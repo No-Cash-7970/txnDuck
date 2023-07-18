@@ -13,6 +13,7 @@
     "test:ci": "jest --ci"
   },
   "dependencies": {
+    "@tabler/icons-react": "^2.26.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "20.4.2",
     "@types/react": "18.2.15",

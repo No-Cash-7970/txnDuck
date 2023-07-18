@@ -745,6 +745,19 @@
   dependencies:
     tslib "^2.4.0"
 
+"@tabler/icons-react@^2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons-react/-/icons-react-2.26.0.tgz#f1062831ced722466daf1d17b16f086c2fd0cab6"
+  integrity sha512-IRhaSfCIRy2uMcUHQxJBSrQWh7KcTFFpGGqvYf+5YITWgr7HD2ipuBCR9d5MYx9o6DqM/B+9kKaUU63JA+dt0A==
+  dependencies:
+    "@tabler/icons" "2.26.0"
+    prop-types "^15.7.2"
+
+"@tabler/icons@2.26.0":
+  version "2.26.0"
+  resolved "https://registry.yarnpkg.com/@tabler/icons/-/icons-2.26.0.tgz#2ec4c30cda1964fcfca473a1334a1254727fbe17"
+  integrity sha512-fYUgqy2txHrFLxhO54lFbNCLdTIf0WtEwABdQ70fH/C6WvGDWpXSln7ntUwK1Z3MNtBkoyXUhtJgtue1yP8Gww==
+
 "@tailwindcss/typography@^0.5.9":
   version "0.5.9"
   resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.9.tgz#027e4b0674929daaf7c921c900beee80dbad93e8"
@@ -4000,7 +4013,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
