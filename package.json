@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "notice": "yarn licenses generate-disclaimer > NOTICE",
     "preprod": "next build",
     "prod": "next start",
     "test": "jest --watch",
