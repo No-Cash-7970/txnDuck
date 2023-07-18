@@ -10,7 +10,8 @@
     "preprod": "next build",
     "prod": "next start",
     "test": "jest --watch",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@tabler/icons-react": "^2.26.0",
