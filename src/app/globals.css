@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display;
+  }
+
+  /* [lang="jp"] {
+    @apply font-sans-jp;
+  }
+
+  [lang="jp"] h1,
+  [lang="jp"] h2,
+  [lang="jp"] h3,
+  [lang="jp"] h4,
+  [lang="jp"] h5,
+  [lang="jp"] h6 {
+    @apply font-display-jp;
+  } */
+}

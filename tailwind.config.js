@@ -42,18 +42,16 @@ module.exports = {
     ],
   },
   theme: {
-    // extend: {
-    //   fontFamily: {
-    //     'sans': ['"Noto Sans"', 'sans-serif'],
-    //     'serif': ['"Noto Serif"', 'serif'],
-    //     'mono': ['"Noto Sans Mono"', 'monospace'],
-    //     'display': ['"Noto Sans Display"', '"Noto Sans"', 'sans-serif'],
-    //     'emoji': ['"Noto Color Emoji"'],
+    extend: {
+      fontFamily: {
+        'sans': ['var(--font-noto-sans)', 'sans-serif'],
+        'display': ['var(--font-noto-sans-display)', 'var(--font-noto-sans)', 'sans-serif'],
+        'mono': ['var(--font-noto-sans-mono)', 'monospace'],
+        'emoji': ['var(--font-noto-color-emoji)'],
 
-    //     'sans-jp': ['"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
-    //     'serif-jp': ['"Noto Serif"', '"Noto Serif JP"', 'serif'],
-    //     'display-jp': ['"Noto Sans Display"', '"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
-    //   },
-    // },
+        // 'sans-jp': ['"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
+        // 'display-jp': ['"Noto Sans Display"', '"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
+      },
+    },
   },
 }
