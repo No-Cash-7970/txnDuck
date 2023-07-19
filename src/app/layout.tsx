@@ -1,43 +1,11 @@
-'use client';
-
 import './globals.css';
 import type { Metadata } from 'next';
-
-import { Noto_Sans } from 'next/font/google';
-import { Noto_Sans_Display } from 'next/font/google';
-import { Noto_Sans_Mono } from 'next/font/google';
-import { Noto_Color_Emoji } from 'next/font/google';
-
-/**
- * TODO: Place these font declarations into a separate file
- */
-
-const notoSans = Noto_Sans({
-  style: ['normal', 'italic'],
-  weight: ['400', '700'],
-  variable: '--font-noto-sans',
-  subsets: [ 'cyrillic', 'cyrillic-ext', 'devanagari', 'greek', 'greek-ext', 'latin', 'latin-ext', 'vietnamese', ],
-  display: 'auto'
-});
-
-const notoSansDisplay = Noto_Sans_Display({
-  variable: '--font-noto-sans-display',
-  subsets: [ 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'latin', 'latin-ext', 'vietnamese', ],
-  display: 'auto'
-});
-
-const notoSansMono = Noto_Sans_Mono({
-  variable: '--font-noto-sans-mono',
-  subsets: [ 'cyrillic', 'cyrillic-ext', 'greek', 'greek-ext', 'latin', 'latin-ext', 'vietnamese', ],
-  display: 'auto'
-});
-
-const notoColorEmoji = Noto_Color_Emoji({
-  weight: ['400'],
-  variable: '--font-noto-color-emoji',
-  subsets: [ 'emoji' ],
-  display: 'auto'
-});
+import {
+  notoSans,
+  notoSansDisplay,
+  notoSansMono,
+  notoColorEmoji,
+} from './lib/fonts';
 
 export const metadata: Metadata = {
   title: 'txnDuck',
