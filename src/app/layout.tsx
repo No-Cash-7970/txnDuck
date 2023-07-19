@@ -6,6 +6,8 @@ import {
   notoSansMono,
   notoColorEmoji,
 } from './lib/fonts';
+import { JotaiProvider } from './lib/providers';
+
 
 export const metadata: Metadata = {
   title: 'txnDuck',
@@ -21,8 +23,11 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${notoSans.variable} ${notoSansDisplay.variable} ${notoSansMono.variable} ${notoColorEmoji.variable}`}
+      data-theme=""
     >
-      <body>{children}</body>
+      <body>
+        <JotaiProvider>{children}</JotaiProvider>
+      </body>
     </html>
   );
 };
