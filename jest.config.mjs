@@ -13,6 +13,10 @@ const config = {
 
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/e2e'],
+
+  // Tell Jest to use the Chance js library through `jest-chance`
+  // Use `import { chance } from 'jest-chance'` to import Chance into tests
+  globalSetup: 'jest-chance',
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
