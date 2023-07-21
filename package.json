@@ -11,7 +11,8 @@
     "prod": "next start",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "prepare": "cd ./node_modules/jest-chance && yarn install && yarn build"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^2.3.1",
