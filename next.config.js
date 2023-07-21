@@ -1,4 +1,10 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  poweredByHeader: false,
+};
 
-module.exports = nextConfig
+if (process.env.STATIC_BUILD?.toLowerCase() === 'true') {
+  nextConfig.output = 'export';
+}
+
+module.exports = nextConfig;
