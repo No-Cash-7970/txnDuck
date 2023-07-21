@@ -17,7 +17,7 @@ export type i18nOptions = {
 
 export function getOptions (lng = fallbackLng, ns: string | string[] = defaultNS): i18nOptions {
   return {
-    debug: true,
+    debug: process.env.I18NEXT_DEBUG?.toLowerCase() === 'true',
     supportedLngs: languages,
     // preload: languages,
     fallbackLng,

@@ -81,7 +81,7 @@ export default function Home({ params: { lng } }: {
         </div>
       </div>
       {/* Language */}
-      {process.env.NEXT_PUBLIC_LANG_SWITCHER?.toLowerCase() !== 'false' &&
+      {process.env.NEXT_PUBLIC_FEAT_LANG_SWITCHER?.toLowerCase() !== 'false' &&
         <div className="flex flex-col items-center">
           <label className="label" htmlFor="light-mode-options block">
             <span className="label-text">{t('language_switcher_label')}</span>
