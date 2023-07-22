@@ -23,3 +23,20 @@ export const buildJestChance = gulp.series(
   task('yarn install'),
   task('yarn build'),
 );
+
+// Stashed unstaged files then runs tests and checks without restoring the
+export const stashThenTest = gulp.series(
+  // Stash away changes that are not going to be committed, so the checks are on the changes that
+  // are going to be committed
+  task('git stash push -k -u -m "precommit"', { reject: false }),
+  task('yarn next lint'),
+  task('yarn jest'),
+  task('yarn playwright test'),
+);
+
+export const precommitHook = gulp.series(
+  // Setting `reject` to `false` allows the next task to run regardless of whether there was an
+  // error or not
+  task('yarn gulp stashThenTest', { reject: false }),
+  task('git stash pop', { reject: false }),
+);
