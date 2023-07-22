@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 // NOTE: This code was copied (with a few modifications) from
 // https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/i18n/client.ts
@@ -36,31 +36,31 @@ export function useTranslation<
   ns?: Ns,
   options?: UseTranslationOptions<KPrefix>,
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
-  const ret = useTranslationOrg(ns, options)
-  const { i18n } = ret
+  const ret = useTranslationOrg(ns, options);
+  const { i18n } = ret;
 
   if (runsOnServerSide && lng && i18n.resolvedLanguage !== lng) {
-    i18n.changeLanguage(lng)
+    i18n.changeLanguage(lng);
   } else {
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)
+    const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (activeLng === i18n.resolvedLanguage){
-        return
+        return;
       }
-      setActiveLng(i18n.resolvedLanguage)
-    }, [activeLng, i18n.resolvedLanguage])
+      setActiveLng(i18n.resolvedLanguage);
+    }, [activeLng, i18n.resolvedLanguage]);
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (!lng || i18n.resolvedLanguage === lng){
-        return
+        return;
       }
-      i18n.changeLanguage(lng)
-    }, [lng, i18n])
+      i18n.changeLanguage(lng);
+    }, [lng, i18n]);
   }
 
-  return ret
+  return ret;
 }

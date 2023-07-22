@@ -11,5 +11,8 @@
       ],
       "extends": ["plugin:testing-library/react"]
     }
-  ]
+  ],
+  "rules": {
+    "semi": ["error", "always"]
+  }
 }

@@ -1,5 +1,5 @@
 import { atom } from 'jotai';
-import { atomWithStorage } from 'jotai/utils'
+import { atomWithStorage } from 'jotai/utils';
 
 // '' = automatic
 // 'duck' = light mode

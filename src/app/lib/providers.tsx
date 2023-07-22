@@ -7,5 +7,5 @@ export function JotaiProvider({ children }: { children: React.ReactNode }) {
     <Provider>
       {children}
     </Provider>
-  )
+  );
 };
