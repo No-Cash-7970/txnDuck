@@ -41,7 +41,8 @@ export default function Home({ params: { lng } }: {
       </p>
       <p className="max-w-4xl px-4 mx-auto text-center italic">
         <Trans i18nKey="code_on_github" ns={i18nNS}>
-          Check out the <code className='p-0'>code</code> on <a href="https://github.com/No-Cash-7970/txnDuck">Github</a>.
+          Check out the <code className='p-0'>code</code> on
+          <a href="https://github.com/No-Cash-7970/txnDuck">Github</a>.
         </Trans>
       </p>
       <p className="max-w-4xl px-4 mx-auto text-center font-emoji text-8xl mt-10 mb-20">
@@ -55,7 +56,12 @@ export default function Home({ params: { lng } }: {
         </label>
         <div className="join">
           <input
-            className="join-item btn btn-sm checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus"
+            className={
+              'join-item'
+              + ' btn btn-sm'
+              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
+              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
+            }
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.light')}
@@ -63,7 +69,12 @@ export default function Home({ params: { lng } }: {
             onClick={() => setDarkMode('duck')}
           />
           <input
-            className="join-item btn btn-sm checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus"
+            className={
+              'join-item'
+              + ' btn btn-sm'
+              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
+              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
+            }
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.dark')}
@@ -71,7 +82,12 @@ export default function Home({ params: { lng } }: {
             onClick={() => setDarkMode('duck_dark')}
           />
           <input
-            className="join-item btn btn-sm checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus"
+            className={
+              'join-item'
+              + ' btn btn-sm'
+              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
+              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
+            }
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.auto')}

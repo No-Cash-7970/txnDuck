@@ -50,7 +50,12 @@ export default function RootLayout(
     <html
       lang={lng}
       dir={dir(lng)}
-      className={`${notoSans.variable} ${notoSansDisplay.variable} ${notoSansMono.variable} ${notoColorEmoji.variable}`}
+      className={
+        notoSans.variable
+        + ` ${notoSansDisplay.variable}`
+        + ` ${notoSansMono.variable}`
+        + ` ${notoColorEmoji.variable}`
+      }
       data-theme=""
     >
       <body>

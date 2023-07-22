@@ -14,12 +14,15 @@ import { getOptions } from './settings';
  * @returns i18next instance
  */
 const initI18next = async (lng: string, ns: string | string[]) => {
-  // on server side we create a new instance for each render, because during compilation everything seems to be executed in parallel
+  // on server side we create a new instance for each render, because during compilation everything
+  // seems to be executed in parallel
   const i18nInstance = createInstance();
 
   await i18nInstance
     .use(initReactI18next)
-    .use(resourcesToBackend((language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)))
+    .use(resourcesToBackend(
+      (language: string, namespace: string) => import(`./locales/${language}/${namespace}.json`)
+    ))
     .init(getOptions(lng, ns));
 
   return i18nInstance;
