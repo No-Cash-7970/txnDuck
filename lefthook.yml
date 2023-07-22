@@ -1,6 +1,8 @@
-no_tty: true
 pre-commit:
-  piped: true
   commands:
     precommit-gulp:
       run: yarn gulp precommitHook
+commit-msg:
+  commands:
+    commitlint:
+      run: yarn commitlint --edit
