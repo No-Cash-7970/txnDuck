@@ -8,14 +8,14 @@ export const notoSans = Noto_Sans({
   weight: ['400', '700'],
   variable: '--font-noto-sans',
   subsets: [
-    'cyrillic',
-    'cyrillic-ext',
-    'devanagari',
-    'greek',
-    'greek-ext',
+    // 'cyrillic',
+    // 'cyrillic-ext',
+    // 'devanagari',
+    // 'greek',
+    // 'greek-ext',
     'latin',
     'latin-ext',
-    'vietnamese',
+    // 'vietnamese',
   ],
   display: 'auto'
 });
@@ -23,13 +23,13 @@ export const notoSans = Noto_Sans({
 export const notoSansDisplay = Noto_Sans_Display({
   variable: '--font-noto-sans-display',
   subsets: [
-    'cyrillic',
-    'cyrillic-ext',
-    'greek',
-    'greek-ext',
+    // 'cyrillic',
+    // 'cyrillic-ext',
+    // 'greek',
+    // 'greek-ext',
     'latin',
     'latin-ext',
-    'vietnamese',
+    // 'vietnamese',
   ],
   display: 'auto'
 });
@@ -37,13 +37,13 @@ export const notoSansDisplay = Noto_Sans_Display({
 export const notoSansMono = Noto_Sans_Mono({
   variable: '--font-noto-sans-mono',
   subsets: [
-    'cyrillic',
-    'cyrillic-ext',
-    'greek',
-    'greek-ext',
+    // 'cyrillic',
+    // 'cyrillic-ext',
+    // 'greek',
+    // 'greek-ext',
     'latin',
     'latin-ext',
-    'vietnamese',
+    // 'vietnamese',
   ],
   display: 'auto'
 });
