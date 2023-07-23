@@ -1,0 +1,6 @@
+# General
+
+site_name: txnPato
+metadata: # Metadata for the website, usually not displayed
+  title: Generador de transacciones de Algorand
+  description: Una herramienta para crear y enviar transacciones de Algorand

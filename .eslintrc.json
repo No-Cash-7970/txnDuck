@@ -10,6 +10,11 @@
         "**/?(*.)+(spec|test).[jt]s?(x)"
       ],
       "extends": ["plugin:testing-library/react"]
+    },
+    {
+      "files": ["**/*.yaml", "**/*.yml"],
+      "parser": "yaml-eslint-parser",
+      "extends": ["plugin:yml/standard"]
     }
   ],
   "rules": {

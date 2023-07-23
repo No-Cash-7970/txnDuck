@@ -1,0 +1,11 @@
+# Home page
+
+greeting: Hello!
+duck_soon: txn<1>Duck</1> will be coming soon!
+code_on_github: Check out the <1>code</1> on <3>Github</3>
+theme_switcher:
+  label: Theme
+  light: Light
+  dark: Dark
+  auto: Automatic
+language_switcher_label: Language

@@ -1,7 +1,0 @@
-{
-  "site_name": "txnDuck",
-  "metadata": {
-    "title": "Algorand Transaction Builder",
-    "description": "A tool for creating and sending Algorand transactions"
-  }
-}

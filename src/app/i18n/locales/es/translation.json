@@ -1,7 +1,0 @@
-{
-  "site_name": "txnPato",
-  "metadata": {
-    "title": "Generador de transacciones de Algorand",
-    "description": "Una herramienta para crear y enviar transacciones de Algorand"
-  }
-}

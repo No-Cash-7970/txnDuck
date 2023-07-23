@@ -37,3 +37,6 @@ next-env.d.ts
 /test-results/
 /playwright-report/
 /playwright/.cache/
+
+# compiled translation files
+src/app/i18n/locales/.dist/

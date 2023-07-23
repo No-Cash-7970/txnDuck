@@ -1,0 +1,11 @@
+# Home page
+
+greeting: ¡Hola!
+duck_soon: ¡txn<1>Pato</1> llegará pronto!
+code_on_github: Echa un vistazo al <1>código</1> en <3>Github</3>.
+theme_switcher:
+  label: El Tema
+  light: Claro
+  dark: Oscuro
+  auto: Automático
+language_switcher_label: El Idioma

@@ -36,12 +36,12 @@ export default function Home({ params: { lng } }: {
       </h1>
       <p className="max-w-4xl px-4 mx-auto text-center">
         <Trans i18nKey="duck_soon" ns={i18nNS}>
-          txn<span className="text-primary">Duck</span> will be coming soon!
+          txn<span className="text-primary">Duck</span>_coming_soon
         </Trans>
       </p>
       <p className="max-w-4xl px-4 mx-auto text-center italic">
         <Trans i18nKey="code_on_github" ns={i18nNS}>
-          Check out the <code className='p-0'>code</code> on
+          check_out_the_<code className='p-0'>code</code>_on
           <a href="https://github.com/No-Cash-7970/txnDuck">Github</a>.
         </Trans>
       </p>
