@@ -1,13 +1,17 @@
 import gulp from 'gulp';
-import { task } from 'gulp-execa';
+import { exec, task } from 'gulp-execa';
 import rename from 'gulp-rename';
 import { Transform } from 'stream';
 import yaml from 'js-yaml';
 
-// The directory where compiled locales will go
+/**
+ * The directory where compiled locales will go
+ */
 const COMPILED_DEST = `src/app/i18n/locales/.dist`;
 
-// Remove the directory for compiled locales
+/**
+ * Remove the directory for compiled locales
+ */
 const cleanLocales = task(`rm -r ${COMPILED_DEST}`, { reject: false });
 
 /**
@@ -32,6 +36,23 @@ const jsonToYamlConverter = new Transform({
     callback(null, file);
   }
 });
+
+/**
+ * Restore the Git repository to its original state before the stashing
+ */
+const stashPop = task('git stash pop', { reject: false });
+
+/**
+ * Restore the Git repository to its original state before the stashing and return an error. For
+ * cleaning up after a task fails.
+ *
+ * @param {string} errorMsg Message for the thrown error
+ * @returns {boolean} False, which results in error
+ */
+const stashPopFail = async (errorMsg = '') => {
+  await exec('git stash pop', { reject: false });
+  return false;
+};
 
 /*
  *******************************************************************************
@@ -66,7 +87,7 @@ export const buildJestChance = gulp.series(
  */
 export const compileLocales = gulp.series(
   cleanLocales,
-  function _compileLocals () {
+  () => {
     return gulp.src(['src/app/i18n/locales/**/*.yml', 'src/app/i18n/locales/**/*.yaml'])
       .pipe(jsonToYamlConverter)
       .pipe(rename({ extname: '.json' }))
@@ -79,34 +100,24 @@ export const compileLocales = gulp.series(
  * Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
  * restore the Git repository to its original state before the stashing in the first task.
  */
-export const precommitHook = gulp.series(
-  // Setting `reject` to `false` allows the next task to run regardless of whether there was an
-  // error or not
-  task('yarn gulp stashThenTest', { reject: false }),
-  task('git stash pop', { reject: false }),
-);
-
-/**
- * Stash unstaged changes, lint, then run tests without restoring the Git repository to its original
- * state before stashing the unstaged changes. Meant to be used as the first part of the
- * `pre-commit` hook.
- */
-export const stashThenTest = gulp.series(
-  // Stash away unstaged changes that are not going to be committed, so the linting and tests are
-  // run on the changes that are going to be committed
-  task(
-    'git stash push -k -u -m "precommit"',
-    { reject: false } // Continue to next task even if there is an error
-  ),
-  // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
-  // cause unit test and E2E test failures, so lint error should be fixed before running the tests.
-  task('yarn next lint'),
-  // Needed for the build that happens before the tests
-  compileLocales,
-  // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
-  // run the E2E tests, which typically take much longer. Something that causes a unit test to fail
-  // is likely to cause at least one of the E2E tests to fail.
-  task('yarn jest'),
-  // E2E tests. Typically take a long time
-  task('yarn playwright test'),
-);
+export const precommitHook = gulp
+  .series(
+    // Stash away unstaged changes that are not going to be committed, so the linting and tests are
+    // run on the changes that are going to be committed
+    task(
+      'git stash push -k -u -m "precommit"',
+      { reject: false } // Continue onto next task even if there is an error
+    ),
+    // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
+    // cause unit test and E2E test failures, so lint error should be fixed before running the
+    // tests.
+    () => exec('yarn next lint').catch(stashPopFail('Lint failed')), // Clean up if fail
+    // Needed for the build that happens before the tests
+    compileLocales,
+    // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
+    // run the E2E tests, which typically take much longer. Something that causes a unit test to
+    // fail is likely to cause at least one of the E2E tests to fail.
+    () => exec('yarn jest -b').catch(stashPopFail('Unit testing failed')), // Clean up if fail
+    // E2E tests. Typically take a long time
+    () => exec('yarn playwright test -x').finally(stashPop), // Always clean up after last item
+  );
