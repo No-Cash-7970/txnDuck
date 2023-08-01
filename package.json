@@ -94,8 +94,8 @@
       "@release-it/conventional-changelog": {
         "preset": "conventionalcommits",
         "writerOpts": {
-          "mainTemplate": "{{#each commitGroups}}\n\n## {{title}}\n\n{{#each commits}}\n{{> commit root=@root}}\n{{/each}}\n{{/each}}\n\n{{> footer}}",
-          "footerPartial": "{{#if noteGroups}}\n{{#each noteGroups}}\n\n## {{title}}\n\n{{#each notes}}\n* {{text}}\n{{/each}}\n{{/each}}\n{{/if}}"
+          "mainTemplate": "{{#each commitGroups}}\n\n### {{title}}\n\n{{#each commits}}\n{{> commit root=@root}}\n{{/each}}\n{{/each}}\n\n{{> footer}}",
+          "footerPartial": "{{#if noteGroups}}\n{{#each noteGroups}}\n\n### {{title}}\n\n{{#each notes}}\n* {{text}}\n{{/each}}\n{{/each}}\n{{/if}}"
         }
       }
     }
