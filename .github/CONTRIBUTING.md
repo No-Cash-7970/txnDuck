@@ -82,6 +82,9 @@ is important.
   development environment to test the translations.
 - Look in the [`locales` directory](../src/app/i18n/locales/)
   to see if the translation exists already.
+- Check the current status of the language translations in the table in the
+  [*Supported languages* section in the
+  README](../README.md#speech_balloon-supported-languages).
 
 ### How do I submit a translation?
 

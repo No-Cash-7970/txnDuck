@@ -18,6 +18,7 @@ knowledge.
 
 - [:globe\_with\_meridians: Websites](#globe_with_meridians-websites)
 - [:sparkles: Features](#sparkles-features)
+- [:speech\_balloon: Supported languages](#speech_balloon-supported-languages)
 - [:computer: Set up and run locally](#computer-set-up-and-run-locally)
   - [Requirements for local setup](#requirements-for-local-setup)
   - [Installing the local setup](#installing-the-local-setup)
@@ -50,7 +51,16 @@ same.
 - FUTURE: Import a transaction file
 - FUTURE: Build transaction groups (atomic transactions)
 
-<!-- TODO: Show table of supported language (i18n) -->
+## :speech_balloon: Supported languages
+
+The <abbr title="user interface">UI</abbr> for txnDuck supports multiple languages. However, the translations for some of the supported languages may be incomplete or have errors due to machine translation.
+
+If you want to help by adding or fixing a translation, read about how you can do so [in the Contributing Guidelines](.github/CONTRIBUTING.md#submitting-translations).
+
+Language | Completeness | Machine translated?
+---------|--------------|---------------------
+English  | Full         | No
+Spanish  | Full         | *Yes*
 
 ## :computer: Set up and run locally
 
@@ -111,7 +121,7 @@ own computer that does not rely on an external website.
 ### Uninstalling and removing local setup
 
 1. Make sure the web server is not running. Stop the server if it is. Refer to
-   step #7 in the ["Installing local setup" instructions](#installing-local-setup).
+   step #7 in the ["Installing local setup" instructions](#installing-the-local-setup).
 2. Delete the source code folder.
 
 ## :hammer_and_wrench: Installation for development
