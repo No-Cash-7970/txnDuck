@@ -18,7 +18,7 @@ import { getOptions, languages } from './settings';
 
 const runsOnServerSide = typeof window === 'undefined';
 
-// on client side the normal singleton is ok
+// On client side the normal singleton is ok
 i18next
   .use(initReactI18next)
   .use(LanguageDetector)
@@ -29,7 +29,7 @@ i18next
   ))
   .init({
     ...getOptions(),
-    lng: undefined, // let detect the language on client side
+    lng: undefined, // Let detect the language on client side
     detection: {
       order: ['path', 'htmlTag', 'cookie', 'navigator'],
     },
@@ -38,6 +38,7 @@ i18next
 
 export default i18next;
 
+// Wrap the original `useTranslation` hook into a client-side hook
 export function useTranslation<
   Ns extends FlatNamespace,
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
@@ -55,6 +56,9 @@ export function useTranslation<
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage);
 
+    /*
+     * Set client side's active language according to the resolved language from the server side
+     */
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (activeLng === i18n.resolvedLanguage){
@@ -63,6 +67,10 @@ export function useTranslation<
       setActiveLng(i18n.resolvedLanguage);
     }, [activeLng, i18n.resolvedLanguage]);
 
+    /*
+     * If a language is specified when using this hook, change the active language to the language
+     * specified
+     */
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (!lng || i18n.resolvedLanguage === lng){

@@ -44,6 +44,8 @@ export function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
   }
 
+  // If the user is coming from a page in a specific language that language should override the
+  // "Accept-Language" header and be saved as preferred language in the cookie
   if (req.headers.has('referer')) {
     const refererUrl = new URL(req.headers.get('referer')!);
     const lngInReferer = languages.find((l) => refererUrl.pathname.startsWith(`/${l}`));
