@@ -22,6 +22,7 @@ This is documentation contains information useful for developers.
 - [Documentation](#documentation)
 - [Releases](#releases)
   - [Changelog](#changelog)
+  - [Releases on the `stable` branch](#releases-on-the-stable-branch)
 
 ## Technology Stack
 
@@ -203,8 +204,8 @@ yarn release
 
 This command increments the version number according to the commit
 messages. Then it creates a
-[tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag),
-push the changes, and generates a URL for creating a
+[tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag)
+on the `main` branch, pushes the changes, and generates a URL for creating a
 [Release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 on GitHub with the release notes generated based on commit messages. Creating a
 Release on GitHub requires signing in to GitHub account of the repository owner
@@ -215,3 +216,12 @@ or a maintainer with the right permissions.
 This project does not keep a changelog in the form a file (e.g. CHANGELOG.md).
 [This project's Releases on GitHub](https://github.com/No-Cash-7970/txnDuck/releases)
 and the release notes there are used for that purpose instead.
+
+### Releases on the `stable` branch
+
+Releases happen on the `main` branch first. After a release on the `main`
+branch, those changes from the `main` branch should be merged onto the the
+`stable` branch Therefore, most recent commit on the `stable` branch should
+always be a release with a version
+[tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
+This means that only released code is deployed to the [Production](https://txnduck.vercel.app).
