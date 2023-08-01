@@ -87,7 +87,7 @@ export const buildJestChance = gulp.series(
  */
 export const compileLocales = gulp.series(
   cleanLocales,
-  () => {
+  function _compileLocales() { // Use named function so output doesn't show '<anonymous>'
     return gulp.src(['src/app/i18n/locales/**/*.yml', 'src/app/i18n/locales/**/*.yaml'])
       .pipe(jsonToYamlConverter)
       .pipe(rename({ extname: '.json' }))

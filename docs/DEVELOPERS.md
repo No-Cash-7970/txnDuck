@@ -21,6 +21,7 @@ This is documentation contains information useful for developers.
   - [`commit-msg` hook](#commit-msg-hook)
 - [Documentation](#documentation)
 - [Releases](#releases)
+  - [Changelog](#changelog)
 
 ## Technology Stack
 
@@ -190,4 +191,27 @@ should be used.
 
 :warning: **For repository owners and maintainers only**
 
-TODO
+This project uses [semantic versioning](https://semver.org/) and
+[commit messages](#git-commit-message-guidelines) to determine the version number of
+ releases and generate release notes.
+
+The fastest way to create a new release is:
+
+```bash
+yarn release
+```
+
+This command increments the version number according to the commit
+messages. Then it creates a
+[tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag),
+push the changes, and generates a URL for creating a
+[Release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
+on GitHub with the release notes generated based on commit messages. Creating a
+Release on GitHub requires signing in to GitHub account of the repository owner
+or a maintainer with the right permissions.
+
+### Changelog
+
+This project does not keep a changelog in the form a file (e.g. CHANGELOG.md).
+[This project's Releases on GitHub](https://github.com/No-Cash-7970/txnDuck/releases)
+and the release notes there are used for that purpose instead.
