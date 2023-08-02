@@ -74,8 +74,8 @@ use the development server:
 
 2. Open a web browser and go to <http://localhost:3000>.
 3. Edit a file in the `src/app` directory and see the result!
-4. Stop the web server by pressing <kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>C</kbd>
-   (<kbd>Cmd</kbd>&nbsp;+&nbsp;<kbd>C</kbd> on Mac). You can restart the web
+4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd>
+   (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can restart the web
    server by following Step #1.
 
 ## Building for production
@@ -123,7 +123,7 @@ yarn test
 To run the E2E tests:
 
 ```bash
-test test:e2e
+yarn test:e2e
 ```
 
 ## Code style guidelines
@@ -158,9 +158,17 @@ yarn cz
 
 ## Git hooks
 
-This project uses both the `pre-commit` and the `commit-msg` hook. Use
-`git commit --no-verify` or `git commit -n` to skip running these hooks when
-committing changes.
+This project uses both the `pre-commit` and the `commit-msg` hook. Use the
+following commands to skip running these hooks when committing changes:
+
+```bash
+git commit --no-verify
+```
+
+Or, the shortcut:
+```bash
+git commit -n
+``` 
 
 ### `pre-commit` hook
 
@@ -214,8 +222,8 @@ or a maintainer with the right permissions.
 ### Changelog
 
 This project does not keep a changelog in the form a file (e.g. CHANGELOG.md).
-[This project's Releases on GitHub](https://github.com/No-Cash-7970/txnDuck/releases)
-and the release notes there are used for that purpose instead.
+[This project's "Releases" on GitHub](https://github.com/No-Cash-7970/txnDuck/releases),
+along with their release notes, is used for that purpose instead.
 
 ### Releases on the `stable` branch
 
