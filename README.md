@@ -1,6 +1,6 @@
 <h1>
     <div style="font-size:1.7em">txn<span style="color:#0ebd9d">Duck</span> 🦆</div>
-    Transaction Builder
+    Transaction Builder UI
 </h1>
 
 ![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)&nbsp;
@@ -14,16 +14,16 @@ sending Algorand transactions without the need for software development
 knowledge.
 
 <!-- omit in toc -->
-## Table of contents
+## :compass: Table of contents
 
 - [:globe\_with\_meridians: Websites](#globe_with_meridians-websites)
 - [:sparkles: Features](#sparkles-features)
 - [:speech\_balloon: Supported languages](#speech_balloon-supported-languages)
-- [:computer: Set up and run locally](#computer-set-up-and-run-locally)
+- [:computer: Setting up and running locally](#computer-setting-up-and-running-locally)
   - [Requirements for local setup](#requirements-for-local-setup)
   - [Installing the local setup](#installing-the-local-setup)
   - [Uninstalling and removing local setup](#uninstalling-and-removing-local-setup)
-- [:hammer\_and\_wrench: Installation for development](#hammer_and_wrench-installation-for-development)
+- [:hammer\_and\_wrench: Installing for development](#hammer_and_wrench-installing-for-development)
 - [:handshake: Contributing](#handshake-contributing)
 - [:trophy: Acknowledgments](#trophy-acknowledgments)
 
@@ -44,7 +44,6 @@ same.
 
 ## :sparkles: Features
 
-- FUTURE: Support for multiple languages and locales
 - FUTURE: Specify custom algod node
 - FUTURE: Export to a signed or unsigned transaction file that is compatible
   with Algorand's `goal` tool
@@ -53,24 +52,28 @@ same.
 
 ## :speech_balloon: Supported languages
 
-The <abbr title="user interface">UI</abbr> for txnDuck supports multiple languages. However, the translations for some of the supported languages may be incomplete or have errors due to machine translation.
+The <abbr title="user interface">UI</abbr> for txnDuck has multiple supported
+languages. However, not all of the languages have the same amount of support.
+The translations for some of the supported languages may be incomplete or
+contain errors due to being a machine translation.
 
-If you want to help by adding or fixing a translation, read about how you can do so [in the Contributing Guidelines](.github/CONTRIBUTING.md#submitting-translations).
+If you want to help by adding or fixing a translation, read about how you can do
+so [in the Contributing Guidelines](.github/CONTRIBUTING.md#submitting-translations).
 
 Language | Completeness | Machine translated?
 ---------|--------------|---------------------
 English  | Full         | No
 Spanish  | Full         | *Yes*
 
-## :computer: Set up and run locally
+## :computer: Setting up and running locally
 
-**This is not for development. To set up and run txnDuck for development,
-follow the instruction for
-[installing for development](#hammer_and_wrench-installation-for-development).**
+**:warning: This is not for development. To set up and run txnDuck for development,
+follow the instructions for
+[installing txnDuck for development](#hammer_and_wrench-installing-for-development).**
 
-Instead of using one of the [official txnDuck websites](#globe_with_meridians-websites), you can
-choose to download the source code and run a of the software "locally" on your
-own computer that does not rely on an external website.
+Instead of using one of the [official txnDuck websites](#globe_with_meridians-websites),
+you can choose to download the source code and run a of the software "locally"
+on your own computer that does not rely on an external website.
 
 ### Requirements for local setup
 
@@ -113,10 +116,9 @@ own computer that does not rely on an external website.
    <abbr title="Command Line Interface">CLI</abbr> to use your local txnDuck.
 7. (Optional) If you are finished using your local txnDuck, stop the web server
    by closing the <abbr title="Command Line Interface">CLI</abbr> window or by
-   pressing <kbd>Ctrl</kbd>&nbsp;+&nbsp;<kbd>C</kbd>
-   (<kbd>Cmd</kbd>&nbsp;+&nbsp;<kbd>C</kbd> on Mac) while in the
-   <abbr title="Command Line Interface">CLI</abbr>. You can restart the web
-   server by following Step #5.
+   pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac)
+   while in the <abbr title="Command Line Interface">CLI</abbr>. You can restart
+   the web server by following Steps #5 and #6.
 
 ### Uninstalling and removing local setup
 
@@ -124,16 +126,16 @@ own computer that does not rely on an external website.
    step #7 in the ["Installing local setup" instructions](#installing-the-local-setup).
 2. Delete the source code folder.
 
-## :hammer_and_wrench: Installation for development
+## :hammer_and_wrench: Installing for development
 
-Refer to the installation instructions in the [Developers Documentation](docs/DEVELOPERS.md).
+Refer to the [installation instructions in the Developers
+Documentation](docs/DEVELOPERS.md#installing-the-development-environment).
 
 ## :handshake: Contributing
 
-Your contributions are always welcome!
-
-- [Contributing Guidelines](.github/CONTRIBUTING.md)
-- [Code of Conduct](.github/CODE_OF_CONDUCT.md)
+Contributions are highly welcomed and appreciated. Every little bit of help
+counts, so do not hesitate! Please read the [Contributing Guidelines](.github/CONTRIBUTING.md)
+to learn how to contribute to this project.
 
 ## :trophy: Acknowledgments
 
