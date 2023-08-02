@@ -8,10 +8,9 @@
 ![Tailwindcss badge](https://img.shields.io/badge/Tailwindcss-0ea5e9?style=for-the-badge&logo=tailwindcss&logoColor=white)&nbsp;
 ![License MIT badge](https://img.shields.io/github/license/No-Cash-7970/txnDuck?style=for-the-badge&color=8e5548)
 
-txn<span style="color:#0ebd9d">Duck</span> is a free and open source web-based
-tool that serves as a graphical user interface (GUI) for easily creating and
-sending Algorand transactions without the need for software development
-knowledge.
+A free and open source web-based tool that serves as a graphical user interface
+(GUI) for easily creating and sending Algorand transactions without the need for
+software development knowledge.
 
 <!-- omit in toc -->
 ## :compass: Table of contents
@@ -29,8 +28,8 @@ knowledge.
 
 ## :globe_with_meridians: Websites
 
-txn<span style="color:#0ebd9d">Duck</span> is available to use for free
-(excluding any Algorand network fees) at the following websites:
+You can use txn<span style="color:#0ebd9d">Duck</span> for free (excluding any
+Algorand network fees) at the following websites:
 
 **Production:** <https://txnduck.vercel.app>  
 Preview: <https://txnduck-preview.vercel.app>
