@@ -9,14 +9,12 @@ import { Trans } from 'react-i18next';
 import Link from 'next/link';
 
 export default function Home({ params: { lng } }: {
-  params: {
-    lng: string;
-  };
+  params: { lng: string }
 }) {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
 
-  const i18nNS = 'home'; // Namespace for translations
-  const { t, i18n } = useTranslation(lng, i18nNS);
+  const I18N_NS = 'home'; // Namespace for translations
+  const { t, i18n } = useTranslation(lng, I18N_NS);
 
   // Set dark mode by setting the "data-theme" attribute in the upper-level <html> tag
   useEffect(() => {
@@ -35,12 +33,12 @@ export default function Home({ params: { lng } }: {
         <IconMoodWink2 strokeWidth={2} className="inline h-10 w-10 align-middle ms-2" />
       </h1>
       <p className="max-w-4xl px-4 mx-auto text-center">
-        <Trans i18nKey="duck_soon" ns={i18nNS}>
+        <Trans i18nKey="duck_soon" ns={I18N_NS}>
           txn<span className="text-primary">Duck</span>_coming_soon
         </Trans>
       </p>
       <p className="max-w-4xl px-4 mx-auto text-center italic">
-        <Trans i18nKey="code_on_github" ns={i18nNS}>
+        <Trans i18nKey="code_on_github" ns={I18N_NS}>
           check_out_the_<code className='p-0'>code</code>_on
           <a href="https://github.com/No-Cash-7970/txnDuck">Github</a>.
         </Trans>
