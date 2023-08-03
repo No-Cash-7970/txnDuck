@@ -8,13 +8,13 @@ import { useTranslation } from '../i18n/client';
 import { Trans } from 'react-i18next';
 import Link from 'next/link';
 
-export default function Home({ params: { lng } }: {
-  params: { lng: string }
+export default function Home({ params: { lang: lang } }: {
+  params: { lang: string }
 }) {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
 
   const I18N_NS = 'home'; // Namespace for translations
-  const { t, i18n } = useTranslation(lng, I18N_NS);
+  const { t, i18n } = useTranslation(lang, I18N_NS);
 
   // Set dark mode by setting the "data-theme" attribute in the upper-level <html> tag
   useEffect(() => {
@@ -102,13 +102,13 @@ export default function Home({ params: { lng } }: {
           </label>
           <div className="join">
             <Link
-              className={`join-item btn btn-sm ${lng==='en' && 'btn-primary'}`}
+              className={`join-item btn btn-sm ${lang==='en' && 'btn-primary'}`}
               href={`/en`}
             >
               English
             </Link>
             <Link
-              className={`join-item btn btn-sm ${lng==='es' && 'btn-accent'}`}
+              className={`join-item btn btn-sm ${lang==='es' && 'btn-accent'}`}
               href={`/es`}
             >
               Español

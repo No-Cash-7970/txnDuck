@@ -23,7 +23,7 @@ jest.mock('react-i18next', () => ({
 
 describe("Home Page", () => {
   it("should render without crashing", () => {
-    render(<Home params={{lng: ''}} />);
+    render(<Home params={{lang: ''}} />);
 
     const title = screen.getByText(/greeting/);
 

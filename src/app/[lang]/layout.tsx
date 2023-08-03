@@ -7,18 +7,15 @@ import { languages } from '../i18n/settings';
 import { useTranslation } from '../i18n';
 
 type Props = {
-  params: { lng: string },
+  params: { lang: string },
 };
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  // Read route param for language
-  const lng: string = params.lng;
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(lng, 'translation');
+  const { t } = await useTranslation(params.lang, 'translation');
 
   return {
     title: `${t('site_name')} - ${t('metadata.title')}`,
@@ -35,16 +32,16 @@ export async function generateStaticParams() {
 export default function RootLayout(
   {
     children,
-    params: { lng }
+    params: { lang }
   }: {
     children: React.ReactNode,
-    params: { lng?: string }
+    params: { lang?: string }
   }
 ) {
   return (
     <html
-      lang={lng}
-      dir={dir(lng)}
+      lang={lang}
+      dir={dir(lang)}
       className={
         fonts.notoSans.variable
         + ` ${fonts.notoSansDisplay.variable}`
