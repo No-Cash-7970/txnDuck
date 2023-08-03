@@ -5,8 +5,8 @@ import {
   notoSansDisplay,
   notoSansMono,
   notoColorEmoji,
-} from '../lib/fonts';
-import { JotaiProvider } from '../lib/providers';
+} from './lib/fonts';
+import { JotaiProvider } from './components/providers';
 import { dir } from 'i18next';
 import { languages } from '../i18n/settings';
 import { useTranslation } from '../i18n';

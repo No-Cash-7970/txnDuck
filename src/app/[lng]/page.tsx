@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { IconMoodWink2 } from '@tabler/icons-react';
 import { useAtom } from 'jotai';
-import { darkModeAtom } from '../lib/app_settings';
+import { darkModeAtom } from './lib/app_settings';
 import { useTranslation } from '../i18n/client';
 import { Trans } from 'react-i18next';
 import Link from 'next/link';
