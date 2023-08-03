@@ -1,4 +1,5 @@
 import '../globals.css';
+import * as fonts from './lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
@@ -45,10 +46,10 @@ export default function RootLayout(
       lang={lng}
       dir={dir(lng)}
       className={
-        notoSans.variable
-        + ` ${notoSansDisplay.variable}`
-        + ` ${notoSansMono.variable}`
-        + ` ${notoColorEmoji.variable}`
+        fonts.notoSans.variable
+        + ` ${fonts.notoSansDisplay.variable}`
+        + ` ${fonts.notoSansMono.variable}`
+        + ` ${fonts.notoColorEmoji.variable}`
       }
       data-theme=""
     >
