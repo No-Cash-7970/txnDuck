@@ -17,7 +17,7 @@
     "test:ci": "jest --ci",
     "pretest:e2e": "yarn compile-locales",
     "test:e2e": "playwright test",
-    "install:dev": "yarn install && lefthook install && gulp buildJestChance"
+    "install:dev": "gulp installDev"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^2.3.1",

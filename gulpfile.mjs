@@ -65,6 +65,8 @@ const stashPopFail = async (errorMsg = '') => {
  *
  * This is needed because a fork of jest-chance is being used. This task can be removed if using
  * the official jest-chance package.
+ *
+ * @returns Node ReadWriteStream object
  */
 export const buildJestChance = gulp.series(
   (cb) => {
@@ -96,34 +98,56 @@ export const compileLocales = gulp.series(
   }
 );
 
-/**
- * Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
- * restore the Git repository to its original state before the stashing in the first task.
+/**s
+ * Install and set up developer tools
+ *
+ * @returns Node ReadWriteStream object
  */
-export const precommitHook = gulp
-  .series(
-    // Stash away unstaged changes that are not going to be committed, so the linting and tests are
-    // run on the changes that are going to be committed
-    task(
-      'git stash push -k -u -m "precommit"',
-      { reject: false } // Continue onto next task even if there is an error
-    ),
-    // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
-    // cause unit test and E2E test failures, so lint error should be fixed before running the
-    // tests.
-    () => exec('yarn next lint').catch(stashPopFail('Lint failed')), // Clean up if fail
-    // Needed for the build that happens before the tests
-    compileLocales,
-    // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
-    // run the E2E tests, which typically take much longer. Something that causes a unit test to
-    // fail is likely to cause at least one of the E2E tests to fail.
-    () => exec('yarn jest -b').catch(stashPopFail('Unit testing failed')), // Clean up if fail
-    // E2E tests. Typically take a long time
-    () => exec('yarn playwright test -x').finally(stashPop), // Always clean up after last item
-  );
+export const installDev = gulp.series(
+  task('yarn install'),
+  gulp.parallel(
+    task('lefthook install'),
+    buildJestChance
+  )
+);
 
+/**
+ * Things that need to be done before building the project. The "prebuild". Usually consists
+ * of compiling files that will be used in the building process.
+ *
+ * @returns Node ReadWriteStream object
+ */
 export const prebuild = gulp.parallel(
   compileLocales,
   // Generate favicon from icon.svg
   task('yarn svg-to-ico ./src/app/icon.svg ./src/app/favicon.ico'),
+);
+
+/**
+ * Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
+ * restore the Git repository to its original state before the stashing in the first task.
+ *
+ * @returns Node ReadWriteStream object
+ */
+export const precommitHook = gulp.series(
+  // Stash away unstaged changes that are not going to be committed, so the linting and tests are
+  // run on the changes that are going to be committed
+  task(
+    'git stash push -k -u -m "precommit"',
+    { reject: false } // Continue onto next task even if there is an error
+  ),
+  // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
+  // cause unit test and E2E test failures, so lint error should be fixed before running the
+  // tests.
+  () => exec('yarn next lint').catch(stashPopFail('Lint failed')), // Clean up if fail
+  // Needed for the build that happens before the tests
+  compileLocales,
+  // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
+  // run the E2E tests, which typically take much longer. Something that causes a unit test to
+  // fail is likely to cause at least one of the E2E tests to fail.
+  () => exec('yarn jest -b').catch(stashPopFail('Unit testing failed')), // Clean up if fail
+  // E2E tests. Typically take a long time
+  () => exec('yarn playwright test -x').catch(stashPopFail('E2E testing failed')), // Clean up if fail
+  // Clean up if everything succeeds
+  stashPop
 );
