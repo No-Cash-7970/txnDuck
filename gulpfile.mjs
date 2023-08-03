@@ -121,3 +121,9 @@ export const precommitHook = gulp
     // E2E tests. Typically take a long time
     () => exec('yarn playwright test -x').finally(stashPop), // Always clean up after last item
   );
+
+export const prebuild = gulp.parallel(
+  compileLocales,
+  // Generate favicon from icon.svg
+  task('yarn svg-to-ico ./src/app/icon.svg ./src/app/favicon.ico'),
+);
