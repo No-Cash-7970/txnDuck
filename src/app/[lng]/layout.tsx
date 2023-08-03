@@ -1,12 +1,6 @@
 import '../globals.css';
 import type { Metadata, ResolvingMetadata } from 'next';
-import {
-  notoSans,
-  notoSansDisplay,
-  notoSansMono,
-  notoColorEmoji,
-} from './lib/fonts';
-import { JotaiProvider } from './components/providers';
+import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
 import { languages } from '../i18n/settings';
 import { useTranslation } from '../i18n';
