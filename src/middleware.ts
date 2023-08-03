@@ -15,7 +15,13 @@ export const config = {
 const cookieName = 'i18next';
 
 export function middleware(req: NextRequest) {
-  if (req.nextUrl.pathname.indexOf('icon') > -1 || req.nextUrl.pathname.indexOf('chrome') > -1) {
+  // Don't do anything if the request is for a file that is an icon or some other kind of special
+  // file
+  if (
+    req.nextUrl.pathname.indexOf('icon') > -1
+    || req.nextUrl.pathname.indexOf('chrome') > -1
+    || req.nextUrl.pathname.indexOf('opengraph') > -1
+  ) {
     return NextResponse.next();
   }
 
