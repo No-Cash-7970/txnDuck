@@ -26,8 +26,9 @@ appreciation, which we would also be very happy about:
 - [Legal notice](#legal-notice)
 - [Asking a question](#asking-a-question)
 - [Submitting translations](#submitting-translations)
-  - [Before submitting a translation](#before-submitting-a-translation)
-  - [How do I submit a translation?](#how-do-i-submit-a-translation)
+  - [Before submitting or editing a translation](#before-submitting-or-editing-a-translation)
+  - [How do I submit a new translation?](#how-do-i-submit-a-new-translation)
+  - [How do I fix or edit an existing translation?](#how-do-i-fix-or-edit-an-existing-translation)
 - [Reporting bugs](#reporting-bugs)
   - [Before submitting a bug report](#before-submitting-a-bug-report)
   - [How do I submit a good bug report?](#how-do-i-submit-a-good-bug-report)
@@ -69,11 +70,11 @@ We will then take care of the issue as soon as possible.
 
 ## Submitting translations
 
-The goal for txnDuck is to make it accessible to as many people as possible, so
+A goal for txnDuck is to make it accessible to as many people as possible, so
 having the txnDuck user interface translated into as many languages as possible
 is important.
 
-### Before submitting a translation
+### Before submitting or editing a translation
 
 - Make sure you are using the latest version. Fork the `main` branch of the
   repository and make sure that fork is up to date.
@@ -86,19 +87,51 @@ is important.
   [*Supported languages* section in the
   README](../README.md#speech_balloon-supported-languages).
 
-### How do I submit a translation?
+### How do I submit a new translation?
 
-A translation is special type of code change. We use GitHub pull requests to
-track and manage code changes from the community. To submit a translation:
+Submitting a new translation is a specific type of code change. We use GitHub
+pull requests to track and manage code changes from the community. To submit a
+translation:
 
-- Put the language files containing the translations in a new directory in
-  [`/src/app/i18n/locales`](../src/app/i18n/locales/). Use the language's
-  [ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
-  as the name of the new directory.
-- Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
-- Provide the language of the translation in the title **in English**.
-- If updating a translation, describe those updates in the pull request
-  description **in English**.
+1. Put the language files containing the translations in a new directory in
+   [`/src/app/i18n/locales`](../src/app/i18n/locales/). Use the language's
+   [ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+   as the name of the new directory.
+2. Add the language to the array of supported languages (`SUPPORTED_LANGS`) in the
+   [I18n settings](../src/app/i18n/settings.ts).
+
+   For example, if `SUPPORTED_LANGS` in the [i18n settings](../src/app/i18n/settings.ts)
+   looked something like this:
+
+   ```typescript
+    export const SUPPORTED_LANGS: string[] = [
+      'en',
+      // ADD NEW LANGUAGE HERE
+    ];
+   ```
+
+   Then after adding Spanish
+   ([ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) "es"),
+   `SUPPORTED_LANGS` should look like this:
+
+   ```typescript
+    export const SUPPORTED_LANGS: string[] = [
+      'en',
+      'es',
+      // ADD NEW LANGUAGE HERE
+    ];
+   ```
+
+3. Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
+   - Provide the language of the translation in the title **in English**.
+   - If updating a translation, describe those updates in the pull request
+     description **in English**.
+
+### How do I fix or edit an existing translation?
+
+Edit the files in the directory for the language in the
+[`locales` directory](../src/app/i18n/locales/). For example, edit the files
+`es` directory to edit the Spanish translation.
 
 ## Reporting bugs
 
