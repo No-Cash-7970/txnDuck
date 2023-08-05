@@ -3,7 +3,7 @@ import * as fonts from './lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
-import { languages } from '../i18n/settings';
+import { SUPPORTED_LANGS } from '../i18n/settings';
 import { useTranslation } from '../i18n';
 
 type Props = {
@@ -23,10 +23,15 @@ export async function generateMetadata(
   };
 }
 
-// NOTE: This function was copied from
-// https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/%5Blng%5D/layout.tsx
-export async function generateStaticParams() {
-  return languages.map((lng) => ({ lng }));
+/**
+ * For each supported language, make Next JS generate a static page for the language when building
+ * the project.
+ *
+ * @returns List of languages as parameters
+ */
+export function generateStaticParams(): { lng: string }[] {
+  // Output should look something like [ { lng: 'en' }, { lng: 'es' } ]
+  return SUPPORTED_LANGS.map((lng) => ({ lng }));
 }
 
 export default function RootLayout(

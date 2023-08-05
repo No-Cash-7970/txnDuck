@@ -1,8 +1,15 @@
-// NOTE: This code was copied (with a few modifications) from
-// https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/i18n/settings.ts
+export const SUPPORTED_LANGS: string[] = [
+  'en', // English
+  'es', // Spanish (Español)
+  // ADD NEW LANGUAGE HERE
+];
+
+/*
+ * NOTE: This code was copied (with a few modifications) from
+ * https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/i18n/settings.ts
+ */
 
 export const fallbackLng: string = 'en';
-export const languages: string[] = [fallbackLng, 'es'];
 export const defaultNS: string = 'translation';
 
 export type i18nOptions = {
@@ -18,7 +25,7 @@ export type i18nOptions = {
 export function getOptions (lng = fallbackLng, ns: string | string[] = defaultNS): i18nOptions {
   return {
     debug: process.env.I18NEXT_DEBUG?.toLowerCase() === 'true',
-    supportedLngs: languages,
+    supportedLngs: SUPPORTED_LANGS,
     // preload: languages,
     fallbackLng,
     lng,
