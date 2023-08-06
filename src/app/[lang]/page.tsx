@@ -27,7 +27,7 @@ export default function Home({ params: { lang: lang } }: {
   }, [darkMode]);
 
   return (
-    <main className="prose bg-base-100 max-w-none min-h-screen p-4">
+    <main className="prose max-w-none min-h-screen p-4">
       <h1 className="text-primary text-center mt-8">
         <span className="align-middle">{t('greeting')}</span>
         <IconMoodWink2 strokeWidth={2} className="inline h-10 w-10 align-middle ms-2" />

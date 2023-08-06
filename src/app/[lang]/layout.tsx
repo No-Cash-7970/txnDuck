@@ -53,7 +53,6 @@ export default function RootLayout(
         + ` ${fonts.notoSansMono.variable}`
         + ` ${fonts.notoColorEmoji.variable}`
       }
-      data-theme=""
     >
       <body>
         <JotaiProvider>{children}</JotaiProvider>
