@@ -9,22 +9,14 @@ acceptLanguage.languages(SUPPORTED_LANGS);
 
 export const config = {
   // matcher: '/:lng*'
-  matcher: ['/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|sw.js).*)']
+  matcher: [
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|opengraph-image.png|sw.js).*)'
+  ]
 };
 
 const cookieName = 'i18next';
 
 export function middleware(req: NextRequest) {
-  // Don't do anything if the request is for a file that is an icon or some other kind of special
-  // file
-  if (
-    req.nextUrl.pathname.indexOf('icon') > -1
-    || req.nextUrl.pathname.indexOf('chrome') > -1
-    || req.nextUrl.pathname.indexOf('opengraph') > -1
-  ) {
-    return NextResponse.next();
-  }
-
   let lng: string | null = '';
 
   // Check stored cookie for saved language
