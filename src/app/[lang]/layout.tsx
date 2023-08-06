@@ -6,12 +6,8 @@ import { dir } from 'i18next';
 import { SUPPORTED_LANGS } from '../i18n/settings';
 import { useTranslation } from '../i18n';
 
-type Props = {
-  params: { lang: string },
-};
-
 export async function generateMetadata(
-  { params }: Props,
+  { params }: { params: { lang: string } },
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
