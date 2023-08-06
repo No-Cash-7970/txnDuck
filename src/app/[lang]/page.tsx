@@ -3,7 +3,7 @@
 import { useEffect } from 'react';
 import { IconMoodWink2 } from '@tabler/icons-react';
 import { useAtom } from 'jotai';
-import { darkModeAtom } from './lib/app_settings';
+import { darkModeAtom, ThemeModes } from './lib/app_settings';
 import { useTranslation } from '../i18n/client';
 import { Trans } from 'react-i18next';
 import Link from 'next/link';
@@ -63,8 +63,8 @@ export default function Home({ params: { lang: lang } }: {
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.light')}
-            defaultChecked={darkMode === 'duck'}
-            onClick={() => setDarkMode('duck')}
+            defaultChecked={darkMode === ThemeModes.light}
+            onClick={() => setDarkMode(ThemeModes.light)}
           />
           <input
             className={
@@ -76,8 +76,8 @@ export default function Home({ params: { lang: lang } }: {
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.dark')}
-            defaultChecked={darkMode === 'duck_dark'}
-            onClick={() => setDarkMode('duck_dark')}
+            defaultChecked={darkMode === ThemeModes.dark}
+            onClick={() => setDarkMode(ThemeModes.dark)}
           />
           <input
             className={
@@ -89,8 +89,8 @@ export default function Home({ params: { lang: lang } }: {
             type="radio"
             name="dark-mode-options"
             aria-label={t('theme_switcher.auto')}
-            defaultChecked={darkMode === ''}
-            onClick={() => setDarkMode('')}
+            defaultChecked={darkMode === ThemeModes.auto}
+            onClick={() => setDarkMode(ThemeModes.auto)}
           />
         </div>
       </div>

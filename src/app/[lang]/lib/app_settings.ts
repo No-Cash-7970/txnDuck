@@ -1,7 +1,10 @@
 import { atom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
-// '' = automatic
-// 'duck' = light mode
-// 'duck_dark' = dark mode
-export const darkModeAtom = atomWithStorage('darkMode', '');
+export enum ThemeModes  {
+  auto = '',
+  light = 'duck',
+  dark = 'duck_dark',
+};
+
+export const darkModeAtom = atomWithStorage('darkMode', ThemeModes.auto);
