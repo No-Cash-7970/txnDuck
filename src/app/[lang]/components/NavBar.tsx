@@ -9,7 +9,7 @@ type Props = {
 };
 
 export default function NavBar({ lng }: Props) {
-  const { t, i18n } = useTranslation(lng || '');
+  const { t, i18n } = useTranslation(lng || '', 'app');
 
   return (
     <nav className='navbar bg-base-200 px-2 sm:px-4'>
