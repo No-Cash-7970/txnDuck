@@ -139,15 +139,15 @@ export const precommitHook = gulp.series(
   // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
   // cause unit test and E2E test failures, so lint error should be fixed before running the
   // tests.
-  () => exec('yarn next lint').catch(stashPopFail('Lint failed')), // Clean up if fail
+  () => exec('yarn next lint').catch(() => stashPopFail('Lint failed')), // Clean up if fail
   // Needed for the build that happens before the tests
   compileLocales,
   // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
   // run the E2E tests, which typically take much longer. Something that causes a unit test to
   // fail is likely to cause at least one of the E2E tests to fail.
-  () => exec('yarn jest -b').catch(stashPopFail('Unit testing failed')), // Clean up if fail
+  () => exec('yarn jest -b').catch(() => stashPopFail('Unit testing failed')), // Clean up if fail
   // E2E tests. Typically take a long time
-  () => exec('yarn playwright test -x').catch(stashPopFail('E2E testing failed')), // Clean up if fail
+  () => exec('yarn playwright test -x').catch(() => stashPopFail('E2E testing failed')), // Clean up if fail
   // Clean up if everything succeeds
   stashPop
 );
