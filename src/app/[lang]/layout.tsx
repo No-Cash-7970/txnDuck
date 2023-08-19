@@ -5,6 +5,7 @@ import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
 import { SUPPORTED_LANGS } from '../i18n/settings';
 import { useTranslation } from '../i18n';
+import NavBar from './components/NavBar';
 
 export async function generateMetadata(
   { params }: { params: { lang: string } },
@@ -51,7 +52,10 @@ export default function RootLayout(
       }
     >
       <body>
-        <JotaiProvider>{children}</JotaiProvider>
+        <JotaiProvider>
+          <NavBar lng={lang} />
+          {children}
+        </JotaiProvider>
       </body>
     </html>
   );

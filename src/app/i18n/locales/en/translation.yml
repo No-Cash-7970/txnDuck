@@ -1,6 +1,8 @@
 # General
 
 site_name: txnDuck
+site_name_formatted: txn<1>Duck</1>
+home: Home # Home page name
 metadata: # Metadata for the website, usually not displayed
   title: Algorand Transaction Builder
   description: A tool for creating and sending Algorand transactions
