@@ -15,7 +15,7 @@ export async function generateMetadata(
   const { t } = await useTranslation(params.lang, 'app');
 
   return {
-    title: `${t('site_name')} | ${t('description.short')}`,
+    title: `${t('site_name')}: ${t('description.short')}`,
     description: t('description.long'),
   };
 }
