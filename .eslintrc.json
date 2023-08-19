@@ -3,11 +3,13 @@
   "extends": ["next/core-web-vitals"],
   "plugins": ["testing-library"],
   "overrides": [
-    // Only uses Testing Library lint rules in test files
+    // Only uses React Testing Library lint rules in UNIT test files
+    // Unit tests have ".test." in the file name
+    // E2E tests have ".spec." in the file name
     {
       "files": [
         "**/__tests__/**/*.[jt]s?(x)",
-        "**/?(*.)+(spec|test).[jt]s?(x)"
+        "**/?(*.)+(test).[jt]s?(x)"
       ],
       "extends": ["plugin:testing-library/react"]
     },
