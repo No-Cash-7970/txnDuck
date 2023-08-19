@@ -1,8 +1,0 @@
-# General
-
-site_name: txnPato
-site_name_formatted: txn<1>Pato</1>
-home: Inicio # Home page name
-metadata: # Metadata for the website, usually not displayed
-  title: Generador de transacciones de Algorand
-  description: Una herramienta para crear y enviar transacciones de Algorand

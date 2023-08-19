@@ -10,7 +10,7 @@ export const SUPPORTED_LANGS: string[] = [
  */
 
 export const fallbackLng: string = 'en';
-export const defaultNS: string = 'translation';
+export const defaultNS: string = 'common';
 
 export type i18nOptions = {
   debug?: boolean,

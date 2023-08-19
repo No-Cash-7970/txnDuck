@@ -13,7 +13,7 @@ export default function Home({ params: { lang } }: {
 }) {
   const [darkMode, setDarkMode] = useAtom(darkModeAtom);
 
-  const I18N_NS = 'home'; // Namespace for translations
+  const I18N_NS = 'home_page'; // Namespace for translations
   const { t, i18n } = useTranslation(lang, I18N_NS);
 
   // Set dark mode by setting the "data-theme" attribute in the upper-level <html> tag

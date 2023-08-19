@@ -1,0 +1,7 @@
+# General app/site info
+
+site_name: txnPato
+site_name_formatted: txn<1>Pato</1>
+description:
+  short: Generador de transacciones de Algorand
+  long: Una herramienta para crear y enviar transacciones de Algorand

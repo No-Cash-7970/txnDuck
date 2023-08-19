@@ -12,11 +12,11 @@ export async function generateMetadata(
   parent: ResolvingMetadata
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(params.lang, 'translation');
+  const { t } = await useTranslation(params.lang, 'app');
 
   return {
-    title: `${t('site_name')} | ${t('metadata.title')}`,
-    description: t('metadata.description'),
+    title: `${t('site_name')} | ${t('description.short')}`,
+    description: t('description.long'),
   };
 }
 

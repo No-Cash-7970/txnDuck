@@ -1,0 +1,7 @@
+# General app/site info
+
+site_name: txnDuck
+site_name_formatted: txn<1>Duck</1>
+description:
+  short: Algorand Transaction Builder
+  long: A tool for creating and sending Algorand transactions
