@@ -13,7 +13,7 @@ export default function HomePage({ params: { lang } }: {
   return (
     <main className="prose max-w-none min-h-screen pb-12">
       {/* Hero section */}
-      <section data-testid='hero'
+      <section
         className={'bg-gradient-to-r from-accent to-accent-focus text-accent-content'
           + ' py-12 sm:py-20 px-8'
           + ' font-display'
@@ -22,13 +22,13 @@ export default function HomePage({ params: { lang } }: {
         <div className='max-w-5xl mx-auto'>
           <p className='text-4xl mt-0 font-bold mb-4'>{t('hero.main_paragraph')}</p>
           <p className='text-3xl mb-16'>{t('hero.sub_paragraph')}</p>
-          <Link
+          <Link data-testid='startBtn'
             className={'btn btn-primary btn-lg btn-block'
               + ' shadow-xl border-none'
               + ' bg-gradient-to-r from-primary-focus to-primary'
               + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
             }
-            href={'' /*`${lang}/txn`*/}
+            href={`${lang}/txn`}
           >
             {t('hero.start_button')}
           </Link>
@@ -44,7 +44,10 @@ export default function HomePage({ params: { lang } }: {
             <div className='card-body items-center px-4 py-6"'>
               <h3 className='card-title self-start mt-0'>{t('how_it_works.compose.heading')}</h3>
               <p className='self-start md:mb-4'>{t('how_it_works.compose.paragraph')}</p>
-              <Link className='btn btn-accent btn-sm h-auto p-2' href={'' /*`${lang}/txn`*/}>
+              <Link data-testid='composeTxnBtn'
+                className='btn btn-accent btn-sm h-auto p-2'
+                href={`${lang}/txn`}
+              >
                 {t('how_it_works.compose.button')}
               </Link>
             </div>
@@ -53,7 +56,11 @@ export default function HomePage({ params: { lang } }: {
             <div className='card-body items-center px-4 py-6"'>
               <h3 className='card-title self-start mt-0'>{t('how_it_works.sign.heading')}</h3>
               <p className='self-start md:mb-4'>{t('how_it_works.sign.paragraph')}</p>
-              <Link className='btn btn-accent btn-sm h-auto p-2 btn-disabled' href={`${lang}/txn/sign`} aria-disabled>
+              <Link data-testid='signTxnBtn'
+                className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
+                href={`${lang}/txn/sign`}
+                aria-disabled
+              >
                 {t('how_it_works.sign.button')}
               </Link>
             </div>
@@ -62,7 +69,11 @@ export default function HomePage({ params: { lang } }: {
             <div className='card-body items-center px-4 py-6"'>
               <h3 className='card-title self-start mt-0'>{t('how_it_works.send.heading')}</h3>
               <p className='self-start md:mb-4'>{t('how_it_works.send.paragraph')}</p>
-              <Link className='btn btn-accent btn-sm h-auto p-2 btn-disabled' href={`${lang}/txn/send`} aria-disabled>
+              <Link data-testid='sendTxnBtn'
+                className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
+                href={`${lang}/txn/send`}
+                aria-disabled
+              >
                 {t('how_it_works.send.button')}
               </Link>
             </div>

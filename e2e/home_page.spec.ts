@@ -1,6 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
 import { HomePage } from './pageModels/HomePage';
+import { TxnTemplatePage } from './pageModels/TxnTemplatePage';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -21,8 +22,24 @@ test.describe('Home Page', () => {
   });
 
   test('has "start" button link', async ({ homePage, page }) => {
-    await expect(homePage.startLink).toBeVisible();
+    await homePage.startBtn.click();
+    await expect(page).toHaveURL(TxnTemplatePage.getFullUrl());
   });
+
+  test('has "compose transaction" button link', async ({ homePage, page }) => {
+    await homePage.composeTxnBtn.click();
+    await expect(page).toHaveURL(TxnTemplatePage.getFullUrl());
+  });
+
+  // test('has "sign transaction" button link', async ({ homePage, page }) => {
+  //   await homePage.signTxnBtn.click();
+  //   await expect(page).toHaveURL(SignTxnPage.getFullUrl());
+  // });
+
+  // test('has "send transaction" button link', async ({ homePage, page }) => {
+  //   await homePage.sendTxnBtn.click();
+  //   await expect(page).toHaveURL(SendTxnPage.getFullUrl());
+  // });
 
   test.describe('Language', () => {
     const languageData: {
@@ -48,7 +65,7 @@ test.describe('Home Page', () => {
         await homePage.goto(lngData.lang);
 
         await expect(page).toHaveURL(baseURL + HomePage.getFullUrl(lngData.lang));
-        await expect(homePage.startLink).toHaveText(lngData.startLinkRegEx);
+        await expect(homePage.startBtn).toHaveText(lngData.startLinkRegEx);
       });
     });
   });
