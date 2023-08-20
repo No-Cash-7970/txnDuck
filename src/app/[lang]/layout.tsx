@@ -1,10 +1,10 @@
-import '../globals.css';
+import '@/app/globals.css';
 import * as fonts from './lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
-import { SUPPORTED_LANGS } from '../i18n/settings';
-import { useTranslation } from '../i18n';
+import { SUPPORTED_LANGS } from '@/app/i18n/settings';
+import { useTranslation } from '@/app/i18n';
 import NavBar from './components/NavBar';
 
 export async function generateMetadata(

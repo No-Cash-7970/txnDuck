@@ -1,122 +1,119 @@
 'use client';
 
-import { useEffect } from 'react';
-import { IconMoodWink2 } from '@tabler/icons-react';
-import { useAtom } from 'jotai';
-import { darkModeAtom, ThemeModes } from './lib/app_settings';
-import { useTranslation } from '../i18n/client';
 import { Trans } from 'react-i18next';
+import { useTranslation } from '@/app/i18n/client';
 import Link from 'next/link';
 
-export default function Home({ params: { lang } }: {
+export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {
-  const [darkMode, setDarkMode] = useAtom(darkModeAtom);
-
   const I18N_NS = 'home_page'; // Namespace for translations
-  const { t, i18n } = useTranslation(lang, I18N_NS);
-
-  // Set dark mode by setting the "data-theme" attribute in the upper-level <html> tag
-  useEffect(() => {
-    const htmlElem: (HTMLHtmlElement | null) = document.querySelector('html');
-
-    if (htmlElem !== null) {
-      htmlElem.dataset.theme = darkMode;
-      console.log(`Switched to ${darkMode}`);
-    }
-  }, [darkMode]);
+  const { t } = useTranslation(lang, I18N_NS);
 
   return (
-    <main className="prose max-w-none min-h-screen p-4">
-      <h1 className="text-primary text-center mt-8">
-        <span className="align-middle">{t('greeting')}</span>
-        <IconMoodWink2 strokeWidth={2} className="inline h-10 w-10 align-middle ms-2" />
-      </h1>
-      <p className="max-w-4xl px-4 mx-auto text-center">
-        <Trans i18nKey="duck_soon" ns={I18N_NS}>
-          txn<span className="text-primary">Duck</span>_coming_soon
-        </Trans>
-      </p>
-      <p className="max-w-4xl px-4 mx-auto text-center italic">
-        <Trans i18nKey="code_on_github" ns={I18N_NS}>
-          check_out_the_<code className='p-0'>code</code>_on
-          <a href="https://github.com/No-Cash-7970/txnDuck">Github</a>.
-        </Trans>
-      </p>
-      <p className="max-w-4xl px-4 mx-auto text-center font-emoji text-8xl mt-10 mb-20">
-        🦆
-      </p>
-      <div className='flex justify-center gap-x-10 gap-y-6 flex-wrap'>
-      {/* Theme */}
-      <div className="flex flex-col items-center">
-        <label className="label" htmlFor="light-mode-options block">
-          <span className="label-text">{t('theme_switcher.label')}</span>
-        </label>
-        <div className="join">
-          <input
-            className={
-              'join-item'
-              + ' btn btn-sm'
-              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
-              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
+    <main className="prose max-w-none min-h-screen pb-12">
+      {/* Hero section */}
+      <section data-testid='hero'
+        className={'bg-gradient-to-r from-accent to-accent-focus text-accent-content'
+          + ' py-12 sm:py-20 px-8'
+          + ' font-display'
+        }
+      >
+        <div className='max-w-5xl mx-auto'>
+          <p className='text-4xl mt-0 font-bold mb-4'>{t('hero.main_paragraph')}</p>
+          <p className='text-3xl mb-16'>{t('hero.sub_paragraph')}</p>
+          <Link
+            className={'btn btn-primary btn-lg btn-block'
+              + ' shadow-xl border-none'
+              + ' bg-gradient-to-r from-primary-focus to-primary'
+              + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
             }
-            type="radio"
-            name="dark-mode-options"
-            aria-label={t('theme_switcher.light')}
-            defaultChecked={darkMode === ThemeModes.light}
-            onClick={() => setDarkMode(ThemeModes.light)}
-          />
-          <input
-            className={
-              'join-item'
-              + ' btn btn-sm'
-              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
-              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
-            }
-            type="radio"
-            name="dark-mode-options"
-            aria-label={t('theme_switcher.dark')}
-            defaultChecked={darkMode === ThemeModes.dark}
-            onClick={() => setDarkMode(ThemeModes.dark)}
-          />
-          <input
-            className={
-              'join-item'
-              + ' btn btn-sm'
-              + ' checked:!bg-secondary checked:!text-secondary-content checked:!border-secondary'
-              + ' checked:hover:!bg-secondary-focus checked:hover:!border-secondary-focus'
-            }
-            type="radio"
-            name="dark-mode-options"
-            aria-label={t('theme_switcher.auto')}
-            defaultChecked={darkMode === ThemeModes.auto}
-            onClick={() => setDarkMode(ThemeModes.auto)}
-          />
+            href={'' /*`${lang}/txn`*/}
+          >
+            {t('hero.start_button')}
+          </Link>
         </div>
-      </div>
-      {/* Language */}
-      {process.env.NEXT_PUBLIC_FEAT_LANG_SWITCHER?.toLowerCase() !== 'false' &&
-        <div className="flex flex-col items-center">
-          <label className="label" htmlFor="light-mode-options block">
-            <span className="label-text">{t('language_switcher_label')}</span>
-          </label>
-          <div className="join">
-            <Link
-              className={`join-item btn btn-sm ${lang==='en' && 'btn-primary'}`}
-              href={`/en`}
-            >
-              English
-            </Link>
-            <Link
-              className={`join-item btn btn-sm ${lang==='es' && 'btn-accent'}`}
-              href={`/es`}
-            >
-              Español
-            </Link>
+      </section>
+
+      {/* Additional information section */}
+      <section className='max-w-6xl mx-auto px-6'>
+        {/* How It Works */}
+        <h2 id='how-it-works'>{t('how_it_works.heading')}</h2>
+        <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
+          <div className='card bg-base-200 prose-headings:text-accent'>
+            <div className='card-body items-center px-4 py-6"'>
+              <h3 className='card-title self-start mt-0'>{t('how_it_works.compose.heading')}</h3>
+              <p className='self-start md:mb-4'>{t('how_it_works.compose.paragraph')}</p>
+              <Link className='btn btn-accent btn-sm h-auto p-2' href={'' /*`${lang}/txn`*/}>
+                {t('how_it_works.compose.button')}
+              </Link>
+            </div>
+          </div>
+          <div className='card bg-base-200 prose-headings:text-accent'>
+            <div className='card-body items-center px-4 py-6"'>
+              <h3 className='card-title self-start mt-0'>{t('how_it_works.sign.heading')}</h3>
+              <p className='self-start md:mb-4'>{t('how_it_works.sign.paragraph')}</p>
+              <Link className='btn btn-accent btn-sm h-auto p-2 btn-disabled' href={`${lang}/txn/sign`} aria-disabled>
+                {t('how_it_works.sign.button')}
+              </Link>
+            </div>
+          </div>
+          <div className='card bg-base-200 prose-headings:text-accent'>
+            <div className='card-body items-center px-4 py-6"'>
+              <h3 className='card-title self-start mt-0'>{t('how_it_works.send.heading')}</h3>
+              <p className='self-start md:mb-4'>{t('how_it_works.send.paragraph')}</p>
+              <Link className='btn btn-accent btn-sm h-auto p-2 btn-disabled' href={`${lang}/txn/send`} aria-disabled>
+                {t('how_it_works.send.button')}
+              </Link>
+            </div>
           </div>
         </div>
-      }
-      </div>
+
+        {/* Uses */}
+        <h2 id='uses'>{t('uses.heading')}</h2>
+        <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
+          <div className='card border-2 border-success bg-opacity-80'>
+            <div className='card-body items-center px-4 py-6'>
+              <h3 className='card-title self-start mt-0'>{t('uses.simple_things.heading')}</h3>
+              <ul className='self-start marker:text-success'>
+                <li>{t('uses.simple_things.list.0')}</li>
+                <li>
+                  <Trans i18nKey='uses.simple_things.list.1' ns={I18N_NS}>
+                    opt_in_to_<abbr title={t('algo_std_asset')}>asa</abbr>
+                  </Trans>
+                </li>
+                <li>
+                  <Trans i18nKey='uses.simple_things.list.2' ns={I18N_NS}>
+                    transfer_<abbr title={t('nonfungible_token')}>nft</abbr>
+                  </Trans>
+                </li>
+                <li>{t('uses.simple_things.list.3')}</li>
+              </ul>
+            </div>
+          </div>
+          <div className='card border-2 border-warning bg-opacity-80'>
+            <div className='card-body items-center px-4 py-6'>
+              <h3 className='card-title self-start mt-0'>{t('uses.complex_things.heading')}</h3>
+              <ul className='self-start marker:text-warning'>
+                <li>{t('uses.complex_things.list.0')}</li>
+                <li>{t('uses.complex_things.list.1')}</li>
+                <li>{t('uses.complex_things.list.2')}</li>
+                <li>{t('uses.complex_things.list.3')}</li>
+              </ul>
+            </div>
+          </div>
+          <div className='card border-2 border-error bg-opacity-80'>
+            <div className='card-body items-center px-4 py-6'>
+              <h3 className='card-title self-start mt-0'>{t('uses.dangerous_things.heading')}</h3>
+              <ul className='self-start marker:text-error'>
+                <li>{t('uses.dangerous_things.list.0')}</li>
+                <li>{t('uses.dangerous_things.list.1')}</li>
+                <li>{t('uses.dangerous_things.list.2')}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
   );
 };

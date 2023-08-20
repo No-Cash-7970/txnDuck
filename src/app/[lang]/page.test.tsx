@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import Home from "./page";
+import HomePage from "./page";
 
 // This mock makes sure any components using the translate hook can use it without a warning being
 // shown
@@ -23,10 +23,10 @@ jest.mock('react-i18next', () => ({
 
 describe("Home Page", () => {
   it("should render without crashing", () => {
-    render(<Home params={{lang: ''}} />);
+    render(<HomePage params={{lang: ''}} />);
 
-    const title = screen.getByText(/greeting/);
+    const startBtn = screen.getByText(/start_button/);
 
-    expect(title).toBeInTheDocument();
+    expect(startBtn).toBeInTheDocument();
   });
 });
