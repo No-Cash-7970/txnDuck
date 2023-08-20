@@ -4,13 +4,13 @@
 // https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/i18n/client.ts
 
 import { useEffect, useState } from 'react';
-import i18next, { FlatNamespace, KeyPrefix } from 'i18next';
+import i18next, { type FlatNamespace, type KeyPrefix } from 'i18next';
 import {
-  FallbackNs,
   initReactI18next,
   useTranslation as useTranslationOrg,
-  UseTranslationOptions,
-  UseTranslationResponse,
+  type FallbackNs,
+  type UseTranslationOptions,
+  type UseTranslationResponse,
 } from 'react-i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -44,7 +44,7 @@ export function useTranslation<
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
 >(
   lng: string,
-  ns?: Ns,
+  ns?: Ns | Ns[],
   options?: UseTranslationOptions<KPrefix>,
 ): UseTranslationResponse<FallbackNs<Ns>, KPrefix> {
   const ret = useTranslationOrg(ns, options);

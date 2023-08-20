@@ -1,10 +1,16 @@
 // NOTE: This code was copied (with a few modifications) from
 // https://github.com/i18next/next-13-app-dir-i18next-example-ts/blob/main/app/i18n/index.ts
 
-import { createInstance, FlatNamespace, KeyPrefix, i18n, TFunction } from 'i18next';
+import {
+  createInstance,
+  i18n,
+  type FlatNamespace,
+  type KeyPrefix,
+  type TFunction
+} from 'i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
-import { FallbackNs } from 'react-i18next';
+import { type FallbackNs } from 'react-i18next';
 import { getOptions } from './settings';
 
 /**
@@ -42,7 +48,7 @@ export async function useTranslation<
   KPrefix extends KeyPrefix<FallbackNs<Ns>> = undefined
 >(
   lng: string,
-  ns?: Ns,
+  ns?: Ns | Ns[],
   options: { keyPrefix?: KPrefix } = {}
 ): Promise<{
   t: TFunction,
