@@ -39,11 +39,11 @@ test.describe('Sign Transaction Page', () => {
     ];
     // Make a test for each language
     languageData.forEach(lngData => {
-      test(`works in ${lngData.langName}`, async ({ page, baseURL }) => {
+      test(`works in ${lngData.langName}`, async ({ page }) => {
         const signTxnPage = new SignTxnPage(page);
         await signTxnPage.goto(lngData.lang);
 
-        await expect(page).toHaveURL(baseURL + SignTxnPage.getFullUrl(lngData.lang));
+        await expect(page).toHaveURL(SignTxnPage.getFullUrl(lngData.lang));
         await expect(page.getByRole('main')).toHaveText(lngData.mainTextRegEx);
       });
     });

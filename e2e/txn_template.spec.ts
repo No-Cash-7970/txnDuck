@@ -39,11 +39,11 @@ test.describe('Transaction Template Page', () => {
     ];
     // Make a test for each language
     languageData.forEach(lngData => {
-      test(`works in ${lngData.langName}`, async ({ page, baseURL }) => {
+      test(`works in ${lngData.langName}`, async ({ page }) => {
         const txnTemplatePage = new TxnTemplatePage(page);
         await txnTemplatePage.goto(lngData.lang);
 
-        await expect(page).toHaveURL(baseURL + TxnTemplatePage.getFullUrl(lngData.lang));
+        await expect(page).toHaveURL(TxnTemplatePage.getFullUrl(lngData.lang));
         await expect(page.getByRole('main')).toHaveText(lngData.mainTextRegEx);
       });
     });
