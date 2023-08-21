@@ -1,14 +1,13 @@
 import { test as base, expect } from '@playwright/test';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
-import { HomePage } from './pageModels/HomePage';
 import { TxnTemplatePage } from './pageModels/TxnTemplatePage';
 
 // Extend basic test by providing a "txnTemplatePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
-const test = base.extend<{ txnTemplatePage: HomePage }>({
+const test = base.extend<{ txnTemplatePage: TxnTemplatePage }>({
   txnTemplatePage: async ({ page }, use) => {
     // Set up the fixture.
-    const txnTemplatePage = new HomePage(page);
+    const txnTemplatePage = new TxnTemplatePage(page);
     await txnTemplatePage.goto();
     // Use the fixture value in the test.
     await use(txnTemplatePage);

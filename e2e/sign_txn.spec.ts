@@ -1,14 +1,13 @@
 import { test as base, expect } from '@playwright/test';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
-import { HomePage } from './pageModels/HomePage';
 import { SignTxnPage } from './pageModels/SignTxnPage';
 
 // Extend basic test by providing a "signTxnPage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
-const test = base.extend<{ signTxnPage: HomePage }>({
+const test = base.extend<{ signTxnPage: SignTxnPage }>({
   signTxnPage: async ({ page }, use) => {
     // Set up the fixture.
-    const signTxnPage = new HomePage(page);
+    const signTxnPage = new SignTxnPage(page);
     await signTxnPage.goto();
     // Use the fixture value in the test.
     await use(signTxnPage);
