@@ -15,6 +15,18 @@ const COMPILED_DEST = `src/app/i18n/locales/.dist`;
 const cleanLocales = task(`rm -r ${COMPILED_DEST}`, { reject: false });
 
 /**
+ * Convert the YAML local files to JSON
+ * @returns {NodeJS.ReadWriteStream}
+ */
+const convertLocales = () => {
+  return gulp.src(['src/app/i18n/locales/**/*.yml', 'src/app/i18n/locales/**/*.yaml'])
+    .pipe(jsonToYamlConverter)
+    .pipe(rename({ extname: '.json' }))
+    .pipe(gulp.dest(COMPILED_DEST))
+    .on('finish', () => { console.log(`Compiled locales to ${COMPILED_DEST}`); });
+};
+
+/**
  * A mini inline Gulp plugin that takes in a YAML file and converts it to a JSON file.
  * As a bonus, the JSON files are minified.
  *
@@ -36,6 +48,33 @@ const jsonToYamlConverter = new Transform({
     callback(null, file);
   }
 });
+
+/**
+ * Lint subtask for the Git pre-commit hook
+ * @returns {ExecaChildProcess|Promise}
+ */
+const precommitLint = () => {
+  return exec('yarn next lint')
+    .catch(() => stashPopFail('Lint failed')); // Clean up if fail
+};
+
+/**
+ * End-to-end testing subtask for the Git pre-commit hook
+ * @returns {ExecaChildProcess|Promise}
+ */
+const precommitE2eTest = () => {
+  return exec('yarn playwright test -x --reporter=dot')
+    .catch(() => stashPopFail('E2E testing failed')); // Clean up if fail
+};
+
+/**
+ * Unit testing subtask for the Git pre-commit hook
+ * @returns {ExecaChildProcess|Promise}
+ */
+const precommitUnitTest = () => {
+  return exec('yarn jest -b')
+  .catch(() => stashPopFail('Unit testing failed')); // Clean up if fail
+};
 
 /**
  * Restore the Git repository to its original state before the stashing
@@ -65,8 +104,6 @@ const stashPopFail = async (errorMsg = '') => {
  *
  * This is needed because a fork of jest-chance is being used. This task can be removed if using
  * the official jest-chance package.
- *
- * @returns Node ReadWriteStream object
  */
 export const buildJestChance = gulp.series(
   (cb) => {
@@ -84,24 +121,11 @@ export const buildJestChance = gulp.series(
  * Compiles the YAML files for language translations (locales) to minified JSON
  *
  * Code based on: https://gulpjs.com/docs/en/getting-started/using-plugins#inline-plugins
- *
- * @returns Node ReadWriteStream object
  */
-export const compileLocales = gulp.series(
-  cleanLocales,
-  function _compileLocales() { // Use named function so output doesn't show '<anonymous>'
-    return gulp.src(['src/app/i18n/locales/**/*.yml', 'src/app/i18n/locales/**/*.yaml'])
-      .pipe(jsonToYamlConverter)
-      .pipe(rename({ extname: '.json' }))
-      .pipe(gulp.dest(COMPILED_DEST))
-      .on('finish', () => { console.log(`Compiled locales to ${COMPILED_DEST}`); });
-  }
-);
+export const compileLocales = gulp.series(cleanLocales, convertLocales);
 
-/**s
+/**
  * Install and set up developer tools
- *
- * @returns Node ReadWriteStream object
  */
 export const installDev = gulp.series(
   task('yarn install'),
@@ -114,8 +138,6 @@ export const installDev = gulp.series(
 /**
  * Things that need to be done before building the project. The "prebuild". Usually consists
  * of compiling files that will be used in the building process.
- *
- * @returns Node ReadWriteStream object
  */
 export const prebuild = gulp.parallel(
   compileLocales,
@@ -126,8 +148,6 @@ export const prebuild = gulp.parallel(
 /**
  * Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
  * restore the Git repository to its original state before the stashing in the first task.
- *
- * @returns Node ReadWriteStream object
  */
 export const precommitHook = gulp.series(
   // Stash away unstaged changes that are not going to be committed, so the linting and tests are
@@ -139,15 +159,15 @@ export const precommitHook = gulp.series(
   // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
   // cause unit test and E2E test failures, so lint error should be fixed before running the
   // tests.
-  () => exec('yarn next lint').catch(() => stashPopFail('Lint failed')), // Clean up if fail
+  precommitLint,
   // Needed for the build that happens before the tests
   compileLocales,
   // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
   // run the E2E tests, which typically take much longer. Something that causes a unit test to
   // fail is likely to cause at least one of the E2E tests to fail.
-  () => exec('yarn jest -b').catch(() => stashPopFail('Unit testing failed')), // Clean up if fail
+  precommitUnitTest,
   // E2E tests. Typically take a long time
-  () => exec('yarn playwright test -x').catch(() => stashPopFail('E2E testing failed')), // Clean up if fail
+  precommitE2eTest,
   // Clean up if everything succeeds
   stashPop
 );
