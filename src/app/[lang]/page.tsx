@@ -28,7 +28,7 @@ export default function HomePage({ params: { lang } }: {
               + ' bg-gradient-to-r from-primary-focus to-primary'
               + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
             }
-            href={`${lang}/txn`}
+            href={`${lang}/txn/compose`}
           >
             {t('hero.start_button')}
           </Link>
@@ -46,7 +46,7 @@ export default function HomePage({ params: { lang } }: {
               <p className='self-start md:mb-4'>{t('how_it_works.compose.paragraph')}</p>
               <Link data-testid='composeTxnBtn'
                 className='btn btn-accent btn-sm h-auto p-2'
-                href={`${lang}/txn`}
+                href={`${lang}/txn/compose`}
               >
                 {t('how_it_works.compose.button')}
               </Link>

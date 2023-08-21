@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
 import { HomePage } from './pageModels/HomePage';
-import { TxnTemplatePage } from './pageModels/TxnTemplatePage';
+import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -23,12 +23,12 @@ test.describe('Home Page', () => {
 
   test('has "start" button link', async ({ homePage, page }) => {
     await homePage.startBtn.click();
-    await expect(page).toHaveURL(TxnTemplatePage.getFullUrl());
+    await expect(page).toHaveURL(ComposeTxnPage.getFullUrl());
   });
 
   test('has "compose transaction" button link', async ({ homePage, page }) => {
     await homePage.composeTxnBtn.click();
-    await expect(page).toHaveURL(TxnTemplatePage.getFullUrl());
+    await expect(page).toHaveURL(ComposeTxnPage.getFullUrl());
   });
 
   // test('has "sign transaction" button link', async ({ homePage, page }) => {
