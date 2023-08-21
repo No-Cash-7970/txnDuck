@@ -7,7 +7,7 @@ import Link from 'next/link';
 export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {
-  const I18N_NS = 'home_page'; // Namespace for translations
+  const I18N_NS = 'home'; // Namespace for translations
   const { t } = useTranslation(lang, I18N_NS);
 
   return (
