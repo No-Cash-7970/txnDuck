@@ -33,4 +33,10 @@ describe("Compose Transaction Page", () => {
     expect(screen.getByText(/builder_steps\.compose/)).toBeInTheDocument();
   });
 
+  it("has page title heading", () => {
+    render(<ComposeTxnPage params={{lang: ''}} />);
+    const pageTitleHeading = screen.getByRole('heading', { level: 1 });
+    expect(pageTitleHeading.innerHTML).toBe('title');
+  });
+
 });

@@ -33,4 +33,10 @@ describe("Sign Transaction Page", () => {
     expect(screen.getByText(/builder_steps\.sign/)).toBeInTheDocument();
   });
 
+  it("has page title heading", () => {
+    render(<SignTxnPage params={{lang: ''}} />);
+    const pageTitleHeading = screen.getByRole('heading', { level: 1 });
+    expect(pageTitleHeading.innerHTML).toBe('title');
+  });
+
 });

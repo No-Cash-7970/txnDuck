@@ -33,4 +33,10 @@ describe("Send Transaction Page", () => {
     expect(screen.getByText(/builder_steps\.send/)).toBeInTheDocument();
   });
 
+  it("has page title heading", () => {
+    render(<SendTxnPage params={{lang: ''}} />);
+    const pageTitleHeading = screen.getByRole('heading', { level: 1 });
+    expect(pageTitleHeading.innerHTML).toBe('title');
+  });
+
 });
