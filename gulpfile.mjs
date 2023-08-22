@@ -86,11 +86,11 @@ const stashPop = task('git stash pop', { reject: false });
  * cleaning up after a task fails.
  *
  * @param {string} errorMsg Message for the thrown error
- * @returns {boolean} False, which results in error
+ * @throws {Error} An error with the given error message
  */
 const stashPopFail = async (errorMsg = '') => {
   await exec('git stash pop', { reject: false });
-  return false;
+  throw new Error(errorMsg);
 };
 
 /*
