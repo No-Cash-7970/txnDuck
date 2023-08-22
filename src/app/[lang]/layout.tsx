@@ -1,5 +1,5 @@
 import '@/app/globals.css';
-import * as fonts from './lib/fonts';
+import * as fonts from '@/app/lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';

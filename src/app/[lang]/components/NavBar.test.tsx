@@ -2,7 +2,7 @@ import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
 // Mock i18next before modules that use i18next are imported
-import  i18nextMock from "@/app/[lang]/lib/testing/i18nextMock";
+import  i18nextMock from "@/app/lib/testing/i18nextMock";
 jest.mock('react-i18next', () => i18nextMock);
 
 // Modules that use i18next
