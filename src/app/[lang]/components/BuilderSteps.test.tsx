@@ -3,26 +3,13 @@
 
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import BuilderSteps from "./BuilderSteps";
 
-// This mock makes sure any components using the translate hook can use it without a warning being
-// shown
-// From https://react.i18next.com/misc/testing
-jest.mock('react-i18next', () => ({
-  useTranslation: () => {
-    return {
-      t: (str: string) => str,
-      i18n: {},
-    };
-  },
-  Trans: ({ i18nKey }: { i18nKey: string }) => {
-    if (i18nKey === 'site_name_formatted') return <>txn<b>Duck</b></>;
-  },
-  initReactI18next: {
-    type: '3rdParty',
-    init: () => {},
-  }
-}));
+// Mock i18next before modules that use i18next are imported
+import  i18nextMock from "@/app/[lang]/lib/testing/i18nextMock";
+jest.mock('react-i18next', () => i18nextMock);
+
+// Modules that use i18next
+import BuilderSteps from "./BuilderSteps";
 
 describe('Builder Steps Component', () => {
 
