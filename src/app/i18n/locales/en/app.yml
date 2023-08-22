@@ -5,3 +5,7 @@ site_name_formatted: txn<1>Duck</1>
 description:
   short: Algorand Transaction Builder
   long: A tool for creating and sending Algorand transactions
+builder_steps:
+  compose: Compose
+  sign: Sign
+  send: Send

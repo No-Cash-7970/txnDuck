@@ -22,8 +22,15 @@ jest.mock('react-i18next', () => ({
 }));
 
 describe("Sign Transaction Page", () => {
-  it("should render without crashing", () => {
+
+  it("renders without crashing", () => {
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText(/coming_soon/)).toBeInTheDocument();
   });
+
+  it("has builder steps", () => {
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText(/builder_steps\.sign/)).toBeInTheDocument();
+  });
+
 });
