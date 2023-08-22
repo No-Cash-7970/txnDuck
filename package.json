@@ -1,5 +1,6 @@
 {
   "name": "txnduck",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "compile-locales": "gulp compileLocales",
@@ -100,6 +101,5 @@
         }
       }
     }
-  },
-  "version": "0.1.0"
+  }
 }
