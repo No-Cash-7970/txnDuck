@@ -1,4 +1,5 @@
 import "@testing-library/jest-dom";
+import {type ReactNode} from 'react';
 import { render, screen } from "@testing-library/react";
 import ComposeTxnPage from "./page";
 
@@ -14,7 +15,7 @@ jest.mock('react-i18next', () => ({
       },
     };
   },
-  Trans: ({ lng }: { lng: string }) => lng,
+  Trans: ({ children }: {children: ReactNode}) => children,
   initReactI18next: {
     type: '3rdParty',
     init: () => {},
@@ -37,6 +38,11 @@ describe("Compose Transaction Page", () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
     const pageTitleHeading = screen.getByRole('heading', { level: 1 });
     expect(pageTitleHeading.innerHTML).toBe('title');
+  });
+
+  it("has instructions", () => {
+    render(<ComposeTxnPage params={{lang: ''}} />);
+    expect(screen.getByText(/asterisk_fields/)).toBeInTheDocument();
   });
 
 });
