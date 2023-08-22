@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Props = {
   children?: React.ReactNode,
   /** The condition value that determines if the content is shown or not */

@@ -1,5 +1,4 @@
 import "@testing-library/jest-dom";
-import {type ReactNode} from 'react';
 import { render, screen } from "@testing-library/react";
 import ComposeTxnPage from "./page";
 
@@ -15,7 +14,7 @@ jest.mock('react-i18next', () => ({
       },
     };
   },
-  Trans: ({ children }: {children: ReactNode}) => children,
+  Trans: ({ children }: { children: React.ReactNode }) => children,
   initReactI18next: {
     type: '3rdParty',
     init: () => {},

@@ -1,5 +1,3 @@
-import React from 'react';
-
 type Props = {
   children?: React.ReactNode,
   /** Text for the badge above the heading. If empty, no badge will be rendered */

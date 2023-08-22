@@ -1,7 +1,6 @@
 'use client';
 
 import { useTranslation } from '@/app/i18n/client';
-import React from 'react';
 import { Trans } from 'react-i18next';
 
 type Props = {
