@@ -24,7 +24,7 @@ jest.mock('react-i18next', () => ({
 describe('Nav Bar Component', () => {
 
   it('renders', () => {
-    render(<NavBar lng='' />);
+    render(<NavBar />);
 
     const navBarContainer = screen.getByRole('navigation');
 
@@ -32,7 +32,7 @@ describe('Nav Bar Component', () => {
   });
 
   it('has site name', () => {
-    render(<NavBar lng='' />);
+    render(<NavBar />);
 
     const siteName1 = screen.getByText(/txn/);
     const siteName2 = screen.getByText(/Duck/);
