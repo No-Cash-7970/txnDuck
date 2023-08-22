@@ -6,6 +6,9 @@ import Link from 'next/link';
 import BuilderSteps from '@/app/[lang]/components/BuilderSteps';
 import PageTitleHeading from '@/app/[lang]/components/PageTitleHeading';
 
+/**
+ * Send Transaction page
+ */
 export default function SendTxnPage({ params: { lang } }: {
   params: { lang: string }
 }) {

@@ -12,7 +12,7 @@ type Props = {
 };
 
 /**
- * Roadmap display for showing the steps for building a transaction
+ * Roadmap display for showing the steps of building a transaction
  */
 export default function BuilderSteps({ lng, current, color = 'primary'}: Props) {
   const { t } = useTranslation(lng || '', 'app');

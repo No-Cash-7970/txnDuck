@@ -5,6 +5,9 @@ import { useTranslation } from '@/app/i18n/client';
 import Link from 'next/link';
 import PageTitleHeading from '@/app/[lang]/components/PageTitleHeading';
 
+/**
+ * Choose Transaction Template page
+ */
 export default function TxnTemplatePage({ params: { lang } }: {
   params: { lang: string }
 }) {

@@ -1,6 +1,6 @@
 # Home page
 
-hero:
+hero: # The attention-grabber that is first thing the user sees
   main_paragraph: Create and send almost any kind of Algorand transaction.
   sub_paragraph: Access and utilize more of what Algorand has to offer.
   start_button: Start by composing a new transaction

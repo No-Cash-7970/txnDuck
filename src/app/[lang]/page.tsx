@@ -4,6 +4,9 @@ import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';
 import Link from 'next/link';
 
+/**
+ * The home page
+ */
 export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {

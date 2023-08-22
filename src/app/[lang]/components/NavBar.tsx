@@ -5,16 +5,20 @@ import React from 'react';
 import { Trans } from 'react-i18next';
 
 type Props = {
+  /** Language */
   lng?: string
 };
 
+/**
+ * Navigation bar that serves as a header for every page
+ */
 export default function NavBar({ lng }: Props) {
   const { t } = useTranslation(lng || '', 'app');
 
   return (
     <nav className='navbar bg-base-200 px-2 sm:px-4'>
       <a className='text-2xl font-bold font-display' href={`/${lng}`} title={t('home')}>
-        <Trans i18nKey="site_name_formatted" ns='app'>
+        <Trans i18nKey='site_name_formatted' ns='app'>
           name_pt_1<span className='text-primary'>name_pt_2</span>
         </Trans>
       </a>
