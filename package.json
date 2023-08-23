@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "compile-locales": "gulp compileLocales",
+    "predev": "gulp prebuild",
     "dev": "next dev",
     "prebuild": "gulp prebuild",
     "build": "next build",
@@ -18,6 +19,7 @@
     "test:ci": "jest --ci",
     "pretest:e2e": "yarn compile-locales",
     "test:e2e": "playwright test",
+    "preinstall:dev": "yarn install",
     "install:dev": "gulp installDev"
   },
   "dependencies": {

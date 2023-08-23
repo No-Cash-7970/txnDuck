@@ -127,12 +127,9 @@ export const compileLocales = gulp.series(cleanLocales, convertLocales);
 /**
  * Install and set up developer tools
  */
-export const installDev = gulp.series(
-  task('yarn install'),
-  gulp.parallel(
-    task('lefthook install'),
-    buildJestChance
-  )
+export const installDev = gulp.parallel(
+  task('lefthook install'),
+  buildJestChance
 );
 
 /**

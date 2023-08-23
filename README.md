@@ -98,26 +98,32 @@ on your own computer that does not rely on an external website.
     cd PATH/TO/SOURCE_CODE/FOLDER
     ```
 
-4. Install and build the source code dependencies.
+4. Install the source code dependencies.
 
     ```bash
-    yarn install --prod && yarn build
+    yarn install --prod
     ```
 
-5. Run the web server.
+5. Build the source code.
+
+    ```bash
+    yarn build
+    ```
+
+6. Run the web server.
 
     ```bash
     yarn start
     ```
 
-6. Open a web browser and go to <http://localhost:3000> to start using your
+7. Open a web browser and go to <http://localhost:3000> to start using your
    local txnDuck! :tada: The web server must be running in the
    <abbr title="Command Line Interface">CLI</abbr> to use your local txnDuck.
-7. (Optional) If you are finished using your local txnDuck, stop the web server
+8. (Optional) If you are finished using your local txnDuck, stop the web server
    by closing the <abbr title="Command Line Interface">CLI</abbr> window or by
    pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac)
    while in the <abbr title="Command Line Interface">CLI</abbr>. You can restart
-   the web server by following Steps #5 and #6.
+   the web server by following Steps #6 and #7.
 
 ### Uninstalling and removing local setup
 
