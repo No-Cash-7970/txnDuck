@@ -48,9 +48,9 @@ export const notoSansMono = Noto_Sans_Mono({
   display: 'auto'
 });
 
-export const notoColorEmoji = Noto_Color_Emoji({
-  weight: ['400'],
-  variable: '--font-noto-color-emoji',
-  subsets: [ 'emoji' ],
-  display: 'auto'
-});
+// export const notoColorEmoji = Noto_Color_Emoji({
+//   weight: ['400'],
+//   variable: '--font-noto-color-emoji',
+//   subsets: [ 'emoji' ],
+//   display: 'swap', // Increases perceived performance by reducing the "First Contentful Paint" time
+// });

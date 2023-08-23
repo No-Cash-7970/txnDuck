@@ -48,7 +48,7 @@ export default function RootLayout(
         fonts.notoSans.variable
         + ` ${fonts.notoSansDisplay.variable}`
         + ` ${fonts.notoSansMono.variable}`
-        + ` ${fonts.notoColorEmoji.variable}`
+        // + ` ${fonts.notoColorEmoji.variable}`
       }
     >
       <body>

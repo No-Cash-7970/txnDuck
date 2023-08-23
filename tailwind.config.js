@@ -47,7 +47,7 @@ module.exports = {
         'sans': ['var(--font-noto-sans)', 'sans-serif'],
         'display': ['var(--font-noto-sans-display)', 'var(--font-noto-sans)', 'sans-serif'],
         'mono': ['var(--font-noto-sans-mono)', 'monospace'],
-        'emoji': ['var(--font-noto-color-emoji)'],
+        // 'emoji': ['var(--font-noto-color-emoji)'],
 
         // 'sans-jp': ['"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
         // 'display-jp': ['"Noto Sans Display"', '"Noto Sans"', '"Noto Sans JP"', 'sans-serif'],
