@@ -52,5 +52,5 @@ export const notoSansMono = Noto_Sans_Mono({
 //   weight: ['400'],
 //   variable: '--font-noto-color-emoji',
 //   subsets: [ 'emoji' ],
-//   display: 'swap', // Increases perceived performance by reducing the "First Contentful Paint" time
+//   display: 'swap', // Decreases perceived load time by reducing the "First Contentful Paint" time
 // });
