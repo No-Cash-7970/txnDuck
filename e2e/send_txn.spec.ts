@@ -1,5 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
+import { LanguageSupport } from './shared/LanguageSupport';
 import { SendTxnPage } from './pageModels/SendTxnPage';
 
 // Extend basic test by providing a "sendTxnPage" fixture.
@@ -20,33 +21,11 @@ test.describe('Send Transaction Page', () => {
     await expect(page).toHaveTitle(sendTxnPage.titleRegEx);
   });
 
-  test.describe('Language', () => {
-    const languageData: {
-      lang: string,
-      langName: string,
-      mainTextRegEx: RegExp
-    }[] = [
-      {
-        lang: 'en',
-        langName: 'English',
-        mainTextRegEx: /Send/
-      },
-      {
-        lang: 'es',
-        langName: 'Spanish',
-        mainTextRegEx: /Enviar/
-      },
-    ];
-    // Make a test for each language
-    languageData.forEach(lngData => {
-      test(`works in ${lngData.langName}`, async ({ page }) => {
-        const sendTxnPage = new SendTxnPage(page);
-        await sendTxnPage.goto(lngData.lang);
-
-        await expect(page).toHaveURL(SendTxnPage.getFullUrl(lngData.lang));
-        await expect(page.getByRole('main')).toHaveText(lngData.mainTextRegEx);
-      });
-    });
+  test.describe('Language Support', () => {
+    (new LanguageSupport({
+      en: /Send/,
+      es: /Enviar/,
+    })).check(test, SendTxnPage.url);
   });
 
   test.describe('Nav Bar', () => {
