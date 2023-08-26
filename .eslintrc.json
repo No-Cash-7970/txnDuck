@@ -11,7 +11,11 @@
         "**/__tests__/**/*.[jt]s?(x)",
         "**/?(*.)+(test).[jt]s?(x)"
       ],
-      "extends": ["plugin:testing-library/react"]
+      "extends": ["plugin:testing-library/react"],
+      "rules": {
+        "testing-library/no-await-sync-events": ["error", { "eventModules": ["fire-event"] }],
+        "testing-library/await-async-events": ["error", { "eventModule": "userEvent" }]
+      }
     },
     {
       "files": ["**/*.yaml", "**/*.yml"],

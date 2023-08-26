@@ -58,6 +58,7 @@
     "@swc-jotai/react-refresh": "^0.1.0",
     "@testing-library/jest-dom": "^6.0.0",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.3",
     "chance": "^1.1.11",
     "commitizen": "^4.3.0",
