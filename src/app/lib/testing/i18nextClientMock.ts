@@ -7,7 +7,7 @@
  * NOTE: In test files, run `jest.mock` for this module before importing any modules that will use
  * this mock module.
  */
-const i18nextMock = {
+const i18nextClientMock = {
   useTranslation: () => {
     return {
       t: (str: string) => str,
@@ -23,4 +23,4 @@ const i18nextMock = {
   }
 };
 
-export default i18nextMock;
+export default i18nextClientMock;
