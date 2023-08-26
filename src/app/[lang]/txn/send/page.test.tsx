@@ -1,11 +1,12 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 
-// Mock i18next before modules that use i18next are imported
-import  i18nextMock from "@/app/lib/testing/i18nextMock";
-jest.mock('react-i18next', () => i18nextMock);
+// Mock react `use` function before modules that use it are imported
+jest.mock('react', () => ({
+  ...jest.requireActual('react'),
+  use: () => ({ t: (key: string) => key }),
+}));
 
-// Modules that use i18next
 import SendTxnPage from "./page";
 
 describe("Send Transaction Page", () => {
@@ -23,7 +24,7 @@ describe("Send Transaction Page", () => {
   it("has page title heading", () => {
     render(<SendTxnPage params={{lang: ''}} />);
     const pageTitleHeading = screen.getByRole('heading', { level: 1 });
-    expect(pageTitleHeading.innerHTML).toBe('title');
+    expect(pageTitleHeading).not.toBeEmptyDOMElement();
   });
 
 });

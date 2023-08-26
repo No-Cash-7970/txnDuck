@@ -1,6 +1,5 @@
-'use client';
-
-import { useTranslation } from '@/app/i18n/client';
+import { use } from 'react';
+import { useTranslation } from '@/app/i18n';
 
 type Props = {
   /** Language */
@@ -15,7 +14,7 @@ type Props = {
  * Roadmap display for showing the steps of building a transaction
  */
 export default function BuilderSteps({ lng, current, color = 'primary'}: Props) {
-  const { t } = useTranslation(lng || '', 'app');
+  const { t } = use(useTranslation(lng || '', 'app'));
 
   return (
     <ul className='steps w-full my-4 p-0'>
