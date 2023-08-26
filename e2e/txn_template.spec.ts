@@ -21,6 +21,10 @@ test.describe('Transaction Template Page', () => {
     await expect(page).toHaveTitle(txnTemplatePage.titleRegEx);
   });
 
+  test('has footer', async ({ txnTemplatePage, page }) => {
+    await expect(page.getByRole('contentinfo')).toBeVisible();
+  });
+
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: /template/,

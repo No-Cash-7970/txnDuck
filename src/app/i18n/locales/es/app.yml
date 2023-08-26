@@ -9,3 +9,8 @@ builder_steps:
   compose: Componer
   sign: Firmar
   send: Enviar
+footer:
+  github_link: Código fuente en Github
+  license_notice: >
+    Al utilizar, descargar o instalar este software, usted acepta los términos descritos en la
+    <1>licencia (en inglés)</1> del software.

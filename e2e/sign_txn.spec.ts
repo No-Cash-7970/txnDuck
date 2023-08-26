@@ -21,6 +21,10 @@ test.describe('Sign Transaction Page', () => {
     await expect(page).toHaveTitle(signTxnPage.titleRegEx);
   });
 
+  test('has footer', async ({ signTxnPage, page }) => {
+    await expect(page.getByRole('contentinfo')).toBeVisible();
+  });
+
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: /Sign/,

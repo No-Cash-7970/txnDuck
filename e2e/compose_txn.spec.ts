@@ -21,6 +21,10 @@ test.describe('Compose Transaction Page', () => {
     await expect(page).toHaveTitle(composeTxnPage.titleRegEx);
   });
 
+  test('has footer', async ({ composeTxnPage, page }) => {
+    await expect(page.getByRole('contentinfo')).toBeVisible();
+  });
+
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: /Compose/,

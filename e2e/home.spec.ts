@@ -22,6 +22,10 @@ test.describe('Home Page', () => {
     await expect(page).toHaveTitle(homePage.titleRegEx);
   });
 
+  test('has footer', async ({ homePage, page }) => {
+    await expect(page.getByRole('contentinfo')).toBeVisible();
+  });
+
   test('has "start" button link', async ({ homePage, page }) => {
     await homePage.startBtn.click();
     await expect(page).toHaveURL(ComposeTxnPage.getFullUrl());
