@@ -66,3 +66,20 @@ export interface SelectFieldProps extends TextFieldProps {
 
 /** Properties for the TextAreaField component */
 export interface TextAreaFieldProps extends TextFieldProps {}
+
+/** Properties for the CheckboxField component */
+export interface CheckboxFieldProps extends InputProps, FieldProps {
+  /** If the field should be checked by default */
+  checked?: boolean;
+  /**
+   * The position of the input relative to the label.
+   *
+   * `start` = input positioned before the label
+   *
+   * `end` = input positioned after the label
+   */
+  inputPosition?: 'start' | 'end';
+}
+
+/** Properties for the ToggleField component */
+export interface ToggleFieldProps extends CheckboxFieldProps {}

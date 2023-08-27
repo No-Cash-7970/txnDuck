@@ -1,3 +1,6 @@
+import CheckboxField from './CheckboxField';
+export { CheckboxField };
+
 import NumberField from './NumberField';
 export { NumberField };
 
@@ -9,3 +12,6 @@ export { TextAreaField };
 
 import TextField from './TextField';
 export { TextField };
+
+import ToggleField from './ToggleField';
+export { ToggleField };
