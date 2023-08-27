@@ -21,20 +21,20 @@ interface FieldProps {
    * Example: "Required"
    */
   requiredText?: string;
-  /** Text for the helper message that is placed below `<input>` element */
+  /** Text for the helper message that is placed below `<input>` or `<select>` element */
   helpMsg?: string;
 }
 
 /** Properties for *Fields that have side-labels */
 interface SideLabelProp {
   /**
-   * A side-label attached to the left side (right side in right-to-left languages) of the <input>
-   * element
+   * A side-label attached to the left side (right side in right-to-left languages) of the `<input>`
+   * or `<select>` element
    */
   beforeSideLabel?: string;
   /**
-   * A side-label attached to the right side (left side in right-to-left languages) of the <input>
-   * element
+   * A side-label attached to the right side (left side in right-to-left languages) of the `<input>`
+   * or `<select>` element
    */
   afterSideLabel?: string;
 }
@@ -53,4 +53,15 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
   max?: number | null;
   /** Specifies the granularity that the value must adhere to */
   step?: number | 'any' | null;
+}
+
+/** Properties for the SelectField component */
+export interface SelectFieldProps extends TextFieldProps {
+  /** List of options available to select. The `value` of each option should be unique */
+  options?: {
+    /** Value of the option */
+    value: string,
+    /** Display text for the option */
+    text: string
+  }[];
 }
