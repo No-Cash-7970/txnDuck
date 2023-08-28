@@ -8,56 +8,56 @@ import NumberField from "./NumberField";
 
 describe('Form Components - NumberField', () => {
 
-  it('renders input `required` attribute and asterisk if `required` is true', () => {
+  it('has input as a required field if `required` is true', () => {
     render(<NumberField required={true} />);
 
     expect(screen.getByRole('spinbutton')).toHaveAttribute('required');
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
-  it("does not render input's `required` attribute or asterisk if `required` is false", () => {
+  it('does not have input as a required field if `required` is false', () => {
     render(<NumberField required={false} />);
 
     expect(screen.getByRole('spinbutton')).not.toHaveAttribute('required');
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
 
-  it('renders `title` attribute for asterisk if `requiredText` is not empty', () => {
+  it('has required notice in label with `title` specified in `requiredText`', () => {
     render(<NumberField required={true} requiredText='foo' />);
     expect(screen.getByText('*')).toHaveAttribute('title', 'foo');
   });
 
-  it("renders input's `id` attribute if `inputId` is not empty", () => {
+  it('has input with `id` specified in `inputId` property', () => {
     const { container } = render(<NumberField id='foo' />);
     expect(container.querySelector('#foo')).toBeInTheDocument();
   });
 
-  it("renders input's `class` attribute if `inputClass` is not empty", () => {
+  it('has input with class(es) specified in `inputClass` property', () => {
     const { container } = render(<NumberField inputClass='foo' />);
     const inputElem = container.getElementsByTagName('input')[0];
     expect(inputElem).toHaveClass('foo');
   });
 
-  it('renders label if `label` is not empty', () => {
+  it('has label with text specified in `label` property', () => {
     render(<NumberField label='foo' />);
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
-  it('renders input INSIDE label if `inputInsideLabel` is true', () => {
+  it('has input INSIDE label if `inputInsideLabel` is true', () => {
     const { container } = render(<NumberField inputInsideLabel={true} />);
 
     expect(container.querySelector('label > input')).toBeInTheDocument();
     expect(container.querySelector('label + input')).not.toBeInTheDocument();
   });
 
-  it('renders input OUTSIDE label if `inputInsideLabel` is false', () => {
+  it('has input OUTSIDE label if `inputInsideLabel` is false', () => {
     const { container } = render(<NumberField inputInsideLabel={false} />);
 
     expect(container.querySelector('label > input')).not.toBeInTheDocument();
     expect(container.querySelector('label + input')).toBeInTheDocument();
   });
 
-  it('renders input OUTSIDE label by default', () => {
+  it('has input OUTSIDE label by default', () => {
     const { container } = render(<NumberField />);
 
     expect(container.querySelector('label > input')).not.toBeInTheDocument();
@@ -76,53 +76,53 @@ describe('Form Components - NumberField', () => {
     expect(screen.getByRole('spinbutton')).toHaveFocus();
   });
 
-  it('renders container `class` attribute if `containerClass` is not empty', () => {
+  it('has container with class(es) specified in `containerClass` property', () => {
     const { container } = render(<NumberField containerClass='foo' />);
     const containerElem = container.getElementsByClassName('form-control')[0];
     expect(containerElem).toHaveClass('foo');
   });
 
-  it('renders help message if `helpMsg` is not empty', () => {
+  it('has help message with text specified in `helpMsg` property', () => {
     render(<NumberField helpMsg='foo' />);
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
-  it("renders input's `min` attribute if `min` is a number", () => {
+  it('has input with a "minimum" specified in `min` property', () => {
     render(<NumberField min={42} />);
     expect(screen.getByRole('spinbutton')).toHaveAttribute('min', '42');
   });
 
-  it("renders input's `max` attribute if `max` is a number", () => {
+  it('has input with a "maximum" specified in `max` property', () => {
     render(<NumberField max={42} />);
     expect(screen.getByRole('spinbutton')).toHaveAttribute('max', '42');
   });
 
-  it("renders input's `step` attribute if `step` is a number", () => {
+  it('has input with a "step" value specified in `step` property', () => {
     render(<NumberField step={42} />);
     expect(screen.getByRole('spinbutton')).toHaveAttribute('step', '42');
   });
 
-  it("renders input's `step` attribute if `step` is 'any'", () => {
+  it('has input with a "step" value specified in `step` property', () => {
     render(<NumberField step='any' />);
     expect(screen.getByRole('spinbutton')).toHaveAttribute('step', 'any');
   });
 
-  it('renders side-label before input (outside label) if `beforeSideLabel` is not empty', () => {
+  it('has side-label with text specified in `beforeSideLabel` before input (outside label)', () => {
     const { container } = render(<NumberField beforeSideLabel='foo' inputInsideLabel={false} />);
     expect(container.querySelector('.join-item:first-child')).toHaveTextContent('foo');
   });
 
-  it('renders side-label after input (outside label) if `afterSideLabel` is not empty', () => {
+  it('has side-label with text specified in `afterSideLabel` after input (outside label)', () => {
     const { container } = render(<NumberField afterSideLabel='foo' inputInsideLabel={false} />);
     expect(container.querySelector('.join-item:last-child')).toHaveTextContent('foo');
   });
 
-  it('renders side-label before input (inside label) if `beforeSideLabel` is not empty', () => {
+  it('has side-label with text specified in `beforeSideLabel` before input (inside label)', () => {
     const { container } = render(<NumberField beforeSideLabel='foo' inputInsideLabel={true} />);
     expect(container.querySelector('.join-item:first-child')).toHaveTextContent('foo');
   });
 
-  it('renders side-label after input (inside label) if `afterSideLabel` is not empty', () => {
+  it('has side-label with text specified in `afterSideLabel` after input (inside label)', () => {
     const { container } = render(<NumberField afterSideLabel='foo' inputInsideLabel={true} />);
     expect(container.querySelector('.join-item:last-child')).toHaveTextContent('foo');
   });

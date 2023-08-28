@@ -7,17 +7,17 @@ import PageTitleHeading from "./PageTitleHeading";
 
 describe('PageTitleHeading Component', () => {
 
-  it('renders heading', () => {
+  it('has heading', () => {
     render(<PageTitleHeading>Hello!</PageTitleHeading>);
     expect(screen.getByRole('heading')).toHaveTextContent('Hello!');
   });
 
-  it('can render empty heading', () => {
+  it('can have empty heading', () => {
     render(<PageTitleHeading></PageTitleHeading>);
     expect(screen.getByRole('heading')).toHaveTextContent('');
   });
 
-  it('renders badge when badge text is given', () => {
+  it('has badge with text specified in `badgeText` property', () => {
     const {container} = render(<PageTitleHeading badgeText='Greeting'></PageTitleHeading>);
 
     const badge = container.querySelector('.badge');
@@ -26,12 +26,12 @@ describe('PageTitleHeading Component', () => {
     expect(badge).toHaveTextContent('Greeting');
   });
 
-  it('does not badge when badge text is not given', () => {
+  it('does not have badge when `badgeText` is not given', () => {
     const {container} = render(<PageTitleHeading></PageTitleHeading>);
     expect(container.querySelector('.badge')).not.toBeInTheDocument();
   });
 
-  it('does not badge when badge text is empty', () => {
+  it('does not have badge when `badgeText` is empty', () => {
     const {container} = render(<PageTitleHeading badgeText=''></PageTitleHeading>);
     expect(container.querySelector('.badge')).not.toBeInTheDocument();
   });

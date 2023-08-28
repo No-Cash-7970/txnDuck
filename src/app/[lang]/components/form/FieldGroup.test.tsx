@@ -4,32 +4,32 @@ import userEvent from '@testing-library/user-event';
 import FieldGroup from "./FieldGroup";
 
 describe('Form Components - FieldGroup', () => {
-  it('renders children', () => {
+  it('has children', () => {
     render(<FieldGroup>foo</FieldGroup>);
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
-  it('renders heading', () => {
+  it('has heading', () => {
     render(<FieldGroup heading='Foo Group'></FieldGroup>);
     expect(screen.getByRole('heading')).toHaveTextContent(/Foo Group/);
   });
 
-  it('renders heading of specified level', () => {
+  it('has heading with level specified in `headingLevel` property', () => {
     render(<FieldGroup heading='Foo Group' headingLevel={5}></FieldGroup>);
     expect(screen.getByRole('heading', { level: 5 })).toHaveTextContent(/Foo Group/);
   });
 
-  it('renders heading with class if `headingClass` is specified', () => {
+  it('has heading with class specified in `headingClass` property', () => {
     render(<FieldGroup heading='Foo Group' headingClass='foo-class'></FieldGroup>);
     expect(screen.getByRole('heading')).toHaveClass('foo-class');
   });
 
-  it('renders heading with `id` if `headingId` is specified', () => {
+  it('has heading with `id` specified in `headingId` property', () => {
     render(<FieldGroup heading='Foo Group' headingId='foo-id'></FieldGroup>);
     expect(screen.getByRole('heading')).toHaveAttribute('id', 'foo-id');
   });
 
-  it('renders container with class(es) specified in `containerClass`', () => {
+  it('has container with class(es) specified in `containerClass` property', () => {
     render(<FieldGroup containerClass='foo'></FieldGroup>);
     expect(screen.getByRole('group')).toHaveClass('foo');
   });
