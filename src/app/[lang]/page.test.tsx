@@ -12,9 +12,7 @@ import HomePage from "./page";
 describe("Home Page", () => {
   it("renders without crashing", () => {
     render(<HomePage params={{lang: ''}} />);
-
     const startBtn = screen.getByText(/start_button/);
-
     expect(startBtn).toBeInTheDocument();
   });
 });

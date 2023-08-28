@@ -18,8 +18,7 @@ describe("Compose Transaction Page", () => {
 
   it("has page title heading", () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
-    const pageTitleHeading = screen.getByRole('heading', { level: 1 });
-    expect(pageTitleHeading).not.toBeEmptyDOMElement();
+    expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
   it("has instructions", () => {

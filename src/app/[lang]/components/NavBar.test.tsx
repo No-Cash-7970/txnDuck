@@ -13,17 +13,12 @@ describe('Nav Bar Component', () => {
 
   it('renders', () => {
     render(<NavBar />);
-
-    const navBarContainer = screen.getByRole('navigation');
-
-    expect(navBarContainer).toBeInTheDocument();
+    expect(screen.getByRole('navigation')).toBeInTheDocument();
   });
 
   it('has site name', () => {
     render(<NavBar />);
-
     const siteName = screen.getByText(/site_name_formatted/);
-
     expect(siteName).toBeInTheDocument();
   });
 

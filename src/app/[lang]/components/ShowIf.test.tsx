@@ -16,7 +16,7 @@ describe('ShowIf Component', () => {
 
   it('has nothing if there are no children', () => {
     const {container} = render(<ShowIf cond={true}></ShowIf>);
-    expect(container.innerHTML).toBeFalsy();
+    expect(container).toBeEmptyDOMElement();
   });
 
 });

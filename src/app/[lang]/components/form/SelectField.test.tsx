@@ -11,31 +11,30 @@ describe('Form Components - SelectField', () => {
   it('has input as a required field if `required` is true', () => {
     render(<SelectField required={true} />);
 
-    expect(screen.getByRole('combobox')).toHaveAttribute('required');
+    expect(screen.getByRole('combobox')).toBeRequired();
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
   it('does not have input as a required field if `required` is false', () => {
     render(<SelectField required={false} />);
 
-    expect(screen.getByRole('combobox')).not.toHaveAttribute('required');
+    expect(screen.getByRole('combobox')).not.toBeRequired();
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
 
   it('has required notice in label with `title` specified in `requiredText`', () => {
     render(<SelectField required={true} requiredText='foo' />);
-    expect(screen.getByText('*')).toHaveAttribute('title', 'foo');
+    expect(screen.getByText('*')).toHaveAccessibleDescription('foo');
   });
 
   it('has input with `id` specified in `inputId` property', () => {
-    const { container } = render(<SelectField id='foo' />);
-    expect(container.querySelector('#foo')).toBeInTheDocument();
+    render(<SelectField id='foo' />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('id', 'foo');
   });
 
   it('has input with class(es) specified in `inputClass` property', () => {
-    const { container } = render(<SelectField inputClass='foo' />);
-    const inputElem = container.getElementsByTagName('select')[0];
-    expect(inputElem).toHaveClass('foo');
+    render(<SelectField inputClass='foo' />);
+    expect(screen.getByRole('combobox')).toHaveClass('foo');
   });
 
   it('has label with text specified in `label` property', () => {
@@ -66,13 +65,13 @@ describe('Form Components - SelectField', () => {
 
   it('focuses on INNER input if label text is clicked', async () => {
     render(<SelectField label='foo' inputInsideLabel={true} />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('combobox')).toHaveFocus();
   });
 
   it('focuses on OUTER input if label text is clicked', async () => {
     render(<SelectField label='foo' inputInsideLabel={false} id='test-field' />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('combobox')).toHaveFocus();
   });
 

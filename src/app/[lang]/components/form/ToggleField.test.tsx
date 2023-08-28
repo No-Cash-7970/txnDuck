@@ -11,31 +11,30 @@ describe('Form Components - ToggleField', () => {
   it('has input as a required field if `required` is true', () => {
     render(<ToggleField required={true} />);
 
-    expect(screen.getByRole('checkbox')).toHaveAttribute('required');
+    expect(screen.getByRole('checkbox')).toBeRequired();
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
   it('does not have input as a required field if `required` is false', () => {
     render(<ToggleField required={false} />);
 
-    expect(screen.getByRole('checkbox')).not.toHaveAttribute('required');
+    expect(screen.getByRole('checkbox')).not.toBeRequired();
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
 
   it('has required notice in label with `title` specified in `requiredText`', () => {
     render(<ToggleField required={true} requiredText='foo' />);
-    expect(screen.getByText('*')).toHaveAttribute('title', 'foo');
+    expect(screen.getByText('*')).toHaveAccessibleDescription('foo');
   });
 
   it('has input with `id` specified in `inputId` property', () => {
-    const { container } = render(<ToggleField id='foo' />);
-    expect(container.querySelector('#foo')).toBeInTheDocument();
+    render(<ToggleField id='foo' />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('id', 'foo');
   });
 
   it('has input with class(es) specified in `inputClass` property', () => {
-    const { container } = render(<ToggleField inputClass='foo' />);
-    const inputElem = container.getElementsByTagName('input')[0];
-    expect(inputElem).toHaveClass('foo');
+    render(<ToggleField inputClass='foo' />);
+    expect(screen.getByRole('checkbox')).toHaveClass('foo');
   });
 
   it('has label with text specified in `label` property', () => {
@@ -90,13 +89,13 @@ describe('Form Components - ToggleField', () => {
 
   it('toggles INNER input if label text is clicked', async () => {
     render(<ToggleField label='foo' inputInsideLabel={true} />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
   it('toggles OUTER input if label text is clicked', async () => {
     render(<ToggleField label='foo' inputInsideLabel={false} id='test-field' />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 

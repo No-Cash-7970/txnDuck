@@ -13,9 +13,7 @@ describe('Footer Component', () => {
 
   it('renders', () => {
     render(<Footer />);
-
     const footerContainer = screen.getByRole('contentinfo');
-
     expect(footerContainer).toBeInTheDocument();
   });
 

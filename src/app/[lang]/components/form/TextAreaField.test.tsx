@@ -11,31 +11,30 @@ describe('Form Components - TextAreaField', () => {
   it('has input as a required field if `required` is true', () => {
     render(<TextAreaField required={true} />);
 
-    expect(screen.getByRole('textbox')).toHaveAttribute('required');
+    expect(screen.getByRole('textbox')).toBeRequired();
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
   it('does not have input as a required field if `required` is false', () => {
     render(<TextAreaField required={false} />);
 
-    expect(screen.getByRole('textbox')).not.toHaveAttribute('required');
+    expect(screen.getByRole('textbox')).not.toBeRequired();
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
 
   it('has required notice in label with `title` specified in `requiredText`', () => {
     render(<TextAreaField required={true} requiredText='foo' />);
-    expect(screen.getByText('*')).toHaveAttribute('title', 'foo');
+    expect(screen.getByText('*')).toHaveAccessibleDescription('foo');
   });
 
   it('has input with `id` specified in `inputId` property', () => {
-    const { container } = render(<TextAreaField id='foo' />);
-    expect(container.querySelector('#foo')).toBeInTheDocument();
+    render(<TextAreaField id='foo' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('id', 'foo');
   });
 
   it('has input with class(es) specified in `inputClass` property', () => {
-    const { container } = render(<TextAreaField inputClass='foo' />);
-    const textareaElem = container.getElementsByTagName('textarea')[0];
-    expect(textareaElem).toHaveClass('foo');
+    render(<TextAreaField inputClass='foo' />);
+    expect(screen.getByRole('textbox')).toHaveClass('foo');
   });
 
   it('has label with text specified in `label` property', () => {
@@ -66,13 +65,13 @@ describe('Form Components - TextAreaField', () => {
 
   it('focuses on INNER input if label text is clicked', async () => {
     render(<TextAreaField label='foo' inputInsideLabel={true} />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('textbox')).toHaveFocus();
   });
 
   it('focuses on OUTER input if label text is clicked', async () => {
     render(<TextAreaField label='foo' inputInsideLabel={false} id='test-field' />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('textbox')).toHaveFocus();
   });
 

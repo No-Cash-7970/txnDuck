@@ -12,7 +12,10 @@ interface InputProps {
 interface FieldProps {
   /** Text for the main label */
   label?: string;
-  /** If the input should be inside in the label */
+  /**
+   * If the input should be inside in the label. If set to `false`, the `id` for the input needs to
+   * be set for the label to function properly
+   */
   inputInsideLabel?: boolean;
   /** Classes to add to the container for the field */
   containerClass?: string;

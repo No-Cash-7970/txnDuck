@@ -11,31 +11,30 @@ describe('Form Components - NumberField', () => {
   it('has input as a required field if `required` is true', () => {
     render(<NumberField required={true} />);
 
-    expect(screen.getByRole('spinbutton')).toHaveAttribute('required');
+    expect(screen.getByRole('spinbutton')).toBeRequired();
     expect(screen.getByText('*')).toBeInTheDocument();
   });
 
   it('does not have input as a required field if `required` is false', () => {
     render(<NumberField required={false} />);
 
-    expect(screen.getByRole('spinbutton')).not.toHaveAttribute('required');
+    expect(screen.getByRole('spinbutton')).not.toBeRequired();
     expect(screen.queryByText('*')).not.toBeInTheDocument();
   });
 
   it('has required notice in label with `title` specified in `requiredText`', () => {
     render(<NumberField required={true} requiredText='foo' />);
-    expect(screen.getByText('*')).toHaveAttribute('title', 'foo');
+    expect(screen.getByText('*')).toHaveAccessibleDescription('foo');
   });
 
   it('has input with `id` specified in `inputId` property', () => {
-    const { container } = render(<NumberField id='foo' />);
-    expect(container.querySelector('#foo')).toBeInTheDocument();
+    render(<NumberField id='foo' />);
+    expect(screen.getByRole('spinbutton')).toHaveAttribute('id', 'foo');
   });
 
   it('has input with class(es) specified in `inputClass` property', () => {
-    const { container } = render(<NumberField inputClass='foo' />);
-    const inputElem = container.getElementsByTagName('input')[0];
-    expect(inputElem).toHaveClass('foo');
+    render(<NumberField inputClass='foo' />);
+    expect(screen.getByRole('spinbutton')).toHaveClass('foo');
   });
 
   it('has label with text specified in `label` property', () => {
@@ -66,13 +65,13 @@ describe('Form Components - NumberField', () => {
 
   it('focuses on INNER input if label text is clicked', async () => {
     render(<NumberField label='foo' inputInsideLabel={true} />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('spinbutton')).toHaveFocus();
   });
 
   it('focuses on OUTER input if label text is clicked', async () => {
     render(<NumberField label='foo' inputInsideLabel={false} id='test-field' />);
-    await userEvent.click(screen.getByText(/foo/));
+    await userEvent.click(screen.getByText(/foo/)); // Click label
     expect(screen.getByRole('spinbutton')).toHaveFocus();
   });
 

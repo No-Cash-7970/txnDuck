@@ -18,8 +18,7 @@ describe("Send Transaction Page", () => {
 
   it("has page title heading", () => {
     render(<SendTxnPage params={{lang: ''}} />);
-    const pageTitleHeading = screen.getByRole('heading', { level: 1 });
-    expect(pageTitleHeading).not.toBeEmptyDOMElement();
+    expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
 });
