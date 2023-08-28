@@ -5,8 +5,6 @@ export class HomePage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url: string = '';
-  /** Regular Expression for the title metadata text */
-  readonly titleRegEx: RegExp = /txnDuck/;
 
   /** The "start" button link that directs the user to use the app. */
   readonly startBtn: Locator;

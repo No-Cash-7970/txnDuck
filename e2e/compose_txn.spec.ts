@@ -17,18 +17,14 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
 
 test.describe('Compose Transaction Page', () => {
 
-  test('has title', async ({ composeTxnPage, page }) => {
-    await expect(page).toHaveTitle(composeTxnPage.titleRegEx);
-  });
-
   test('has footer', async ({ composeTxnPage, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: /Compose/,
-      es: /Componer/,
+      en: { body: /Compose/, title: /Compose/ },
+      es: { body: /Componer/, title: /Componer/ },
     })).check(test, ComposeTxnPage.url);
   });
 

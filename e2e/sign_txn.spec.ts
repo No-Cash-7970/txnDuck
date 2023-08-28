@@ -17,18 +17,14 @@ const test = base.extend<{ signTxnPage: SignTxnPage }>({
 
 test.describe('Sign Transaction Page', () => {
 
-  test('has title', async ({ signTxnPage, page }) => {
-    await expect(page).toHaveTitle(signTxnPage.titleRegEx);
-  });
-
   test('has footer', async ({ signTxnPage, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: /Sign/,
-      es: /Firmar/,
+      en: { body: /Sign/, title: /Sign/ },
+      es: { body: /Firmar/, title: /Firmar/ },
     })).check(test, SignTxnPage.url);
   });
 

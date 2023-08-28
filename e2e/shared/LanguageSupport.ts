@@ -7,13 +7,27 @@ import {
   type PlaywrightWorkerOptions,
 } from '@playwright/test';
 
-type LangRegExList = { [lang: string]: RegExp };
+type LangRegExList = {
+  [lang: string]: {
+    /** For checking the page content */
+    body: RegExp,
+    /** For checking the metadata title */
+    title: RegExp,
+  }
+};
 
 export class LanguageSupport {
   /**
-   * A mapping the Regular Expressions (RegExp) for detecting each language
+   * A mapping the Regular Expressions (RegExp) for detecting each language. It is best to pick an
+   * identifying word or small phrase to put in the Regular Expressions.
    *
-   * Example: `{ en: /Hello/, es: /Hola/ }`
+   * Example:
+   * ```
+   * {
+   *   en: { body: /hello/, title: /Hello/ },
+   *   es:{ body: /hola/, title: /Hola/ },
+   * }
+   * ```
    */
   private langRegExList: LangRegExList = {};
   /** A mapping of the full name of ISO 639-1 codes */
@@ -24,7 +38,6 @@ export class LanguageSupport {
 
   /**
    * @param langRegExList A mapping the Regular Expressions (RegExp) for detecting each language.
-   *                      Example: `{ en: /Hello/, es: /Hola/ }`
    */
   constructor(langRegExList: LangRegExList = {}) {
     this.langRegExList = langRegExList;
@@ -53,10 +66,14 @@ export class LanguageSupport {
           await expect(page).toHaveURL(fullUrlWithLang);
         });
 
-        test('loads the correct text', async ({ page }) => {
+        test('loads correct title text', async ({ page }) => {
           await page.goto(fullUrlWithLang);
-          // await expect(page.getByText(lngData.testRegEx)).toBeAttached();
-          await expect(page.getByRole('main')).toHaveText(this.langRegExList[lng]);
+          await expect(page).toHaveTitle(this.langRegExList[lng].title);
+        });
+
+        test('loads correct body text', async ({ page }) => {
+          await page.goto(fullUrlWithLang);
+          await expect(page.getByRole('main')).toHaveText(this.langRegExList[lng].body);
         });
 
         test.describe('With Cookie', () => {

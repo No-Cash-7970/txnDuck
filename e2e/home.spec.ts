@@ -18,10 +18,6 @@ const test = base.extend<{ homePage: HomePage }>({
 
 test.describe('Home Page', () => {
 
-  test('has title', async ({ homePage, page }) => {
-    await expect(page).toHaveTitle(homePage.titleRegEx);
-  });
-
   test('has footer', async ({ homePage, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
@@ -48,8 +44,8 @@ test.describe('Home Page', () => {
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: /Start/,
-      es: /Comience/,
+      en: { body: /Start/, title: /Transaction/ },
+      es: { body: /Comience/, title: /transacciones/ },
     })).check(test, HomePage.url);
   });
 

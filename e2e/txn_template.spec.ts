@@ -17,18 +17,14 @@ const test = base.extend<{ txnTemplatePage: TxnTemplatePage }>({
 
 test.describe('Transaction Template Page', () => {
 
-  test('has title', async ({ txnTemplatePage, page }) => {
-    await expect(page).toHaveTitle(txnTemplatePage.titleRegEx);
-  });
-
   test('has footer', async ({ txnTemplatePage, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: /template/,
-      es: /modelo/,
+      en: { body: /template/, title: /Transaction/ },
+      es: { body: /modelo/, title: /Transacción/ },
     })).check(test, TxnTemplatePage.url);
   });
 

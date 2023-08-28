@@ -5,8 +5,6 @@ export class SendTxnPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url: string = '/txn/send';
-  /** Regular Expression for the title metadata text */
-  readonly titleRegEx: RegExp = /txnDuck/;
 
   /** Main section of the page */
   readonly main: Locator;

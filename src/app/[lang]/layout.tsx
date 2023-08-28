@@ -1,23 +1,39 @@
 import '@/app/globals.css';
 import * as fonts from '@/app/lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
+import { headers } from 'next/headers';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
 import { SUPPORTED_LANGS } from '@/app/i18n/settings';
-import { useTranslation } from '@/app/i18n';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import NavBar from './components/NavBar';
 import Footer from './components/Footer';
 
+/**
+ * Generate the base metadata for the site. Parts may be overwritten by child pages.
+ */
 export async function generateMetadata(
-  { params }: { params: { lang: string } },
-  parent: ResolvingMetadata
+  { params }: { params: { lang: string } }
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, 'app');
 
+  /*
+   * Calculate base URL for metadata purposes. This is similar to what Next.js does by default if
+   * the metadata base is not specified.
+   */
+  let metadataBase: string = `http://localhost:${process.env.PORT || 3000}`;
+  if (process.env.VERCEL_URL) metadataBase = `https://${process.env.VERCEL_URL}`;
+  if (process.env.BASE_URL) metadataBase = `https://${process.env.BASE_URL}`;
+
   return {
-    title: `${t('site_name')}: ${t('description.short')}`,
+    title: {
+      template: `%s | ${t('site_name')}`,
+      default: `${t('site_name')}: ${t('description.short')}`,
+    },
     description: t('description.long'),
+    metadataBase: new URL(metadataBase),
+    alternates: generateLangAltsMetadata(),
   };
 }
 

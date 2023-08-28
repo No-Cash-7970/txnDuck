@@ -11,7 +11,10 @@ import {
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
 import { type FallbackNs } from 'react-i18next';
-import { getOptions } from './settings';
+import { SUPPORTED_LANGS, getOptions } from './settings';
+import {
+  type AlternateURLs as MetadataAlternateURLs
+} from 'next/dist/lib/metadata/types/alternative-urls-types';
 
 /**
  *
@@ -59,5 +62,24 @@ export async function useTranslation<
   return {
     t: i18nextInstance.getFixedT(lng, ns, options.keyPrefix),
     i18n: i18nextInstance
+  };
+}
+
+/**
+ * Generate the canonical URL and the language alternate URLs for the given path. The URLs
+ * generated are meant to be use to generate the `canonical` and `alternates` metadata.
+ * @param path The path for which to generate the URLs. The path is relative to the site's base URL
+ *             and must have a leading slash ("/"). (Example: `/path/to/somewhere`)
+ * @returns The canonical and alternate URLs
+ */
+export function generateLangAltsMetadata(
+  path: string = '/'
+): Pick<MetadataAlternateURLs, 'canonical' | 'languages'> {
+  const langUrls: {[lang: string]: string} = {};
+  SUPPORTED_LANGS.forEach((lng: string) => langUrls[lng] = lng + path);
+
+  return {
+    canonical: path,
+    languages: langUrls
   };
 }

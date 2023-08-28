@@ -17,18 +17,14 @@ const test = base.extend<{ sendTxnPage: SendTxnPage }>({
 
 test.describe('Send Transaction Page', () => {
 
-  test('has title', async ({ sendTxnPage, page }) => {
-    await expect(page).toHaveTitle(sendTxnPage.titleRegEx);
-  });
-
   test('has footer', async ({ sendTxnPage, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: /Send/,
-      es: /Enviar/,
+      en: { body: /Send/, title: /Send/ },
+      es: { body: /Enviar/, title: /Enviar/ },
     })).check(test, SendTxnPage.url);
   });
 
