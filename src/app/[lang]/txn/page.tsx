@@ -2,7 +2,7 @@ import { use } from 'react';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import { useTranslation } from '@/app/i18n';
 import Link from 'next/link';
-import PageTitleHeading from '@/app/[lang]/components/PageTitleHeading';
+import { PageTitleHeading } from '@/app/[lang]/components';
 
 /**
  * Choose Transaction Template page

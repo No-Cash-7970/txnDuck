@@ -1,4 +1,4 @@
-import ShowIf from '@/app/[lang]/components/ShowIf';
+import { ShowIf } from '@/app/[lang]/components';
 import type { TextAreaFieldProps } from './types';
 
 /** Text area form field. Includes a `<label>` element and a `<textarea>` element */

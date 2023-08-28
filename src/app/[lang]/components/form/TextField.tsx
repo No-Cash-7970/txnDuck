@@ -1,4 +1,4 @@
-import ShowIf from '@/app/[lang]/components/ShowIf';
+import { ShowIf } from '@/app/[lang]/components';
 import type { TextFieldProps } from './types';
 
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */

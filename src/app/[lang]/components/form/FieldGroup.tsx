@@ -1,4 +1,4 @@
-import ShowIf from '@/app/[lang]/components/ShowIf';
+import { ShowIf } from '@/app/[lang]/components';
 import type { FieldGroupProps } from './types';
 
 export default function FieldGroup({
