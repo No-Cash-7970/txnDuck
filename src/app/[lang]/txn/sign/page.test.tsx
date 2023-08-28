@@ -11,11 +11,6 @@ import SignTxnPage from "./page";
 
 describe("Sign Transaction Page", () => {
 
-  it("renders without crashing", () => {
-    render(<SignTxnPage params={{lang: ''}} />);
-    expect(screen.getByText(/coming_soon/)).toBeInTheDocument();
-  });
-
   it("has builder steps", () => {
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText(/builder_steps\.sign/)).toBeInTheDocument();

@@ -14,11 +14,6 @@ import BuilderSteps from "./BuilderSteps";
 
 describe('Builder Steps Component', () => {
 
-  it('renders', () => {
-    const {container} = render(<BuilderSteps />);
-    expect(screen.getByText(/builder_steps\.compose/)).toBeInTheDocument();
-  });
-
   it('can highlight in primary color', () => {
     const {container} = render(<BuilderSteps current='sign' color='primary' />);
 

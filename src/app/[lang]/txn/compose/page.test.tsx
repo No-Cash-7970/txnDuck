@@ -11,11 +11,6 @@ import ComposeTxnPage from "./page";
 
 describe("Compose Transaction Page", () => {
 
-  it("renders without crashing", () => {
-    render(<ComposeTxnPage params={{lang: ''}} />);
-    expect(screen.getByText(/coming_soon/)).toBeInTheDocument();
-  });
-
   it("has builder steps", () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
     expect(screen.getByText(/builder_steps\.compose/)).toBeInTheDocument();

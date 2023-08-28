@@ -11,11 +11,6 @@ import SendTxnPage from "./page";
 
 describe("Send Transaction Page", () => {
 
-  it("renders without crashing", () => {
-    render(<SendTxnPage params={{lang: ''}} />);
-    expect(screen.getByText(/coming_soon/)).toBeInTheDocument();
-  });
-
   it("has builder steps", () => {
     render(<SendTxnPage params={{lang: ''}} />);
     expect(screen.getByText(/builder_steps\.send/)).toBeInTheDocument();

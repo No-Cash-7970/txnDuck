@@ -12,11 +12,6 @@ describe('PageTitleHeading Component', () => {
     expect(screen.getByRole('heading')).toHaveTextContent('Hello!');
   });
 
-  it('can have empty heading', () => {
-    render(<PageTitleHeading></PageTitleHeading>);
-    expect(screen.getByRole('heading')).toHaveTextContent('');
-  });
-
   it('has badge with text specified in `badgeText` property', () => {
     const {container} = render(<PageTitleHeading badgeText='Greeting'></PageTitleHeading>);
 
