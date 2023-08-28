@@ -24,7 +24,7 @@ test.describe('Transaction Template Page', () => {
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /template/, title: /Transaction/ },
-      es: { body: /modelo/, title: /Transacción/ },
+      es: { body: /modelo/, title: /transacción/ },
     })).check(test, TxnTemplatePage.url);
   });
 
