@@ -83,3 +83,19 @@ export interface CheckboxFieldProps extends InputProps, FieldProps {
 
 /** Properties for the ToggleField component */
 export interface ToggleFieldProps extends CheckboxFieldProps {}
+
+/** Properties for the FieldGroup component */
+export interface FieldGroupProps {
+  /** Fields and other things inside the group */
+  children?: React.ReactNode;
+  /** Text of the heading */
+  heading?: string;
+  /** The level of the heading. Ranges from `1` (an `<h1>` heading) to `6` (an `<h6>`) */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6 ;
+  /** Classes to add to the heading */
+  headingClass?: string;
+  /** The `id` for the heading */
+  headingId?: string;
+  /** Classes to add to the container for the field group */
+  containerClass?: string;
+}

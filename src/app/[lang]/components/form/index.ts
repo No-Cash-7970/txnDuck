@@ -1,6 +1,9 @@
 import CheckboxField from './CheckboxField';
 export { CheckboxField };
 
+import FieldGroup from './FieldGroup';
+export { FieldGroup };
+
 import NumberField from './NumberField';
 export { NumberField };
 
