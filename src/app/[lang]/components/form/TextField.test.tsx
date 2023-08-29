@@ -42,6 +42,26 @@ describe('Form Components - TextField', () => {
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
+  it('has input with value specified `defaultValue` property by default', () => {
+    render(<TextField defaultValue='foo' />);
+    expect(screen.getByRole('textbox')).toHaveValue('foo');
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<TextField name='foo' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<TextField disabled={true} />);
+    expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<TextField disabled={false} />);
+    expect(screen.getByRole('textbox')).not.toBeDisabled();
+  });
+
   it('has input INSIDE label if `inputInsideLabel` is true', () => {
     const { container } = render(<TextField inputInsideLabel={true} />);
 
@@ -109,6 +129,16 @@ describe('Form Components - TextField', () => {
   it('has side-label with text specified in `afterSideLabel` after input (inside label)', () => {
     const { container } = render(<TextField afterSideLabel='foo' inputInsideLabel={true} />);
     expect(container.querySelector('.join-item:last-child')).toHaveTextContent('foo');
+  });
+
+  it('has input with auto-complete value specified in `autoComplete` property', () => {
+    render(<TextField autoComplete='foo' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('autocomplete', 'foo');
+  });
+
+  it('has input with spell-check enabled if `spellCheck` is true', () => {
+    render(<TextField disabled={true} />);
+    expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
 });

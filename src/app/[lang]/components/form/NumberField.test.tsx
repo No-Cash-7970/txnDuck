@@ -126,4 +126,29 @@ describe('Form Components - NumberField', () => {
     expect(container.querySelector('.join-item:last-child')).toHaveTextContent('foo');
   });
 
+  it('has input with value specified `defaultValue` property by default', () => {
+    render(<NumberField defaultValue={42} />);
+    expect(screen.getByRole('spinbutton')).toHaveValue(42);
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<NumberField name='foo' />);
+    expect(screen.getByRole('spinbutton')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<NumberField disabled={true} />);
+    expect(screen.getByRole('spinbutton')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<NumberField disabled={false} />);
+    expect(screen.getByRole('spinbutton')).not.toBeDisabled();
+  });
+
+  it('has input with auto-complete value specified in `autoComplete` property', () => {
+    render(<NumberField autoComplete='foo' />);
+    expect(screen.getByRole('spinbutton')).toHaveAttribute('autocomplete', 'foo');
+  });
+
 });

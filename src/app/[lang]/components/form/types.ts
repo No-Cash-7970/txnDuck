@@ -6,6 +6,12 @@ interface InputProps {
   id?: string;
   /** Classes to add to the input element for the field */
   inputClass?: string;
+  /** Data key for the input */
+  name?: string;
+  /** Default value of the input */
+  defaultValue?: string | number | boolean;
+  /** If the input is disabled */
+  disabled?: boolean;
 }
 
 /** General properties for fields */
@@ -42,22 +48,41 @@ interface SideLabelProp {
 
 /** Properties for the TextField component */
 export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
+  /** Default value of the input */
+  defaultValue?: string | number;
   /** Placeholder text for the input */
   placeholder?: string;
+  /**
+   * Type of auto-complete. Set to 'off' to turn off auto-complete.
+   *
+   * More information:
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+   */
+  autoComplete?: string;
+  /** If spell-check should be enabled */
+  spellCheck?: boolean;
 }
 
 /** Properties for the NumberField component */
 export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp {
+  defaultValue?: number;
   /** Minimum value allowed */
   min?: number | null;
   /** Maximum value allowed */
   max?: number | null;
   /** Specifies the granularity that the value must adhere to */
   step?: number | 'any' | null;
+  /**
+   * Type of auto-complete. Set to 'off' to turn off auto-complete.
+   *
+   * More information:
+   * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
+   */
+  autoComplete?: string;
 }
 
 /** Properties for the SelectField component */
-export interface SelectFieldProps extends TextFieldProps {
+export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'> {
   /** List of options available to select. The `value` of each option should be unique */
   options?: {
     /** Value of the option */
@@ -73,7 +98,7 @@ export interface TextAreaFieldProps extends TextFieldProps {}
 /** Properties for the CheckboxField component */
 export interface CheckboxFieldProps extends InputProps, FieldProps {
   /** If the field should be checked by default */
-  checked?: boolean;
+  defaultValue?: boolean;
   /**
    * The position of the input relative to the label.
    *
@@ -101,4 +126,6 @@ export interface FieldGroupProps {
   headingId?: string;
   /** Classes to add to the container for the field group */
   containerClass?: string;
+  /** If all inputs contained within the group should be disabled */
+  disabled?: boolean;
 }

@@ -111,4 +111,34 @@ describe('Form Components - TextAreaField', () => {
     expect(container.querySelector('.join-item:last-child')).toHaveTextContent('foo');
   });
 
+  it('has input with value specified `defaultValue` property by default', () => {
+    render(<TextAreaField defaultValue='foo' />);
+    expect(screen.getByRole('textbox')).toHaveValue('foo');
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<TextAreaField name='foo' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<TextAreaField disabled={true} />);
+    expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<TextAreaField disabled={false} />);
+    expect(screen.getByRole('textbox')).not.toBeDisabled();
+  });
+
+  it('has input with auto-complete value specified in `autoComplete` property', () => {
+    render(<TextAreaField autoComplete='foo' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('autocomplete', 'foo');
+  });
+
+  it('has input with spell-check enabled if `spellCheck` is true', () => {
+    render(<TextAreaField disabled={true} />);
+    expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
 });

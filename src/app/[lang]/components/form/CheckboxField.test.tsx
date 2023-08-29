@@ -110,14 +110,29 @@ describe('Form Components - CheckboxField', () => {
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
-  it('has checked input if `checked` is true', async () => {
-    render(<CheckboxField checked={true} />);
+  it('has input checked by default if `defaultValue` is true', () => {
+    render(<CheckboxField defaultValue={true} />);
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('does not have checked input if `checked` is false', async () => {
-    render(<CheckboxField checked={false} />);
+  it('does not have input checked by default if `defaultValue` is false', () => {
+    render(<CheckboxField defaultValue={false} />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<CheckboxField name='foo' />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<CheckboxField disabled={true} />);
+    expect(screen.getByRole('checkbox')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<CheckboxField disabled={false} />);
+    expect(screen.getByRole('checkbox')).not.toBeDisabled();
   });
 
 });

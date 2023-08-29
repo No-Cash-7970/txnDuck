@@ -34,4 +34,14 @@ describe('Form Components - FieldGroup', () => {
     expect(screen.getByRole('group')).toHaveClass('foo');
   });
 
+  it('disables the input if `disabled` is true', () => {
+    render(<FieldGroup disabled={true}></FieldGroup>);
+    expect(screen.getByRole('group')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<FieldGroup disabled={false}></FieldGroup>);
+    expect(screen.getByRole('group')).not.toBeDisabled();
+  });
+
 });

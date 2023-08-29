@@ -120,4 +120,35 @@ describe('Form Components - SelectField', () => {
     expect(screen.getByText(/Bar/)).toHaveAttribute('value', 'bar');
   });
 
+  it('has input with value specified `defaultValue` property by default', () => {
+    render(
+      <SelectField
+        defaultValue='foo'
+        placeholder='Choose one'
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('foo');
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<SelectField name='foo' />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<SelectField disabled={true} />);
+    expect(screen.getByRole('combobox')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<SelectField disabled={false} />);
+    expect(screen.getByRole('combobox')).not.toBeDisabled();
+  });
+
+  it('has input with auto-complete value specified in `autoComplete` property', () => {
+    render(<SelectField autoComplete='foo' />);
+    expect(screen.getByRole('combobox')).toHaveAttribute('autocomplete', 'foo');
+  });
+
 });

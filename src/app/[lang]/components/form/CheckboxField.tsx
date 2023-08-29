@@ -11,8 +11,10 @@ export default function CheckboxField({
   containerClass = '',
   requiredText = '',
   helpMsg = '',
-  checked = false,
+  defaultValue = false,
   inputPosition = 'start',
+  name ='',
+  disabled = false,
 }: CheckboxFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -22,7 +24,9 @@ export default function CheckboxField({
           type='checkbox'
           id={inputId || undefined}
           required={required}
-          defaultChecked={checked}
+          defaultChecked={defaultValue}
+          name={name || undefined}
+          disabled={disabled}
         />
       </ShowIf>
       <label className='label justify-normal' htmlFor={inputId || undefined}>
@@ -32,7 +36,9 @@ export default function CheckboxField({
             type='checkbox'
             id={inputId || undefined}
             required={required}
-            defaultChecked={checked}
+            defaultChecked={defaultValue}
+            name={name || undefined}
+            disabled={disabled}
           />
         </ShowIf>
         <span className={`label-text align-middle ${inputInsideLabel? 'flex-1' : ''}`}>
@@ -47,7 +53,9 @@ export default function CheckboxField({
             type='checkbox'
             id={inputId || undefined}
             required={required}
-            defaultChecked={checked}
+            defaultChecked={defaultValue}
+            name={name || undefined}
+            disabled={disabled}
           />
         </ShowIf>
       </label>
@@ -57,7 +65,9 @@ export default function CheckboxField({
           type='checkbox'
           id={inputId || undefined}
           required={required}
-          defaultChecked={checked}
+          defaultChecked={defaultValue}
+          name={name || undefined}
+          disabled={disabled}
         />
       </ShowIf>
       <ShowIf cond={!!helpMsg}>

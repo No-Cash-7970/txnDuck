@@ -15,6 +15,10 @@ export default function SelectField({
   beforeSideLabel = '',
   afterSideLabel = '',
   options = [],
+  name ='',
+  defaultValue = undefined,
+  disabled = false,
+  autoComplete = undefined, // Use browser default
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -31,7 +35,10 @@ export default function SelectField({
               className={`select-bordered select ${inputClass}`}
               id={inputId || undefined}
               required={required}
-              defaultValue={!!placeholder? '': undefined}
+              defaultValue={defaultValue || (placeholder? '': undefined)}
+              name={name || undefined}
+              disabled={disabled}
+              autoComplete={autoComplete}
             >
               <ShowIf cond={!!placeholder}>
                 <option value='' disabled>{placeholder}</option>
@@ -54,7 +61,10 @@ export default function SelectField({
                 className={`select-bordered select join-item ${inputClass}`}
                 id={inputId || undefined}
                 required={required}
-                defaultValue={!!placeholder? '': undefined}
+                defaultValue={defaultValue || (placeholder? '': undefined)}
+                name={name || undefined}
+                disabled={disabled}
+                autoComplete={autoComplete}
               >
                 <ShowIf cond={!!placeholder}>
                   <option value='' disabled>{placeholder}</option>
@@ -80,7 +90,10 @@ export default function SelectField({
             className={`select-bordered select ${inputClass}`}
             id={inputId || undefined}
             required={required}
-            defaultValue={!!placeholder? '': undefined}
+            defaultValue={defaultValue || (placeholder? '': undefined)}
+            name={name || undefined}
+            disabled={disabled}
+            autoComplete={autoComplete}
           >
             <ShowIf cond={!!placeholder}>
               <option value='' disabled>{placeholder}</option>
@@ -103,7 +116,10 @@ export default function SelectField({
               className={`select-bordered select join-item ${inputClass}`}
               id={inputId || undefined}
               required={required}
-              defaultValue={!!placeholder? '': undefined}
+              defaultValue={defaultValue || (placeholder? '': undefined)}
+              name={name || undefined}
+              disabled={disabled}
+              autoComplete={autoComplete}
             >
               <ShowIf cond={!!placeholder}>
                 <option value='' disabled>{placeholder}</option>

@@ -16,6 +16,10 @@ export default function NumberField({
   step = null,
   beforeSideLabel = '',
   afterSideLabel = '',
+  name ='',
+  defaultValue = undefined,
+  disabled = false,
+  autoComplete = undefined, // Use browser default
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -37,6 +41,10 @@ export default function NumberField({
               min={min !== null? min : undefined }
               max={max !== null? max : undefined }
               step={step !== null? step : undefined }
+              name={name || undefined}
+              defaultValue={defaultValue}
+              disabled={disabled}
+              autoComplete={autoComplete}
             />
           </ShowIf>
           <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -54,6 +62,10 @@ export default function NumberField({
                 min={min !== null? min : undefined }
                 max={max !== null? max : undefined }
                 step={step !== null? step : undefined }
+                name={name || undefined}
+                defaultValue={defaultValue}
+                disabled={disabled}
+                autoComplete={autoComplete}
               />
               <ShowIf cond={!!afterSideLabel}>
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -75,6 +87,10 @@ export default function NumberField({
             min={min !== null? min : undefined }
             max={max !== null? max : undefined }
             step={step !== null? step : undefined }
+            name={name || undefined}
+            defaultValue={defaultValue}
+            disabled={disabled}
+            autoComplete={autoComplete}
           />
         </ShowIf>
         <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -92,6 +108,10 @@ export default function NumberField({
               min={min !== null? min : undefined }
               max={max !== null? max : undefined }
               step={step !== null? step : undefined }
+              name={name || undefined}
+              defaultValue={defaultValue}
+              disabled={disabled}
+              autoComplete={autoComplete}
             />
             <ShowIf cond={!!afterSideLabel}>
               <span className='join-item bg-base-200 flex items-center px-4'>

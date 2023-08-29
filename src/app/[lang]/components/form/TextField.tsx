@@ -14,6 +14,11 @@ export default function TextField({
   helpMsg = '',
   beforeSideLabel = '',
   afterSideLabel = '',
+  name ='',
+  defaultValue = undefined,
+  disabled = false,
+  autoComplete = undefined, // Use browser default
+  spellCheck = undefined, // Use browser default
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -32,6 +37,11 @@ export default function TextField({
               id={inputId || undefined}
               required={required}
               placeholder={placeholder || undefined}
+              name={name || undefined}
+              defaultValue={defaultValue}
+              disabled={disabled}
+              autoComplete={autoComplete}
+              spellCheck={spellCheck}
             />
           </ShowIf>
           <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -47,6 +57,11 @@ export default function TextField({
                 id={inputId || undefined}
                 required={required}
                 placeholder={placeholder || undefined}
+                name={name || undefined}
+                defaultValue={defaultValue}
+                disabled={disabled}
+                autoComplete={autoComplete}
+                spellCheck={spellCheck}
               />
               <ShowIf cond={!!afterSideLabel}>
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -65,6 +80,11 @@ export default function TextField({
             id={inputId || undefined}
             required={required}
             placeholder={placeholder || undefined}
+            name={name || undefined}
+            defaultValue={defaultValue}
+            disabled={disabled}
+            autoComplete={autoComplete}
+            spellCheck={spellCheck}
           />
         </ShowIf>
         <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -80,6 +100,11 @@ export default function TextField({
               id={inputId || undefined}
               required={required}
               placeholder={placeholder || undefined}
+              name={name || undefined}
+              defaultValue={defaultValue}
+              disabled={disabled}
+              autoComplete={autoComplete}
+              spellCheck={spellCheck}
             />
             <ShowIf cond={!!afterSideLabel}>
               <span className='join-item bg-base-200 flex items-center px-4'>

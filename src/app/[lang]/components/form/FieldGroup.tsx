@@ -8,9 +8,10 @@ export default function FieldGroup({
   headingClass = '',
   headingId = '',
   containerClass = '',
+  disabled = false,
 }: FieldGroupProps) {
   return (
-    <fieldset className={containerClass || undefined}>
+    <fieldset className={containerClass || undefined} disabled={disabled}>
       <ShowIf cond={!!heading}>
         <ShowIf cond={headingLevel === 1}>
           <h1 id={headingId || undefined} className={headingClass || undefined}>{heading}</h1>

@@ -50,7 +50,9 @@ export default function ComposeTxnPage({ params: { lang } }: {
         id="test-text-field"
         inputInsideLabel={true}
         containerClass='max-w-md mt-4'
+        defaultValue='Duck'
         afterSideLabel='ちゃん'
+        placeholder='Name'
       />
       <TextAreaField
         label="Tell us everything..."
@@ -60,6 +62,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
         beforeSideLabel='👉'
         helpMsg='If you leave something out, we will punish you.'
         required={true}
+        defaultValue={42}
       />
 
       <FieldGroup
@@ -92,6 +95,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
           ]}
           placeholder='Pick one'
           afterSideLabel='Option'
+          defaultValue='2nd'
         />
       </FieldGroup>
       <CheckboxField
@@ -110,7 +114,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
         inputClass='toggle-secondary me-4'
         inputInsideLabel={true}
         inputPosition='start'
-        checked={true}
+        defaultValue={true}
       />
       </form>
     </main>

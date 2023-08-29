@@ -110,14 +110,29 @@ describe('Form Components - ToggleField', () => {
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
-  it('has checked input if `checked` is true', async () => {
-    render(<ToggleField checked={true} />);
+  it('has input checked by default if `defaultValue` is true', () => {
+    render(<ToggleField defaultValue={true} />);
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
-  it('does not have checked input if `checked` is false', async () => {
-    render(<ToggleField checked={false} />);
+  it('does not have input checked by default if `defaultValue` is false', () => {
+    render(<ToggleField defaultValue={false} />);
     expect(screen.getByRole('checkbox')).not.toBeChecked();
+  });
+
+  it('has input with name specified in `name` property', () => {
+    render(<ToggleField name='foo' />);
+    expect(screen.getByRole('checkbox')).toHaveAttribute('name', 'foo');
+  });
+
+  it('disables the input if `disabled` is true', () => {
+    render(<ToggleField disabled={true} />);
+    expect(screen.getByRole('checkbox')).toBeDisabled();
+  });
+
+  it('enables the input if `disabled` is false', () => {
+    render(<ToggleField disabled={false} />);
+    expect(screen.getByRole('checkbox')).not.toBeDisabled();
   });
 
 });
