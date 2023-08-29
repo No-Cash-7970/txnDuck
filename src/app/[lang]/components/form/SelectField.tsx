@@ -26,7 +26,7 @@ export default function SelectField({
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
-            <span className='text-error' title={requiredText || undefined}>*</span>
+            <span className='text-error px-1' title={requiredText || undefined}>*</span>
           </ShowIf>
         </span>
         <ShowIf cond={inputInsideLabel}>

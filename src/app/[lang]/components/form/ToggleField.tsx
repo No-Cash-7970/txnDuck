@@ -44,7 +44,7 @@ export default function ToggleField({
         <span className={`label-text align-middle ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
-            <span className='text-error' title={requiredText || undefined}>*</span>
+            <span className='text-error px-1' title={requiredText || undefined}>*</span>
           </ShowIf>
         </span>
         <ShowIf cond={inputInsideLabel && inputPosition === 'end'}>
