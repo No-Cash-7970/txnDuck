@@ -25,16 +25,19 @@ export default function Footer({ lng }: Props) {
             href='https://github.com/No-Cash-7970/txnDuck'
             className='link link-hover flex gap-1'
           >
-            <IconBrandGithubFilled size={20} aria-hidden='true' />
+            <IconBrandGithubFilled size={20} aria-hidden />
             <span>{t('footer.github_link')}</span>
           </Link>
         </div>
 
         {/* License notice */}
-        <p className='prose max-w-none text-neutral-content text-sm prose-a:neutral-content mt-4'>
+        <p className='text-sm mt-4'>
           <Trans t={t} i18nKey='footer.license_notice'>
             using_is_agreeing_to
-            <Link href='https://github.com/No-Cash-7970/txnDuck/blob/main/LICENSE.md'>
+            <Link
+              className='underline'
+              href='https://github.com/No-Cash-7970/txnDuck/blob/main/LICENSE.md'
+            >
               license
             </Link>.
           </Trans>
