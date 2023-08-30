@@ -12,6 +12,10 @@
     @apply font-display;
   }
 
+  input::placeholder, textarea::placeholder {
+    color: theme(colors.base-content / 40%)
+  }
+
   /* [lang="jp"] {
     @apply font-sans-jp;
   }
