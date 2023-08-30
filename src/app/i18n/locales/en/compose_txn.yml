@@ -1,3 +1,54 @@
 title: Compose Transaction
 instructions: Fields marked with an asterisk (<1>*</1>) are required.
-coming_soon: "Coming soon: Compose transaction"
+more_fields: More fields
+txn_template_btn: Choose template
+txn_template_btn_warning: You may lose your progress if you choose a different template.
+sign_txn_btn: Review & sign
+fields:
+  type: # Transaction type
+    label: Transaction type
+    placeholder: Choose one
+    options:
+      pay: Payment
+      axfer: Asset transfer
+      acfg: Asset configuration
+      afrz: Asset freeze
+      appl: Application
+      keyreg: Key registration
+  snd: # Sender
+    label: Sender
+    placeholder: Sender address
+  fee: # Fee
+    label: Fee
+    help_msg_one: "Minimum: {{count, number}} Algo"
+    help_msg_other: "Minimum: {{count, number}} Algos"
+  note: # Note
+    label: Note
+    placeholder: Enter note...
+  fv: # First valid round
+    label: Transaction's first valid round
+  lv: # Last valid round
+    label: Transaction's last valid round
+  lx: # Lease
+    label: Lease
+  rekey: # Rekey to
+    label: Rekey to
+    placeholder: Address to rekey to
+    warning: >
+      <strong>Rekeying a wallet account can result in losing access to your funds</strong> if the
+      account is rekeyed to an address you do not have access to. Make sure you know what you are
+      doing. Learn more about rekeying from the <2>Algorand documentation</2>.
+  # Fields for payment type
+  rcv: # Receiver of payment
+    label: Receiver
+    placeholder: Receiver address
+  amt: # Amount to pay (in Algos)
+    label: Amount
+  close: # Close remainder to
+    label: Close remainder to
+    placeholder: Address to close remainder of funds to
+    warning: >
+      If an address is specified, <strong>all funds in the sender account will be sent to the
+      specified address</strong> and the sender account will be closed. Make sure you know what you
+      are doing.
+

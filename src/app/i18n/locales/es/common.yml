@@ -3,3 +3,12 @@
 home: Inicio # Home page name
 algo_std_asset: Algorand Standard Asset (El activo estándar de Algorand)
 nonfungible_token: Non-Fungible Token (La ficha no fungible)
+
+# Unit name of the token for Algorand
+# More information about specifying singular and plural versions of a word:
+# https://www.i18next.com/translation-function/plurals#singular-plural
+algo_one: Algo # 1 Algo
+algo_other: Algos # Mulitple Algos
+
+form: # For forms
+  required: Obligatorio # When a field is required

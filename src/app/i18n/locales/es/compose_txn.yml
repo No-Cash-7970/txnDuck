@@ -1,3 +1,54 @@
 title: Componer transacción
 instructions: Los campos marcados con un asterisco (<1>*</1>) son obligatorios.
-coming_soon: "Próximamente: Componer transacción"
+more_fields: Más campos
+txn_template_btn: Elegir un modelo
+txn_template_btn_warning: Puede perder su progreso si elige un modelo diferente.
+sign_txn_btn: Revisar y firmar
+fields:
+  type: # Transaction type
+    label: Tipo de transacción
+    placeholder: Elija uno
+    options:
+      pay: Pago
+      axfer: Transferencia del activo
+      acfg: Configuración del activo
+      afrz: Congelación del activo
+      appl: Aplicación
+      keyreg: Registro de la llave
+  snd: # Sender
+    label: Remitente
+    placeholder: Dirección del remitente
+  fee: # Fee
+    label: Tarifa
+    help_msg_one: "Mínimo: {{count, number}} Algo" # If the fee is exactly 1 Algo
+    help_msg_other: "Mínimo: {{count, number}} Algos" # If the fee is something other than 1 Algo
+  note: # Note
+    label: Nota
+    placeholder: Introduzca la nota...
+  fv: # First valid round
+    label: Primera ronda válida de la transacción
+  lv: # Last valid round
+    label: Última ronda válida de la transacción
+  lx: # Lease
+    label: Arrendamiento
+  rekey: # Rekey to
+    label: ¿A qué recodificar?
+    placeholder: Dirección a la que recodificar
+    warning: >
+      <strong>Recodificar una cuenta de monedero puede provocar la pérdida de acceso a sus
+      fondos</strong> si la cuenta se vuelve a teclear en una dirección a la que usted no tiene
+      acceso. Asegúrese de saber lo que está haciendo. Obtenga más información sobre el cambio de
+      claves en la <2>documentación (en inglés) de Algorand</2>.
+  # Fields for payment type
+  rcv: # Receiver of payment
+    label: Destinatario
+    placeholder: Dirección del destinatario
+  amt: # Amount to pay (in Algos)
+    label: Cantidad
+  close: # Close remainder to
+    label: ¿A qué cerra el remanente?
+    placeholder: Dirección a la que cerrar el remanente de fondos
+    warning: >
+      Si se especifica una dirección, <strong>todos los fondos de la cuenta del remitente se
+      enviarán a la dirección especificada</strong> y la cuenta del remitente se cerrará. Asegúrese
+      de saber lo que está haciendo.
