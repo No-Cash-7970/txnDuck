@@ -21,8 +21,6 @@ export default function HomePage({ params: { lang } }: {
         }
       >
         <div className='max-w-5xl mx-auto'>
-          <p className='text-4xl mt-0 font-bold mb-4'>{t('home:hero.main_paragraph')}</p>
-          <p className='text-3xl mb-16'>{t('home:hero.sub_paragraph')}</p>
           <Link data-testid='startBtn'
             className={'btn btn-primary btn-lg btn-block'
               + ' shadow-xl border-none'
@@ -33,6 +31,8 @@ export default function HomePage({ params: { lang } }: {
           >
             {t('home:hero.start_button')}
           </Link>
+          <p className='text-4xl mt-12 font-bold mb-6'>{t('home:hero.main_paragraph')}</p>
+          <p className='text-3xl my-0'>{t('home:hero.sub_paragraph')}</p>
         </div>
       </section>
 
