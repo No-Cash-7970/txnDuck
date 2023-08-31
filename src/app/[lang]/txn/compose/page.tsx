@@ -1,5 +1,4 @@
 import { use } from 'react';
-import { type Metadata } from 'next';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import {
@@ -8,7 +7,7 @@ import {
   IconArrowLeft,
   IconArrowRight
 } from '@tabler/icons-react';
-import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
+import { useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading, ShowIf } from '@/app/[lang]/components';
 import {
   TextField,
@@ -17,18 +16,6 @@ import {
   TextAreaField,
   ToggleField,
 } from '@/app/[lang]/components/form';
-
-export async function generateMetadata(
-  { params }: { params: { lang: string } },
-): Promise<Metadata> {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(params.lang, 'compose_txn');
-
-  return {
-    title: t('title'),
-    alternates: generateLangAltsMetadata('/txn/compose'),
-  };
-}
 
 /**
  * Compose Transaction page
