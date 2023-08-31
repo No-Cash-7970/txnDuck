@@ -52,4 +52,5 @@ test.describe('Home Page', () => {
   test.describe('Nav Bar', () => {
     NavBar.check(test, HomePage.getFullUrl());
   });
+
 });

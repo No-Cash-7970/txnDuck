@@ -11,10 +11,10 @@ import {
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
 import { type FallbackNs } from 'react-i18next';
-import { SUPPORTED_LANGS, getOptions } from './settings';
 import {
   type AlternateURLs as MetadataAlternateURLs
 } from 'next/dist/lib/metadata/types/alternative-urls-types';
+import { SUPPORTED_LANGS, getOptions } from './settings';
 
 /**
  *
@@ -53,10 +53,7 @@ export async function useTranslation<
   lng: string,
   ns?: Ns | Ns[],
   options: { keyPrefix?: KPrefix } = {}
-): Promise<{
-  t: TFunction,
-  i18n: i18n,
-}> {
+): Promise<{ t: TFunction, i18n: i18n }> {
   const i18nextInstance = await initI18next(lng, Array.isArray(ns) ? ns as string[] : ns as string);
 
   return {

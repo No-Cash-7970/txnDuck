@@ -1,7 +1,6 @@
 import '@/app/globals.css';
 import * as fonts from '@/app/lib/fonts';
 import type { Metadata, ResolvingMetadata } from 'next';
-import { headers } from 'next/headers';
 import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
 import { SUPPORTED_LANGS } from '@/app/i18n/settings';
@@ -18,10 +17,8 @@ export async function generateMetadata(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, 'app');
 
-  /*
-   * Calculate base URL for metadata purposes. This is similar to what Next.js does by default if
-   * the metadata base is not specified.
-   */
+  // Calculate base URL for metadata purposes. This is similar to what Next.js does by default if
+  // the metadata base is not specified.
   let metadataBase: string = `http://localhost:${process.env.PORT || 3000}`;
   if (process.env.VERCEL_URL) metadataBase = `https://${process.env.VERCEL_URL}`;
   if (process.env.BASE_URL) metadataBase = `https://${process.env.BASE_URL}`;

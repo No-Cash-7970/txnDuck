@@ -31,4 +31,5 @@ test.describe('Send Transaction Page', () => {
   test.describe('Nav Bar', () => {
     NavBar.check(test, SendTxnPage.getFullUrl());
   });
+
 });

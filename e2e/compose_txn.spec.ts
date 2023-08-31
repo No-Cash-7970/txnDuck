@@ -31,4 +31,5 @@ test.describe('Compose Transaction Page', () => {
   test.describe('Nav Bar', () => {
     NavBar.check(test, ComposeTxnPage.getFullUrl());
   });
+
 });

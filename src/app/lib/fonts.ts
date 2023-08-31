@@ -17,7 +17,7 @@ export const notoSans = Noto_Sans({
     'latin-ext',
     // 'vietnamese',
   ],
-  display: 'swap'
+  display: 'swap',
 });
 
 export const notoSansDisplay = Noto_Sans_Display({
@@ -31,7 +31,7 @@ export const notoSansDisplay = Noto_Sans_Display({
     'latin-ext',
     // 'vietnamese',
   ],
-  display: 'swap'
+  display: 'swap',
 });
 
 export const notoSansMono = Noto_Sans_Mono({
@@ -45,7 +45,7 @@ export const notoSansMono = Noto_Sans_Mono({
     'latin-ext',
     // 'vietnamese',
   ],
-  display: 'swap'
+  display: 'swap',
 });
 
 // export const notoColorEmoji = Noto_Color_Emoji({

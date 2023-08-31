@@ -85,4 +85,5 @@ describe('Builder Steps Component', () => {
     expect(highlightedSteps).toHaveLength(3);
     expect(doneStep).toBeInTheDocument();
   });
+
 });

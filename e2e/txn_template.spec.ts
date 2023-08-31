@@ -31,4 +31,5 @@ test.describe('Transaction Template Page', () => {
   test.describe('Nav Bar', () => {
     NavBar.check(test, TxnTemplatePage.getFullUrl());
   });
+
 });

@@ -31,4 +31,5 @@ test.describe('Sign Transaction Page', () => {
   test.describe('Nav Bar', () => {
     NavBar.check(test, SignTxnPage.getFullUrl());
   });
+
 });
