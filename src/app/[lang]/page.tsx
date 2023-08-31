@@ -9,21 +9,22 @@ import Link from 'next/link';
 export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {
-  const { t } = use(useTranslation(lang, ['home', 'app']));
+  const { t } = use(useTranslation(lang, ['home', 'app', 'common']));
 
   return (
     <main className="prose max-w-none min-h-screen pb-12">
       {/* Hero section */}
       <section
         className={'bg-gradient-to-r from-accent to-accent-focus text-accent-content'
-          + ' py-12 sm:py-20 px-8'
+          + ' py-10 sm:py-12 md:py-20 px-8'
           + ' font-display'
         }
       >
-        <div className='max-w-5xl mx-auto'>
+        <div className='max-w-5xl mx-auto text-center'>
+          <p className='text-4xl font-bold my-0'>{t('home:hero.main_paragraph')}</p>
           <Link data-testid='startBtn'
-            className={'btn btn-primary btn-lg btn-block'
-              + ' shadow-xl border-none'
+            className={'btn btn-primary btn-lg btn-block h-auto my-8 md:my-10 leading-6'
+              + ' shadow-lg border-none'
               + ' bg-gradient-to-r from-primary-focus to-primary'
               + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
             }
@@ -31,7 +32,6 @@ export default function HomePage({ params: { lang } }: {
           >
             {t('home:hero.start_button')}
           </Link>
-          <p className='text-4xl mt-12 font-bold mb-6'>{t('home:hero.main_paragraph')}</p>
           <p className='text-3xl my-0'>{t('home:hero.sub_paragraph')}</p>
         </div>
       </section>
