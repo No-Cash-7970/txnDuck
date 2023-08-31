@@ -31,7 +31,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
       <BuilderSteps lng={lang} current='compose' />
       <PageTitleHeading badgeText=''>{t('title')}</PageTitleHeading>
 
-      <form id={formId} className='max-w-3xl mx-auto mt-12 px-4'>
+      <form id={formId} className='max-w-3xl mx-auto mt-12'>
 
         <p className=' text-sm mb-8'>
           <Trans t={t} i18nKey='instructions'>
@@ -44,9 +44,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
           id='type-field'
           required={true}
           requiredText={t('form.required')}
-          inputInsideLabel={true}
-          inputClass='ms-2'
-          containerClass='max-w-sm'
+          containerClass='max-w-xs'
           placeholder={t('fields.type.placeholder')}
           options={[
             { value: 'pay', text: t('fields.type.options.pay') },
@@ -147,7 +145,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
           />
           <div className='alert alert-warning not-prose max-w-2xl my-1'>
             <IconAlertTriangle aria-hidden />
-            <span>
+            <span className='text-start'>
               <Trans t={t} i18nKey='fields.rekey.warning'>
                 <strong>rekeying_can_result_in_loss</strong> learn_more_at
                 <a
@@ -170,7 +168,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
             />
             <div className='alert alert-warning not-prose max-w-2xl my-1'>
               <IconAlertTriangle aria-hidden />
-              <span>
+              <span className='text-start'>
                 <Trans t={t} i18nKey='fields.close.warning'>
                   if_given <strong>all_funds_will_be_sent_to_given_address</strong>
                   make_sure_you_know_what_you_are_doing
@@ -181,8 +179,8 @@ export default function ComposeTxnPage({ params: { lang } }: {
         </div>
 
         {/* Buttons */}
-        <div className='grid gap-6 grid-cols-2 grid-rows-1 mx-auto mt-16'>
-          <div>
+        <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
+          <div className='order-last sm:order-first'>
             <Link type='button' href='' className='btn w-full btn-disabled'>
               <IconArrowLeft aria-hidden className='rtl:hidden' />
               <IconArrowRight aria-hidden className='hidden rtl:inline' />
