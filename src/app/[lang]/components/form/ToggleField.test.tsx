@@ -135,4 +135,20 @@ describe('Form Components - ToggleField', () => {
     expect(screen.getByRole('checkbox')).not.toBeDisabled();
   });
 
+  it('has input with value specified in `value` attribute', () => {
+    render(<ToggleField value={true} onChange={() => null} />);
+    expect(screen.getByRole('checkbox')).toBeChecked();
+  });
+
+  it('has input with "on-change" event function specified by `onChange` attribute', async () => {
+    const onChangeFn = jest.fn();
+    render(<ToggleField onChange={onChangeFn} />);
+
+    const input = screen.getByRole('checkbox');
+    await userEvent.click(input); // Toggle the switch
+
+    expect(input).toBeChecked();
+    expect(onChangeFn).toBeCalledTimes(1);
+  });
+
 });

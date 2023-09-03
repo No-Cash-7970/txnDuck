@@ -141,4 +141,20 @@ describe('Form Components - TextAreaField', () => {
     expect(screen.getByRole('textbox')).toBeDisabled();
   });
 
+  it('has input with value specified in `value` attribute', () => {
+    render(<TextAreaField value={'foo'} onChange={() => null} />);
+    expect(screen.getByRole('textbox')).toHaveValue('foo');
+  });
+
+  it('has input with "on-change" event function specified by `onChange` attribute', async () => {
+    const onChangeFn = jest.fn();
+    render(<TextAreaField onChange={onChangeFn} />);
+
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, 'bar'); // Enter 'bar' into the box
+
+    expect(input).toHaveValue('bar');
+    expect(onChangeFn).toBeCalledTimes(3);
+  });
+
 });

@@ -151,4 +151,20 @@ describe('Form Components - NumberField', () => {
     expect(screen.getByRole('spinbutton')).toHaveAttribute('autocomplete', 'foo');
   });
 
+  it('has input with value specified in `value` attribute', () => {
+    render(<NumberField value={42} onChange={() => null} />);
+    expect(screen.getByRole('spinbutton')).toHaveValue(42);
+  });
+
+  it('has input with "on-change" event function specified by `onChange` attribute', async () => {
+    const onChangeFn = jest.fn();
+    render(<NumberField onChange={onChangeFn} />);
+
+    const input = screen.getByRole('spinbutton');
+    await userEvent.type(input, '42'); // Enter '42' into the box
+
+    expect(input).toHaveValue(42);
+    expect(onChangeFn).toBeCalledTimes(2);
+  });
+
 });

@@ -11,10 +11,12 @@ export default function CheckboxField({
   containerClass = '',
   requiredText = '',
   helpMsg = '',
-  defaultValue = false,
+  defaultValue = undefined,
   inputPosition = 'start',
   name ='',
   disabled = false,
+  value = undefined,
+  onChange = undefined,
 }: CheckboxFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -27,6 +29,8 @@ export default function CheckboxField({
           defaultChecked={defaultValue}
           name={name || undefined}
           disabled={disabled}
+          checked={value}
+          onChange={onChange}
         />
       </ShowIf>
       <label className='label justify-normal' htmlFor={inputId || undefined}>
@@ -39,6 +43,8 @@ export default function CheckboxField({
             defaultChecked={defaultValue}
             name={name || undefined}
             disabled={disabled}
+            checked={value}
+            onChange={onChange}
           />
         </ShowIf>
         <span className={`label-text align-middle ${inputInsideLabel? 'flex-1' : ''}`}>
@@ -56,6 +62,8 @@ export default function CheckboxField({
             defaultChecked={defaultValue}
             name={name || undefined}
             disabled={disabled}
+            checked={value}
+            onChange={onChange}
           />
         </ShowIf>
       </label>
@@ -68,6 +76,8 @@ export default function CheckboxField({
           defaultChecked={defaultValue}
           name={name || undefined}
           disabled={disabled}
+          checked={value}
+          onChange={onChange}
         />
       </ShowIf>
       <ShowIf cond={!!helpMsg}>

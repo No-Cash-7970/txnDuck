@@ -10,8 +10,12 @@ interface InputProps {
   name?: string;
   /** Default value of the input */
   defaultValue?: string | number | boolean;
+  /** Current value of the input */
+  value?: string | number | boolean;
   /** If the input is disabled */
   disabled?: boolean;
+  /** Event handler function for the when the field value is changed */
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 /** General properties for fields */
@@ -48,8 +52,9 @@ interface SideLabelProp {
 
 /** Properties for the TextField component */
 export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
-  /** Default value of the input */
   defaultValue?: string | number;
+  value?: string | number;
+
   /** Placeholder text for the input */
   placeholder?: string;
   /**
@@ -66,6 +71,8 @@ export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
 /** Properties for the NumberField component */
 export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp {
   defaultValue?: number;
+  value?: number;
+
   /** Minimum value allowed */
   min?: number | null;
   /** Maximum value allowed */
@@ -82,23 +89,30 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
 }
 
 /** Properties for the SelectField component */
-export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'> {
+export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onChange'> {
+  /** Event handler function for the when the field value is changed */
+  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   /** List of options available to select. The `value` of each option should be unique */
   options?: {
     /** Value of the option */
-    value: string,
+    value: string | number,
     /** Display text for the option */
-    text: string
+    text?: string
   }[];
 }
 
 /** Properties for the TextAreaField component */
-export interface TextAreaFieldProps extends TextFieldProps {}
+export interface TextAreaFieldProps extends  Omit<TextFieldProps, 'onChange'> {
+  /** Event handler function for the when the field value is changed */
+  onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+}
 
 /** Properties for the CheckboxField component */
 export interface CheckboxFieldProps extends InputProps, FieldProps {
   /** If the field should be checked by default */
   defaultValue?: boolean;
+  /** If the field is checked or unchecked */
+  value?: boolean;
   /**
    * The position of the input relative to the label.
    *

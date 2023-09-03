@@ -1,5 +1,6 @@
 import { ShowIf } from '@/app/[lang]/components';
 import type { TextFieldProps } from './types';
+import { atom, useAtom } from 'jotai';
 
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
 export default function TextField({
@@ -19,6 +20,8 @@ export default function TextField({
   disabled = false,
   autoComplete = undefined, // Use browser default
   spellCheck = undefined, // Use browser default
+  value = undefined,
+  onChange = undefined,
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -42,6 +45,8 @@ export default function TextField({
               disabled={disabled}
               autoComplete={autoComplete}
               spellCheck={spellCheck}
+              value={value}
+              onChange={onChange}
             />
           </ShowIf>
           <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -62,6 +67,8 @@ export default function TextField({
                 disabled={disabled}
                 autoComplete={autoComplete}
                 spellCheck={spellCheck}
+                value={value}
+                onChange={onChange}
               />
               <ShowIf cond={!!afterSideLabel}>
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -85,6 +92,8 @@ export default function TextField({
             disabled={disabled}
             autoComplete={autoComplete}
             spellCheck={spellCheck}
+            value={value}
+            onChange={onChange}
           />
         </ShowIf>
         <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -105,6 +114,8 @@ export default function TextField({
               disabled={disabled}
               autoComplete={autoComplete}
               spellCheck={spellCheck}
+              value={value}
+              onChange={onChange}
             />
             <ShowIf cond={!!afterSideLabel}>
               <span className='join-item bg-base-200 flex items-center px-4'>

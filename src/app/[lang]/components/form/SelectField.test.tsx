@@ -151,4 +151,31 @@ describe('Form Components - SelectField', () => {
     expect(screen.getByRole('combobox')).toHaveAttribute('autocomplete', 'foo');
   });
 
+  it('has input with value specified in `value` attribute', () => {
+    render(
+      <SelectField
+        value={'foo'}
+        onChange={() => null}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('foo');
+  });
+
+  it('has input with "on-change" event function specified by `onChange` attribute', async () => {
+    const onChangeFn = jest.fn();
+    render(
+      <SelectField
+        onChange={onChangeFn}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+
+    const input = screen.getByRole('combobox');
+    await userEvent.selectOptions(input, 'bar'); // Select 'bar'
+
+    expect(input).toHaveValue('bar');
+    expect(onChangeFn).toBeCalledTimes(1);
+  });
+
 });

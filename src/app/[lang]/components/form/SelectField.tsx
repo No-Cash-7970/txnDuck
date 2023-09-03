@@ -19,6 +19,8 @@ export default function SelectField({
   defaultValue = undefined,
   disabled = false,
   autoComplete = undefined, // Use browser default
+  value = undefined,
+  onChange = undefined,
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -39,6 +41,8 @@ export default function SelectField({
               name={name || undefined}
               disabled={disabled}
               autoComplete={autoComplete}
+              value={value}
+              onChange={onChange}
             >
               <ShowIf cond={!!placeholder}>
                 <option value='' disabled>{placeholder}</option>
@@ -65,6 +69,8 @@ export default function SelectField({
                 name={name || undefined}
                 disabled={disabled}
                 autoComplete={autoComplete}
+                value={value}
+                onChange={onChange}
               >
                 <ShowIf cond={!!placeholder}>
                   <option value='' disabled>{placeholder}</option>
@@ -94,6 +100,8 @@ export default function SelectField({
             name={name || undefined}
             disabled={disabled}
             autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
           >
             <ShowIf cond={!!placeholder}>
               <option value='' disabled>{placeholder}</option>
@@ -120,6 +128,8 @@ export default function SelectField({
               name={name || undefined}
               disabled={disabled}
               autoComplete={autoComplete}
+              value={value}
+              onChange={onChange}
             >
               <ShowIf cond={!!placeholder}>
                 <option value='' disabled>{placeholder}</option>

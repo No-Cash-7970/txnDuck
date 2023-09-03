@@ -20,6 +20,8 @@ export default function NumberField({
   defaultValue = undefined,
   disabled = false,
   autoComplete = undefined, // Use browser default
+  value = undefined,
+  onChange = undefined,
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -45,6 +47,8 @@ export default function NumberField({
               defaultValue={defaultValue}
               disabled={disabled}
               autoComplete={autoComplete}
+              value={value}
+              onChange={onChange}
             />
           </ShowIf>
           <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
@@ -66,6 +70,8 @@ export default function NumberField({
                 defaultValue={defaultValue}
                 disabled={disabled}
                 autoComplete={autoComplete}
+                value={value}
+                onChange={onChange}
               />
               <ShowIf cond={!!afterSideLabel}>
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -91,6 +97,8 @@ export default function NumberField({
             defaultValue={defaultValue}
             disabled={disabled}
             autoComplete={autoComplete}
+            value={value}
+            onChange={onChange}
           />
         </ShowIf>
         <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>

@@ -4,6 +4,7 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
+import { atom, useAtomValue, useSetAtom } from "jotai";
 import TextField from "./TextField";
 
 describe('Form Components - TextField', () => {
@@ -139,6 +140,22 @@ describe('Form Components - TextField', () => {
   it('has input with spell-check enabled if `spellCheck` is true', () => {
     render(<TextField disabled={true} />);
     expect(screen.getByRole('textbox')).toBeDisabled();
+  });
+
+  it('has input with value specified in `value` attribute', () => {
+    render(<TextField value={'foo'} onChange={() => null} />);
+    expect(screen.getByRole('textbox')).toHaveValue('foo');
+  });
+
+  it('has input with "on-change" event function specified by `onChange` attribute', async () => {
+    const onChangeFn = jest.fn();
+    render(<TextField onChange={onChangeFn} />);
+
+    const input = screen.getByRole('textbox');
+    await userEvent.type(input, 'bar'); // Enter 'bar' into the box
+
+    expect(input).toHaveValue('bar');
+    expect(onChangeFn).toBeCalledTimes(3);
   });
 
 });
