@@ -16,7 +16,7 @@ const i18nextClientMock = {
       },
     };
   },
-  Trans: ({ children }: { children: React.ReactNode}) => children,
+  Trans: ({ i18nKey }: { i18nKey: string }) => i18nKey,
   initReactI18next: {
     type: '3rdParty',
     init: () => {},
