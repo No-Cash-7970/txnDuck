@@ -25,11 +25,6 @@ describe("Compose Transaction Page", () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
-  it('has instructions', () => {
-    render(<ComposeTxnPage params={{lang: ''}} />);
-    expect(screen.getByText(/instructions/)).toBeInTheDocument();
-  });
-
   it('has form', () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
     expect(screen.getByRole('form')).toBeInTheDocument();

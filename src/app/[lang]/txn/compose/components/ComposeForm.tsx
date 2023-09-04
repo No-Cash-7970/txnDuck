@@ -4,168 +4,55 @@ import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import {
-  TextField,
-  NumberField,
-  SelectField,
-  TextAreaField,
-  ToggleField,
-} from '@/app/[lang]/components/form';
-import { ShowIf } from '@/app/[lang]/components';
-import {
-  IconAlertTriangle,
   IconAlertTriangleFilled,
   IconArrowLeft,
   IconArrowRight
 } from '@tabler/icons-react';
+import * as GeneralFields from './GeneralFields';
+import * as PaymentFields from './PaymentFields';
 
 type Props = {
   /** Language */
   lng?: string
 };
 
+/** Form for composing a transaction */
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
 
+  const submitData = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
+
   return (
-    <form id='compose-txn-form' className='max-w-3xl' noValidate={true} aria-label={t('title')}>
-      <SelectField label={t('fields.type.label')}
-        name='type'
-        id='type-field'
-        required={true}
-        requiredText={t('form.required')}
-        containerClass='max-w-xs'
-        placeholder={t('fields.type.placeholder')}
-        options={[
-          { value: 'pay', text: t('fields.type.options.pay') },
-          { value: 'axfer', text: t('fields.type.options.axfer') },
-          { value: 'acfg', text: t('fields.type.options.acfg') },
-          { value: 'afrz', text: t('fields.type.options.afrz') },
-          { value: 'appl', text: t('fields.type.options.appl') },
-          { value: 'keyreg', text: t('fields.type.options.keyreg') },
-        ]}
-      />
+    <form
+      id='compose-txn-form'
+      className='max-w-2xl mx-auto mt-12'
+      noValidate={true}
+      aria-label={t('title')}
+    >
+      <p className='max-w-3xl text-sm mb-8'>
+        <Trans t={t} i18nKey='instructions'>
+          asterisk_fields (<span className='text-error'>*</span>) required
+        </Trans>
+      </p>
 
-      <TextField label={t('fields.snd.label')}
-        name='snd'
-        id='snd-field'
-        required={true}
-        requiredText={t('form.required')}
-        inputInsideLabel={false}
-        placeholder={t('fields.snd.placeholder')}
-        containerClass='mt-4 max-w-2xl'
-      />
+      <GeneralFields.TxnType t={t} />
+      <GeneralFields.Sender t={t} />
 
-      {/* If payment type */}
-      <ShowIf cond={true}>
-        <TextField label={t('fields.rcv.label')}
-          name='rcv'
-          id='rcv-field'
-          required={true}
-          requiredText={t('form.required')}
-          inputInsideLabel={false}
-          placeholder={t('fields.rcv.placeholder')}
-          containerClass='mt-4 max-w-2xl'
-        />
-        <NumberField label={t('fields.amt.label')}
-          name='amt'
-          id='amt-field'
-          required={true}
-          requiredText={t('form.required')}
-          inputInsideLabel={false}
-          containerClass='mt-4 max-w-xs'
-          afterSideLabel={t('algo_other')}
-          min={0}
-          step={0.000001}
-        />
-      </ShowIf>
+      <PaymentFields.ReceiverAndAmount t={t} />
 
-      <NumberField label={t('fields.fee.label')}
-        name='fee'
-        id='fee-field'
-        required={true}
-        requiredText={t('form.required')}
-        inputInsideLabel={false}
-        containerClass='mt-4 max-w-xs'
-        afterSideLabel={t('algo_other')}
-        min={0.001}
-        step={0.000001}
-        helpMsg={t('fields.fee.help_msg', { count: 0.001 })}
-      />
-      <TextAreaField label={t('fields.note.label')}
-        name='note'
-        id='note-field'
-        inputInsideLabel={false}
-        placeholder={t('fields.note.placeholder')}
-        containerClass='mt-4 max-w-lg'
-      />
+      <GeneralFields.Fee t={t} />
+      <GeneralFields.Note t={t} />
 
       <div>
-        <NumberField label={t('fields.fv.label')}
-          name='fv'
-          id='fv-field'
-          required={true}
-          requiredText={t('form.required')}
-          inputInsideLabel={false}
-          containerClass='mt-4 max-w-xs'
-          min={1}
-          step={1}
-        />
-        <NumberField label={t('fields.lv.label')}
-          name='lv'
-          id='lv-field'
-          required={true}
-          requiredText={t('form.required')}
-          inputInsideLabel={false}
-          containerClass='mt-4 max-w-xs'
-          min={1}
-          step={1}
-        />
-        <TextField label={t('fields.lx.label')}
-          name='lx'
-          id='lx-field'
-          inputInsideLabel={false}
-          containerClass='mt-4 max-w-sm'
-        />
-        <TextField label={t('fields.rekey.label')}
-          name='rekey'
-          id='rekey-field'
-          inputInsideLabel={false}
-          placeholder={t('fields.rekey.placeholder')}
-          containerClass='mt-4 max-w-2xl'
-        />
-        <div className='alert alert-warning not-prose max-w-2xl my-1'>
-          <IconAlertTriangle aria-hidden />
-          <span className='text-start'>
-            <Trans t={t} i18nKey='fields.rekey.warning'>
-              <strong>rekeying_can_result_in_loss</strong> learn_more_at
-              <a
-                href="https://developer.algorand.org/docs/get-details/accounts/rekey"
-                className="underline"
-              >
-                algo_docs
-              </a>.
-            </Trans>
-          </span>
-        </div>
+        <GeneralFields.FirstValid t={t} />
+        <GeneralFields.LastValid t={t} />
+        <GeneralFields.Lease t={t} />
+        <GeneralFields.Rekey t={t} />
+
         {/* If payment type */}
-        <ShowIf cond={true}>
-          <TextField label={t('fields.close.label')}
-            name='close'
-            id='close-field'
-            inputInsideLabel={false}
-            placeholder={t('fields.close.placeholder')}
-            containerClass='mt-4 max-w-2xl'
-          />
-          <div className='alert alert-warning not-prose max-w-2xl my-1'>
-            <IconAlertTriangle aria-hidden />
-            <span className='text-start'>
-              <Trans t={t} i18nKey='fields.close.warning'>
-                if_given <strong>all_funds_will_be_sent_to_given_address</strong>
-                make_sure_you_know_what_you_are_doing
-              </Trans>
-            </span>
-          </div>
-        </ShowIf>
+        <PaymentFields.CloseTo t={t} />
       </div>
 
       {/* Buttons */}
@@ -185,7 +72,7 @@ export default function ComposeForm({ lng }: Props) {
           </div> */}
         </div>
         <div>
-          <button type='submit' className='btn btn-primary w-full' onClick={(e) => e.preventDefault()}>
+          <button type='submit' className='btn btn-primary w-full' onClick={(submitData)}>
             {t('sign_txn_btn')}
             <IconArrowRight aria-hidden className='rtl:hidden' />
             <IconArrowLeft aria-hidden className='hidden rtl:inline' />

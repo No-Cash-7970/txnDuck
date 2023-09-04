@@ -16,13 +16,6 @@ export default function ComposeTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='compose' />
       <PageTitleHeading badgeText=''>{t('title')}</PageTitleHeading>
-
-      <p className='max-w-3xl text-sm mt-12 mb-8'>
-        <Trans t={t} i18nKey='instructions'>
-          asterisk_fields (<span className='text-error'>*</span>) required
-        </Trans>
-      </p>
-
       <ComposeForm lng={lang} />
     </main>
   );

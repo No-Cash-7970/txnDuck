@@ -9,6 +9,11 @@ import ComposeForm from "./ComposeForm";
 
 describe('Compose Form Component', () => {
 
+  it('has instructions', () => {
+    render(<ComposeForm />);
+    expect(screen.getByText(/instructions/)).toBeInTheDocument();
+  });
+
   it('has base transaction fields', () => {
     render(<ComposeForm />);
     expect(screen.getByText('fields.type.label')).toBeInTheDocument();
@@ -36,4 +41,5 @@ describe('Compose Form Component', () => {
     render(<ComposeForm />);
     expect(screen.getByText('sign_txn_btn')).toBeEnabled();
   });
+
 });
