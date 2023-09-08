@@ -120,6 +120,8 @@ export default function NumberField({
               defaultValue={defaultValue}
               disabled={disabled}
               autoComplete={autoComplete}
+              value={value}
+              onChange={onChange}
             />
             <ShowIf cond={!!afterSideLabel}>
               <span className='join-item bg-base-200 flex items-center px-4'>
