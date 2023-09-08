@@ -162,6 +162,18 @@ describe('Form Components - SelectField', () => {
     expect(screen.getByRole('combobox')).toHaveValue('foo');
   });
 
+  it('has input with value specified in `value` attribute even when `placeholder` is set', () => {
+    render(
+      <SelectField
+        value={'foo'}
+        onChange={() => null}
+        placeholder='Select something'
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    expect(screen.getByRole('combobox')).toHaveValue('foo');
+  });
+
   it('has input with "on-change" event function specified by `onChange` attribute', async () => {
     const onChangeFn = jest.fn();
     render(
