@@ -156,6 +156,11 @@ describe('Form Components - NumberField', () => {
     expect(screen.getByRole('spinbutton')).toHaveValue(42);
   });
 
+  it('has input with empty value if `value` attribute is an empty string', () => {
+    render(<NumberField value='' onChange={() => null} />);
+    expect(screen.getByRole('spinbutton')).toHaveValue(null);
+  });
+
   it('has input with "on-change" event function specified by `onChange` attribute', async () => {
     const onChangeFn = jest.fn();
     render(<NumberField onChange={onChangeFn} />);

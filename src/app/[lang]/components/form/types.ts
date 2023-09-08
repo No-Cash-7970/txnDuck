@@ -70,8 +70,8 @@ export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
 
 /** Properties for the NumberField component */
 export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp {
-  defaultValue?: number;
-  value?: number;
+  defaultValue?: number | string;
+  value?: number | string;
 
   /** Minimum value allowed */
   min?: number | null;
