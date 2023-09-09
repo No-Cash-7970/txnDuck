@@ -28,6 +28,7 @@ This is documentation contains information useful for developers.
 
 - TypeScript (except for a few configuration files)
 - [Next.js](https://nextjs.org/) - Web development framework built on React
+- [Jotai](https://jotai.org/) - Global state management for React (similar to React Redux)
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
 - [daisyUI](https://daisyui.com/) - Library of UI components built with Tailwind
   CSS
