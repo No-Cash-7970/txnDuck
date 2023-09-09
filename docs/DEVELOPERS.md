@@ -11,6 +11,7 @@ This is documentation contains information useful for developers.
 - [Installing the development environment](#installing-the-development-environment)
 - [Running the development web server](#running-the-development-web-server)
 - [Building for production](#building-for-production)
+  - [Deploying to somewhere other than localhost or Vercel](#deploying-to-somewhere-other-than-localhost-or-vercel)
 - [Testing](#testing)
   - [Unit testing](#unit-testing)
   - [End-to-end (E2E) testing](#end-to-end-e2e-testing)
@@ -98,6 +99,28 @@ Optionally, you can build and run in one command:
 
 ```bash
 yarn prod
+```
+
+### Deploying to somewhere other than localhost or Vercel
+
+If the build is going to deployed to somewhere other than localhost or
+[Vercel](https://vercel.com/), then the `BASE_URL` environment variable needs
+to be set to the URL of what will be the home page of the deployed website. The
+`BASE_URL` can be set in a `.env.local` file, which can be created by copying
+the `.env.local.example` file and renaming it to `.env.local`. Alternatively,
+the `BASE_URL` can be set in the `.env.production` file. However, it is best to
+set the `BASE_URL` in the `.env.local` file because it will not be overwritten
+if when upgrading to a new version.
+
+Here is an example of what setting the `BASE_URL` looks like:
+
+```shell
+# .env.local file
+# ...other settings here
+
+BASE_URL=https://example.com
+
+# some more settings here...
 ```
 
 ## Testing
