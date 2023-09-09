@@ -1,9 +1,23 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+
+/* Polyfill for TextEncoder and the Uint8Array it uses */
+import { TextEncoder } from 'util';
+global.TextEncoder = TextEncoder;
+// NOTE: For some reason, the Uint8Array class that the polyfills use is different from the actual
+// Uint8Array class, so polyfilling Uint8array is necessary too
+// @ts-ignore
+global.Uint8Array = (new TextEncoder).encode().constructor;
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock useRouter
+const routerPushMock = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: routerPushMock })
+}));
 
 import ComposeForm from "./ComposeForm";
 
@@ -41,5 +55,31 @@ describe('Compose Form Component', () => {
     render(<ComposeForm />);
     expect(screen.getByText('sign_txn_btn')).toBeEnabled();
   });
+
+  it('goes to sign-transaction page if valid payment transaction data is submitted', async () => {
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.type(
+      screen.getByLabelText(/fields.snd.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+    );
+    await userEvent.type(
+      screen.getByLabelText(/fields.rcv.label/),
+      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+    );
+    await userEvent.type(screen.getByLabelText(/fields.amt.label/), '5');
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.note.label/), 'Hello world');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).toHaveBeenCalled();
+  });
+
+  // it('does not go to sign-transaction page if invalid data is submitted', () => {
+
+  // });
 
 });

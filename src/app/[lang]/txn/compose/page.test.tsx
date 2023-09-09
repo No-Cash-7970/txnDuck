@@ -10,6 +10,10 @@ jest.mock('react', () => ({
 // Mock i18next before modules that use it are imported. This needs to be mocked because it is a
 // dependency of a child client component.
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock useRouter because it is used by a child component
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: jest.fn() })
+}));
 
 import ComposeTxnPage from "./page";
 

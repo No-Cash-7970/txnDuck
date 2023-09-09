@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import {
@@ -8,8 +9,12 @@ import {
   IconArrowLeft,
   IconArrowRight
 } from '@tabler/icons-react';
+import { useStore } from 'jotai';
+import { TransactionType } from 'algosdk';
+import * as TxnFormAtoms from '@/app/lib/TxnDataAtoms';
 import * as GeneralFields from './GeneralFields';
 import * as PaymentFields from './PaymentFields';
+import { createTxnFromData } from '../TxnDataProcessor';
 
 type Props = {
   /** Language */
@@ -19,9 +24,36 @@ type Props = {
 /** Form for composing a transaction */
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
+  const jotaiStore = useStore();
+  const router = useRouter();
+
 
   const submitData = (e: React.MouseEvent) => {
     e.preventDefault();
+
+    const data = {
+      type: jotaiStore.get(TxnFormAtoms.txnType) as TransactionType,
+      snd: jotaiStore.get(TxnFormAtoms.snd),
+      note: jotaiStore.get(TxnFormAtoms.note),
+      fee: jotaiStore.get(TxnFormAtoms.fee) as number,
+      fv: jotaiStore.get(TxnFormAtoms.fv) as number,
+      lv: jotaiStore.get(TxnFormAtoms.lv) as number,
+      rcv: jotaiStore.get(TxnFormAtoms.rcv),
+      amt:jotaiStore.get(TxnFormAtoms.amt) as number,
+      lx: jotaiStore.get(TxnFormAtoms.lx) || undefined,
+      rekey: jotaiStore.get(TxnFormAtoms.rekey) || undefined,
+      close: jotaiStore.get(TxnFormAtoms.close) || undefined,
+    };
+    const txn = createTxnFromData(
+      data,
+      'testnet-v1.0',
+      'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+    );
+
+    jotaiStore.set(TxnFormAtoms.txn, txn);
+
+    // Go to sign-transaction page
+    router.push(`/${lng}/txn/sign`);
   };
 
   return (
