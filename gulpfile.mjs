@@ -100,24 +100,6 @@ const stashPopFail = async (errorMsg = '') => {
  */
 
 /**
- * Build the `jest-chance` dependency
- *
- * This is needed because a fork of jest-chance is being used. This task can be removed if using
- * the official jest-chance package.
- */
-export const buildJestChance = gulp.series(
-  (cb) => {
-    const dir = './node_modules/jest-chance';
-
-    process.chdir(dir);
-    console.log(`cwd ${dir}`);
-    cb();
-  },
-  task('yarn install'),
-  task('yarn build'),
-);
-
-/**
  * Compiles the YAML files for language translations (locales) to minified JSON
  *
  * Code based on: https://gulpjs.com/docs/en/getting-started/using-plugins#inline-plugins
@@ -127,10 +109,7 @@ export const compileLocales = gulp.series(cleanLocales, convertLocales);
 /**
  * Install and set up developer tools
  */
-export const installDev = gulp.parallel(
-  task('lefthook install'),
-  buildJestChance
-);
+export const installDev = task('lefthook install');
 
 /**
  * Things that need to be done before building the project. The "prebuild". Usually consists

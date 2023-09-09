@@ -14,9 +14,6 @@ const config = {
 
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/e2e'],
-
-  // Needed to make Jest-Chance work
-  globalSetup: './node_modules/jest-chance/dist/esm/index.js',
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which

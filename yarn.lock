@@ -2365,11 +2365,6 @@ chalk@^4.0.0, chalk@^4.1.0, chalk@^4.1.1:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chance@^1.1.11, chance@^1.1.9:
-  version "1.1.11"
-  resolved "https://registry.yarnpkg.com/chance/-/chance-1.1.11.tgz#78e10e1f9220a5bbc60a83e3f28a5d8558d84d1b"
-  integrity sha512-kqTg3WWywappJPqtgrdvbA380VoXO2eu9VCV895JgbyHsaErXdyHK9LOZ911OvAk6L0obK7kDk9CGs8+oBawVA==
-
 char-regex@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
@@ -5688,12 +5683,6 @@ iterator.prototype@^1.1.0:
     has-symbols "^1.0.3"
     has-tostringtag "^1.0.0"
     reflect.getprototypeof "^1.0.3"
-
-"jest-chance@https://github.com/No-Cash-7970/jest-chance":
-  version "0.1.11"
-  resolved "https://github.com/No-Cash-7970/jest-chance#4386dd435c1971dda77a0c58ff2b388a1a3517ef"
-  dependencies:
-    chance "^1.1.9"
 
 jest-changed-files@^29.5.0:
   version "29.5.0"
