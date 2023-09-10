@@ -65,6 +65,7 @@ export default function HomePage({ params: { lang } }: {
                 className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
                 href={`${lang}/txn/sign`}
                 aria-disabled
+                tabIndex={-1}
               >
                 {t('home:how_it_works.sign.button')}
               </Link>
@@ -80,6 +81,7 @@ export default function HomePage({ params: { lang } }: {
                 className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
                 href={`${lang}/txn/send`}
                 aria-disabled
+                tabIndex={-1}
               >
                 {t('home:how_it_works.send.button')}
               </Link>
