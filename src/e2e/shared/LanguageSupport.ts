@@ -59,6 +59,7 @@ export class LanguageSupport {
       test.describe(this.langFullNames[lng], () => {
         const fullUrlWithLang = '/' + lng + pageUrl;
 
+        // Set the browser's locale, which sets the Accept-Language header
         test.use({ locale: lng });
 
         test('redirects based on `Accept-Language` header', async({ page }) => {
@@ -77,6 +78,8 @@ export class LanguageSupport {
         });
 
         test.describe('With Cookie', () => {
+          // Set browser's locale to something that definitely doesn't exist to make it easier to
+          // detect if the browser's locale is being used.
           test.use({ locale: 'fake' });
 
           test(
