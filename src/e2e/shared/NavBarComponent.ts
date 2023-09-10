@@ -11,14 +11,6 @@ import { HomePage } from '../pageModels/HomePage';
 
 export class NavBarComponent {
   /**
-   * Checks if the navigation bar is present.
-   * @param page Playwright Page fixture
-   */
-  static async isPresent(page: Page): Promise<void> {
-    await expect(page.getByRole('navigation')).toBeVisible();
-  }
-
-  /**
    * Checks if the navigation bar has a link to the home page, which is usually the site name.
    * @param page Playwright Page fixture
    * @param lang Language prefix for the page
@@ -44,10 +36,6 @@ export class NavBarComponent {
   ): void {
     test.beforeEach(async ({ page }) => {
       await page.goto(pageFullUrl);
-    });
-
-    test('is present', async({ page }) => {
-      await this.isPresent(page);
     });
 
     test('has link to home page', async({ page }) => {
