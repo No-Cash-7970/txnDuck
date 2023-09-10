@@ -7,6 +7,7 @@ module.exports = {
   ],
   plugins: [require('@tailwindcss/typography'), require('daisyui')],
   daisyui: {
+    // rtl: true,
     darkTheme: 'duck_dark',
     themes: [
       {
@@ -52,9 +53,39 @@ module.exports = {
         'display': ['var(--font-noto-sans-display)', 'var(--font-noto-sans)', 'sans-serif'],
         'mono': ['var(--font-noto-sans-mono)', 'monospace'],
         // 'emoji': ['var(--font-noto-color-emoji)'],
-
         // 'sans-jp': [''Noto Sans'', ''Noto Sans JP'', 'sans-serif'],
         // 'display-jp': [''Noto Sans Display'', ''Noto Sans'', ''Noto Sans JP'', 'sans-serif'],
+      },
+      keyframes: {
+        // For animating Radix UI Toast component when interacting with it
+        toastHide: {
+          from: { opacity: 1 },
+          to: { opacity: 0 },
+        },
+        toastSlideInFromRight: {
+          from: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+          to: { transform: 'translateX(0)' },
+        },
+        toastSlideInFromLeft: {
+          from: { transform: 'translateX(calc(0em - 100% - var(--viewport-padding)))' },
+          to: { transform: 'translateX(0)' },
+        },
+        toastSwipeOutToRight: {
+          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
+          to: { transform: 'translateX(calc(100% + var(--viewport-padding)))' },
+        },
+        toastSwipeOutToLeft: {
+          from: { transform: 'translateX(var(--radix-toast-swipe-end-x))' },
+          to: { transform: 'translateX(calc(0em - 100% - var(--viewport-padding)))' },
+        },
+      },
+      animation: {
+        // For animating Radix UI Toast component when interacting with it
+        toastHide: 'toastHide 100ms ease-in',
+        toastSlideInFromRight: 'toastSlideInFromRight 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        toastSlideInFromLeft: 'toastSlideInFromLeft 150ms cubic-bezier(0.16, 1, 0.3, 1)',
+        toastSwipeOutToRight: 'toastSwipeOutToRight 100ms ease-out',
+        toastSwipeOutToLeft: 'toastSwipeOutToLeft 100ms ease-out',
       },
     },
   },

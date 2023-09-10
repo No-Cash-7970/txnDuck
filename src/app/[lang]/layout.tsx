@@ -1,12 +1,11 @@
 import '@/app/globals.css';
+import { use } from 'react';
+import type { Metadata } from 'next';
 import * as fonts from '@/app/lib/fonts';
-import type { Metadata, ResolvingMetadata } from 'next';
-import JotaiProvider from './components/JotaiProvider';
 import { dir } from 'i18next';
-import { SUPPORTED_LANGS } from '@/app/i18n/settings';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
+import { SUPPORTED_LANGS } from '@/app/i18n/settings';
+import { Footer, JotaiProvider, NavBar, ToastProvider, ToastViewport } from './components';
 
 /**
  * Generate the base metadata for the site. Parts may be overwritten by child pages.
@@ -54,10 +53,13 @@ export default function RootLayout(
     params: { lang?: string }
   }
 ) {
+  const { t } = use(useTranslation(lang || '', 'common'));
+  const langDir = dir(lang);
+
   return (
     <html
       lang={lang}
-      dir={dir(lang)}
+      dir={langDir}
       className={
         fonts.notoSans.variable
         + ` ${fonts.notoSansDisplay.variable}`
@@ -67,9 +69,21 @@ export default function RootLayout(
     >
       <body>
         <JotaiProvider>
-          <NavBar lng={lang} />
-          {children}
-          <Footer lng={lang} />
+          <ToastProvider
+            swipeDirection={langDir === 'rtl'? 'left' : 'right'}
+            label={t('toast.provider_label')}
+          >
+            <NavBar lng={lang} />
+            {children}
+
+            <ToastViewport
+              toastPosition={langDir === 'rtl'? 'left' : 'right'}
+              label={t('toast.viewport_label')}
+            />
+
+            <Footer lng={lang} />
+
+          </ToastProvider>
         </JotaiProvider>
       </body>
     </html>

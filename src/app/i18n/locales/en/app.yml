@@ -14,3 +14,8 @@ footer:
   license_notice: >
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <1>license</1>.
+settings:
+  heading: Settings
+  reset_button: Reset all to default
+  saved_message: Settings saved!
+  reset_message: All settings have been reset.

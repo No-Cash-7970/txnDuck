@@ -24,6 +24,8 @@
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^3.0.0",
+    "@radix-ui/react-dialog": "^1.0.4",
+    "@radix-ui/react-toast": "^1.1.4",
     "@tabler/icons-react": "^2.26.0",
     "@tailwindcss/typography": "^0.5.9",
     "@types/node": "^20.5.0",

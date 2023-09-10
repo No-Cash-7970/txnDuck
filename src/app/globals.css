@@ -3,6 +3,14 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /*
+     * This should be set to whatever the padding of container for Daisy UI Toast component.
+     * The padding of the container for the Daisy UI Toast component is 1rem by default.
+     */
+    --viewport-padding: 1rem;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
