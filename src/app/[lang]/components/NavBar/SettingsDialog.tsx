@@ -29,7 +29,10 @@ export default function SettingsDialog({ lng, open = false }: Props) {
         </Dialog.Trigger>
         <Dialog.Portal>
           <Dialog.Overlay />
-          <Dialog.Content className='modal data-[state=open]:modal-open'>
+          <Dialog.Content
+            aria-describedby={undefined}
+            className='modal data-[state=open]:modal-open'
+          >
             <div className='modal-box prose'>
               <Dialog.Title>{t('settings.heading')}</Dialog.Title>
               <div>
