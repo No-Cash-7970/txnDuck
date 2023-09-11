@@ -33,7 +33,7 @@ export default function ToggleField({
           onChange={onChange}
         />
       </ShowIf>
-      <label className='label justify-normal' htmlFor={id || undefined}>
+      <label className='label' htmlFor={id || undefined}>
         <ShowIf cond={inputInsideLabel && inputPosition === 'start'}>
           <input
             className={`toggle ${inputClass}`}

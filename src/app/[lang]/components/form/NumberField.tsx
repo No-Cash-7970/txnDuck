@@ -25,7 +25,7 @@ export default function NumberField({
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label justify-normal' htmlFor={id || undefined}>
+      <label className='label' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
