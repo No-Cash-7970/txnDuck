@@ -89,8 +89,15 @@ export default function ComposeForm({ lng }: Props) {
 
       {/* Buttons */}
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
-        <div className='order-last sm:order-first'>
-          <Link type='button' href='' className='btn w-full btn-disabled'>
+        <div>
+          <button type='submit' className='btn btn-primary w-full' onClick={(submitData)}>
+            {t('sign_txn_btn')}
+            <IconArrowRight aria-hidden className='rtl:hidden' />
+            <IconArrowLeft aria-hidden className='hidden rtl:inline' />
+          </button>
+        </div>
+        <div className='sm:order-first'>
+          <Link type='button' href='' className='btn w-full btn-disabled' tabIndex={-1}>
             <IconArrowLeft aria-hidden className='rtl:hidden' />
             <IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('txn_template_btn')}
@@ -102,13 +109,6 @@ export default function ComposeForm({ lng }: Props) {
             />
             <small>{t('txn_template_btn_warning')}</small>
           </div> */}
-        </div>
-        <div>
-          <button type='submit' className='btn btn-primary w-full' onClick={(submitData)}>
-            {t('sign_txn_btn')}
-            <IconArrowRight aria-hidden className='rtl:hidden' />
-            <IconArrowLeft aria-hidden className='hidden rtl:inline' />
-          </button>
         </div>
       </div>
 
