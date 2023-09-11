@@ -5,7 +5,7 @@ import { atom, useAtom } from 'jotai';
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
 export default function TextField({
   required = false,
-  id: inputId = '',
+  id = '',
   inputClass = '',
   placeholder = '',
   label = '',
@@ -25,7 +25,7 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label justify-normal' htmlFor={inputId || undefined}>
+      <label className='label justify-normal' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
@@ -37,7 +37,7 @@ export default function TextField({
             <input
               className={`input-bordered input ${inputClass}`}
               type='text'
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
               name={name || undefined}
@@ -59,7 +59,7 @@ export default function TextField({
               <input
                 className={`input-bordered input join-item ${inputClass}`}
                 type='text'
-                id={inputId || undefined}
+                id={id || undefined}
                 required={required}
                 placeholder={placeholder || undefined}
                 name={name || undefined}
@@ -84,7 +84,7 @@ export default function TextField({
           <input
             className={`input-bordered input ${inputClass}`}
             type='text'
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             placeholder={placeholder || undefined}
             name={name || undefined}
@@ -106,7 +106,7 @@ export default function TextField({
             <input
               className={`input-bordered input join-item ${inputClass}`}
               type='text'
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
               name={name || undefined}

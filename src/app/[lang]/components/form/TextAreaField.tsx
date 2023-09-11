@@ -4,7 +4,7 @@ import type { TextAreaFieldProps } from './types';
 /** Text area form field. Includes a `<label>` element and a `<textarea>` element */
 export default function TextAreaField({
   required = false,
-  id: inputId = '',
+  id = '',
   inputClass = '',
   placeholder = '',
   label = '',
@@ -24,7 +24,7 @@ export default function TextAreaField({
 }: TextAreaFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label justify-normal' htmlFor={inputId || undefined}>
+      <label className='label justify-normal' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
@@ -35,7 +35,7 @@ export default function TextAreaField({
           <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
             <textarea
               className={`textarea-bordered textarea ${inputClass}`}
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
               name={name || undefined}
@@ -56,7 +56,7 @@ export default function TextAreaField({
               </ShowIf>
               <textarea
                 className={`textarea-bordered textarea join-item ${inputClass}`}
-                id={inputId || undefined}
+                id={id || undefined}
                 required={required}
                 placeholder={placeholder || undefined}
                 name={name || undefined}
@@ -80,7 +80,7 @@ export default function TextAreaField({
         <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
           <textarea
             className={`textarea-bordered textarea ${inputClass}`}
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             placeholder={placeholder || undefined}
             name={name || undefined}
@@ -101,7 +101,7 @@ export default function TextAreaField({
             </ShowIf>
             <textarea
               className={`textarea-bordered textarea join-item ${inputClass}`}
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
               name={name || undefined}

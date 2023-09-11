@@ -4,7 +4,7 @@ import type { ToggleFieldProps } from './types';
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
 export default function ToggleField({
   required = false,
-  id: inputId = '',
+  id = '',
   inputClass = '',
   label = '',
   inputInsideLabel = true,
@@ -24,7 +24,7 @@ export default function ToggleField({
         <input
           className={`toggle ${inputClass}`}
           type='checkbox'
-          id={inputId || undefined}
+          id={id || undefined}
           required={required}
           defaultChecked={defaultValue}
           name={name || undefined}
@@ -33,12 +33,12 @@ export default function ToggleField({
           onChange={onChange}
         />
       </ShowIf>
-      <label className='label justify-normal' htmlFor={inputId || undefined}>
+      <label className='label justify-normal' htmlFor={id || undefined}>
         <ShowIf cond={inputInsideLabel && inputPosition === 'start'}>
           <input
             className={`toggle ${inputClass}`}
             type='checkbox'
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             defaultChecked={defaultValue}
             name={name || undefined}
@@ -57,7 +57,7 @@ export default function ToggleField({
           <input
             className={`toggle ${inputClass}`}
             type='checkbox'
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             defaultChecked={defaultValue}
             name={name || undefined}
@@ -71,7 +71,7 @@ export default function ToggleField({
         <input
           className={`toggle ${inputClass}`}
           type='checkbox'
-          id={inputId || undefined}
+          id={id || undefined}
           required={required}
           defaultChecked={defaultValue}
           name={name || undefined}

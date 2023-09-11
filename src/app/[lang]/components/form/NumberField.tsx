@@ -4,7 +4,7 @@ import type { NumberFieldProps } from './types';
 /** Number form field. Includes a `<label>` element and an `<input>` element */
 export default function NumberField({
   required = false,
-  id: inputId = '',
+  id = '',
   inputClass = '',
   label = '',
   inputInsideLabel = false,
@@ -25,7 +25,7 @@ export default function NumberField({
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label justify-normal' htmlFor={inputId || undefined}>
+      <label className='label justify-normal' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
@@ -38,7 +38,7 @@ export default function NumberField({
             <input
               className={`input-bordered input ${inputClass}`}
               type='number'
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               min={min !== null? min : undefined }
               max={max !== null? max : undefined }
@@ -61,7 +61,7 @@ export default function NumberField({
               <input
                 className={`input-bordered input join-item ${inputClass}`}
                 type='number'
-                id={inputId || undefined}
+                id={id || undefined}
                 required={required}
                 min={min !== null? min : undefined }
                 max={max !== null? max : undefined }
@@ -88,7 +88,7 @@ export default function NumberField({
           <input
             className={`input-bordered input ${inputClass}`}
             type='number'
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             min={min !== null? min : undefined }
             max={max !== null? max : undefined }
@@ -111,7 +111,7 @@ export default function NumberField({
             <input
               className={`input-bordered input join-item ${inputClass}`}
               type='number'
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               min={min !== null? min : undefined }
               max={max !== null? max : undefined }

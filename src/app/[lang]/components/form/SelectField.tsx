@@ -4,7 +4,7 @@ import type { SelectFieldProps } from './types';
 /** Selection box form field. Includes a `<label>` element and a `<select>` element */
 export default function SelectField({
   required = false,
-  id: inputId = '',
+  id = '',
   inputClass = '',
   placeholder = '',
   label = '',
@@ -24,7 +24,7 @@ export default function SelectField({
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label justify-normal' htmlFor={inputId || undefined}>
+      <label className='label justify-normal' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
           <ShowIf cond={required}>
@@ -35,7 +35,7 @@ export default function SelectField({
           <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
             <select
               className={`select-bordered select ${inputClass}`}
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
               name={name || undefined}
@@ -63,7 +63,7 @@ export default function SelectField({
               </ShowIf>
               <select
                 className={`select-bordered select join-item ${inputClass}`}
-                id={inputId || undefined}
+                id={id || undefined}
                 required={required}
                 defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
                 name={name || undefined}
@@ -94,7 +94,7 @@ export default function SelectField({
         <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
           <select
             className={`select-bordered select ${inputClass}`}
-            id={inputId || undefined}
+            id={id || undefined}
             required={required}
             defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
             name={name || undefined}
@@ -122,7 +122,7 @@ export default function SelectField({
             </ShowIf>
             <select
               className={`select-bordered select join-item ${inputClass}`}
-              id={inputId || undefined}
+              id={id || undefined}
               required={required}
               defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
               name={name || undefined}
