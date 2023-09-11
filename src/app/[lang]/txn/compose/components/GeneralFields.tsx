@@ -4,7 +4,7 @@ import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import * as TxnFormAtoms from '@/app/lib/TxnDataAtoms';
+import * as TxnFormAtoms from '@/app/lib/txn-form-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
 

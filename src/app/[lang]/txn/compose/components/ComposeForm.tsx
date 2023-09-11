@@ -11,7 +11,7 @@ import {
 } from '@tabler/icons-react';
 import { useStore } from 'jotai';
 import { TransactionType } from 'algosdk';
-import * as TxnFormAtoms from '@/app/lib/TxnDataAtoms';
+import * as TxnFormAtoms from '@/app/lib/txn-form-data';
 import * as GeneralFields from './GeneralFields';
 import * as PaymentFields from './PaymentFields';
 import { createTxnFromData } from '../TxnDataProcessor';
