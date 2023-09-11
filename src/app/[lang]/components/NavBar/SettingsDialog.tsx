@@ -5,6 +5,7 @@ import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
 import SettingsToast from './SettingsToast';
+import { RadioButtonGroupField } from '../form';
 
 type Props = {
   /** Language */
@@ -18,6 +19,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
+  const [test, setTest] = useState('');
 
   return (
     <>
@@ -35,7 +37,25 @@ export default function SettingsDialog({ lng, open = false }: Props) {
           >
             <div className='modal-box prose'>
               <Dialog.Title>{t('settings.heading')}</Dialog.Title>
+              {test || '?'}
               <div>
+                <RadioButtonGroupField
+                  name='test'
+                  label='Test Radio Button Group'
+                  disabled={false}
+                  required={true}
+                  requiredText='Required'
+                  containerClass='mb-8'
+                  optionClass='disabled:checked:opacity-20'
+                  helpMsg='This is some helpful information'
+                  options={[
+                    { value: 'a', text: 'A' },
+                    { value: 'b', text: 'B' },
+                    { value: 'c', text: 'C' },
+                  ]}
+                  value={test}
+                  onChange={(e) => setTest(e.target.value)}
+                />
                 <button
                   className='btn'
                   onClick={() => {setToastOpen(true); setToastMsg(t('settings.saved_message'));}}

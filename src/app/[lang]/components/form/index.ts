@@ -7,6 +7,9 @@ export { FieldGroup };
 import NumberField from './NumberField';
 export { NumberField };
 
+import RadioButtonGroupField from './RadioButtonGroupField';
+export { RadioButtonGroupField };
+
 import SelectField from './SelectField';
 export { SelectField };
 

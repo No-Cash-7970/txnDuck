@@ -6,13 +6,13 @@ interface InputProps {
   id?: string;
   /** Classes to add to the input element for the field */
   inputClass?: string;
-  /** Data key for the input */
+  /** Data key */
   name?: string;
-  /** Default value of the input */
+  /** Default value */
   defaultValue?: string | number | boolean;
-  /** Current value of the input */
+  /** Current value */
   value?: string | number | boolean;
-  /** If the input is disabled */
+  /** If the field is disabled */
   disabled?: boolean;
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
@@ -34,7 +34,7 @@ interface FieldProps {
    * Example: "Required"
    */
   requiredText?: string;
-  /** Text for the helper message that is placed below input */
+  /** Text for the helper message */
   helpMsg?: string;
 }
 
@@ -125,6 +125,20 @@ export interface CheckboxFieldProps extends InputProps, FieldProps {
 
 /** Properties for the ToggleField component */
 export interface ToggleFieldProps extends CheckboxFieldProps {}
+
+/** Properties for the RadioButtonGroupField component */
+export interface RadioButtonGroupFieldProps
+extends Omit<InputProps, 'id'|'inputClass'>, Omit<FieldProps, 'inputInsideLabel'> {
+  /** Classes to add to each option */
+  optionClass?: string;
+  /** List of options. The `value` of each option should be unique */
+  options?: {
+    /** Value of the option */
+    value: string | number,
+    /** Display text for the option */
+    text?: string
+  }[];
+}
 
 /** Properties for the FieldGroup component */
 export interface FieldGroupProps {
