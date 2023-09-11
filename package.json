@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "compile-locales": "gulp compileLocales",
+    "compile-locales": "gulp compileLocales --no-color",
     "predev": "gulp prebuild",
     "dev": "next dev",
     "prebuild": "gulp prebuild",
@@ -13,9 +13,7 @@
     "preprod": "yarn build",
     "prod": "next start",
     "release": "release-it --ci",
-    "pretest": "yarn compile-locales",
     "test": "jest --watch",
-    "pretest:ci": "yarn compile-locales",
     "test:ci": "jest --ci",
     "pretest:e2e": "yarn compile-locales",
     "test:e2e": "playwright test",
