@@ -1,3 +1,5 @@
+/** @file Collection of variables that contain the global state for transaction form data */
+
 import type { OnApplicationComplete, Transaction, TransactionType } from "algosdk";
 import { type PrimitiveAtom, atom } from "jotai";
 
