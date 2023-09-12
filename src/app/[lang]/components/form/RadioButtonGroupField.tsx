@@ -35,8 +35,10 @@ export default function SelectField({
                 value={option.value}
                 required={required}
                 className={`join-item btn ${optionClass}`}
-                defaultChecked={(option.value === defaultValue) || undefined}
-                checked={option.value === value || undefined}
+                defaultChecked={
+                  (defaultValue === undefined)? undefined : (option.value === defaultValue)
+                }
+                checked={(value === undefined)? undefined : (option.value === value)}
                 onChange={onChange}
                 aria-label={option.text}
               />
