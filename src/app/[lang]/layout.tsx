@@ -66,6 +66,7 @@ export default function RootLayout(
         + ` ${fonts.notoSansMono.variable}`
         // + ` ${fonts.notoColorEmoji.variable}`
       }
+      suppressHydrationWarning={process.env.SUPPRESS_HYDRATION_WARNINGS === 'true'}
     >
       <body>
         <JotaiProvider>
