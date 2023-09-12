@@ -19,3 +19,8 @@ settings:
   reset_button: Restablezca todos los ajustes por defecto
   saved_message: ¡Ajustes guardados!
   reset_message: Se han restablecido todos los ajustes.
+  theme_switcher:
+    label: Tema
+    light: Claro
+    dark: Oscuro
+    auto: Automático

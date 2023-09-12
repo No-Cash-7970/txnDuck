@@ -60,20 +60,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.reset_button')).toBeInTheDocument();
   });
 
-  it('saves when a setting is changed', async () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-
-    // TODO: Change an actual setting
-    await userEvent.click(screen.getByText('🦆'));
-
-    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
-  });
-
   it('can reset to defaults', async () => {
     render(
       <ToastProvider>
@@ -81,9 +67,41 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
+    // Change settings to non-default values
+    await userEvent.click(screen.getByLabelText('settings.theme_switcher.light'));
+
+    // Click reset button
     await userEvent.click(screen.getByText('settings.reset_button'));
+    // TODO: Add more settings here
+
+    // Toast notification
     expect(screen.getByText('settings.reset_message')).toBeInTheDocument();
-    // TODO: Check if setting fields are at the defaults
+
+    // Check settings
+    expect(screen.getByLabelText('settings.theme_switcher.auto')).toBeChecked();
+    // TODO: Add more settings here
+  });
+
+  it('has theme mode setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.theme_switcher.label/)).toBeInTheDocument();
+  });
+
+  it('notifies when theme is changed', async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change theme from '' (default) --> 'light'
+    await userEvent.click(screen.getByLabelText('settings.theme_switcher.light'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
 });

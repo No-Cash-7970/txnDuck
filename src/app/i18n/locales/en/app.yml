@@ -19,3 +19,8 @@ settings:
   reset_button: Reset all to default
   saved_message: Settings saved!
   reset_message: All settings have been reset.
+  theme_switcher:
+    label: Theme
+    light: Light
+    dark: Dark
+    auto: Automatic

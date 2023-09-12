@@ -68,6 +68,18 @@ export default function RootLayout(
       }
       suppressHydrationWarning={process.env.SUPPRESS_HYDRATION_WARNINGS === 'true'}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{
+          /*
+           * Apply the theme before everything is loaded to avoid the annoying flicker caused by
+           * the user using a theme that is not the default. Doing this causes a hydration warning
+           * that can be safely suppressed.
+           * NOTE: If you change something here, also update the theme-switcher if necessary.
+           */
+          // eslint-disable-next-line max-len
+          __html: `document.querySelector('html').dataset.theme = JSON.parse(localStorage.getItem('theme')) || ''`,
+        }} />
+      </head>
       <body>
         <JotaiProvider>
           <ToastProvider

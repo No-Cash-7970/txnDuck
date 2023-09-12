@@ -1,11 +1,13 @@
 'use client';
 
 import { useState } from 'react';
+import { useAtom } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
 import SettingsToast from './SettingsToast';
-import { RadioButtonGroupField } from '../form';
+import { RadioButtonGroupField } from '@/app/[lang]/components/form';
+import * as Settings from '@/app/lib/app-settings';
 
 type Props = {
   /** Language */
@@ -19,7 +21,41 @@ export default function SettingsDialog({ lng, open = false }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
-  const [test, setTest] = useState('');
+
+  /* Settings Data */
+  const [theme, setTheme] = useAtom(Settings.themeAtom);
+  // TODO: Add more settings here
+
+  /** Notify user that the updated settings have been saved */
+  const notifySave = () => {
+    setToastMsg(t('settings.saved_message'));
+    setToastOpen(true);
+  };
+
+  /** Save the user's theme preference and apply it */
+  const applyTheme = (themeValue: Settings.Themes, notify = true) => {
+    // Update theme value in local storage
+    setTheme(themeValue);
+
+    /* Apply the theme
+     * NOTE: If there are significant changes to the following line, update the script in the
+     *`<head>` if necessary */
+    (document.querySelector('html') as HTMLHtmlElement).dataset.theme = themeValue;
+
+    // Notify user (if the user should be notified)
+    if (notify) notifySave();
+  };
+
+  /** Reset all settings to their default values  */
+  const resetSettings = () => {
+    // Set to defaults
+    applyTheme(Settings.defaults.theme, false);
+    // TODO: Add more settings here
+
+    // Notify user of reset
+    setToastMsg(t('settings.reset_message'));
+    setToastOpen(true);
+  };
 
   return (
     <>
@@ -37,36 +73,26 @@ export default function SettingsDialog({ lng, open = false }: Props) {
           >
             <div className='modal-box prose'>
               <Dialog.Title>{t('settings.heading')}</Dialog.Title>
-              {test || '?'}
-              <div>
+              <form noValidate={true} aria-label={t('settings.heading')}>
                 <RadioButtonGroupField
-                  name='test'
-                  label='Test Radio Button Group'
-                  disabled={false}
-                  required={true}
-                  requiredText='Required'
-                  containerClass='mb-8'
-                  optionClass='disabled:checked:opacity-20'
-                  helpMsg='This is some helpful information'
+                  name='theme'
+                  label={t('settings.theme_switcher.label')}
+                  containerClass=''
+                  optionClass='btn-sm disabled:checked:opacity-20'
                   options={[
-                    { value: 'a', text: 'A' },
-                    { value: 'b', text: 'B' },
-                    { value: 'c', text: 'C' },
+                    { value: Settings.Themes.light, text: t('settings.theme_switcher.light') },
+                    { value: Settings.Themes.dark, text: t('settings.theme_switcher.dark') },
+                    { value: Settings.Themes.auto, text: t('settings.theme_switcher.auto') },
                   ]}
-                  value={test}
-                  onChange={(e) => setTest(e.target.value)}
+                  value={theme}
+                  onChange={(e) => applyTheme(e.target.value as Settings.Themes)}
                 />
-                <button
-                  className='btn'
-                  onClick={() => {setToastOpen(true); setToastMsg(t('settings.saved_message'));}}
-                >
-                  🦆
-                </button>
-              </div>
+                {/* TODO: Add more settings here */}
+              </form>
               <div className='action mt-8'>
                 <button
                   className='btn btn-sm btn-outline normal-case font-normal'
-                  onClick={() => {setToastOpen(true); setToastMsg(t('settings.reset_message'));}}
+                  onClick={resetSettings}
                 >
                   {t('settings.reset_button')}
                 </button>
