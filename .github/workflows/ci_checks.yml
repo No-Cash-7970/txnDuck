@@ -41,8 +41,6 @@ jobs:
         cache: yarn
     - name: Install dependencies
       run: yarn
-    - name: Build Jest Chance # This should be temporary until there's an official fix for Jest Chance
-      run: yarn gulp buildJestChance
     - name: Run unit tests
       run: yarn test:ci
   lint:
