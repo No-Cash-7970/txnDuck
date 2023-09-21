@@ -18,7 +18,7 @@ interface Props {
 };
 
 /** Toast (notification) for when a setting or multiple settings are updated and saved */
-export default function SettingsToast({ lng, message, open, onOpenChange }: Props) {
+export default function ToastNotification({ lng, message, open, onOpenChange }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const langDir = dir(lng);
 

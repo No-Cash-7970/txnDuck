@@ -5,7 +5,7 @@ import { useAtom } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
-import SettingsToast from './SettingsToast';
+import ToastNotification from './ToastNotification';
 import { RadioButtonGroupField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
 
@@ -110,7 +110,12 @@ export default function SettingsDialog({ lng, open = false }: Props) {
         </Dialog.Portal>
       </Dialog.Root>
 
-      <SettingsToast lng={lng} message={toastMsg} open={toastOpen} onOpenChange={setToastOpen} />
+      <ToastNotification
+        lng={lng}
+        message={toastMsg}
+        open={toastOpen}
+        onOpenChange={setToastOpen}
+      />
     </>
   );
 }

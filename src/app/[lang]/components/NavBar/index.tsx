@@ -1,7 +1,7 @@
 import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import { Trans } from 'react-i18next/TransWithoutContext';
-import SettingsDialog from './SettingsDialog';
+import Settings from './Settings';
 
 type Props = {
   /** Language */
@@ -27,7 +27,7 @@ export default function NavBar({ lng }: Props) {
 
       </div>
       <div className='navbar-end'>
-        <SettingsDialog />
+        <Settings />
       </div>
     </nav>
   );
