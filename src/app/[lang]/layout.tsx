@@ -5,7 +5,14 @@ import * as fonts from '@/app/lib/fonts';
 import { dir } from 'i18next';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { SUPPORTED_LANGS } from '@/app/i18n/settings';
-import { Footer, JotaiProvider, NavBar, ToastProvider, ToastViewport } from './components';
+import {
+  Footer,
+  JotaiProvider,
+  NavBar,
+  ToastProvider,
+  ToastViewport,
+  WalletProvider
+} from './components';
 
 /**
  * Generate the base metadata for the site. Parts may be overwritten by child pages.
@@ -86,16 +93,15 @@ export default function RootLayout(
             swipeDirection={langDir === 'rtl'? 'left' : 'right'}
             label={t('toast.provider_label')}
           >
-            <NavBar lng={lang} />
-            {children}
-
-            <ToastViewport
-              toastPosition={langDir === 'rtl'? 'left' : 'right'}
-              label={t('toast.viewport_label')}
-            />
-
-            <Footer lng={lang} />
-
+            <WalletProvider>
+              <NavBar lng={lang} />
+              {children}
+              <ToastViewport
+                toastPosition={langDir === 'rtl'? 'left' : 'right'}
+                label={t('toast.viewport_label')}
+              />
+              <Footer lng={lang} />
+            </WalletProvider>
           </ToastProvider>
         </JotaiProvider>
       </body>

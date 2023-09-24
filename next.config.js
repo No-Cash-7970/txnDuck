@@ -1,6 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
+  webpack: (config) => {
+    // Add use-wallet dependency modules that cause "not found" errors
+    config.externals.push('bufferutil', 'utf-8-validate', 'encoding');
+    return config;
+  },
   eslint: {
     // Warning: This allows production builds to successfully complete even if
     // your project has ESLint errors.

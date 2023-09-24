@@ -21,3 +21,6 @@ export {ToastProvider};
 
 import ToastViewport from "./ToastViewport";
 export {ToastViewport};
+
+import WalletProvider from "./WalletProvider";
+export {WalletProvider};
