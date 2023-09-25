@@ -8,6 +8,8 @@ import { IconSettings, IconX } from '@tabler/icons-react';
 import ToastNotification from './ToastNotification';
 import { RadioButtonGroupField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
+import ConnectWallet from './ConnectWallet';
+import { useWallet } from '@txnlab/use-wallet';
 
 type Props = {
   /** Language */
@@ -19,6 +21,7 @@ type Props = {
 /** Dialog that allows the user to change app settings */
 export default function SettingsDialog({ lng, open = false }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
+  const { clients, activeAccount } = useWallet();
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
@@ -52,6 +55,11 @@ export default function SettingsDialog({ lng, open = false }: Props) {
     applyTheme(Settings.defaults.theme, false);
     // TODO: Add more settings here
 
+    // Disconnect wallet
+    if (activeAccount && clients) {
+      clients[activeAccount.providerId]?.disconnect();
+    }
+
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
     setToastOpen(true);
@@ -59,7 +67,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
 
   return (
     <>
-      <Dialog.Root defaultOpen={open}>
+      <Dialog.Root defaultOpen={open} modal={false}>
         <Dialog.Trigger asChild>
           <button className='btn btn-ghost px-2' title={t('settings.heading')}>
             <IconSettings stroke={1.5} size={32} />
@@ -70,6 +78,8 @@ export default function SettingsDialog({ lng, open = false }: Props) {
           <Dialog.Content
             aria-describedby={undefined}
             className='modal data-[state=open]:modal-open'
+            onPointerDownOutside={(e) => e.preventDefault()}
+            onInteractOutside={(e) => e.preventDefault()}
           >
             <div className='modal-box prose'>
               <Dialog.Title>{t('settings.heading')}</Dialog.Title>
@@ -87,6 +97,11 @@ export default function SettingsDialog({ lng, open = false }: Props) {
                   value={theme}
                   onChange={(e) => applyTheme(e.target.value as Settings.Themes)}
                 />
+
+                <div className='mt-4'>
+                  <ConnectWallet t={t} />
+                </div>
+
                 {/* TODO: Add more settings here */}
               </form>
               <div className='action mt-8'>

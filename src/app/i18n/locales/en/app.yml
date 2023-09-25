@@ -24,3 +24,22 @@ settings:
     light: Light
     dark: Dark
     auto: Automatic
+wallet:
+  connect: Connect wallet
+  disconnect: Disconnect wallet
+  choose_provider: Choose wallet provider
+  is_not_connected: No wallet connected.
+  is_connected: "Connected account: {{address}}"
+  provider_icon_alt: "{{provider}} icon"
+  provider_unavailable: " (Unavailable)" # Note the space at the beginning
+  providers:
+    pera: Pera
+    defly: Defly
+    exodus: Exodus
+    myalgo: MyAlgo
+    daffi: Daffi
+  type:
+    mobile: Mobile wallet
+    mobile_web: Mobile & web wallet
+    web: Web wallet
+    browser_extension: Browser extension wallet

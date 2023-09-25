@@ -24,3 +24,22 @@ settings:
     light: Claro
     dark: Oscuro
     auto: Automático
+wallet:
+  connect: Conecte la cartera
+  disconnect: Desconecte la cartera
+  choose_provider: Elija el proveedor de cartera
+  is_not_connected: No hay cartera conectada.
+  is_connected: "Cuenta conectada: {{address}}"
+  provider_icon_alt: "Icono de {{provider}}"
+  provider_unavailable: " (No disponible)" # Note the space at the beginning
+  providers:
+    pera: Pera
+    defly: Defly
+    exodus: Exodus
+    myalgo: MyAlgo
+    daffi: Daffi
+  type:
+    mobile: Cartera móvil
+    mobile_web: Cartera móvil y web
+    web: Cartera web
+    browser_extension: Cartera de extensión del navegador
