@@ -16,7 +16,7 @@ export default function Footer({ lng }: Props) {
   const { t } = use(useTranslation(lng || '', 'app'));
 
   return (
-    <footer className='footer item-center bg-neutral text-neutral-content p-10'>
+    <footer className='footer item-center bg-neutral text-neutral-content px-8 py-10 sm:px-12'>
       <div className='w-full max-w-6xl mx-auto place-items-center'>
         {/* Links */}
         <div className='grid grid-flow-col gap-6'>
