@@ -34,6 +34,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
@@ -57,7 +58,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('sign_txn_btn')).toBeEnabled();
   });
 
-  it('goes to sign-transaction page if valid payment transaction data is submitted', async () => {
+  it('goes to sign-transaction page if valid transaction data is submitted', async () => {
     sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -83,7 +84,7 @@ describe('Compose Form Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
-  it('can store submitted payment transaction data', async () => {
+  it('can store submitted *payment* transaction data', async () => {
     sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -115,6 +116,39 @@ describe('Compose Form Component', () => {
     expect(storedTxnData.lv).toBe(6001000);
     expect(storedTxnData.rcv).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     expect(storedTxnData.amt).toBe(5);
+  });
+
+  it('can retrieve transaction data from session storage', () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      fee: 0.001,
+      fv: 5,
+      lv: 1005,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
+    }));
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    expect(screen.getByLabelText(/fields.type.label/))
+      .toHaveDisplayValue('fields.type.options.pay');
+    expect(screen.getByLabelText(/fields.snd.label/))
+      .toHaveDisplayValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveDisplayValue('0.001');
+    expect(screen.getByLabelText(/fields.note.label/)).toHaveDisplayValue('');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveDisplayValue('5');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveDisplayValue('1005');
+    expect(screen.getByLabelText(/fields.lx.label/)).toHaveDisplayValue('');
+    expect(screen.getByLabelText(/fields.rekey.label/))
+      .toHaveDisplayValue('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    expect(screen.getByLabelText(/fields.rcv.label/))
+      .toHaveDisplayValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    expect(screen.getByLabelText(/fields.amt.label/)).toHaveDisplayValue('42');
+    expect(screen.getByLabelText(/fields.close.label/)).toHaveDisplayValue('');
   });
 
   // it('does not go to sign-transaction page if invalid data is submitted', () => {
