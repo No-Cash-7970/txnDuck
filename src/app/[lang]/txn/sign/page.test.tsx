@@ -30,4 +30,14 @@ describe("Sign Transaction Page", () => {
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
+  it('has "compose transaction" (back) button', () => {
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText('compose_txn_btn')).toBeEnabled();
+  });
+
+  it('has "send transaction" (forward) button', () => {
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText('send_txn_btn')).toBeDisabled();
+  });
+
 });
