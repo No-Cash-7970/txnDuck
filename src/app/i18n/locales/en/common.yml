@@ -4,12 +4,14 @@ home: Home # Home page name
 algo_std_asset: Algorand Standard Asset
 nonfungible_token: Non-Fungible Token
 close: Close # For a button to close dialog/modal
+none: None # Often used when displaying that a form field value was not given or was empty
+number_value: "{{value, number}}" # When displaying a number without any other text
 
 # Unit name of the token for Algorand
 # More information about specifying singular and plural versions of a word:
 # https://www.i18next.com/translation-function/plurals#singular-plural
 algo_one: Algo # 1 Algo
-algo_other: Algos # Multiple Algos
+algo_other: Algos # Mulitple Algos
 
 # These labels are used to help screen readers
 # More information: https://www.radix-ui.com/primitives/docs/components/toast#api-reference

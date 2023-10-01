@@ -22,6 +22,8 @@ fields:
     label: Fee
     help_msg_one: "Minimum: {{count, number}} Algo"
     help_msg_other: "Minimum: {{count, number}} Algos"
+    in_algos_one: "{{count, number}} Algo"
+    in_algos_other: "{{count, number}} Algos"
   note: # Note
     label: Note
     placeholder: Enter note...
@@ -44,6 +46,8 @@ fields:
     placeholder: Receiver address
   amt: # Amount to pay (in Algos)
     label: Amount
+    in_algos_one: "{{count, number}} Algo"
+    in_algos_other: "{{count, number}} Algos"
   close: # Close remainder to
     label: Close remainder to
     placeholder: Address to close remainder of funds to
@@ -51,4 +55,3 @@ fields:
       If an address is specified, <strong>all funds in the sender account will be sent to the
       specified address</strong> and the sender account will be closed. Make sure you know what you
       are doing.
-

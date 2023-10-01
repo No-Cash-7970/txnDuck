@@ -22,6 +22,8 @@ fields:
     label: Tarifa
     help_msg_one: "Mínimo: {{count, number}} Algo" # If the fee is exactly 1 Algo
     help_msg_other: "Mínimo: {{count, number}} Algos" # If the fee is something other than 1 Algo
+    in_algos_one: "{{count, number}} Algo"
+    in_algos_other: "{{count, number}} Algos"
   note: # Note
     label: Nota
     placeholder: Introduzca la nota...
@@ -45,6 +47,8 @@ fields:
     placeholder: Dirección del destinatario
   amt: # Amount to pay (in Algos)
     label: Cantidad
+    in_algos_one: "{{count, number}} Algo"
+    in_algos_other: "{{count, number}} Algos"
   close: # Close remainder to
     label: ¿A qué cerra el remanente?
     placeholder: Dirección a la que cerrar el remanente de fondos
