@@ -6,10 +6,10 @@ import { IconAlertTriangle } from "@tabler/icons-react";
 import { type TFunction } from "i18next";
 import { Trans } from "react-i18next";
 import { useAtom } from "jotai";
-import * as TxnFormAtoms from '@/app/lib/txn-form-data';
+import { txnDataAtoms } from '@/app/lib/txn-form-data';
 
 export function Receiver({ t }: { t: TFunction }) {
-  const [rcv, setRcv] = useAtom(TxnFormAtoms.rcv);
+  const [rcv, setRcv] = useAtom(txnDataAtoms.rcv);
   return (
     <TextField label={t('fields.rcv.label')}
       name='rcv'
@@ -26,7 +26,7 @@ export function Receiver({ t }: { t: TFunction }) {
 }
 
 export function Amount({ t }: { t: TFunction }) {
-  const [amt, setAmt] = useAtom(TxnFormAtoms.amt);
+  const [amt, setAmt] = useAtom(txnDataAtoms.amt);
   return (
     <NumberField label={t('fields.amt.label')}
       name='amt'
@@ -64,7 +64,7 @@ export function CloseTo({ t }: { t: TFunction }) {
 }
 
 function CloseToField({ t }: { t: TFunction }) {
-  const [close, setClose] = useAtom(TxnFormAtoms.close);
+  const [close, setClose] = useAtom(txnDataAtoms.close);
   return (
     <TextField label={t('fields.close.label')}
       name='close'

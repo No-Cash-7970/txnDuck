@@ -11,10 +11,14 @@ import {
 } from '@tabler/icons-react';
 import { useStore } from 'jotai';
 import { TransactionType } from 'algosdk';
-import * as TxnFormAtoms from '@/app/lib/txn-form-data';
 import * as GeneralFields from './GeneralFields';
 import * as PaymentFields from './PaymentFields';
-import { createTxnFromData } from '../TxnDataProcessor';
+import {
+  type PaymentTxnData,
+  type TxnData,
+  txnDataAtoms,
+  storedTxnDataAtom
+} from '@/app/lib/txn-form-data';
 
 type Props = {
   /** Language */
@@ -31,27 +35,26 @@ export default function ComposeForm({ lng }: Props) {
   const submitData = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    const data = {
-      type: jotaiStore.get(TxnFormAtoms.txnType) as TransactionType,
-      snd: jotaiStore.get(TxnFormAtoms.snd),
-      note: jotaiStore.get(TxnFormAtoms.note),
-      fee: jotaiStore.get(TxnFormAtoms.fee) as number,
-      fv: jotaiStore.get(TxnFormAtoms.fv) as number,
-      lv: jotaiStore.get(TxnFormAtoms.lv) as number,
-      rcv: jotaiStore.get(TxnFormAtoms.rcv),
-      amt:jotaiStore.get(TxnFormAtoms.amt) as number,
-      lx: jotaiStore.get(TxnFormAtoms.lx) || undefined,
-      rekey: jotaiStore.get(TxnFormAtoms.rekey) || undefined,
-      close: jotaiStore.get(TxnFormAtoms.close) || undefined,
+    const txnType: TransactionType = jotaiStore.get(txnDataAtoms.txnType) as TransactionType;
+    const txnData: TxnData = {
+      type: txnType,
+      snd: jotaiStore.get(txnDataAtoms.snd),
+      note: jotaiStore.get(txnDataAtoms.note),
+      fee: jotaiStore.get(txnDataAtoms.fee) as number,
+      fv: jotaiStore.get(txnDataAtoms.fv) as number,
+      lv: jotaiStore.get(txnDataAtoms.lv) as number,
+      lx: jotaiStore.get(txnDataAtoms.lx) || undefined,
+      rekey: jotaiStore.get(txnDataAtoms.rekey) || undefined,
     };
-    const txn = createTxnFromData(
-      data,
-      'testnet-v1.0',
-      'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
-    );
 
-    jotaiStore.set(TxnFormAtoms.txn, txn);
+    if (txnType === TransactionType.pay) {
+      (txnData as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
+      (txnData as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
+      (txnData as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
+    }
 
+    // Store transaction data into local/session storage
+    jotaiStore.set(storedTxnDataAtom, txnData);
     // Go to sign-transaction page
     router.push(`/${lng}/txn/sign`);
   };

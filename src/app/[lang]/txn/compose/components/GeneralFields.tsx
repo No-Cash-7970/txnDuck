@@ -4,12 +4,12 @@ import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import * as TxnFormAtoms from '@/app/lib/txn-form-data';
+import { txnDataAtoms } from '@/app/lib/txn-form-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
 
 export function TxnType({ t }: { t: TFunction }) {
-  const [txnType, setTxnType] = useAtom(TxnFormAtoms.txnType);
+  const [txnType, setTxnType] = useAtom(txnDataAtoms.txnType);
   return (
     <SelectField label={t('fields.type.label')}
       name='type'
@@ -33,7 +33,7 @@ export function TxnType({ t }: { t: TFunction }) {
 }
 
 export function Sender({ t }: { t: TFunction }) {
-  const [snd, setSnd] = useAtom(TxnFormAtoms.snd);
+  const [snd, setSnd] = useAtom(txnDataAtoms.snd);
   return (
     <TextField label={t('fields.snd.label')}
       name='snd'
@@ -50,7 +50,7 @@ export function Sender({ t }: { t: TFunction }) {
 }
 
 export function Fee({ t }: { t: TFunction }) {
-  const [fee, setFee] = useAtom(TxnFormAtoms.fee);
+  const [fee, setFee] = useAtom(txnDataAtoms.fee);
   return (
     <NumberField label={t('fields.fee.label')}
       name='fee'
@@ -70,7 +70,7 @@ export function Fee({ t }: { t: TFunction }) {
 }
 
 export function Note({ t }: { t: TFunction }) {
-  const [note, setNote] = useAtom(TxnFormAtoms.note);
+  const [note, setNote] = useAtom(txnDataAtoms.note);
   return (
     <TextAreaField label={t('fields.note.label')}
       name='note'
@@ -85,7 +85,7 @@ export function Note({ t }: { t: TFunction }) {
 }
 
 export function FirstValid({ t }: { t: TFunction }) {
-  const [fv, setFv] = useAtom(TxnFormAtoms.fv);
+  const [fv, setFv] = useAtom(txnDataAtoms.fv);
   return (
     <NumberField label={t('fields.fv.label')}
       name='fv'
@@ -103,7 +103,7 @@ export function FirstValid({ t }: { t: TFunction }) {
 }
 
 export function LastValid({ t }: { t: TFunction }) {
-  const [lv, setLv] = useAtom(TxnFormAtoms.lv);
+  const [lv, setLv] = useAtom(txnDataAtoms.lv);
   return (
     <NumberField label={t('fields.lv.label')}
       name='lv'
@@ -121,7 +121,7 @@ export function LastValid({ t }: { t: TFunction }) {
 }
 
 export function Lease({ t }: { t: TFunction }) {
-  const [lx, setLx] = useAtom(TxnFormAtoms.lx);
+  const [lx, setLx] = useAtom(txnDataAtoms.lx);
   return (
     <TextField label={t('fields.lx.label')}
       name='lx'
@@ -159,7 +159,7 @@ export function Rekey({ t }: { t: TFunction }) {
 }
 
 function RekeyField({ t }: { t: TFunction }) {
-  const [rekey, setRekey] = useAtom(TxnFormAtoms.rekey);
+  const [rekey, setRekey] = useAtom(txnDataAtoms.rekey);
   return (
     <TextField label={t('fields.rekey.label')}
       name='rekey'

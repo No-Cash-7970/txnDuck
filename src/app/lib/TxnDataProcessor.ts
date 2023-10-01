@@ -4,37 +4,7 @@ import {
   makePaymentTxnWithSuggestedParamsFromObject,
 } from 'algosdk';
 import { encodeTransactionNote } from '@algorandfoundation/algokit-utils';
-
-interface BaseTxnData {
-  /** Type */
-  type: Omit<TransactionType, 'stpf'>,
-  /** Sender */
-  snd: string,
-  /** Note */
-  note?: string,
-  /** Fee */
-  fee: number
-  /** First valid round */
-  fv: number,
-  /** Last valid round */
-  lv: number,
-  /** Rekey to */
-  rekey?: string,
-  /** Lease */
-  lx?: string,
-}
-
-interface PaymentTxnData extends BaseTxnData {
-  type: TransactionType.pay,
-  /** Receiver */
-  rcv: string,
-  /** Amount */
-  amt: number,
-  /** Close remainder to */
-  close?: string,
-}
-
-type TxnData = BaseTxnData | PaymentTxnData
+import type { PaymentTxnData, TxnData } from '@/app/lib/txn-form-data';
 
 /** Creates an `Transaction` object that represents an Algorand transaction */
 export function createTxnFromData(txnData: TxnData, genesisID: string, genesisHash: string) {

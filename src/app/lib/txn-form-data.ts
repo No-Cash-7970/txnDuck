@@ -2,133 +2,39 @@
 
 import type { OnApplicationComplete, Transaction, TransactionType } from "algosdk";
 import { type PrimitiveAtom, atom } from "jotai";
+import { atomWithStorage, createJSONStorage } from "jotai/utils";
 
-/** Transaction being built */
-export const txn = atom<Transaction|undefined>(undefined);
-
-/** Transaction type */
-export const txnType = atom<Omit<TransactionType, 'stpf'>|undefined>(undefined);
-/** Sender */
-export const snd = atom<string>('');
-/** Fee */
-export const fee = atom<number|undefined>(undefined);
-/** Note */
-export const note = atom<string|undefined>(undefined);
-/** First round */
-export const fv = atom<number|undefined>(undefined);
-/** Last round */
-export const lv = atom<number|undefined>(undefined);
-/** Lease */
-export const lx = atom<string>('');
-/** Rekey to */
-export const rekey = atom<string>('');
-
-/*
- * Payment
- */
-
-/** Payment - Receiver */
-export const rcv = atom<string>('');
-/** Payment - Amount */
-export const amt = atom<number|undefined>(undefined);
-/** Payment - Close remainder to */
-export const close = atom<string>('');
-
-/*
- * Asset Transfer
- */
-
-/** Asset transfer - Asset ID */
-export const xaid = atom<number|undefined>(undefined);
-/** Asset transfer - Sender */
-export const asnd = atom<string>('');
-/** Asset transfer - Asset receiver */
-export const arcv = atom<string>('');
-/** Asset transfer - Asset amount */
-export const aamt = atom<number|bigint|undefined>(undefined);
-/** Asset transfer - Close remainder of asset To */
-export const aclose = atom<string>('');
-
-/*
- * Asset Configuration
- */
-
-/** Asset configuration - Asset ID */
-export const caid = atom<number|undefined>(undefined);
-/** Asset configuration - Unit name */
-export const apar_un = atom<string>('');
-/** Asset configuration - Asset name */
-export const apar_an = atom<string>('');
-/** Asset configuration - Total */
-export const apar_t = atom<number|bigint|undefined>(undefined);
-/** Asset configuration - Number of decimals places */
-export const apar_dc = atom<number|undefined>(undefined);
-/** Asset configuration - Frozen by default? */
-export const apar_df = atom<boolean>(false);
-/** Asset configuration - URL */
-export const apar_au = atom<string>('');
-/** Asset configuration - Manager address */
-export const apar_m = atom<string>('');
-/** Asset configuration - Freeze address */
-export const apar_f = atom<string>('');
-/** Asset configuration - Clawback address */
-export const apar_c = atom<string>('');
-/** Asset configuration - Reserve address */
-export const apar_r = atom<string>('');
-/** Asset configuration - Metadata hash */
-export const apar_am = atom<string>('');
-
-/*
- * Asset Freeze
- */
-
-/** Asset freeze - Asset ID */
-export const faid = atom<number|undefined>(undefined);
-/** Asset freeze - Freeze address */
-export const fadd = atom<string>('');
-/** Asset freeze - Freeze asset? */
-export const afrz = atom<string>('');
-
-/*
- * Application
- */
-
-/** Application - Application ID */
-export const apid = atom<number|undefined>(undefined);
-/** Application - OnComplete (Action type) */
-export const apan = atom<OnApplicationComplete|undefined>(undefined);
-/** Application - Application arguments */
-export const apaa = atom<(string|number)[]>([]);
-
-/*
- * Application properties
- */
-
-/** Application properties - Approval program */
-export const apap = atom<string|Uint8Array|undefined>(undefined);
-/** Application properties - Clear-state program */
-export const apsu = atom<string|Uint8Array|undefined>(undefined);
-/** Application properties - Number of global integers */
-export const apgs_nui = atom<number|undefined>(undefined);
-/** Application properties - Number of global bytes slices */
-export const apgs_nbs = atom<number|undefined>(undefined);
-/** Application properties - Number of local integers */
-export const apls_nui = atom<number|undefined>(undefined);
-/** Application properties - Number of local bytes slices */
-export const apls_nbs = atom<number|undefined>(undefined);
-/** Application properties - Number of extra program pages */
-export const apep = atom<number|undefined>(undefined);
-
-/*
- * Application dependencies
- */
-
-/** Application dependencies - Foreign accounts */
-export const apat = atom<string[]>([]);
-/** Application dependencies - Foreign applications */
-export const apfa = atom<number[]>([]);
-/** Application dependencies - Foreign assets */
-export const apas = atom<number[]>([]);
+/** Data common to all transaction types */
+export interface BaseTxnData {
+  /** Type */
+  type: Omit<TransactionType, 'stpf'>,
+  /** Sender */
+  snd: string,
+  /** Note */
+  note?: string,
+  /** Fee */
+  fee: number
+  /** First valid round */
+  fv: number,
+  /** Last valid round */
+  lv: number,
+  /** Rekey to */
+  rekey?: string,
+  /** Lease */
+  lx?: string,
+}
+/** Data for a payment transaction */
+export interface PaymentTxnData extends BaseTxnData {
+  type: TransactionType.pay,
+  /** Receiver */
+  rcv: string,
+  /** Amount */
+  amt: number,
+  /** Close remainder to */
+  close?: string,
+}
+/** Data for the transaction being built */
+export type TxnData = BaseTxnData | PaymentTxnData; // TODO: Add other transaction types
 /** Box reference */
 type BoxRef = {
   /** ID of the application that contains the box */
@@ -136,5 +42,138 @@ type BoxRef = {
   /** Name of box to reference */
   n: PrimitiveAtom<string>,
 };
-/** Application dependencies - Box references */
-export const apbx = atom<BoxRef[]>([]);
+
+/* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
+const storage = createJSONStorage<TxnData|undefined>(() => sessionStorage);
+/** Transaction form data that is temporarily stored locally */
+export const storedTxnDataAtom = atomWithStorage<TxnData|undefined>('txnData', undefined, storage);
+
+/** Collection of Jotai atoms containing  */
+export const txnDataAtoms = {
+  /** Transaction type */
+  txnType: atom<Omit<TransactionType, 'stpf'>|undefined>(undefined),
+  /** Sender */
+  snd: atom<string>(''),
+  /** Fee */
+  fee: atom<number|undefined>(undefined),
+  /** Note */
+  note: atom<string|undefined>(undefined),
+  /** First round */
+  fv: atom<number|undefined>(undefined),
+  /** Last round */
+  lv: atom<number|undefined>(undefined),
+  /** Lease */
+  lx: atom<string>(''),
+  /** Rekey to */
+  rekey: atom<string>(''),
+
+  /*
+   * Payment
+   */
+
+  /** Payment - Receiver */
+  rcv: atom<string>(''),
+  /** Payment - Amount */
+  amt: atom<number|undefined>(undefined),
+  /** Payment - Close remainder to */
+  close: atom<string>(''),
+
+  /*
+   * Asset Transfer
+   */
+
+  /** Asset transfer - Asset ID */
+  xaid: atom<number|undefined>(undefined),
+  /** Asset transfer - Sender */
+  asnd: atom<string>(''),
+  /** Asset transfer - Asset receiver */
+  arcv: atom<string>(''),
+  /** Asset transfer - Asset amount */
+  aamt: atom<number|bigint|undefined>(undefined),
+  /** Asset transfer - Close remainder of asset To */
+  aclose: atom<string>(''),
+
+  /*
+   * Asset Configuration
+   */
+
+  /** Asset configuration - Asset ID */
+  caid: atom<number|undefined>(undefined),
+  /** Asset configuration - Unit name */
+  apar_un: atom<string>(''),
+  /** Asset configuration - Asset name */
+  apar_an: atom<string>(''),
+  /** Asset configuration - Total */
+  apar_t: atom<number|bigint|undefined>(undefined),
+  /** Asset configuration - Number of decimals places */
+  apar_dc: atom<number|undefined>(undefined),
+  /** Asset configuration - Frozen by default? */
+  apar_df: atom<boolean>(false),
+  /** Asset configuration - URL */
+  apar_au: atom<string>(''),
+  /** Asset configuration - Manager address */
+  apar_m: atom<string>(''),
+  /** Asset configuration - Freeze address */
+  apar_f: atom<string>(''),
+  /** Asset configuration - Clawback address */
+  apar_c: atom<string>(''),
+  /** Asset configuration - Reserve address */
+  apar_r: atom<string>(''),
+  /** Asset configuration - Metadata hash */
+  apar_am: atom<string>(''),
+
+  /*
+   * Asset Freeze
+   */
+
+  /** Asset freeze - Asset ID */
+  faid: atom<number|undefined>(undefined),
+  /** Asset freeze - Freeze address */
+  fadd: atom<string>(''),
+  /** Asset freeze - Freeze asset? */
+  afrz: atom<string>(''),
+
+  /*
+   * Application
+   */
+
+  /** Application - Application ID */
+  apid: atom<number|undefined>(undefined),
+  /** Application - OnComplete (Action type) */
+  apan: atom<OnApplicationComplete|undefined>(undefined),
+  /** Application - Application arguments */
+  apaa: atom<(string|number)[]>([]),
+
+  /*
+   * Application properties
+   */
+
+  /** Application properties - Approval program */
+  apap: atom<string|Uint8Array|undefined>(undefined),
+  /** Application properties - Clear-state program */
+  apsu: atom<string|Uint8Array|undefined>(undefined),
+  /** Application properties - Number of global integers */
+  apgs_nui: atom<number|undefined>(undefined),
+  /** Application properties - Number of global bytes slices */
+  apgs_nbs: atom<number|undefined>(undefined),
+  /** Application properties - Number of local integers */
+  apls_nui: atom<number|undefined>(undefined),
+  /** Application properties - Number of local bytes slices */
+  apls_nbs: atom<number|undefined>(undefined),
+  /** Application properties - Number of extra program pages */
+  apep: atom<number|undefined>(undefined),
+
+  /*
+   * Application dependencies
+   */
+
+  /** Application dependencies - Foreign accounts */
+  apat: atom<string[]>([]),
+  /** Application dependencies - Foreign applications */
+  apfa: atom<number[]>([]),
+  /** Application dependencies - Foreign assets */
+  apas: atom<number[]>([]),
+  /** Application dependencies - Box references */
+  apbx: atom<BoxRef[]>([]),
+
+};
