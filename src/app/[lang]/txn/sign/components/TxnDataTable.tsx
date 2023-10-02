@@ -33,13 +33,27 @@ export default function TxnDataTable({ lng }: Props) {
           </tr>
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.amt.label')}</th>
-            <td>{t('fields.amt.in_algos', {count: (txnData as PaymentTxnData)?.amt})}</td>
+            <td>
+              {
+                t('fields.amt.in_algos', {
+                  count: (txnData as PaymentTxnData)?.amt,
+                  formatParams: { count: { maximumFractionDigits: 6 } }
+                })
+              }
+            </td>
           </tr>
         </ShowIf>
 
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
-          <td>{t('fields.fee.in_algos', {count: txnData?.fee})}</td>
+            <td>
+              {
+                t('fields.fee.in_algos', {
+                  count: (txnData as PaymentTxnData)?.fee,
+                  formatParams: { count: { maximumFractionDigits: 6 } }
+                })
+              }
+            </td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.note.label')}</th>
