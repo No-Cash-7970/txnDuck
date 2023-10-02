@@ -27,7 +27,7 @@ export default function NavBar({ lng }: Props) {
 
       </div>
       <div className='navbar-end'>
-        <Settings />
+        <Settings lng={lng} />
       </div>
     </nav>
   );
