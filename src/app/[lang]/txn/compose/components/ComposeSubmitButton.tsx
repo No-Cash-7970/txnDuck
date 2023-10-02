@@ -16,6 +16,7 @@ type Props = {
   lng?: string
 };
 
+/** Submit button for the "Compose Transaction" form */
 export default function ComposeSubmitButton({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   /** A flag for indicating that the form is being submitted */
