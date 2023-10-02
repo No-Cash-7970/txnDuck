@@ -3,14 +3,6 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
 
-/* Polyfill for TextEncoder and the Uint8Array it uses */
-import { TextEncoder } from 'util';
-global.TextEncoder = TextEncoder;
-// NOTE: For some reason, the Uint8Array class that the polyfills use is different from the actual
-// Uint8Array class, so polyfilling Uint8array is necessary too
-// @ts-ignore
-global.Uint8Array = (new TextEncoder).encode().constructor;
-
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock useRouter
@@ -108,14 +100,15 @@ describe('Compose Form Component', () => {
     await userEvent.click(screen.getByText('sign_txn_btn'));
 
     // Check session storage
-    const storedTxnData = JSON.parse(sessionStorage.getItem('txnData') || '{}');
-    expect(storedTxnData.type).toBe('pay');
-    expect(storedTxnData.snd).toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    expect(storedTxnData.fee).toBe(0.001);
-    expect(storedTxnData.fv).toBe(6000000);
-    expect(storedTxnData.lv).toBe(6001000);
-    expect(storedTxnData.rcv).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-    expect(storedTxnData.amt).toBe(5);
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      type: 'pay',
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      amt: 5,
+    });
   });
 
   it('can retrieve transaction data from session storage', () => {
@@ -133,22 +126,16 @@ describe('Compose Form Component', () => {
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
     );
-
-    expect(screen.getByLabelText(/fields.type.label/))
-      .toHaveDisplayValue('fields.type.options.pay');
-    expect(screen.getByLabelText(/fields.snd.label/))
-      .toHaveDisplayValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveDisplayValue('0.001');
-    expect(screen.getByLabelText(/fields.note.label/)).toHaveDisplayValue('');
-    expect(screen.getByLabelText(/fields.fv.label/)).toHaveDisplayValue('5');
-    expect(screen.getByLabelText(/fields.lv.label/)).toHaveDisplayValue('1005');
-    expect(screen.getByLabelText(/fields.lx.label/)).toHaveDisplayValue('');
-    expect(screen.getByLabelText(/fields.rekey.label/))
-      .toHaveDisplayValue('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-    expect(screen.getByLabelText(/fields.rcv.label/))
-      .toHaveDisplayValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-    expect(screen.getByLabelText(/fields.amt.label/)).toHaveDisplayValue('42');
-    expect(screen.getByLabelText(/fields.close.label/)).toHaveDisplayValue('');
+    expect(screen.getByRole('form')).toHaveFormValues({
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      fee: 0.001,
+      fv: 5,
+      lv: 1005,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
+    });
   });
 
   // it('does not go to sign-transaction page if invalid data is submitted', () => {
