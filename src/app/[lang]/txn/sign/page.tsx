@@ -35,6 +35,13 @@ export default function SignTxnPage({ params: { lang } }: {
             <IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('compose_txn_btn')}
           </Link>
+          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
+            <IconAlertTriangleFilled
+              aria-hidden
+              className='text-warning align-middle my-auto me-2'
+            />
+            <small>{t('compose_txn_btn_warning')}</small>
+          </div>
         </div>
       </div>
     </main>

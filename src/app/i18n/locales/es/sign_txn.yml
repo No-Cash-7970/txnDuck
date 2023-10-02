@@ -1,3 +1,4 @@
 title: Revise y firme la transacción
 compose_txn_btn: Componga
+compose_txn_btn_warning: Si se edita la transacción, será necesario firmarla de nuevo.
 send_txn_btn: Envíe

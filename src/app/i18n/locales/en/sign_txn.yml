@@ -1,3 +1,4 @@
-title: Sign Transaction
+title: Review & Sign Transaction
 compose_txn_btn: Compose
+compose_txn_btn_warning: If the transaction is edited, it will need to be signed again.
 send_txn_btn: Send
