@@ -24,7 +24,7 @@ test.describe('Sign Transaction Page', () => {
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Sign/, title: /Sign/ },
-      es: { body: /Firmar/, title: /Firmar/ },
+      es: { body: /firme/, title: /firme/ },
     })).check(test, SignTxnPage.url);
   });
 

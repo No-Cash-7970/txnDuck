@@ -1,9 +1,9 @@
-title: Componer transacción
+title: Componga la transacción
 instructions: Los campos marcados con un asterisco (<1>*</1>) son obligatorios.
 more_fields: Más campos
-txn_template_btn: Elegir un modelo
+txn_template_btn: Elija un modelo
 txn_template_btn_warning: Puede perder su progreso si elige un modelo diferente.
-sign_txn_btn: Revisar y firmar
+sign_txn_btn: Revise y firme
 fields:
   type: # Transaction type
     label: Tipo de transacción
