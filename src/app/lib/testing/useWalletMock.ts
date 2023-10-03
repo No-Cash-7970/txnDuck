@@ -64,6 +64,7 @@ export const useWalletConnectedMock = {
     clients: {
       fooWallet: {
         disconnect: fooDisconnectFn,
+        metadata: { id: 'fooWallet', icon: 'data:image/svg+xml;base64,' },
       },
       barWallet: null
     },

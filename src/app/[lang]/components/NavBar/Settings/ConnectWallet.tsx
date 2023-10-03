@@ -3,7 +3,6 @@ import { type TFunction } from 'i18next';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
-import { ShowIf } from '@/app/[lang]/components';
 import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
@@ -18,7 +17,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
 
   return (
     <>
-      <ShowIf cond={!activeAccount}>
+      {!activeAccount && <>
         <div className='text-secondary mb-1'>
           <i>{t('wallet.is_not_connected')}</i>
         </div>
@@ -31,7 +30,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
             <DropdownMenu.Content asChild>
-              <ul className={'z-[1000] card menu bg-base-200 shadow'
+              <ul className={'z-[1000] card menu shadow-md border border-base-300 bg-base-200'
                 + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
                 + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
               }>
@@ -64,7 +63,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                                 : <i>{t('wallet.provider_unavailable')}</i>
                               }
                             </div>
-                            <small className='italic opacity-50'>
+                            <small className='italic opacity-70'>
                               {t('wallet.type.' + walletTypes[provider.metadata.id])}
                             </small>
                           </div>
@@ -77,17 +76,29 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
             </DropdownMenu.Content>
           </DropdownMenu.Portal>
         </DropdownMenu.Root>
-      </ShowIf>
+      </>}
 
-      <ShowIf cond={!!activeAccount}>
-        <div className='text-secondary mb-1 truncate'>
-          <span>{t('wallet.is_connected', {address: activeAccount?.address})}</span>
+      {!!activeAccount &&
+        <div className='bg-base-200 rounded-btn p-4'>
+          <div className='not-prose truncate align-middle mb-3 px-1'>
+            <Image
+              src={getClient(activeAccount.providerId)?.metadata.icon || ''}
+              alt={t(
+                'wallet.provider_icon_alt',
+                {provider: getClient(activeAccount.providerId)?.metadata.name}
+              )}
+              width={20}
+              height={20}
+              className='inline-block me-2'
+            />
+            <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
+          </div>
+          <button className='btn btn-sm btn-secondary btn-block' onClick={disconnectWallet}>
+            <IconWalletOff aria-hidden />
+            {t('wallet.disconnect')}
+          </button>
         </div>
-        <button className='btn btn-sm btn-secondary' onClick={disconnectWallet}>
-          <IconWalletOff aria-hidden />
-          {t('wallet.disconnect')}
-        </button>
-      </ShowIf>
+      }
     </>
   );
 }
