@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
-import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import { IconAlertTriangleFilled, IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 
 /**
  * Sign Transaction page
