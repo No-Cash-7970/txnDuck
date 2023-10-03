@@ -60,7 +60,7 @@ export default function RootLayout(
     params: { lang?: string }
   }
 ) {
-  const { t } = use(useTranslation(lang || '', 'common'));
+  const { t } = use(useTranslation(lang || '', ['app', 'common']));
   const langDir = dir(lang);
 
   return (
@@ -86,6 +86,9 @@ export default function RootLayout(
           // eslint-disable-next-line max-len
           __html: `document.querySelector('html').dataset.theme = JSON.parse(localStorage.getItem('theme')) || ''`,
         }} />
+
+        {/*  Set app name, the name that appears when connecting a wallet to this app */}
+        <meta name='name' content={t('site_name')} />
       </head>
       <body>
         <JotaiProvider>
