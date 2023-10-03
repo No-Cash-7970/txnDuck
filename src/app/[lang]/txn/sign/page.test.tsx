@@ -30,6 +30,11 @@ describe("Sign Transaction Page", () => {
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
+  it('has connect wallet/sign button', () => {
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText('wallet.connect')).toBeInTheDocument();
+  });
+
   it('has "compose transaction" (back) button', () => {
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText('compose_txn_btn')).toBeEnabled();

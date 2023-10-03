@@ -19,6 +19,7 @@ export default function SignTxnPage({ params: { lang } }: {
       <BuilderSteps lng={lang} current='sign' />
       <PageTitleHeading badgeText=''>{t('title')}</PageTitleHeading>
       <TxnDataTable lng={lang} />
+      <SignTxn lng={lang} />
 
       {/* Buttons */}
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>

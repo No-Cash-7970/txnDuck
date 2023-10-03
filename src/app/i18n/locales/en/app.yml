@@ -28,8 +28,11 @@ wallet:
   connect: Connect wallet
   disconnect: Disconnect wallet
   choose_provider: Choose wallet provider
+  choose_provider_description: >
+    Select one of the following wallet providers to connect your wallet account to this app.
+  use_provider_btn: "Use {{provider}}"
   is_not_connected: No wallet connected.
-  is_connected: "Connected account: {{address}}"
+  is_connected: "Account: {{address}}" # Address is displayed when wallet is connected
   provider_icon_alt: "{{provider}} icon"
   provider_unavailable: " (Unavailable)" # Note the space at the beginning
   providers:

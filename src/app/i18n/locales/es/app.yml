@@ -28,8 +28,12 @@ wallet:
   connect: Conecte la cartera
   disconnect: Desconecte la cartera
   choose_provider: Elija el proveedor de cartera
+  choose_provider_description: >
+    Seleccione uno de los siguientes proveedores de monederos para conectar su cuenta de monedero a
+    esta aplicación.
+  use_provider_btn: "Use {{provider}}"
   is_not_connected: No hay cartera conectada.
-  is_connected: "Cuenta conectada: {{address}}"
+  is_connected: "Cuenta: {{address}}" # Address is displayed when wallet is connected
   provider_icon_alt: "Icono de {{provider}}"
   provider_unavailable: " (No disponible)" # Note the space at the beginning
   providers:
