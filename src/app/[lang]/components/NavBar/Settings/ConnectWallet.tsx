@@ -4,26 +4,17 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import { ShowIf } from '@/app/[lang]/components';
+import {
+  walletTypes,
+  disconnectWallet as utilsDisconnectWallet,
+  getClient as utilsGetClient,
+} from '@/app/lib/WalletUtils';
 
+/** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
   const { providers, activeAccount, clients } = useWallet();
-
-  /** The type of wallet for each supported wallet provider. */
-  const walletTypes: {[id: string]: string} = {
-    [PROVIDER_ID.PERA]: 'mobile_web',
-    [PROVIDER_ID.DEFLY]: 'mobile',
-    [PROVIDER_ID.EXODUS]: 'browser_extension',
-    [PROVIDER_ID.MYALGO]: 'web',
-    [PROVIDER_ID.DAFFI]: 'mobile',
-  };
-  /** Disconnect the current wallet provider. (Only one wallet provider is allowed for now) */
-  const disconnectWallet = () => {
-    if (clients && activeAccount) {
-      clients[activeAccount.providerId]?.disconnect();
-    }
-  };
-  /** Get the client for the provider with the given provider ID */
-  const getClient = (providerId: PROVIDER_ID) => (clients ? clients[providerId] : null);
+  const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
+  const getClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
 
   return (
     <>
