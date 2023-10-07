@@ -20,6 +20,7 @@ import {
 } from '@/app/lib/WalletUtils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-form-data';
 import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
+import { bytesToBase64DataUrl } from '@/app/lib/Utils';
 
 type Props = {
   /** Language */
@@ -35,24 +36,6 @@ export default function SignTxn({ lng }: Props) {
 
   const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
   const getClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
-
-  /** Converts bytes as an Uint8Array buffer to base64
-   *
-   * Adapted from:
-   * https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
-   */
-  const bytesToBase64DataUrl = async (
-    bytes: Uint8Array,
-    type = 'application/octet-stream'
-  ): Promise<string> => {
-    return await new Promise((resolve, reject) => {
-      const reader = Object.assign(new FileReader(), {
-        onload: () => resolve(reader.result as string),
-        onerror: () => reject(reader.error),
-      });
-      reader.readAsDataURL(new File([bytes], '', { type }));
-    });
-  };
 
   /** Create transaction object from stored transaction data and sign the transaction */
   const signTransaction = async () => {
