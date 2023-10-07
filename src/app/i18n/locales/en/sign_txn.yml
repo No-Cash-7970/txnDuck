@@ -3,3 +3,4 @@ compose_txn_btn: Compose
 compose_txn_btn_warning: If the transaction is edited, it will need to be signed again.
 sign_txn_btn: Sign this transaction
 send_txn_btn: Send
+txn_signed: Transaction signed

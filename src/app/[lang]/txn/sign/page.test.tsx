@@ -40,9 +40,16 @@ describe("Sign Transaction Page", () => {
     expect(screen.getByText('compose_txn_btn')).toBeEnabled();
   });
 
-  it('has "send transaction" (forward) button', () => {
+  it('has disabled "send transaction" (next step) button if transaction is NOT signed', () => {
+    sessionStorage.removeItem('signedTxn');
     render(<SignTxnPage params={{lang: ''}} />);
-    expect(screen.getByText('send_txn_btn')).toBeDisabled();
+    expect(screen.getByText('send_txn_btn')).toHaveClass('btn-disabled');
+  });
+
+  it('has enabled "send transaction" (next step) button if transaction is signed', () => {
+    sessionStorage.setItem('signedTxn', JSON.stringify('a signed transaction'));
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText('send_txn_btn')).not.toHaveClass('btn-disabled');
   });
 
 });

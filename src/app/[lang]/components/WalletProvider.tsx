@@ -39,7 +39,13 @@ export default function WalletProvider({ children }: { children: React.ReactNode
       { id: PROVIDER_ID.EXODUS },
       { id: PROVIDER_ID.MYALGO, getDynamicClient: getDynamicMyAlgoWalletConnect },
       { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
-    ]
+    ],
+    nodeConfig: {
+      network: 'testnet',
+      nodeServer: 'https://testnet-api.algonode.cloud',
+      nodeToken: '',
+      nodePort: '443'
+    }
   });
 
   return (

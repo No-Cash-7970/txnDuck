@@ -1,33 +1,84 @@
 'use client';
 
 import Image from 'next/image';
+import algosdk from 'algosdk';
 import { PROVIDER_ID, useWallet } from "@txnlab/use-wallet";
 import * as Dialog from '@radix-ui/react-dialog';
+import {
+  IconBallpenFilled,
+  IconCircleCheck,
+  IconWallet,
+  IconWalletOff,
+  IconX,
+} from "@tabler/icons-react";
+import { useAtom, useAtomValue } from 'jotai';
 import { useTranslation } from "@/app/i18n/client";
-import { IconBallpenFilled, IconWallet, IconWalletOff, IconX } from "@tabler/icons-react";
 import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
   getClient as utilsGetClient,
 } from '@/app/lib/WalletUtils';
+import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-form-data';
+import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
 
 type Props = {
   /** Language */
-  lng?: string,
-  /** The open state of the dialog when it is initially rendered */
-  open?: boolean,
+  lng?: string
 };
 
 /** Buttons for connecting to wallet and signing transaction */
-export default function SignTxn({ lng, open = false }: Props) {
+export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
-  const { providers, activeAccount, clients } = useWallet();
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
+  const { providers, activeAccount, clients, signTransactions } = useWallet();
+
   const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
   const getClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
 
+  /** Converts bytes as an Uint8Array buffer to base64
+   *
+   * Adapted from:
+   * https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
+   */
+  const bytesToBase64DataUrl = async (
+    bytes: Uint8Array,
+    type = 'application/octet-stream'
+  ): Promise<string> => {
+    return await new Promise((resolve, reject) => {
+      const reader = Object.assign(new FileReader(), {
+        onload: () => resolve(reader.result as string),
+        onerror: () => reject(reader.error),
+      });
+      reader.readAsDataURL(new File([bytes], '', { type }));
+    });
+  };
+
+  /** Create transaction object from stored transaction data and sign the transaction */
+  const signTransaction = async () => {
+    // TODO: Get suggested parameters
+
+    if (!storedTxnData) throw Error('No transaction data exists in session storage');
+
+    // Create Transaction object and encoded it
+    const unsignedTxn = algosdk.encodeUnsignedTransaction(
+      createTxnFromData(
+        storedTxnData,
+        // TODO: Change hard-coded node config
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+      )
+    );
+
+    // Sign the transaction and store it
+    const signedTxn = (await signTransactions([unsignedTxn]))[0];
+    const signedTxnBase64 = await bytesToBase64DataUrl(signedTxn);
+    setStoredSignedTxn(signedTxnBase64);
+  };
+
   return (
     <>
-      {!activeAccount &&
+      {(!activeAccount && !storedSignedTxn) &&
         <Dialog.Root modal={false}>
           <Dialog.Trigger asChild>
             <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
@@ -110,12 +161,11 @@ export default function SignTxn({ lng, open = false }: Props) {
           </Dialog.Portal>
         </Dialog.Root>
       }
-      {!!activeAccount &&
+      {(activeAccount && !storedSignedTxn) &&
         <div className='mt-8'>
-          {/* TODO: Add ability to sign transaction */}
           <button
             className='btn btn-primary btn-block min-h-[5em] h-auto'
-            // onClick={() => signTransaction()}
+            onClick={() => signTransaction()}
           >
             <IconBallpenFilled aria-hidden />
             {t('sign_txn:sign_txn_btn')}
@@ -140,6 +190,12 @@ export default function SignTxn({ lng, open = false }: Props) {
               {t('wallet.disconnect')}
             </button>
           </div>
+        </div>
+      }
+      {storedSignedTxn &&
+        <div className='alert alert-success break-all mt-8'>
+          <IconCircleCheck aria-hidden />
+          {t('sign_txn:txn_signed')}
         </div>
       }
     </>

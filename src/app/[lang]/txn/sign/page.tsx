@@ -5,6 +5,7 @@ import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
 import { IconAlertTriangleFilled, IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
+import NextStepButton from './components/NextStepButton';
 
 /**
  * Sign Transaction page
@@ -24,11 +25,7 @@ export default function SignTxnPage({ params: { lang } }: {
       {/* Buttons */}
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
         <div>
-          <button className='btn btn-primary w-full' disabled={true} tabIndex={-1}>
-            {t('send_txn_btn')}
-            <IconArrowRight aria-hidden className='rtl:hidden' />
-            <IconArrowLeft aria-hidden className='hidden rtl:inline' />
-          </button>
+          <NextStepButton lng={lang} />
         </div>
         <div className='sm:order-first'>
           <Link href={`/${lang}/txn/compose`} className='btn w-full'>
