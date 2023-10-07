@@ -70,7 +70,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
       <Dialog.Root defaultOpen={open} modal={false}>
         <Dialog.Trigger asChild>
           <button className='btn btn-ghost px-2' title={t('settings.heading')}>
-            <IconSettings stroke={1.5} size={32} />
+            <IconSettings stroke={1.5} size={32} aria-hidden />
           </button>
         </Dialog.Trigger>
         <Dialog.Portal>
