@@ -1,4 +1,3 @@
-import { ShowIf } from '@/app/[lang]/components';
 import type { TextAreaFieldProps } from './types';
 
 /** Text area form field. Includes a `<label>` element and a `<textarea>` element */
@@ -27,12 +26,10 @@ export default function TextAreaField({
       <label className='label' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
-          <ShowIf cond={required}>
-            <span className='text-error px-1' title={requiredText || undefined}>*</span>
-          </ShowIf>
+          {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
         </span>
-        <ShowIf cond={inputInsideLabel}>
-          <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
+        {inputInsideLabel && <>
+          {(!beforeSideLabel && !afterSideLabel) &&
             <textarea
               className={`textarea-bordered textarea ${inputClass}`}
               id={id || undefined}
@@ -46,14 +43,14 @@ export default function TextAreaField({
               value={value}
               onChange={onChange}
             />
-          </ShowIf>
-          <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
+          }
+          {(beforeSideLabel || afterSideLabel) &&
             <span className='join'>
-              <ShowIf cond={!!beforeSideLabel}>
+              {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {beforeSideLabel}
                 </span>
-              </ShowIf>
+              }
               <textarea
                 className={`textarea-bordered textarea join-item ${inputClass}`}
                 id={id || undefined}
@@ -67,17 +64,17 @@ export default function TextAreaField({
                 value={value}
                 onChange={onChange}
               />
-              <ShowIf cond={!!afterSideLabel}>
+              {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {afterSideLabel}
                 </span>
-              </ShowIf>
+              }
             </span>
-          </ShowIf>
-        </ShowIf>
+          }
+        </>}
       </label>
-      <ShowIf cond={!inputInsideLabel}>
-        <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
+      {!inputInsideLabel && <>
+        {(!beforeSideLabel && !afterSideLabel) &&
           <textarea
             className={`textarea-bordered textarea ${inputClass}`}
             id={id || undefined}
@@ -91,14 +88,14 @@ export default function TextAreaField({
             value={value}
             onChange={onChange}
           />
-        </ShowIf>
-        <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
+        }
+        {(beforeSideLabel || afterSideLabel) &&
           <span className='join'>
-            <ShowIf cond={!!beforeSideLabel}>
+            {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {beforeSideLabel}
               </span>
-            </ShowIf>
+            }
             <textarea
               className={`textarea-bordered textarea join-item ${inputClass}`}
               id={id || undefined}
@@ -112,17 +109,18 @@ export default function TextAreaField({
               value={value}
               onChange={onChange}
             />
-            <ShowIf cond={!!afterSideLabel}>
+            {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {afterSideLabel}
               </span>
-            </ShowIf>
+            }
           </span>
-        </ShowIf>
-      </ShowIf>
-      <ShowIf cond={!!helpMsg}>
+        }
+      </>}
+
+      {helpMsg &&
         <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
-      </ShowIf>
+      }
     </div>
   );
 }

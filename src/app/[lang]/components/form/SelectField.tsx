@@ -1,4 +1,3 @@
-import { ShowIf } from '@/app/[lang]/components';
 import type { SelectFieldProps } from './types';
 
 /** Selection box form field. Includes a `<label>` element and a `<select>` element */
@@ -27,12 +26,10 @@ export default function SelectField({
       <label className='label' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
-          <ShowIf cond={required}>
-            <span className='text-error px-1' title={requiredText || undefined}>*</span>
-          </ShowIf>
+          {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
         </span>
-        <ShowIf cond={inputInsideLabel}>
-          <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
+        {inputInsideLabel && <>
+          {(!beforeSideLabel && !afterSideLabel) &&
             <select
               className={`select-bordered select ${inputClass}`}
               id={id || undefined}
@@ -44,23 +41,21 @@ export default function SelectField({
               value={value}
               onChange={onChange}
             >
-              <ShowIf cond={!!placeholder}>
-                <option value='' disabled>{placeholder}</option>
-              </ShowIf>
+              {placeholder && <option value='' disabled>{placeholder}</option>}
               {
                 options.map((option) => {
                   return <option key={option.value} value={option.value}>{option.text}</option>;
                 })
               }
             </select>
-          </ShowIf>
-          <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
+          }
+          {(beforeSideLabel || afterSideLabel) &&
             <span className='join'>
-              <ShowIf cond={!!beforeSideLabel}>
+              {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {beforeSideLabel}
                 </span>
-              </ShowIf>
+              }
               <select
                 className={`select-bordered select join-item ${inputClass}`}
                 id={id || undefined}
@@ -72,26 +67,24 @@ export default function SelectField({
                 value={value}
                 onChange={onChange}
               >
-                <ShowIf cond={!!placeholder}>
-                  <option value='' disabled>{placeholder}</option>
-                </ShowIf>
+                {placeholder && <option value='' disabled>{placeholder}</option>}
                 {
                   options.map((option) => {
                     return <option key={option.value} value={option.value}>{option.text}</option>;
                   })
                 }
               </select>
-              <ShowIf cond={!!afterSideLabel}>
+              {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {afterSideLabel}
                 </span>
-              </ShowIf>
+              }
             </span>
-          </ShowIf>
-        </ShowIf>
+          }
+        </>}
       </label>
-      <ShowIf cond={!inputInsideLabel}>
-        <ShowIf cond={!beforeSideLabel && !afterSideLabel}>
+      {!inputInsideLabel && <>
+        {(!beforeSideLabel && !afterSideLabel) &&
           <select
             className={`select-bordered select ${inputClass}`}
             id={id || undefined}
@@ -103,23 +96,21 @@ export default function SelectField({
             value={value}
             onChange={onChange}
           >
-            <ShowIf cond={!!placeholder}>
-              <option value='' disabled>{placeholder}</option>
-            </ShowIf>
+            {placeholder && <option value='' disabled>{placeholder}</option>}
             {
               options.map((option) => {
                 return <option key={option.value} value={option.value}>{option.text}</option>;
               })
             }
           </select>
-        </ShowIf>
-        <ShowIf cond={!!beforeSideLabel || !!afterSideLabel}>
+        }
+        {(beforeSideLabel || afterSideLabel) &&
           <span className='join'>
-            <ShowIf cond={!!beforeSideLabel}>
+            {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {beforeSideLabel}
               </span>
-            </ShowIf>
+            }
             <select
               className={`select-bordered select join-item ${inputClass}`}
               id={id || undefined}
@@ -131,26 +122,25 @@ export default function SelectField({
               value={value}
               onChange={onChange}
             >
-              <ShowIf cond={!!placeholder}>
-                <option value='' disabled>{placeholder}</option>
-              </ShowIf>
+              {placeholder && <option value='' disabled>{placeholder}</option>}
               {
                 options.map((option) => {
                   return <option key={option.value} value={option.value}>{option.text}</option>;
                 })
               }
             </select>
-            <ShowIf cond={!!afterSideLabel}>
+            {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {afterSideLabel}
               </span>
-            </ShowIf>
+            }
           </span>
-        </ShowIf>
-      </ShowIf>
-      <ShowIf cond={!!helpMsg}>
+        }
+      </>}
+
+      {helpMsg &&
         <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
-      </ShowIf>
+      }
     </div>
   );
 }

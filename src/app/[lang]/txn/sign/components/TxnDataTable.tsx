@@ -1,6 +1,5 @@
 'use client';
 
-import { ShowIf } from "@/app/[lang]/components";
 import { useTranslation } from "@/app/i18n/client";
 import { PaymentTxnData, storedTxnDataAtom } from "@/app/lib/txn-form-data";
 import { TransactionType } from "algosdk";
@@ -26,7 +25,7 @@ export default function TxnDataTable({ lng }: Props) {
           <td className='break-all'>{txnData?.snd}</td>
         </tr>
 
-        <ShowIf cond={txnData?.type === TransactionType.pay}>
+        {txnData?.type === TransactionType.pay && <>
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.rcv.label')}</th>
             <td className='break-all'>{(txnData as PaymentTxnData)?.rcv}</td>
@@ -42,7 +41,7 @@ export default function TxnDataTable({ lng }: Props) {
               }
             </td>
           </tr>
-        </ShowIf>
+        </>}
 
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
@@ -78,7 +77,7 @@ export default function TxnDataTable({ lng }: Props) {
           </td>
         </tr>
 
-        <ShowIf cond={txnData?.type === TransactionType.pay}>
+        {txnData?.type === TransactionType.pay &&
           <tr
             className={(txnData as PaymentTxnData)?.close ? 'bg-warning text-warning-content' : ''}
           >
@@ -87,7 +86,7 @@ export default function TxnDataTable({ lng }: Props) {
               {(txnData as PaymentTxnData)?.close || <i className='opacity-50'>{t('none')}</i>}
             </td>
           </tr>
-        </ShowIf>
+        }
       </tbody>
     </table>
   );

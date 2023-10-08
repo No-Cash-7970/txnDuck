@@ -1,7 +1,6 @@
 /** Fields for the compose-transaction form that are for payment transactions */
 
 import { NumberField, TextField } from "@/app/[lang]/components/form";
-import { ShowIf } from "@/app/[lang]/components";
 import { IconAlertTriangle } from "@tabler/icons-react";
 import { type TFunction } from "i18next";
 import { Trans } from "react-i18next";
@@ -47,7 +46,7 @@ export function Amount({ t }: { t: TFunction }) {
 /** The "Close To" field WITH the notice */
 export function CloseTo({ t }: { t: TFunction }) {
   return (
-    <ShowIf cond={true}>
+    <>
       <CloseToField t={t} />
 
       <div className='alert alert-warning not-prose my-1'>
@@ -59,7 +58,7 @@ export function CloseTo({ t }: { t: TFunction }) {
           </Trans>
         </span>
       </div>
-    </ShowIf>
+    </>
   );
 }
 
@@ -81,9 +80,9 @@ function CloseToField({ t }: { t: TFunction }) {
 export function ReceiverAndAmount({ t }: { t: TFunction }) {
   return (
     // If payment type
-    <ShowIf cond={true}>
+    <>
       <Receiver t={t} />
       <Amount t={t} />
-    </ShowIf>
+    </>
   );
 }

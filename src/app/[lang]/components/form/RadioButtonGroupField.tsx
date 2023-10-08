@@ -1,4 +1,3 @@
-import { ShowIf } from '@/app/[lang]/components';
 import type { RadioButtonGroupFieldProps } from './types';
 
 /** Radio button group form field */
@@ -20,9 +19,7 @@ export default function SelectField({
     <fieldset role='radiogroup' className={containerClass} disabled={disabled}>
       <legend className='label'>
         <span className='label-text'>{label}</span>
-        <ShowIf cond={required}>
-          <span className='text-error px-1' title={requiredText || undefined}>*</span>
-        </ShowIf>
+        {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
       </legend>
       <div className='join'>
         {
@@ -46,11 +43,11 @@ export default function SelectField({
           })
         }
       </div>
-      <ShowIf cond={!!helpMsg}>
+      {helpMsg &&
         <p className='label help-msg mt-1 mb-0'>
           <span className='label-text-alt'>{helpMsg}</span>
         </p>
-      </ShowIf>
+      }
     </fieldset>
   );
 }
