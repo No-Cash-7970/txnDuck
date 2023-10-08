@@ -8,8 +8,8 @@ import {
   IconArrowLeft,
   IconArrowRight
 } from '@tabler/icons-react';
-import * as GeneralFields from './GeneralFields';
-import * as PaymentFields from './PaymentFields';
+import * as GeneralFields from './fields/GeneralFields';
+import * as PaymentFields from './fields/PaymentFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
