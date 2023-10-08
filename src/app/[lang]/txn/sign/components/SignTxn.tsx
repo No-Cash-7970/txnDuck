@@ -18,7 +18,7 @@ import {
   disconnectWallet as utilsDisconnectWallet,
   getClient as utilsGetClient,
 } from '@/app/lib/WalletUtils';
-import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-form-data';
+import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
 import { bytesToBase64DataUrl } from '@/app/lib/Utils';
 

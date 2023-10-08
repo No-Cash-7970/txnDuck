@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useTranslation } from "@/app/i18n/client";
 import { IconArrowRight, IconArrowLeft } from "@tabler/icons-react";
 import { useAtomValue } from "jotai";
-import { storedSignedTxnAtom } from "@/app/lib/txn-form-data";
+import { storedSignedTxnAtom } from "@/app/lib/txn-data";
 
 type Props = {
   /** Language */

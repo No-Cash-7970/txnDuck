@@ -5,7 +5,7 @@ import { IconAlertTriangle } from "@tabler/icons-react";
 import { type TFunction } from "i18next";
 import { Trans } from "react-i18next";
 import { useAtom } from "jotai";
-import { txnDataAtoms } from '@/app/lib/txn-form-data';
+import { txnDataAtoms } from '@/app/lib/txn-data';
 
 export function Receiver({ t }: { t: TFunction }) {
   const [rcv, setRcv] = useAtom(txnDataAtoms.rcv);

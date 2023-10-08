@@ -9,7 +9,7 @@ import {
   type TxnData,
   storedTxnDataAtom,
   txnDataAtoms
-} from '@/app/lib/txn-form-data';
+} from '@/app/lib/txn-data';
 
 type Props = {
   /** Language */

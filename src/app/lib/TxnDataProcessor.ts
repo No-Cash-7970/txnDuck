@@ -4,7 +4,7 @@ import {
   makePaymentTxnWithSuggestedParamsFromObject,
 } from 'algosdk';
 import { encodeTransactionNote } from '@algorandfoundation/algokit-utils';
-import type { PaymentTxnData, TxnData } from '@/app/lib/txn-form-data';
+import type { PaymentTxnData, TxnData } from '@/app/lib/txn-data';
 
 /** Creates an `Transaction` object that represents an Algorand transaction */
 export function createTxnFromData(txnData: TxnData, genesisID: string, genesisHash: string) {
