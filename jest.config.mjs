@@ -14,6 +14,7 @@ const config = {
 
   testEnvironment: 'jest-environment-jsdom',
   testPathIgnorePatterns: ['/node_modules/', '<rootDir>/src/e2e'],
+  resetMocks: true,
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which
