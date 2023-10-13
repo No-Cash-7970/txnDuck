@@ -28,7 +28,7 @@ const getDynamicDaffiWalletConnect = async () => {
 
 export default function WalletProvider({ children }: { children: React.ReactNode }) {
   const providers = useInitializeProviders({
-    debug: process.env.WALLET_DEBUG === 'true',
+    debug: process.env.NEXT_PUBLIC_WALLET_DEBUG === 'true',
     providers: [
       { id: PROVIDER_ID.PERA,
         getDynamicClient: getDynamicPeraWalletConnect,
