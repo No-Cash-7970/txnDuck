@@ -12,6 +12,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useAtom, useAtomValue } from 'jotai';
+import * as algokit from '@algorandfoundation/algokit-utils';
 import { useTranslation } from "@/app/i18n/client";
 import {
   walletTypes,
@@ -21,6 +22,7 @@ import {
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
 import { bytesToBase64DataUrl } from '@/app/lib/Utils';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
   /** Language */
@@ -30,6 +32,7 @@ type Props = {
 /** Buttons for connecting to wallet and signing transaction */
 export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const { providers, activeAccount, clients, signTransactions } = useWallet();
@@ -39,18 +42,19 @@ export default function SignTxn({ lng }: Props) {
 
   /** Create transaction object from stored transaction data and sign the transaction */
   const signTransaction = async () => {
-    // TODO: Get suggested parameters
+    const algod = algokit.getAlgoClient({
+      server: nodeConfig.nodeServer,
+      port: nodeConfig.nodePort,
+      token: (nodeConfig.nodeToken || '') as string,
+    });
+    // Get suggested parameters
+    const suggestedParams = await algokit.getTransactionParams(undefined, algod);
 
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     // Create Transaction object and encoded it
     const unsignedTxn = algosdk.encodeUnsignedTransaction(
-      createTxnFromData(
-        storedTxnData,
-        // TODO: Change hard-coded node config
-        'testnet-v1.0',
-        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-      )
+      createTxnFromData(storedTxnData, suggestedParams.genesisID, suggestedParams.genesisHash)
     );
 
     // Sign the transaction and store it

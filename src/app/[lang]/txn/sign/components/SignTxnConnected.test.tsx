@@ -9,6 +9,14 @@ import { fooDisconnectFn, useWalletConnectedMock } from "@/app/lib/testing/useWa
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
+// Mock algokit before modules that use it are imported
+jest.mock('@algorandfoundation/algokit-utils', () => ({
+  getAlgoClient: () => ({}),
+  getTransactionParams: () => ({
+    genesisId: 'fooNet',
+    genesisHash: 'Some genesis hash'
+  })
+}));
 
 import SignTxn from './SignTxn';
 
