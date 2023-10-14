@@ -17,7 +17,7 @@ jest.mock('react-i18next', () => i18nextClientMock);
 
 import NavBar from '.';
 
-describe.only('Nav Bar Component', () => {
+describe('Nav Bar Component', () => {
 
   it('renders', () => {
     render(<NavBar />);
@@ -27,6 +27,11 @@ describe.only('Nav Bar Component', () => {
   it('has site name', () => {
     render(<NavBar />);
     expect(screen.getByText('site_name_formatted')).toBeInTheDocument();
+  });
+
+  it('has node selector button', () => {
+    render(<NavBar />);
+    expect(screen.getByTitle('node_selector.choose_node')).toBeInTheDocument();
   });
 
   it('has settings button', () => {
