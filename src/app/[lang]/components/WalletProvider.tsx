@@ -5,6 +5,8 @@ import {
   useInitializeProviders,
   PROVIDER_ID,
 } from '@txnlab/use-wallet';
+import { useAtomValue } from 'jotai';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 
 const getDynamicDeflyWalletConnect = async () => {
   const DeflyWalletConnect = (await import('@blockshake/defly-connect')).DeflyWalletConnect;
@@ -27,6 +29,7 @@ const getDynamicDaffiWalletConnect = async () => {
 };
 
 export default function WalletProvider({ children }: { children: React.ReactNode }) {
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   const providers = useInitializeProviders({
     debug: process.env.NEXT_PUBLIC_WALLET_DEBUG === 'true',
     providers: [
@@ -40,12 +43,7 @@ export default function WalletProvider({ children }: { children: React.ReactNode
       { id: PROVIDER_ID.MYALGO, getDynamicClient: getDynamicMyAlgoWalletConnect },
       { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
     ],
-    nodeConfig: {
-      network: 'testnet',
-      nodeServer: 'https://testnet-api.algonode.cloud',
-      nodeToken: '',
-      nodePort: '443'
-    }
+    nodeConfig
   });
 
   return (

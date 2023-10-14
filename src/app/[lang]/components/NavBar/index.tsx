@@ -2,6 +2,7 @@ import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import Settings from './Settings';
+import NodeSelector from './NodeSelector';
 
 type Props = {
   /** Language */
@@ -24,7 +25,7 @@ export default function NavBar({ lng }: Props) {
         </a>
       </div>
       <div className='navbar-center'>
-
+        <NodeSelector lng={lng} />
       </div>
       <div className='navbar-end'>
         <Settings lng={lng} />

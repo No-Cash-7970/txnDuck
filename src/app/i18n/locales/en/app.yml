@@ -46,3 +46,8 @@ wallet:
     mobile_web: Mobile & web wallet
     web: Web wallet
     browser_extension: Browser extension wallet
+node_selector:
+  choose_node: Select node
+  testnet: TestNet
+  mainnet: MainNet
+  betanet: BetaNet

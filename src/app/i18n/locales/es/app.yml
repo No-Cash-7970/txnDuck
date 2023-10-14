@@ -47,3 +47,8 @@ wallet:
     mobile_web: Cartera móvil y web
     web: Cartera web
     browser_extension: Cartera de extensión del navegador
+node_selector:
+  choose_node: Elija nodo
+  testnet: TestNet
+  mainnet: MainNet
+  betanet: BetaNet
