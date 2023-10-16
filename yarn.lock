@@ -4742,6 +4742,11 @@ fined@^1.0.1:
     object.pick "^1.2.0"
     parse-filepath "^1.0.1"
 
+flag-icons@^6.11.1:
+  version "6.11.1"
+  resolved "https://registry.yarnpkg.com/flag-icons/-/flag-icons-6.11.1.tgz#3546cde2a77c6bcdaacb4ca17e176a9964db8ae4"
+  integrity sha512-c2UMJTFZoVQ47/sE1mb+9b5S1pi8SjXsx0MR063O31GV+O2EN4FMwMdEYSQItpien2bl9w1viLUoo2R3r6OK3g==
+
 flagged-respawn@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/flagged-respawn/-/flagged-respawn-1.0.1.tgz"

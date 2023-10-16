@@ -14,7 +14,7 @@ import { type FallbackNs } from 'react-i18next';
 import {
   type AlternateURLs as MetadataAlternateURLs
 } from 'next/dist/lib/metadata/types/alternative-urls-types';
-import { SUPPORTED_LANGS, getOptions } from './settings';
+import { supportedLangs, getOptions } from './settings';
 
 /**
  *
@@ -73,7 +73,7 @@ export function generateLangAltsMetadata(
   path: string = '/'
 ): Pick<MetadataAlternateURLs, 'canonical' | 'languages'> {
   const langUrls: {[lang: string]: string} = {};
-  SUPPORTED_LANGS.forEach((lng: string) => langUrls[lng] = lng + path);
+  Object.keys(supportedLangs).forEach((lng: string) => langUrls[lng] = lng + path);
 
   return {
     canonical: path,

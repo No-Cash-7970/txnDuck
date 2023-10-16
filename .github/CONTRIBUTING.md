@@ -98,32 +98,50 @@ translation:
    [`/src/app/i18n/locales`](../src/app/i18n/locales/). Use the language's
    [ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
    as the name of the new directory.
-2. Add the language to the array of supported languages (`SUPPORTED_LANGS`) in the
+2. Add the language data to the object of supported languages (`supportedLangs`) in the
    [I18n settings](../src/app/i18n/settings.ts).
 
-   For example, if `SUPPORTED_LANGS` in the [i18n settings](../src/app/i18n/settings.ts)
+   For example, if `supportedLangs` in the [i18n settings](../src/app/i18n/settings.ts)
    looked something like this:
 
    ```typescript
-    export const SUPPORTED_LANGS: string[] = [
-      'en',
-      // ADD NEW LANGUAGE HERE
-    ];
+   /**
+    * Collection of supported languages
+    */
+   export const supportedLangs: LanguageData = {
+     en: {
+       name: 'English', // Shown on language button if it is the current language
+       listName: 'English (US)', // Shown in language menu
+       country: 'us' // ISO 3166-1-alpha-2 code for the country associated with the language
+     },
+     // ADD DATA FOR NEW LANGUAGE HERE
+   };
    ```
 
    Then after adding Spanish
    ([ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) "es"),
-   `SUPPORTED_LANGS` should look like this:
+   `supportedLangs` should look like this:
 
    ```typescript
-    export const SUPPORTED_LANGS: string[] = [
-      'en',
-      'es',
-      // ADD NEW LANGUAGE HERE
-    ];
+   /**
+    * Collection of supported languages
+    */
+   export const supportedLangs: LanguageData = {
+     en: {
+       name: 'English', // Shown on language button if it is the current language
+       listName: 'English (US)', // Shown in language menu
+       country: 'us' // ISO 3166-1-alpha-2 code for the country associated with the language
+     },
+     es: {
+       name: 'Español',
+       listName: 'Español (Traducción automática)',
+       country: 'es'
+     },
+     // ADD DATA FOR NEW LANGUAGE HERE
+   };
    ```
 
-3. Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
+1. Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
    - Provide the language of the translation in the title **in English**.
    - If updating a translation, describe those updates in the pull request
      description **in English**.

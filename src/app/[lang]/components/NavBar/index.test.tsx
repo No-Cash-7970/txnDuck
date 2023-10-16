@@ -7,9 +7,11 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   use: () => ({ t: (key: string) => key }),
 }));
-// Mock useRouter because it is used by a child component
+// Mock useRouter because it is used by  child components
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ refresh: jest.fn() })
+  useRouter: () => ({ refresh: jest.fn() }),
+  usePathname: () => '/current/url/of/page',
+  useSearchParams: () => ({toString: () => 'q=yes'}),
 }));
 // Mock i18next before modules that use it are imported. This needs to be mocked because it is a
 // dependency of a child client component.
@@ -32,6 +34,11 @@ describe('Nav Bar Component', () => {
   it('has node selector button', () => {
     render(<NavBar />);
     expect(screen.getByTitle('node_selector.choose_node')).toBeInTheDocument();
+  });
+
+  it('has language selector button', () => {
+    render(<NavBar />);
+    expect(screen.getByTestId('lang-btn')).toBeInTheDocument();
   });
 
   it('has settings button', () => {

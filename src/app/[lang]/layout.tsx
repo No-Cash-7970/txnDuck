@@ -4,7 +4,7 @@ import type { Metadata } from 'next';
 import * as fonts from '@/app/lib/fonts';
 import { dir } from 'i18next';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
-import { SUPPORTED_LANGS } from '@/app/i18n/settings';
+import { supportedLangs } from '@/app/i18n/settings';
 import {
   Footer,
   JotaiProvider,
@@ -48,7 +48,7 @@ export async function generateMetadata(
  */
 export function generateStaticParams(): { lng: string }[] {
   // Output should look something like [ { lng: 'en' }, { lng: 'es' } ]
-  return SUPPORTED_LANGS.map((lng) => ({ lng }));
+  return Object.keys(supportedLangs).map((lng) => ({ lng }));
 }
 
 export default function RootLayout(

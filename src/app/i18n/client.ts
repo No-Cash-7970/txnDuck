@@ -14,7 +14,7 @@ import {
 } from 'react-i18next';
 import resourcesToBackend from 'i18next-resources-to-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { getOptions, SUPPORTED_LANGS } from './settings';
+import { getOptions, supportedLangs } from './settings';
 
 const runsOnServerSide = typeof window === 'undefined';
 
@@ -33,7 +33,7 @@ i18next
     detection: {
       order: ['path', 'htmlTag', 'cookie', 'navigator'],
     },
-    preload: runsOnServerSide ? SUPPORTED_LANGS : []
+    preload: runsOnServerSide ? Object.keys(supportedLangs) : []
   });
 
 export default i18next;

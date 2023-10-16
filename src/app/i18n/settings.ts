@@ -1,8 +1,31 @@
-export const SUPPORTED_LANGS: string[] = [
-  'en', // English
-  'es', // Spanish (Español)
-  // ADD NEW LANGUAGE HERE
-];
+type LanguageData = {
+  // The key must be an ISO 639-1 language code
+  [lang: string]: {
+    /** Full name used to display the currently selected language. */
+    name: string,
+    /** Name used in list of supported languages. Usually the same as the full name. */
+    listName: string,
+    /** ISO 3166-1-alpha-2 code for the country associated with the language */
+    country: string, // Must be all lowercase
+  }
+};
+
+/**
+ * Collection of supported languages
+ */
+export const supportedLangs: LanguageData = {
+  en: {
+    name: 'English',
+    listName: 'English (US)',
+    country: 'us'
+  },
+  es: {
+    name: 'Español',
+    listName: 'Español (Traducción automática)',
+    country: 'es'
+  },
+  // ADD DATA FOR NEW LANGUAGE HERE
+};
 
 /*
  * NOTE: This code was copied (with a few modifications) from
@@ -25,7 +48,7 @@ export type i18nOptions = {
 export function getOptions (lng = fallbackLng, ns: string | string[] = defaultNS): i18nOptions {
   return {
     debug: process.env.I18NEXT_DEBUG?.toLowerCase() === 'true',
-    supportedLngs: SUPPORTED_LANGS,
+    supportedLngs: Object.keys(supportedLangs),
     // preload: languages,
     fallbackLng,
     lng,
