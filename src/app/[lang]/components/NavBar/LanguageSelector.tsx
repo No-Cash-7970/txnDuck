@@ -35,6 +35,7 @@ export default function LanguageSelector({ lng }: Props) {
             {Object.keys(supportedLangs).map((l: string) => (
               <li key={l}>
                 <Link
+                  className={l === lng ? 'active': ''}
                   href={{
                     pathname: `/${l}` + currentURLPath.replace(`/${lng}`, ''),
                     query: currentURLParams.toString()
