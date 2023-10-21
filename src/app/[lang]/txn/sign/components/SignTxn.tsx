@@ -48,13 +48,13 @@ export default function SignTxn({ lng }: Props) {
       token: (nodeConfig.nodeToken || '') as string,
     });
     // Get suggested parameters
-    const suggestedParams = await algokit.getTransactionParams(undefined, algod);
+    const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
 
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     // Create Transaction object and encoded it
     const unsignedTxn = algosdk.encodeUnsignedTransaction(
-      createTxnFromData(storedTxnData, suggestedParams.genesisID, suggestedParams.genesisHash)
+      createTxnFromData(storedTxnData, genesisID, genesisHash)
     );
 
     // Sign the transaction and store it
