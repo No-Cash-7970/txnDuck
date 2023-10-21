@@ -42,35 +42,28 @@ export default function NodeSelector({ lng }: Props) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <div className='mx-2'>
-          {nodeConfig?.network === TESTNET &&
-            <button
-              className='btn btn-secondary w-auto max-w-[4rem] sm:max-w-xs px-2 sm:px-4'
-              title={t('node_selector.choose_node')}
-            >
-              <IconCircleLetterT aria-hidden />
-              <span className='truncate'>{t('node_selector.testnet')}</span>
-            </button>
+      <button
+          className={
+            'btn w-auto max-w-[4rem] sm:max-w-xs mx-2 px-2 sm:px-4 '
+            + (nodeConfig?.network === TESTNET ? 'btn-secondary' : '')
+            + (nodeConfig?.network === MAINNET ? 'btn-primary' : '')
+            + (nodeConfig?.network === BETANET ? 'btn-accent' : '')
           }
-          {nodeConfig?.network === MAINNET &&
-            <button
-              className='btn btn-primary w-auto max-w-[4rem] sm:max-w-xs px-2 sm:px-4'
-              title={t('node_selector.choose_node')}
-            >
-              <IconCircleLetterM aria-hidden />
-              <span className='truncate'>{t('node_selector.mainnet')}</span>
-            </button>
-          }
-          {nodeConfig?.network === BETANET &&
-            <button
-              className='btn btn-accent w-auto max-w-[4rem] sm:max-w-xs px-2 sm:px-4'
-              title={t('node_selector.choose_node')}
-            >
-              <IconCircleLetterB aria-hidden />
-              <span className='truncate'>{t('node_selector.betanet')}</span>
-            </button>
-          }
-        </div>
+          title={t('node_selector.choose_node')}
+        >
+          {nodeConfig?.network === TESTNET && <>
+            <IconCircleLetterT aria-hidden />
+            <span className='truncate'>{t('node_selector.testnet')}</span>
+          </>}
+          {nodeConfig?.network === MAINNET && <>
+            <IconCircleLetterM aria-hidden />
+            <span className='truncate'>{t('node_selector.mainnet')}</span>
+          </>}
+          {nodeConfig?.network === BETANET && <>
+            <IconCircleLetterB aria-hidden />
+            <span className='truncate'>{t('node_selector.betanet')}</span>
+          </>}
+        </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content asChild>
