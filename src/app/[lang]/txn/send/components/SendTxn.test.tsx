@@ -38,13 +38,13 @@ describe('Send Transaction Component', () => {
   });
 
   it('shows "waiting" message if waiting for transaction confirmation', async () => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
     expect(await screen.findByText('txn_confirm_wait')).toBeInTheDocument();
   });
 
   it('shows success message if transaction is successful', async () => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
 
     expect(await screen.findByText('success.heading')).toBeInTheDocument();
@@ -53,7 +53,7 @@ describe('Send Transaction Component', () => {
 
   it('removes temporary transaction data from storage if transaction is successful', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({ fake: 'txn data'}));
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
 
     await waitFor(() => expect(sessionStorage.getItem('txnData')).toBeNull());
@@ -61,7 +61,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('shows fail message if transaction fails', async () => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     sendErrorMsg = 'foo';
     render(<SendTxn />);
 
@@ -72,7 +72,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('has "retry" button when transaction fails', async() => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     sendErrorMsg = 'foo';
     render(<SendTxn />);
 
@@ -83,7 +83,7 @@ describe('Send Transaction Component', () => {
 
   it('shows warning message if transaction is not confirmed in specified number of rounds',
   async () => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);
 
@@ -93,7 +93,7 @@ describe('Send Transaction Component', () => {
 
   it('has "retry" button when transaction is not confirmed in specified number of rounds',
   async() => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);
 
@@ -105,7 +105,7 @@ describe('Send Transaction Component', () => {
 
   it('has "wait longer" button when transaction is not confirmed in specified number of rounds',
   async() => {
-    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);
 
