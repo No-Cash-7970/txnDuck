@@ -26,7 +26,7 @@ fields:
     in_algos_other: "{{count, number}} Algos"
   note: # Note
     label: Nota
-    placeholder: Introduzca la nota...
+    placeholder: Introduzca la nota…
   fv: # First valid round
     label: Primera ronda válida de la transacción
   lv: # Last valid round

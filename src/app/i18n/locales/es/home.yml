@@ -39,7 +39,7 @@ uses:
   complex_things:
     heading: Cosas avanzadas o complejas
     list:
-      0: Marcar una cuenta como “en línea” to start participating consensus
+      0: Marcar una cuenta como «en línea» to start participating consensus
       1: Actualizar una aplicación (smart contract)
       2: Revocar (Claw back) un activo
       3: Y más

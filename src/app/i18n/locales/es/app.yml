@@ -10,7 +10,7 @@ builder_steps:
   sign: Firme
   send: Envíe
 footer:
-  github_link: Código fuente en Github
+  github_link: Código fuente en GitHub
   license_notice: >
     Al utilizar, descargar o instalar este software, usted acepta los términos descritos en la
     <1>licencia (en inglés)</1> del software.

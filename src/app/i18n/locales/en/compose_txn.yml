@@ -26,11 +26,11 @@ fields:
     in_algos_other: "{{count, number}} Algos"
   note: # Note
     label: Note
-    placeholder: Enter note...
+    placeholder: Enter note…
   fv: # First valid round
-    label: Transaction's first valid round
+    label: Transaction’s first valid round
   lv: # Last valid round
-    label: Transaction's last valid round
+    label: Transaction’s last valid round
   lx: # Lease
     label: Lease
   rekey: # Rekey to

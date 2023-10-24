@@ -11,7 +11,7 @@ number_value: "{{value, number}}" # When displaying a number without any other t
 # More information about specifying singular and plural versions of a word:
 # https://www.i18next.com/translation-function/plurals#singular-plural
 algo_one: Algo # 1 Algo
-algo_other: Algos # Mulitple Algos
+algo_other: Algos # Multiple Algos
 
 # These labels are used to help screen readers
 # More information: https://www.radix-ui.com/primitives/docs/components/toast#api-reference

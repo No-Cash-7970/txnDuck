@@ -10,7 +10,7 @@ builder_steps:
   sign: Sign
   send: Send
 footer:
-  github_link: Source on Github
+  github_link: Source on GitHub
   license_notice: >
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <1>license</1>.
