@@ -1,23 +1,8 @@
-import BuilderSteps from "./BuilderSteps";
-export {BuilderSteps};
-
-import Footer from "./Footer";
-export {Footer};
-
-import JotaiProvider from "./JotaiProvider";
-export {JotaiProvider};
-
-import NavBar from "./NavBar";
-export {NavBar};
-
-import PageTitleHeading from "./PageTitleHeading";
-export {PageTitleHeading};
-
-import ToastProvider from "./ToastProvider";
-export {ToastProvider};
-
-import ToastViewport from "./ToastViewport";
-export {ToastViewport};
-
-import WalletProvider from "./WalletProvider";
-export {WalletProvider};
+export {default as BuilderSteps} from "./BuilderSteps";
+export {default as Footer} from "./Footer";
+export {default as JotaiProvider} from "./JotaiProvider";
+export {default as NavBar} from "./NavBar";
+export {default as PageTitleHeading} from "./PageTitleHeading";
+export {default as ToastProvider} from "./ToastProvider";
+export {default as ToastViewport} from "./ToastViewport";
+export {default as WalletProvider} from "./WalletProvider";

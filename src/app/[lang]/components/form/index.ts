@@ -1,23 +1,8 @@
-import CheckboxField from './CheckboxField';
-export { CheckboxField };
-
-import FieldGroup from './FieldGroup';
-export { FieldGroup };
-
-import NumberField from './NumberField';
-export { NumberField };
-
-import RadioButtonGroupField from './RadioButtonGroupField';
-export { RadioButtonGroupField };
-
-import SelectField from './SelectField';
-export { SelectField };
-
-import TextAreaField from './TextAreaField';
-export { TextAreaField };
-
-import TextField from './TextField';
-export { TextField };
-
-import ToggleField from './ToggleField';
-export { ToggleField };
+export { default as CheckboxField } from './CheckboxField';
+export { default as FieldGroup } from './FieldGroup';
+export { default as NumberField } from './NumberField';
+export { default as RadioButtonGroupField } from './RadioButtonGroupField';
+export { default as SelectField } from './SelectField';
+export { default as TextAreaField } from './TextAreaField';
+export { default as TextField } from './TextField';
+export { default as ToggleField } from './ToggleField';
