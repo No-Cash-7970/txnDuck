@@ -1,6 +1,5 @@
 import "@testing-library/jest-dom";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { TFunction } from "i18next";
 import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
 
@@ -14,14 +13,18 @@ describe('Transaction Data Table Component', () => {
 
   it('displays general transaction data', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      type: 'pay',
-      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      fee: 0.0042,
-      note: 'Hello world',
-      fv: 42,
-      lv: 43,
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      gen: '',
+      gh: '',
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.0042,
+        note: 'Hello world',
+        fv: 42,
+        lv: 43,
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      }
     }));
     render(<TxnDataTable />);
 
@@ -52,9 +55,13 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no note', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: '',
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      gen: '',
+      gh: '',
+      txn: {
+        note: '',
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -62,9 +69,13 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no lease', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: 'Hello world',
-      lx: '',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      gen: '',
+      gh: '',
+      txn: {
+        note: 'Hello world',
+        lx: '',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -72,9 +83,13 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no rekey address', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: 'Hello world',
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: '',
+      gen: '',
+      gh: '',
+      txn: {
+        note: 'Hello world',
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: '',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -84,10 +99,14 @@ describe('Transaction Data Table Component', () => {
 
     it('displays payment transaction data', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'pay',
-        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        amt: 42,
-        close: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'pay',
+          rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          amt: 42,
+          close: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
       }));
       render(<TxnDataTable />);
 
@@ -105,13 +124,17 @@ describe('Transaction Data Table Component', () => {
 
     it('displays "none" when there is no close-to address', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'pay',
-        note: 'Hello world',
-        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        amt: 42,
-        close: ''
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'pay',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          amt: 42,
+          close: ''
+        }
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();

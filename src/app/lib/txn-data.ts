@@ -7,34 +7,41 @@ import { atomWithStorage, createJSONStorage } from "jotai/utils";
 /** Data common to all transaction types */
 export interface BaseTxnData {
   /** Type */
-  type: Omit<TransactionType, 'stpf'>,
+  type: Omit<TransactionType, 'stpf'>;
   /** Sender */
-  snd: string,
+  snd: string;
   /** Note */
-  note?: string,
+  note?: string;
   /** Fee */
-  fee: number
+  fee: number;
   /** First valid round */
-  fv: number,
+  fv: number;
   /** Last valid round */
-  lv: number,
+  lv: number;
   /** Rekey to */
-  rekey?: string,
+  rekey?: string;
   /** Lease */
-  lx?: string,
+  lx?: string;
 }
 /** Data for a payment transaction */
 export interface PaymentTxnData extends BaseTxnData {
-  type: TransactionType.pay,
+  type: TransactionType.pay;
   /** Receiver */
-  rcv: string,
+  rcv: string;
   /** Amount */
-  amt: number,
+  amt: number;
   /** Close remainder to */
-  close?: string,
+  close?: string;
 }
 /** Data for the transaction being built */
-export type TxnData = BaseTxnData | PaymentTxnData; // TODO: Add other transaction types
+export interface TxnData {
+  /** Genesis ID (retrieved from currently connected node) */
+  gen: string;
+  /** Genesis hash (retrieved from currently connected node) */
+  gh: string;
+  /** Transaction form data */
+  txn: BaseTxnData | PaymentTxnData; // TODO: Add other transaction types;
+};
 /** Box reference */
 type BoxRef = {
   /** ID of the application that contains the box */

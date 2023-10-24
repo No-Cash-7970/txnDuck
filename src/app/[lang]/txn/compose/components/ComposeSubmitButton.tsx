@@ -4,12 +4,14 @@ import { useTranslation } from '@/app/i18n/client';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
 import { TransactionType } from 'algosdk';
+import * as algokit from '@algorandfoundation/algokit-utils';
 import {
   type PaymentTxnData,
   type TxnData,
   storedTxnDataAtom,
   txnDataAtoms
 } from '@/app/lib/txn-data';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
   /** Language */
@@ -23,6 +25,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
 
   useEffect(() => {
@@ -34,43 +37,59 @@ export default function ComposeSubmitButton({ lng }: Props) {
       return;
     }
 
+    const txnData = storedTxnData.txn;
+
     // Restore transaction data into atoms
-    jotaiStore.set(txnDataAtoms.txnType, storedTxnData.type);
-    jotaiStore.set(txnDataAtoms.snd, storedTxnData.snd || '');
-    jotaiStore.set(txnDataAtoms.note, storedTxnData.note || '');
-    jotaiStore.set(txnDataAtoms.fee, storedTxnData.fee);
-    jotaiStore.set(txnDataAtoms.fv, storedTxnData.fv);
-    jotaiStore.set(txnDataAtoms.lv, storedTxnData.lv);
-    jotaiStore.set(txnDataAtoms.lx, storedTxnData?.lx || '');
-    jotaiStore.set(txnDataAtoms.rekey, storedTxnData?.rekey || '');
+    jotaiStore.set(txnDataAtoms.txnType, txnData.type);
+    jotaiStore.set(txnDataAtoms.snd, txnData.snd || '');
+    jotaiStore.set(txnDataAtoms.note, txnData.note || '');
+    jotaiStore.set(txnDataAtoms.fee, txnData.fee);
+    jotaiStore.set(txnDataAtoms.fv, txnData.fv);
+    jotaiStore.set(txnDataAtoms.lv, txnData.lv);
+    jotaiStore.set(txnDataAtoms.lx, txnData?.lx || '');
+    jotaiStore.set(txnDataAtoms.rekey, txnData?.rekey || '');
     // Restore payment transaction data, if applicable
-    if (storedTxnData.type === TransactionType.pay) {
-      jotaiStore.set(txnDataAtoms.rcv, (storedTxnData as PaymentTxnData).rcv || '');
-      jotaiStore.set(txnDataAtoms.amt, (storedTxnData as PaymentTxnData).amt);
-      jotaiStore.set(txnDataAtoms.close, (storedTxnData as PaymentTxnData)?.close || '');
+    if (txnData.type === TransactionType.pay) {
+      jotaiStore.set(txnDataAtoms.rcv, (txnData as PaymentTxnData).rcv || '');
+      jotaiStore.set(txnDataAtoms.amt, (txnData as PaymentTxnData).amt);
+      jotaiStore.set(txnDataAtoms.close, (txnData as PaymentTxnData)?.close || '');
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
-  const submitData = (e: React.MouseEvent) => {
+  const submitData = async (e: React.MouseEvent) => {
     e.preventDefault();
 
+    // Get suggested parameters
+    const algod = algokit.getAlgoClient({
+      server: nodeConfig.nodeServer,
+      port: nodeConfig.nodePort,
+      token: (nodeConfig.nodeToken || '') as string,
+    });
+    const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
+
+    // Gather base transaction data
     const txnType: TransactionType = jotaiStore.get(txnDataAtoms.txnType) as TransactionType;
     const txnData: TxnData = {
-      type: txnType,
-      snd: jotaiStore.get(txnDataAtoms.snd),
-      note: jotaiStore.get(txnDataAtoms.note),
-      fee: jotaiStore.get(txnDataAtoms.fee) as number,
-      fv: jotaiStore.get(txnDataAtoms.fv) as number,
-      lv: jotaiStore.get(txnDataAtoms.lv) as number,
-      lx: jotaiStore.get(txnDataAtoms.lx) || undefined,
-      rekey: jotaiStore.get(txnDataAtoms.rekey) || undefined,
+      gen: genesisID,
+      gh: genesisHash,
+      txn: {
+        type: txnType,
+        snd: jotaiStore.get(txnDataAtoms.snd),
+        note: jotaiStore.get(txnDataAtoms.note),
+        fee: jotaiStore.get(txnDataAtoms.fee) as number,
+        fv: jotaiStore.get(txnDataAtoms.fv) as number,
+        lv: jotaiStore.get(txnDataAtoms.lv) as number,
+        lx: jotaiStore.get(txnDataAtoms.lx) || undefined,
+        rekey: jotaiStore.get(txnDataAtoms.rekey) || undefined,
+      }
     };
 
+    // Gather payment transaction data
     if (txnType === TransactionType.pay) {
-      (txnData as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
-      (txnData as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
-      (txnData as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
+      (txnData.txn as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
+      (txnData.txn as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
+      (txnData.txn as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
     }
 
     setSubmittingForm(true);
@@ -81,7 +100,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   };
 
   return (
-    <button type='submit' className='btn btn-primary w-full' onClick={(submitData)}>
+    <button type='submit' className='btn btn-primary w-full' onClick={submitData}>
       {t('sign_txn_btn')}
       <IconArrowRight aria-hidden className='rtl:hidden' />
       <IconArrowLeft aria-hidden className='hidden rtl:inline' />

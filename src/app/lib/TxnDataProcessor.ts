@@ -7,7 +7,7 @@ import { encodeTransactionNote } from '@algorandfoundation/algokit-utils';
 import type { PaymentTxnData, TxnData } from '@/app/lib/txn-data';
 
 /** Creates an `Transaction` object that represents an Algorand transaction */
-export function createTxnFromData(txnData: TxnData, genesisID: string, genesisHash: string) {
+export function createTxnFromData(txnData: TxnData['txn'], genesisID: string, genesisHash: string) {
   if (txnData.type === TransactionType.pay) {
     return createPayTxn(txnData as PaymentTxnData, genesisID, genesisHash);
   }

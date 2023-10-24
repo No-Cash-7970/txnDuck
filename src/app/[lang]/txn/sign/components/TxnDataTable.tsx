@@ -12,7 +12,8 @@ type Props = {
 
 export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
-  const txnData = useAtomValue(storedTxnDataAtom);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const txnData = storedTxnData?.txn;
   return (
     <table className='table'>
       <tbody>

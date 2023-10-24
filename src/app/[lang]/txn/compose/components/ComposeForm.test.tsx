@@ -10,6 +10,14 @@ const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock })
 }));
+// Mock algokit
+jest.mock('@algorandfoundation/algokit-utils', () => ({
+  getAlgoClient: () => ({}),
+  getTransactionParams: () => ({
+    genesisID: 'fooNet',
+    genesisHash: 'Some genesis hash'
+  })
+}));
 
 import ComposeForm from "./ComposeForm";
 import { JotaiProvider } from "@/app/[lang]/components";
@@ -101,26 +109,34 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'pay',
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-      amt: 5,
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'pay',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amt: 5,
+      }
     });
   });
 
   it('can retrieve transaction data from session storage', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      type: 'pay',
-      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      fee: 0.001,
-      fv: 5,
-      lv: 1005,
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      amt: 42,
+      gen: '',
+      gh: '',
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.001,
+        fv: 5,
+        lv: 1005,
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        amt: 42,
+      }
     }));
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms

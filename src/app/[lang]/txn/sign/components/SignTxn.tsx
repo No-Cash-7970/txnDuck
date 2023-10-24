@@ -12,7 +12,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { useAtom, useAtomValue } from 'jotai';
-import * as algokit from '@algorandfoundation/algokit-utils';
+import { RESET } from 'jotai/utils';
 import { useTranslation } from "@/app/i18n/client";
 import {
   walletTypes,
@@ -21,8 +21,8 @@ import {
 } from '@/app/lib/WalletUtils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
-import { bytesToBase64DataUrl } from '@/app/lib/Utils';
-import { nodeConfigAtom } from '@/app/lib/node-config';
+import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/Utils';
+import { useEffect } from 'react';
 
 type Props = {
   /** Language */
@@ -32,29 +32,20 @@ type Props = {
 /** Buttons for connecting to wallet and signing transaction */
 export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
-  const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const { providers, activeAccount, clients, signTransactions } = useWallet();
 
   const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
-  const getClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
+  const getWalletClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
 
   /** Create transaction object from stored transaction data and sign the transaction */
   const signTransaction = async () => {
-    const algod = algokit.getAlgoClient({
-      server: nodeConfig.nodeServer,
-      port: nodeConfig.nodePort,
-      token: (nodeConfig.nodeToken || '') as string,
-    });
-    // Get suggested parameters
-    const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
-
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     // Create Transaction object and encoded it
     const unsignedTxn = algosdk.encodeUnsignedTransaction(
-      createTxnFromData(storedTxnData, genesisID, genesisHash)
+      createTxnFromData(storedTxnData.txn, storedTxnData.gen, storedTxnData.gh)
     );
 
     // Sign the transaction and store it
@@ -62,6 +53,22 @@ export default function SignTxn({ lng }: Props) {
     const signedTxnBase64 = await bytesToBase64DataUrl(signedTxn);
     setStoredSignedTxn(signedTxnBase64);
   };
+
+  useEffect(() => {
+    if (!storedTxnData || !storedSignedTxn) return;
+
+    // Remove stored signed transaction if the transaction data was edited
+    dataUrlToBytes(storedSignedTxn)
+      .then((signedTxnBytes) => {
+        const unsignedTxn = createTxnFromData(
+          storedTxnData.txn, storedTxnData.gen, storedTxnData.gh
+        );
+        const signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
+
+        if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [storedTxnData]);
 
   return (
     <>
@@ -91,13 +98,13 @@ export default function SignTxn({ lng }: Props) {
                     <div
                       key={provider.metadata.id}
                       onClick={(e) => {
-                        getClient(provider.metadata.id)
+                        getWalletClient(provider.metadata.id)
                           ? provider.connect()
                           : e.preventDefault();
                       }}
                       className={
                         'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
-                        + (getClient(provider.metadata.id) ? '' : ' opacity-50')
+                        + (getWalletClient(provider.metadata.id) ? '' : ' opacity-50')
                       }
                     >
                       <Image
@@ -113,7 +120,7 @@ export default function SignTxn({ lng }: Props) {
                           <h3 className='m-0'>
                             {t('wallet.providers.' + provider.metadata.id)}
                             {
-                              getClient(provider.metadata.id)
+                              getWalletClient(provider.metadata.id)
                               ? ''
                               : <i>{t('wallet.provider_unavailable')}</i>
                             }
@@ -124,7 +131,7 @@ export default function SignTxn({ lng }: Props) {
                         </div>
                         <button
                           className='btn btn-block btn-sm btn-secondary mt-2'
-                          disabled={!getClient(provider.metadata.id)}
+                          disabled={!getWalletClient(provider.metadata.id)}
                         >
                           {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
                         </button>
@@ -161,10 +168,10 @@ export default function SignTxn({ lng }: Props) {
           <div className='not-prose text-center mt-3'>
             <div className='truncate align-middle px-2'>
               <Image
-                src={getClient(activeAccount.providerId)?.metadata.icon || ''}
+                src={getWalletClient(activeAccount.providerId)?.metadata.icon || ''}
                 alt={t(
                   'wallet.provider_icon_alt',
-                  {provider: getClient(activeAccount.providerId)?.metadata.name}
+                  {provider: getWalletClient(activeAccount.providerId)?.metadata.name}
                 )}
                 width={24}
                 height={24}
