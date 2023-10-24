@@ -1,2 +1,36 @@
 title: Envíe la transacción
-coming_soon: "Próximamente: Enviar transacción"
+txn_confirm_wait: A la espera de que se confirme la transacción…
+click_for_details: Haga clic en «{{details_title}}» para obtener más información.
+fail:
+  heading: La transacción ha fallado.
+  rejected_msg: >
+    El nodo ha rechazado la transacción. Lo más probable es que al menos uno de los datos de la
+    transacción contenga un error.
+  http_400_msg: >
+    No se ha podido confirmar la transacción. Lo más probable es que al menos uno de los datos de la
+    transacción contenga un error.
+  http_401_msg: >
+    No se ha podido enviar la transacción. El token de API para el nodo Algorand no es válido.
+  http_500_msg: No se ha podido enviar la transacción. El nodo Algorand no funciona correctamente.
+  http_503_msg: >
+    No se ha podido enviar la transacción. El nodo Algorand no está disponible en este momento.
+  http_unknown_msg: No se ha podido enviar la transacción.
+  unknown_msg: La transacción no ha podido confirmarse.
+  details: Detalles del error
+warn:
+  heading: La transacción <i>puede haber</i> fallado.
+  not_confirmed_msg: >
+    La transacción no se confirmó después de {{count}} ronda(s). Sin embargo, si <strong>la última
+    ronda válida</strong> de la transacción aún está en el futuro, la transacción aún puede
+    confirmarse más tarde.
+success:
+  heading: ¡Transacción confirmada!
+  msg: "ID de la transacción: {{txn_id}}"
+  details: Más información
+done_btn: ¡Hecho!
+wait_longer_btn: Espere más
+retry_btn: Reintente
+quit_btn: Abandone
+compose_txn_btn: Edite los datos de la transacción
+sign_txn_btn: Firme la transacción de nuevo
+make_new_txn_btn: Haga otra transacción

@@ -1,2 +1,34 @@
 title: Send Transaction
-coming_soon: "Coming soon: Send transaction"
+txn_confirm_wait: Waiting for transaction to be confirmed…
+click_for_details: Click “{{details_title}}” below for more information.
+fail:
+  heading: Transaction failed.
+  rejected_msg: >
+    The node rejected the transaction. It is most likely that at least one of the transaction fields
+    contains an error.
+  http_400_msg: >
+    The transaction failed to be confirmed. It is most likely that at least one of the transaction
+    fields contains an error.
+  http_401_msg: The transaction could not be sent. The API token for the Algorand node is invalid.
+  http_500_msg: The transaction could not be sent. The Algorand node is malfunctioning.
+  http_503_msg: The transaction could not be sent. The Algorand node is not available at the moment.
+  http_unknown_msg: The transaction could not be sent.
+  unknown_msg: The transaction could not be confirmed.
+  details: Error details
+warn:
+  heading: Transaction <i>may</i> have failed.
+  not_confirmed_msg: >
+    The transaction was not confirmed after {{count, number}} round(s). However, if the
+    transaction’s <strong>last valid round</strong> is still in the future, the transaction may
+    still be confirmed later.
+success:
+  heading: Transaction confirmed!
+  msg: "Transaction ID: {{txn_id}}"
+  details: More information
+done_btn: Done!
+wait_longer_btn: Wait longer
+retry_btn: Retry
+quit_btn: Quit
+compose_txn_btn: Edit transaction fields
+sign_txn_btn: Sign transaction again
+make_new_txn_btn: Make another transaction
