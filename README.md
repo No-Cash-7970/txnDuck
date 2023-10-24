@@ -45,7 +45,7 @@ same.
 
 - FUTURE: Specify custom algod node
 - FUTURE: Export to a signed or unsigned transaction file that is compatible
-  with Algorand's `goal` tool
+  with Algorand's `goal` command-line tool
 - FUTURE: Import a transaction file
 - FUTURE: Build transaction groups (atomic transactions)
 
@@ -66,13 +66,13 @@ Spanish  | Full         | *Yes*
 
 ## :computer: Setting up and running locally
 
-**:warning: This is not for development. To set up and run txnDuck for development,
-follow the instructions for
+**:warning: This is not for development. To set up and run txnDuck for
+development, follow the instructions for
 [installing txnDuck for development](#hammer_and_wrench-installing-for-development).**
 
 Instead of using one of the [official txnDuck websites](#globe_with_meridians-websites),
-you can choose to download the source code and run a of the software "locally"
-on your own computer that does not rely on an external website.
+you can choose to download the source code and run the software "locally" on
+your own computer that does not rely on an external website.
 
 ### Requirements for local setup
 
