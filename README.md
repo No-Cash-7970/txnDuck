@@ -122,8 +122,8 @@ your own computer that does not rely on an external website.
 8. (Optional) If you are finished using your local txnDuck, stop the web server
    by closing the <abbr title="Command Line Interface">CLI</abbr> window or by
    pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac)
-   while in the <abbr title="Command Line Interface">CLI</abbr>. You can restart
-   the web server by following Steps #6 and #7.
+   while in the <abbr title="Command Line Interface">CLI</abbr>. You can start
+   the web server again by following Steps #6 and #7.
 
 ### Uninstalling and removing local setup
 
