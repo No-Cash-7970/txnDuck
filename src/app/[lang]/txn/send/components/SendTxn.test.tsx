@@ -6,7 +6,7 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock the utils library because of the use of `fetch()`
-jest.mock('../../../../lib/Utils.ts', () => ({
+jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 // Mock algokit
