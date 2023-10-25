@@ -17,7 +17,7 @@ const test = base.extend<{ txnTemplatePage: TxnTemplatePage }>({
 
 test.describe('Transaction Template Page', () => {
 
-  test('has footer', async ({ page }) => {
+  test('has footer', async ({ txnTemplatePage /* Adding this loads the page */, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 

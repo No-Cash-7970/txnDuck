@@ -18,7 +18,7 @@ const test = base.extend<{ homePage: HomePage }>({
 
 test.describe('Home Page', () => {
 
-  test('has footer', async ({ page }) => {
+  test('has footer', async ({ homePage /* Adding this loads the page */, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 

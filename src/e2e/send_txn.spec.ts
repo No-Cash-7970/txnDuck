@@ -17,7 +17,7 @@ const test = base.extend<{ sendTxnPage: SendTxnPage }>({
 
 test.describe('Send Transaction Page', () => {
 
-  test('has footer', async ({ page }) => {
+  test('has footer', async ({ sendTxnPage /* Adding this loads the page */, page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
