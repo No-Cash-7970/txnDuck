@@ -14,7 +14,7 @@ jest.mock('react-i18next', () => i18nextClientMock);
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet', () => useWalletUnconnectedMock);
 // Mock the utils library because of the use of `fetch()`
-jest.mock('../../../../lib/Utils.ts', () => ({
+jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array([
     // {"gen":"testnet-v1.0","gh":"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
     // "txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",

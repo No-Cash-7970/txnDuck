@@ -11,7 +11,7 @@ jest.mock('react', () => ({
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock the utils library because of the use of `fetch()`. This needs to be mocked because it is a
 // dependency of a child client component.
-jest.mock('../../../lib/Utils.ts', () => ({
+jest.mock('../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 // Mock algokit to prevent sending real HTTP requests because it is a dependency of a child client
