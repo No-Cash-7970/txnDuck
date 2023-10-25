@@ -17,7 +17,7 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
 
 test.describe('Compose Transaction Page', () => {
 
-  test('has footer', async ({ composeTxnPage, page }) => {
+  test('has footer', async ({ page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 

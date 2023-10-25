@@ -2,7 +2,7 @@
 /* eslint-disable testing-library/no-node-access */
 
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({

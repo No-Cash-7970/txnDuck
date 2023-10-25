@@ -17,7 +17,7 @@ const test = base.extend<{ signTxnPage: SignTxnPage }>({
 
 test.describe('Sign Transaction Page', () => {
 
-  test('has footer', async ({ signTxnPage, page }) => {
+  test('has footer', async ({ page }) => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 

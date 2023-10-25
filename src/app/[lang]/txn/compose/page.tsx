@@ -1,6 +1,5 @@
 import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
-import { Trans } from 'react-i18next/TransWithoutContext';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import ComposeForm from './components/ComposeForm';
 

@@ -4,7 +4,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { atom, useAtomValue, useSetAtom } from 'jotai';
 import TextField from './TextField';
 
 describe('Form Components - TextField', () => {
