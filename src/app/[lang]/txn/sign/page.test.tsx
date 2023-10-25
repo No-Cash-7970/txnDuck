@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -11,9 +11,9 @@ jest.mock('react', () => ({
 // dependency of a child client component.
 jest.mock('react-i18next', () => i18nextClientMock);
 
-import SignTxnPage from "./page";
+import SignTxnPage from './page';
 
-describe("Sign Transaction Page", () => {
+describe('Sign Transaction Page', () => {
 
   it('has builder steps', () => {
     render(<SignTxnPage params={{lang: ''}} />);

@@ -2,11 +2,11 @@
 
 import { useRouter } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
-import { useAtom } from "jotai";
-import { IconCircleLetterB, IconCircleLetterM, IconCircleLetterT } from "@tabler/icons-react";
-import { type NodeConfig } from "@txnlab/use-wallet";
-import { useTranslation } from "@/app/i18n/client";
-import * as NodeConfigLib from "@/app/lib/node-config";
+import { useAtom } from 'jotai';
+import { IconCircleLetterB, IconCircleLetterM, IconCircleLetterT } from '@tabler/icons-react';
+import { type NodeConfig } from '@txnlab/use-wallet';
+import { useTranslation } from '@/app/i18n/client';
+import * as NodeConfigLib from '@/app/lib/node-config';
 
 type Props = {
   /** Language */

@@ -1,8 +1,8 @@
 /** @file Collection of variables that contain the global state for transaction form data */
 
-import type { OnApplicationComplete, Transaction, TransactionType } from "algosdk";
-import { type PrimitiveAtom, atom } from "jotai";
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import type { OnApplicationComplete, Transaction, TransactionType } from 'algosdk';
+import { type PrimitiveAtom, atom } from 'jotai';
+import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 
 /** Data common to all transaction types */
 export interface BaseTxnData {

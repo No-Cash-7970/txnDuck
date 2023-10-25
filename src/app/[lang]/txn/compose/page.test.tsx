@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -15,9 +15,9 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() })
 }));
 
-import ComposeTxnPage from "./page";
+import ComposeTxnPage from './page';
 
-describe("Compose Transaction Page", () => {
+describe('Compose Transaction Page', () => {
 
   it('has builder steps', () => {
     render(<ComposeTxnPage params={{lang: ''}} />);

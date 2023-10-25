@@ -1,9 +1,9 @@
 'use client';
 
-import { useTranslation } from "@/app/i18n/client";
-import { PaymentTxnData, storedTxnDataAtom } from "@/app/lib/txn-data";
-import { TransactionType } from "algosdk";
-import { useAtomValue } from "jotai";
+import { useTranslation } from '@/app/i18n/client';
+import { PaymentTxnData, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { TransactionType } from 'algosdk';
+import { useAtomValue } from 'jotai';
 
 type Props = {
   /** Language */

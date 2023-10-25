@@ -1,8 +1,8 @@
 /* eslint-disable testing-library/no-container */
 /* eslint-disable testing-library/no-node-access */
 
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -10,7 +10,7 @@ jest.mock('react', () => ({
   use: () => ({ t: (key: string) => key }),
 }));
 
-import BuilderSteps from "./BuilderSteps";
+import BuilderSteps from './BuilderSteps';
 
 describe('Builder Steps Component', () => {
 

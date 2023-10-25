@@ -2,12 +2,12 @@
 
 import Image from 'next/image';
 import algosdk from 'algosdk';
-import { PROVIDER_ID, useWallet } from "@txnlab/use-wallet";
+import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
-import * as Icons from "@tabler/icons-react";
+import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue } from 'jotai';
 import { RESET } from 'jotai/utils';
-import { useTranslation } from "@/app/i18n/client";
+import { useTranslation } from '@/app/i18n/client';
 import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,

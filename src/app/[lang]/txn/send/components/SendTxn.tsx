@@ -1,17 +1,17 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { Trans } from "react-i18next";
-import { useTranslation } from "@/app/i18n/client";
-import { modelsv2 } from "algosdk";
-import * as algokit from "@algorandfoundation/algokit-utils";
-import * as Icons from "@tabler/icons-react";
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { RESET } from "jotai/utils";
-import { dataUrlToBytes } from "@/app/lib/Utils";
-import { storedSignedTxnAtom, storedTxnDataAtom } from "@/app/lib/txn-data";
-import { nodeConfigAtom } from "@/app/lib/node-config";
-import Link from "next/link";
+import { useEffect, useState } from 'react';
+import { Trans } from 'react-i18next';
+import { useTranslation } from '@/app/i18n/client';
+import { modelsv2 } from 'algosdk';
+import * as algokit from '@algorandfoundation/algokit-utils';
+import * as Icons from '@tabler/icons-react';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { RESET } from 'jotai/utils';
+import { dataUrlToBytes } from '@/app/lib/Utils';
+import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { nodeConfigAtom } from '@/app/lib/node-config';
+import Link from 'next/link';
 
 type Props = {
   /** Language */

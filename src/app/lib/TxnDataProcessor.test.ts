@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { type Address, TransactionType, encodeAddress } from "algosdk";
-import * as tdp from "./TxnDataProcessor";
+import '@testing-library/jest-dom';
+import { type Address, TransactionType, encodeAddress } from 'algosdk';
+import * as tdp from './TxnDataProcessor';
 
 /* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
 import { TextEncoder, TextDecoder } from 'util';

@@ -1,7 +1,7 @@
-import { use } from "react";
-import { useTranslation } from "@/app/i18n";
-import { BuilderSteps, PageTitleHeading } from "@/app/[lang]/components";
-import SendTxn from "./components/SendTxn";
+import { use } from 'react';
+import { useTranslation } from '@/app/i18n';
+import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
+import SendTxn from './components/SendTxn';
 
 /**
  * Send Transaction page

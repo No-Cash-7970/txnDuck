@@ -1,9 +1,9 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { Provider as ToastProvider, Viewport as ToastViewport } from '@radix-ui/react-toast';
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
-import { fooDisconnectFn, useWalletConnectedMock } from "@/app/lib/testing/useWalletMock";
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);

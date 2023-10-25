@@ -12,7 +12,7 @@ export default function HomePage({ params: { lang } }: {
   const { t } = use(useTranslation(lang, ['home', 'app', 'common']));
 
   return (
-    <main className="prose max-w-none min-h-screen pb-12">
+    <main className='prose max-w-none min-h-screen pb-12'>
       {/* Hero section */}
       <section
         className={'bg-gradient-to-r from-accent to-accent-focus text-accent-content'
@@ -42,7 +42,7 @@ export default function HomePage({ params: { lang } }: {
         <h2 id='how-it-works'>{t('home:how_it_works.heading')}</h2>
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6"'>
+            <div className='card-body items-center px-4 py-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.compose.heading')}
               </h3>
@@ -56,7 +56,7 @@ export default function HomePage({ params: { lang } }: {
             </div>
           </div>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6"'>
+            <div className='card-body items-center px-4 py-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.sign.heading')}
               </h3>
@@ -72,7 +72,7 @@ export default function HomePage({ params: { lang } }: {
             </div>
           </div>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6"'>
+            <div className='card-body items-center px-4 py-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.send.heading')}
               </h3>

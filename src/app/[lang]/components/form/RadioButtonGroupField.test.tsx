@@ -1,7 +1,7 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import RadioButtonGroupField from "./RadioButtonGroupField";
+import RadioButtonGroupField from './RadioButtonGroupField';
 
 describe('Form Components - RadioButtonGroupField', () => {
 

@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import FieldGroup from "./FieldGroup";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import FieldGroup from './FieldGroup';
 
 describe('Form Components - FieldGroup', () => {
   it('has children', () => {

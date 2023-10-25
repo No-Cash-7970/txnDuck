@@ -1,6 +1,6 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -22,7 +22,7 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
   waitForConfirmation: () => ({ get_obj_for_encoding: () => ({}) })
 }));
 
-import SendTxnPage from "./page";
+import SendTxnPage from './page';
 
 describe('Send Transaction Page', () => {
 

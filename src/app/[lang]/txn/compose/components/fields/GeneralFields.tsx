@@ -146,8 +146,8 @@ export function Rekey({ t }: { t: TFunction }) {
           <Trans t={t} i18nKey='fields.rekey.warning'>
             <strong>rekeying_can_result_in_loss</strong> learn_more_at
             <a
-              href="https://developer.algorand.org/docs/get-details/accounts/rekey"
-              className="underline"
+              href='https://developer.algorand.org/docs/get-details/accounts/rekey'
+              className='underline'
             >
               algo_docs
             </a>.

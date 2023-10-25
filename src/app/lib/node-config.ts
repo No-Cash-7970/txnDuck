@@ -1,5 +1,5 @@
-import { type NodeConfig } from "@txnlab/use-wallet";
-import { atomWithStorage, createJSONStorage } from "jotai/utils";
+import { type NodeConfig } from '@txnlab/use-wallet';
+import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 
 /** Name for TestNet */
 export const TESTNET = 'testnet';

@@ -1,10 +1,10 @@
 /** Fields for the compose-transaction form that are for payment transactions */
 
-import { NumberField, TextField } from "@/app/[lang]/components/form";
-import { IconAlertTriangle } from "@tabler/icons-react";
-import { type TFunction } from "i18next";
-import { Trans } from "react-i18next";
-import { useAtom } from "jotai";
+import { NumberField, TextField } from '@/app/[lang]/components/form';
+import { IconAlertTriangle } from '@tabler/icons-react';
+import { type TFunction } from 'i18next';
+import { Trans } from 'react-i18next';
+import { useAtom } from 'jotai';
 import { txnDataAtoms } from '@/app/lib/txn-data';
 
 export function Receiver({ t }: { t: TFunction }) {

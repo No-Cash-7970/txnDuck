@@ -1,4 +1,4 @@
-import { type Account, PROVIDER_ID } from "@txnlab/use-wallet";
+import { type Account, PROVIDER_ID } from '@txnlab/use-wallet';
 
 /** The type of wallet for each supported wallet provider */
 export const walletTypes: {[id: string]: string} = {

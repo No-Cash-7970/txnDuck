@@ -1,13 +1,13 @@
-import "@testing-library/jest-dom";
-import { render, screen, waitFor } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { TFunction } from "i18next";
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+import '@testing-library/jest-dom';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { TFunction } from 'i18next';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import {
   barConnectFn,
   fooConnectFn,
   useWalletUnconnectedMock
-} from "@/app/lib/testing/useWalletMock";
+} from '@/app/lib/testing/useWalletMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);

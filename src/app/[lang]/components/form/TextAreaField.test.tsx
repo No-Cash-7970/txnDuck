@@ -1,10 +1,10 @@
 /* eslint-disable testing-library/no-container */
 /* eslint-disable testing-library/no-node-access */
 
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import TextAreaField from "./TextAreaField";
+import TextAreaField from './TextAreaField';
 
 describe('Form Components - TextAreaField', () => {
 

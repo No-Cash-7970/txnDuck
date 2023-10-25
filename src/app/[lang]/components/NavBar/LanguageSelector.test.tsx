@@ -1,7 +1,7 @@
-import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import i18nextClientMock from "@/app/lib/testing/i18nextClientMock";
+import '@testing-library/jest-dom';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -28,7 +28,7 @@ jest.mock('../../../../app/i18n/settings', () => ({
   }
 }));
 
-import LanguageSelector from "./LanguageSelector";
+import LanguageSelector from './LanguageSelector';
 
 describe('Language Selector', () => {
 
