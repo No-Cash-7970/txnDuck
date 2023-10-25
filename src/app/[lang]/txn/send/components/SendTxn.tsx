@@ -8,7 +8,7 @@ import * as algokit from '@algorandfoundation/algokit-utils';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
-import { dataUrlToBytes } from '@/app/lib/Utils';
+import { dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import Link from 'next/link';

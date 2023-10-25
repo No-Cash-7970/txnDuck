@@ -12,10 +12,10 @@ import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
   getClient as utilsGetClient,
-} from '@/app/lib/WalletUtils';
+} from '@/app/lib/wallet-utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import { createTxnFromData } from '@/app/lib/TxnDataProcessor';
-import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/Utils';
+import { createTxnFromData } from '@/app/lib/txn-data-processor';
+import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import { useEffect } from 'react';
 
 type Props = {

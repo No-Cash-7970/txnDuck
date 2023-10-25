@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { type Address, TransactionType, encodeAddress } from 'algosdk';
-import * as tdp from './TxnDataProcessor';
+import * as tdp from './txn-data-processor';
 
 /* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
 import { TextEncoder, TextDecoder } from 'util';
@@ -9,7 +9,6 @@ global.TextEncoder = TextEncoder;
 // Uint8Array class, so polyfilling Uint8array is necessary too
 // @ts-ignore
 global.Uint8Array = (new TextEncoder).encode().constructor;
-
 
 describe('Transaction Data Processor', () => {
   describe('createTxnFromData()', () => {

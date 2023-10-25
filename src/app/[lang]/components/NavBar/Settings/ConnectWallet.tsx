@@ -7,7 +7,7 @@ import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
   getClient as utilsGetClient,
-} from '@/app/lib/WalletUtils';
+} from '@/app/lib/wallet-utils';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
