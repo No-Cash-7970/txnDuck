@@ -18,35 +18,20 @@ export default function BuilderSteps({ lng, current, color = 'primary'}: Props) 
 
   return (
     <ul className='steps w-full my-4 p-0'>
-      <li
-        className={
-          'step'
-          + (current == 'compose'? ` step-${color}` : '')
-          + (current == 'sign'? ` step-${color} text-${color}` : '')
-          + (current == 'send'? ` step-${color} text-${color}` : '')
-          + (current == 'done'? ` step-${color} text-${color}` : '')
-        }
-      >
+      <li className={'step'
+        + (current == 'compose'? ` font-bold step-${color}` : '')
+        + (current == 'sign'? ` step-${color}` : '')
+        + (current == 'send'? ` step-${color}` : '')
+      }>
         {t('builder_steps.compose')}
       </li>
-      <li
-        className={
-          'step'
-          + (current == 'sign'? ` step-${color}` : '')
-          + (current == 'send'? ` step-${color} text-${color}` : '')
-          + (current == 'done'? ` step-${color} text-${color}` : '')
-        }
-      >
+      <li className={'step'
+        + (current == 'sign'? ` font-bold step-${color}` : '')
+        + (current == 'send'? ` step-${color}` : '')
+      }>
         {t('builder_steps.sign')}
       </li>
-      <li
-        data-content={current == 'done'? '★': null}
-        className={
-          'step'
-          + (current == 'send'? ` step-${color}` : '')
-          + (current == 'done'? ` step-${color} text-${color}` : '')
-        }
-      >
+      <li className={'step' + (current == 'send'? ` font-bold step-${color}` : '')}>
         {t('builder_steps.send')}
       </li>
     </ul>
