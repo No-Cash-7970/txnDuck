@@ -38,7 +38,7 @@ This is documentation contains information useful for developers.
 
 ## Requirements for the development environment
 
-- Access to your machine's command line interface (CLI), such as Terminal,
+- Access to your machine's command-line interface (CLI), such as Terminal,
   PowerShell or Command Prompt
 - [Git](https://git-scm.com/) installed
 - [Node.js](https://nodejs.org/en) version 18.0.0 or higher installed
@@ -77,8 +77,8 @@ use the development server:
 2. Open a web browser and go to <http://localhost:3000>.
 3. Edit a file in the `src/app` directory and see the result!
 4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd>
-   (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can restart the web
-   server by following Step #1.
+   (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can start the web
+   server again by following Step #1.
 
 ## Building for production
 
@@ -88,14 +88,14 @@ To build for production run:
 yarn build
 ```
 
-If you want to run the build locally in a local web server, which would be
+To run the build locally in a local web server, which would be
 served at <http://localhost:3000>:
 
 ```bash
 yarn start
 ```
 
-Optionally, you can build and run in one command:
+Or, you can build and run with one command:
 
 ```bash
 yarn prod
@@ -109,10 +109,9 @@ to be set to the URL of what will be the home page of the deployed website. The
 `BASE_URL` can be set in a `.env.local` file, which can be created by copying
 the `.env.local.example` file and renaming it to `.env.local`. Alternatively,
 the `BASE_URL` can be set in the `.env.production` file. However, it is best to
-set the `BASE_URL` in the `.env.local` file because it will not be overwritten
-if when upgrading to a new version.
+set the `BASE_URL` in the `.env.local` file because it will not be overwritten when upgrading to a new version.
 
-Here is an example of what setting the `BASE_URL` looks like:
+Here is an example to show what setting the `BASE_URL` looks like:
 
 ```shell
 # .env.local file
@@ -129,14 +128,14 @@ This project uses both unit testing and end-to-end (E2E) testing.
 
 ### Unit testing
 
-To run all of the unit tests once (Note that it's **j**est, not **t**est):
+To run all of the unit tests once (Note that it's **j**est with a **j**, not **t**est):
 
 ```bash
 yarn jest
 ```
 
 To continuously run all of the units when a file is changed (Note that it's
-**t**est, not **j**est):
+**t**est with a **t**, not **j**est):
 
 ```bash
 yarn test
@@ -159,7 +158,7 @@ yarn test:e2e
   characters
 
 The code style guidelines for TypeScript, JavaScript and YAML files are enforced
-using a linter. Run the linter using the following command:
+by a linter. Run the linter using the following command:
 
 ```bash
 yarn lint
@@ -240,8 +239,7 @@ messages. Then it creates a
 on the `main` branch, pushes the changes, and generates a URL for creating a
 [Release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 on GitHub with the release notes generated based on commit messages. Creating a
-Release on GitHub requires signing in to GitHub account of the repository owner
-or a maintainer with the right permissions.
+Release on GitHub requires signing into the GitHub account of the repository owner or a maintainer with the right permissions.
 
 ### Changelog
 
@@ -253,7 +251,7 @@ along with their release notes, is used for that purpose instead.
 
 Releases happen on the `main` branch first. After a release on the `main`
 branch, those changes from the `main` branch should be merged onto the the
-`stable` branch Therefore, most recent commit on the `stable` branch should
+`stable` branch. Therefore, the most recent commit on the `stable` branch should
 always be a release with a version
 [tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
-This means that only released code is deployed to the [Production](https://txnduck.vercel.app).
+This means that only “released” code is deployed to the [Production](https://txnduck.vercel.app).
