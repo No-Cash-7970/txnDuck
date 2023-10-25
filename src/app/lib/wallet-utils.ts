@@ -27,6 +27,6 @@ export const disconnectWallet = (clients: any, activeAccount?: Account|null ) =>
  * @param clients  Collection of clients returned by `useWallet()`
  * @param activeAccount The wallet account that is currently active, as returned by `useWallet()`
  */
-export const getClient = (providerId?: PROVIDER_ID, clients?: any) => {
+export const getWalletClient = (providerId?: PROVIDER_ID, clients?: any) => {
   return (clients && providerId) ? clients[providerId] : null;
 };

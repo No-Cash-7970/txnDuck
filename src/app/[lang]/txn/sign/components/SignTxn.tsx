@@ -11,7 +11,7 @@ import { useTranslation } from '@/app/i18n/client';
 import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
-  getClient as utilsGetClient,
+  getWalletClient as utilsGetClient,
 } from '@/app/lib/wallet-utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { createTxnFromData } from '@/app/lib/txn-data-processor';

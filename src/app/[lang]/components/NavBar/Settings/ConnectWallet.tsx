@@ -6,7 +6,7 @@ import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import {
   walletTypes,
   disconnectWallet as utilsDisconnectWallet,
-  getClient as utilsGetClient,
+  getWalletClient as utilsGetClient,
 } from '@/app/lib/wallet-utils';
 
 /** Button and menu for connecting wallet */
