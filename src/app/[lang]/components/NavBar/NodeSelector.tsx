@@ -6,15 +6,7 @@ import { useAtom } from "jotai";
 import { IconCircleLetterB, IconCircleLetterM, IconCircleLetterT } from "@tabler/icons-react";
 import { type NodeConfig } from "@txnlab/use-wallet";
 import { useTranslation } from "@/app/i18n/client";
-import {
-  BETANET,
-  MAINNET,
-  TESTNET,
-  betanetNodeConfig,
-  nodeConfigAtom,
-  mainnetNodeConfig,
-  testnetNodeConfig
-} from "@/app/lib/node-config";
+import * as NodeConfigLib from "@/app/lib/node-config";
 
 type Props = {
   /** Language */
@@ -25,7 +17,7 @@ type Props = {
 export default function NodeSelector({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const router = useRouter();
-  const [nodeConfig, setNodeConfig] = useAtom(nodeConfigAtom);
+  const [nodeConfig, setNodeConfig] = useAtom(NodeConfigLib.nodeConfigAtom);
 
   /**
    * Set the node configuration to the given configuration and apply the change
@@ -45,21 +37,21 @@ export default function NodeSelector({ lng }: Props) {
       <button
           className={
             'btn w-auto max-w-[4rem] sm:max-w-xs mx-2 px-2 sm:px-4 '
-            + (nodeConfig?.network === TESTNET ? 'btn-secondary' : '')
-            + (nodeConfig?.network === MAINNET ? 'btn-primary' : '')
-            + (nodeConfig?.network === BETANET ? 'btn-accent' : '')
+            + (nodeConfig?.network === NodeConfigLib.TESTNET ? 'btn-secondary' : '')
+            + (nodeConfig?.network === NodeConfigLib.MAINNET ? 'btn-primary' : '')
+            + (nodeConfig?.network === NodeConfigLib.BETANET ? 'btn-accent' : '')
           }
           title={t('node_selector.choose_node')}
         >
-          {nodeConfig?.network === TESTNET && <>
+          {nodeConfig?.network === NodeConfigLib.TESTNET && <>
             <IconCircleLetterT aria-hidden />
             <span className='truncate'>{t('node_selector.testnet')}</span>
           </>}
-          {nodeConfig?.network === MAINNET && <>
+          {nodeConfig?.network === NodeConfigLib.MAINNET && <>
             <IconCircleLetterM aria-hidden />
             <span className='truncate'>{t('node_selector.mainnet')}</span>
           </>}
-          {nodeConfig?.network === BETANET && <>
+          {nodeConfig?.network === NodeConfigLib.BETANET && <>
             <IconCircleLetterB aria-hidden />
             <span className='truncate'>{t('node_selector.betanet')}</span>
           </>}
@@ -74,9 +66,9 @@ export default function NodeSelector({ lng }: Props) {
             <li className='menu-title'>{t('node_selector.choose_node')}</li>
             <DropdownMenu.Item asChild>
               <li onClick={(e) => {
-                nodeConfig.network === TESTNET
+                nodeConfig.network === NodeConfigLib.TESTNET
                 ? e.preventDefault()
-                : updateNodeConfig(testnetNodeConfig);
+                : updateNodeConfig(NodeConfigLib.testnetNodeConfig);
               }}>
                 <span>
                   <IconCircleLetterT aria-hidden />
@@ -86,9 +78,9 @@ export default function NodeSelector({ lng }: Props) {
             </DropdownMenu.Item>
             <DropdownMenu.Item asChild>
               <li onClick={(e) => {
-                nodeConfig.network === MAINNET
+                nodeConfig.network === NodeConfigLib.MAINNET
                 ? e.preventDefault()
-                : updateNodeConfig(mainnetNodeConfig);
+                : updateNodeConfig(NodeConfigLib.mainnetNodeConfig);
               }}>
                 <span>
                   <IconCircleLetterM aria-hidden />
@@ -98,9 +90,9 @@ export default function NodeSelector({ lng }: Props) {
             </DropdownMenu.Item>
             <DropdownMenu.Item asChild>
               <li onClick={(e) => {
-                nodeConfig.network === BETANET
+                nodeConfig.network === NodeConfigLib.BETANET
                 ? e.preventDefault()
-                : updateNodeConfig(betanetNodeConfig);
+                : updateNodeConfig(NodeConfigLib.betanetNodeConfig);
               }}>
                 <span>
                   <IconCircleLetterB aria-hidden />

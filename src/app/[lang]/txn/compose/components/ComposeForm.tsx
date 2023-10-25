@@ -3,11 +3,7 @@
 import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
-import {
-  IconAlertTriangleFilled,
-  IconArrowLeft,
-  IconArrowRight
-} from '@tabler/icons-react';
+import * as Icons from '@tabler/icons-react';
 import * as GeneralFields from './fields/GeneralFields';
 import * as PaymentFields from './fields/PaymentFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
@@ -58,12 +54,12 @@ export default function ComposeForm({ lng }: Props) {
         </div>
         <div className='sm:order-first'>
           <Link type='button' href='' className='btn w-full btn-disabled' tabIndex={-1}>
-            <IconArrowLeft aria-hidden className='rtl:hidden' />
-            <IconArrowRight aria-hidden className='hidden rtl:inline' />
+            <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
+            <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('txn_template_btn')}
           </Link>
           {/* <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
-            <IconAlertTriangleFilled
+            <Icons.IconAlertTriangleFilled
               aria-hidden
               className='text-warning align-middle my-auto me-2'
             />

@@ -4,13 +4,7 @@ import Image from 'next/image';
 import algosdk from 'algosdk';
 import { PROVIDER_ID, useWallet } from "@txnlab/use-wallet";
 import * as Dialog from '@radix-ui/react-dialog';
-import {
-  IconBallpenFilled,
-  IconCircleCheck,
-  IconWallet,
-  IconWalletOff,
-  IconX,
-} from "@tabler/icons-react";
+import * as Icons from "@tabler/icons-react";
 import { useAtom, useAtomValue } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from "@/app/i18n/client";
@@ -76,7 +70,7 @@ export default function SignTxn({ lng }: Props) {
         <Dialog.Root modal={false}>
           <Dialog.Trigger asChild>
             <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
-              <IconWallet aria-hidden />
+              <Icons.IconWallet aria-hidden />
               {t('wallet.connect')}
             </button>
           </Dialog.Trigger>
@@ -147,7 +141,7 @@ export default function SignTxn({ lng }: Props) {
                     }
                     title={t('close')}
                   >
-                    <IconX aria-hidden />
+                    <Icons.IconX aria-hidden />
                   </button>
                 </Dialog.Close>
               </div>
@@ -161,7 +155,7 @@ export default function SignTxn({ lng }: Props) {
             className='btn btn-primary btn-block min-h-[5em] h-auto'
             onClick={() => signTransaction()}
           >
-            <IconBallpenFilled aria-hidden />
+            <Icons.IconBallpenFilled aria-hidden />
             {t('sign_txn:sign_txn_btn')}
           </button>
 
@@ -180,7 +174,7 @@ export default function SignTxn({ lng }: Props) {
               <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
             </div>
             <button className='btn btn-sm btn-link text-secondary' onClick={disconnectWallet}>
-              <IconWalletOff aria-hidden />
+              <Icons.IconWalletOff aria-hidden />
               {t('wallet.disconnect')}
             </button>
           </div>
@@ -188,7 +182,7 @@ export default function SignTxn({ lng }: Props) {
       }
       {storedSignedTxn &&
         <div className='alert alert-success break-all mt-8'>
-          <IconCircleCheck aria-hidden />
+          <Icons.IconCircleCheck aria-hidden />
           {t('sign_txn:txn_signed')}
         </div>
       }
