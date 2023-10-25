@@ -104,9 +104,9 @@ export default function SettingsDialog({ lng, open = false }: Props) {
 
                 {/* TODO: Add more settings here */}
               </form>
-              <div className='action mt-8'>
+              <div className='action mt-8 grid justify-end'>
                 <button
-                  className='btn btn-sm btn-outline normal-case font-normal'
+                  className='btn btn-sm btn-link text-base-content p-0'
                   onClick={resetSettings}
                 >
                   {t('settings.reset_button')}
