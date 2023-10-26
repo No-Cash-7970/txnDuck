@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslation } from '@/app/i18n/client';
-import { PaymentTxnData, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { AssetTransferTxnData, PaymentTxnData, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 
@@ -34,12 +34,32 @@ export default function TxnDataTable({ lng }: Props) {
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.amt.label')}</th>
             <td>
-              {
-                t('fields.amt.in_algos', {
-                  count: (txnData as PaymentTxnData)?.amt,
-                  formatParams: { count: { maximumFractionDigits: 6 } }
-                })
-              }
+              {t('fields.amt.in_algos', {
+                count: (txnData as PaymentTxnData)?.amt,
+                formatParams: { count: { maximumFractionDigits: 6 } }
+              })}
+            </td>
+          </tr>
+        </>}
+
+        {txnData?.type === TransactionType.axfer && <>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.arcv.label')}</th>
+            <td className='break-all'>{(txnData as AssetTransferTxnData)?.arcv}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.xaid.label')}</th>
+            <td>{(txnData as AssetTransferTxnData)?.xaid}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.aamt.label')}</th>
+            <td>{t('number_value', {value: (txnData as AssetTransferTxnData)?.aamt})}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.asnd.label')}</th>
+            <td className='break-all'>
+              {(txnData as AssetTransferTxnData)?.asnd ||
+                <i className='opacity-50'>{t('none')}</i>}
             </td>
           </tr>
         </>}
@@ -47,12 +67,10 @@ export default function TxnDataTable({ lng }: Props) {
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
             <td>
-              {
-                t('fields.fee.in_algos', {
-                  count: (txnData as PaymentTxnData)?.fee,
-                  formatParams: { count: { maximumFractionDigits: 6 } }
-                })
-              }
+              {t('fields.fee.in_algos', {
+                count: (txnData as PaymentTxnData)?.fee,
+                formatParams: { count: { maximumFractionDigits: 6 } }
+              })}
             </td>
         </tr>
         <tr>
@@ -85,6 +103,18 @@ export default function TxnDataTable({ lng }: Props) {
             <th role='rowheader' className='align-top'>{t('fields.close.label')}</th>
             <td className='break-all'>
               {(txnData as PaymentTxnData)?.close || <i className='opacity-50'>{t('none')}</i>}
+            </td>
+          </tr>
+        }
+
+        {txnData?.type === TransactionType.axfer &&
+          <tr className={
+            (txnData as AssetTransferTxnData)?.aclose ? 'bg-warning text-warning-content' : ''
+          }>
+            <th role='rowheader' className='align-top'>{t('fields.aclose.label')}</th>
+            <td className='break-all'>
+              {(txnData as AssetTransferTxnData)?.aclose ||
+                <i className='opacity-50'>{t('none')}</i>}
             </td>
           </tr>
         }

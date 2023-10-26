@@ -4,8 +4,12 @@ import Link from 'next/link';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import * as Icons from '@tabler/icons-react';
+import { TransactionType } from 'algosdk';
+import { useAtomValue } from 'jotai';
+import { txnDataAtoms } from '@/app/lib/txn-data';
 import * as GeneralFields from './fields/GeneralFields';
 import * as PaymentFields from './fields/PaymentFields';
+import * as AssetTransferFields from './fields/AssetTransferFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
@@ -16,6 +20,7 @@ type Props = {
 /** Form for composing a transaction */
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
+  const txnType = useAtomValue(txnDataAtoms.txnType);
 
   return (
     <form
@@ -33,7 +38,14 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.TxnType t={t} />
       <GeneralFields.Sender t={t} />
 
-      <PaymentFields.ReceiverAndAmount t={t} />
+      {txnType === TransactionType.pay && <PaymentFields.ReceiverAndAmount t={t} />}
+
+      {txnType === TransactionType.axfer && <>
+        <AssetTransferFields.Receiver t={t} />
+        <AssetTransferFields.AssetId t={t} />
+        <AssetTransferFields.Amount t={t} />
+        <AssetTransferFields.Sender t={t} />
+      </>}
 
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
@@ -44,8 +56,8 @@ export default function ComposeForm({ lng }: Props) {
         <GeneralFields.Lease t={t} />
         <GeneralFields.Rekey t={t} />
 
-        {/* If payment type */}
-        <PaymentFields.CloseTo t={t} />
+        {txnType === TransactionType.pay && <PaymentFields.CloseTo t={t} />}
+        {txnType === TransactionType.axfer && <AssetTransferFields.CloseTo t={t} />}
       </div>
 
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>

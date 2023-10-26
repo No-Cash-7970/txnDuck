@@ -42,11 +42,54 @@ describe('Transaction Data Processor', () => {
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
-      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.amount).toBe(5000000);
       expect(txn.lease).toHaveLength(32);
       expect(addrToStr(txn.reKeyTo))
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.amount).toBe(5000000);
+      expect(addrToStr(txn.closeRemainderTo))
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    });
+
+    it('returns `Transaction` object with given data for a asset transfer transaction', () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.axfer,
+          snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          rekey: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          asnd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+          arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          xaid: 88888888,
+          aamt: 500,
+          aclose: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.axfer);
+      expect(addrToStr(txn.from))
+        .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(addrToStr(txn.reKeyTo))
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(addrToStr(txn.assetRevocationTarget))
+        .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.assetIndex).toBe(88888888);
+      expect(txn.amount.toString()).toBe('500');
       expect(addrToStr(txn.closeRemainderTo))
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });

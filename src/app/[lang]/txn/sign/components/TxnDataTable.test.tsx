@@ -141,4 +141,82 @@ describe('Transaction Data Table Component', () => {
     });
 
   });
+
+  describe('Asset Transfer Transaction', () => {
+
+    it('displays asset transfer transaction data', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'axfer',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.arcv.label')).toBeInTheDocument();
+      expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.xaid.label')).toBeInTheDocument();
+      expect(screen.getByText('1234')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.aamt.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.asnd.label')).toBeInTheDocument();
+      expect(screen.getByText('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
+      expect(screen.getByText('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'))
+        .toBeInTheDocument();
+    });
+
+    it('displays "none" when there is no clawback target address', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'axfer',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: '',
+          aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
+      }));
+      render(<TxnDataTable />);
+      expect(screen.getByText('none')).toBeInTheDocument();
+    });
+
+    it('displays "none" when there is no close-to address', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'axfer',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          aclose: ''
+        }
+      }));
+      render(<TxnDataTable />);
+      expect(screen.getByText('none')).toBeInTheDocument();
+    });
+
+  });
+
 });

@@ -55,3 +55,21 @@ fields:
       If an address is specified, <strong>all funds in the sender account will be sent to the
       specified address</strong> and the sender account will be closed. Make sure you know what you
       are doing.
+  # Fields for asset transfer type
+  arcv: # Asset receiver
+    label: Asset receiver
+    placeholder: Receiver address
+  xaid: # Asset ID
+    label: Asset ID
+  aamt: # Amount of asset to transfer
+    label: Asset amount
+  asnd: # Revocation target (the account from which the asset will be revoked)
+    label: Clawback target
+    placeholder: Target address
+  aclose: # Close remainder of asset to
+    label: Close remainder to of asset to
+    placeholder: Address to close remainder of asset to
+    warning: >
+      If an address is specified, <strong>all of the asset in the sender account will be sent to the
+      specified address</strong>, and the sender account will be opted out of the asset. Make sure
+      you know what you are doing.

@@ -7,9 +7,9 @@ import { TransactionType } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import {
   type PaymentTxnData,
-  type TxnData,
   storedTxnDataAtom,
-  txnDataAtoms
+  txnDataAtoms,
+  AssetTransferTxnData
 } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
@@ -68,12 +68,36 @@ export default function ComposeSubmitButton({ lng }: Props) {
     });
     const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
 
-    // Gather base transaction data
     const txnType: TransactionType = jotaiStore.get(txnDataAtoms.txnType) as TransactionType;
-    const txnData: TxnData = {
+    const coreTxnData = {};
+
+    // Gather payment transaction data
+    if (txnType === TransactionType.pay) {
+      (coreTxnData as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
+      (coreTxnData as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
+      (coreTxnData as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
+    }
+
+    // Gather asset transfer transaction data
+    if (txnType === TransactionType.axfer) {
+      (coreTxnData as AssetTransferTxnData).asnd =
+        jotaiStore.get(txnDataAtoms.asnd) || undefined;
+      (coreTxnData as AssetTransferTxnData).arcv = jotaiStore.get(txnDataAtoms.arcv);
+      (coreTxnData as AssetTransferTxnData).xaid = jotaiStore.get(txnDataAtoms.xaid) as number;
+      // Convert amount to string just in case it is a bigint
+      (coreTxnData as AssetTransferTxnData).aamt = `${jotaiStore.get(txnDataAtoms.aamt)}`;
+      (coreTxnData as AssetTransferTxnData).aclose =
+        jotaiStore.get(txnDataAtoms.aclose) || undefined;
+    }
+
+    setSubmittingForm(true);
+    // Store transaction data into local/session storage
+    jotaiStore.set(storedTxnDataAtom, {
       gen: genesisID,
       gh: genesisHash,
       txn: {
+        ...coreTxnData,
+        // Gather base transaction data
         type: txnType,
         snd: jotaiStore.get(txnDataAtoms.snd),
         note: jotaiStore.get(txnDataAtoms.note),
@@ -83,18 +107,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         lx: jotaiStore.get(txnDataAtoms.lx) || undefined,
         rekey: jotaiStore.get(txnDataAtoms.rekey) || undefined,
       }
-    };
-
-    // Gather payment transaction data
-    if (txnType === TransactionType.pay) {
-      (txnData.txn as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
-      (txnData.txn as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
-      (txnData.txn as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
-    }
-
-    setSubmittingForm(true);
-    // Store transaction data into local/session storage
-    jotaiStore.set(storedTxnDataAtom, txnData);
+    });
     // Go to sign-transaction page
     router.push(`/${lng}/txn/sign`);
   };

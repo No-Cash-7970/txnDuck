@@ -56,3 +56,20 @@ fields:
       Si se especifica una dirección, <strong>todos los fondos de la cuenta del remitente se
       enviarán a la dirección especificada</strong> y la cuenta del remitente se cerrará. Asegúrese
       de saber lo que está haciendo.
+  # Fields for asset transfer type
+  arcv: # Asset receiver
+    label: Destinatario de activo
+    placeholder: Dirección del destinatario
+  xaid: # Asset ID
+    label: ID de activo
+  aamt: # Amount of asset to transfer
+    label: Cantidad de activo
+  asnd: # Revocation target (the account from which the asset will be revoked)
+    label: Objetivo para revocar
+    placeholder: dirección objetivo
+  aclose: # Close remainder of asset to
+    label: ¿A qué cerra el remanente del activo?
+    placeholder: Dirección a la que cerrar el remanente de activos
+    warning: >
+      Si se especifica una dirección, <strong>todos los activos de la cuenta del remitente se
+      enviarán a la dirección especificada</strong>. Asegúrese de saber lo que está haciendo.

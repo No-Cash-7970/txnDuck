@@ -41,11 +41,38 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
   });
 
-  it('has fields for payment transaction type', () => {
+  it('has fields for payment transaction type if "Payment" transaction type is selected',
+  async () => {
     render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+
     expect(screen.getByText('fields.rcv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.amt.label')).toBeInTheDocument();
     expect(screen.getByText('fields.close.label')).toBeInTheDocument();
+  });
+
+  it('has fields for payment transaction type if "Asset Transfer" transaction type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.asnd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.arcv.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.xaid.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.aamt.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.aclose.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+
+    expect(screen.getByText('fields.asnd.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.arcv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.xaid.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.aamt.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
   it('has "transaction template" button', () => {
@@ -119,6 +146,47 @@ describe('Compose Form Component', () => {
         lv: 6001000,
         rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         amt: 5,
+      }
+    });
+  });
+
+  it('can store submitted *asset transfer* transaction data', async () => {
+    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.type(screen.getByLabelText(/fields.arcv.label/),
+      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.xaid.label/), '123456789');
+    await userEvent.type(screen.getByLabelText(/fields.aamt.label/), '5');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'axfer',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        xaid: 123456789,
+        aamt: '5',
       }
     });
   });

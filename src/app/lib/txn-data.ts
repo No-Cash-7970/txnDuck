@@ -33,6 +33,20 @@ export interface PaymentTxnData extends BaseTxnData {
   /** Close remainder to */
   close?: string;
 }
+/** Data for a payment transaction */
+export interface AssetTransferTxnData extends BaseTxnData {
+  type: TransactionType.axfer;
+  /** Asset receiver */
+  arcv: string;
+  /** Asset ID */
+  xaid: number,
+  /** Asset amount */
+  aamt: number|string; // String because the number could be larger than 2^53 - 1
+  /** Revocation target */
+  asnd?: string;
+  /** Close remainder of asset to */
+  aclose?: string;
+}
 /** Data for the transaction being built */
 export interface TxnData {
   /** Genesis ID (retrieved from currently connected node) */
@@ -40,7 +54,7 @@ export interface TxnData {
   /** Genesis hash (retrieved from currently connected node) */
   gh: string;
   /** Transaction form data */
-  txn: BaseTxnData | PaymentTxnData; // TODO: Add other transaction types;
+  txn: BaseTxnData | PaymentTxnData | AssetTransferTxnData; // TODO: Add other transaction types;
 };
 /** Box reference */
 type BoxRef = {
@@ -94,13 +108,13 @@ export const txnDataAtoms = {
 
   /** Asset transfer - Asset ID */
   xaid: atom<number|undefined>(undefined),
-  /** Asset transfer - Sender */
+  /** Asset transfer - Revocation Target (the account from which the asset will be revoked) */
   asnd: atom<string>(''),
   /** Asset transfer - Asset receiver */
   arcv: atom<string>(''),
   /** Asset transfer - Asset amount */
-  aamt: atom<number|bigint|undefined>(undefined),
-  /** Asset transfer - Close remainder of asset To */
+  aamt: atom<number|string|undefined>(undefined),
+  /** Asset transfer - Close remainder of asset to */
   aclose: atom<string>(''),
 
   /*
