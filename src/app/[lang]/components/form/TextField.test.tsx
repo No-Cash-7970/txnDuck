@@ -137,8 +137,8 @@ describe('Form Components - TextField', () => {
   });
 
   it('has input with spell-check enabled if `spellCheck` is true', () => {
-    render(<TextField disabled={true} />);
-    expect(screen.getByRole('textbox')).toBeDisabled();
+    render(<TextField spellCheck={true} />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('spellcheck', 'true');
   });
 
   it('has input with value specified in `value` attribute', () => {
