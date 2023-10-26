@@ -16,6 +16,8 @@ interface InputProps {
   disabled?: boolean;
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /** The type of keyboard to use when a virtual keyboard is used */
+  inputMode?: 'none'|'text'|'decimal'|'numeric'|'tel'|'search'|'email'|'url'
 }
 
 /** General properties for fields */

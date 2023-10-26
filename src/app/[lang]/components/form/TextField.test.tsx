@@ -157,4 +157,9 @@ describe('Form Components - TextField', () => {
     expect(onChangeFn).toBeCalledTimes(3);
   });
 
+  it('has input with input mode enabled if `input` is true', () => {
+    render(<TextField inputMode='decimal' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('inputmode', 'decimal');
+  });
+
 });

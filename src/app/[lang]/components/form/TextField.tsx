@@ -20,6 +20,7 @@ export default function TextField({
   spellCheck = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  inputMode = undefined,
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -43,6 +44,7 @@ export default function TextField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              inputMode={inputMode}
             />
           }
           {(beforeSideLabel || afterSideLabel) &&
@@ -65,6 +67,7 @@ export default function TextField({
                 spellCheck={spellCheck}
                 value={value}
                 onChange={onChange}
+                inputMode={inputMode}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -90,6 +93,7 @@ export default function TextField({
             spellCheck={spellCheck}
             value={value}
             onChange={onChange}
+            inputMode={inputMode}
           />
         }
         {(beforeSideLabel || afterSideLabel) &&
@@ -112,6 +116,7 @@ export default function TextField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              inputMode={inputMode}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
