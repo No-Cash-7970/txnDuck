@@ -75,6 +75,40 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
+  it(
+  'has fields for payment transaction type if "Asset Configuration" transaction type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.caid.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+
+    expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_un.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_an.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_t.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_dc.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_au.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+  });
+
   it('has "transaction template" button', () => {
     render(<ComposeForm />);
     expect(screen.getByText('txn_template_btn')).toHaveClass('btn-disabled');
@@ -190,6 +224,71 @@ describe('Compose Form Component', () => {
       }
     });
   });
+
+  it('can store submitted *asset configuration* transaction data', async () => {
+    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.type(screen.getByLabelText(/fields.apar_un.label/), 'FAKE');
+    await userEvent.type(screen.getByLabelText(/fields.apar_an.label/), 'Fake Token');
+    await userEvent.type(screen.getByLabelText(/fields.apar_t.label/), '10000000');
+    await userEvent.type(screen.getByLabelText(/fields.apar_dc.label/), '3');
+    await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
+    await userEvent.type(screen.getByLabelText(/fields.apar_au.label/), 'https://fake.token');
+    await userEvent.type(screen.getByLabelText(/fields.apar_m.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.apar_f.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.apar_c.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.apar_r.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.apar_am.label/),
+      'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'
+    );
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'acfg',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_un: 'FAKE',
+        apar_an: 'Fake Token',
+        apar_t: '10000000',
+        apar_dc: 3,
+        apar_df: true,
+        apar_au: 'https://fake.token',
+        apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+      }
+    });
+  }, 10000);
 
   it('can retrieve transaction data from session storage', () => {
     sessionStorage.setItem('txnData', JSON.stringify({

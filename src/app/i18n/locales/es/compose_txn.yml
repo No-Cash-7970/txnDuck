@@ -12,6 +12,9 @@ fields:
       pay: Pago
       axfer: Transferencia del activo
       acfg: Configuración del activo
+      acfg_create: Configuración del activo (crear)
+      acfg_reconfig: Configuración del activo (reconfigurar)
+      acfg_destroy: Configuración del activo (destruir)
       afrz: Congelación del activo
       appl: Aplicación
       keyreg: Registro de la llave
@@ -73,3 +76,38 @@ fields:
     warning: >
       Si se especifica una dirección, <strong>todos los activos de la cuenta del remitente se
       enviarán a la dirección especificada</strong>. Asegúrese de saber lo que está haciendo.
+  # Fields for asset configuration type
+  caid: # Asset ID
+    label: ID de activo
+  apar_un: # Unit name
+    label: Nombre de la unidad
+    placeholder: ACTIVO
+  apar_an: # Asset name
+    label: Nombre del activo
+    placeholder: Mi activo
+  apar_t: # Total
+    label: Total
+  apar_dc: # Number of decimals places
+    label: Número de cifras decimales
+  apar_df: # Frozen by default?
+    label: ¿Congelado por defecto?
+    is_frozen: Sí
+    is_not_frozen: No
+  apar_au: # URL
+    label: URL
+    placeholder: "ipfs://"
+  apar_m: # Manager
+    label: Administrador
+    placeholder: Dirección del administrador
+  apar_f: # Freeze address
+    label: Dirección para congelar
+    placeholder: Dirección para congelar
+  apar_c: # Clawback address
+    label: Dirección para revocar
+    placeholder: Dirección para revocar
+  apar_r: # Reserve address
+    label: Dirección de la reserva
+    placeholder: Dirección de la reserva
+  apar_am: # Metadata hash
+    label: Hash de metadatos
+    placeholder: Hash de metadatos

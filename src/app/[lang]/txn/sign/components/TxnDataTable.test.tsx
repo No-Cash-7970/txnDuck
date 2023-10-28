@@ -219,4 +219,190 @@ describe('Transaction Data Table Component', () => {
 
   });
 
+  describe('Asset Configuration Transaction', () => {
+
+    it('displays asset configuration transaction data for asset creation', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'acfg',
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.queryByText('fields.caid.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.type.options.acfg_create')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_un.label')).toBeInTheDocument();
+      expect(screen.getByText('FAKE')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_an.label')).toBeInTheDocument();
+      expect(screen.getByText('Fake Token')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_t.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_dc.label')).toBeInTheDocument();
+      expect(screen.getByText('5')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apar_df.is_frozen')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_au.label')).toBeInTheDocument();
+      expect(screen.getByText('https://fake.token')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
+      expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
+      expect(screen.getByText('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
+      expect(screen.getByText('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+      expect(screen.getByText('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+      expect(screen.getByText('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'))
+        .toBeInTheDocument();
+    });
+
+    it('displays asset configuration transaction data for asset reconfiguration', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'acfg',
+          caid: 1234,
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.type.options.acfg_reconfig')).toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_df.is_frozen')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
+      expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
+      expect(screen.getByText('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
+      expect(screen.getByText('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+      expect(screen.getByText('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD'))
+        .toBeInTheDocument();
+    });
+
+    it('displays asset configuration transaction data for asset deletion', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'acfg',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          caid: 1234,
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: '',
+          apar_f: '',
+          apar_c: '',
+          apar_r: '',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.type.options.acfg_destroy')).toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_df.is_frozen')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+
+      expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+
+      expect(screen.getAllByText('none')).toHaveLength(4);
+    });
+
+    it('displays "none" when there is no metadata hash', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'acfg',
+          note: 'Hello world',
+          lx: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+          rekey: 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: '',
+        }
+      }));
+      render(<TxnDataTable />);
+      expect(screen.getByText('none')).toBeInTheDocument();
+    });
+
+  });
+
 });

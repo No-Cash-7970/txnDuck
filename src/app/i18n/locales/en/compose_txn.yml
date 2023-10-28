@@ -12,6 +12,9 @@ fields:
       pay: Payment
       axfer: Asset transfer
       acfg: Asset configuration
+      acfg_create: Asset configuration (creation)
+      acfg_reconfig: Asset configuration (reconfiguration)
+      acfg_destroy: Asset configuration (destroy)
       afrz: Asset freeze
       appl: Application
       keyreg: Key registration
@@ -73,3 +76,38 @@ fields:
       If an address is specified, <strong>all of the asset in the sender account will be sent to the
       specified address</strong>, and the sender account will be opted out of the asset. Make sure
       you know what you are doing.
+  # Fields for asset configuration type
+  caid: # Asset ID
+    label: Asset ID
+  apar_un: # Unit name
+    label: Unit name
+    placeholder: ASSET
+  apar_an: # Asset name
+    label: Asset name
+    placeholder: My Asset
+  apar_t: # Total
+    label: Total
+  apar_dc: # Number of decimals places
+    label: Number of decimals places
+  apar_df: # Frozen by default?
+    label: Frozen by default?
+    is_frozen: Yes
+    is_not_frozen: No
+  apar_au: # URL
+    label: URL
+    placeholder: "ipfs://"
+  apar_m: # Manager
+    label: Manager address
+    placeholder: Manager address
+  apar_f: # Freeze address
+    label: Freeze address
+    placeholder: Freeze address
+  apar_c: # Clawback address
+    label: Clawback address
+    placeholder: Clawback address
+  apar_r: # Reserve address
+    label: Reserve address
+    placeholder: Reserve address
+  apar_am: # Metadata hash
+    label: Metadata hash
+    placeholder: Metadata hash

@@ -5,12 +5,7 @@ import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
 import { TransactionType } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import {
-  type PaymentTxnData,
-  storedTxnDataAtom,
-  txnDataAtoms,
-  AssetTransferTxnData
-} from '@/app/lib/txn-data';
+import * as TxnData from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
@@ -24,7 +19,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   /** A flag for indicating that the form is being submitted */
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
-  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
 
@@ -40,19 +35,71 @@ export default function ComposeSubmitButton({ lng }: Props) {
     const txnData = storedTxnData.txn;
 
     // Restore transaction data into atoms
-    jotaiStore.set(txnDataAtoms.txnType, txnData.type);
-    jotaiStore.set(txnDataAtoms.snd, txnData.snd || '');
-    jotaiStore.set(txnDataAtoms.note, txnData.note || '');
-    jotaiStore.set(txnDataAtoms.fee, txnData.fee);
-    jotaiStore.set(txnDataAtoms.fv, txnData.fv);
-    jotaiStore.set(txnDataAtoms.lv, txnData.lv);
-    jotaiStore.set(txnDataAtoms.lx, txnData?.lx || '');
-    jotaiStore.set(txnDataAtoms.rekey, txnData?.rekey || '');
+    jotaiStore.set(TxnData.txnDataAtoms.txnType, txnData.type);
+    jotaiStore.set(TxnData.txnDataAtoms.snd, txnData.snd || '');
+    jotaiStore.set(TxnData.txnDataAtoms.note, txnData.note || '');
+    jotaiStore.set(TxnData.txnDataAtoms.fee, txnData.fee);
+    jotaiStore.set(TxnData.txnDataAtoms.fv, txnData.fv);
+    jotaiStore.set(TxnData.txnDataAtoms.lv, txnData.lv);
+    jotaiStore.set(TxnData.txnDataAtoms.lx, txnData?.lx || '');
+    jotaiStore.set(TxnData.txnDataAtoms.rekey, txnData?.rekey || '');
     // Restore payment transaction data, if applicable
     if (txnData.type === TransactionType.pay) {
-      jotaiStore.set(txnDataAtoms.rcv, (txnData as PaymentTxnData).rcv || '');
-      jotaiStore.set(txnDataAtoms.amt, (txnData as PaymentTxnData).amt);
-      jotaiStore.set(txnDataAtoms.close, (txnData as PaymentTxnData)?.close || '');
+      jotaiStore.set(TxnData.txnDataAtoms.rcv, (txnData as TxnData.PaymentTxnData).rcv || '');
+      jotaiStore.set(TxnData.txnDataAtoms.amt, (txnData as TxnData.PaymentTxnData).amt);
+      jotaiStore.set(TxnData.txnDataAtoms.close, (txnData as TxnData.PaymentTxnData).close || '');
+    }
+    // Restore asset transfer transaction data, if applicable
+    if (txnData.type === TransactionType.axfer) {
+      jotaiStore.set(TxnData.txnDataAtoms.arcv,
+        (txnData as TxnData.AssetTransferTxnData).arcv || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.xaid, (txnData as TxnData.AssetTransferTxnData).xaid);
+      jotaiStore.set(TxnData.txnDataAtoms.aamt,
+        `${(txnData as TxnData.AssetTransferTxnData).aamt}`
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.asnd,
+        (txnData as TxnData.AssetTransferTxnData).asnd || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.aclose,
+        (txnData as TxnData.AssetTransferTxnData).aclose || ''
+      );
+    }
+    // Restore asset configuration transaction data, if applicable
+    if (txnData.type === TransactionType.acfg) {
+      jotaiStore.set(TxnData.txnDataAtoms.caid, (txnData as TxnData.AssetConfigTxnData).caid);
+      jotaiStore.set(TxnData.txnDataAtoms.apar_un,
+        (txnData as TxnData.AssetConfigTxnData).apar_un || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_an,
+        (txnData as TxnData.AssetConfigTxnData).apar_an || ''
+      );
+      // Convert total to string just in case it is a bigint
+      jotaiStore.set(TxnData.txnDataAtoms.apar_t,
+        `${(txnData as TxnData.AssetConfigTxnData).apar_t}`
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_dc, (txnData as TxnData.AssetConfigTxnData).apar_dc);
+      jotaiStore.set(TxnData.txnDataAtoms.apar_df,
+        !!((txnData as TxnData.AssetConfigTxnData).apar_df)
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_au,
+        (txnData as TxnData.AssetConfigTxnData).apar_au || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_m,
+        (txnData as TxnData.AssetConfigTxnData).apar_m || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_f,
+        (txnData as TxnData.AssetConfigTxnData).apar_f || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_c,
+        (txnData as TxnData.AssetConfigTxnData).apar_c || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_r,
+        (txnData as TxnData.AssetConfigTxnData).apar_r || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.apar_am,
+        (txnData as TxnData.AssetConfigTxnData).apar_am || ''
+      );
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
@@ -68,44 +115,66 @@ export default function ComposeSubmitButton({ lng }: Props) {
     });
     const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
 
-    const txnType: TransactionType = jotaiStore.get(txnDataAtoms.txnType) as TransactionType;
-    const coreTxnData = {};
+    const txnType: TransactionType =
+      jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
+    let specificTxnData = {};
 
     // Gather payment transaction data
     if (txnType === TransactionType.pay) {
-      (coreTxnData as PaymentTxnData).rcv = jotaiStore.get(txnDataAtoms.rcv);
-      (coreTxnData as PaymentTxnData).amt = jotaiStore.get(txnDataAtoms.amt) as number;
-      (coreTxnData as PaymentTxnData).close = jotaiStore.get(txnDataAtoms.close) || undefined;
+      specificTxnData = {
+        rcv: jotaiStore.get(TxnData.txnDataAtoms.rcv),
+        amt: jotaiStore.get(TxnData.txnDataAtoms.amt),
+        close: jotaiStore.get(TxnData.txnDataAtoms.close) || undefined,
+      };
     }
 
     // Gather asset transfer transaction data
     if (txnType === TransactionType.axfer) {
-      (coreTxnData as AssetTransferTxnData).asnd =
-        jotaiStore.get(txnDataAtoms.asnd) || undefined;
-      (coreTxnData as AssetTransferTxnData).arcv = jotaiStore.get(txnDataAtoms.arcv);
-      (coreTxnData as AssetTransferTxnData).xaid = jotaiStore.get(txnDataAtoms.xaid) as number;
-      // Convert amount to string just in case it is a bigint
-      (coreTxnData as AssetTransferTxnData).aamt = `${jotaiStore.get(txnDataAtoms.aamt)}`;
-      (coreTxnData as AssetTransferTxnData).aclose =
-        jotaiStore.get(txnDataAtoms.aclose) || undefined;
+      specificTxnData = {
+        arcv: jotaiStore.get(TxnData.txnDataAtoms.arcv),
+        xaid: jotaiStore.get(TxnData.txnDataAtoms.xaid),
+        // Convert amount to string just in case it is a bigint
+        aamt: `${jotaiStore.get(TxnData.txnDataAtoms.aamt)}`,
+        asnd: jotaiStore.get(TxnData.txnDataAtoms.asnd) || undefined,
+        aclose: jotaiStore.get(TxnData.txnDataAtoms.aclose) || undefined,
+      };
+    }
+
+    // Gather asset configuration transaction data
+    if (txnType === TransactionType.acfg) {
+      specificTxnData = {
+        caid: jotaiStore.get(TxnData.txnDataAtoms.caid) || undefined,
+        apar_un: jotaiStore.get(TxnData.txnDataAtoms.apar_un) || undefined,
+        apar_an: jotaiStore.get(TxnData.txnDataAtoms.apar_an) || undefined,
+        // Convert total to string just in case it is a bigint
+        apar_t: `${jotaiStore.get(TxnData.txnDataAtoms.apar_t)}`,
+        apar_dc: jotaiStore.get(TxnData.txnDataAtoms.apar_dc),
+        apar_df: jotaiStore.get(TxnData.txnDataAtoms.apar_df) || undefined,
+        apar_au: jotaiStore.get(TxnData.txnDataAtoms.apar_au) || undefined,
+        apar_m: jotaiStore.get(TxnData.txnDataAtoms.apar_m) || undefined,
+        apar_f: jotaiStore.get(TxnData.txnDataAtoms.apar_f) || undefined,
+        apar_c: jotaiStore.get(TxnData.txnDataAtoms.apar_c) || undefined,
+        apar_r: jotaiStore.get(TxnData.txnDataAtoms.apar_r) || undefined,
+        apar_am: jotaiStore.get(TxnData.txnDataAtoms.apar_am) || undefined,
+      };
     }
 
     setSubmittingForm(true);
     // Store transaction data into local/session storage
-    jotaiStore.set(storedTxnDataAtom, {
+    jotaiStore.set(TxnData.storedTxnDataAtom, {
       gen: genesisID,
       gh: genesisHash,
       txn: {
-        ...coreTxnData,
+        ...specificTxnData,
         // Gather base transaction data
         type: txnType,
-        snd: jotaiStore.get(txnDataAtoms.snd),
-        note: jotaiStore.get(txnDataAtoms.note),
-        fee: jotaiStore.get(txnDataAtoms.fee) as number,
-        fv: jotaiStore.get(txnDataAtoms.fv) as number,
-        lv: jotaiStore.get(txnDataAtoms.lv) as number,
-        lx: jotaiStore.get(txnDataAtoms.lx) || undefined,
-        rekey: jotaiStore.get(txnDataAtoms.rekey) || undefined,
+        snd: jotaiStore.get(TxnData.txnDataAtoms.snd),
+        note: jotaiStore.get(TxnData.txnDataAtoms.note),
+        fee: jotaiStore.get(TxnData.txnDataAtoms.fee) as number,
+        fv: jotaiStore.get(TxnData.txnDataAtoms.fv) as number,
+        lv: jotaiStore.get(TxnData.txnDataAtoms.lv) as number,
+        lx: jotaiStore.get(TxnData.txnDataAtoms.lx) || undefined,
+        rekey: jotaiStore.get(TxnData.txnDataAtoms.rekey) || undefined,
       }
     });
     // Go to sign-transaction page

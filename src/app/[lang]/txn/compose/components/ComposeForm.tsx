@@ -10,6 +10,7 @@ import { txnDataAtoms } from '@/app/lib/txn-data';
 import * as GeneralFields from './fields/GeneralFields';
 import * as PaymentFields from './fields/PaymentFields';
 import * as AssetTransferFields from './fields/AssetTransferFields';
+import * as AssetConfigFields from './fields/AssetConfigFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
@@ -47,8 +48,26 @@ export default function ComposeForm({ lng }: Props) {
         <AssetTransferFields.Sender t={t} />
       </>}
 
+      {txnType === TransactionType.acfg && <>
+        <AssetConfigFields.AssetId t={t} />
+        <AssetConfigFields.UnitName t={t} />
+        <AssetConfigFields.AssetName t={t} />
+        <AssetConfigFields.Total t={t} />
+        <AssetConfigFields.DecimalPlaces t={t} />
+        <AssetConfigFields.DefaultFrozen t={t} />
+        <AssetConfigFields.Url t={t} />
+      </>}
+
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
+
+      {txnType === TransactionType.acfg && <>
+        <AssetConfigFields.ManagerAddr t={t} />
+        <AssetConfigFields.FreezeAddr t={t} />
+        <AssetConfigFields.ClawbackAddr t={t} />
+        <AssetConfigFields.ReserveAddr t={t} />
+        <AssetConfigFields.MetadataHash t={t} />
+      </>}
 
       <div>
         <GeneralFields.FirstValid t={t} />

@@ -1,6 +1,6 @@
 /** @file Collection of variables that contain the global state for transaction form data */
 
-import type { OnApplicationComplete, Transaction, TransactionType } from 'algosdk';
+import type { OnApplicationComplete, TransactionType } from 'algosdk';
 import { type PrimitiveAtom, atom } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 
@@ -33,7 +33,7 @@ export interface PaymentTxnData extends BaseTxnData {
   /** Close remainder to */
   close?: string;
 }
-/** Data for a payment transaction */
+/** Data for a asset transfer transaction */
 export interface AssetTransferTxnData extends BaseTxnData {
   type: TransactionType.axfer;
   /** Asset receiver */
@@ -47,6 +47,34 @@ export interface AssetTransferTxnData extends BaseTxnData {
   /** Close remainder of asset to */
   aclose?: string;
 }
+/** Data for a asset configuration transaction */
+export interface AssetConfigTxnData extends BaseTxnData {
+  type: TransactionType.acfg;
+  /** Asset ID */
+  caid?: number;
+  /** Unit name */
+  apar_un?: string;
+  /** Asset name */
+  apar_an?: string;
+  /** Total */
+  apar_t?: number|string;
+  /** Number of decimals places */
+  apar_dc?: number;
+  /** Frozen by default? */
+  apar_df?: boolean;
+  /** URL */
+  apar_au?: string;
+  /** Manager address */
+  apar_m?: string;
+  /** Freeze address */
+  apar_f?: string;
+  /** Clawback address */
+  apar_c?: string;
+  /** Reserve address */
+  apar_r?: string;
+  /** Metadata hash */
+  apar_am?: string;
+}
 /** Data for the transaction being built */
 export interface TxnData {
   /** Genesis ID (retrieved from currently connected node) */
@@ -54,7 +82,10 @@ export interface TxnData {
   /** Genesis hash (retrieved from currently connected node) */
   gh: string;
   /** Transaction form data */
-  txn: BaseTxnData | PaymentTxnData | AssetTransferTxnData; // TODO: Add other transaction types;
+  txn: BaseTxnData
+    | PaymentTxnData
+    | AssetTransferTxnData
+    | AssetConfigTxnData; // TODO: Add other transaction types;
 };
 /** Box reference */
 type BoxRef = {
@@ -113,7 +144,7 @@ export const txnDataAtoms = {
   /** Asset transfer - Asset receiver */
   arcv: atom<string>(''),
   /** Asset transfer - Asset amount */
-  aamt: atom<number|string|undefined>(undefined),
+  aamt: atom<number|string>(''),
   /** Asset transfer - Close remainder of asset to */
   aclose: atom<string>(''),
 
@@ -128,7 +159,7 @@ export const txnDataAtoms = {
   /** Asset configuration - Asset name */
   apar_an: atom<string>(''),
   /** Asset configuration - Total */
-  apar_t: atom<number|bigint|undefined>(undefined),
+  apar_t: atom<number|string>(''),
   /** Asset configuration - Number of decimals places */
   apar_dc: atom<number|undefined>(undefined),
   /** Asset configuration - Frozen by default? */
