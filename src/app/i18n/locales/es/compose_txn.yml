@@ -111,3 +111,13 @@ fields:
   apar_am: # Metadata hash
     label: Hash de metadatos
     placeholder: Hash de metadatos
+  # Fields for asset freeze type
+  faid: # Asset ID
+    label: ID de activo
+  fadd: # Freeze target address
+    label: Objetivo para congelar
+    placeholder: Dirección del objetivo
+  afrz: # Freeze?
+    label: ¿Debería congelar el objetivo?
+    is_frozen: Sí
+    is_not_frozen: No

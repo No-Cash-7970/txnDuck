@@ -109,6 +109,21 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
   });
 
+  it('has fields for payment transaction type if "Asset Freeze" transaction type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.faid.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.fadd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.afrz.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+
+    expect(screen.getByText('fields.faid.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.fadd.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
+  });
+
   it('has "transaction template" button', () => {
     render(<ComposeForm />);
     expect(screen.getByText('txn_template_btn')).toHaveClass('btn-disabled');
@@ -289,6 +304,47 @@ describe('Compose Form Component', () => {
       }
     });
   }, 10000);
+
+  it('can store submitted *asset freeze* transaction data', async () => {
+    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.type(screen.getByLabelText(/fields.faid.label/), '123456789');
+    await userEvent.type(screen.getByLabelText(/fields.fadd.label/),
+      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
+    );
+    await userEvent.click(screen.getByLabelText(/fields.afrz.label/));
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'afrz',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        faid: 123456789,
+        fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        afrz: true,
+      }
+    });
+  });
 
   it('can retrieve transaction data from session storage', () => {
     sessionStorage.setItem('txnData', JSON.stringify({

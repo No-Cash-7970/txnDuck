@@ -11,6 +11,7 @@ import * as GeneralFields from './fields/GeneralFields';
 import * as PaymentFields from './fields/PaymentFields';
 import * as AssetTransferFields from './fields/AssetTransferFields';
 import * as AssetConfigFields from './fields/AssetConfigFields';
+import * as AssetFreezeFields from './fields/AssetFreezeFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
@@ -56,6 +57,12 @@ export default function ComposeForm({ lng }: Props) {
         <AssetConfigFields.DecimalPlaces t={t} />
         <AssetConfigFields.DefaultFrozen t={t} />
         <AssetConfigFields.Url t={t} />
+      </>}
+
+      {txnType === TransactionType.afrz && <>
+        <AssetFreezeFields.AssetId t={t} />
+        <AssetFreezeFields.TargetAddr t={t} />
+        <AssetFreezeFields.Freeze t={t} />
       </>}
 
       <GeneralFields.Fee t={t} />

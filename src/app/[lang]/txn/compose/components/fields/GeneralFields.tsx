@@ -22,7 +22,7 @@ export function TxnType({ t }: { t: TFunction }) {
         { value: TransactionType.pay, text: t('fields.type.options.pay') },
         { value: TransactionType.axfer, text: t('fields.type.options.axfer') },
         { value: TransactionType.acfg, text: t('fields.type.options.acfg') },
-        // { value: TransactionType.afrz, text: t('fields.type.options.afrz') },
+        { value: TransactionType.afrz, text: t('fields.type.options.afrz') },
         // { value: TransactionType.appl, text: t('fields.type.options.appl') },
         // { value: TransactionType.keyreg, text: t('fields.type.options.keyreg') },
       ]}

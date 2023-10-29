@@ -75,6 +75,16 @@ export interface AssetConfigTxnData extends BaseTxnData {
   /** Metadata hash */
   apar_am?: string;
 }
+/** Data for a asset freeze transaction */
+export interface AssetFreezeTxnData extends BaseTxnData {
+  type: TransactionType.afrz;
+  /** Asset ID */
+  faid: number,
+  /** Freeze address */
+  fadd: string;
+  /** Freeze? */
+  afrz: boolean;
+}
 /** Data for the transaction being built */
 export interface TxnData {
   /** Genesis ID (retrieved from currently connected node) */
@@ -85,7 +95,8 @@ export interface TxnData {
   txn: BaseTxnData
     | PaymentTxnData
     | AssetTransferTxnData
-    | AssetConfigTxnData; // TODO: Add other transaction types;
+    | AssetConfigTxnData
+    | AssetFreezeTxnData; // TODO: Add other transaction types;
 };
 /** Box reference */
 type BoxRef = {
@@ -186,7 +197,7 @@ export const txnDataAtoms = {
   /** Asset freeze - Freeze address */
   fadd: atom<string>(''),
   /** Asset freeze - Freeze asset? */
-  afrz: atom<string>(''),
+  afrz: atom<boolean>(false),
 
   /*
    * Application

@@ -101,6 +101,14 @@ export default function ComposeSubmitButton({ lng }: Props) {
         (txnData as TxnData.AssetConfigTxnData).apar_am || ''
       );
     }
+    // Restore asset freeze transaction data, if applicable
+    if (txnData.type === TransactionType.afrz) {
+      jotaiStore.set(TxnData.txnDataAtoms.faid, (txnData as TxnData.AssetFreezeTxnData).faid);
+      jotaiStore.set(TxnData.txnDataAtoms.fadd,
+        (txnData as TxnData.AssetFreezeTxnData).fadd || ''
+      );
+      jotaiStore.set(TxnData.txnDataAtoms.afrz, (txnData as TxnData.AssetFreezeTxnData).afrz);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
@@ -156,6 +164,15 @@ export default function ComposeSubmitButton({ lng }: Props) {
         apar_c: jotaiStore.get(TxnData.txnDataAtoms.apar_c) || undefined,
         apar_r: jotaiStore.get(TxnData.txnDataAtoms.apar_r) || undefined,
         apar_am: jotaiStore.get(TxnData.txnDataAtoms.apar_am) || undefined,
+      };
+    }
+
+    // Gather asset freeze transaction data
+    if (txnType === TransactionType.afrz) {
+      specificTxnData = {
+        faid: jotaiStore.get(TxnData.txnDataAtoms.faid),
+        fadd: jotaiStore.get(TxnData.txnDataAtoms.fadd),
+        afrz: jotaiStore.get(TxnData.txnDataAtoms.afrz),
       };
     }
 

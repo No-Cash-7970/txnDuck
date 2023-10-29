@@ -15,6 +15,8 @@ export function createTxnFromData(
       return createAxferTxn(txnData as TxnData.AssetTransferTxnData, genesisID, genesisHash);
     case algosdk.TransactionType.acfg:
       return createAcfgTxn(txnData as TxnData.AssetConfigTxnData, genesisID, genesisHash);
+    case algosdk.TransactionType.afrz:
+      return createAfrzTxn(txnData as TxnData.AssetFreezeTxnData, genesisID, genesisHash);
     default:
       throw Error('Unsupported transaction type');
   }
@@ -155,6 +157,36 @@ function createAcfgTxn(
 
   if (acfgTxnData.lx) {
     txn.addLease((new TextEncoder).encode(acfgTxnData.lx));
+  }
+
+  return txn;
+}
+
+/** Creates an `Transaction` object that represents an Algorand asset freeze transaction */
+function createAfrzTxn(
+  afrzTxnData: TxnData.AssetFreezeTxnData,
+  genesisID: string,
+  genesisHash: string
+) {
+  const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
+    from: afrzTxnData.snd,
+    note: encodeTransactionNote(afrzTxnData.note),
+    rekeyTo: afrzTxnData.rekey || undefined,
+    assetIndex: afrzTxnData.faid,
+    freezeTarget: afrzTxnData.fadd,
+    freezeState: afrzTxnData.afrz,
+    suggestedParams: {
+      fee: algosdk.algosToMicroalgos(afrzTxnData.fee),
+      flatFee: true,
+      firstRound: afrzTxnData.fv,
+      lastRound: afrzTxnData.lv,
+      genesisHash,
+      genesisID,
+    }
+  });
+
+  if (afrzTxnData.lx) {
+    txn.addLease((new TextEncoder).encode(afrzTxnData.lx));
   }
 
   return txn;

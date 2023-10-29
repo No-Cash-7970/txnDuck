@@ -405,4 +405,31 @@ describe('Transaction Data Table Component', () => {
 
   });
 
+  describe('Asset Freeze Transaction', () => {
+
+    it('displays asset freeze transaction data', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'afrz',
+          faid: 1234,
+          fadd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          afrz: true,
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.faid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.fadd.label')).toBeInTheDocument();
+      expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
+        .toBeInTheDocument();
+
+      expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.afrz.is_frozen')).toBeInTheDocument();
+    });
+
+  });
+
 });

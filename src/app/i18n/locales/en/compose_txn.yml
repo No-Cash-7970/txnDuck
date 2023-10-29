@@ -111,3 +111,13 @@ fields:
   apar_am: # Metadata hash
     label: Metadata hash
     placeholder: Metadata hash
+  # Fields for asset freeze type
+  faid: # Asset ID
+    label: Asset ID
+  fadd: # Freeze target address
+    label: Freeze target
+    placeholder: Freeze target address
+  afrz: # Freeze?
+    label: Freeze asset?
+    is_frozen: Yes
+    is_not_frozen: No

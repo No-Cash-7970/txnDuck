@@ -236,6 +236,42 @@ describe('Transaction Data Processor', () => {
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
     });
 
+    it('returns `Transaction` object with given data for a asset freeze transaction', () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.afrz,
+          snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          rekey: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          faid: 88888888,
+          fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          afrz: true,
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.afrz);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(addrToStr(txn.reKeyTo))
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.assetIndex).toBe(88888888);
+      expect(addrToStr(txn.freezeAccount))
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.freezeState).toBe(true);
+    });
+
   });
 });
 

@@ -139,6 +139,26 @@ export default function TxnDataTable({ lng }: Props) {
           </>}
         </>}
 
+        {txnData?.type === TransactionType.afrz && <>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.faid.label')}</th>
+            <td>{(txnData as TxnData.AssetFreezeTxnData).faid}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.fadd.label')}</th>
+            <td className='break-all'>{(txnData as TxnData.AssetFreezeTxnData).fadd}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.afrz.label')}</th>
+            <td>
+              {(txnData as TxnData.AssetFreezeTxnData).afrz
+                ? <b>{t('fields.afrz.is_frozen')}</b>
+                : t('fields.afrz.is_not_frozen')
+              }
+            </td>
+          </tr>
+        </>}
+
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
             <td>
