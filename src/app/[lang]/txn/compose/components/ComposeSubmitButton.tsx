@@ -109,6 +109,16 @@ export default function ComposeSubmitButton({ lng }: Props) {
       );
       jotaiStore.set(TxnData.txnDataAtoms.afrz, (txnData as TxnData.AssetFreezeTxnData).afrz);
     }
+    // Restore key registration transaction data, if applicable
+    if (txnData.type === TransactionType.keyreg) {
+      jotaiStore.set(TxnData.txnDataAtoms.votekey, (txnData as TxnData.KeyRegTxnData).votekey);
+      jotaiStore.set(TxnData.txnDataAtoms.selkey, (txnData as TxnData.KeyRegTxnData).selkey);
+      jotaiStore.set(TxnData.txnDataAtoms.sprfkey, (txnData as TxnData.KeyRegTxnData).sprfkey);
+      jotaiStore.set(TxnData.txnDataAtoms.votefst, (txnData as TxnData.KeyRegTxnData).votefst);
+      jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData).votelst);
+      jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData).votekd);
+      jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData).nonpart);
+    }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
@@ -173,6 +183,19 @@ export default function ComposeSubmitButton({ lng }: Props) {
         faid: jotaiStore.get(TxnData.txnDataAtoms.faid),
         fadd: jotaiStore.get(TxnData.txnDataAtoms.fadd),
         afrz: jotaiStore.get(TxnData.txnDataAtoms.afrz),
+      };
+    }
+
+    // Gather key registration transaction data
+    if (txnType === TransactionType.keyreg) {
+      specificTxnData = {
+        votekey: jotaiStore.get(TxnData.txnDataAtoms.votekey),
+        selkey: jotaiStore.get(TxnData.txnDataAtoms.selkey),
+        sprfkey: jotaiStore.get(TxnData.txnDataAtoms.sprfkey),
+        votefst: jotaiStore.get(TxnData.txnDataAtoms.votefst),
+        votelst: jotaiStore.get(TxnData.txnDataAtoms.votelst),
+        votekd: jotaiStore.get(TxnData.txnDataAtoms.votekd),
+        nonpart: jotaiStore.get(TxnData.txnDataAtoms.nonpart),
       };
     }
 

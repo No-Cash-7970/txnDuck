@@ -79,11 +79,29 @@ export interface AssetConfigTxnData extends BaseTxnData {
 export interface AssetFreezeTxnData extends BaseTxnData {
   type: TransactionType.afrz;
   /** Asset ID */
-  faid: number,
+  faid: number;
   /** Freeze address */
   fadd: string;
   /** Freeze? */
   afrz: boolean;
+}
+/** Data for a key registration transaction */
+export interface KeyRegTxnData extends BaseTxnData {
+  type: TransactionType.keyreg;
+  /** Voting key */
+  votekey: string;
+  /** Selection key */
+  selkey: string;
+  /** State proof key */
+  sprfkey: string;
+  /** First voting round */
+  votefst?: number;
+  /** Last voting round */
+  votelst?: number;
+  /** Voting key dilution */
+  votekd?: number;
+  /** Nonparticipation */
+  nonpart: boolean;
 }
 /** Data for the transaction being built */
 export interface TxnData {
@@ -96,7 +114,8 @@ export interface TxnData {
     | PaymentTxnData
     | AssetTransferTxnData
     | AssetConfigTxnData
-    | AssetFreezeTxnData; // TODO: Add other transaction types;
+    | AssetFreezeTxnData
+    | KeyRegTxnData; // TODO: Add other transaction types;
 };
 /** Box reference */
 type BoxRef = {
@@ -241,5 +260,24 @@ export const txnDataAtoms = {
   apas: atom<number[]>([]),
   /** Application dependencies - Box references */
   apbx: atom<BoxRef[]>([]),
+
+  /*
+   * Key Registration
+   */
+
+  /** Key Registration - Voting key */
+  votekey: atom<string>(''),
+  /** Key Registration - Selection key */
+  selkey: atom<string>(''),
+  /** Key Registration - State proof key */
+  sprfkey: atom<string>(''),
+  /** Key Registration - First voting round */
+  votefst: atom<number|undefined>(undefined),
+  /** Key Registration - Last voting round */
+  votelst: atom<number|undefined>(undefined),
+  /** Key Registration - Voting key dilution */
+  votekd: atom<number|undefined>(undefined),
+  /** Key Registration - Nonparticipation */
+  nonpart: atom<boolean>(false),
 
 };

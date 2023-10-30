@@ -17,6 +17,8 @@ export function createTxnFromData(
       return createAcfgTxn(txnData as TxnData.AssetConfigTxnData, genesisID, genesisHash);
     case algosdk.TransactionType.afrz:
       return createAfrzTxn(txnData as TxnData.AssetFreezeTxnData, genesisID, genesisHash);
+    case algosdk.TransactionType.keyreg:
+      return createKeyRegTxn(txnData as TxnData.KeyRegTxnData, genesisID, genesisHash);
     default:
       throw Error('Unsupported transaction type');
   }
@@ -187,6 +189,46 @@ function createAfrzTxn(
 
   if (afrzTxnData.lx) {
     txn.addLease((new TextEncoder).encode(afrzTxnData.lx));
+  }
+
+  return txn;
+}
+
+/** Creates an `Transaction` object that represents an Algorand key registration transaction */
+function createKeyRegTxn(
+  keyRegTxnData: TxnData.KeyRegTxnData,
+  genesisID: string,
+  genesisHash: string
+) {
+  let keyRegData = keyRegTxnData.nonpart
+    ? { nonParticipation: true } // Activating "nonparticipation"
+    : {
+      voteKey: keyRegTxnData.votekey || undefined,
+      selectionKey: keyRegTxnData.selkey || undefined,
+      stateProofKey: keyRegTxnData.sprfkey || undefined,
+      voteFirst: keyRegTxnData.votefst || undefined,
+      voteLast: keyRegTxnData.votelst || undefined,
+      voteKeyDilution: keyRegTxnData.votekd || undefined,
+      nonParticipation: keyRegTxnData.nonpart, // false or unset
+    };
+
+  const txn = algosdk.makeKeyRegistrationTxnWithSuggestedParamsFromObject({
+    ...keyRegData,
+    from: keyRegTxnData.snd,
+    note: encodeTransactionNote(keyRegTxnData.note),
+    rekeyTo: keyRegTxnData.rekey || undefined,
+    suggestedParams: {
+      fee: algosdk.algosToMicroalgos(keyRegTxnData.fee),
+      flatFee: true,
+      firstRound: keyRegTxnData.fv,
+      lastRound: keyRegTxnData.lv,
+      genesisHash,
+      genesisID,
+    }
+  });
+
+  if (keyRegTxnData.lx) {
+    txn.addLease((new TextEncoder).encode(keyRegTxnData.lx));
   }
 
   return txn;

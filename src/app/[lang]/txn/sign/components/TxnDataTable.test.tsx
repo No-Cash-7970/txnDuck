@@ -432,4 +432,93 @@ describe('Transaction Data Table Component', () => {
 
   });
 
+  describe('Key Registration Transaction', () => {
+
+    it('displays key registration transaction data for marking "online"', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'keyreg',
+          votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+          selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+          // eslint-disable-next-line max-len
+          sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+          votefst: 6000000,
+          votelst: 6100000,
+          votekd: 1730,
+          nonpart: false,
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.keyreg_on')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.votekey.label')).toBeInTheDocument();
+      expect(screen.getByText('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.selkey.label')).toBeInTheDocument();
+      expect(screen.getByText('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.sprfkey.label')).toBeInTheDocument();
+      expect(screen.getByText(
+        'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
+      )).toBeInTheDocument();
+
+      expect(screen.getByText('fields.votefst.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.votelst.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.votekd.label')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
+    });
+
+    it('displays key registration transaction data for marking "offline"', async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'keyreg',
+          votekey: '',
+          selkey: '',
+          sprfkey: '',
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.keyreg_off')).toBeInTheDocument();
+      expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.sprfkey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votefst.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votelst.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votekd.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
+    });
+
+    it('displays key registration transaction data for marking "nonparticipating"',
+    async () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'keyreg',
+          nonpart: true,
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.keyreg_nonpart')).toBeInTheDocument();
+      expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.sprfkey.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votefst.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votelst.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.votekd.label')).not.toBeInTheDocument();
+
+      expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.nonpart.is_nonpart')).toBeInTheDocument();
+    });
+
+  });
+
 });

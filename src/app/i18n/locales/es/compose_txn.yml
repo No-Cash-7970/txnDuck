@@ -18,6 +18,9 @@ fields:
       afrz: Congelación del activo
       appl: Aplicación
       keyreg: Registro de la llave
+      keyreg_on: Registro de la llave (en línea)
+      keyreg_off: Registro de la llave (sin conexión)
+      keyreg_nonpart: Registro de la llave (no participación)
   snd: # Sender
     label: Remitente
     placeholder: Dirección del remitente
@@ -121,3 +124,21 @@ fields:
     label: ¿Debería congelar el objetivo?
     is_frozen: Sí
     is_not_frozen: No
+  # Fields for key registration type
+  votekey: # Voting key
+    label: Llave de votación
+    placeholder: Llave de votación
+  selkey: # Selection key
+    label: Llave de selección
+    placeholder: Llave de selección
+  sprfkey: # State proof key
+    label: Llave de prueba de estado
+    placeholder: Llave de prueba de estado
+  votefst: # First voting round
+    label: Primera ronda de votaciones
+  votelst: # Last voting round
+    label: Última ronda de votaciones
+  votekd: # Voting key dilution
+    label: Dilución de la llave de voto
+  nonpart: # Nonparticipation
+    label: No participación

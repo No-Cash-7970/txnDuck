@@ -272,6 +272,130 @@ describe('Transaction Data Processor', () => {
       expect(txn.freezeState).toBe(true);
     });
 
+    it('returns `Transaction` object with given data for a key registration (online) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.keyreg,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+          selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+          // eslint-disable-next-line max-len
+          sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+          votefst: 6000000,
+          votelst: 6100000,
+          votekd: 1730,
+          nonpart: false,
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.keyreg);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.voteKey.toString('base64')).toBe('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
+      expect(txn.selectionKey.toString('base64'))
+        .toBe('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=');
+      expect(txn.stateProofKey.toString('base64')).toBe(
+        'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
+      );
+      expect(txn.voteFirst).toBe(6000000);
+      expect(txn.voteLast).toBe(6100000);
+      expect(txn.voteKeyDilution).toBe(1730);
+      expect(txn.nonParticipation).toBe(false);
+    });
+
+    it('returns `Transaction` object with given data for a key registration (offline) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.keyreg,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          votekey: '',
+          selkey: '',
+          // eslint-disable-next-line max-len
+          sprfkey: '',
+          nonpart: false,
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.keyreg);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.voteKey).toBeUndefined();
+      expect(txn.selectionKey).toBeUndefined();
+      expect(txn.stateProofKey).toBeUndefined();
+      expect(txn.voteFirst).toBeUndefined();
+      expect(txn.voteLast).toBeUndefined();
+      expect(txn.voteKeyDilution).toBeUndefined();
+      expect(txn.nonParticipation).toBe(false);
+    });
+
+    it('returns `Transaction` object with given data for a key registration (nonparticipating)'
+    +' transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.keyreg,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          votekey: '',
+          selkey: '',
+          // eslint-disable-next-line max-len
+          sprfkey: '',
+          nonpart: true,
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.keyreg);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.voteKey).toBeUndefined();
+      expect(txn.selectionKey).toBeUndefined();
+      expect(txn.stateProofKey).toBeUndefined();
+      expect(txn.voteFirst).toBeUndefined();
+      expect(txn.voteLast).toBeUndefined();
+      expect(txn.voteKeyDilution).toBeUndefined();
+      expect(txn.nonParticipation).toBe(true);
+    });
+
   });
 });
 

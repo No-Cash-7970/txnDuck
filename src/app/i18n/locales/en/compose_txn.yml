@@ -18,6 +18,9 @@ fields:
       afrz: Asset freeze
       appl: Application
       keyreg: Key registration
+      keyreg_on: Key registration (online)
+      keyreg_off: Key registration (offline)
+      keyreg_nonpart: Key registration (nonparticipation)
   snd: # Sender
     label: Sender
     placeholder: Sender address
@@ -121,3 +124,21 @@ fields:
     label: Freeze asset?
     is_frozen: Yes
     is_not_frozen: No
+  # Fields for key registration type
+  votekey: # Voting key
+    label: Voting key
+    placeholder: Voting key
+  selkey: # Selection key
+    label: Selection key
+    placeholder: Selection key
+  sprfkey: # State proof key
+    label: State proof key
+    placeholder: State proof key
+  votefst: # First voting round
+    label: First voting round
+  votelst: # Last voting round
+    label: Last voting round
+  votekd: # Voting key dilution
+    label: Voting key dilution
+  nonpart: # Nonparticipation
+    label: Nonparticipation

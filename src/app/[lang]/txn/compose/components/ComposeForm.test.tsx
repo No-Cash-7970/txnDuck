@@ -124,6 +124,29 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
   });
 
+  it('has fields for payment transaction type if "Key Registration" transaction type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.sprfkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votefst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votelst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votekd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
+
+    expect(screen.getByText('fields.votekey.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.selkey.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.sprfkey.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.votefst.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.votelst.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.votekd.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
+  });
+
   it('has "transaction template" button', () => {
     render(<ComposeForm />);
     expect(screen.getByText('txn_template_btn')).toHaveClass('btn-disabled');
@@ -342,6 +365,59 @@ describe('Compose Form Component', () => {
         faid: 123456789,
         fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         afrz: true,
+      }
+    });
+  });
+
+  it('can store submitted *key registration* transaction data', async () => {
+    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
+    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
+      'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.type(screen.getByLabelText(/fields.votekey.label/),
+      'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo='
+    );
+    await userEvent.type(screen.getByLabelText(/fields.selkey.label/),
+      'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk='
+    );
+    await userEvent.type(screen.getByLabelText(/fields.sprfkey.label/),
+      'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
+    );
+    await userEvent.type(screen.getByLabelText(/fields.votefst.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.votelst.label/), '6100000');
+    await userEvent.type(screen.getByLabelText(/fields.votekd.label/), '1730');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'keyreg',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+        selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+        // eslint-disable-next-line max-len
+        sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+        votefst: 6000000,
+        votelst: 6100000,
+        votekd: 1730,
+        nonpart: false,
       }
     });
   });

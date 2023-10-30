@@ -24,7 +24,7 @@ export function TxnType({ t }: { t: TFunction }) {
         { value: TransactionType.acfg, text: t('fields.type.options.acfg') },
         { value: TransactionType.afrz, text: t('fields.type.options.afrz') },
         // { value: TransactionType.appl, text: t('fields.type.options.appl') },
-        // { value: TransactionType.keyreg, text: t('fields.type.options.keyreg') },
+        { value: TransactionType.keyreg, text: t('fields.type.options.keyreg') },
       ]}
       value={txnType as string}
       onChange={(e) => setTxnType(e.target.value as TransactionType)}

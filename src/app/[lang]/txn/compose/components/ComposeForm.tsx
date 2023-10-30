@@ -12,6 +12,7 @@ import * as PaymentFields from './fields/PaymentFields';
 import * as AssetTransferFields from './fields/AssetTransferFields';
 import * as AssetConfigFields from './fields/AssetConfigFields';
 import * as AssetFreezeFields from './fields/AssetFreezeFields';
+import * as KeyRegFields from './fields/KeyRegFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
@@ -65,6 +66,15 @@ export default function ComposeForm({ lng }: Props) {
         <AssetFreezeFields.Freeze t={t} />
       </>}
 
+      {txnType === TransactionType.keyreg && <>
+        <KeyRegFields.VoteKey t={t} />
+        <KeyRegFields.SelectionKey t={t} />
+        <KeyRegFields.StateProofKey t={t} />
+        <KeyRegFields.FirstVoteRound t={t} />
+        <KeyRegFields.LastVoteRound t={t} />
+        <KeyRegFields.KeyDilution t={t} />
+      </>}
+
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
 
@@ -77,6 +87,8 @@ export default function ComposeForm({ lng }: Props) {
       </>}
 
       <div>
+        {txnType === TransactionType.keyreg && <KeyRegFields.Nonparticipation t={t} />}
+
         <GeneralFields.FirstValid t={t} />
         <GeneralFields.LastValid t={t} />
         <GeneralFields.Lease t={t} />

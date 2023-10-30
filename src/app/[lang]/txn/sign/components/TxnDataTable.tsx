@@ -4,6 +4,7 @@ import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
 import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
+import { useMemo } from 'react';
 
 type Props = {
   /** Language */
@@ -20,7 +21,9 @@ export default function TxnDataTable({ lng }: Props) {
    *
    * @returns Part of the i18n translation key for the transaction type
    */
-  const getTxnTypeKeyPart = (type?: TxnData.BaseTxnData['type']): string => {
+  const txnTypeKeyPart = useMemo((): string => {
+    const type = txnData?.type;
+
     if (type === TransactionType.acfg) {
       if (!((txnData as TxnData.AssetConfigTxnData).caid)) return 'acfg_create';
 
@@ -35,15 +38,31 @@ export default function TxnDataTable({ lng }: Props) {
       return 'acfg_reconfig';
     }
 
+    if (type === TransactionType.keyreg) {
+      if ((txnData as TxnData.KeyRegTxnData).nonpart) return 'keyreg_nonpart';
+
+      if ((txnData as TxnData.KeyRegTxnData).votekey
+        || (txnData as TxnData.KeyRegTxnData).selkey
+        || (txnData as TxnData.KeyRegTxnData).sprfkey
+        || (txnData as TxnData.KeyRegTxnData).votefst
+        || (txnData as TxnData.KeyRegTxnData).votelst
+        || (txnData as TxnData.KeyRegTxnData).votekd
+      ) {
+        return 'keyreg_on';
+      }
+
+      return 'keyreg_off';
+    }
+
     return `${type}` ?? '';
-  };
+  }, [txnData]);
 
   return (
     <table className='table'>
       <tbody>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.type.label')}</th>
-          <td>{t('fields.type.options.' + getTxnTypeKeyPart(txnData?.type))}</td>
+          <td>{t(`fields.type.options.${txnTypeKeyPart}`)}</td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.snd.label')}</th>
@@ -159,14 +178,42 @@ export default function TxnDataTable({ lng }: Props) {
           </tr>
         </>}
 
+        {txnData?.type === TransactionType.keyreg && txnTypeKeyPart === 'keyreg_on' &&
+        <>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.votekey.label')}</th>
+            <td className='break-all'>{(txnData as TxnData.KeyRegTxnData).votekey}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.selkey.label')}</th>
+            <td className='break-all'>{(txnData as TxnData.KeyRegTxnData).selkey}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.sprfkey.label')}</th>
+            <td className='break-all'>{(txnData as TxnData.KeyRegTxnData).sprfkey}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.votefst.label')}</th>
+            <td>{t('number_value', {value: (txnData as TxnData.KeyRegTxnData).votefst})}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.votelst.label')}</th>
+            <td>{t('number_value', {value: (txnData as TxnData.KeyRegTxnData).votelst})}</td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.votekd.label')}</th>
+            <td>{t('number_value', {value: (txnData as TxnData.KeyRegTxnData).votekd})}</td>
+          </tr>
+        </>}
+
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
-            <td>
-              {t('fields.fee.in_algos', {
-                count: (txnData as TxnData.PaymentTxnData)?.fee,
-                formatParams: { count: { maximumFractionDigits: 6 } }
-              })}
-            </td>
+          <td>
+            {t('fields.fee.in_algos', {
+              count: (txnData as TxnData.PaymentTxnData)?.fee,
+              formatParams: { count: { maximumFractionDigits: 6 } }
+            })}
+          </td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.note.label')}</th>
@@ -215,6 +262,18 @@ export default function TxnDataTable({ lng }: Props) {
           </>}
 
         </>}
+
+        {txnData?.type === TransactionType.keyreg && txnTypeKeyPart === 'keyreg_nonpart' &&
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.nonpart.label')}</th>
+            <td>
+              {(txnData as TxnData.KeyRegTxnData).nonpart
+                ? <b>{t('fields.nonpart.is_nonpart')}</b>
+                : t('fields.nonpart.is_not_nonpart')
+              }
+            </td>
+          </tr>
+        }
 
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fv.label')}</th>
