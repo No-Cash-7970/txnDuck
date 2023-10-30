@@ -34,7 +34,6 @@ export function UnitName({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       value={unitName ||''}
       onChange={(e) => setUnitName(e.target.value)}
-      inputMode='numeric'
     />
   );
 }
@@ -51,7 +50,6 @@ export function AssetName({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-sm'
       value={aparAn ||''}
       onChange={(e) => setAparAn(e.target.value)}
-      inputMode='numeric'
     />
   );
 }
@@ -71,7 +69,6 @@ export function Total({ t }: { t: TFunction }) {
       step={1}
       value={`${total || ''}`}
       onChange={(e) => setTotal(e.target.value || '')}
-      inputMode='numeric'
     />
   );
 }

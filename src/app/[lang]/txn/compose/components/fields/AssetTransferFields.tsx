@@ -70,7 +70,6 @@ export function Amount({ t }: { t: TFunction }) {
       step={1}
       value={`${aamt || ''}`}
       onChange={(e) => setAamt(e.target.value || '')}
-      inputMode='numeric'
     />
   );
 }
