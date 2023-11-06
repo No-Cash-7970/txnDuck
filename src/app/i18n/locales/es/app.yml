@@ -2,6 +2,8 @@
 
 site_name: txnPato
 site_name_formatted: txn<1>Pato</1>
+page_title: "{{- page}} | {{- site}}" # Title metadata format for each page except the home page
+home_page_title: "{{- site}}: {{- slogan}}" # Title metadata format for the home page
 description:
   short: Generador de transacciones de Algorand
   long: Una herramienta para crear y enviar transacciones de Algorand

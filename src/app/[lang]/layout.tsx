@@ -30,10 +30,7 @@ export async function generateMetadata(
   if (process.env.BASE_URL) metadataBase = `https://${process.env.BASE_URL}`;
 
   return {
-    title: {
-      template: `%s | ${t('site_name')}`,
-      default: `${t('site_name')}: ${t('description.short')}`,
-    },
+    title: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
     description: t('description.long'),
     metadataBase: new URL(metadataBase),
     alternates: generateLangAltsMetadata(),

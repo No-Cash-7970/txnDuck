@@ -2,6 +2,8 @@
 
 site_name: txnDuck
 site_name_formatted: txn<1>Duck</1>
+page_title: "{{- page}} | {{- site}}" # Title metadata format for each page except the home page
+home_page_title: "{{- site}}: {{- slogan}}" # Title metadata format for the home page
 description:
   short: Algorand Transaction Builder
   long: A tool for creating and sending Algorand transactions
