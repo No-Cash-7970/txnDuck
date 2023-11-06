@@ -115,6 +115,7 @@ export function Url({ t }: { t: TFunction }) {
   const caid = useAtomValue(txnDataAtoms.caid);
   return (!caid &&
     <TextField label={t('fields.apar_au.label')}
+      type='url'
       name='apar_au'
       id='apar_au-field'
       inputInsideLabel={false}

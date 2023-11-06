@@ -56,6 +56,7 @@ interface SideLabelProp {
 export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
   defaultValue?: string | number;
   value?: string | number;
+  type?: 'text'|'email'|'password'|'tel'|'url'
 
   /** Placeholder text for the input */
   placeholder?: string;
@@ -91,7 +92,7 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
 }
 
 /** Properties for the SelectField component */
-export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onChange'> {
+export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'type'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   /** List of options available to select. The `value` of each option should be unique */
@@ -104,7 +105,7 @@ export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onC
 }
 
 /** Properties for the TextAreaField component */
-export interface TextAreaFieldProps extends  Omit<TextFieldProps, 'onChange'> {
+export interface TextAreaFieldProps extends  Omit<TextFieldProps, 'onChange'|'type'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
 }

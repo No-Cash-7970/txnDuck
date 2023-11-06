@@ -21,6 +21,7 @@ export default function TextField({
   value = undefined,
   onChange = undefined,
   inputMode = undefined,
+  type = undefined,
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -33,7 +34,7 @@ export default function TextField({
           {(!beforeSideLabel && !afterSideLabel) &&
             <input
               className={`input-bordered input ${inputClass}`}
-              type='text'
+              type={type ?? 'text'}
               id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
@@ -56,7 +57,7 @@ export default function TextField({
               }
               <input
                 className={`input-bordered input join-item ${inputClass}`}
-                type='text'
+                type={type ?? 'text'}
                 id={id || undefined}
                 required={required}
                 placeholder={placeholder || undefined}
@@ -82,7 +83,7 @@ export default function TextField({
         {(!beforeSideLabel && !afterSideLabel) &&
           <input
             className={`input-bordered input ${inputClass}`}
-            type='text'
+            type={type ?? 'text'}
             id={id || undefined}
             required={required}
             placeholder={placeholder || undefined}
@@ -105,7 +106,7 @@ export default function TextField({
             }
             <input
               className={`input-bordered input join-item ${inputClass}`}
-              type='text'
+              type={type ?? 'text'}
               id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}
