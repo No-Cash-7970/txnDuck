@@ -104,9 +104,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
     // Restore asset freeze transaction data, if applicable
     if (txnData.type === TransactionType.afrz) {
       jotaiStore.set(TxnData.txnDataAtoms.faid, (txnData as TxnData.AssetFreezeTxnData).faid);
-      jotaiStore.set(TxnData.txnDataAtoms.fadd,
-        (txnData as TxnData.AssetFreezeTxnData).fadd || ''
-      );
+      jotaiStore.set(TxnData.txnDataAtoms.fadd, (txnData as TxnData.AssetFreezeTxnData).fadd);
       jotaiStore.set(TxnData.txnDataAtoms.afrz, (txnData as TxnData.AssetFreezeTxnData).afrz);
     }
     // Restore key registration transaction data, if applicable
@@ -118,6 +116,23 @@ export default function ComposeSubmitButton({ lng }: Props) {
       jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData).votelst);
       jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData).votekd);
       jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData).nonpart);
+    }
+    // Restore application call transaction data, if applicable
+    if (txnData.type === TransactionType.appl) {
+      jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData).apid);
+      jotaiStore.set(TxnData.txnDataAtoms.apan, (txnData as TxnData.AppCallTxnData).apan);
+      jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData).apap || '');
+      jotaiStore.set(TxnData.txnDataAtoms.apsu, (txnData as TxnData.AppCallTxnData).apsu || '');
+      jotaiStore.set(TxnData.txnDataAtoms.apgs_nui, (txnData as TxnData.AppCallTxnData).apgs_nui);
+      jotaiStore.set(TxnData.txnDataAtoms.apgs_nbs, (txnData as TxnData.AppCallTxnData).apgs_nbs);
+      jotaiStore.set(TxnData.txnDataAtoms.apls_nui, (txnData as TxnData.AppCallTxnData).apls_nui);
+      jotaiStore.set(TxnData.txnDataAtoms.apls_nbs, (txnData as TxnData.AppCallTxnData).apls_nbs);
+      jotaiStore.set(TxnData.txnDataAtoms.apep, (txnData as TxnData.AppCallTxnData).apep);
+      jotaiStore.set(TxnData.apaaListAtom, (txnData as TxnData.AppCallTxnData).apaa);
+      jotaiStore.set(TxnData.apatListAtom, (txnData as TxnData.AppCallTxnData).apat);
+      jotaiStore.set(TxnData.apfaListAtom, (txnData as TxnData.AppCallTxnData).apfa);
+      jotaiStore.set(TxnData.apasListAtom, (txnData as TxnData.AppCallTxnData).apas);
+      jotaiStore.set(TxnData.apbxListAtom, (txnData as TxnData.AppCallTxnData).apbx);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
@@ -196,6 +211,26 @@ export default function ComposeSubmitButton({ lng }: Props) {
         votelst: jotaiStore.get(TxnData.txnDataAtoms.votelst),
         votekd: jotaiStore.get(TxnData.txnDataAtoms.votekd),
         nonpart: jotaiStore.get(TxnData.txnDataAtoms.nonpart),
+      };
+    }
+
+    // Gather application call transaction data
+    if (txnType === TransactionType.appl) {
+      specificTxnData = {
+        apid: jotaiStore.get(TxnData.txnDataAtoms.apid),
+        apan: jotaiStore.get(TxnData.txnDataAtoms.apan),
+        apap: jotaiStore.get(TxnData.txnDataAtoms.apap),
+        apsu: jotaiStore.get(TxnData.txnDataAtoms.apsu),
+        apgs_nui: jotaiStore.get(TxnData.txnDataAtoms.apgs_nui),
+        apgs_nbs: jotaiStore.get(TxnData.txnDataAtoms.apgs_nbs),
+        apls_nui: jotaiStore.get(TxnData.txnDataAtoms.apls_nui),
+        apls_nbs: jotaiStore.get(TxnData.txnDataAtoms.apls_nbs),
+        apep: jotaiStore.get(TxnData.txnDataAtoms.apep),
+        apaa: jotaiStore.get(TxnData.apaaListAtom),
+        apat: jotaiStore.get(TxnData.apatListAtom),
+        apfa: jotaiStore.get(TxnData.apfaListAtom),
+        apas: jotaiStore.get(TxnData.apasListAtom),
+        apbx: jotaiStore.get(TxnData.apbxListAtom),
       };
     }
 

@@ -53,7 +53,7 @@ describe('Transaction Data Table Component', () => {
       .toBeInTheDocument();
   });
 
-  it('displays "none" when there is no note', async () => {
+  it('displays "none" when there is no note', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       gen: '',
       gh: '',
@@ -67,7 +67,7 @@ describe('Transaction Data Table Component', () => {
     expect(screen.getByText('none')).toBeInTheDocument();
   });
 
-  it('displays "none" when there is no lease', async () => {
+  it('displays "none" when there is no lease', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       gen: '',
       gh: '',
@@ -81,7 +81,7 @@ describe('Transaction Data Table Component', () => {
     expect(screen.getByText('none')).toBeInTheDocument();
   });
 
-  it('displays "none" when there is no rekey address', async () => {
+  it('displays "none" when there is no rekey address', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       gen: '',
       gh: '',
@@ -97,7 +97,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Payment Transaction', () => {
 
-    it('displays payment transaction data', async () => {
+    it('displays payment transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -122,7 +122,7 @@ describe('Transaction Data Table Component', () => {
         .toBeInTheDocument();
     });
 
-    it('displays "none" when there is no close-to address', async () => {
+    it('displays "none" when there is no close-to address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -144,7 +144,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Asset Transfer Transaction', () => {
 
-    it('displays asset transfer transaction data', async () => {
+    it('displays asset transfer transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -177,7 +177,7 @@ describe('Transaction Data Table Component', () => {
         .toBeInTheDocument();
     });
 
-    it('displays "none" when there is no clawback target address', async () => {
+    it('displays "none" when there is no clawback target address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -197,7 +197,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('none')).toBeInTheDocument();
     });
 
-    it('displays "none" when there is no close-to address', async () => {
+    it('displays "none" when there is no close-to address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -221,7 +221,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Asset Configuration Transaction', () => {
 
-    it('displays asset configuration transaction data for asset creation', async () => {
+    it('displays asset configuration transaction data for asset creation', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -283,7 +283,7 @@ describe('Transaction Data Table Component', () => {
         .toBeInTheDocument();
     });
 
-    it('displays asset configuration transaction data for asset reconfiguration', async () => {
+    it('displays asset configuration transaction data for asset reconfiguration', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -333,7 +333,7 @@ describe('Transaction Data Table Component', () => {
         .toBeInTheDocument();
     });
 
-    it('displays asset configuration transaction data for asset deletion', async () => {
+    it('displays asset configuration transaction data for asset deletion', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -377,7 +377,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getAllByText('none')).toHaveLength(4);
     });
 
-    it('displays "none" when there is no metadata hash', async () => {
+    it('displays "none" when there is no metadata hash', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -407,7 +407,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Asset Freeze Transaction', () => {
 
-    it('displays asset freeze transaction data', async () => {
+    it('displays asset freeze transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -434,7 +434,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Key Registration Transaction', () => {
 
-    it('displays key registration transaction data for marking "online"', async () => {
+    it('displays key registration transaction data for marking "online"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -472,7 +472,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
     });
 
-    it('displays key registration transaction data for marking "offline"', async () => {
+    it('displays key registration transaction data for marking "offline"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -495,8 +495,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
     });
 
-    it('displays key registration transaction data for marking "nonparticipating"',
-    async () => {
+    it('displays key registration transaction data for marking "nonparticipating"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         gen: '',
         gh: '',
@@ -517,6 +516,277 @@ describe('Transaction Data Table Component', () => {
 
       expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
       expect(screen.getByText('fields.nonpart.is_nonpart')).toBeInTheDocument();
+    });
+
+  });
+
+  describe('Application Call Transaction', () => {
+
+    it('displays application call transaction data for application creation', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apan: 0,
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apgs_nui: 1,
+          apgs_nbs: 2,
+          apls_nui: 3,
+          apls_nbs: 4,
+          apep: 1,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_create')).toBeInTheDocument();
+      expect(screen.queryByText('fields.apid.label')).not.toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.no_op')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apap.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apsu.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apgs_nui.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apgs_nbs.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apls_nui.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apls_nbs.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apep.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application update', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 4,
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_update')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.update')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apap.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apsu.label')).toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application deletion', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 5,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_delete')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.delete')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application opt-in', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 1,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_opt_in')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.opt_in')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application close-out', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 2,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_close_out')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.close_out')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application clear-state', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 3,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_clear')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.clear')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    });
+
+    it('displays application call transaction data for application no-op call', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        gen: '',
+        gh: '',
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 0,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 99999999, n: 'Boxy box' }],
+        }
+      }));
+      render(<TxnDataTable />);
+
+      expect(screen.getByText('fields.type.options.appl_no_op')).toBeInTheDocument();
+      expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+
+      expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.apan.options.no_op')).toBeInTheDocument();
+
+      expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
     });
 
   });

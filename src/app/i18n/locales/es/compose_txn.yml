@@ -17,6 +17,13 @@ fields:
       acfg_destroy: Configuración del activo (destruir)
       afrz: Congelación del activo
       appl: Aplicación
+      appl_create: Aplicación (crear)
+      appl_no_op: Aplicación call (NoOp)
+      appl_opt_in: Aplicación (optar)
+      appl_close_out: Aplicación (cerrar)
+      appl_clear: Aplicación (despejar el estado)
+      appl_update: Aplicación (actualizar)
+      appl_delete: Aplicación (eliminación)
       keyreg: Registro de la llave
       keyreg_on: Registro de la llave (en línea)
       keyreg_off: Registro de la llave (sin conexión)
@@ -142,3 +149,80 @@ fields:
     label: Dilución de la llave de voto
   nonpart: # Nonparticipation
     label: No participación
+  # Fields for application call type
+  apan: # OnComplete
+    label: Tipo de acción de la aplicación
+    options:
+      no_op: Llamada (NoOp)
+      opt_in: Optar
+      close_out: Cerrar
+      clear: Despejar el estado
+      update: Actualizar
+      delete: Eliminar
+  apid: # Application ID
+    label: ID de aplicación
+  apap: # Approval program
+    label: Programa de aprobación
+    placeholder: Introduzca el programa compilado de aprobación como texto base64
+  apsu: # Clear state program
+    label: Programa para despejar el estado
+    placeholder: Introduzca el programa compilado para despejar el estado como texto base64
+  apgs_nui: # Number of global ints
+    label: Número de enteros globales
+  apgs_nbs: # Number of global byte slices
+    label: Número de bytes globales
+  apls_nui: # Number of local ints
+    label: Número de enteros locales
+  apls_nbs: # Number of local byte slices
+    label: Número de bytes locales
+  apep: # Number of extra pages
+    label: Número de páginas adicionales
+  apaa: # Arguments
+    label: "Argumento #{{index}}"
+    placeholder: "Valor de argumento #{{index}}"
+    title: Argumento de aplicación
+    none: No argumento de aplicación
+    empty: Argumento vacío
+    add_btn: Añada un argumento
+    remove_btn: Elimine un argumento
+    no_abi_support: Las llamadas a métodos ABI no son compatibles…por ahora.
+  apat: # Account references
+    label: "Cuenta #{{index}}"
+    placeholder: "Dirección de cuenta #{{index}}"
+    title: Referencias de cuentas
+    none: No referencias de cuentas
+    add_btn: Añada una cuenta
+    remove_btn: Elimine una cuenta
+  apfa: # Application references
+    label: "Aplicación #{{index}}"
+    placeholder: "ID de aplicación #{{index}}"
+    title: Referencias de aplicación
+    none: No referencias de aplicación
+    add_btn: Añada una aplicación
+    remove_btn: Elimine una aplicación
+  apas: # Asset references
+    label: "Activo #{{index}}"
+    placeholder: "ID de activo #{{index}}"
+    title: Referencias de activo
+    none: No referencias de activo
+    add_btn: Añada un activo
+    remove_btn: Elimine un activo
+  apbx: # Box references
+    title: Referencias de caja
+    box_title: "Caja #{{index}}"
+    none: No referencias de caja
+    add_btn: Añada una caja
+    remove_btn: Elimine una caja
+  apbx_i: # Box application ID
+    label: "ID de aplicación para Caja #{{index}}"
+    placeholder: "ID de aplicación para Caja #{{index}}"
+    title: "ID de app: {{id}}"
+  apbx_n: # Box name
+    label: "Nombre de Caja #{{index}}"
+    placeholder: "Nombre de Caja #{{index}}"
+    title: "Nombre: <1>{{name}}</1>"
+  app_props_title: Propiedades de aplicación
+  global_state_title: Estado global
+  local_state_title: Estado local
+  extra_pages_title: Páginas adicionales
+  app_deps_title: Dependencias de la aplicación

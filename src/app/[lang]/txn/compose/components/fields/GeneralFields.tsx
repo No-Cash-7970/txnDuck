@@ -23,7 +23,7 @@ export function TxnType({ t }: { t: TFunction }) {
         { value: TransactionType.axfer, text: t('fields.type.options.axfer') },
         { value: TransactionType.acfg, text: t('fields.type.options.acfg') },
         { value: TransactionType.afrz, text: t('fields.type.options.afrz') },
-        // { value: TransactionType.appl, text: t('fields.type.options.appl') },
+        { value: TransactionType.appl, text: t('fields.type.options.appl') },
         { value: TransactionType.keyreg, text: t('fields.type.options.keyreg') },
       ]}
       value={txnType as string}
@@ -63,7 +63,7 @@ export function Fee({ t }: { t: TFunction }) {
       min={0.001}
       step={0.000001}
       helpMsg={t('fields.fee.help_msg', { count: 0.001 })}
-      value={fee !== undefined? fee : ''}
+      value={fee ?? ''}
       onChange={(e) => setFee(parseFloat(e.target.value))}
     />
   );
@@ -97,7 +97,7 @@ export function FirstValid({ t }: { t: TFunction }) {
       min={1}
       step={1}
       value={fv ||''}
-      onChange={(e) => setFv(parseInt(e.target.value))}
+      onChange={(e) => setFv(e.target.value === '' ? undefined : parseInt(e.target.value))}
     />
   );
 }
@@ -114,8 +114,8 @@ export function LastValid({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={1}
       step={1}
-      value={lv ||''}
-      onChange={(e) => setLv(parseInt(e.target.value))}
+      value={lv ?? ''}
+      onChange={(e) => setLv(e.target.value === '' ? undefined : parseInt(e.target.value))}
     />
   );
 }

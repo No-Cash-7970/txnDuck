@@ -13,6 +13,7 @@ import * as AssetTransferFields from './fields/AssetTransferFields';
 import * as AssetConfigFields from './fields/AssetConfigFields';
 import * as AssetFreezeFields from './fields/AssetFreezeFields';
 import * as KeyRegFields from './fields/KeyRegFields';
+import * as AppCallFields from './fields/AppCallFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
 
 type Props = {
@@ -73,6 +74,14 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.FirstVoteRound t={t} />
         <KeyRegFields.LastVoteRound t={t} />
         <KeyRegFields.KeyDilution t={t} />
+      </>}
+
+      {txnType === TransactionType.appl && <>
+        <AppCallFields.OnComplete t={t} />
+        <AppCallFields.AppId t={t} />
+        <AppCallFields.AppArgs t={t} />
+        <AppCallFields.AppProperties t={t} />
+        <AppCallFields.AppDependencies t={t} />
       </>}
 
       <GeneralFields.Fee t={t} />

@@ -17,6 +17,13 @@ fields:
       acfg_destroy: Asset configuration (destroy)
       afrz: Asset freeze
       appl: Application
+      appl_create: Application (creation)
+      appl_no_op: Application call (NoOp)
+      appl_opt_in: Application (opt-in)
+      appl_close_out: Application (close-out)
+      appl_clear: Application (clear state)
+      appl_update: Application (update)
+      appl_delete: Application (deletion)
       keyreg: Key registration
       keyreg_on: Key registration (online)
       keyreg_off: Key registration (offline)
@@ -142,3 +149,80 @@ fields:
     label: Voting key dilution
   nonpart: # Nonparticipation
     label: Nonparticipation
+  # Fields for application call type
+  apan: # OnComplete
+    label: Application action type
+    options:
+      no_op: Call (NoOp)
+      opt_in: Opt in
+      close_out: Close out
+      clear: Clear state
+      update: Update
+      delete: Delete
+  apid: # Application ID
+    label: Application ID
+  apap: # Approval program
+    label: Approval program
+    placeholder: Enter compiled approval program as base64 text
+  apsu: # Clear state program
+    label: Clear state program
+    placeholder: Enter compiled clear state program as base64 text
+  apgs_nui: # Number of global ints
+    label: Number of global integers
+  apgs_nbs: # Number of global byte slices
+    label: Number of global byte slices
+  apls_nui: # Number of local ints
+    label: Number of local integers
+  apls_nbs: # Number of local byte slices
+    label: Number of local byte slices
+  apep: # Number of extra pages
+    label: Number of extra pages
+  apaa: # Arguments
+    label: "Argument #{{index}}"
+    placeholder: "Argument #{{index}} value"
+    title: Application arguments
+    none: No application arguments
+    empty: Empty argument
+    add_btn: Add argument
+    remove_btn: Remove argument
+    no_abi_support: ABI method calls are not supported…for now.
+  apat: # Account references
+    label: "Account #{{index}}"
+    placeholder: "Account #{{index}} address"
+    title: Account references
+    none: No account references
+    add_btn: Add account
+    remove_btn: Remove account
+  apfa: # Application references
+    label: "Application #{{index}}"
+    placeholder: "Application #{{index}} ID"
+    title: Application references
+    none: No application references
+    add_btn: Add application
+    remove_btn: Remove application
+  apas: # Asset references
+    label: "Asset #{{index}}"
+    placeholder: "Asset #{{index}} ID"
+    title: Asset references
+    none: No asset references
+    add_btn: Add asset
+    remove_btn: Remove asset
+  apbx: # Box references
+    title: Box references
+    box_title: "Box #{{index}}"
+    none: No box references
+    add_btn: Add box
+    remove_btn: Remove box
+  apbx_i: # Box application ID
+    label: "Box #{{index}} application ID"
+    placeholder: "Box #{{index}} application ID"
+    title: "App ID: {{id}}"
+  apbx_n: # Box name
+    label: "Box #{{index}} name"
+    placeholder: "Box #{{index}} name"
+    title: "Name: <1>{{name}}</1>"
+  app_props_title: Application properties
+  global_state_title: Global state
+  local_state_title: Local state
+  extra_pages_title: Extra pages
+  app_deps_title: Application dependencies

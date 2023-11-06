@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { type Address, TransactionType, encodeAddress } from 'algosdk';
+import { type Address, TransactionType, encodeAddress, OnApplicationComplete } from 'algosdk';
 import * as tdp from './txn-data-processor';
 
 /* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
@@ -94,8 +94,8 @@ describe('Transaction Data Processor', () => {
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
-    it(
-    'returns `Transaction` object with given data for a asset configuration (creation) transaction',
+    it('returns `Transaction` object with given data for a asset configuration (creation)'
+    + ' transaction',
     () => {
       const txn = tdp.createTxnFromData(
         {
@@ -153,8 +153,8 @@ describe('Transaction Data Processor', () => {
       expect(txn.assetMetadataHash).toHaveLength(32);
     });
 
-    it(
-    'returns `Transaction` object with given data for a asset configuration (destroy) transaction',
+    it('returns `Transaction` object with given data for a asset configuration (destroy)'
+    + ' transaction',
     () => {
       const txn = tdp.createTxnFromData(
         {
@@ -394,6 +394,290 @@ describe('Transaction Data Processor', () => {
       expect(txn.voteLast).toBeUndefined();
       expect(txn.voteKeyDilution).toBeUndefined();
       expect(txn.nonParticipation).toBe(true);
+    });
+
+    it('returns `Transaction` object with given data for a application call (create) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apgs_nui: 1,
+          apgs_nbs: 2,
+          apls_nui: 3,
+          apls_nbs: 4,
+          apep: 1,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.appGlobalInts).toBe(1);
+      expect(txn.appGlobalByteSlices).toBe(2);
+      expect(txn.appLocalInts).toBe(3);
+      expect(txn.appLocalByteSlices).toBe(4);
+      expect(txn.extraPages).toBe(1);
+      expect(txn.appArgs).toHaveLength(3);
+      expect(txn.appAccounts).toHaveLength(1);
+      expect(txn.appForeignApps).toHaveLength(2);
+      expect(txn.appForeignAssets).toHaveLength(3);
+      expect(txn.boxes).toHaveLength(2);
+    });
+
+    it('returns `Transaction` object with given data for a application call (update) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.UpdateApplicationOC,
+          apid: 88888888,
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.UpdateApplicationOC);
+      expect(txn.appIndex).toBe(88888888);
+      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.appArgs).toHaveLength(3);
+      expect(txn.appAccounts).toHaveLength(1);
+      expect(txn.appForeignApps).toHaveLength(2);
+      expect(txn.appForeignAssets).toHaveLength(3);
+      expect(txn.boxes).toHaveLength(2);
+    });
+
+    it('returns `Transaction` object with given data for a application call (delete) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.DeleteApplicationOC,
+          apid: 88888888,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.DeleteApplicationOC);
+      expect(txn.appIndex).toBe(88888888);
+    });
+
+    it('returns `Transaction` object with given data for a application call (opt-in) transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.OptInOC,
+          apid: 88888888,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.OptInOC);
+      expect(txn.appIndex).toBe(88888888);
+    });
+
+    it('returns `Transaction` object with given data for a application call (close out)'
+    + ' transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.CloseOutOC,
+          apid: 88888888,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.CloseOutOC);
+      expect(txn.appIndex).toBe(88888888);
+    });
+
+    it('returns `Transaction` object with given data for a application call (clear state)'
+    +' transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.ClearStateOC,
+          apid: 88888888,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.ClearStateOC);
+      expect(txn.appIndex).toBe(88888888);
+      expect(txn.appArgs).toHaveLength(3);
+      expect(txn.appAccounts).toHaveLength(1);
+      expect(txn.appForeignApps).toHaveLength(2);
+      expect(txn.appForeignAssets).toHaveLength(3);
+      expect(txn.boxes).toHaveLength(2);
+    });
+
+    it('returns `Transaction` object with given data for a application call (no-op call)'
+    + ' transaction',
+    () => {
+      const txn = tdp.createTxnFromData(
+        {
+          type: TransactionType.appl,
+          snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+          note: 'Hello world',
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: OnApplicationComplete.NoOpOC,
+          apid: 88888888,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 88888888, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+        },
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txn.type).toBe(TransactionType.appl);
+
+      const noteText = (new TextDecoder).decode(txn.note);
+      expect(noteText).toBe('Hello world');
+
+      expect(txn.fee).toBe(1000);
+      expect(txn.firstRound).toBe(6000000);
+      expect(txn.lastRound).toBe(6001000);
+      expect(txn.lease).toHaveLength(32);
+      expect(txn.appOnComplete).toBe(OnApplicationComplete.NoOpOC);
+      expect(txn.appIndex).toBe(88888888);
     });
 
   });

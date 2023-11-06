@@ -1,8 +1,16 @@
 /** @file Collection of variables that contain the global state for transaction form data */
 
 import type { OnApplicationComplete, TransactionType } from 'algosdk';
-import { type PrimitiveAtom, atom } from 'jotai';
-import { atomWithStorage, createJSONStorage } from 'jotai/utils';
+import { atom } from 'jotai';
+import { atomWithStorage, createJSONStorage, splitAtom } from 'jotai/utils';
+
+/** Box reference */
+export type BoxRef = {
+  /** ID of the application that contains the box */
+  i: number|null,
+  /** Name of box to reference */
+  n: string,
+};
 
 /** Data common to all transaction types */
 export interface BaseTxnData {
@@ -53,27 +61,27 @@ export interface AssetConfigTxnData extends BaseTxnData {
   /** Asset ID */
   caid?: number;
   /** Unit name */
-  apar_un?: string;
+  apar_un: string;
   /** Asset name */
-  apar_an?: string;
+  apar_an: string;
   /** Total */
-  apar_t?: number|string;
+  apar_t: number|string; // String because the number could be larger than 2^53 - 1
   /** Number of decimals places */
   apar_dc?: number;
   /** Frozen by default? */
-  apar_df?: boolean;
+  apar_df: boolean;
   /** URL */
-  apar_au?: string;
+  apar_au: string;
   /** Manager address */
-  apar_m?: string;
+  apar_m: string;
   /** Freeze address */
-  apar_f?: string;
+  apar_f: string;
   /** Clawback address */
-  apar_c?: string;
+  apar_c: string;
   /** Reserve address */
-  apar_r?: string;
+  apar_r: string;
   /** Metadata hash */
-  apar_am?: string;
+  apar_am: string;
 }
 /** Data for a asset freeze transaction */
 export interface AssetFreezeTxnData extends BaseTxnData {
@@ -103,6 +111,40 @@ export interface KeyRegTxnData extends BaseTxnData {
   /** Nonparticipation */
   nonpart: boolean;
 }
+/** Data for a application call transaction */
+export interface AppCallTxnData extends BaseTxnData {
+  type: TransactionType.appl;
+  /** Application ID */
+  apid?: number;
+  /** OnComplete (Action type) */
+  apan: OnApplicationComplete;
+  /** Application arguments */
+  apaa: string[];
+
+  /** Approval program */
+  apap?: string;
+  /** Clear-state program */
+  apsu?: string;
+  /** Number of global integers */
+  apgs_nui?: number;
+  /** Number of global bytes slices */
+  apgs_nbs?: number;
+  /** Number of local integers */
+  apls_nui?: number;
+  /** Number of local bytes slices */
+  apls_nbs?: number;
+  /** Number of extra program pages */
+  apep?: number;
+
+  /** Foreign accounts */
+  apat: string[];
+  /** Foreign applications */
+  apfa: number[];
+  /** Foreign assets */
+  apas: number[];
+  /** Box references */
+  apbx: BoxRef[];
+}
 /** Data for the transaction being built */
 export interface TxnData {
   /** Genesis ID (retrieved from currently connected node) */
@@ -115,14 +157,8 @@ export interface TxnData {
     | AssetTransferTxnData
     | AssetConfigTxnData
     | AssetFreezeTxnData
-    | KeyRegTxnData; // TODO: Add other transaction types;
-};
-/** Box reference */
-type BoxRef = {
-  /** ID of the application that contains the box */
-  i: PrimitiveAtom<number>,
-  /** Name of box to reference */
-  n: PrimitiveAtom<string>,
+    | KeyRegTxnData
+    | AppCallTxnData;
 };
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
@@ -132,6 +168,17 @@ export const storedTxnDataAtom = atomWithStorage<TxnData|undefined>('txnData', u
 /** Signed transaction, as a Data URI string, that is stored locally */
 export const storedSignedTxnAtom =
   atomWithStorage<string|undefined>('signedTxn', undefined, storage);
+
+/** Application - Application arguments */
+export const apaaListAtom = atom<(string)[]>([]);
+/** Application dependencies - Foreign accounts */
+export const apatListAtom = atom<(string)[]>([]);
+/** Application dependencies - Foreign applications */
+export const apfaListAtom = atom<(number|null)[]>([]);
+/** Application dependencies - Foreign assets */
+export const apasListAtom = atom<(number|null)[]>([]);
+/** Application dependencies - Box references */
+export const apbxListAtom = atom<BoxRef[]>([]);
 
 /** Collection of Jotai atoms containing  */
 export const txnDataAtoms = {
@@ -225,18 +272,18 @@ export const txnDataAtoms = {
   /** Application - Application ID */
   apid: atom<number|undefined>(undefined),
   /** Application - OnComplete (Action type) */
-  apan: atom<OnApplicationComplete|undefined>(undefined),
-  /** Application - Application arguments */
-  apaa: atom<(string|number)[]>([]),
+  apan: atom<OnApplicationComplete>(0),
+  /** Application - Collection of atoms for application arguments */
+  apaa: splitAtom(apaaListAtom),
 
   /*
    * Application properties
    */
 
   /** Application properties - Approval program */
-  apap: atom<string|Uint8Array|undefined>(undefined),
+  apap: atom<string>(''),
   /** Application properties - Clear-state program */
-  apsu: atom<string|Uint8Array|undefined>(undefined),
+  apsu: atom<string>(''),
   /** Application properties - Number of global integers */
   apgs_nui: atom<number|undefined>(undefined),
   /** Application properties - Number of global bytes slices */
@@ -252,14 +299,14 @@ export const txnDataAtoms = {
    * Application dependencies
    */
 
-  /** Application dependencies - Foreign accounts */
-  apat: atom<string[]>([]),
-  /** Application dependencies - Foreign applications */
-  apfa: atom<number[]>([]),
-  /** Application dependencies - Foreign assets */
-  apas: atom<number[]>([]),
-  /** Application dependencies - Box references */
-  apbx: atom<BoxRef[]>([]),
+  /** Application dependencies - Collection of atoms for foreign accounts */
+  apat: splitAtom(apatListAtom),
+  /** Application dependencies - Collection of atoms for foreign applications */
+  apfa: splitAtom(apfaListAtom),
+  /** Application dependencies - Collection of atoms for foreign assets */
+  apas: splitAtom(apasListAtom),
+  /** Application dependencies - Collection of atoms for box references */
+  apbx: splitAtom(apbxListAtom),
 
   /*
    * Key Registration

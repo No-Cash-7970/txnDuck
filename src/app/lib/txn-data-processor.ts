@@ -1,5 +1,5 @@
 import * as algosdk from 'algosdk';
-import { encodeTransactionNote } from '@algorandfoundation/algokit-utils';
+import { encodeTransactionNote, getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 import type * as TxnData from '@/app/lib/txn-data';
 
 /** Creates an `Transaction` object that represents an Algorand transaction */
@@ -19,6 +19,8 @@ export function createTxnFromData(
       return createAfrzTxn(txnData as TxnData.AssetFreezeTxnData, genesisID, genesisHash);
     case algosdk.TransactionType.keyreg:
       return createKeyRegTxn(txnData as TxnData.KeyRegTxnData, genesisID, genesisHash);
+    case algosdk.TransactionType.appl:
+      return createApplTxn(txnData as TxnData.AppCallTxnData, genesisID, genesisHash);
     default:
       throw Error('Unsupported transaction type');
   }
@@ -200,7 +202,7 @@ function createKeyRegTxn(
   genesisID: string,
   genesisHash: string
 ) {
-  let keyRegData = keyRegTxnData.nonpart
+  const keyRegData = keyRegTxnData.nonpart
     ? { nonParticipation: true } // Activating "nonparticipation"
     : {
       voteKey: keyRegTxnData.votekey || undefined,
@@ -229,6 +231,52 @@ function createKeyRegTxn(
 
   if (keyRegTxnData.lx) {
     txn.addLease((new TextEncoder).encode(keyRegTxnData.lx));
+  }
+
+  return txn;
+}
+
+/** Creates an `Transaction` object that represents an Algorand application call transaction */
+function createApplTxn(
+  applTxnData: TxnData.AppCallTxnData,
+  genesisID: string,
+  genesisHash: string
+) {
+  const encoder = new TextEncoder;
+  const encodedAppArgs = getAppArgsForTransaction({
+    accounts: applTxnData.apat,
+    appArgs: applTxnData.apaa,
+    apps: applTxnData.apfa,
+    assets: applTxnData.apas,
+    boxes: applTxnData.apbx.map(box => ({ appId: box.i || 0, name: box.n })),
+  });
+
+  const txn = algosdk.makeApplicationCallTxnFromObject({
+    ...encodedAppArgs,
+    from: applTxnData.snd,
+    note: encodeTransactionNote(applTxnData.note),
+    rekeyTo: applTxnData.rekey || undefined,
+    appIndex: applTxnData.apid ?? 0,
+    onComplete: applTxnData.apan,
+    approvalProgram: encoder.encode(applTxnData.apap),
+    clearProgram: encoder.encode(applTxnData.apsu),
+    numGlobalInts: applTxnData.apgs_nui,
+    numGlobalByteSlices: applTxnData.apgs_nbs,
+    numLocalInts: applTxnData.apls_nui,
+    numLocalByteSlices: applTxnData.apls_nbs,
+    extraPages: applTxnData.apep,
+    suggestedParams: {
+      fee: algosdk.algosToMicroalgos(applTxnData.fee),
+      flatFee: true,
+      firstRound: applTxnData.fv,
+      lastRound: applTxnData.lv,
+      genesisHash,
+      genesisID,
+    },
+  });
+
+  if (applTxnData.lx) {
+    txn.addLease(encoder.encode(applTxnData.lx));
   }
 
   return txn;

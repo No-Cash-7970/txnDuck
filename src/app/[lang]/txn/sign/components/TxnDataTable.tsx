@@ -5,11 +5,21 @@ import * as TxnData from '@/app/lib/txn-data';
 import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
+import { Trans } from 'react-i18next';
 
 type Props = {
   /** Language */
   lng?: string
 };
+
+const appTypes = [
+  'no_op',
+  'opt_in',
+  'close_out',
+  'clear',
+  'update',
+  'delete'
+];
 
 export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
@@ -52,6 +62,12 @@ export default function TxnDataTable({ lng }: Props) {
       }
 
       return 'keyreg_off';
+    }
+
+    if (type === TransactionType.appl) {
+      if (!((txnData as TxnData.AppCallTxnData).apid)) return 'appl_create';
+
+      return 'appl_' + appTypes[(txnData as TxnData.AppCallTxnData).apan];
     }
 
     return `${type}` ?? '';
@@ -203,6 +219,136 @@ export default function TxnDataTable({ lng }: Props) {
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.votekd.label')}</th>
             <td>{t('number_value', {value: (txnData as TxnData.KeyRegTxnData).votekd})}</td>
+          </tr>
+        </>}
+
+        {txnData?.type === TransactionType.appl && <>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apan.label')}</th>
+            <td>{
+              t('fields.apan.options.' + appTypes[(txnData as TxnData.AppCallTxnData).apan])
+            }</td>
+          </tr>
+          { // If NOT an app creation transaction
+          (txnData as TxnData.AppCallTxnData).apid &&
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apid.label')}</th>
+            <td>{(txnData as TxnData.AppCallTxnData).apid}</td>
+          </tr>}
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apaa.title')}</th>
+            <td>
+              {!((txnData as TxnData.AppCallTxnData).apaa.length)
+                ? <i className='opacity-50'>{t('none')}</i>
+                : <ol className='m-0'>
+                  {(txnData as TxnData.AppCallTxnData).apaa.map((arg, i) => (
+                    <li key={`arg-${i}`}>
+                      {arg || <i className='opacity-50'>{t('fields.apaa.empty')}</i>}
+                    </li>
+                  ))}
+                </ol>
+              }
+            </td>
+          </tr>
+
+          {(txnTypeKeyPart === 'appl_create' || txnTypeKeyPart === 'appl_update') && <>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apap.label')}</th>
+              <td className='break-all'>{(txnData as TxnData.AppCallTxnData).apap}</td>
+            </tr>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apsu.label')}</th>
+              <td className='break-all'>{(txnData as TxnData.AppCallTxnData).apsu}</td>
+            </tr>
+          </>}
+
+          {txnTypeKeyPart === 'appl_create' && <>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apgs_nui.label')}</th>
+              <td>{(txnData as TxnData.AppCallTxnData).apgs_nui}</td>
+            </tr>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apgs_nbs.label')}</th>
+              <td>{(txnData as TxnData.AppCallTxnData).apgs_nbs}</td>
+            </tr>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apls_nui.label')}</th>
+              <td>{(txnData as TxnData.AppCallTxnData).apls_nui}</td>
+            </tr>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apls_nbs.label')}</th>
+              <td>{(txnData as TxnData.AppCallTxnData).apls_nbs}</td>
+            </tr>
+            <tr>
+              <th role='rowheader' className='align-top'>{t('fields.apep.label')}</th>
+              <td>{(txnData as TxnData.AppCallTxnData).apep}</td>
+            </tr>
+          </>}
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apat.title')}</th>
+            <td>
+              {!((txnData as TxnData.AppCallTxnData).apat.length)
+                ? <i className='opacity-50'>{t('none')}</i>
+                : <ul className='m-0'>
+                  {(txnData as TxnData.AppCallTxnData).apat.map((acct, i) => (
+                    <li className='break-all' key={`acct-${i}`}>{acct}</li>
+                  ))}
+                </ul>
+              }
+            </td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apfa.title')}</th>
+            <td>
+              {!((txnData as TxnData.AppCallTxnData).apfa.length)
+                ? <i className='opacity-50'>{t('none')}</i>
+                : <ul className='m-0'>
+                  {(txnData as TxnData.AppCallTxnData).apfa.map((app, i) => (
+                    <li key={`app-${i}`}>{app}</li>
+                  ))}
+                </ul>
+              }
+            </td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apas.title')}</th>
+            <td>
+              {!((txnData as TxnData.AppCallTxnData).apas.length)
+                ? <i className='opacity-50'>{t('none')}</i>
+                : <ul className='m-0'>
+                  {(txnData as TxnData.AppCallTxnData).apas.map((asset, i) => (
+                    <li key={`asset-${i}`}>{asset}</li>
+                  ))}
+                </ul>
+              }
+            </td>
+          </tr>
+          <tr>
+            <th role='rowheader' className='align-top'>{t('fields.apbx.title')}</th>
+            <td>
+              {!((txnData as TxnData.AppCallTxnData).apbx.length)
+                ? <i className='opacity-50'>{t('none')}</i>
+                : <ol className='m-0'>
+                  {(txnData as TxnData.AppCallTxnData).apbx.map((box, i) => (
+                    <li key={`box-${i}`}>
+                      <ul className='m-0'>
+                        <li className='m-0'>{t('fields.apbx_i.title', {id: box.i})}</li>
+                        <li className='m-0'>
+                          <Trans t={t} i18nKey='fields.apbx_n.title'
+                            values={{ name: box.n || t('none') }}
+                          >
+                            name:
+                            <span className={box.n ? '' : 'opacity-50 italic'}>
+                              box_name
+                            </span>
+                          </Trans>
+                        </li>
+                      </ul>
+                    </li>
+                  ))}
+                </ol>
+              }
+            </td>
           </tr>
         </>}
 

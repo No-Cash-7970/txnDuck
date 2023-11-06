@@ -147,6 +147,41 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
   });
 
+  it('has fields for payment transaction type if "Application Call" transaction type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.apan.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apid.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apat.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apfa.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apas.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apbx.title')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+
+    expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apap.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apsu.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apgs_nui.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apgs_nbs.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apls_nui.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apls_nbs.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apep.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+  });
+
   it('has "transaction template" button', () => {
     render(<ComposeForm />);
     expect(screen.getByText('txn_template_btn')).toHaveClass('btn-disabled');
@@ -421,6 +456,95 @@ describe('Compose Form Component', () => {
       }
     });
   });
+
+  it('can store submitted *application call* transaction data', async () => {
+    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
+      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
+    );
+    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
+    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
+    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+
+    await userEvent.type(screen.getByLabelText(/fields.apap.label/), 'BYEB');
+    await userEvent.type(screen.getByLabelText(/fields.apsu.label/), 'BYEB');
+    await userEvent.type(screen.getByLabelText(/fields.apgs_nui.label/), '1');
+    await userEvent.type(screen.getByLabelText(/fields.apgs_nbs.label/), '2');
+    await userEvent.type(screen.getByLabelText(/fields.apls_nui.label/), '3');
+    await userEvent.type(screen.getByLabelText(/fields.apls_nbs.label/), '4');
+    await userEvent.type(screen.getByLabelText(/fields.apep.label/), '1');
+
+    // Add and enter arguments
+    await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
+    await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
+    await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
+    const argInputs = screen.getAllByLabelText(/fields.apaa.label/);
+    await userEvent.type(argInputs[0], 'foo');
+    await userEvent.type(argInputs[1], '42');
+
+    // Add and enter foreign accounts
+    await userEvent.click(screen.getByText(/fields.apat.add_btn/));
+    await userEvent.type(screen.getByLabelText(/fields.apat.label/),
+      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
+    );
+
+    // Add and enter foreign applications
+    await userEvent.click(screen.getByText(/fields.apfa.add_btn/));
+    await userEvent.click(screen.getByText(/fields.apfa.add_btn/));
+    const appInputs = screen.getAllByLabelText(/fields.apfa.label/);
+    await userEvent.type(appInputs[0], '11111111');
+    await userEvent.type(appInputs[1], '22222222');
+
+    // Add and enter foreign assets
+    await userEvent.click(screen.getByText(/fields.apas.add_btn/));
+    await userEvent.click(screen.getByText(/fields.apas.add_btn/));
+    await userEvent.click(screen.getByText(/fields.apas.add_btn/));
+    const assetInputs = screen.getAllByLabelText(/fields.apas.label/);
+    await userEvent.type(assetInputs[0], '33333333');
+    await userEvent.type(assetInputs[1], '44444444');
+    await userEvent.type(assetInputs[2], '55555555');
+
+    // Add and enter box information
+    await userEvent.click(screen.getByText(/fields.apbx.add_btn/));
+    await userEvent.type(screen.getByLabelText(/fields.apbx_i.label/), '99999999');
+    await userEvent.type(screen.getByLabelText(/fields.apbx_n.label/), 'Boxy box');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      gen: 'fooNet',
+      gh: 'Some genesis hash',
+      txn: {
+        type: 'appl',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apan: 0,
+        apap: 'BYEB',
+        apsu: 'BYEB',
+        apgs_nui: 1,
+        apgs_nbs: 2,
+        apls_nui: 3,
+        apls_nbs: 4,
+        apep: 1,
+        apaa: ['foo', '42', ''],
+        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+        apfa: [11111111, 22222222],
+        apas: [33333333, 44444444, 55555555],
+        apbx: [{i: 99999999, n: 'Boxy box' }],
+      }
+    });
+  }, 10000);
 
   it('can retrieve transaction data from session storage', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
