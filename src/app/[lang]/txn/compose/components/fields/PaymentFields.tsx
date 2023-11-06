@@ -37,8 +37,8 @@ export function Amount({ t }: { t: TFunction }) {
       afterSideLabel={t('algo_other')}
       min={0}
       step={0.000001}
-      value={amt !== undefined? amt : ''}
-      onChange={(e) => setAmt(e.target.value !== ''? parseFloat(e.target.value) : undefined)}
+      value={amt ?? ''}
+      onChange={(e) => setAmt(e.target.value !== '' ? parseFloat(e.target.value) : undefined)}
     />
   );
 }

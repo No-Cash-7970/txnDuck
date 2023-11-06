@@ -92,8 +92,10 @@ export function FirstVoteRound({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={1}
       step={1}
-      value={voteFst ||''}
-      onChange={(e) => setVoteFst(parseInt(e.target.value))}
+      value={voteFst ?? ''}
+      onChange={
+        (e) => setVoteFst(e.target.value === '' ? undefined : parseInt(e.target.value))
+      }
     />
   );
 }
@@ -116,8 +118,8 @@ export function LastVoteRound({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={1}
       step={1}
-      value={voteLst ||''}
-      onChange={(e) => setVoteLst(parseInt(e.target.value))}
+      value={voteLst ?? ''}
+      onChange={(e) => setVoteLst(e.target.value === '' ? undefined : parseInt(e.target.value))}
     />
   );
 }
@@ -140,8 +142,8 @@ export function KeyDilution({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={1}
       step={1}
-      value={voteKd ||''}
-      onChange={(e) => setVoteKd(parseInt(e.target.value))}
+      value={voteKd ?? ''}
+      onChange={(e) => setVoteKd(e.target.value === '' ? undefined : parseInt(e.target.value))}
     />
   );
 }

@@ -15,8 +15,8 @@ export function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
-      value={caid ||''}
-      onChange={(e) => setCaid(parseInt(e.target.value))}
+      value={caid ?? ''}
+      onChange={(e) => setCaid(e.target.value === '' ? undefined : parseInt(e.target.value))}
       inputMode='numeric'
     />
   );
@@ -32,7 +32,7 @@ export function UnitName({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_un.placeholder')}
       containerClass='mt-4 max-w-xs'
-      value={unitName ||''}
+      value={unitName}
       onChange={(e) => setUnitName(e.target.value)}
     />
   );
@@ -48,7 +48,7 @@ export function AssetName({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_an.placeholder')}
       containerClass='mt-4 max-w-sm'
-      value={aparAn ||''}
+      value={aparAn}
       onChange={(e) => setAparAn(e.target.value)}
     />
   );
@@ -67,8 +67,8 @@ export function Total({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={1}
       step={1}
-      value={`${total || ''}`}
-      onChange={(e) => setTotal(e.target.value || '')}
+      value={total}
+      onChange={(e) => setTotal(e.target.value === '' ? '' : parseInt(e.target.value))}
     />
   );
 }
@@ -86,8 +86,10 @@ export function DecimalPlaces({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={0}
       step={1}
-      value={`${decimalPlaces ?? ''}`}
-      onChange={(e) => setDecimalPlaces(parseInt(e.target.value))}
+      value={decimalPlaces ?? ''}
+      onChange={
+        (e) => setDecimalPlaces(e.target.value === '' ? undefined : parseInt(e.target.value))
+      }
     />
   );
 }

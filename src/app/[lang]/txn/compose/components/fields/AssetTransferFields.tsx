@@ -49,8 +49,8 @@ export function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
-      value={xaid ||''}
-      onChange={(e) => setXaid(parseInt(e.target.value))}
+      value={xaid ?? ''}
+      onChange={(e) => setXaid(e.target.value === '' ? undefined : parseInt(e.target.value))}
       inputMode='numeric'
     />
   );
@@ -68,8 +68,8 @@ export function Amount({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       min={0}
       step={1}
-      value={`${aamt || ''}`}
-      onChange={(e) => setAamt(e.target.value || '')}
+      value={aamt ?? ''}
+      onChange={(e) => setAamt(e.target.value === '' ? '' : parseInt(e.target.value))}
     />
   );
 }

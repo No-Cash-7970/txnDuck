@@ -15,8 +15,8 @@ export function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
-      value={assetId ||''}
-      onChange={(e) => setAssetId(parseInt(e.target.value))}
+      value={assetId ?? ''}
+      onChange={(e) => setAssetId(e.target.value === '' ? undefined : parseInt(e.target.value))}
       inputMode='numeric'
     />
   );
