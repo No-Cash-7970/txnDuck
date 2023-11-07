@@ -1,6 +1,12 @@
 /** Fields for the compose-transaction form that are for application call transaction */
 
-import { NumberField, TextField, SelectField, TextAreaField } from '@/app/[lang]/components/form';
+import {
+  NumberField,
+  TextField,
+  SelectField,
+  TextAreaField,
+  FieldGroup,
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
 import * as Icons from '@tabler/icons-react';
@@ -60,9 +66,7 @@ export function AppId({ t }: { t: TFunction }) {
 export function AppArgs({ t }: { t: TFunction }) {
   const [appArgs, dispatch] = useAtom(txnDataAtoms.apaa);
   return (
-    <section>
-      <h2>{t('fields.apaa.title')}</h2>
-
+    <FieldGroup headingLevel={2} heading={t('fields.apaa.title')}>
       <div className='alert alert-info text-start'>{t('fields.apaa.no_abi_support')}</div>
 
       {!appArgs.length && <p className='italic'>{t('fields.apaa.none')}</p>}
@@ -89,7 +93,7 @@ export function AppArgs({ t }: { t: TFunction }) {
           {t('fields.apaa.remove_btn')}
         </button>
       </div>
-    </section>
+    </FieldGroup>
   );
 }
 function AppArgInput({ t, argAtom, index }:
@@ -260,28 +264,24 @@ export function AppProperties({ t }: { t: TFunction }) {
       (onComplete === OnApplicationComplete.NoOpOC && !appId)
       || onComplete === OnApplicationComplete.UpdateApplicationOC // updating app
     ) &&
-    <section>
-      <h2>{t('fields.app_props_title')}</h2>
+    <FieldGroup headingLevel={2} heading={t('fields.app_props_title')}>
       <ApprovalProg t={t} />
       <ClearStateProg t={t} />
       {// Creating app
       onComplete === OnApplicationComplete.NoOpOC && <>
-        <section>
-          <h3>{t('fields.global_state_title')}</h3>
+        <FieldGroup headingLevel={3} heading={t('fields.global_state_title')}>
           <GlobalInts t={t} />
           <GlobalByteSlices t={t} />
-        </section>
-        <section>
-          <h3>{t('fields.local_state_title')}</h3>
+        </FieldGroup>
+        <FieldGroup headingLevel={3} heading={t('fields.local_state_title')}>
           <LocalInts t={t} />
           <LocalByteSlices t={t} />
-        </section>
-        <section>
-          <h3>{t('fields.extra_pages_title')}</h3>
+        </FieldGroup>
+        <FieldGroup headingLevel={3} heading={t('fields.extra_pages_title')}>
           <ExtraPages t={t} />
-        </section>
+        </FieldGroup>
       </>}
-    </section>
+    </FieldGroup>
   );
 }
 
@@ -470,11 +470,13 @@ function Boxes({ t }: { t: TFunction }) {
 
     {boxes.map(
       (boxAtom, i) =>
-        <section key={`${boxAtom}`}>
-          <h4>{t('fields.apbx.box_title', { index: i + 1 })}</h4>
+        <FieldGroup headingLevel={4}
+          heading={t('fields.apbx.box_title', { index: i + 1 })}
+          key={`${boxAtom}`}
+        >
           <BoxIdInput t={t} boxAtom={boxAtom} index={i} />
           <BoxNameInput t={t} boxAtom={boxAtom} index={i} />
-        </section>
+        </FieldGroup>
     )}
 
     <div className='py-4'>
@@ -540,24 +542,19 @@ function BoxNameInput({ t, boxAtom, index }:
 
 export function AppDependencies({ t }: { t: TFunction }) {
   return (
-    <section>
-      <h2>{t('fields.app_deps_title')}</h2>
-      <section>
-        <h3>{t('fields.apat.title')}</h3>
+    <FieldGroup headingLevel={2} heading={t('fields.app_deps_title')}>
+      <FieldGroup headingLevel={3} heading={t('fields.apat.title')}>
         <AppAccts t={t} />
-      </section>
-      <section>
-        <h3>{t('fields.apfa.title')}</h3>
+      </FieldGroup>
+      <FieldGroup headingLevel={3} heading={t('fields.apfa.title')}>
         <ForeignApps t={t} />
-      </section>
-      <section>
-        <h3>{t('fields.apas.title')}</h3>
+      </FieldGroup>
+      <FieldGroup headingLevel={3} heading={t('fields.apas.title')}>
         <ForeignAssets t={t} />
-      </section>
-      <section>
-        <h3>{t('fields.apbx.title')}</h3>
+      </FieldGroup>
+      <FieldGroup headingLevel={3} heading={t('fields.apbx.title')}>
         <Boxes t={t} />
-      </section>
-    </section>
+      </FieldGroup>
+    </FieldGroup>
   );
 }
