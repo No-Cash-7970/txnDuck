@@ -151,4 +151,14 @@ describe('Form Components - ToggleField', () => {
     expect(onChangeFn).toBeCalledTimes(1);
   });
 
+  it('has label with class(es) specified in `labelClass` property', () => {
+    const { container } = render(<ToggleField labelClass='foo-label' />);
+    expect(container.getElementsByClassName('label')[0]).toHaveClass('foo-label');
+  });
+
+  it('has label text element with class(es) specified in `labelTextClass` property', () => {
+    render(<ToggleField label='foo' labelTextClass='foo-label-text' />);
+    expect(screen.getByText('foo')).toHaveClass('foo-label-text');
+  });
+
 });

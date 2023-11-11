@@ -5,6 +5,8 @@ export default function SelectField({
   required = false,
   optionClass = '',
   label = '',
+  labelClass = '',
+  labelTextClass = '',
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -17,8 +19,8 @@ export default function SelectField({
 }: RadioButtonGroupFieldProps) {
   return (
     <fieldset role='radiogroup' className={containerClass} disabled={disabled}>
-      <legend className='label'>
-        <span className='label-text'>{label}</span>
+      <legend className={`label ${labelClass}`}>
+        <span className={`label-text ${labelTextClass}`}>{label}</span>
         {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
       </legend>
       <div className='join'>

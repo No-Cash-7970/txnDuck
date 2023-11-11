@@ -7,6 +7,8 @@ export default function SelectField({
   inputClass = '',
   placeholder = '',
   label = '',
+  labelClass = '',
+  labelTextClass = '',
   inputInsideLabel = false,
   containerClass = '',
   requiredText = '',
@@ -23,8 +25,8 @@ export default function SelectField({
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
-      <label className='label' htmlFor={id || undefined}>
-        <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
+      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+        <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
         </span>

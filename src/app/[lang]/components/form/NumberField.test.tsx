@@ -172,4 +172,14 @@ describe('Form Components - NumberField', () => {
     expect(onChangeFn).toBeCalledTimes(2);
   });
 
+  it('has label with class(es) specified in `labelClass` property', () => {
+    const { container } = render(<NumberField labelClass='foo-label' />);
+    expect(container.getElementsByClassName('label')[0]).toHaveClass('foo-label');
+  });
+
+  it('has label text element with class(es) specified in `labelTextClass` property', () => {
+    render(<NumberField label='foo' labelTextClass='foo-label-text' />);
+    expect(screen.getByText('foo')).toHaveClass('foo-label-text');
+  });
+
 });

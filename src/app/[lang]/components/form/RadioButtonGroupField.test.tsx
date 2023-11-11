@@ -1,3 +1,6 @@
+/* eslint-disable testing-library/no-container */
+/* eslint-disable testing-library/no-node-access */
+
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -145,5 +148,26 @@ describe('Form Components - RadioButtonGroupField', () => {
       expect(onChangeFn).toBeCalledTimes(1);
     }
   );
+
+  it('has label with class(es) specified in `labelClass` property', () => {
+    const { container } = render(
+      <RadioButtonGroupField
+        labelClass='foo-label'
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    expect(container.getElementsByClassName('label')[0]).toHaveClass('foo-label');
+  });
+
+  it('has label text element with class(es) specified in `labelTextClass` property', () => {
+    render(
+      <RadioButtonGroupField
+        label='foobar'
+        labelTextClass='foo-label-text'
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    expect(screen.getByText('foobar')).toHaveClass('foo-label-text');
+  });
 
 });

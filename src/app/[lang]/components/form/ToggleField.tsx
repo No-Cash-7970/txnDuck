@@ -6,6 +6,8 @@ export default function ToggleField({
   id = '',
   inputClass = '',
   label = '',
+  labelClass = '',
+  labelTextClass = '',
   inputInsideLabel = true,
   containerClass = '',
   requiredText = '',
@@ -32,7 +34,7 @@ export default function ToggleField({
           onChange={onChange}
         />
       }
-      <label className='label' htmlFor={id || undefined}>
+      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
         {(inputInsideLabel && inputPosition === 'start') &&
           <input
             className={`toggle ${inputClass}`}
@@ -46,7 +48,7 @@ export default function ToggleField({
             onChange={onChange}
           />
         }
-        <span className={`label-text align-middle ${inputInsideLabel? 'flex-1' : ''}`}>
+        <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
         </span>

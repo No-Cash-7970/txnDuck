@@ -6,6 +6,10 @@ interface InputProps {
   id?: string;
   /** Classes to add to the input element for the field */
   inputClass?: string;
+  /** Classes to add to the label element for the field */
+  labelClass?: string;
+  /** Classes to add to the element for the text content of the label for the field */
+  labelTextClass?: string;
   /** Data key */
   name?: string;
   /** Default value */
@@ -16,8 +20,6 @@ interface InputProps {
   disabled?: boolean;
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  /** The type of keyboard to use when a virtual keyboard is used */
-  inputMode?: 'none'|'text'|'decimal'|'numeric'|'tel'|'search'|'email'|'url'
 }
 
 /** General properties for fields */
@@ -69,6 +71,8 @@ export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
   autoComplete?: string;
   /** If spell-check should be enabled */
   spellCheck?: boolean;
+  /** The type of keyboard to use when a virtual keyboard is used */
+  inputMode?: 'none'|'text'|'decimal'|'numeric'|'tel'|'search'|'email'|'url'
 }
 
 /** Properties for the NumberField component */

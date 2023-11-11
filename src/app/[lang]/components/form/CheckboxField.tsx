@@ -6,6 +6,8 @@ export default function CheckboxField({
   id = '',
   inputClass = '',
   label = '',
+  labelClass = '',
+  labelTextClass = '',
   inputInsideLabel = true,
   containerClass = '',
   requiredText = '',
@@ -21,7 +23,7 @@ export default function CheckboxField({
     <div className={`form-control ${containerClass}`}>
       {(!inputInsideLabel && inputPosition === 'start') &&
         <input
-          className={`checkbox align-middle ${inputClass}`}
+          className={`checkbox ${inputClass}`}
           type='checkbox'
           id={id || undefined}
           required={required}
@@ -32,10 +34,10 @@ export default function CheckboxField({
           onChange={onChange}
         />
       }
-      <label className='label' htmlFor={id || undefined}>
+      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
         {(inputInsideLabel && inputPosition === 'start') &&
           <input
-            className={`checkbox align-middle ${inputClass}`}
+            className={`checkbox ${inputClass}`}
             type='checkbox'
             id={id || undefined}
             required={required}
@@ -46,13 +48,13 @@ export default function CheckboxField({
             onChange={onChange}
           />
         }
-        <span className={`label-text align-middle ${inputInsideLabel? 'flex-1' : ''}`}>
+        <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
         </span>
         {(inputInsideLabel && inputPosition === 'end') &&
           <input
-            className={`checkbox align-middle ${inputClass}`}
+            className={`checkbox ${inputClass}`}
             type='checkbox'
             id={id || undefined}
             required={required}
@@ -66,7 +68,7 @@ export default function CheckboxField({
       </label>
       {(!inputInsideLabel && inputPosition === 'end') &&
         <input
-          className={`checkbox align-middle ${inputClass}`}
+          className={`checkbox ${inputClass}`}
           type='checkbox'
           id={id || undefined}
           required={required}

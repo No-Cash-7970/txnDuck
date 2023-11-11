@@ -162,4 +162,14 @@ describe('Form Components - TextField', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('inputmode', 'decimal');
   });
 
+  it('has input with input mode specified in `inputMode` property', () => {
+    render(<TextField inputMode='numeric' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('inputmode', 'numeric');
+  });
+
+  it('has input with type specified in `type` property', () => {
+    render(<TextField type='email' />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('type', 'email');
+  });
+
 });
