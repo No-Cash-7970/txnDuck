@@ -1,0 +1,115 @@
+title: Elija una preselección de transacción
+instruction: >
+  Componga una transacción más rápidamente utilizando uno de las siguientes preselecciones.
+skip_btn: O sáltese esto y componga una transacción sin utilizar una preselección
+category_label: Categorías
+all_title: Todas
+# General category
+general_title: General
+transfer_algos:
+  heading: Transfiera Algos
+  description: Transfiera Algos de una cuenta monedero a otra (o a sí mismo).
+  action: Transfiera Algos
+rekey_account:
+  heading: Recodifique una cuenta
+  description: >
+    Cambie la(s) clave(s) privada(s) de gasto autorizada(s) manteniendo la misma dirección
+    pública.
+  action: Recodifique una cuenta
+close_account:
+  heading: Cierre una cuenta
+  description: Elimine una cuenta del libro mayor.
+  action: Cierre una cuenta
+# Asset category
+asset_title: Activo
+asset_transfer:
+  heading: Transfiera un activo
+  description: Transfiera un activo de una cuenta monedero a otra (o a sí mismo).
+  action: Transfiera un activo
+asset_opt_in:
+  heading: Opte por un activo
+  description: Habilite la capacidad de recibir o enviar un activo concreto optando por ese activo.
+  action: Opte por un activo
+asset_opt_out:
+  heading: Opte por la exclusión de un activo
+  description: Elimine un activo de la cuenta, deshaciendo así el optar por el activo.
+  action: Opte por la exclusión
+asset_create:
+  heading: Cree un activo
+  description: Cree un activo nuevo.
+  action: Cree un activo
+asset_reconfigure:
+  heading: Reconfigure un activo
+  description: Cambie la configuración de un activo existente.
+  action: Reconfigure un activo
+asset_clawback:
+  heading: Revoque (Claw back) un activo
+  description: Elimine un número determinado de activos de una cuenta de destino.
+  action: Revoque un activo
+asset_freeze:
+  heading: Congele un activo
+  description: Desactive la capacidad de una cuenta para enviar o recibir un determinado activo.
+  action: Congele un activo
+asset_unfreeze:
+  heading: Descongele un activo
+  description: >
+    Descongele una cuenta para un activo concreto. De este modo, se habilita la capacidad de la
+    cuenta para enviar o recibir ese activo.
+  action: Descongele un activo
+asset_destroy:
+  heading: Destruya un activo
+  description: Elimine un activo existente del libro de Algorand.
+  action: Destruya un activo
+# Application category
+app_title: Aplicación (Smart contract)
+app_run:
+  heading: Ejecute una aplicación
+  description: >
+    Realiza una llamada a la aplicación genérica para ejecutar el <code>ApprovalProgram</code> de la
+    aplicación.
+  action: Ejecute una aplicación
+app_opt_in:
+  heading: Opte por una aplicación
+  description: >
+    Habilite el estado local que se utilizará. No es necesario si la aplicación no requiere ningún
+    estado local. local.
+  action: Opte por una aplicación
+app_deploy:
+  heading: Despliegue una aplicación
+  description: Despliegue una aplicación nueva.
+  action: Despliegue una aplicación
+app_update:
+  heading: Actualice una aplicación
+  description: >
+    Actualice la lógica de la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo
+    permite.
+  action: Actualice una aplicación
+app_close_out:
+  heading: Cierre de la aplicación
+  description: Salga con gracia de una aplicación y elimine su estado local del registro de saldos.
+  action: Cierre de la aplicación
+app_clear:
+  heading: Cancele una aplicación
+  description: Fuerce la eliminación del estado local del registro de saldos.
+  action: Cancele una aplicación
+app_delete:
+  heading: Destruya una aplicación
+  description: >
+    Elimine la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo permite.
+  action: Destruya una aplicación
+# Participation key category
+part_key_title: Clave de participación
+reg_online:
+  heading: Registre una cuenta en línea
+  description: Registre una cuenta como «en línea» para empezar a participar en el consenso.
+  action: Registre en línea
+reg_offline:
+  heading: Registre una cuenta fuera de línea
+  description: Registre una cuenta como «desconectada» para dejar de participar en el consenso.
+  action: Registre fuera de línea
+reg_nonpart:
+  heading: Registre una cuenta como no participante
+  description: >
+    Registre una cuenta como «no participante» para dejar de ganar recompensas por participar en
+    consensos.
+  action: Registre como no participante

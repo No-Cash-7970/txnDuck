@@ -3,14 +3,14 @@
 hero: # The attention-grabber that is first thing the user sees
   main_paragraph: Create and send almost any kind of Algorand transaction.
   sub_paragraph: Access and utilize more of what Algorand has to offer.
-  start_button: Start by composing a new transaction
+  start_button: Create a new transaction!
 how_it_works:
   heading: How does it work?
   compose:
     heading: 1. Compose the transaction.
     paragraph: >
       Begin creating a new transaction by entering the transaction information. Use one of the
-      transaction templates to make this step faster and easier. If you want sign the transaction
+      transaction presets to make this step faster and easier. If you want sign the transaction
       later, you can export it as a file.
     button: Compose a new transaction
   sign:

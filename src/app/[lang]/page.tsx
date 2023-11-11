@@ -28,7 +28,7 @@ export default function HomePage({ params: { lang } }: {
               + ' bg-gradient-to-r from-primary-focus to-primary'
               + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
             }
-            href={`${lang}/txn/compose`}
+            href={`${lang}/txn`}
           >
             {t('home:hero.start_button')}
           </Link>

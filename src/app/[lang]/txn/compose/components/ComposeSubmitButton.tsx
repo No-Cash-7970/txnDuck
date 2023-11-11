@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useTranslation } from '@/app/i18n/client';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
 import { TransactionType } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
+import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
@@ -22,6 +22,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
+  const currentURLParams = useSearchParams();
 
   useEffect(() => {
     // Check if there is any transaction data in storage.
@@ -253,7 +254,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
       }
     });
     // Go to sign-transaction page
-    router.push(`/${lng}/txn/sign`);
+    router.push(`/${lng}/txn/sign` + (currentURLParams.size ? `?${currentURLParams}` : ''));
   };
 
   return (

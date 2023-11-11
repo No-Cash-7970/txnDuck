@@ -1,0 +1,111 @@
+title: Choose a Transaction Preset
+instruction: Compose a transaction faster by using one of the following presets.
+skip_btn: Or skip this and compose a transaction without using a preset
+category_label: Category
+all_title: All
+# General category
+general_title: General
+transfer_algos:
+  heading: Transfer Algos
+  description: Transfer Algos from one wallet account to another (or itself).
+  action: Transfer Algos
+rekey_account:
+  heading: Rekey account
+  description: >
+    Change the authoritative private spending key(s) while maintaining the same public address.
+  action: Rekey account
+close_account:
+  heading: Close account
+  description: Remove an account from the ledger.
+  action: Close account
+# Asset category
+asset_title: Asset
+asset_transfer:
+  heading: Transfer asset
+  description: Transfer an asset from one wallet account to another (or itself).
+  action: Transfer asset
+asset_opt_in:
+  heading: Opt into asset
+  description: Enable the ability to receive or send a particular asset by opting into that asset.
+  action: Opt into asset
+asset_opt_out:
+  heading: Opt out of asset
+  description: Remove an asset from the account, thus undoing the opt-in to the asset.
+  action: Opt out of asset
+asset_create:
+  heading: Create asset
+  description: Create a new asset.
+  action: Create asset
+asset_reconfigure:
+  heading: Reconfigure asset
+  description: Change the configuration of an existing asset.
+  action: Reconfigure asset
+asset_clawback:
+  heading: Revoke (Claw back) asset
+  description: Remove a specific number of asset from a target account.
+  action: Revoke asset
+asset_freeze:
+  heading: Freeze asset
+  description: Disable an account’s ability to send or receive a particular asset.
+  action: Freeze asset
+asset_unfreeze:
+  heading: Unfreeze asset
+  description: >
+    Undo a freeze on an account for a particular asset. Thus, enabling the account’s ability to send
+    or receive that asset.
+  action: Unfreeze asset
+asset_destroy:
+  heading: Destroy asset
+  description: Remove an existing asset from the ledger.
+  action: Destroy asset
+# Application category
+app_title: Application (Smart contract)
+app_run:
+  heading: Run application
+  description: >
+    Make a generic application call to run the application’s <code>ApprovalProgram</code>.
+  action: Run application
+app_opt_in:
+  heading: Opt into application
+  description: >
+    Enable the local state to be used. Not necessary if the application does not require any local
+    state.
+  action: Opt into application
+app_deploy:
+  heading: Deploy application
+  description: Deploy a new application.
+  action: Deploy application
+app_update:
+  heading: Update application
+  description: >
+    Update the application logic, if the application’s <code>ApprovalProgram</code> allows it.
+  action: Update application
+app_close_out:
+  heading: Close out application
+  description: >
+    Gracefully opt out of an application and remove its local state from the balance record.
+  action: Close out application
+app_clear:
+  heading: Clear application
+  description: Force removal of the local state from the balance record.
+  action: Clear application
+app_delete:
+  heading: Delete application
+  description: Delete the application, if the application’s <code>ApprovalProgram</code> allows it.
+  action: Delete application
+# Participation key category
+part_key_title: Participation key
+reg_online:
+  heading: Register account online
+  description: Register an account as “online” to start participating in consensus.
+  action: Register as online
+reg_offline:
+  heading: Register account offline
+  description: Register an account as “offline” to stop participating in consensus.
+  action: Register as offline
+reg_nonpart:
+  heading: Register account nonparticipating
+  description: >
+    Register an account as “nonparticipating” to no longer earn rewards for participating in
+    consensus.
+  action: Register as nonparticipating

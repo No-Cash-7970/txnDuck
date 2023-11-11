@@ -14,7 +14,7 @@ export async function generateMetadata(
   { params }: { params: { lang: string } },
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { t } = await useTranslation(params.lang, ['txn_template', 'app']);
+  const { t } = await useTranslation(params.lang, ['txn_presets', 'app']);
 
   return {
     title: t('page_title', {page: t('title'), site: t('site_name')}),
@@ -22,7 +22,7 @@ export async function generateMetadata(
   };
 }
 
-export default function SignTxnLayout(
+export default function TxnPresetsLayout(
   {
     children,
     params: { lang }

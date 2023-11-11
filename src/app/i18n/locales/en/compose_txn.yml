@@ -1,8 +1,8 @@
 title: Compose Transaction
 instructions: Fields marked with an asterisk (<1>*</1>) are required.
 more_fields: More fields
-txn_template_btn: Choose template
-txn_template_btn_warning: You may lose your progress if you choose a different template.
+txn_presets_btn: Choose preset
+txn_presets_btn_warning: You may lose your progress if you choose a different preset.
 sign_txn_btn: Review & sign
 fields:
   type: # Transaction type

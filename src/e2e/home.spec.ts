@@ -3,6 +3,7 @@ import { NavBarComponent as NavBar } from './shared/NavBarComponent';
 import { LanguageSupport } from './shared/LanguageSupport';
 import { HomePage } from './pageModels/HomePage';
 import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
+import { TxnPresetsPage } from './pageModels/TxnPresetsPage';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -24,7 +25,7 @@ test.describe('Home Page', () => {
 
   test('has "start" button link', async ({ homePage, page }) => {
     await homePage.startBtn.click();
-    await expect(page).toHaveURL(ComposeTxnPage.getFullUrl());
+    await expect(page).toHaveURL(TxnPresetsPage.getFullUrl());
   });
 
   test('has "compose transaction" button link', async ({ homePage, page }) => {
@@ -44,8 +45,8 @@ test.describe('Home Page', () => {
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: { body: /Start/, title: /Transaction/ },
-      es: { body: /Comience/, title: /transacciones/ },
+      en: { body: /Create/, title: /Transaction/ },
+      es: { body: /Cree/, title: /transacciones/ },
     })).check(test, HomePage.url);
   });
 

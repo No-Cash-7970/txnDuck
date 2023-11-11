@@ -9,6 +9,10 @@ jest.mock('react', () => ({
 }));
 // Mock i18next before modules that use it are imported because it is used by a child component
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock navigation hooks because they are used by a child components
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({get: () => 'foo'})
+}));
 
 import SignTxnPage from './page';
 
@@ -36,7 +40,7 @@ describe('Sign Transaction Page', () => {
 
   it('has "compose transaction" (back) button', () => {
     render(<SignTxnPage params={{lang: ''}} />);
-    expect(screen.getByText('compose_txn_btn')).toBeEnabled();
+    expect(screen.getByText('sign_txn:compose_txn_btn')).toBeEnabled();
   });
 
   it('has disabled "send transaction" (next step) button if transaction is NOT signed', () => {

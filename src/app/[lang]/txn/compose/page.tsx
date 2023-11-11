@@ -1,4 +1,4 @@
-import { use } from 'react';
+import { Suspense, use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import ComposeForm from './components/ComposeForm';
@@ -14,8 +14,8 @@ export default function ComposeTxnPage({ params: { lang } }: {
   return (
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='compose' />
-      <PageTitleHeading badgeText=''>{t('title')}</PageTitleHeading>
-      <ComposeForm lng={lang} />
+      <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
+      <Suspense><ComposeForm lng={lang} /></Suspense>
     </main>
   );
 }

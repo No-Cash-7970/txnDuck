@@ -8,7 +8,8 @@ jest.mock('react-i18next', () => i18nextClientMock);
 // Mock useRouter
 const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ push: routerPushMock })
+  useRouter: () => ({ push: routerPushMock }),
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
 // Mock algokit
 jest.mock('@algorandfoundation/algokit-utils', () => ({
@@ -182,9 +183,9 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
   });
 
-  it('has "transaction template" button', () => {
+  it('has "transaction presets" button', () => {
     render(<ComposeForm />);
-    expect(screen.getByText('txn_template_btn')).toHaveClass('btn-disabled');
+    expect(screen.getByText('txn_presets_btn')).toBeInTheDocument();
   });
 
   it('has "sign transaction" button', () => {

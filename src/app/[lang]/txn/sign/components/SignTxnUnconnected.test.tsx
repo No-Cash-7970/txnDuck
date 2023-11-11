@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { TFunction } from 'i18next';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
@@ -30,6 +30,10 @@ jest.mock('../../../../lib/utils.ts', () => ({
     100,196,32,250,70,29,35,81,230,110,222,4,6,203,34,172,63,38,83,166,0,196,6,226,155,168,254,118,
     112,12,192,137,116,205,208,164,116,121,112,101,163,112,97,121
   ])
+}));
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
 
 import SignTxn from './SignTxn';

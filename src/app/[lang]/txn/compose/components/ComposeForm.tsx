@@ -112,18 +112,18 @@ export default function ComposeForm({ lng }: Props) {
           <ComposeSubmitButton lng={lng} />
         </div>
         <div className='sm:order-first'>
-          <Link type='button' href='' className='btn w-full btn-disabled' tabIndex={-1}>
+          <Link type='button' href={`/${lng}/txn`} className='btn w-full'>
             <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
             <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
-            {t('txn_template_btn')}
+            {t('txn_presets_btn')}
           </Link>
-          {/* <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
+          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
             <Icons.IconAlertTriangleFilled
               aria-hidden
               className='text-warning align-middle my-auto me-2'
             />
-            <small>{t('txn_template_btn_warning')}</small>
-          </div> */}
+            <small>{t('txn_presets_btn_warning')}</small>
+          </div>
         </div>
       </div>
 

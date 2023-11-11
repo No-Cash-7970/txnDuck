@@ -1,6 +1,9 @@
 'use client';
 
+import { useEffect } from 'react';
+import Link from 'next/link';
 import Image from 'next/image';
+import { useSearchParams } from 'next/navigation';
 import algosdk from 'algosdk';
 import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -16,7 +19,7 @@ import {
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { createTxnFromData } from '@/app/lib/txn-data-processor';
 import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
-import { useEffect } from 'react';
+import NextStepButton from './NextStepButton';
 
 type Props = {
   /** Language */
@@ -29,6 +32,7 @@ export default function SignTxn({ lng }: Props) {
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const { providers, activeAccount, clients, signTransactions } = useWallet();
+  const currentURLParams = useSearchParams();
 
   const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
   const getWalletClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
@@ -186,6 +190,30 @@ export default function SignTxn({ lng }: Props) {
           {t('sign_txn:txn_signed')}
         </div>
       }
+
+      {/* Buttons */}
+      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
+        <div>
+          <NextStepButton lng={lng} />
+        </div>
+        <div className='sm:order-first'>
+          <Link href={{
+            pathname: `/${lng}/txn/compose`,
+            query: currentURLParams.toString(),
+          }} className='btn w-full'>
+            <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
+            <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
+            {t('sign_txn:compose_txn_btn')}
+          </Link>
+          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
+            <Icons.IconAlertTriangleFilled
+              aria-hidden
+              className='text-warning align-middle my-auto me-2'
+            />
+            <small>{t('sign_txn:compose_txn_btn_warning')}</small>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

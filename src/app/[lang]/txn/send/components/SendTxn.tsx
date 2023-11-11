@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';
 import { modelsv2 } from 'algosdk';
@@ -11,7 +13,6 @@ import { RESET } from 'jotai/utils';
 import { dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import Link from 'next/link';
 
 type Props = {
   /** Language */
@@ -43,6 +44,7 @@ const WAIT_ROUNDS_TO_CONFIRM = 10;
 
 export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
+  const currentURLParams = useSearchParams();
 
   const [waiting, setWaiting] = useState(false);
   const [pendingTxId, setPendingTxId] = useState('');
@@ -216,7 +218,7 @@ export default function SendTxn({ lng }: Props) {
             <Icons.IconHome aria-hidden />
             {t('done_btn')}
           </Link>
-          <Link className='btn btn-secondary btn-block h-auto' href={`/${lng}/txn/compose`}>
+          <Link className='btn btn-secondary btn-block h-auto' href={`/${lng}/txn`}>
             <Icons.IconPlus aria-hidden />
             {t('make_new_txn_btn')}
           </Link>
@@ -255,13 +257,15 @@ export default function SendTxn({ lng }: Props) {
           </div>
         </details>
         <div className='grid gap-4 md:gap-4 grid-cols-1 md:grid-cols-5 grid-rows-1 mt-8'>
-          <Link className='btn btn-primary h-auto col-span-2' href={`/${lng}/txn/compose`}>
+          <Link className='btn btn-primary h-auto col-span-2'
+            href={{ pathname: `/${lng}/txn/compose`, query: currentURLParams.toString()}}
+          >
             <Icons.IconArrowBackUpDouble aria-hidden />
             {t('compose_txn_btn')}
           </Link>
           <Link
             className='btn btn-secondary h-auto md:col-span-1 col-span-2'
-            href={`/${lng}/txn/sign`}
+            href={{pathname: `/${lng}/txn/sign`, query: currentURLParams.toString()}}
           >
             <Icons.IconArrowBackUp aria-hidden />
             {t('sign_txn_btn')}

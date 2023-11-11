@@ -28,6 +28,10 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     return { get_obj_for_encoding: () => ({}) };
   }
 }));
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
+}));
 
 import SendTxn from './SendTxn';
 

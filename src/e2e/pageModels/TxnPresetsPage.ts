@@ -1,6 +1,6 @@
 import { type Page as PageFixture, type Locator } from '@playwright/test';
 
-export class TxnTemplatePage {
+export class TxnPresetsPage {
   /** Page fixture from Playwright */
   readonly page: PageFixture;
   /** URL without the language prefix */
@@ -23,7 +23,7 @@ export class TxnTemplatePage {
    * @returns The URL with the language prefix
    */
   static getFullUrl(lang: string = 'en'): string {
-    return '/' + lang + TxnTemplatePage.url;
+    return '/' + lang + TxnPresetsPage.url;
   }
 
   /**
@@ -31,6 +31,6 @@ export class TxnTemplatePage {
    * @param lang The language prefix of the page to go to.
    */
   async goto(lang: string = 'en') {
-    await this.page.goto(TxnTemplatePage.getFullUrl(lang));
+    await this.page.goto(TxnPresetsPage.getFullUrl(lang));
   }
 }

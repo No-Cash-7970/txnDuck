@@ -27,6 +27,10 @@ jest.mock('../../../../lib/utils.ts', () => ({
     112,12,192,137,116,205,208,164,116,121,112,101,163,112,97,121
   ])
 }));
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
+}));
 
 import SignTxn from './SignTxn';
 

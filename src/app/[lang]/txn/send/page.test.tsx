@@ -20,6 +20,10 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
   getAlgoClient: () => ({ sendRawTransaction: () => ({ do: () =>  ({}) }) }),
   waitForConfirmation: () => ({ get_obj_for_encoding: () => ({}) })
 }));
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({get: () => 'foo'})
+}));
 
 import SendTxnPage from './page';
 

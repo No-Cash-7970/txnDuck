@@ -1,8 +1,11 @@
-/* eslint-disable testing-library/no-container */
-/* eslint-disable testing-library/no-node-access */
-
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({get: () => 'foo'})
+}));
+
 import PageTitleHeading from './PageTitleHeading';
 
 describe('PageTitleHeading Component', () => {
@@ -12,23 +15,14 @@ describe('PageTitleHeading Component', () => {
     expect(screen.getByRole('heading')).toHaveTextContent('Hello!');
   });
 
-  it('has badge with text specified in `badgeText` property', () => {
-    const {container} = render(<PageTitleHeading badgeText='Greeting'></PageTitleHeading>);
-
-    const badge = container.querySelector('.badge');
-
-    expect(badge).toBeInTheDocument();
-    expect(badge).toHaveTextContent('Greeting');
+  it('has badge with preset name if `showTxnPreset` is true', async() => {
+    render(<PageTitleHeading showTxnPreset={true}></PageTitleHeading>);
+    expect(await screen.findByText('foo.heading')).toBeInTheDocument();
   });
 
-  it('does not have badge when `badgeText` is not given', () => {
-    const {container} = render(<PageTitleHeading></PageTitleHeading>);
-    expect(container.querySelector('.badge')).not.toBeInTheDocument();
-  });
-
-  it('does not have badge when `badgeText` is empty', () => {
-    const {container} = render(<PageTitleHeading badgeText=''></PageTitleHeading>);
-    expect(container.querySelector('.badge')).not.toBeInTheDocument();
+  it('does not have badge with preset name if `showTxnPreset` is false', () => {
+    render(<PageTitleHeading showTxnPreset={false}></PageTitleHeading>);
+    expect(screen.queryByText('foo.heading')).not.toBeInTheDocument();
   });
 
 });
