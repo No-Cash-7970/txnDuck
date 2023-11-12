@@ -48,7 +48,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('app_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('app_deploy.description')).toBeInTheDocument();
     expect(screen.getByText('app_update.description')).toBeInTheDocument();
-    expect(screen.getByText('app_close_out.description')).toBeInTheDocument();
+    expect(screen.getByText('app_close.description')).toBeInTheDocument();
     expect(screen.getByText('app_clear.description')).toBeInTheDocument();
     expect(screen.getByText('app_delete.description')).toBeInTheDocument();
   });
@@ -91,7 +91,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('app_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('app_deploy.description')).toBeInTheDocument();
     expect(screen.getByText('app_update.description')).toBeInTheDocument();
-    expect(screen.getByText('app_close_out.description')).toBeInTheDocument();
+    expect(screen.getByText('app_close.description')).toBeInTheDocument();
     expect(screen.getByText('app_clear.description')).toBeInTheDocument();
     expect(screen.getByText('app_delete.description')).toBeInTheDocument();
 

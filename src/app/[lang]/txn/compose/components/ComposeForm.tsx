@@ -83,9 +83,15 @@ export default function ComposeForm({ lng }: Props) {
 
       {txnType === TransactionType.appl && <>
         <AppCallFields.OnComplete t={t} />
-        <AppCallFields.AppId t={t} />
+
+        {presetParams !== 'app_deploy' && <AppCallFields.AppId t={t} />}
+
         <AppCallFields.AppArgs t={t} />
-        <AppCallFields.AppProperties t={t} />
+
+        {(!presetParams || presetParams === 'app_deploy' || presetParams === 'app_update') &&
+          <AppCallFields.AppProperties t={t} />
+        }
+
         <AppCallFields.AppDependencies t={t} />
       </>}
 

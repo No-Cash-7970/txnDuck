@@ -141,7 +141,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('app_run.heading')}
           actionText={t('app_run.action')}
           actionURL={`/${lng}/txn/compose?preset=app_run`}
-          actionDisabled={true}
           color='primary'
         >
           <Trans t={t} i18nKey='app_run.description'
@@ -151,7 +150,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('app_opt_in.heading')}
           actionText={t('app_opt_in.action')}
           actionURL={`/${lng}/txn/compose?preset=app_opt_in`}
-          actionDisabled={true}
           color='primary'
         >
           {t('app_opt_in.description')}
@@ -159,7 +157,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('app_deploy.heading')}
           actionText={t('app_deploy.action')}
           actionURL={`/${lng}/txn/compose?preset=app_deploy`}
-          actionDisabled={true}
           color='primary'
         >
           {t('app_deploy.description')}
@@ -167,25 +164,22 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('app_update.heading')}
           actionText={t('app_update.action')}
           actionURL={`/${lng}/txn/compose?preset=app_update`}
-          actionDisabled={true}
           color='primary'
         >
           <Trans t={t} i18nKey='app_update.description'
             components={{code: <code className='px-0' />}}
           />
         </TxnPreset>
-        <TxnPreset heading={t('app_close_out.heading')}
-          actionText={t('app_close_out.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_close_out`}
-          actionDisabled={true}
+        <TxnPreset heading={t('app_close.heading')}
+          actionText={t('app_close.action')}
+          actionURL={`/${lng}/txn/compose?preset=app_close`}
           color='primary'
         >
-          {t('app_close_out.description')}
+          {t('app_close.description')}
         </TxnPreset>
         <TxnPreset heading={t('app_clear.heading')}
           actionText={t('app_clear.action')}
           actionURL={`/${lng}/txn/compose?preset=app_clear`}
-          actionDisabled={true}
           color='primary'
         >
           {t('app_clear.description')}
@@ -193,7 +187,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('app_delete.heading')}
           actionText={t('app_delete.action')}
           actionURL={`/${lng}/txn/compose?preset=app_delete`}
-          actionDisabled={true}
           color='primary'
         >
           <Trans t={t} i18nKey='app_delete.description'

@@ -1,5 +1,6 @@
 /** Fields for the compose-transaction form that are for application call transaction */
 
+import { useSearchParams } from 'next/navigation';
 import {
   NumberField,
   TextField,
@@ -23,6 +24,7 @@ const MAX_ACCTS = 4;
 
 export function OnComplete({ t }: { t: TFunction }) {
   const [onComplete, setOnComplete] = useAtom(txnDataAtoms.apan);
+  const presetParams = useSearchParams().get('preset');
   return (
     <SelectField label={t('fields.apan.label')}
       name='apan'
@@ -30,6 +32,7 @@ export function OnComplete({ t }: { t: TFunction }) {
       required={true}
       requiredText={t('form.required')}
       containerClass='mt-4 max-w-xs'
+      disabled={!!presetParams}
       options={[
         { value: OnApplicationComplete.NoOpOC, text: t('fields.apan.options.no_op') },
         { value: OnApplicationComplete.OptInOC, text: t('fields.apan.options.opt_in') },
@@ -47,11 +50,12 @@ export function OnComplete({ t }: { t: TFunction }) {
 export function AppId({ t }: { t: TFunction }) {
   const [appId, setAppId] = useAtom(txnDataAtoms.apid);
   const onComplete = useAtomValue(txnDataAtoms.apan);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.apid.label')}
       name='apid'
       id='apid-field'
-      required={onComplete !== OnApplicationComplete.NoOpOC}
+      required={onComplete !== OnApplicationComplete.NoOpOC || presetParams === 'app_run'}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'

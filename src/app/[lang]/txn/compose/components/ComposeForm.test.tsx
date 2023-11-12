@@ -168,6 +168,7 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apat.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apaa.title')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apfa.title')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apas.title')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apbx.title')).not.toBeInTheDocument();
@@ -183,6 +184,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apls_nui.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apls_nbs.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apep.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
     expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
     expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
     expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
@@ -627,6 +629,202 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
     expect(screen.getByLabelText(/fields.close.label/)).toBeInTheDocument();
     expect(screen.getByLabelText(/fields.close.label/)).toBeRequired();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "run application" preset', () => {
+    presetMockValue = 'app_run';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('0'); // NoOp
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "opt in application" preset', () => {
+    presetMockValue = 'app_opt_in';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('1'); // Opt in
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "deploy application" preset', () => {
+    presetMockValue = 'app_deploy';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('0'); // NoOp
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.queryByText('fields.apid.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apap.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apsu.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apgs_nui.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apgs_nbs.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apls_nui.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apls_nbs.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apep.label/)).toBeRequired();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "update application" preset', () => {
+    presetMockValue = 'app_update';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('4'); // Update
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apap.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apsu.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "close out application" preset', () => {
+    presetMockValue = 'app_close';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('2'); // Close Out
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "clear application" preset', () => {
+    presetMockValue = 'app_clear';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('3'); // Clear
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "delete application" preset', () => {
+    presetMockValue = 'app_delete';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('5'); // Delete
+    expect(screen.getByLabelText(/fields.apan.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.apid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apap.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apsu.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apgs_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();

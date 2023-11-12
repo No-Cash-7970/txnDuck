@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
-import { TransactionType } from 'algosdk';
+import { OnApplicationComplete, TransactionType } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
@@ -47,7 +47,14 @@ export default function ComposeSubmitButton({ lng }: Props) {
       case 'reg_nonpart':
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.keyreg);
         break;
-      default:
+      case 'app_run':
+      case 'app_opt_in':
+      case 'app_deploy':
+      case 'app_update':
+      case 'app_close':
+      case 'app_clear':
+      case 'app_delete':
+        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.appl);
         break;
     }
 
@@ -183,20 +190,61 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
     // Restore application call transaction data, if applicable
     if (txnType === TransactionType.appl) {
-      jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData).apid);
-      jotaiStore.set(TxnData.txnDataAtoms.apan, (txnData as TxnData.AppCallTxnData).apan);
-      jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData).apap || '');
-      jotaiStore.set(TxnData.txnDataAtoms.apsu, (txnData as TxnData.AppCallTxnData).apsu || '');
-      jotaiStore.set(TxnData.txnDataAtoms.apgs_nui, (txnData as TxnData.AppCallTxnData).apgs_nui);
-      jotaiStore.set(TxnData.txnDataAtoms.apgs_nbs, (txnData as TxnData.AppCallTxnData).apgs_nbs);
-      jotaiStore.set(TxnData.txnDataAtoms.apls_nui, (txnData as TxnData.AppCallTxnData).apls_nui);
-      jotaiStore.set(TxnData.txnDataAtoms.apls_nbs, (txnData as TxnData.AppCallTxnData).apls_nbs);
-      jotaiStore.set(TxnData.txnDataAtoms.apep, (txnData as TxnData.AppCallTxnData).apep);
-      jotaiStore.set(TxnData.apaaListAtom, (txnData as TxnData.AppCallTxnData).apaa);
-      jotaiStore.set(TxnData.apatListAtom, (txnData as TxnData.AppCallTxnData).apat);
-      jotaiStore.set(TxnData.apfaListAtom, (txnData as TxnData.AppCallTxnData).apfa);
-      jotaiStore.set(TxnData.apasListAtom, (txnData as TxnData.AppCallTxnData).apas);
-      jotaiStore.set(TxnData.apbxListAtom, (txnData as TxnData.AppCallTxnData).apbx);
+      switch (preset) {
+        case 'app_run':
+        case 'app_deploy':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.NoOpOC);
+          break;
+        case 'app_opt_in':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.OptInOC);
+          break;
+        case 'app_update':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.UpdateApplicationOC);
+          break;
+        case 'app_close':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.CloseOutOC);
+          break;
+        case 'app_clear':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.ClearStateOC);
+          break;
+        case 'app_delete':
+          jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.DeleteApplicationOC);
+          break;
+        default:
+          jotaiStore.set(TxnData.txnDataAtoms.apan, (txnData as TxnData.AppCallTxnData).apan);
+          break;
+      }
+
+      if (preset !== 'app_deploy') {
+        jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData).apid);
+      }
+
+      if (!preset || preset === 'app_deploy' || preset === 'app_update') {
+        jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData)?.apap || '');
+        jotaiStore.set(TxnData.txnDataAtoms.apsu, (txnData as TxnData.AppCallTxnData)?.apsu || '');
+      }
+
+      if (!preset || preset === 'app_deploy') {
+        jotaiStore.set(TxnData.txnDataAtoms.apgs_nui,
+          (txnData as TxnData.AppCallTxnData)?.apgs_nui
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.apgs_nbs,
+          (txnData as TxnData.AppCallTxnData)?.apgs_nbs
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.apls_nui,
+          (txnData as TxnData.AppCallTxnData)?.apls_nui
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.apls_nbs,
+          (txnData as TxnData.AppCallTxnData)?.apls_nbs
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.apep, (txnData as TxnData.AppCallTxnData)?.apep);
+      }
+
+      jotaiStore.set(TxnData.apaaListAtom, (txnData as TxnData.AppCallTxnData)?.apaa || []);
+      jotaiStore.set(TxnData.apatListAtom, (txnData as TxnData.AppCallTxnData)?.apat || []);
+      jotaiStore.set(TxnData.apfaListAtom, (txnData as TxnData.AppCallTxnData)?.apfa || []);
+      jotaiStore.set(TxnData.apasListAtom, (txnData as TxnData.AppCallTxnData)?.apas || []);
+      jotaiStore.set(TxnData.apbxListAtom, (txnData as TxnData.AppCallTxnData)?.apbx || []);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);

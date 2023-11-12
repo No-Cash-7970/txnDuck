@@ -84,7 +84,7 @@ app_update:
     Actualice la lógica de la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo
     permite.
   action: Actualice una aplicación
-app_close_out:
+app_close:
   heading: Cierre de la aplicación
   description: Salga con gracia de una aplicación y elimine su estado local del registro de saldos.
   action: Cierre de la aplicación

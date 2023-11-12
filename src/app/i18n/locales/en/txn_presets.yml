@@ -80,7 +80,7 @@ app_update:
   description: >
     Update the application logic, if the application’s <code>ApprovalProgram</code> allows it.
   action: Update application
-app_close_out:
+app_close:
   heading: Close out application
   description: >
     Gracefully opt out of an application and remove its local state from the balance record.
