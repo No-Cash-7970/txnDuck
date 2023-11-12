@@ -208,7 +208,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('reg_online.heading')}
           actionText={t('reg_online.action')}
           actionURL={`/${lng}/txn/compose?preset=reg_online`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('reg_online.description')}
@@ -216,7 +215,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('reg_offline.heading')}
           actionText={t('reg_offline.action')}
           actionURL={`/${lng}/txn/compose?preset=reg_offline`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('reg_offline.description')}
@@ -224,7 +222,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('reg_nonpart.heading')}
           actionText={t('reg_nonpart.action')}
           actionURL={`/${lng}/txn/compose?preset=reg_nonpart`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('reg_nonpart.description')}

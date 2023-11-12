@@ -149,6 +149,8 @@ fields:
     label: Dilución de la llave de voto
   nonpart: # Nonparticipation
     label: No participación
+    is_nonpart: Sí
+    is_not_nonpart: No
   # Fields for application call type
   apan: # OnComplete
     label: Tipo de acción de la aplicación

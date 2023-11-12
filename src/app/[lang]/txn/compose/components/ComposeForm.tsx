@@ -72,7 +72,7 @@ export default function ComposeForm({ lng }: Props) {
         <AssetFreezeFields.Freeze t={t} />
       </>}
 
-      {txnType === TransactionType.keyreg && <>
+      {txnType === TransactionType.keyreg && (!presetParams || presetParams === 'reg_online') && <>
         <KeyRegFields.VoteKey t={t} />
         <KeyRegFields.SelectionKey t={t} />
         <KeyRegFields.StateProofKey t={t} />
@@ -100,7 +100,9 @@ export default function ComposeForm({ lng }: Props) {
         <AssetConfigFields.MetadataHash t={t} />
       </>}
 
-      {txnType === TransactionType.keyreg && <KeyRegFields.Nonparticipation t={t} />}
+      {txnType === TransactionType.keyreg && (!presetParams || presetParams === 'reg_nonpart') &&
+        <KeyRegFields.Nonparticipation t={t} />
+      }
 
       <GeneralFields.FirstValid t={t} />
       <GeneralFields.LastValid t={t} />

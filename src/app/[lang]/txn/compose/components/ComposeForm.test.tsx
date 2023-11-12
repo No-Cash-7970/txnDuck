@@ -632,4 +632,61 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
+  it('has fields for "register online" preset', () => {
+    presetMockValue = 'reg_online';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.votekey.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.selkey.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.sprfkey.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.votefst.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.votelst.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.votekd.label/)).toBeRequired();
+
+    expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "register offline" preset', () => {
+    presetMockValue = 'reg_offline';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.sprfkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votefst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votelst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votekd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.nonpart.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "register nonparticipation" preset', () => {
+    presetMockValue = 'reg_nonpart';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.sprfkey.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votefst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votelst.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.votekd.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText('fields.nonpart.label')).toBeChecked();
+    expect(screen.getByLabelText('fields.nonpart.label')).toBeDisabled();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
 });

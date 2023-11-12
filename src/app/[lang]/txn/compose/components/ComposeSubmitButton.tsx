@@ -42,7 +42,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
       case 'close_account':
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.pay);
         break;
-
+      case 'reg_online':
+      case 'reg_offline':
+      case 'reg_nonpart':
+        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.keyreg);
+        break;
       default:
         break;
     }
@@ -156,6 +160,26 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
     // Restore key registration transaction data, if applicable
     if (txnType === TransactionType.keyreg) {
+      if (!preset || preset === 'reg_online') {
+        jotaiStore.set(TxnData.txnDataAtoms.votekey,
+          (txnData as TxnData.KeyRegTxnData)?.votekey || ''
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.selkey,
+          (txnData as TxnData.KeyRegTxnData)?.selkey || ''
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.sprfkey,
+          (txnData as TxnData.KeyRegTxnData)?.sprfkey || ''
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.votefst, (txnData as TxnData.KeyRegTxnData)?.votefst);
+        jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData)?.votelst);
+        jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData)?.votekd);
+      }
+      if (!preset) {
+        jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData)?.nonpart);
+      }
+      if (preset === 'reg_nonpart') {
+        jotaiStore.set(TxnData.txnDataAtoms.nonpart, true);
+      }
     }
     // Restore application call transaction data, if applicable
     if (txnType === TransactionType.appl) {
