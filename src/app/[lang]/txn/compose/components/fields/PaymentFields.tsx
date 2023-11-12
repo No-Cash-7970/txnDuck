@@ -1,5 +1,6 @@
 /** Fields for the compose-transaction form that are for payment transactions */
 
+import { useSearchParams } from 'next/navigation';
 import { NumberField, TextField } from '@/app/[lang]/components/form';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
@@ -64,25 +65,18 @@ export function CloseTo({ t }: { t: TFunction }) {
 
 function CloseToField({ t }: { t: TFunction }) {
   const [close, setClose] = useAtom(txnDataAtoms.close);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.close.label')}
       name='close'
       id='close-field'
+      required={presetParams === 'close_account'}
+      requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.close.placeholder')}
       containerClass='mt-4'
       value={close}
       onChange={(e) => setClose(e.target.value)}
     />
-  );
-}
-
-export function ReceiverAndAmount({ t }: { t: TFunction }) {
-  return (
-    // If payment type
-    <>
-      <Receiver t={t} />
-      <Amount t={t} />
-    </>
   );
 }

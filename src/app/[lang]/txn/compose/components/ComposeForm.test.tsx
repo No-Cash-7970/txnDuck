@@ -7,9 +7,12 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock useRouter
 const routerPushMock = jest.fn();
+let presetMockValue = '';
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
-  useSearchParams: () => ({toString: () => 'preset=foo'}),
+  useSearchParams: () => ({
+    get: () => presetMockValue
+  }),
 }));
 // Mock algokit
 jest.mock('@algorandfoundation/algokit-utils', () => ({
@@ -24,6 +27,9 @@ import ComposeForm from './ComposeForm';
 import { JotaiProvider } from '@/app/[lang]/components';
 
 describe('Compose Form Component', () => {
+  afterEach(() => {
+    presetMockValue = '';
+  });
 
   it('has instructions', () => {
     render(<ComposeForm />);
@@ -581,5 +587,49 @@ describe('Compose Form Component', () => {
   // it('does not go to sign-transaction page if invalid data is submitted', () => {
 
   // });
+
+  it('has fields for "transfer algos" preset', () => {
+    presetMockValue = 'transfer_algos';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByText('fields.rcv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.amt.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "rekey account" preset', () => {
+    presetMockValue = 'rekey_account';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.rekey.label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.rekey.label/)).toBeRequired();
+  });
+
+  it('has fields for "close account" preset', () => {
+    presetMockValue = 'close_account';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.close.label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.close.label/)).toBeRequired();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
 
 });

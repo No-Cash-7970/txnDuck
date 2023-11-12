@@ -23,35 +23,81 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
+  const preset = currentURLParams.get('preset');
 
   useEffect(() => {
-    // Check if there is any transaction data in storage.
-    // Also check if the form is being submitted. The transaction data is put into storage when the
-    // form is submitted. In this case, the transaction data does not need to be restored into the
-    // atoms.
-    if (!storedTxnData || submittingForm) {
+    // Check if the form is being submitted. The transaction data is put into storage when the form
+    // is submitted. In this case, the transaction data does not need to be restored into the atoms.
+    if (submittingForm) {
       return;
     }
 
-    const txnData = storedTxnData.txn;
+    /*
+     * Set transaction type according to preset
+     */
 
-    // Restore transaction data into atoms
-    jotaiStore.set(TxnData.txnDataAtoms.txnType, txnData.type);
-    jotaiStore.set(TxnData.txnDataAtoms.snd, txnData.snd || '');
-    jotaiStore.set(TxnData.txnDataAtoms.note, txnData.note || '');
-    jotaiStore.set(TxnData.txnDataAtoms.fee, txnData.fee);
-    jotaiStore.set(TxnData.txnDataAtoms.fv, txnData.fv);
-    jotaiStore.set(TxnData.txnDataAtoms.lv, txnData.lv);
-    jotaiStore.set(TxnData.txnDataAtoms.lx, txnData?.lx || '');
-    jotaiStore.set(TxnData.txnDataAtoms.rekey, txnData?.rekey || '');
+    switch (preset) {
+      case 'transfer_algos':
+      case 'rekey_account':
+      case 'close_account':
+        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.pay);
+        break;
+
+      default:
+        break;
+    }
+
+    /*
+     * Restore transaction data into atoms
+     */
+
+    // If there is no transaction data in storage and there is no preset specified
+    if (!storedTxnData && !preset) {
+      return;
+    }
+
+    // NOTE: At this point, there is stored transaction data and/or a preset specified.
+
+    const txnData = storedTxnData?.txn;
+    let txnType = storedTxnData?.txn?.type;
+
+    // Do not set the transaction type again if it was determined by the preset
+    if (!preset) {
+      jotaiStore.set(TxnData.txnDataAtoms.txnType, txnType);
+    } else {
+      // Override the transaction type in the transaction data if there is a preset
+      txnType = jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
+    }
+
+    jotaiStore.set(TxnData.txnDataAtoms.snd, txnData?.snd || '');
+    jotaiStore.set(TxnData.txnDataAtoms.note, txnData?.note || '');
+    jotaiStore.set(TxnData.txnDataAtoms.fee, txnData?.fee);
+    jotaiStore.set(TxnData.txnDataAtoms.fv, txnData?.fv);
+    jotaiStore.set(TxnData.txnDataAtoms.lv, txnData?.lv);
+
+    if (!preset || preset === 'app_run') {
+      jotaiStore.set(TxnData.txnDataAtoms.lx, txnData?.lx || '');
+    }
+
+    if (!preset || preset === 'rekey_account') {
+      jotaiStore.set(TxnData.txnDataAtoms.rekey, txnData?.rekey || '');
+    }
+
     // Restore payment transaction data, if applicable
-    if (txnData.type === TransactionType.pay) {
-      jotaiStore.set(TxnData.txnDataAtoms.rcv, (txnData as TxnData.PaymentTxnData).rcv || '');
-      jotaiStore.set(TxnData.txnDataAtoms.amt, (txnData as TxnData.PaymentTxnData).amt);
-      jotaiStore.set(TxnData.txnDataAtoms.close, (txnData as TxnData.PaymentTxnData).close || '');
+    if (txnType === TransactionType.pay) {
+      if (!preset || preset === 'transfer_algos') {
+        jotaiStore.set(TxnData.txnDataAtoms.rcv, (txnData as TxnData.PaymentTxnData)?.rcv || '');
+        jotaiStore.set(TxnData.txnDataAtoms.amt, (txnData as TxnData.PaymentTxnData)?.amt);
+      }
+
+      if (!preset || preset === 'close_account') {
+        jotaiStore.set(TxnData.txnDataAtoms.close,
+          (txnData as TxnData.PaymentTxnData)?.close || ''
+        );
+      }
     }
     // Restore asset transfer transaction data, if applicable
-    if (txnData.type === TransactionType.axfer) {
+    if (txnType === TransactionType.axfer) {
       jotaiStore.set(TxnData.txnDataAtoms.arcv,
         (txnData as TxnData.AssetTransferTxnData).arcv || ''
       );
@@ -67,7 +113,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
       );
     }
     // Restore asset configuration transaction data, if applicable
-    if (txnData.type === TransactionType.acfg) {
+    if (txnType === TransactionType.acfg) {
       jotaiStore.set(TxnData.txnDataAtoms.caid, (txnData as TxnData.AssetConfigTxnData).caid);
       jotaiStore.set(TxnData.txnDataAtoms.apar_un,
         (txnData as TxnData.AssetConfigTxnData).apar_un || ''
@@ -103,23 +149,16 @@ export default function ComposeSubmitButton({ lng }: Props) {
       );
     }
     // Restore asset freeze transaction data, if applicable
-    if (txnData.type === TransactionType.afrz) {
+    if (txnType === TransactionType.afrz) {
       jotaiStore.set(TxnData.txnDataAtoms.faid, (txnData as TxnData.AssetFreezeTxnData).faid);
       jotaiStore.set(TxnData.txnDataAtoms.fadd, (txnData as TxnData.AssetFreezeTxnData).fadd);
       jotaiStore.set(TxnData.txnDataAtoms.afrz, (txnData as TxnData.AssetFreezeTxnData).afrz);
     }
     // Restore key registration transaction data, if applicable
-    if (txnData.type === TransactionType.keyreg) {
-      jotaiStore.set(TxnData.txnDataAtoms.votekey, (txnData as TxnData.KeyRegTxnData).votekey);
-      jotaiStore.set(TxnData.txnDataAtoms.selkey, (txnData as TxnData.KeyRegTxnData).selkey);
-      jotaiStore.set(TxnData.txnDataAtoms.sprfkey, (txnData as TxnData.KeyRegTxnData).sprfkey);
-      jotaiStore.set(TxnData.txnDataAtoms.votefst, (txnData as TxnData.KeyRegTxnData).votefst);
-      jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData).votelst);
-      jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData).votekd);
-      jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData).nonpart);
+    if (txnType === TransactionType.keyreg) {
     }
     // Restore application call transaction data, if applicable
-    if (txnData.type === TransactionType.appl) {
+    if (txnType === TransactionType.appl) {
       jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData).apid);
       jotaiStore.set(TxnData.txnDataAtoms.apan, (txnData as TxnData.AppCallTxnData).apan);
       jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData).apap || '');
@@ -151,7 +190,19 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
     const txnType: TransactionType =
       jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
-    let specificTxnData = {};
+
+    let baseTxnData: any = {
+      // Gather base transaction data
+      type: txnType,
+      snd: jotaiStore.get(TxnData.txnDataAtoms.snd),
+      note: jotaiStore.get(TxnData.txnDataAtoms.note),
+      fee: jotaiStore.get(TxnData.txnDataAtoms.fee) as number,
+      fv: jotaiStore.get(TxnData.txnDataAtoms.fv) as number,
+      lv: jotaiStore.get(TxnData.txnDataAtoms.lv) as number,
+      lx: jotaiStore.get(TxnData.txnDataAtoms.lx) || undefined,
+      rekey: jotaiStore.get(TxnData.txnDataAtoms.rekey) || undefined,
+    };
+    let specificTxnData: any = {};
 
     // Gather payment transaction data
     if (txnType === TransactionType.pay) {
@@ -160,6 +211,21 @@ export default function ComposeSubmitButton({ lng }: Props) {
         amt: jotaiStore.get(TxnData.txnDataAtoms.amt),
         close: jotaiStore.get(TxnData.txnDataAtoms.close) || undefined,
       };
+
+      if (preset === 'transfer_algos') {
+        baseTxnData.rekey = undefined;
+        specificTxnData.close = undefined;
+      }
+
+      if (preset === 'rekey_account') {
+        specificTxnData.rcv = baseTxnData.snd;
+        specificTxnData.amt = 0;
+      }
+
+      if (preset === 'close_account') {
+        specificTxnData.rcv = specificTxnData.close;
+        specificTxnData.amt = 0;
+      }
     }
 
     // Gather asset transfer transaction data
@@ -241,16 +307,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
       gen: genesisID,
       gh: genesisHash,
       txn: {
+        ...baseTxnData,
         ...specificTxnData,
-        // Gather base transaction data
-        type: txnType,
-        snd: jotaiStore.get(TxnData.txnDataAtoms.snd),
-        note: jotaiStore.get(TxnData.txnDataAtoms.note),
-        fee: jotaiStore.get(TxnData.txnDataAtoms.fee) as number,
-        fv: jotaiStore.get(TxnData.txnDataAtoms.fv) as number,
-        lv: jotaiStore.get(TxnData.txnDataAtoms.lv) as number,
-        lx: jotaiStore.get(TxnData.txnDataAtoms.lx) || undefined,
-        rekey: jotaiStore.get(TxnData.txnDataAtoms.rekey) || undefined,
       }
     });
     // Go to sign-transaction page

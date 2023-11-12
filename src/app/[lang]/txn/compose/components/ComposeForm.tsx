@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import * as Icons from '@tabler/icons-react';
@@ -25,6 +26,7 @@ type Props = {
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const txnType = useAtomValue(txnDataAtoms.txnType);
+  const presetParams = useSearchParams().get('preset');
 
   return (
     <form
@@ -42,7 +44,10 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.TxnType t={t} />
       <GeneralFields.Sender t={t} />
 
-      {txnType === TransactionType.pay && <PaymentFields.ReceiverAndAmount t={t} />}
+      {txnType === TransactionType.pay && (!presetParams || presetParams === 'transfer_algos') && <>
+        <PaymentFields.Receiver t={t} />
+        <PaymentFields.Amount t={t} />
+      </>}
 
       {txnType === TransactionType.axfer && <>
         <AssetTransferFields.Receiver t={t} />
@@ -95,17 +100,20 @@ export default function ComposeForm({ lng }: Props) {
         <AssetConfigFields.MetadataHash t={t} />
       </>}
 
-      <div>
-        {txnType === TransactionType.keyreg && <KeyRegFields.Nonparticipation t={t} />}
+      {txnType === TransactionType.keyreg && <KeyRegFields.Nonparticipation t={t} />}
 
-        <GeneralFields.FirstValid t={t} />
-        <GeneralFields.LastValid t={t} />
-        <GeneralFields.Lease t={t} />
-        <GeneralFields.Rekey t={t} />
+      <GeneralFields.FirstValid t={t} />
+      <GeneralFields.LastValid t={t} />
 
-        {txnType === TransactionType.pay && <PaymentFields.CloseTo t={t} />}
-        {txnType === TransactionType.axfer && <AssetTransferFields.CloseTo t={t} />}
-      </div>
+      {(!presetParams || presetParams === 'app_run') && <GeneralFields.Lease t={t} />}
+
+      {(!presetParams || presetParams === 'rekey_account') && <GeneralFields.Rekey t={t} />}
+
+      {(txnType === TransactionType.pay) && (!presetParams || presetParams === 'close_account') &&
+        <PaymentFields.CloseTo t={t} />
+      }
+
+      {txnType === TransactionType.axfer && <AssetTransferFields.CloseTo t={t} />}
 
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
         <div>

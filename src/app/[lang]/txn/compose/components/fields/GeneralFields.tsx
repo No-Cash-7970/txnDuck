@@ -1,5 +1,6 @@
 /** Fields for the compose-transaction form that every transaction has */
 
+import { useSearchParams } from 'next/navigation';
 import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
@@ -10,6 +11,7 @@ import { TransactionType } from 'algosdk';
 
 export function TxnType({ t }: { t: TFunction }) {
   const [txnType, setTxnType] = useAtom(txnDataAtoms.txnType);
+  const presetParams = useSearchParams().get('preset');
   return (
     <SelectField label={t('fields.type.label')}
       name='type'
@@ -18,6 +20,7 @@ export function TxnType({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       containerClass='max-w-xs'
       placeholder={t('fields.type.placeholder')}
+      disabled={!!presetParams}
       options={[
         { value: TransactionType.pay, text: t('fields.type.options.pay') },
         { value: TransactionType.axfer, text: t('fields.type.options.axfer') },
@@ -160,10 +163,13 @@ export function Rekey({ t }: { t: TFunction }) {
 
 function RekeyField({ t }: { t: TFunction }) {
   const [rekey, setRekey] = useAtom(txnDataAtoms.rekey);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.rekey.label')}
       name='rekey'
       id='rekey-field'
+      required={presetParams === 'rekey_account'}
+      requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.rekey.placeholder')}
       containerClass='mt-4'

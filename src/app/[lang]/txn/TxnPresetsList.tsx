@@ -38,7 +38,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('transfer_algos.heading')}
           actionText={t('transfer_algos.action')}
           actionURL={`/${lng}/txn/compose?preset=transfer_algos`}
-          actionDisabled={true}
           color='primary'
         >
           {t('transfer_algos.description')}
@@ -46,7 +45,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('rekey_account.heading')}
           actionText={t('rekey_account.action')}
           actionURL={`/${lng}/txn/compose?preset=rekey_account`}
-          actionDisabled={true}
           color='primary'
         >
           {t('rekey_account.description')}
@@ -54,7 +52,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('close_account.heading')}
           actionText={t('close_account.action')}
           actionURL={`/${lng}/txn/compose?preset=close_account`}
-          actionDisabled={true}
           color='primary'
         >
           {t('close_account.description')}
