@@ -23,7 +23,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
-  const preset = currentURLParams.get('preset');
+  const preset = currentURLParams.get(TxnData.Preset.ParamName);
 
   useEffect(() => {
     // Check if the form is being submitted. The transaction data is put into storage when the form
@@ -37,38 +37,38 @@ export default function ComposeSubmitButton({ lng }: Props) {
      */
 
     switch (preset) {
-      case 'transfer_algos':
-      case 'rekey_account':
-      case 'close_account':
+      case TxnData.Preset.TransferAlgos:
+      case TxnData.Preset.RekeyAccount:
+      case TxnData.Preset.CloseAccount:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.pay);
         break;
-      case 'reg_online':
-      case 'reg_offline':
-      case 'reg_nonpart':
+      case TxnData.Preset.RegOnline:
+      case TxnData.Preset.RegOffline:
+      case TxnData.Preset.RegNonpart:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.keyreg);
         break;
-      case 'app_run':
-      case 'app_opt_in':
-      case 'app_deploy':
-      case 'app_update':
-      case 'app_close':
-      case 'app_clear':
-      case 'app_delete':
+      case TxnData.Preset.AppRun:
+      case TxnData.Preset.AppOptIn:
+      case TxnData.Preset.AppDeploy:
+      case TxnData.Preset.AppUpdate:
+      case TxnData.Preset.AppClose:
+      case TxnData.Preset.AppClear:
+      case TxnData.Preset.AppDelete:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.appl);
         break;
-      case 'asset_transfer':
-      case 'asset_opt_in':
-      case 'asset_opt_out':
-      case 'asset_clawback':
+      case TxnData.Preset.AssetTransfer:
+      case TxnData.Preset.AssetOptIn:
+      case TxnData.Preset.AssetOptOut:
+      case TxnData.Preset.AssetClawback:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.axfer);
         break;
-      case 'asset_create':
-      case 'asset_reconfig':
-      case 'asset_destroy':
+      case TxnData.Preset.AssetCreate:
+      case TxnData.Preset.AssetReconfig:
+      case TxnData.Preset.AssetDestroy:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.acfg);
         break;
-      case 'asset_freeze':
-      case 'asset_unfreeze':
+      case TxnData.Preset.AssetFreeze:
+      case TxnData.Preset.AssetUnfreeze:
         jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.afrz);
         break;
     }
@@ -101,32 +101,33 @@ export default function ComposeSubmitButton({ lng }: Props) {
     jotaiStore.set(TxnData.txnDataAtoms.fv, txnData?.fv);
     jotaiStore.set(TxnData.txnDataAtoms.lv, txnData?.lv);
 
-    if (!preset || preset === 'app_run') {
+    if (!preset || preset === TxnData.Preset.AppRun) {
       jotaiStore.set(TxnData.txnDataAtoms.lx, txnData?.lx || '');
     }
 
-    if (!preset || preset === 'rekey_account') {
+    if (!preset || preset === TxnData.Preset.RekeyAccount) {
       jotaiStore.set(TxnData.txnDataAtoms.rekey, txnData?.rekey || '');
     }
 
     // Restore payment transaction data, if applicable
     if (txnType === TransactionType.pay) {
-      if (!preset || preset === 'transfer_algos') {
+      if (!preset || preset === TxnData.Preset.TransferAlgos) {
         jotaiStore.set(TxnData.txnDataAtoms.rcv, (txnData as TxnData.PaymentTxnData)?.rcv || '');
         jotaiStore.set(TxnData.txnDataAtoms.amt, (txnData as TxnData.PaymentTxnData)?.amt);
       }
 
-      if (!preset || preset === 'close_account') {
+      if (!preset || preset === TxnData.Preset.CloseAccount) {
         jotaiStore.set(TxnData.txnDataAtoms.close,
           (txnData as TxnData.PaymentTxnData)?.close || ''
         );
       }
     }
+
     // Restore asset transfer transaction data, if applicable
     if (txnType === TransactionType.axfer) {
       jotaiStore.set(TxnData.txnDataAtoms.xaid, (txnData as TxnData.AssetTransferTxnData)?.xaid);
 
-      if (preset !== 'asset_opt_in' && preset !== 'asset_opt_out') {
+      if (preset !== TxnData.Preset.AssetOptIn && preset !== TxnData.Preset.AssetOptOut) {
         jotaiStore.set(TxnData.txnDataAtoms.arcv,
           (txnData as TxnData.AssetTransferTxnData)?.arcv || ''
         );
@@ -135,21 +136,22 @@ export default function ComposeSubmitButton({ lng }: Props) {
         );
       }
 
-      if (!preset || preset === 'asset_clawback') {
+      if (!preset || preset === TxnData.Preset.AssetClawback) {
         jotaiStore.set(TxnData.txnDataAtoms.asnd,
           (txnData as TxnData.AssetTransferTxnData)?.asnd || ''
         );
       }
 
-      if (!preset || preset === 'asset_opt_out') {
+      if (!preset || preset === TxnData.Preset.AssetOptOut) {
         jotaiStore.set(TxnData.txnDataAtoms.aclose,
           (txnData as TxnData.AssetTransferTxnData)?.aclose || ''
         );
       }
     }
+
     // Restore asset configuration transaction data, if applicable
     if (txnType === TransactionType.acfg) {
-      if (preset !== 'asset_create') {
+      if (preset !== TxnData.Preset.AssetCreate) {
         jotaiStore.set(TxnData.txnDataAtoms.caid, (txnData as TxnData.AssetConfigTxnData)?.caid);
       }
 
@@ -188,6 +190,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         (txnData as TxnData.AssetConfigTxnData)?.apar_am || ''
       );
     }
+
     // Restore asset freeze transaction data, if applicable
     if (txnType === TransactionType.afrz) {
       jotaiStore.set(TxnData.txnDataAtoms.faid, (txnData as TxnData.AssetFreezeTxnData)?.faid);
@@ -195,19 +198,19 @@ export default function ComposeSubmitButton({ lng }: Props) {
         (txnData as TxnData.AssetFreezeTxnData)?.fadd || ''
       );
 
-      if (preset === 'asset_freeze') {
+      if (preset === TxnData.Preset.AssetFreeze) {
         jotaiStore.set(TxnData.txnDataAtoms.afrz, true);
-      } else if (preset === 'asset_unfreeze') {
+      } else if (preset === TxnData.Preset.AssetUnfreeze) {
         jotaiStore.set(TxnData.txnDataAtoms.afrz, false);
       } else {
         jotaiStore.set(TxnData.txnDataAtoms.afrz,
-          (txnData as TxnData.AssetFreezeTxnData)?.afrz || false
+          (txnData as TxnData.AssetFreezeTxnData)?.afrz ?? false
         );
       }
     }
     // Restore key registration transaction data, if applicable
     if (txnType === TransactionType.keyreg) {
-      if (!preset || preset === 'reg_online') {
+      if (!preset || preset === TxnData.Preset.RegOnline) {
         jotaiStore.set(TxnData.txnDataAtoms.votekey,
           (txnData as TxnData.KeyRegTxnData)?.votekey || ''
         );
@@ -221,33 +224,35 @@ export default function ComposeSubmitButton({ lng }: Props) {
         jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData)?.votelst);
         jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData)?.votekd);
       }
+
       if (!preset) {
         jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData)?.nonpart);
       }
-      if (preset === 'reg_nonpart') {
+
+      if (preset === TxnData.Preset.RegNonpart) {
         jotaiStore.set(TxnData.txnDataAtoms.nonpart, true);
       }
     }
     // Restore application call transaction data, if applicable
     if (txnType === TransactionType.appl) {
       switch (preset) {
-        case 'app_run':
-        case 'app_deploy':
+        case TxnData.Preset.AppRun:
+        case TxnData.Preset.AppDeploy:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.NoOpOC);
           break;
-        case 'app_opt_in':
+        case TxnData.Preset.AppOptIn:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.OptInOC);
           break;
-        case 'app_update':
+        case TxnData.Preset.AppUpdate:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.UpdateApplicationOC);
           break;
-        case 'app_close':
+        case TxnData.Preset.AppClose:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.CloseOutOC);
           break;
-        case 'app_clear':
+        case TxnData.Preset.AppClear:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.ClearStateOC);
           break;
-        case 'app_delete':
+        case TxnData.Preset.AppDelete:
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.DeleteApplicationOC);
           break;
         default:
@@ -255,16 +260,16 @@ export default function ComposeSubmitButton({ lng }: Props) {
           break;
       }
 
-      if (preset !== 'app_deploy') {
+      if (preset !== TxnData.Preset.AppDeploy) {
         jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData)?.apid);
       }
 
-      if (!preset || preset === 'app_deploy' || preset === 'app_update') {
+      if (!preset || preset === TxnData.Preset.AppDeploy || preset === TxnData.Preset.AppUpdate) {
         jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData)?.apap || '');
         jotaiStore.set(TxnData.txnDataAtoms.apsu, (txnData as TxnData.AppCallTxnData)?.apsu || '');
       }
 
-      if (!preset || preset === 'app_deploy') {
+      if (!preset || preset === TxnData.Preset.AppDeploy) {
         jotaiStore.set(TxnData.txnDataAtoms.apgs_nui,
           (txnData as TxnData.AppCallTxnData)?.apgs_nui
         );
@@ -324,16 +329,16 @@ export default function ComposeSubmitButton({ lng }: Props) {
         close: jotaiStore.get(TxnData.txnDataAtoms.close) || undefined,
       };
 
-      if (preset === 'transfer_algos') {
+      if (preset === TxnData.Preset.TransferAlgos) {
         specificTxnData.close = undefined;
       }
 
-      if (preset === 'rekey_account') {
+      if (preset === TxnData.Preset.RekeyAccount) {
         specificTxnData.rcv = baseTxnData.snd;
         specificTxnData.amt = 0;
       }
 
-      if (preset === 'close_account') {
+      if (preset === TxnData.Preset.CloseAccount) {
         specificTxnData.rcv = specificTxnData.close;
         specificTxnData.amt = 0;
       }
@@ -350,12 +355,12 @@ export default function ComposeSubmitButton({ lng }: Props) {
         aclose: jotaiStore.get(TxnData.txnDataAtoms.aclose) || undefined,
       };
 
-      if (preset === 'asset_opt_in') {
+      if (preset === TxnData.Preset.AssetOptIn) {
         specificTxnData.arcv = baseTxnData.snd;
         specificTxnData.aamt = 0;
       }
 
-      if (preset === 'asset_opt_out') {
+      if (preset === TxnData.Preset.AssetOptOut) {
         specificTxnData.arcv = specificTxnData.aclose;
         specificTxnData.aamt = 0;
       }
@@ -379,7 +384,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         apar_am: jotaiStore.get(TxnData.txnDataAtoms.apar_am) || undefined,
       };
 
-      if (preset === 'asset_destroy') {
+      if (preset === TxnData.Preset.AssetDestroy) {
         specificTxnData.apar_m = undefined;
         specificTxnData.apar_f = undefined;
         specificTxnData.apar_c = undefined;

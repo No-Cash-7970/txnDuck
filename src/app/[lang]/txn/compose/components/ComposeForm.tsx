@@ -7,7 +7,7 @@ import { Trans } from 'react-i18next';
 import * as Icons from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import * as GeneralFields from './fields/GeneralFields';
 import * as PaymentFields from './fields/PaymentFields';
 import * as AssetTransferFields from './fields/AssetTransferFields';
@@ -26,7 +26,7 @@ type Props = {
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const txnType = useAtomValue(txnDataAtoms.txnType);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
 
   return (
     <form
@@ -44,31 +44,29 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.TxnType t={t} />
       <GeneralFields.Sender t={t} />
 
-      {txnType === TransactionType.pay && (!presetParams || presetParams === 'transfer_algos') && <>
+      {txnType === TransactionType.pay && (!preset || preset === Preset.TransferAlgos) && <>
         <PaymentFields.Receiver t={t} />
         <PaymentFields.Amount t={t} />
       </>}
 
       {txnType === TransactionType.axfer && <>
-        {presetParams !== 'asset_opt_in' && presetParams !== 'asset_opt_out' && <>
+        {preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut &&
           <AssetTransferFields.Receiver t={t} />
-        </>}
+        }
 
         <AssetTransferFields.AssetId t={t} />
 
-        {presetParams !== 'asset_opt_in' && presetParams !== 'asset_opt_out' && <>
+        {preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut &&
           <AssetTransferFields.Amount t={t} />
-        </>}
-
-        {(!presetParams || presetParams === 'asset_clawback') &&
-          <AssetTransferFields.Sender t={t} />
         }
+
+        {(!preset || preset === Preset.AssetClawback) && <AssetTransferFields.Sender t={t} />}
       </>}
 
       {txnType === TransactionType.acfg && <>
-        {presetParams !== 'asset_create' && <AssetConfigFields.AssetId t={t} />}
+        {preset !== Preset.AssetCreate && <AssetConfigFields.AssetId t={t} />}
 
-        {(!presetParams || presetParams === 'asset_create') && <>
+        {(!preset || preset === Preset.AssetCreate) && <>
           <AssetConfigFields.UnitName t={t} />
           <AssetConfigFields.AssetName t={t} />
           <AssetConfigFields.Total t={t} />
@@ -84,7 +82,7 @@ export default function ComposeForm({ lng }: Props) {
         <AssetFreezeFields.Freeze t={t} />
       </>}
 
-      {txnType === TransactionType.keyreg && (!presetParams || presetParams === 'reg_online') && <>
+      {txnType === TransactionType.keyreg && (!preset || preset === Preset.RegOnline) && <>
         <KeyRegFields.VoteKey t={t} />
         <KeyRegFields.SelectionKey t={t} />
         <KeyRegFields.StateProofKey t={t} />
@@ -96,11 +94,11 @@ export default function ComposeForm({ lng }: Props) {
       {txnType === TransactionType.appl && <>
         <AppCallFields.OnComplete t={t} />
 
-        {presetParams !== 'app_deploy' && <AppCallFields.AppId t={t} />}
+        {preset !== Preset.AppDeploy && <AppCallFields.AppId t={t} />}
 
         <AppCallFields.AppArgs t={t} />
 
-        {(!presetParams || presetParams === 'app_deploy' || presetParams === 'app_update') &&
+        {(!preset || preset === Preset.AppDeploy || preset === Preset.AppUpdate) &&
           <AppCallFields.AppProperties t={t} />
         }
 
@@ -110,33 +108,31 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
 
-      {txnType === TransactionType.acfg && presetParams !== 'asset_destroy' && <>
+      {txnType === TransactionType.acfg && preset !== Preset.AssetDestroy && <>
         <AssetConfigFields.ManagerAddr t={t} />
         <AssetConfigFields.FreezeAddr t={t} />
         <AssetConfigFields.ClawbackAddr t={t} />
         <AssetConfigFields.ReserveAddr t={t} />
 
-        {(!presetParams || presetParams === 'asset_create') &&
-          <AssetConfigFields.MetadataHash t={t} />
-        }
+        {(!preset || preset === Preset.AssetCreate) && <AssetConfigFields.MetadataHash t={t} />}
       </>}
 
-      {txnType === TransactionType.keyreg && (!presetParams || presetParams === 'reg_nonpart') &&
+      {txnType === TransactionType.keyreg && (!preset || preset === Preset.RegNonpart) &&
         <KeyRegFields.Nonparticipation t={t} />
       }
 
       <GeneralFields.FirstValid t={t} />
       <GeneralFields.LastValid t={t} />
 
-      {(!presetParams || presetParams === 'app_run') && <GeneralFields.Lease t={t} />}
+      {(!preset || preset === Preset.AppRun) && <GeneralFields.Lease t={t} />}
 
-      {(!presetParams || presetParams === 'rekey_account') && <GeneralFields.Rekey t={t} />}
+      {(!preset || preset === Preset.RekeyAccount) && <GeneralFields.Rekey t={t} />}
 
-      {(txnType === TransactionType.pay) && (!presetParams || presetParams === 'close_account') &&
+      {(txnType === TransactionType.pay) && (!preset || preset === Preset.CloseAccount) &&
         <PaymentFields.CloseTo t={t} />
       }
 
-      {txnType === TransactionType.axfer && (!presetParams || presetParams === 'asset_opt_out') &&
+      {txnType === TransactionType.axfer && (!preset || preset === Preset.AssetOptOut) &&
         <AssetTransferFields.CloseTo t={t} />
       }
 

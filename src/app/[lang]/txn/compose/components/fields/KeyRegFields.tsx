@@ -4,11 +4,11 @@ import { useSearchParams } from 'next/navigation';
 import { NumberField, TextAreaField, TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 
 export function VoteKey({ t }: { t: TFunction }) {
   const [voteKey, setVoteKey] = useAtom(txnDataAtoms.votekey);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
   const voteFst = useAtomValue(txnDataAtoms.votefst);
@@ -21,7 +21,7 @@ export function VoteKey({ t }: { t: TFunction }) {
       id='votekey-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -35,7 +35,7 @@ export function VoteKey({ t }: { t: TFunction }) {
 
 export function SelectionKey({ t }: { t: TFunction }) {
   const [selKey, setSelKey] = useAtom(txnDataAtoms.selkey);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
   const voteFst = useAtomValue(txnDataAtoms.votefst);
@@ -48,7 +48,7 @@ export function SelectionKey({ t }: { t: TFunction }) {
       id='selkey-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -62,7 +62,7 @@ export function SelectionKey({ t }: { t: TFunction }) {
 
 export function StateProofKey({ t }: { t: TFunction }) {
   const [stateProofKey, setStateProofKey] = useAtom(txnDataAtoms.sprfkey);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const voteFst = useAtomValue(txnDataAtoms.votefst);
@@ -75,7 +75,7 @@ export function StateProofKey({ t }: { t: TFunction }) {
       id='sprfkey-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -89,7 +89,7 @@ export function StateProofKey({ t }: { t: TFunction }) {
 
 export function FirstVoteRound({ t }: { t: TFunction }) {
   const [voteFst, setVoteFst] = useAtom(txnDataAtoms.votefst);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
@@ -102,7 +102,7 @@ export function FirstVoteRound({ t }: { t: TFunction }) {
       id='votefst-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -119,7 +119,7 @@ export function FirstVoteRound({ t }: { t: TFunction }) {
 
 export function LastVoteRound({ t }: { t: TFunction }) {
   const [voteLst, setVoteLst] = useAtom(txnDataAtoms.votelst);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
@@ -132,7 +132,7 @@ export function LastVoteRound({ t }: { t: TFunction }) {
       id='votelst-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -147,7 +147,7 @@ export function LastVoteRound({ t }: { t: TFunction }) {
 
 export function KeyDilution({ t }: { t: TFunction }) {
   const [voteKd, setVoteKd] = useAtom(txnDataAtoms.votekd);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
@@ -160,7 +160,7 @@ export function KeyDilution({ t }: { t: TFunction }) {
       id='votekd-field'
       required={
         !!(voteKey || selKey || stateProofKey || voteFst || voteLst || voteKd
-          || presetParams === 'reg_online')
+          || preset === Preset.RegOnline)
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -175,7 +175,7 @@ export function KeyDilution({ t }: { t: TFunction }) {
 
 export function Nonparticipation({ t }: { t: TFunction }) {
   const [nonPart, setNonPart] = useAtom(txnDataAtoms.nonpart);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   const voteKey = useAtomValue(txnDataAtoms.votekey);
   const selKey = useAtomValue(txnDataAtoms.selkey);
   const stateProofKey = useAtomValue(txnDataAtoms.sprfkey);
@@ -189,7 +189,7 @@ export function Nonparticipation({ t }: { t: TFunction }) {
       inputInsideLabel={true}
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
-      disabled={presetParams === 'reg_nonpart'}
+      disabled={preset === Preset.RegNonpart}
       value={nonPart}
       onChange={(e) => setNonPart(e.target.checked)}
     />

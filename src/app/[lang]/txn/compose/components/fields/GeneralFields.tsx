@@ -5,13 +5,13 @@ import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
 
 export function TxnType({ t }: { t: TFunction }) {
   const [txnType, setTxnType] = useAtom(txnDataAtoms.txnType);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <SelectField label={t('fields.type.label')}
       name='type'
@@ -20,7 +20,7 @@ export function TxnType({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       containerClass='max-w-xs'
       placeholder={t('fields.type.placeholder')}
-      disabled={!!presetParams}
+      disabled={!!preset}
       options={[
         { value: TransactionType.pay, text: t('fields.type.options.pay') },
         { value: TransactionType.axfer, text: t('fields.type.options.axfer') },
@@ -163,12 +163,12 @@ export function Rekey({ t }: { t: TFunction }) {
 
 function RekeyField({ t }: { t: TFunction }) {
   const [rekey, setRekey] = useAtom(txnDataAtoms.rekey);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.rekey.label')}
       name='rekey'
       id='rekey-field'
-      required={presetParams === 'rekey_account'}
+      required={preset === Preset.RekeyAccount}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.rekey.placeholder')}

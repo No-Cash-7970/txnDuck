@@ -5,17 +5,17 @@ import { NumberField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 
 export function Sender({ t }: { t: TFunction }) {
   const [asnd, setAsnd] = useAtom(txnDataAtoms.asnd);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.asnd.label')}
       name='asnd'
       id='asnd-field'
-      required={presetParams === 'asset_clawback'}
+      required={preset === Preset.AssetClawback}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.asnd.placeholder')}
@@ -96,12 +96,12 @@ export function CloseTo({ t }: { t: TFunction }) {
 
 function CloseToField({ t }: { t: TFunction }) {
   const [aclose, setAclose] = useAtom(txnDataAtoms.aclose);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.aclose.label')}
       name='aclose'
       id='aclose-field'
-      required={presetParams === 'asset_opt_out'}
+      required={preset === Preset.AssetOptOut}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.aclose.placeholder')}

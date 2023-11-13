@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtom } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 
 export function AssetId({ t }: { t: TFunction }) {
   const [assetId, setAssetId] = useAtom(txnDataAtoms.faid);
@@ -42,7 +42,7 @@ export function TargetAddr({ t }: { t: TFunction }) {
 
 export function Freeze({ t }: { t: TFunction }) {
   const [freeze, setFreeze] = useAtom(txnDataAtoms.afrz);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <ToggleField label={t('fields.afrz.label')}
       name='afrz'
@@ -50,7 +50,7 @@ export function Freeze({ t }: { t: TFunction }) {
       inputInsideLabel={true}
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
-      disabled={presetParams === 'asset_freeze' || presetParams === 'asset_unfreeze'}
+      disabled={preset === Preset.AssetFreeze || preset === Preset.AssetUnfreeze}
       value={freeze}
       onChange={(e) => setFreeze(e.target.checked)}
     />

@@ -11,7 +11,7 @@ import {
 import { type TFunction } from 'i18next';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
 import * as Icons from '@tabler/icons-react';
-import { BoxRef, txnDataAtoms } from '@/app/lib/txn-data';
+import { BoxRef, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { OnApplicationComplete } from 'algosdk';
 
 // https://developer.algorand.org/docs/get-details/parameter_tables/
@@ -24,7 +24,7 @@ const MAX_ACCTS = 4;
 
 export function OnComplete({ t }: { t: TFunction }) {
   const [onComplete, setOnComplete] = useAtom(txnDataAtoms.apan);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <SelectField label={t('fields.apan.label')}
       name='apan'
@@ -32,7 +32,7 @@ export function OnComplete({ t }: { t: TFunction }) {
       required={true}
       requiredText={t('form.required')}
       containerClass='mt-4 max-w-xs'
-      disabled={!!presetParams}
+      disabled={!!preset}
       options={[
         { value: OnApplicationComplete.NoOpOC, text: t('fields.apan.options.no_op') },
         { value: OnApplicationComplete.OptInOC, text: t('fields.apan.options.opt_in') },
@@ -50,12 +50,12 @@ export function OnComplete({ t }: { t: TFunction }) {
 export function AppId({ t }: { t: TFunction }) {
   const [appId, setAppId] = useAtom(txnDataAtoms.apid);
   const onComplete = useAtomValue(txnDataAtoms.apan);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.apid.label')}
       name='apid'
       id='apid-field'
-      required={onComplete !== OnApplicationComplete.NoOpOC || presetParams === 'app_run'}
+      required={onComplete !== OnApplicationComplete.NoOpOC || preset === Preset.AppRun}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'

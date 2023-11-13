@@ -4,16 +4,16 @@ import { useSearchParams } from 'next/navigation';
 import { NumberField, TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue } from 'jotai';
-import { txnDataAtoms } from '@/app/lib/txn-data';
+import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
 
 export function AssetId({ t }: { t: TFunction }) {
   const [caid, setCaid] = useAtom(txnDataAtoms.caid);
-  const presetParams = useSearchParams().get('preset');
+  const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.caid.label')}
       name='caid'
       id='caid-field'
-      required={presetParams === 'asset_reconfig' || presetParams === 'asset_destroy'}
+      required={preset === Preset.AssetReconfig || preset === Preset.AssetDestroy}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'

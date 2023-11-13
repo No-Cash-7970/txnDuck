@@ -5,6 +5,7 @@ import { Trans } from "react-i18next";
 import { useTranslation } from "@/app/i18n/client";
 import { SelectField } from "@/app/[lang]/components/form";
 import TxnPreset from "./TxnPreset";
+import { Preset } from "@/app/lib/txn-data";
 
 type Props = {
   /** Language */
@@ -35,152 +36,152 @@ export default function TxnPresetsList({ lng }: Props) {
     {(category === 'general' || category === 'all') && <>
       <h2 className='ps-2' id='general'>{t('general_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-        <TxnPreset heading={t('transfer_algos.heading')}
-          actionText={t('transfer_algos.action')}
-          actionURL={`/${lng}/txn/compose?preset=transfer_algos`}
+        <TxnPreset heading={t(`${Preset.TransferAlgos}.heading`)}
+          actionText={t(`${Preset.TransferAlgos}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.TransferAlgos}`}
           color='primary'
         >
-          {t('transfer_algos.description')}
+          {t(`${Preset.TransferAlgos}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('rekey_account.heading')}
-          actionText={t('rekey_account.action')}
-          actionURL={`/${lng}/txn/compose?preset=rekey_account`}
+        <TxnPreset heading={t(`${Preset.RekeyAccount}.heading`)}
+          actionText={t(`${Preset.RekeyAccount}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.RekeyAccount}`}
           color='primary'
         >
-          {t('rekey_account.description')}
+          {t(`${Preset.RekeyAccount}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('close_account.heading')}
-          actionText={t('close_account.action')}
-          actionURL={`/${lng}/txn/compose?preset=close_account`}
+        <TxnPreset heading={t(`${Preset.CloseAccount}.heading`)}
+          actionText={t(`${Preset.CloseAccount}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.CloseAccount}`}
           color='primary'
         >
-          {t('close_account.description')}
+          {t(`${Preset.CloseAccount}.description`)}
         </TxnPreset>
       </section>
     </>}
     {(category === 'asset' || category === 'all') && <>
       <h2 className='ps-2' id='asset'>{t('asset_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-        <TxnPreset heading={t('asset_transfer.heading')}
-          actionText={t('asset_transfer.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_transfer`}
+        <TxnPreset heading={t(`${Preset.AssetTransfer}.heading`)}
+          actionText={t(`${Preset.AssetTransfer}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetTransfer}`}
           color='secondary'
         >
-          {t('asset_transfer.description')}
+          {t(`${Preset.AssetTransfer}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_opt_in.heading')}
-          actionText={t('asset_opt_in.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_opt_in`}
+        <TxnPreset heading={t(`${Preset.AssetOptIn}.heading`)}
+          actionText={t(`${Preset.AssetOptIn}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetOptIn}`}
           color='secondary'
         >
-          {t('asset_opt_in.description')}
+          {t(`${Preset.AssetOptIn}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_opt_out.heading')}
-          actionText={t('asset_opt_out.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_opt_out`}
+        <TxnPreset heading={t(`${Preset.AssetOptOut}.heading`)}
+          actionText={t(`${Preset.AssetOptOut}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetOptOut}`}
           color='secondary'
         >
-          {t('asset_opt_out.description')}
+          {t(`${Preset.AssetOptOut}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_create.heading')}
-          actionText={t('asset_create.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_create`}
+        <TxnPreset heading={t(`${Preset.AssetCreate}.heading`)}
+          actionText={t(`${Preset.AssetCreate}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetCreate}`}
           color='secondary'
         >
-          {t('asset_create.description')}
+          {t(`${Preset.AssetCreate}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_reconfig.heading')}
-          actionText={t('asset_reconfig.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_reconfig`}
+        <TxnPreset heading={t(`${Preset.AssetReconfig}.heading`)}
+          actionText={t(`${Preset.AssetReconfig}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetReconfig}`}
           color='secondary'
         >
-          {t('asset_reconfig.description')}
+          {t(`${Preset.AssetReconfig}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_clawback.heading')}
-          actionText={t('asset_clawback.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_clawback`}
+        <TxnPreset heading={t(`${Preset.AssetClawback}.heading`)}
+          actionText={t(`${Preset.AssetClawback}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetClawback}`}
           color='secondary'
         >
-          {t('asset_clawback.description')}
+          {t(`${Preset.AssetClawback}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_freeze.heading')}
-          actionText={t('asset_freeze.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_freeze`}
+        <TxnPreset heading={t(`${Preset.AssetFreeze}.heading`)}
+          actionText={t(`${Preset.AssetFreeze}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetFreeze}`}
           color='secondary'
         >
-          {t('asset_freeze.description')}
+          {t(`${Preset.AssetFreeze}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_unfreeze.heading')}
-          actionText={t('asset_unfreeze.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_unfreeze`}
+        <TxnPreset heading={t(`${Preset.AssetUnfreeze}.heading`)}
+          actionText={t(`${Preset.AssetUnfreeze}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetUnfreeze}`}
           color='secondary'
         >
-          {t('asset_unfreeze.description')}
+          {t(`${Preset.AssetUnfreeze}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('asset_destroy.heading')}
-          actionText={t('asset_destroy.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_destroy`}
+        <TxnPreset heading={t(`${Preset.AssetDestroy}.heading`)}
+          actionText={t(`${Preset.AssetDestroy}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AssetDestroy}`}
           color='secondary'
         >
-          {t('asset_destroy.description')}
+          {t(`${Preset.AssetDestroy}.description`)}
         </TxnPreset>
       </section>
     </>}
     {(category === 'app' || category === 'all') && <>
       <h2 className='ps-2' id='application'>{t('app_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-        <TxnPreset heading={t('app_run.heading')}
-          actionText={t('app_run.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_run`}
+        <TxnPreset heading={t(`${Preset.AppRun}.heading`)}
+          actionText={t(`${Preset.AppRun}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppRun}`}
           color='primary'
         >
-          <Trans t={t} i18nKey='app_run.description'
+          <Trans t={t} i18nKey={`${Preset.AppRun}.description`}
             components={{code: <code className='px-0' />}}
           />
         </TxnPreset>
-        <TxnPreset heading={t('app_opt_in.heading')}
-          actionText={t('app_opt_in.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_opt_in`}
+        <TxnPreset heading={t(`${Preset.AppOptIn}.heading`)}
+          actionText={t(`${Preset.AppOptIn}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppOptIn}`}
           color='primary'
         >
-          {t('app_opt_in.description')}
+          {t(`${Preset.AppOptIn}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('app_deploy.heading')}
-          actionText={t('app_deploy.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_deploy`}
+        <TxnPreset heading={t(`${Preset.AppDeploy}.heading`)}
+          actionText={t(`${Preset.AppDeploy}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppDeploy}`}
           color='primary'
         >
-          {t('app_deploy.description')}
+          {t(`${Preset.AppDeploy}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('app_update.heading')}
-          actionText={t('app_update.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_update`}
+        <TxnPreset heading={t(`${Preset.AppUpdate}.heading`)}
+          actionText={t(`${Preset.AppUpdate}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppUpdate}`}
           color='primary'
         >
-          <Trans t={t} i18nKey='app_update.description'
+          <Trans t={t} i18nKey={`${Preset.AppUpdate}.description`}
             components={{code: <code className='px-0' />}}
           />
         </TxnPreset>
-        <TxnPreset heading={t('app_close.heading')}
-          actionText={t('app_close.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_close`}
+        <TxnPreset heading={t(`${Preset.AppClose}.heading`)}
+          actionText={t(`${Preset.AppClose}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppClose}`}
           color='primary'
         >
-          {t('app_close.description')}
+          {t(`${Preset.AppClose}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('app_clear.heading')}
-          actionText={t('app_clear.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_clear`}
+        <TxnPreset heading={t(`${Preset.AppClear}.heading`)}
+          actionText={t(`${Preset.AppClear}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppClear}`}
           color='primary'
         >
-          {t('app_clear.description')}
+          {t(`${Preset.AppClear}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('app_delete.heading')}
-          actionText={t('app_delete.action')}
-          actionURL={`/${lng}/txn/compose?preset=app_delete`}
+        <TxnPreset heading={t(`${Preset.AppDelete}.heading`)}
+          actionText={t(`${Preset.AppDelete}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.AppDelete}`}
           color='primary'
         >
-          <Trans t={t} i18nKey='app_delete.description'
+          <Trans t={t} i18nKey={`${Preset.AppDelete}.description`}
             components={{code: <code className='px-0' />}}
           />
         </TxnPreset>
@@ -189,26 +190,26 @@ export default function TxnPresetsList({ lng }: Props) {
     {(category === 'part_key' || category === 'all') && <>
       <h2 className='ps-2' id='part-key'>{t('part_key_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-        <TxnPreset heading={t('reg_online.heading')}
-          actionText={t('reg_online.action')}
-          actionURL={`/${lng}/txn/compose?preset=reg_online`}
+        <TxnPreset heading={t(`${Preset.RegOnline}.heading`)}
+          actionText={t(`${Preset.RegOnline}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.RegOnline}`}
           color='secondary'
         >
-          {t('reg_online.description')}
+          {t(`${Preset.RegOnline}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('reg_offline.heading')}
-          actionText={t('reg_offline.action')}
-          actionURL={`/${lng}/txn/compose?preset=reg_offline`}
+        <TxnPreset heading={t(`${Preset.RegOffline}.heading`)}
+          actionText={t(`${Preset.RegOffline}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.RegOffline}`}
           color='secondary'
         >
-          {t('reg_offline.description')}
+          {t(`${Preset.RegOffline}.description`)}
         </TxnPreset>
-        <TxnPreset heading={t('reg_nonpart.heading')}
-          actionText={t('reg_nonpart.action')}
-          actionURL={`/${lng}/txn/compose?preset=reg_nonpart`}
+        <TxnPreset heading={t(`${Preset.RegNonpart}.heading`)}
+          actionText={t(`${Preset.RegNonpart}.action`)}
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.RegNonpart}`}
           color='secondary'
         >
-          {t('reg_nonpart.description')}
+          {t(`${Preset.RegNonpart}.description`)}
         </TxnPreset>
       </section>
     </>}
