@@ -42,7 +42,7 @@ export default function TxnPreset({
         </h3>
         <p>{children}</p>
         <div className='card-actions'>
-          <Link href={actionURL}
+          <Link href={actionURL} prefetch={false}
             className={'btn btn-sm max-h-none max-w-full'
               + (color === 'primary' ? ' btn-primary' : '')
               + (color === 'secondary' ? ' btn-secondary' : '')
