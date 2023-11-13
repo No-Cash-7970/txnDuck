@@ -37,10 +37,10 @@ export default function TxnDataTable({ lng }: Props) {
     if (type === TransactionType.acfg) {
       if (!((txnData as TxnData.AssetConfigTxnData).caid)) return 'acfg_create';
 
-      if (!((txnData as TxnData.AssetConfigTxnData).apar_m)
-        && !((txnData as TxnData.AssetConfigTxnData).apar_f)
-        && !((txnData as TxnData.AssetConfigTxnData).apar_c)
-        && !((txnData as TxnData.AssetConfigTxnData).apar_r)
+      if ((txnData as TxnData.AssetConfigTxnData).apar_m === undefined
+        && (txnData as TxnData.AssetConfigTxnData).apar_f === undefined
+        && (txnData as TxnData.AssetConfigTxnData).apar_c === undefined
+        && (txnData as TxnData.AssetConfigTxnData).apar_r === undefined
       ) {
         return 'acfg_destroy';
       }
@@ -366,7 +366,7 @@ export default function TxnDataTable({ lng }: Props) {
           <td>{txnData?.note || <i className='opacity-50'>{t('none')}</i>}</td>
         </tr>
 
-        {txnData?.type === TransactionType.acfg && <>
+        {txnData?.type === TransactionType.acfg && txnTypeKeyPart !== 'acfg_destroy' && <>
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.apar_m.label')}</th>
             <td className='break-all'>

@@ -118,20 +118,20 @@ function createAcfgTxn(
       }
     });
   } else if (
-    acfgTxnData.apar_m
-    || acfgTxnData.apar_f
-    || acfgTxnData.apar_c
-    || acfgTxnData.apar_r
+    acfgTxnData.apar_m !== undefined
+    || acfgTxnData.apar_f !== undefined
+    || acfgTxnData.apar_c !== undefined
+    || acfgTxnData.apar_r !== undefined
   ) { // If asset configuration transaction
     txn = algosdk.makeAssetConfigTxnWithSuggestedParamsFromObject({
       from: acfgTxnData.snd,
       note: encodeTransactionNote(acfgTxnData.note),
       rekeyTo: acfgTxnData.rekey || undefined,
       assetIndex: acfgTxnData.caid,
-      manager: acfgTxnData.apar_m || undefined,
-      freeze: acfgTxnData.apar_f || undefined,
-      clawback: acfgTxnData.apar_c || undefined,
-      reserve: acfgTxnData.apar_r || undefined,
+      manager: acfgTxnData.apar_m,
+      freeze: acfgTxnData.apar_f,
+      clawback: acfgTxnData.apar_c,
+      reserve: acfgTxnData.apar_r,
       suggestedParams: {
         fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
         flatFee: true,

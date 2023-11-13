@@ -349,10 +349,6 @@ describe('Transaction Data Table Component', () => {
           apar_dc: 5,
           apar_df: true,
           apar_au: 'https://fake.token',
-          apar_m: '',
-          apar_f: '',
-          apar_c: '',
-          apar_r: '',
           apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
         }
       }));
@@ -369,12 +365,10 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
 
-      expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
-      expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
-      expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
-      expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
-
-      expect(screen.getAllByText('none')).toHaveLength(4);
+      expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+      expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     });
 
     it('displays "none" when there is no metadata hash', () => {
