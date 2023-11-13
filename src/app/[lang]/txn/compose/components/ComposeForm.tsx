@@ -50,20 +50,32 @@ export default function ComposeForm({ lng }: Props) {
       </>}
 
       {txnType === TransactionType.axfer && <>
-        <AssetTransferFields.Receiver t={t} />
+        {presetParams !== 'asset_opt_in' && presetParams !== 'asset_opt_out' && <>
+          <AssetTransferFields.Receiver t={t} />
+        </>}
+
         <AssetTransferFields.AssetId t={t} />
-        <AssetTransferFields.Amount t={t} />
-        <AssetTransferFields.Sender t={t} />
+
+        {presetParams !== 'asset_opt_in' && presetParams !== 'asset_opt_out' && <>
+          <AssetTransferFields.Amount t={t} />
+        </>}
+
+        {(!presetParams || presetParams === 'asset_clawback') &&
+          <AssetTransferFields.Sender t={t} />
+        }
       </>}
 
       {txnType === TransactionType.acfg && <>
-        <AssetConfigFields.AssetId t={t} />
-        <AssetConfigFields.UnitName t={t} />
-        <AssetConfigFields.AssetName t={t} />
-        <AssetConfigFields.Total t={t} />
-        <AssetConfigFields.DecimalPlaces t={t} />
-        <AssetConfigFields.DefaultFrozen t={t} />
-        <AssetConfigFields.Url t={t} />
+        {presetParams !== 'asset_create' && <AssetConfigFields.AssetId t={t} />}
+
+        {(!presetParams || presetParams === 'asset_create') && <>
+          <AssetConfigFields.UnitName t={t} />
+          <AssetConfigFields.AssetName t={t} />
+          <AssetConfigFields.Total t={t} />
+          <AssetConfigFields.DecimalPlaces t={t} />
+          <AssetConfigFields.DefaultFrozen t={t} />
+          <AssetConfigFields.Url t={t} />
+        </>}
       </>}
 
       {txnType === TransactionType.afrz && <>
@@ -98,12 +110,15 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
 
-      {txnType === TransactionType.acfg && <>
+      {txnType === TransactionType.acfg && presetParams !== 'asset_destroy' && <>
         <AssetConfigFields.ManagerAddr t={t} />
         <AssetConfigFields.FreezeAddr t={t} />
         <AssetConfigFields.ClawbackAddr t={t} />
         <AssetConfigFields.ReserveAddr t={t} />
-        <AssetConfigFields.MetadataHash t={t} />
+
+        {(!presetParams || presetParams === 'asset_create') &&
+          <AssetConfigFields.MetadataHash t={t} />
+        }
       </>}
 
       {txnType === TransactionType.keyreg && (!presetParams || presetParams === 'reg_nonpart') &&
@@ -121,7 +136,9 @@ export default function ComposeForm({ lng }: Props) {
         <PaymentFields.CloseTo t={t} />
       }
 
-      {txnType === TransactionType.axfer && <AssetTransferFields.CloseTo t={t} />}
+      {txnType === TransactionType.axfer && (!presetParams || presetParams === 'asset_opt_out') &&
+        <AssetTransferFields.CloseTo t={t} />
+      }
 
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
         <div>

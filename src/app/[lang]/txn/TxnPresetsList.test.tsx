@@ -31,7 +31,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('asset_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('asset_opt_out.description')).toBeInTheDocument();
     expect(screen.getByText('asset_create.description')).toBeInTheDocument();
-    expect(screen.getByText('asset_reconfigure.description')).toBeInTheDocument();
+    expect(screen.getByText('asset_reconfig.description')).toBeInTheDocument();
     expect(screen.getByText('asset_clawback.description')).toBeInTheDocument();
     expect(screen.getByText('asset_freeze.description')).toBeInTheDocument();
     expect(screen.getByText('asset_unfreeze.description')).toBeInTheDocument();
@@ -81,7 +81,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('asset_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('asset_opt_out.description')).toBeInTheDocument();
     expect(screen.getByText('asset_create.description')).toBeInTheDocument();
-    expect(screen.getByText('asset_reconfigure.description')).toBeInTheDocument();
+    expect(screen.getByText('asset_reconfig.description')).toBeInTheDocument();
     expect(screen.getByText('asset_clawback.description')).toBeInTheDocument();
     expect(screen.getByText('asset_freeze.description')).toBeInTheDocument();
     expect(screen.getByText('asset_unfreeze.description')).toBeInTheDocument();

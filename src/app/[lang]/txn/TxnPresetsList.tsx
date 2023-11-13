@@ -33,7 +33,7 @@ export default function TxnPresetsList({ lng }: Props) {
     />
 
     {(category === 'general' || category === 'all') && <>
-      <h2 id='general'>{t('general_title')}</h2>
+      <h2 className='ps-2' id='general'>{t('general_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t('transfer_algos.heading')}
           actionText={t('transfer_algos.action')}
@@ -59,12 +59,11 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'asset' || category === 'all') && <>
-      <h2 id='asset'>{t('asset_title')}</h2>
+      <h2 className='ps-2' id='asset'>{t('asset_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t('asset_transfer.heading')}
           actionText={t('asset_transfer.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_transfer`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_transfer.description')}
@@ -72,7 +71,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_opt_in.heading')}
           actionText={t('asset_opt_in.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_opt_in`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_opt_in.description')}
@@ -80,7 +78,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_opt_out.heading')}
           actionText={t('asset_opt_out.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_opt_out`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_opt_out.description')}
@@ -88,23 +85,20 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_create.heading')}
           actionText={t('asset_create.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_create`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_create.description')}
         </TxnPreset>
-        <TxnPreset heading={t('asset_reconfigure.heading')}
-          actionText={t('asset_reconfigure.action')}
-          actionURL={`/${lng}/txn/compose?preset=asset_reconfigure`}
-          actionDisabled={true}
+        <TxnPreset heading={t('asset_reconfig.heading')}
+          actionText={t('asset_reconfig.action')}
+          actionURL={`/${lng}/txn/compose?preset=asset_reconfig`}
           color='secondary'
         >
-          {t('asset_reconfigure.description')}
+          {t('asset_reconfig.description')}
         </TxnPreset>
         <TxnPreset heading={t('asset_clawback.heading')}
           actionText={t('asset_clawback.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_clawback`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_clawback.description')}
@@ -112,7 +106,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_freeze.heading')}
           actionText={t('asset_freeze.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_freeze`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_freeze.description')}
@@ -120,7 +113,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_unfreeze.heading')}
           actionText={t('asset_unfreeze.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_unfreeze`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_unfreeze.description')}
@@ -128,7 +120,6 @@ export default function TxnPresetsList({ lng }: Props) {
         <TxnPreset heading={t('asset_destroy.heading')}
           actionText={t('asset_destroy.action')}
           actionURL={`/${lng}/txn/compose?preset=asset_destroy`}
-          actionDisabled={true}
           color='secondary'
         >
           {t('asset_destroy.description')}
@@ -136,7 +127,7 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'app' || category === 'all') && <>
-      <h2 id='application'>{t('app_title')}</h2>
+      <h2 className='ps-2' id='application'>{t('app_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t('app_run.heading')}
           actionText={t('app_run.action')}
@@ -196,7 +187,7 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'part_key' || category === 'all') && <>
-      <h2 id='part-key'>{t('part_key_title')}</h2>
+      <h2 className='ps-2' id='part-key'>{t('part_key_title')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t('reg_online.heading')}
           actionText={t('reg_online.action')}

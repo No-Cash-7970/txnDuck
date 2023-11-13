@@ -36,7 +36,7 @@ asset_create:
   heading: Create asset
   description: Create a new asset.
   action: Create asset
-asset_reconfigure:
+asset_reconfig:
   heading: Reconfigure asset
   description: Change the configuration of an existing asset.
   action: Reconfigure asset

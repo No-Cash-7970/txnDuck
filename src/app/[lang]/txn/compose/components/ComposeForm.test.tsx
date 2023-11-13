@@ -596,8 +596,8 @@ describe('Compose Form Component', () => {
 
     expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
-    expect(screen.getByText('fields.rcv.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.amt.label')).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.rcv.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.amt.label/)).toBeRequired();
     expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
@@ -615,7 +615,6 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
-    expect(screen.getByLabelText(/fields.rekey.label/)).toBeInTheDocument();
     expect(screen.getByLabelText(/fields.rekey.label/)).toBeRequired();
   });
 
@@ -627,8 +626,172 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
-    expect(screen.getByLabelText(/fields.close.label/)).toBeInTheDocument();
     expect(screen.getByLabelText(/fields.close.label/)).toBeRequired();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "transfer asset" preset', () => {
+    presetMockValue = 'asset_transfer';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.arcv.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.aamt.label/)).toBeRequired();
+    expect(screen.queryByText('fields.asnd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.aclose.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "opt in asset" preset', () => {
+    presetMockValue = 'asset_opt_in';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
+    expect(screen.queryByText(/fields.arcv.label/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/fields.aamt.label/)).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.asnd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.aclose.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "opt out asset" preset', () => {
+    presetMockValue = 'asset_opt_out';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
+    expect(screen.queryByText(/fields.arcv.label/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/fields.aamt.label/)).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.asnd.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.aclose.label/)).toBeRequired();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "create asset" preset', () => {
+    presetMockValue = 'asset_create';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.queryByText('fields.caid.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_un.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_an.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_t.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_dc.label/)).toBeRequired();
+    expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_au.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_am.label/)).not.toBeRequired();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "reconfigure asset" preset', () => {
+    presetMockValue = 'asset_reconfig';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.caid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toBeRequired();
+    expect(screen.queryByText(/fields.apar_am.label/)).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "revoke (claw back) asset" preset', () => {
+    presetMockValue = 'asset_clawback';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.arcv.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.aamt.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.asnd.label/)).toBeRequired();
+    expect(screen.queryByText('fields.aclose.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "destroy asset" preset', () => {
+    presetMockValue = 'asset_destroy';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.caid.label/)).toBeRequired();
+    expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
+    expect(screen.queryByText(/fields.apar_am.label/)).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "freeze asset" preset', () => {
+    presetMockValue = 'asset_freeze';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('afrz');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.faid.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.fadd.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.afrz.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.afrz.label/)).toBeChecked();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "unfreeze asset" preset', () => {
+    presetMockValue = 'asset_unfreeze';
+    render(<ComposeForm />);
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('afrz');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+
+    expect(screen.getByLabelText(/fields.faid.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.fadd.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.afrz.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.afrz.label/)).not.toBeChecked();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();

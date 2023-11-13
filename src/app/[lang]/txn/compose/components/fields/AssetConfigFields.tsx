@@ -1,5 +1,6 @@
 /** Fields for the compose-transaction form that are for asset-configuration transaction */
 
+import { useSearchParams } from 'next/navigation';
 import { NumberField, TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue } from 'jotai';
@@ -7,11 +8,12 @@ import { txnDataAtoms } from '@/app/lib/txn-data';
 
 export function AssetId({ t }: { t: TFunction }) {
   const [caid, setCaid] = useAtom(txnDataAtoms.caid);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.caid.label')}
       name='caid'
       id='caid-field'
-      required={false}
+      required={presetParams === 'asset_reconfig' || presetParams === 'asset_destroy'}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
@@ -25,7 +27,7 @@ export function AssetId({ t }: { t: TFunction }) {
 export function UnitName({ t }: { t: TFunction }) {
   const [unitName, setUnitName] = useAtom(txnDataAtoms.apar_un);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <TextField label={t('fields.apar_un.label')}
       name='apar_un'
       id='apar_un-field'
@@ -41,7 +43,7 @@ export function UnitName({ t }: { t: TFunction }) {
 export function AssetName({ t }: { t: TFunction }) {
   const [aparAn, setAparAn] = useAtom(txnDataAtoms.apar_an);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <TextField label={t('fields.apar_an.label')}
       name='apar_an'
       id='apar_an-field'
@@ -57,7 +59,7 @@ export function AssetName({ t }: { t: TFunction }) {
 export function Total({ t }: { t: TFunction }) {
   const [total, setTotal] = useAtom(txnDataAtoms.apar_t);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <NumberField label={t('fields.apar_t.label')}
       name='apar_t'
       id='apar_t-field'
@@ -76,7 +78,7 @@ export function Total({ t }: { t: TFunction }) {
 export function DecimalPlaces({ t }: { t: TFunction }) {
   const [decimalPlaces, setDecimalPlaces] = useAtom(txnDataAtoms.apar_dc);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <NumberField label={t('fields.apar_dc.label')}
       name='apar_dc'
       id='apar_dc-field'
@@ -97,7 +99,7 @@ export function DecimalPlaces({ t }: { t: TFunction }) {
 export function DefaultFrozen({ t }: { t: TFunction }) {
   const [defaultFrozen, setDefaultFrozen] = useAtom(txnDataAtoms.apar_df);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <ToggleField label={t('fields.apar_df.label')}
       name='apar_df'
       id='apar_df-field'
@@ -113,7 +115,7 @@ export function DefaultFrozen({ t }: { t: TFunction }) {
 export function Url({ t }: { t: TFunction }) {
   const [url, setUrl] = useAtom(txnDataAtoms.apar_au);
   const caid = useAtomValue(txnDataAtoms.caid);
-  return (!caid &&
+  return (!caid && // If creation transaction
     <TextField label={t('fields.apar_au.label')}
       type='url'
       name='apar_au'

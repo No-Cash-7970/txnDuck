@@ -1,5 +1,6 @@
 /** Fields for the compose-transaction form that are for asset-transfer transaction */
 
+import { useSearchParams } from 'next/navigation';
 import { NumberField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
@@ -9,10 +10,13 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 
 export function Sender({ t }: { t: TFunction }) {
   const [asnd, setAsnd] = useAtom(txnDataAtoms.asnd);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.asnd.label')}
       name='asnd'
       id='asnd-field'
+      required={presetParams === 'asset_clawback'}
+      requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.asnd.placeholder')}
       containerClass='mt-4'
@@ -92,10 +96,13 @@ export function CloseTo({ t }: { t: TFunction }) {
 
 function CloseToField({ t }: { t: TFunction }) {
   const [aclose, setAclose] = useAtom(txnDataAtoms.aclose);
+  const presetParams = useSearchParams().get('preset');
   return (
     <TextField label={t('fields.aclose.label')}
       name='aclose'
       id='aclose-field'
+      required={presetParams === 'asset_opt_out'}
+      requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.aclose.placeholder')}
       containerClass='mt-4'
