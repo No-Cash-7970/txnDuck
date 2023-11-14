@@ -56,17 +56,24 @@ export default function SignTxn({ lng }: Props) {
     if (!storedTxnData || !storedSignedTxn) return;
 
     // Remove stored signed transaction if the transaction data was edited
-    dataUrlToBytes(storedSignedTxn)
-      .then((signedTxnBytes) => {
-        const unsignedTxn = createTxnFromData(
-          storedTxnData.txn, storedTxnData.gen, storedTxnData.gh
-        );
-        const signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
+    dataUrlToBytes(storedSignedTxn).then((signedTxnBytes) => {
+      const unsignedTxn = createTxnFromData(
+        storedTxnData.txn, storedTxnData.gen, storedTxnData.gh
+      );
+      let signedTxn: algosdk.Transaction;
 
-        if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
-      });
+      try {
+        signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
+      } catch (e) { // The stored signed transaction is invalid for some reason
+        setStoredSignedTxn(RESET); // The transaction will need to be signed again
+        return;
+      }
+
+      // The transaction has been changed and will need to be signed again
+      if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storedTxnData]);
+  }, [storedTxnData, storedSignedTxn]);
 
   return (
     <>
