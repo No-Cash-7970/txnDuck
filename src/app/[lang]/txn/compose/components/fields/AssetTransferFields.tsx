@@ -73,7 +73,7 @@ export function Amount({ t }: { t: TFunction }) {
       min={0}
       step={1}
       value={aamt ?? ''}
-      onChange={(e) => setAamt(e.target.value === '' ? '' : parseInt(e.target.value))}
+      onChange={(e) => setAamt(e.target.value === '' ? '' : BigInt(e.target.value).toString())}
     />
   );
 }

@@ -70,7 +70,7 @@ export function Total({ t }: { t: TFunction }) {
       min={1}
       step={1}
       value={total}
-      onChange={(e) => setTotal(e.target.value === '' ? '' : parseInt(e.target.value))}
+      onChange={(e) => setTotal(e.target.value === '' ? '' : BigInt(e.target.value).toString())}
     />
   );
 }

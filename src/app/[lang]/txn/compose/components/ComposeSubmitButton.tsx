@@ -132,7 +132,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
           (txnData as TxnData.AssetTransferTxnData)?.arcv || ''
         );
         jotaiStore.set(TxnData.txnDataAtoms.aamt,
-          `${(txnData as TxnData.AssetTransferTxnData)?.aamt}`
+          (txnData as TxnData.AssetTransferTxnData)?.aamt || ''
         );
       }
 
@@ -161,9 +161,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
       jotaiStore.set(TxnData.txnDataAtoms.apar_an,
         (txnData as TxnData.AssetConfigTxnData)?.apar_an || ''
       );
-      // Convert total to string just in case it is a bigint
       jotaiStore.set(TxnData.txnDataAtoms.apar_t,
-        `${(txnData as TxnData.AssetConfigTxnData)?.apar_t}`
+        (txnData as TxnData.AssetConfigTxnData)?.apar_t || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_dc,
         (txnData as TxnData.AssetConfigTxnData)?.apar_dc
@@ -349,8 +348,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
       specificTxnData = {
         arcv: jotaiStore.get(TxnData.txnDataAtoms.arcv),
         xaid: jotaiStore.get(TxnData.txnDataAtoms.xaid),
-        // Convert amount to string just in case it is a bigint
-        aamt: `${jotaiStore.get(TxnData.txnDataAtoms.aamt)}`,
+        aamt: jotaiStore.get(TxnData.txnDataAtoms.aamt),
         asnd: jotaiStore.get(TxnData.txnDataAtoms.asnd) || undefined,
         aclose: jotaiStore.get(TxnData.txnDataAtoms.aclose) || undefined,
       };
@@ -372,8 +370,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         caid: jotaiStore.get(TxnData.txnDataAtoms.caid) || undefined,
         apar_un: jotaiStore.get(TxnData.txnDataAtoms.apar_un) || undefined,
         apar_an: jotaiStore.get(TxnData.txnDataAtoms.apar_an) || undefined,
-        // Convert total to string just in case it is a bigint
-        apar_t: `${jotaiStore.get(TxnData.txnDataAtoms.apar_t)}`,
+        apar_t: jotaiStore.get(TxnData.txnDataAtoms.apar_t),
         apar_dc: jotaiStore.get(TxnData.txnDataAtoms.apar_dc),
         apar_df: jotaiStore.get(TxnData.txnDataAtoms.apar_df) || undefined,
         apar_au: jotaiStore.get(TxnData.txnDataAtoms.apar_au) || undefined,
