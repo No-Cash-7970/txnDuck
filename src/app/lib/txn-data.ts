@@ -175,9 +175,9 @@ export interface AppCallTxnData extends BaseTxnData {
   apaa: string[];
 
   /** Approval program */
-  apap?: string;
+  apap: string;
   /** Clear-state program */
-  apsu?: string;
+  apsu: string;
   /** Number of global integers */
   apgs_nui?: number;
   /** Number of global bytes slices */
