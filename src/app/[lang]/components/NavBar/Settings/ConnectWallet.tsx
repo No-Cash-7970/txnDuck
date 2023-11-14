@@ -93,7 +93,10 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
             />
             <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
           </div>
-          <button className='btn btn-sm btn-secondary btn-block' onClick={disconnectWallet}>
+          <button type='button'
+            className='btn btn-sm btn-secondary btn-block'
+            onClick={disconnectWallet}
+          >
             <IconWalletOff aria-hidden />
             {t('wallet.disconnect')}
           </button>
