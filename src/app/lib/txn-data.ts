@@ -126,13 +126,13 @@ export interface AssetConfigTxnData extends BaseTxnData {
   /** URL */
   apar_au: string;
   /** Manager address */
-  apar_m?: string;
+  apar_m: string;
   /** Freeze address */
-  apar_f?: string;
+  apar_f: string;
   /** Clawback address */
-  apar_c?: string;
+  apar_c: string;
   /** Reserve address */
-  apar_r?: string;
+  apar_r: string;
   /** Metadata hash */
   apar_am: string;
 }
@@ -297,13 +297,13 @@ export const txnDataAtoms = {
   /** Asset configuration - URL */
   apar_au: atom<string>(''),
   /** Asset configuration - Manager address */
-  apar_m: atom<string|undefined>(''),
+  apar_m: atom<string>(''),
   /** Asset configuration - Freeze address */
-  apar_f: atom<string|undefined>(''),
+  apar_f: atom<string>(''),
   /** Asset configuration - Clawback address */
-  apar_c: atom<string|undefined>(''),
+  apar_c: atom<string>(''),
   /** Asset configuration - Reserve address */
-  apar_r: atom<string|undefined>(''),
+  apar_r: atom<string>(''),
   /** Asset configuration - Metadata hash */
   apar_am: atom<string>(''),
 

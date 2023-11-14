@@ -37,10 +37,10 @@ export default function TxnDataTable({ lng }: Props) {
     if (type === TransactionType.acfg) {
       if (!((txnData as TxnData.AssetConfigTxnData).caid)) return 'acfg_create';
 
-      if ((txnData as TxnData.AssetConfigTxnData).apar_m === undefined
-        && (txnData as TxnData.AssetConfigTxnData).apar_f === undefined
-        && (txnData as TxnData.AssetConfigTxnData).apar_c === undefined
-        && (txnData as TxnData.AssetConfigTxnData).apar_r === undefined
+      if (!((txnData as TxnData.AssetConfigTxnData)?.apar_m)
+        && !((txnData as TxnData.AssetConfigTxnData)?.apar_f)
+        && !((txnData as TxnData.AssetConfigTxnData)?.apar_c)
+        && !((txnData as TxnData.AssetConfigTxnData)?.apar_r)
       ) {
         return 'acfg_destroy';
       }
@@ -49,14 +49,14 @@ export default function TxnDataTable({ lng }: Props) {
     }
 
     if (type === TransactionType.keyreg) {
-      if ((txnData as TxnData.KeyRegTxnData).nonpart) return 'keyreg_nonpart';
+      if ((txnData as TxnData.KeyRegTxnData)?.nonpart) return 'keyreg_nonpart';
 
-      if ((txnData as TxnData.KeyRegTxnData).votekey
-        || (txnData as TxnData.KeyRegTxnData).selkey
-        || (txnData as TxnData.KeyRegTxnData).sprfkey
-        || (txnData as TxnData.KeyRegTxnData).votefst
-        || (txnData as TxnData.KeyRegTxnData).votelst
-        || (txnData as TxnData.KeyRegTxnData).votekd
+      if ((txnData as TxnData.KeyRegTxnData)?.votekey
+        || (txnData as TxnData.KeyRegTxnData)?.selkey
+        || (txnData as TxnData.KeyRegTxnData)?.sprfkey
+        || (txnData as TxnData.KeyRegTxnData)?.votefst
+        || (txnData as TxnData.KeyRegTxnData)?.votelst
+        || (txnData as TxnData.KeyRegTxnData)?.votekd
       ) {
         return 'keyreg_on';
       }
@@ -65,9 +65,9 @@ export default function TxnDataTable({ lng }: Props) {
     }
 
     if (type === TransactionType.appl) {
-      if (!((txnData as TxnData.AppCallTxnData).apid)) return 'appl_create';
+      if (!((txnData as TxnData.AppCallTxnData)?.apid)) return 'appl_create';
 
-      return 'appl_' + appTypes[(txnData as TxnData.AppCallTxnData).apan];
+      return 'appl_' + appTypes[(txnData as TxnData.AppCallTxnData)?.apan];
     }
 
     return `${type}` ?? '';
