@@ -101,7 +101,7 @@ function createAcfgTxn(
       assetName: acfgTxnData.apar_an || undefined,
       total: BigInt(acfgTxnData.apar_t || ''),
       decimals: acfgTxnData.apar_dc || 0,
-      defaultFrozen: !!acfgTxnData.apar_f,
+      defaultFrozen: acfgTxnData.apar_df,
       assetMetadataHash: acfgTxnData.apar_am || undefined,
       assetURL: acfgTxnData.apar_au || undefined,
       manager: acfgTxnData.apar_m || undefined,
