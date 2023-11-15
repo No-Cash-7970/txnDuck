@@ -12,7 +12,7 @@ type Props = {
 
 /** Navigation bar that serves as a header for every page */
 export default function NavBar({ lng }: Props) {
-  const { t } = use(useTranslation(lng || '', 'app'));
+  const { t } = use(useTranslation(lng || '', ['app', 'common']));
 
   return (
     <nav className='navbar bg-base-200 px-2 sm:px-4'>
