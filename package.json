@@ -38,7 +38,7 @@
     "accept-language": "^3.0.18",
     "algosdk": "^2.4.0",
     "autoprefixer": "^10.4.14",
-    "daisyui": "^3.2.1",
+    "daisyui": "^4.0.0",
     "flag-icons": "^6.11.1",
     "gulp": "^4.0.2",
     "gulp-execa": "^6.0.0",

@@ -25,7 +25,7 @@ export default function TxnPreset({
   color = 'primary',
 }: Props) {
   return (
-    <div className={'card card-compact shadow-md shadow-base-200 border border-opacity-50'
+    <div className={'card card-compact shadow-md border border-opacity-50'
       + (color === 'primary' ? ' border-primary' : '')
       + (color === 'secondary' ? ' border-secondary' : '')
       + (color === 'accent' ? ' border-accent' : '')

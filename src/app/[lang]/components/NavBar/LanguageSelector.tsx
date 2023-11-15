@@ -20,7 +20,9 @@ export default function LanguageSelector({ lng }: Props) {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className='btn btn-ghost mx-2 px-2 sm:mx-4 sm:px-4' data-testid='lang-btn'>
+        <button data-testid='lang-btn'
+          className='btn btn-ghost mx-2 px-2 sm:mx-4 sm:px-4 leading-tight'
+        >
           <IconLanguage aria-hidden />
           <span className='hidden sm:inline truncate'>{lng ? supportedLangs[lng].name : ''}</span>
           <span className='sm:hidden truncate'>{lng?.toUpperCase()}</span>
@@ -42,6 +44,7 @@ export default function LanguageSelector({ lng }: Props) {
                   }}
                   replace={true}
                   scroll={false}
+                  prefetch={false}
                 >
                   <span
                     className={`mask mask-circle h-5 w-5 fis fi-${supportedLangs[l].country}`}
