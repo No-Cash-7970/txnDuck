@@ -2,7 +2,6 @@
 
 hero: # The attention-grabber that is first thing the user sees
   main_paragraph: Cree y envíe casi cualquier tipo de transacción de Algorand.
-  sub_paragraph: Acceda y utilice más de lo que Algorand puede ofrecerle.
   start_button: ¡Cree una nueva transacción!
 how_it_works:
   heading: ¿Cómo funciona?

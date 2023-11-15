@@ -3,9 +3,7 @@ import { Trans } from 'react-i18next/TransWithoutContext';
 import { useTranslation } from '@/app/i18n';
 import Link from 'next/link';
 
-/**
- * The home page
- */
+/** The home page */
 export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {
@@ -22,17 +20,13 @@ export default function HomePage({ params: { lang } }: {
       >
         <div className='max-w-5xl mx-auto text-center'>
           <p className='text-4xl font-bold my-0'>{t('home:hero.main_paragraph')}</p>
-          <Link data-testid='startBtn'
-            className={'btn btn-primary btn-lg btn-block h-auto my-8 md:my-10 leading-6'
-              + ' shadow-lg border-none'
-              + ' bg-gradient-to-r from-primary-focus to-primary'
-              + ' hover:from-secondary-focus hover:to-secondary hover:text-secondary-content'
+          <Link data-testid='startBtn' href={`${lang}/txn`}
+            className={'btn btn-lg btn-block h-auto mt-8 md:mt-10 leading-6 shadow-2xl border-none'
+              + ' btn-primary hover:btn-secondary'
             }
-            href={`${lang}/txn`}
           >
             {t('home:hero.start_button')}
           </Link>
-          <p className='text-3xl my-0'>{t('home:hero.sub_paragraph')}</p>
         </div>
       </section>
 
