@@ -1,5 +1,6 @@
 import type { FieldGroupProps } from './types';
 
+/** Grouping for form fields with an optional heading. */
 export default function FieldGroup({
   children,
   heading = '',

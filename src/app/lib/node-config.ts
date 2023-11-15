@@ -33,6 +33,7 @@ export const betanetNodeConfig: NodeConfig = {
   nodeHeaders: undefined,
 };
 
+/** Default node configuration */
 export const DEFAULT_NODE_CONFIG = testnetNodeConfig;
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */

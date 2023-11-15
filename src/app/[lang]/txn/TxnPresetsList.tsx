@@ -12,6 +12,7 @@ type Props = {
   lng?: string
 };
 
+/** List of all the transaction presets */
 export default function TxnPresetsList({ lng }: Props) {
   const { t } = useTranslation(lng || '', 'txn_presets');
   const [category, setCategory] = useState('all');

@@ -28,6 +28,10 @@ const getDynamicDaffiWalletConnect = async () => {
   return DaffiWalletConnect;
 };
 
+/**
+ *  Wrapper for the use-wallet provider to convert it to a client component so it is compatible with
+ *  Next.js server-side rendering (SSR)
+ */
 export default function WalletProvider({ children }: { children: React.ReactNode }) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const providers = useInitializeProviders({
@@ -46,9 +50,5 @@ export default function WalletProvider({ children }: { children: React.ReactNode
     nodeConfig
   });
 
-  return (
-    <Provider value={providers}>
-      {children}
-    </Provider>
-  );
+  return <Provider value={providers}>{children}</Provider>;
 }

@@ -260,6 +260,7 @@ function ExtraPages({ t }: { t: TFunction }) {
   );
 }
 
+/** Application properties section */
 export function AppProperties({ t }: { t: TFunction }) {
   const onComplete = useAtomValue(txnDataAtoms.apan);
   const appId = useAtomValue(txnDataAtoms.apid);
@@ -544,6 +545,7 @@ function BoxNameInput({ t, boxAtom, index }:
   );
 }
 
+/** Application dependencies section */
 export function AppDependencies({ t }: { t: TFunction }) {
   return (
     <FieldGroup headingLevel={2} heading={t('fields.app_deps_title')}>

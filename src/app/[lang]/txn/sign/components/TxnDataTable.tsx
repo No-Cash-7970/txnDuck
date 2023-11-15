@@ -21,6 +21,7 @@ const appTypes = [
   'delete'
 ];
 
+/** Table that displays the stored transaction data */
 export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);

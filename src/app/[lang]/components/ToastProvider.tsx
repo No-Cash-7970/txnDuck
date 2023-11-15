@@ -15,8 +15,7 @@ export default function ToastProvider({
   swipeDirection?: 'right' | 'left',
   label?: string,
 }) {
-  return (
-     // The left swipe direction is usually for when the language is (right-to-left) RTL
+  return ( // The left swipe direction is usually for when the language is (right-to-left) RTL
     <Provider swipeDirection={swipeDirection} label={label}>
       {children}
     </Provider>

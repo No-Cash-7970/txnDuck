@@ -5,9 +5,7 @@ import { IconArrowBigRightLinesFilled, IconArrowBigLeftLinesFilled } from '@tabl
 import { PageTitleHeading } from '@/app/[lang]/components';
 import TxnPresetsList from './TxnPresetsList';
 
-/**
- * Choose Transaction Presets page
- */
+/** Choose Transaction Presets page */
 export default function TxnPresetsPage({ params: { lang } }: {
   params: { lang: string }
 }) {

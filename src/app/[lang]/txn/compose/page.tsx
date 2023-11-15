@@ -3,9 +3,7 @@ import { useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import ComposeForm from './components/ComposeForm';
 
-/**
- * Compose Transaction page
- */
+/** Compose Transaction page */
 export default function ComposeTxnPage({ params: { lang } }: {
   params: { lang: string }
 }) {

@@ -42,6 +42,7 @@ type SuccessMessage = {
 /** Number of round to wait for transaction to be confirmed or to fail */
 const WAIT_ROUNDS_TO_CONFIRM = 10;
 
+/** Section for sending a transaction and showing status of the transaction */
 export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
   const currentURLParams = useSearchParams();

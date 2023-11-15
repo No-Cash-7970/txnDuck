@@ -8,6 +8,7 @@ type Props = {
   lng?: string
 };
 
+/** Badge that shows the transaction preset being used. Usually in the page title heading */
 export function TxnPresetBadge({ lng }: Props) {
   const { t } = useTranslation(lng || '', 'txn_presets');
   const txnPresetName = useSearchParams().get('preset');

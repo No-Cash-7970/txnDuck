@@ -10,9 +10,7 @@ type Props = {
   lng?: string
 };
 
-/**
- * Navigation bar that serves as a header for every page
- */
+/** Navigation bar that serves as a header for every page */
 export default function NavBar({ lng }: Props) {
   const { t } = use(useTranslation(lng || '', 'app'));
 

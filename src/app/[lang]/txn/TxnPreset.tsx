@@ -15,6 +15,7 @@ type Props = {
   color?: 'primary'|'secondary'|'accent'|'neutral',
 };
 
+/** Small section containing a heading, description, and a link for a transaction preset */
 export default function TxnPreset({
   children,
   heading = '',

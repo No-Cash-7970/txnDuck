@@ -9,9 +9,7 @@ type Props = {
   lng?: string
 };
 
-/**
- * Footer for every page
- */
+/** Footer for every page */
 export default function Footer({ lng }: Props) {
   const { t } = use(useTranslation(lng || '', 'app'));
 

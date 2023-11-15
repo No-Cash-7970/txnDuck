@@ -4,9 +4,7 @@ import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
 
-/**
- * Sign Transaction page
- */
+/**  Sign Transaction page */
 export default function SignTxnPage({ params: { lang } }: {
   params: { lang: string }
 }) {

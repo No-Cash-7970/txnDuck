@@ -10,9 +10,7 @@ type Props = {
   color?: 'primary' | 'secondary' | 'accent',
 };
 
-/**
- * Roadmap display for showing the steps of building a transaction
- */
+/** Roadmap display for showing the steps of building a transaction */
 export default function BuilderSteps({ lng, current, color = 'primary'}: Props) {
   const { t } = use(useTranslation(lng || '', 'app'));
 
