@@ -3,6 +3,7 @@ import { useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
+import SignTxnLoading from './components/SignTxnLoading';
 
 /**  Sign Transaction page */
 export default function SignTxnPage({ params: { lang } }: {
@@ -15,7 +16,9 @@ export default function SignTxnPage({ params: { lang } }: {
       <BuilderSteps lng={lang} current='sign' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
       <TxnDataTable lng={lang} />
-      <Suspense><SignTxn lng={lang} /></Suspense>
+      <Suspense fallback={<SignTxnLoading />}>
+        <SignTxn lng={lang} />
+      </Suspense>
     </main>
   );
 }

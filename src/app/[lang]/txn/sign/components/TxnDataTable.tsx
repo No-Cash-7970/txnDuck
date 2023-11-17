@@ -79,11 +79,14 @@ export default function TxnDataTable({ lng }: Props) {
       <tbody>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.type.label')}</th>
-          <td>{t(`fields.type.options.${txnTypeKeyPart}`)}</td>
+          <td>{ txnTypeKeyPart !== 'undefined'
+            ? t(`fields.type.options.${txnTypeKeyPart}`)
+            : t('loading')
+          }</td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.snd.label')}</th>
-          <td className='break-all'>{txnData?.snd}</td>
+          <td className='break-all'>{txnData ? txnData?.snd : t('loading')}</td>
         </tr>
 
         {txnData?.type === TransactionType.pay && <>
@@ -356,15 +359,21 @@ export default function TxnDataTable({ lng }: Props) {
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fee.label')}</th>
           <td>
-            {t('fields.fee.in_algos', {
-              count: (txnData as TxnData.PaymentTxnData)?.fee,
-              formatParams: { count: { maximumFractionDigits: 6 } }
-            })}
+            {txnData
+              ? t('fields.fee.in_algos', {
+                count: (txnData as TxnData.PaymentTxnData)?.fee,
+                formatParams: { count: { maximumFractionDigits: 6 } }
+              })
+              : t('loading')
+            }
           </td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.note.label')}</th>
-          <td>{txnData?.note || <i className='opacity-50'>{t('none')}</i>}</td>
+          <td>{txnData
+            ? (txnData?.note || <i className='opacity-50'>{t('none')}</i>)
+            : t('loading')
+          }</td>
         </tr>
 
         {txnData?.type === TransactionType.acfg && txnTypeKeyPart !== 'acfg_destroy' && <>
@@ -424,20 +433,25 @@ export default function TxnDataTable({ lng }: Props) {
 
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.fv.label')}</th>
-          <td>{t('number_value', {value: txnData?.fv})}</td>
+          <td>{txnData ? t('number_value', {value: txnData?.fv}) : t('loading')}</td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.lv.label')}</th>
-          <td>{t('number_value', {value: txnData?.lv})}</td>
+          <td>{txnData ? t('number_value', {value: txnData?.lv}) : t('loading')}</td>
         </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.lx.label')}</th>
-          <td className='break-all'>{txnData?.lx || <i className='opacity-50'>{t('none')}</i>}</td>
+          <td className='break-all'>{txnData
+            ? (txnData?.lx || <i className='opacity-50'>{t('none')}</i>)
+            : t('loading')
+          }</td>
         </tr>
         <tr className={txnData?.rekey ? 'bg-warning text-warning-content' : ''}>
           <th role='rowheader' className='align-top'>{t('fields.rekey.label')}</th>
-          <td className='break-all'>
-            {txnData?.rekey || <i className='opacity-50'>{t('none')}</i>}
+          <td className='break-all'>{txnData
+            ? (txnData?.rekey || <i className='opacity-50'>{t('none')}</i>)
+            : t('loading')
+          }
           </td>
         </tr>
 
