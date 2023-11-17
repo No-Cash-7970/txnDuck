@@ -21,7 +21,7 @@ export default function HomePage({ params: { lang } }: {
         <div className='max-w-5xl mx-auto text-center'>
           <p className='text-4xl font-bold my-0'>{t('home:hero.main_paragraph')}</p>
           <Link data-testid='startBtn' href={`${lang}/txn`}
-            className={'btn btn-lg btn-block h-auto mt-8 md:mt-10 leading-6 shadow-2xl border-none'
+            className={'btn btn-lg btn-block h-auto mt-10 md:mt-14 leading-6 shadow-2xl border-none'
               + ' btn-primary hover:btn-secondary'
             }
           >
