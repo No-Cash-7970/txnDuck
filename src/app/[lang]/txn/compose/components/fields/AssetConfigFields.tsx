@@ -14,7 +14,7 @@ const URL_MAX_LENGTH = 96;
 const METADATA_HASH_MAX_LENGTH = 32;
 
 export function AssetId({ t }: { t: TFunction }) {
-  const [caid, setCaid] = useAtom(txnDataAtoms.caid);
+  const [assetId, setAssetId] = useAtom(txnDataAtoms.caid);
   const preset = useSearchParams().get(Preset.ParamName);
   return (
     <TextField label={t('fields.caid.label')}
@@ -24,8 +24,11 @@ export function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
-      value={caid ?? ''}
-      onChange={(e) => setCaid(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      value={assetId ?? ''}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setAssetId(value === '' ? undefined : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );

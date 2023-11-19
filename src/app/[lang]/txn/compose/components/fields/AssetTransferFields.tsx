@@ -46,7 +46,7 @@ export function Receiver({ t }: { t: TFunction }) {
 }
 
 export function AssetId({ t }: { t: TFunction }) {
-  const [xaid, setXaid] = useAtom(txnDataAtoms.xaid);
+  const [assetId, setAssetId] = useAtom(txnDataAtoms.xaid);
   return (
     <TextField label={t('fields.xaid.label')}
       name='xaid'
@@ -55,8 +55,11 @@ export function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
-      value={xaid ?? ''}
-      onChange={(e) => setXaid(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      value={assetId ?? ''}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setAssetId(value === '' ? undefined : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );

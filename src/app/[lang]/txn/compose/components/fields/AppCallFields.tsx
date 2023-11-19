@@ -60,7 +60,10 @@ export function AppId({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
       value={appId ||''}
-      onChange={(e) => setAppId(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setAppId(value === '' ? undefined : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );
@@ -399,7 +402,10 @@ function ForeignAppInput({ t, appAtom, index }:
       placeholder={t('fields.apfa.placeholder', { index: index + 1 })}
       containerClass='mt-4 max-w-xs'
       value={app ?? ''}
-      onChange={(e) => setApp(e.target.value === '' ? null : parseInt(e.target.value))}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setApp(value === '' ? null : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );
@@ -459,7 +465,10 @@ function ForeignAssetInput({ t, assetAtom, index }:
       placeholder={t('fields.apas.placeholder', { index: index + 1 })}
       containerClass='mt-4 max-w-xs'
       value={asset ?? ''}
-      onChange={(e) => setAsset(e.target.value === '' ? null : parseInt(e.target.value))}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setAsset(value === '' ? null : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );
@@ -524,7 +533,10 @@ function BoxIdInput({ t, boxAtom, index }:
       placeholder={t('fields.apbx_i.placeholder', { index: index + 1 })}
       containerClass='mt-4 max-w-xs'
       value={box.i ?? ''}
-      onChange={(e) => setBox({...box, i: e.target.value === '' ? null : parseInt(e.target.value)})}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setBox({...box, i: value === '' ? null : parseInt(value)});
+      }}
       inputMode='numeric'
     />
   );

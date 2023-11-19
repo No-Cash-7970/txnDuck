@@ -17,7 +17,10 @@ export function AssetId({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerClass='mt-4 max-w-xs'
       value={assetId ?? ''}
-      onChange={(e) => setAssetId(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      onChange={(e) => {
+        const value = e.target.value.replace(/[^0-9]/gm, '');
+        setAssetId(value === '' ? undefined : parseInt(value));
+      }}
       inputMode='numeric'
     />
   );
