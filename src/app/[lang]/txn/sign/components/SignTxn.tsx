@@ -59,8 +59,15 @@ export default function SignTxn({ lng }: Props) {
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     const {gen, gh} = await getGenesisInfo();
-    // Create Transaction object and encoded it
-    let unsignedTxn = algosdk.encodeUnsignedTransaction(createTxnFromData(storedTxnData, gen, gh));
+    let unsignedTxn = new Uint8Array;
+
+    try {
+      // Create Transaction object and encoded it
+      unsignedTxn = algosdk.encodeUnsignedTransaction(createTxnFromData(storedTxnData, gen, gh));
+    } catch (e) {
+      setHasSignTxnError(true);
+      return;
+    }
 
     // Sign the transaction and store it
     const signedTxn = (await signTransactions([unsignedTxn]))[0];

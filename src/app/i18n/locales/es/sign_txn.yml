@@ -4,3 +4,7 @@ compose_txn_btn_warning: Si se edita la transacción, será necesario firmarla d
 sign_txn_btn: Firme esta transacción
 send_txn_btn: Envíe
 txn_signed: Transacción firmada
+sign_error: >
+  No se ha podido firmar la transacción porque está malformada. Esto suele deberse a que la
+  información de la transacción no es válida. Vuelva al paso anterior y compruebe si hay errores en
+  la información de la transacción.

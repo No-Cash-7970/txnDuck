@@ -4,3 +4,7 @@ compose_txn_btn_warning: If the transaction is edited, it will need to be signed
 sign_txn_btn: Sign this transaction
 send_txn_btn: Send
 txn_signed: Transaction signed
+sign_error: >
+  The transaction could not be signed because the transaction is malformed. This is usually caused
+  by invalid transaction information. Go back to the previous step and check for errors in the
+  transaction information.
