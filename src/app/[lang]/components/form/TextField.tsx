@@ -22,6 +22,7 @@ export default function TextField({
   onChange = undefined,
   inputMode = undefined,
   type = undefined,
+  maxLength = undefined,
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -46,6 +47,7 @@ export default function TextField({
               value={value}
               onChange={onChange}
               inputMode={inputMode}
+              maxLength={maxLength}
             />
           }
           {(beforeSideLabel || afterSideLabel) &&
@@ -69,6 +71,7 @@ export default function TextField({
                 value={value}
                 onChange={onChange}
                 inputMode={inputMode}
+                maxLength={maxLength}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -95,6 +98,7 @@ export default function TextField({
             value={value}
             onChange={onChange}
             inputMode={inputMode}
+            maxLength={maxLength}
           />
         }
         {(beforeSideLabel || afterSideLabel) &&
@@ -118,6 +122,7 @@ export default function TextField({
               value={value}
               onChange={onChange}
               inputMode={inputMode}
+              maxLength={maxLength}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

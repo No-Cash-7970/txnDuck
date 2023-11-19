@@ -5,9 +5,11 @@ import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
+
+const LEASE_MAX_LENGTH = 32;
 
 export function TxnType({ t }: { t: TFunction }) {
   const [txnType, setTxnType] = useAtom(txnDataAtoms.txnType);
@@ -46,6 +48,7 @@ export function Sender({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.snd.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={snd}
       onChange={(e) => setSnd(e.target.value)}
     />
@@ -131,6 +134,7 @@ export function Lease({ t }: { t: TFunction }) {
       id='lx-field'
       inputInsideLabel={false}
       containerClass='mt-4 max-w-sm'
+      maxLength={LEASE_MAX_LENGTH}
       value={lx}
       onChange={(e) => setLx(e.target.value)}
     />
@@ -173,6 +177,7 @@ function RekeyField({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.rekey.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={rekey}
       onChange={(e) => setRekey(e.target.value)}
     />

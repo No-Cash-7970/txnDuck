@@ -73,6 +73,8 @@ export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
   spellCheck?: boolean;
   /** The type of keyboard to use when a virtual keyboard is used */
   inputMode?: 'none'|'text'|'decimal'|'numeric'|'tel'|'search'|'email'|'url'
+  /** Maximum number of characters allowed */
+  maxLength?: number;
 }
 
 /** Properties for the NumberField component */

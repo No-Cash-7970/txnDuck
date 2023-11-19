@@ -6,7 +6,7 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 
 export function Receiver({ t }: { t: TFunction }) {
   const [rcv, setRcv] = useAtom(txnDataAtoms.rcv);
@@ -19,6 +19,7 @@ export function Receiver({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.rcv.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={rcv}
       onChange={(e) => setRcv(e.target.value)}
     />

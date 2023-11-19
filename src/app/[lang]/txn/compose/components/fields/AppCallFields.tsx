@@ -11,7 +11,7 @@ import {
 import { type TFunction } from 'i18next';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
 import * as Icons from '@tabler/icons-react';
-import { BoxRef, Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { ADDRESS_MAX_LENGTH, BoxRef, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { OnApplicationComplete } from 'algosdk';
 
 // https://developer.algorand.org/docs/get-details/parameter_tables/
@@ -340,6 +340,7 @@ function AppAcctInput({ t, acctAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apat.placeholder', { index: index + 1 })}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={acct}
       onChange={(e) => setAcct(e.target.value)}
     />

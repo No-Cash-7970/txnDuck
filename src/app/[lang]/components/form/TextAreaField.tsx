@@ -22,6 +22,7 @@ export default function TextAreaField({
   spellCheck = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  maxLength = undefined,
 }: TextAreaFieldProps) {
   return (
     <div className={`form-control ${containerClass}`}>
@@ -44,6 +45,7 @@ export default function TextAreaField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              maxLength={maxLength}
             />
           }
           {(beforeSideLabel || afterSideLabel) &&
@@ -65,6 +67,7 @@ export default function TextAreaField({
                 spellCheck={spellCheck}
                 value={value}
                 onChange={onChange}
+                maxLength={maxLength}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -89,6 +92,7 @@ export default function TextAreaField({
             spellCheck={spellCheck}
             value={value}
             onChange={onChange}
+            maxLength={maxLength}
           />
         }
         {(beforeSideLabel || afterSideLabel) &&
@@ -110,6 +114,7 @@ export default function TextAreaField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              maxLength={maxLength}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

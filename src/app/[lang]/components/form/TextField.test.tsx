@@ -172,4 +172,9 @@ describe('Form Components - TextField', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('type', 'email');
   });
 
+  it('has max length specified in `maxlength` property', () => {
+    render(<TextField maxLength={5} />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '5');
+  });
+
 });

@@ -167,4 +167,9 @@ describe('Form Components - TextAreaField', () => {
     expect(screen.getByText('foo')).toHaveClass('foo-label-text');
   });
 
+  it('has max length specified in `maxlength` property', () => {
+    render(<TextAreaField maxLength={5} />);
+    expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '5');
+  });
+
 });

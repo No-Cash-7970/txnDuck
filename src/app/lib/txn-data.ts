@@ -4,6 +4,8 @@ import type { OnApplicationComplete, TransactionType } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithStorage, createJSONStorage, splitAtom } from 'jotai/utils';
 
+export const ADDRESS_MAX_LENGTH = 58;
+
 export enum Preset {
   /** Preset query parameter name */
   ParamName = 'preset',

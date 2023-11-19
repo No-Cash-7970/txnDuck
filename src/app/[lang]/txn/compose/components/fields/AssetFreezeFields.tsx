@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtom } from 'jotai';
-import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 
 export function AssetId({ t }: { t: TFunction }) {
   const [assetId, setAssetId] = useAtom(txnDataAtoms.faid);
@@ -34,6 +34,7 @@ export function TargetAddr({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.fadd.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={addr}
       onChange={(e) => setAddr(e.target.value)}
     />

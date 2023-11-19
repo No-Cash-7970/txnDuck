@@ -5,7 +5,7 @@ import { NumberField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtom } from 'jotai';
-import { Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 
 export function Sender({ t }: { t: TFunction }) {
@@ -20,6 +20,7 @@ export function Sender({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.asnd.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={asnd}
       onChange={(e) => setAsnd(e.target.value)}
     />
@@ -37,6 +38,7 @@ export function Receiver({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.arcv.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={arcv}
       onChange={(e) => setArcv(e.target.value)}
     />
@@ -106,6 +108,7 @@ function CloseToField({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.aclose.placeholder')}
       containerClass='mt-4'
+      maxLength={ADDRESS_MAX_LENGTH}
       value={aclose}
       onChange={(e) => setAclose(e.target.value)}
     />
