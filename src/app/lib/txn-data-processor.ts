@@ -4,7 +4,7 @@ import type * as TxnData from '@/app/lib/txn-data';
 
 /** Creates an `Transaction` object that represents an Algorand transaction */
 export function createTxnFromData(
-  txnData: TxnData.TxnData['txn'],
+  txnData: TxnData.TxnData,
   genesisID: string,
   genesisHash: string
 ) {

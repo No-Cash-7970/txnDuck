@@ -16,10 +16,10 @@ jest.mock('@txnlab/use-wallet', () => useWalletUnconnectedMock);
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array([
-    // {"gen":"testnet-v1.0","gh":"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
-    // "txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",
+    // Genesis ID: testnet-v1.0, Genesis hash: SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=
+    // {"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",
     // "fee":0.001,"fv":1,"lv":2, rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M,
-    // "amt":0}}
+    // "amt":0}
     130,163,115,105,103,196,64,37,21,106,1,57,107,80,242,128,8,97,9,238,113,67,123,201,222,146,146,
     103,88,71,191,126,81,172,69,55,251,124,130,249,184,68,26,236,229,212,59,55,231,47,238,34,218,
     204,101,60,45,150,140,217,142,194,59,52,147,204,9,96,24,90,11,163,116,120,110,136,163,102,101,
@@ -34,6 +34,15 @@ jest.mock('../../../../lib/utils.ts', () => ({
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({toString: () => 'preset=foo'}),
+}));
+// Mock algokit
+jest.mock('@algorandfoundation/algokit-utils', () => ({
+  ...jest.requireActual('@algorandfoundation/algokit-utils'),
+  getAlgoClient: () => ({}),
+  getTransactionParams: () => ({
+    genesisID: 'testnet-v1.0',
+    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
+  }),
 }));
 
 import SignTxn from './SignTxn';
@@ -77,31 +86,31 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
   it('removes stored signed transaction if it is different from stored unsigned transaction',
   async () => {
     sessionStorage.setItem('txnData',
-      '{"gen":"testnet-v1.0","gh":"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=","txn":{'
-      + '"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.002,"fv":1,"lv":2,' // Change the fee
-      +'"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}}'
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SignTxn />);
 
-    expect(await screen.findByText('sign_txn:txn_signed')).not.toBeInTheDocument();
+    expect(await screen.findByText('wallet.connect')).toBeInTheDocument();
+    expect(screen.queryByText('sign_txn:txn_signed')).not.toBeInTheDocument();
   });
 
   it('does not remove stored signed transaction if it is the same as stored unsigned transaction',
   async () => {
     sessionStorage.setItem('txnData',
-      '{"gen":"testnet-v1.0","gh":"SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=","txn":{'
-      + '"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,'
-      +'"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}}'
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,..."');
     render(<SignTxn />);
 
     expect(await screen.findByText('sign_txn:txn_signed')).toBeInTheDocument();
+    expect(screen.queryByText('wallet.connect')).not.toBeInTheDocument();
   });
 
 });

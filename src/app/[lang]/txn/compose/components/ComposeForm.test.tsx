@@ -14,14 +14,6 @@ jest.mock('next/navigation', () => ({
     get: () => presetMockValue
   }),
 }));
-// Mock algokit
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  getAlgoClient: () => ({}),
-  getTransactionParams: () => ({
-    genesisID: 'fooNet',
-    genesisHash: 'Some genesis hash'
-  })
-}));
 
 import ComposeForm from './ComposeForm';
 import { JotaiProvider } from '@/app/[lang]/components';
@@ -252,17 +244,13 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'pay',
-        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-        amt: 5,
-      }
+      type: 'pay',
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      amt: 5,
     });
   });
 
@@ -292,18 +280,14 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'axfer',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-        xaid: 123456789,
-        aamt: '5',
-      }
+      type: 'axfer',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      xaid: 123456789,
+      aamt: '5',
     });
   });
 
@@ -349,26 +333,22 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'acfg',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apar_un: 'FAKE',
-        apar_an: 'Fake Token',
-        apar_t: '10000000',
-        apar_dc: 3,
-        apar_df: true,
-        apar_au: 'https://fake.token',
-        apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-      }
+      type: 'acfg',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apar_un: 'FAKE',
+      apar_an: 'Fake Token',
+      apar_t: '10000000',
+      apar_dc: 3,
+      apar_df: true,
+      apar_au: 'https://fake.token',
+      apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
     });
   }, 10000);
 
@@ -398,18 +378,14 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'afrz',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        faid: 123456789,
-        fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-        afrz: true,
-      }
+      type: 'afrz',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      faid: 123456789,
+      fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      afrz: true,
     });
   });
 
@@ -446,23 +422,19 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'keyreg',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
-        votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
-        selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-        // eslint-disable-next-line max-len
-        sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
-        votefst: 6000000,
-        votelst: 6100000,
-        votekd: 1730,
-        nonpart: false,
-      }
+      type: 'keyreg',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+      votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+      selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+      // eslint-disable-next-line max-len
+      sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+      votefst: 6000000,
+      votelst: 6100000,
+      votekd: 1730,
+      nonpart: false,
     });
   });
 
@@ -530,45 +502,37 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      gen: 'fooNet',
-      gh: 'Some genesis hash',
-      txn: {
-        type: 'appl',
-        fee: 0.001,
-        fv: 6000000,
-        lv: 6001000,
-        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        apan: 0,
-        apap: 'BYEB',
-        apsu: 'BYEB',
-        apgs_nui: 1,
-        apgs_nbs: 2,
-        apls_nui: 3,
-        apls_nbs: 4,
-        apep: 1,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 99999999, n: 'Boxy box' }],
-      }
+      type: 'appl',
+      fee: 0.001,
+      fv: 6000000,
+      lv: 6001000,
+      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      apan: 0,
+      apap: 'BYEB',
+      apsu: 'BYEB',
+      apgs_nui: 1,
+      apgs_nbs: 2,
+      apls_nui: 3,
+      apls_nbs: 4,
+      apep: 1,
+      apaa: ['foo', '42', ''],
+      apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+      apfa: [11111111, 22222222],
+      apas: [33333333, 44444444, 55555555],
+      apbx: [{i: 99999999, n: 'Boxy box' }],
     });
   }, 10000);
 
   it('can retrieve transaction data from session storage', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      gen: '',
-      gh: '',
-      txn: {
-        type: 'pay',
-        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        fee: 0.001,
-        fv: 5,
-        lv: 1005,
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        amt: 42,
-      }
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      fee: 0.001,
+      fv: 5,
+      lv: 1005,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
     }));
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms

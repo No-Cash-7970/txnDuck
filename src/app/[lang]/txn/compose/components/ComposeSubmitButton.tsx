@@ -3,10 +3,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
 import { OnApplicationComplete, TransactionType } from 'algosdk';
-import * as algokit from '@algorandfoundation/algokit-utils';
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
-import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
   /** Language */
@@ -20,7 +18,6 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
-  const nodeConfig = useAtomValue(nodeConfigAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(TxnData.Preset.ParamName);
@@ -84,8 +81,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
     // NOTE: At this point, there is stored transaction data and/or a preset specified.
 
-    const txnData = storedTxnData?.txn;
-    let txnType = storedTxnData?.txn?.type;
+    let txnType = storedTxnData?.type;
 
     // Do not set the transaction type again if it was determined by the preset
     if (!preset) {
@@ -95,56 +91,60 @@ export default function ComposeSubmitButton({ lng }: Props) {
       txnType = jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
     }
 
-    jotaiStore.set(TxnData.txnDataAtoms.snd, txnData?.snd || '');
-    jotaiStore.set(TxnData.txnDataAtoms.note, txnData?.note || '');
-    jotaiStore.set(TxnData.txnDataAtoms.fee, txnData?.fee);
-    jotaiStore.set(TxnData.txnDataAtoms.fv, txnData?.fv);
-    jotaiStore.set(TxnData.txnDataAtoms.lv, txnData?.lv);
+    jotaiStore.set(TxnData.txnDataAtoms.snd, storedTxnData?.snd || '');
+    jotaiStore.set(TxnData.txnDataAtoms.note, storedTxnData?.note);
+    jotaiStore.set(TxnData.txnDataAtoms.fee, storedTxnData?.fee);
+    jotaiStore.set(TxnData.txnDataAtoms.fv, storedTxnData?.fv);
+    jotaiStore.set(TxnData.txnDataAtoms.lv, storedTxnData?.lv);
 
     if (!preset || preset === TxnData.Preset.AppRun) {
-      jotaiStore.set(TxnData.txnDataAtoms.lx, txnData?.lx || '');
+      jotaiStore.set(TxnData.txnDataAtoms.lx, storedTxnData?.lx || '');
     }
 
     if (!preset || preset === TxnData.Preset.RekeyAccount) {
-      jotaiStore.set(TxnData.txnDataAtoms.rekey, txnData?.rekey || '');
+      jotaiStore.set(TxnData.txnDataAtoms.rekey, storedTxnData?.rekey || '');
     }
 
     // Restore payment transaction data, if applicable
     if (txnType === TransactionType.pay) {
       if (!preset || preset === TxnData.Preset.TransferAlgos) {
-        jotaiStore.set(TxnData.txnDataAtoms.rcv, (txnData as TxnData.PaymentTxnData)?.rcv || '');
-        jotaiStore.set(TxnData.txnDataAtoms.amt, (txnData as TxnData.PaymentTxnData)?.amt);
+        jotaiStore.set(TxnData.txnDataAtoms.rcv,
+          (storedTxnData as TxnData.PaymentTxnData)?.rcv || ''
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.amt, (storedTxnData as TxnData.PaymentTxnData)?.amt);
       }
 
       if (!preset || preset === TxnData.Preset.CloseAccount) {
         jotaiStore.set(TxnData.txnDataAtoms.close,
-          (txnData as TxnData.PaymentTxnData)?.close || ''
+          (storedTxnData as TxnData.PaymentTxnData)?.close || ''
         );
       }
     }
 
     // Restore asset transfer transaction data, if applicable
     if (txnType === TransactionType.axfer) {
-      jotaiStore.set(TxnData.txnDataAtoms.xaid, (txnData as TxnData.AssetTransferTxnData)?.xaid);
+      jotaiStore.set(TxnData.txnDataAtoms.xaid,
+        (storedTxnData as TxnData.AssetTransferTxnData)?.xaid
+      );
 
       if (preset !== TxnData.Preset.AssetOptIn && preset !== TxnData.Preset.AssetOptOut) {
         jotaiStore.set(TxnData.txnDataAtoms.arcv,
-          (txnData as TxnData.AssetTransferTxnData)?.arcv || ''
+          (storedTxnData as TxnData.AssetTransferTxnData)?.arcv || ''
         );
         jotaiStore.set(TxnData.txnDataAtoms.aamt,
-          (txnData as TxnData.AssetTransferTxnData)?.aamt || ''
+          (storedTxnData as TxnData.AssetTransferTxnData)?.aamt || ''
         );
       }
 
       if (!preset || preset === TxnData.Preset.AssetClawback) {
         jotaiStore.set(TxnData.txnDataAtoms.asnd,
-          (txnData as TxnData.AssetTransferTxnData)?.asnd || ''
+          (storedTxnData as TxnData.AssetTransferTxnData)?.asnd || ''
         );
       }
 
       if (!preset || preset === TxnData.Preset.AssetOptOut) {
         jotaiStore.set(TxnData.txnDataAtoms.aclose,
-          (txnData as TxnData.AssetTransferTxnData)?.aclose || ''
+          (storedTxnData as TxnData.AssetTransferTxnData)?.aclose || ''
         );
       }
     }
@@ -152,49 +152,53 @@ export default function ComposeSubmitButton({ lng }: Props) {
     // Restore asset configuration transaction data, if applicable
     if (txnType === TransactionType.acfg) {
       if (preset !== TxnData.Preset.AssetCreate) {
-        jotaiStore.set(TxnData.txnDataAtoms.caid, (txnData as TxnData.AssetConfigTxnData)?.caid);
+        jotaiStore.set(TxnData.txnDataAtoms.caid,
+          (storedTxnData as TxnData.AssetConfigTxnData)?.caid
+        );
       }
 
       jotaiStore.set(TxnData.txnDataAtoms.apar_un,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_un || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_un || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_an,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_an || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_an || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_t,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_t || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_t || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_dc,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_dc
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_dc
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_df,
-        !!((txnData as TxnData.AssetConfigTxnData)?.apar_df)
+        !!((storedTxnData as TxnData.AssetConfigTxnData)?.apar_df)
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_au,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_au || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_au || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_m,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_m || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_m || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_f,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_f || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_f || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_c,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_c || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_c || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_r,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_r || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_r || ''
       );
       jotaiStore.set(TxnData.txnDataAtoms.apar_am,
-        (txnData as TxnData.AssetConfigTxnData)?.apar_am || ''
+        (storedTxnData as TxnData.AssetConfigTxnData)?.apar_am || ''
       );
     }
 
     // Restore asset freeze transaction data, if applicable
     if (txnType === TransactionType.afrz) {
-      jotaiStore.set(TxnData.txnDataAtoms.faid, (txnData as TxnData.AssetFreezeTxnData)?.faid);
+      jotaiStore.set(TxnData.txnDataAtoms.faid, (
+        storedTxnData as TxnData.AssetFreezeTxnData)?.faid
+      );
       jotaiStore.set(TxnData.txnDataAtoms.fadd,
-        (txnData as TxnData.AssetFreezeTxnData)?.fadd || ''
+        (storedTxnData as TxnData.AssetFreezeTxnData)?.fadd || ''
       );
 
       if (preset === TxnData.Preset.AssetFreeze) {
@@ -203,7 +207,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         jotaiStore.set(TxnData.txnDataAtoms.afrz, false);
       } else {
         jotaiStore.set(TxnData.txnDataAtoms.afrz,
-          (txnData as TxnData.AssetFreezeTxnData)?.afrz ?? false
+          (storedTxnData as TxnData.AssetFreezeTxnData)?.afrz ?? false
         );
       }
     }
@@ -211,21 +215,29 @@ export default function ComposeSubmitButton({ lng }: Props) {
     if (txnType === TransactionType.keyreg) {
       if (!preset || preset === TxnData.Preset.RegOnline) {
         jotaiStore.set(TxnData.txnDataAtoms.votekey,
-          (txnData as TxnData.KeyRegTxnData)?.votekey || ''
+          (storedTxnData as TxnData.KeyRegTxnData)?.votekey || ''
         );
         jotaiStore.set(TxnData.txnDataAtoms.selkey,
-          (txnData as TxnData.KeyRegTxnData)?.selkey || ''
+          (storedTxnData as TxnData.KeyRegTxnData)?.selkey || ''
         );
         jotaiStore.set(TxnData.txnDataAtoms.sprfkey,
-          (txnData as TxnData.KeyRegTxnData)?.sprfkey || ''
+          (storedTxnData as TxnData.KeyRegTxnData)?.sprfkey || ''
         );
-        jotaiStore.set(TxnData.txnDataAtoms.votefst, (txnData as TxnData.KeyRegTxnData)?.votefst);
-        jotaiStore.set(TxnData.txnDataAtoms.votelst, (txnData as TxnData.KeyRegTxnData)?.votelst);
-        jotaiStore.set(TxnData.txnDataAtoms.votekd, (txnData as TxnData.KeyRegTxnData)?.votekd);
+        jotaiStore.set(TxnData.txnDataAtoms.votefst,
+          (storedTxnData as TxnData.KeyRegTxnData)?.votefst
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.votelst,
+          (storedTxnData as TxnData.KeyRegTxnData)?.votelst
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.votekd,
+          (storedTxnData as TxnData.KeyRegTxnData)?.votekd
+        );
       }
 
       if (!preset) {
-        jotaiStore.set(TxnData.txnDataAtoms.nonpart, (txnData as TxnData.KeyRegTxnData)?.nonpart);
+        jotaiStore.set(TxnData.txnDataAtoms.nonpart,
+          (storedTxnData as TxnData.KeyRegTxnData)?.nonpart
+        );
       }
 
       if (preset === TxnData.Preset.RegNonpart) {
@@ -255,54 +267,52 @@ export default function ComposeSubmitButton({ lng }: Props) {
           jotaiStore.set(TxnData.txnDataAtoms.apan, OnApplicationComplete.DeleteApplicationOC);
           break;
         default:
-          jotaiStore.set(TxnData.txnDataAtoms.apan, (txnData as TxnData.AppCallTxnData)?.apan);
+          jotaiStore.set(TxnData.txnDataAtoms.apan,
+            (storedTxnData as TxnData.AppCallTxnData)?.apan
+          );
           break;
       }
 
       if (preset !== TxnData.Preset.AppDeploy) {
-        jotaiStore.set(TxnData.txnDataAtoms.apid, (txnData as TxnData.AppCallTxnData)?.apid);
+        jotaiStore.set(TxnData.txnDataAtoms.apid, (storedTxnData as TxnData.AppCallTxnData)?.apid);
       }
 
       if (!preset || preset === TxnData.Preset.AppDeploy || preset === TxnData.Preset.AppUpdate) {
-        jotaiStore.set(TxnData.txnDataAtoms.apap, (txnData as TxnData.AppCallTxnData)?.apap || '');
-        jotaiStore.set(TxnData.txnDataAtoms.apsu, (txnData as TxnData.AppCallTxnData)?.apsu || '');
+        jotaiStore.set(TxnData.txnDataAtoms.apap,
+          (storedTxnData as TxnData.AppCallTxnData)?.apap || ''
+        );
+        jotaiStore.set(TxnData.txnDataAtoms.apsu,
+          (storedTxnData as TxnData.AppCallTxnData)?.apsu || ''
+        );
       }
 
       if (!preset || preset === TxnData.Preset.AppDeploy) {
         jotaiStore.set(TxnData.txnDataAtoms.apgs_nui,
-          (txnData as TxnData.AppCallTxnData)?.apgs_nui
+          (storedTxnData as TxnData.AppCallTxnData)?.apgs_nui
         );
         jotaiStore.set(TxnData.txnDataAtoms.apgs_nbs,
-          (txnData as TxnData.AppCallTxnData)?.apgs_nbs
+          (storedTxnData as TxnData.AppCallTxnData)?.apgs_nbs
         );
         jotaiStore.set(TxnData.txnDataAtoms.apls_nui,
-          (txnData as TxnData.AppCallTxnData)?.apls_nui
+          (storedTxnData as TxnData.AppCallTxnData)?.apls_nui
         );
         jotaiStore.set(TxnData.txnDataAtoms.apls_nbs,
-          (txnData as TxnData.AppCallTxnData)?.apls_nbs
+          (storedTxnData as TxnData.AppCallTxnData)?.apls_nbs
         );
-        jotaiStore.set(TxnData.txnDataAtoms.apep, (txnData as TxnData.AppCallTxnData)?.apep);
+        jotaiStore.set(TxnData.txnDataAtoms.apep, (storedTxnData as TxnData.AppCallTxnData)?.apep);
       }
 
-      jotaiStore.set(TxnData.apaaListAtom, (txnData as TxnData.AppCallTxnData)?.apaa || []);
-      jotaiStore.set(TxnData.apatListAtom, (txnData as TxnData.AppCallTxnData)?.apat || []);
-      jotaiStore.set(TxnData.apfaListAtom, (txnData as TxnData.AppCallTxnData)?.apfa || []);
-      jotaiStore.set(TxnData.apasListAtom, (txnData as TxnData.AppCallTxnData)?.apas || []);
-      jotaiStore.set(TxnData.apbxListAtom, (txnData as TxnData.AppCallTxnData)?.apbx || []);
+      jotaiStore.set(TxnData.apaaListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apaa || []);
+      jotaiStore.set(TxnData.apatListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apat || []);
+      jotaiStore.set(TxnData.apfaListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apfa || []);
+      jotaiStore.set(TxnData.apasListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apas || []);
+      jotaiStore.set(TxnData.apbxListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apbx || []);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
   const submitData = async (e: React.MouseEvent) => {
     e.preventDefault();
-
-    // Get suggested parameters
-    const algod = algokit.getAlgoClient({
-      server: nodeConfig.nodeServer,
-      port: nodeConfig.nodePort,
-      token: (nodeConfig.nodeToken || '') as string,
-    });
-    const {genesisID, genesisHash} = await algokit.getTransactionParams(undefined, algod);
 
     const txnType: TransactionType =
       jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
@@ -434,12 +444,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
     setSubmittingForm(true);
     // Store transaction data into local/session storage
     jotaiStore.set(TxnData.storedTxnDataAtom, {
-      gen: genesisID,
-      gh: genesisHash,
-      txn: {
-        ...baseTxnData,
-        ...specificTxnData,
-      }
+      ...baseTxnData,
+      ...specificTxnData,
     });
     // Go to sign-transaction page
     router.push(`/${lng}/txn/sign` + (currentURLParams.size ? `?${currentURLParams}` : ''));

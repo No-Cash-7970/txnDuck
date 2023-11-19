@@ -201,20 +201,13 @@ export interface AppCallTxnData extends BaseTxnData {
   apbx: BoxRef[];
 }
 /** Data for the transaction being built */
-export interface TxnData {
-  /** Genesis ID (retrieved from currently connected node) */
-  gen: string;
-  /** Genesis hash (retrieved from currently connected node) */
-  gh: string;
-  /** Transaction form data */
-  txn: BaseTxnData
-    | PaymentTxnData
-    | AssetTransferTxnData
-    | AssetConfigTxnData
-    | AssetFreezeTxnData
-    | KeyRegTxnData
-    | AppCallTxnData;
-};
+export type TxnData = BaseTxnData
+  | PaymentTxnData
+  | AssetTransferTxnData
+  | AssetConfigTxnData
+  | AssetFreezeTxnData
+  | KeyRegTxnData
+  | AppCallTxnData;
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage);
