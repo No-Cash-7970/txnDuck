@@ -75,6 +75,12 @@ describe('Form Components - SelectField', () => {
     expect(screen.getByRole('combobox')).toHaveFocus();
   });
 
+  it('has container with ID specified in `containerId` property', () => {
+    const { container } = render(<SelectField containerId='foo' />);
+    const containerElem = container.getElementsByClassName('form-control')[0];
+    expect(containerElem).toHaveAttribute('id', 'foo');
+  });
+
   it('has container with class(es) specified in `containerClass` property', () => {
     const { container } = render(<SelectField containerClass='foo' />);
     const containerElem = container.getElementsByClassName('form-control')[0];
@@ -188,6 +194,39 @@ describe('Form Components - SelectField', () => {
 
     expect(input).toHaveValue('bar');
     expect(onChangeFn).toBeCalledTimes(1);
+  });
+
+  it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
+    const onFocusFn = jest.fn();
+    render(
+      <SelectField
+        onFocus={onFocusFn}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input); // Click on input
+
+    expect(onFocusFn).toBeCalledTimes(1);
+    expect(input).toHaveFocus();
+  });
+
+  it('has input with "on-blur" event function specified by `onBlur` attribute', async () => {
+    const onBlurFn = jest.fn();
+    render(
+      <SelectField
+        onBlur={onBlurFn}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input); // Click on input
+    await userEvent.tab(); // Tab away to lose focus
+
+    expect(onBlurFn).toBeCalledTimes(1);
+    expect(input).not.toHaveFocus();
   });
 
   it('has label with class(es) specified in `labelClass` property', () => {

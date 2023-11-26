@@ -7,11 +7,12 @@ export default function FieldGroup({
   headingLevel = 2,
   headingClass = '',
   headingId = '',
+  containerId = undefined,
   containerClass = '',
   disabled = false,
 }: FieldGroupProps) {
   return (
-    <fieldset className={containerClass || undefined} disabled={disabled}>
+    <fieldset className={containerClass || undefined} id={containerId} disabled={disabled}>
       {heading && <>
         {headingLevel === 1 &&
           <h1 id={headingId || undefined} className={headingClass || undefined}>{heading}</h1>

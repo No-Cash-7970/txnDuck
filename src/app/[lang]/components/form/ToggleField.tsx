@@ -9,6 +9,7 @@ export default function ToggleField({
   labelClass = '',
   labelTextClass = '',
   inputInsideLabel = true,
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -18,9 +19,11 @@ export default function ToggleField({
   disabled = false,
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
 }: ToggleFieldProps) {
   return (
-    <div className={`form-control ${containerClass}`}>
+    <div className={`form-control ${containerClass}`} id={containerId}>
       {(!inputInsideLabel && inputPosition === 'start') &&
         <input
           className={`toggle ${inputClass}`}
@@ -32,6 +35,8 @@ export default function ToggleField({
           disabled={disabled}
           checked={value}
           onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
       }
       <label className={`label ${labelClass}`} htmlFor={id || undefined}>
@@ -46,6 +51,8 @@ export default function ToggleField({
             disabled={disabled}
             checked={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         }
         <span className={`label-text ${labelTextClass}`}>
@@ -63,6 +70,8 @@ export default function ToggleField({
             disabled={disabled}
             checked={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         }
       </label>
@@ -77,6 +86,8 @@ export default function ToggleField({
           disabled={disabled}
           checked={value}
           onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
         />
       }
 

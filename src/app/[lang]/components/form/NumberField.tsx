@@ -9,6 +9,7 @@ export default function NumberField({
   labelClass = '',
   labelTextClass = '',
   inputInsideLabel = false,
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -23,9 +24,11 @@ export default function NumberField({
   autoComplete = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
 }: NumberFieldProps) {
   return (
-    <div className={`form-control ${containerClass}`}>
+    <div className={`form-control ${containerClass}`} id={containerId}>
       <label className={`label ${labelClass}`} htmlFor={id || undefined}>
         <span className={`label-text ${labelTextClass}`}>
           {label}
@@ -48,6 +51,8 @@ export default function NumberField({
               autoComplete={autoComplete}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           }
           {(beforeSideLabel || afterSideLabel) && <>
@@ -71,6 +76,8 @@ export default function NumberField({
                 autoComplete={autoComplete}
                 value={value}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -98,6 +105,8 @@ export default function NumberField({
             autoComplete={autoComplete}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           />
         }
         {(beforeSideLabel || afterSideLabel) &&
@@ -121,6 +130,8 @@ export default function NumberField({
               autoComplete={autoComplete}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

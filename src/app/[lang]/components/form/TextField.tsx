@@ -8,6 +8,7 @@ export default function TextField({
   placeholder = '',
   label = '',
   inputInsideLabel = false,
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -20,12 +21,14 @@ export default function TextField({
   spellCheck = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
   inputMode = undefined,
   type = undefined,
   maxLength = undefined,
 }: TextFieldProps) {
   return (
-    <div className={`form-control ${containerClass}`}>
+    <div className={`form-control ${containerClass}`} id={containerId}>
       <label className='label' htmlFor={id || undefined}>
         <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
           {label}
@@ -46,6 +49,8 @@ export default function TextField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
               inputMode={inputMode}
               maxLength={maxLength}
             />
@@ -70,6 +75,8 @@ export default function TextField({
                 spellCheck={spellCheck}
                 value={value}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 inputMode={inputMode}
                 maxLength={maxLength}
               />
@@ -97,6 +104,8 @@ export default function TextField({
             spellCheck={spellCheck}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
             inputMode={inputMode}
             maxLength={maxLength}
           />
@@ -121,6 +130,8 @@ export default function TextField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
               inputMode={inputMode}
               maxLength={maxLength}
             />

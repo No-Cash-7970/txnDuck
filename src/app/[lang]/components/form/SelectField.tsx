@@ -10,6 +10,7 @@ export default function SelectField({
   labelClass = '',
   labelTextClass = '',
   inputInsideLabel = false,
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -22,9 +23,11 @@ export default function SelectField({
   autoComplete = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
 }: SelectFieldProps) {
   return (
-    <div className={`form-control ${containerClass}`}>
+    <div className={`form-control ${containerClass}`} id={containerId}>
       <label className={`label ${labelClass}`} htmlFor={id || undefined}>
         <span className={`label-text ${labelTextClass}`}>
           {label}
@@ -42,6 +45,8 @@ export default function SelectField({
               autoComplete={autoComplete}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
             >
               {placeholder && <option value='' disabled>{placeholder}</option>}
               {
@@ -68,6 +73,8 @@ export default function SelectField({
                 autoComplete={autoComplete}
                 value={value}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
               >
                 {placeholder && <option value='' disabled>{placeholder}</option>}
                 {
@@ -97,6 +104,8 @@ export default function SelectField({
             autoComplete={autoComplete}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
           >
             {placeholder && <option value='' disabled>{placeholder}</option>}
             {
@@ -123,6 +132,8 @@ export default function SelectField({
               autoComplete={autoComplete}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
             >
               {placeholder && <option value='' disabled>{placeholder}</option>}
               {

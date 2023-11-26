@@ -10,6 +10,7 @@ export default function TextAreaField({
   labelClass = '',
   labelTextClass = '',
   inputInsideLabel = false,
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -22,10 +23,12 @@ export default function TextAreaField({
   spellCheck = undefined, // Use browser default
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
   maxLength = undefined,
 }: TextAreaFieldProps) {
   return (
-    <div className={`form-control ${containerClass}`}>
+    <div className={`form-control ${containerClass}`} id={containerId}>
       <label className={`label ${labelClass}`} htmlFor={id || undefined}>
         <span className={`label-text ${labelTextClass}`}>
           {label}
@@ -45,6 +48,8 @@ export default function TextAreaField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
               maxLength={maxLength}
             />
           }
@@ -67,6 +72,8 @@ export default function TextAreaField({
                 spellCheck={spellCheck}
                 value={value}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 maxLength={maxLength}
               />
               {afterSideLabel &&
@@ -92,6 +99,8 @@ export default function TextAreaField({
             spellCheck={spellCheck}
             value={value}
             onChange={onChange}
+            onFocus={onFocus}
+            onBlur={onBlur}
             maxLength={maxLength}
           />
         }
@@ -114,6 +123,8 @@ export default function TextAreaField({
               spellCheck={spellCheck}
               value={value}
               onChange={onChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
               maxLength={maxLength}
             />
             {afterSideLabel &&

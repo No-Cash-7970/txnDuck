@@ -99,6 +99,12 @@ describe('Form Components - CheckboxField', () => {
     expect(screen.getByRole('checkbox')).toBeChecked();
   });
 
+  it('has container with ID specified in `containerId` property', () => {
+    const { container } = render(<CheckboxField containerId='foo' />);
+    const containerElem = container.getElementsByClassName('form-control')[0];
+    expect(containerElem).toHaveAttribute('id', 'foo');
+  });
+
   it('has container with class(es) specified in `containerClass` property', () => {
     const { container } = render(<CheckboxField containerClass='foo' />);
     const containerElem = container.getElementsByClassName('form-control')[0];
@@ -149,6 +155,29 @@ describe('Form Components - CheckboxField', () => {
 
     expect(input).toBeChecked();
     expect(onChangeFn).toBeCalledTimes(1);
+  });
+
+  it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
+    const onFocusFn = jest.fn();
+    render(<CheckboxField onFocus={onFocusFn} />);
+
+    const input = screen.getByRole('checkbox');
+    await userEvent.click(input); // Click on box
+
+    expect(onFocusFn).toBeCalledTimes(1);
+    expect(input).toHaveFocus();
+  });
+
+  it('has input with "on-blur" event function specified by `onBlur` attribute', async () => {
+    const onBlurFn = jest.fn();
+    render(<CheckboxField onBlur={onBlurFn} />);
+
+    const input = screen.getByRole('checkbox');
+    await userEvent.click(input); // Click on box
+    await userEvent.tab(); // Tab away to lose focus
+
+    expect(onBlurFn).toBeCalledTimes(1);
+    expect(input).not.toHaveFocus();
   });
 
   it('has label with class(es) specified in `labelClass` property', () => {

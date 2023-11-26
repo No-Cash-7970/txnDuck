@@ -55,6 +55,11 @@ describe('Form Components - RadioButtonGroupField', () => {
     expect(screen.getByText(/foo/)).toBeInTheDocument();
   });
 
+  it('has container with ID specified in `containerId` property', () => {
+    render(<RadioButtonGroupField containerId='foo' />);
+    expect(screen.getByRole('radiogroup')).toHaveAttribute('id', 'foo');
+  });
+
   it('has container with class(es) specified in `containerClass` property', () => {
     render(<RadioButtonGroupField containerClass='foo' />);
     expect(screen.getByRole('radiogroup')).toHaveClass('foo');
@@ -148,6 +153,39 @@ describe('Form Components - RadioButtonGroupField', () => {
       expect(onChangeFn).toBeCalledTimes(1);
     }
   );
+
+  it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
+    const onFocusFn = jest.fn();
+    render(
+      <RadioButtonGroupField
+        onFocus={onFocusFn}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    const fooInput = screen.getByLabelText('Foo');
+
+    await userEvent.click(fooInput);
+
+    expect(onFocusFn).toBeCalledTimes(1);
+    expect(fooInput).toHaveFocus();
+  });
+
+  it('has input with "on-blur" event function specified by `onBlur` attribute', async () => {
+    const onBlurFn = jest.fn();
+    render(
+      <RadioButtonGroupField
+        onBlur={onBlurFn}
+        options={[{value: 'foo', text: 'Foo'}, {value: 'bar', text: 'Bar'}]}
+      />
+    );
+    const fooInput = screen.getByLabelText('Foo');
+
+    await userEvent.click(fooInput);
+    await userEvent.tab(); // Tab away to lose focus
+
+    expect(onBlurFn).toBeCalledTimes(1);
+    expect(fooInput).not.toHaveFocus();
+  });
 
   it('has label with class(es) specified in `labelClass` property', () => {
     const { container } = render(

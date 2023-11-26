@@ -28,6 +28,11 @@ describe('Form Components - FieldGroup', () => {
     expect(screen.getByRole('heading')).toHaveAttribute('id', 'foo-id');
   });
 
+  it('has container with ID specified in `containerId` property', () => {
+    render(<FieldGroup containerId='foo'></FieldGroup>);
+    expect(screen.getByRole('group')).toHaveAttribute('id', 'foo');
+  });
+
   it('has container with class(es) specified in `containerClass` property', () => {
     render(<FieldGroup containerClass='foo'></FieldGroup>);
     expect(screen.getByRole('group')).toHaveClass('foo');

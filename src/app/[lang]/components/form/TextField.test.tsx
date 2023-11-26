@@ -95,6 +95,12 @@ describe('Form Components - TextField', () => {
     expect(screen.getByRole('textbox')).toHaveFocus();
   });
 
+  it('has container with ID specified in `containerId` property', () => {
+    const { container } = render(<TextField containerId='foo' />);
+    const containerElem = container.getElementsByClassName('form-control')[0];
+    expect(containerElem).toHaveAttribute('id', 'foo');
+  });
+
   it('has container with class(es) specified in `containerClass` property', () => {
     const { container } = render(<TextField containerClass='foo' />);
     const containerElem = container.getElementsByClassName('form-control')[0];
@@ -155,6 +161,29 @@ describe('Form Components - TextField', () => {
 
     expect(input).toHaveValue('bar');
     expect(onChangeFn).toBeCalledTimes(3);
+  });
+
+  it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
+    const onFocusFn = jest.fn();
+    render(<TextField onFocus={onFocusFn} />);
+
+    const input = screen.getByRole('textbox');
+    await userEvent.click(input); // Click on input
+
+    expect(onFocusFn).toBeCalledTimes(1);
+    expect(input).toHaveFocus();
+  });
+
+  it('has input with "on-blur" event function specified by `onBlur` attribute', async () => {
+    const onBlurFn = jest.fn();
+    render(<TextField onBlur={onBlurFn} />);
+
+    const input = screen.getByRole('textbox');
+    await userEvent.click(input); // Click on input
+    await userEvent.tab(); // Tab away to lose focus
+
+    expect(onBlurFn).toBeCalledTimes(1);
+    expect(input).not.toHaveFocus();
   });
 
   it('has input with input mode enabled if `input` is true', () => {

@@ -7,6 +7,7 @@ export default function SelectField({
   label = '',
   labelClass = '',
   labelTextClass = '',
+  containerId = undefined,
   containerClass = '',
   requiredText = '',
   helpMsg = '',
@@ -16,9 +17,11 @@ export default function SelectField({
   disabled = false,
   value = undefined,
   onChange = undefined,
+  onFocus = undefined,
+  onBlur = undefined,
 }: RadioButtonGroupFieldProps) {
   return (
-    <fieldset role='radiogroup' className={containerClass} disabled={disabled}>
+    <fieldset role='radiogroup' className={containerClass} id={containerId} disabled={disabled}>
       <legend className={`label ${labelClass}`}>
         <span className={`label-text ${labelTextClass}`}>{label}</span>
         {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
@@ -39,6 +42,8 @@ export default function SelectField({
                 }
                 checked={(value === undefined)? undefined : (option.value === value)}
                 onChange={onChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
                 aria-label={option.text}
               />
             );

@@ -20,8 +20,11 @@ interface InputProps {
   disabled?: boolean;
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Event handler function for the when the field is focused on */
+  onFocus?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Event handler function for the when the field loses focus */
+  onBlur?: React.ChangeEventHandler<HTMLInputElement>;
 }
-
 /** General properties for fields */
 interface FieldProps {
   /** Text for the main label */
@@ -31,6 +34,8 @@ interface FieldProps {
    * be set for the label to function properly
    */
   inputInsideLabel?: boolean;
+  /** ID to assign to the container */
+  containerId?: string;
   /** Classes to add to the container for the field */
   containerClass?: string;
   /**
@@ -98,9 +103,14 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
 }
 
 /** Properties for the SelectField component */
-export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'type'> {
+export interface SelectFieldProps
+extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'onFocus'|'onBlur'|'type'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  /** Event handler function for the when the field is focused on */
+  onFocus?: React.ChangeEventHandler<HTMLSelectElement>;
+  /** Event handler function for the when the field loses focus */
+  onBlur?: React.ChangeEventHandler<HTMLSelectElement>;
   /** List of options available to select. The `value` of each option should be unique */
   options?: {
     /** Value of the option */
@@ -111,9 +121,14 @@ export interface SelectFieldProps extends Omit<TextFieldProps, 'spellcheck'|'onC
 }
 
 /** Properties for the TextAreaField component */
-export interface TextAreaFieldProps extends  Omit<TextFieldProps, 'onChange'|'type'> {
+export interface TextAreaFieldProps
+extends  Omit<TextFieldProps, 'onChange'|'onFocus'|'onBlur'|'type'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  /** Event handler function for the when the field is focused on */
+  onFocus?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  /** Event handler function for the when the field loses focus */
+  onBlur?: React.ChangeEventHandler<HTMLTextAreaElement>;
 }
 
 /** Properties for the CheckboxField component */
@@ -161,7 +176,9 @@ export interface FieldGroupProps {
   headingClass?: string;
   /** The `id` for the heading */
   headingId?: string;
-  /** Classes to add to the container for the field group */
+  /** ID to assign to the container the field group */
+  containerId?: string;
+  /** Classes to add to the container the field group */
   containerClass?: string;
   /** If all inputs contained within the group should be disabled */
   disabled?: boolean;
