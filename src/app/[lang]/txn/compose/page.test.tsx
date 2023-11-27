@@ -19,19 +19,19 @@ import ComposeTxnPage from './page';
 
 describe('Compose Transaction Page', () => {
 
-  it('has builder steps', () => {
+  it('has builder steps', async () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
-    expect(screen.getByText(/builder_steps\.compose/)).toBeInTheDocument();
+    expect(await screen.findByText(/builder_steps\.compose/)).toBeInTheDocument();
   });
 
-  it('has page title heading', () => {
+  it('has page title heading', async () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
-    expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
+    expect(await screen.findByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
-  it('has form', () => {
+  it('has form', async () => {
     render(<ComposeTxnPage params={{lang: ''}} />);
-    expect(screen.getByRole('form')).toBeInTheDocument();
+    expect(await screen.findByRole('form')).toBeInTheDocument();
   });
 
 });

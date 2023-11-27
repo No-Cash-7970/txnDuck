@@ -2,9 +2,11 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
+import { atomWithValidate } from 'jotai-form';
 import { OnApplicationComplete, TransactionType } from 'algosdk';
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
+import { FormControls } from 'jotai-form/dist/src/atomWithFormControls';
 
 type Props = {
   /** Language */
@@ -24,25 +26,31 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
   useEffect(() => {
     // Check if the form is being submitted. The transaction data is put into storage when the form
-    // is submitted. In this case, the transaction data does not need to be restored into the atoms.
-    if (submittingForm) {
-      return;
-    }
+    // is submitted. If the form is being submitted, the transaction data does not need to be
+    // restored into the atoms, so we can stop here to save time and effort.
+    if (submittingForm) return;
+    // Nothing else to do if there is no stored transaction data and not using a preset
+    if (!storedTxnData && !preset) return;
+
+    // NOTE: At this point, there is stored transaction and/or using a preset.  Certain field atoms
+    // may be set according the preset being used.
 
     /*
      * Set transaction type according to preset
      */
 
+    let txnType = storedTxnData?.type;
+
     switch (preset) {
       case TxnData.Preset.TransferAlgos:
       case TxnData.Preset.RekeyAccount:
       case TxnData.Preset.CloseAccount:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.pay);
+        txnType = TransactionType.pay;
         break;
       case TxnData.Preset.RegOnline:
       case TxnData.Preset.RegOffline:
       case TxnData.Preset.RegNonpart:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.keyreg);
+        txnType = TransactionType.keyreg;
         break;
       case TxnData.Preset.AppRun:
       case TxnData.Preset.AppOptIn:
@@ -51,46 +59,30 @@ export default function ComposeSubmitButton({ lng }: Props) {
       case TxnData.Preset.AppClose:
       case TxnData.Preset.AppClear:
       case TxnData.Preset.AppDelete:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.appl);
+        txnType = TransactionType.appl;
         break;
       case TxnData.Preset.AssetTransfer:
       case TxnData.Preset.AssetOptIn:
       case TxnData.Preset.AssetOptOut:
       case TxnData.Preset.AssetClawback:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.axfer);
+        txnType = TransactionType.axfer;
         break;
       case TxnData.Preset.AssetCreate:
       case TxnData.Preset.AssetReconfig:
       case TxnData.Preset.AssetDestroy:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.acfg);
+        txnType = TransactionType.acfg;
         break;
       case TxnData.Preset.AssetFreeze:
       case TxnData.Preset.AssetUnfreeze:
-        jotaiStore.set(TxnData.txnDataAtoms.txnType, TransactionType.afrz);
+        txnType = TransactionType.afrz;
         break;
     }
 
     /*
-     * Restore transaction data into atoms
+     * Restore stored transaction data into atoms
      */
 
-    // If there is no transaction data in storage and there is no preset specified
-    if (!storedTxnData && !preset) {
-      return;
-    }
-
-    // NOTE: At this point, there is stored transaction data and/or a preset specified.
-
-    let txnType = storedTxnData?.type;
-
-    // Do not set the transaction type again if it was determined by the preset
-    if (!preset) {
-      jotaiStore.set(TxnData.txnDataAtoms.txnType, txnType);
-    } else {
-      // Override the transaction type in the transaction data if there is a preset
-      txnType = jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
-    }
-
+    jotaiStore.set(TxnData.txnDataAtoms.txnType, txnType);
     jotaiStore.set(TxnData.txnDataAtoms.snd, storedTxnData?.snd || '');
     jotaiStore.set(TxnData.txnDataAtoms.note, storedTxnData?.note);
     jotaiStore.set(TxnData.txnDataAtoms.fee, storedTxnData?.fee);
@@ -302,44 +294,157 @@ export default function ComposeSubmitButton({ lng }: Props) {
         jotaiStore.set(TxnData.txnDataAtoms.apep, (storedTxnData as TxnData.AppCallTxnData)?.apep);
       }
 
-      jotaiStore.set(TxnData.apaaListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apaa || []);
-      jotaiStore.set(TxnData.apatListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apat || []);
-      jotaiStore.set(TxnData.apfaListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apfa || []);
-      jotaiStore.set(TxnData.apasListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apas || []);
-      jotaiStore.set(TxnData.apbxListAtom, (storedTxnData as TxnData.AppCallTxnData)?.apbx || []);
+      jotaiStore.set(TxnData.apaaListAtom,
+        (storedTxnData as TxnData.AppCallTxnData)?.apaa
+          ? ((storedTxnData as TxnData.AppCallTxnData)?.apaa).map(
+            arg => atomWithValidate(arg, TxnData.apaaValidateOptions)
+          )
+          : []
+      );
+      jotaiStore.set(TxnData.apatListAtom,
+        (storedTxnData as TxnData.AppCallTxnData)?.apat
+          ? ((storedTxnData as TxnData.AppCallTxnData)?.apat).map(
+            acct => atomWithValidate(acct, TxnData.apatValidateOptions)
+          )
+          : []
+      );
+      jotaiStore.set(TxnData.apfaListAtom,
+        (storedTxnData as TxnData.AppCallTxnData)?.apfa
+          ? ((storedTxnData as TxnData.AppCallTxnData)?.apfa).map(
+            app => atomWithValidate(app, TxnData.apfaValidateOptions)
+          )
+          : []
+      );
+      jotaiStore.set(TxnData.apasListAtom,
+        (storedTxnData as TxnData.AppCallTxnData)?.apas
+          ? ((storedTxnData as TxnData.AppCallTxnData)?.apas).map(
+            asset => atomWithValidate(asset, TxnData.apasValidateOptions)
+          )
+          : []
+      );
+      jotaiStore.set(TxnData.apbxListAtom,
+        (storedTxnData as TxnData.AppCallTxnData)?.apbx
+          ? ((storedTxnData as TxnData.AppCallTxnData)?.apbx).map(
+            box => ({
+              i: atomWithValidate(box.i, TxnData.apbxIValidateOptions),
+              n: atomWithValidate(box.n, TxnData.apbxNValidateOptions)
+            })
+          )
+          : []
+      );
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
+  /**
+   * Focus and scroll to the first invalid field.
+   *
+   * @param invalidFields Names of the fields that are invalid
+   */
+  const scrollToFirstInvalidField = (invalidFields: Set<string>) => {
+    // Focus and scroll to first invalid field
+    if (invalidFields.size) {
+      const firstInvalidField = invalidFields.values().next().value;
+      const field = document.getElementById(`${firstInvalidField}-field`);
+      const input = document.getElementById(`${firstInvalidField}-input`);
+
+      // There may not be an input for the "field" if it is an array or grouping of fields
+      if (input) input.focus();
+      else field?.focus();
+
+      field?.scrollIntoView({behavior: 'smooth'});
+    }
+  };
+
+  /**
+   * Get all of the invalid fields within the given form
+   *
+   * @param form Collection of validation form controls to check
+   * @returns List of all the invalid fields
+   */
+  const getInvalidFields = (form: FormControls<string, any>) => {
+    return form.isValid
+      ? new Set<string>()
+      : new Set<string>(Object.keys(form.fieldErrors)
+        .filter(field => form.fieldErrors[field]) as string[]
+      );
+  };
+
+  /**
+   * "Submit" the form by processing the form data and saving the data into local storage if there
+   * are no form validation errors
+   */
   const submitData = async (e: React.MouseEvent) => {
     e.preventDefault();
+    jotaiStore.set(TxnData.showFormErrorsAtom, true);
 
-    const txnType: TransactionType =
-      jotaiStore.get(TxnData.txnDataAtoms.txnType) as TransactionType;
+    const generalForm = jotaiStore.get(TxnData.generalFormControlAtom);
+    const txnType = generalForm.values.txnType;
+
+    // Gather all invalid general fields in the main validation rules
+    const invalidGeneralFields = getInvalidFields(generalForm);
+    // If "rekey address" field did not meet the conditional validation
+    const rekey = jotaiStore.get(TxnData.rekeyConditionalRequireAtom);
+    if (!rekey.isValidating && !rekey.isValid) invalidGeneralFields.add('rekey');
+    // Add "first valid round" field as an invalid general field if the first/last valid rounds did
+    // not pass the special group validation
+    if (!(jotaiStore.get(TxnData.fvLvFormControlAtom)).isValid) {
+      invalidGeneralFields.add('fv');
+    }
+
+    scrollToFirstInvalidField(invalidGeneralFields);
+
+    // Stop and cancel form submission if no transaction type was specified.
+    if (!txnType) return;
+
+    /*
+     * Continue, even if there are invalid general, so we can find and highlight more invalid fields
+     */
 
     let baseTxnData: any = {
       // Gather base transaction data
       type: txnType,
-      snd: jotaiStore.get(TxnData.txnDataAtoms.snd),
-      note: jotaiStore.get(TxnData.txnDataAtoms.note),
-      fee: jotaiStore.get(TxnData.txnDataAtoms.fee) as number,
-      fv: jotaiStore.get(TxnData.txnDataAtoms.fv) as number,
-      lv: jotaiStore.get(TxnData.txnDataAtoms.lv) as number,
-      lx: jotaiStore.get(TxnData.txnDataAtoms.lx) || undefined,
-      rekey: jotaiStore.get(TxnData.txnDataAtoms.rekey) || undefined,
+      snd: generalForm.values.snd,
+      note: generalForm.values.note,
+      fee: generalForm.values.fee as number,
+      fv: generalForm.values.fv as number,
+      lv: generalForm.values.lv as number,
+      lx: generalForm.values.lx || undefined,
+      rekey: generalForm.values.rekey || undefined,
     };
     let specificTxnData: any = {};
 
     // Gather payment transaction data
     if (txnType === TransactionType.pay) {
+      // Gather all invalid payment fields in the main validation rules
+      const paymentForm = jotaiStore.get(TxnData.paymentFormControlAtom);
+      const invalidPaymentFields = getInvalidFields(paymentForm);
+
+      // Do not include fields that have a predetermined value as invalid fields
+      if (preset === TxnData.Preset.RekeyAccount || preset === TxnData.Preset.CloseAccount) {
+        invalidPaymentFields.delete('rcv');
+        invalidPaymentFields.delete('amt');
+      }
+      // If "close address" field did not meet the conditional validation
+      const close = jotaiStore.get(TxnData.closeConditionalRequireAtom);
+      if (!close.isValidating && !close.isValid) {
+        invalidPaymentFields.add('close');
+      }
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidPaymentFields);
+
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidPaymentFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        rcv: jotaiStore.get(TxnData.txnDataAtoms.rcv),
-        amt: jotaiStore.get(TxnData.txnDataAtoms.amt),
-        close: jotaiStore.get(TxnData.txnDataAtoms.close) || undefined,
+        rcv: paymentForm.values.rcv,
+        amt: paymentForm.values.amt,
+        close: paymentForm.values.close || undefined,
       };
 
       if (preset === TxnData.Preset.TransferAlgos) {
         specificTxnData.close = undefined;
+        baseTxnData.rekey = undefined;
       }
 
       if (preset === TxnData.Preset.RekeyAccount) {
@@ -350,17 +455,43 @@ export default function ComposeSubmitButton({ lng }: Props) {
       if (preset === TxnData.Preset.CloseAccount) {
         specificTxnData.rcv = specificTxnData.close;
         specificTxnData.amt = 0;
+        baseTxnData.rekey = undefined;
       }
     }
 
     // Gather asset transfer transaction data
     if (txnType === TransactionType.axfer) {
+      // Gather all invalid asset transfer fields in the main validation rules
+      const assetTransferForm = jotaiStore.get(TxnData.assetTransferFormControlAtom);
+      const invalidAssetTransferFields = getInvalidFields(assetTransferForm);
+
+      // Do not include fields that have a predetermined value as invalid fields
+      if (preset === TxnData.Preset.AssetOptIn || preset === TxnData.Preset.AssetOptOut) {
+        invalidAssetTransferFields.delete('arcv');
+        invalidAssetTransferFields.delete('aamt');
+      }
+      // If "asset close address" field did not meet the conditional validation
+      const aclose = jotaiStore.get(TxnData.acloseConditionalRequireAtom);
+      if (!aclose.isValidating && !aclose.isValid) {
+        invalidAssetTransferFields.add('aclose');
+      }
+      // If "clawback address" field did not meet the conditional validation
+      const asnd = jotaiStore.get(TxnData.asndConditionalRequireAtom);
+      if (!asnd.isValidating && !asnd.isValid) {
+        invalidAssetTransferFields.add('asnd');
+      }
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetTransferFields);
+
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidAssetTransferFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        arcv: jotaiStore.get(TxnData.txnDataAtoms.arcv),
-        xaid: jotaiStore.get(TxnData.txnDataAtoms.xaid),
-        aamt: jotaiStore.get(TxnData.txnDataAtoms.aamt),
-        asnd: jotaiStore.get(TxnData.txnDataAtoms.asnd) || undefined,
-        aclose: jotaiStore.get(TxnData.txnDataAtoms.aclose) || undefined,
+        arcv: assetTransferForm.values.arcv,
+        xaid: assetTransferForm.values.xaid,
+        aamt: assetTransferForm.values.aamt,
+        asnd: assetTransferForm.values.asnd || undefined,
+        aclose: assetTransferForm.values.aclose || undefined,
       };
 
       if (preset === TxnData.Preset.AssetOptIn) {
@@ -376,19 +507,44 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
     // Gather asset configuration transaction data
     if (txnType === TransactionType.acfg) {
+      // Gather all invalid asset transfer fields in the main validation rules
+      const assetConfigForm = jotaiStore.get(TxnData.assetConfigFormControlAtom);
+      const invalidAssetConfigFields = getInvalidFields(assetConfigForm);
+
+      // If "asset ID" field did not meet the condtional validation
+      const caid = jotaiStore.get(TxnData.caidConditionalRequireAtom);
+      if (!caid.isValidating && !caid.isValid) {
+        invalidAssetConfigFields.add('caid');
+      }
+      // If "asset total" field did not meet the condtional validation
+      const aparT = jotaiStore.get(TxnData.aparTConditionalRequireAtom);
+      if (!aparT.isValidating && !aparT.isValid) {
+        invalidAssetConfigFields.add('apar_t');
+      }
+      // If "asset decimals" field did not meet the condtional validation
+      const aparDc = jotaiStore.get(TxnData.aparDcConditionalRequireAtom);
+      if (!aparDc.isValidating && !aparDc.isValid) {
+        invalidAssetConfigFields.add('apar_dc');
+      }
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetConfigFields);
+
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidAssetConfigFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        caid: jotaiStore.get(TxnData.txnDataAtoms.caid) || undefined,
-        apar_un: jotaiStore.get(TxnData.txnDataAtoms.apar_un) || undefined,
-        apar_an: jotaiStore.get(TxnData.txnDataAtoms.apar_an) || undefined,
-        apar_t: jotaiStore.get(TxnData.txnDataAtoms.apar_t),
-        apar_dc: jotaiStore.get(TxnData.txnDataAtoms.apar_dc),
-        apar_df: jotaiStore.get(TxnData.txnDataAtoms.apar_df) || undefined,
-        apar_au: jotaiStore.get(TxnData.txnDataAtoms.apar_au) || undefined,
-        apar_m: jotaiStore.get(TxnData.txnDataAtoms.apar_m),
-        apar_f: jotaiStore.get(TxnData.txnDataAtoms.apar_f),
-        apar_c: jotaiStore.get(TxnData.txnDataAtoms.apar_c),
-        apar_r: jotaiStore.get(TxnData.txnDataAtoms.apar_r),
-        apar_am: jotaiStore.get(TxnData.txnDataAtoms.apar_am) || undefined,
+        caid: assetConfigForm.values.caid,
+        apar_un: assetConfigForm.values.apar_un,
+        apar_an: assetConfigForm.values.apar_an,
+        apar_t: assetConfigForm.values.apar_t,
+        apar_dc: assetConfigForm.values.apar_dc,
+        apar_df: assetConfigForm.values.apar_df,
+        apar_au: assetConfigForm.values.apar_au,
+        apar_m: assetConfigForm.values.apar_m,
+        apar_f: assetConfigForm.values.apar_f,
+        apar_c: assetConfigForm.values.apar_c,
+        apar_r: assetConfigForm.values.apar_r,
+        apar_am: assetConfigForm.values.apar_am,
       };
 
       if (preset === TxnData.Preset.AssetDestroy) {
@@ -401,48 +557,221 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
     // Gather asset freeze transaction data
     if (txnType === TransactionType.afrz) {
+      // Gather all invalid asset freeze fields in the main validation rules
+      const assetFreezeForm = jotaiStore.get(TxnData.assetFreezeFormControlAtom);
+      const invalidAssetFreezeFields = getInvalidFields(assetFreezeForm);
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetFreezeFields);
+
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidAssetFreezeFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        faid: jotaiStore.get(TxnData.txnDataAtoms.faid),
-        fadd: jotaiStore.get(TxnData.txnDataAtoms.fadd),
-        afrz: jotaiStore.get(TxnData.txnDataAtoms.afrz),
+        faid: assetFreezeForm.values.faid,
+        fadd: assetFreezeForm.values.fadd,
+        afrz: assetFreezeForm.values.afrz,
       };
     }
 
     // Gather key registration transaction data
     if (txnType === TransactionType.keyreg) {
+      // Gather all invalid key registration fields in the main validation rules
+      const keyRegForm = jotaiStore.get(TxnData.keyRegFormControlAtom);
+      const invalidKeyRegFields = getInvalidFields(keyRegForm);
+
+      // If "vote key" field did not meet the condtional validation
+      const votekey = jotaiStore.get(TxnData.votekeyConditionalRequireAtom);
+      if (!votekey.isValidating && !votekey.isValid) {
+        invalidKeyRegFields.add('votekey');
+      }
+      // If "selection key" field did not meet the condtional validation
+      const selkey = jotaiStore.get(TxnData.selkeyConditionalRequireAtom);
+      if (!selkey.isValidating && !selkey.isValid) {
+        invalidKeyRegFields.add('selkey');
+      }
+      // If "state proof key" field did not meet the condtional validation
+      const sprfkey = jotaiStore.get(TxnData.sprfkeyConditionalRequireAtom);
+      if (!sprfkey.isValidating && !sprfkey.isValid) {
+        invalidKeyRegFields.add('sprfkey');
+      }
+      // If "first voting round" field did not meet the condtional validation
+      const votefst = jotaiStore.get(TxnData.votefstConditionalRequireAtom);
+      if (!votefst.isValidating && !votefst.isValid) {
+        invalidKeyRegFields.add('votefst');
+      }
+      // If "last voting round" field did not meet the condtional validation
+      const votelst = jotaiStore.get(TxnData.votelstConditionalRequireAtom);
+      if (!votelst.isValidating && !votelst.isValid) {
+        invalidKeyRegFields.add('votelst');
+      }
+      // If "key dilution" field did not meet the condtional validation
+      const votekd = jotaiStore.get(TxnData.votekdConditionalRequireAtom);
+      if (!votekd.isValidating && !votekd.isValid) {
+        invalidKeyRegFields.add('votekd');
+      }
+      // Add "first valid round" field as an invalid general field if the first/last valid rounds
+      // did not pass the special group validation
+      const votefstVotelst = jotaiStore.get(TxnData.votefstVotelstFormControlAtom);
+      if (!votefstVotelst.isValidating && !votefstVotelst.isValid) {
+        invalidKeyRegFields.add('votelst');
+      }
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidKeyRegFields);
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidKeyRegFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        votekey: jotaiStore.get(TxnData.txnDataAtoms.votekey),
-        selkey: jotaiStore.get(TxnData.txnDataAtoms.selkey),
-        sprfkey: jotaiStore.get(TxnData.txnDataAtoms.sprfkey),
-        votefst: jotaiStore.get(TxnData.txnDataAtoms.votefst),
-        votelst: jotaiStore.get(TxnData.txnDataAtoms.votelst),
-        votekd: jotaiStore.get(TxnData.txnDataAtoms.votekd),
-        nonpart: jotaiStore.get(TxnData.txnDataAtoms.nonpart),
+        votekey: keyRegForm.values.votekey,
+        selkey: keyRegForm.values.selkey,
+        sprfkey: keyRegForm.values.sprfkey,
+        votefst: keyRegForm.values.votefst,
+        votelst: keyRegForm.values.votelst,
+        votekd: keyRegForm.values.votekd,
+        nonpart: keyRegForm.values.nonpart,
       };
     }
 
     // Gather application call transaction data
     if (txnType === TransactionType.appl) {
+      // Gather all invalid application call fields in the main validation rules
+      const applForm = jotaiStore.get(TxnData.applFormControlAtom);
+      const invalidApplFields = getInvalidFields(applForm);
+      // If "application ID" field did not meet the condtional validation
+      const apid = jotaiStore.get(TxnData.apidConditionalRequireAtom);
+      if (!apid.isValidating && !apid.isValid) {
+        invalidApplFields.add('apid');
+      }
+
+      const apaaList = jotaiStore.get(TxnData.apaaListAtom);
+      // If there are too many "application argument" fields
+      if (apaaList.length > TxnData.MAX_APP_ARGS) {
+        invalidApplFields.add('apaa');
+      }
+      apaaList.forEach((apaaAtom, i) => {
+        const apaa = jotaiStore.get(apaaAtom);
+        // If this "application argument" field did not meet the condtional validation
+        if (!apaa.isValid) invalidApplFields.add(`apaa-${i}`);
+      });
+
+      // If "approval program" field did not meet the condtional validation
+      const apap = jotaiStore.get(TxnData.apapConditionalRequireAtom);
+      if (!apap.isValidating && !apap.isValid) {
+        invalidApplFields.add('apap');
+      }
+      // If "clear program" field did not meet the condtional validation
+      const apsu = jotaiStore.get(TxnData.apsuConditionalRequireAtom);
+      if (!apsu.isValidating && !apsu.isValid) {
+        invalidApplFields.add('apsu');
+      }
+      // If "global integers" field did not meet the condtional validation
+      const apgsNui = jotaiStore.get(TxnData.apgsNuiConditionalRequireAtom);
+      if (!apgsNui.isValidating && !apgsNui.isValid) {
+        invalidApplFields.add('apgs_nui');
+      }
+      // If "global byte slices" field did not meet the condtional validation
+      const apgsNbs = jotaiStore.get(TxnData.apgsNbsConditionalRequireAtom);
+      if (!apgsNbs.isValidating && !apgsNbs.isValid) {
+        invalidApplFields.add('apgs_nbs');
+      }
+      // If "global integers" and "global byte slices" fields together did not meet the condtional
+      // "max globals" validation
+      const maxGlobalsCheck = jotaiStore.get(TxnData.maxAppGlobalsCheckAtom);
+      if (!maxGlobalsCheck.isValidating && !maxGlobalsCheck.isValid) {
+        invalidApplFields.add('apgs_nui');
+        invalidApplFields.add('apgs_nbs');
+      }
+      // If "local integers" field did not meet the condtional validation
+      const aplsNui = jotaiStore.get(TxnData.aplsNuiConditionalRequireAtom);
+      if (!aplsNui.isValidating && !aplsNui.isValid) {
+        invalidApplFields.add('apls_nui');
+      }
+      // If "local byte slices" field did not meet the condtional validation
+      const aplsNbs = jotaiStore.get(TxnData.aplsNbsConditionalRequireAtom);
+      if (!aplsNbs.isValidating && !aplsNbs.isValid) {
+        invalidApplFields.add('apls_nbs');
+      }
+      // If "local integers" and "local byte slices" fields together did not meet the condtional
+      // "max locals" validation
+      const maxLocalsCheck = jotaiStore.get(TxnData.maxAppLocalsCheckAtom);
+      if (!maxLocalsCheck.isValidating && !maxLocalsCheck.isValid) {
+        invalidApplFields.add('apls_nui');
+        invalidApplFields.add('apls_nbs');
+      }
+      // If "extra pages" field did not meet the condtional validation
+      const apep = jotaiStore.get(TxnData.apepConditionalRequireAtom);
+      if (!apep.isValidating && !apep.isValid) {
+        invalidApplFields.add('apep');
+      }
+
+      const apatList = jotaiStore.get(TxnData.apatListAtom);
+      const apfaList = jotaiStore.get(TxnData.apfaListAtom);
+      const apasList = jotaiStore.get(TxnData.apasListAtom);
+      const apbxList = jotaiStore.get(TxnData.apbxListAtom);
+
+      // If there are too many application dependencies
+      if ((apatList.length + apfaList.length + apasList.length + apbxList.length)
+        > TxnData.MAX_APP_TOTAL_DEPS
+      ) {
+        invalidApplFields.add('apdeps');
+      }
+
+      // If there are too many "application account reference" fields
+      if (apatList.length > TxnData.MAX_APP_ACCTS) invalidApplFields.add('apat');
+
+      apatList.forEach((apatAtom, i) => {
+        const apat = jotaiStore.get(apatAtom);
+        // If this "application account reference" field is invalid
+        if (!apat.isValid) invalidApplFields.add(`apat-${i}`);
+      });
+      apfaList.forEach((apfaAtom, i) => {
+        const apfa = jotaiStore.get(apfaAtom);
+        // If this "application foreign app" field is invalid
+        if (!apfa.isValid) invalidApplFields.add(`apfa-${i}`);
+      });
+      apasList.forEach((apasAtom, i) => {
+        const apas = jotaiStore.get(apasAtom);
+        // If this "application asset reference" field is invalid
+        if (!apas.isValid) invalidApplFields.add(`apas-${i}`);
+      });
+      apbxList.forEach((apbxAtom, i) => {
+        const apbxI = jotaiStore.get(apbxAtom.i);
+        const apbxN = jotaiStore.get(apbxAtom.n);
+        // If this "application box ID" field is invalid
+        if (!apbxI.isValid) invalidApplFields.add(`apbx_i-${i}`);
+        // If this "application box name" field is invalid
+        if (!apbxN.isValid) invalidApplFields.add(`apbx_n-${i}`);
+      });
+
+      if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidApplFields);
+
+      // Stop and cancel the form submission if there are any invalid fields
+      if (invalidApplFields.size || invalidGeneralFields.size) return;
+
       specificTxnData = {
-        apid: jotaiStore.get(TxnData.txnDataAtoms.apid),
-        apan: jotaiStore.get(TxnData.txnDataAtoms.apan),
-        apap: jotaiStore.get(TxnData.txnDataAtoms.apap),
-        apsu: jotaiStore.get(TxnData.txnDataAtoms.apsu),
-        apgs_nui: jotaiStore.get(TxnData.txnDataAtoms.apgs_nui),
-        apgs_nbs: jotaiStore.get(TxnData.txnDataAtoms.apgs_nbs),
-        apls_nui: jotaiStore.get(TxnData.txnDataAtoms.apls_nui),
-        apls_nbs: jotaiStore.get(TxnData.txnDataAtoms.apls_nbs),
-        apep: jotaiStore.get(TxnData.txnDataAtoms.apep),
-        apaa: jotaiStore.get(TxnData.apaaListAtom),
-        apat: jotaiStore.get(TxnData.apatListAtom),
-        apfa: jotaiStore.get(TxnData.apfaListAtom),
-        apas: jotaiStore.get(TxnData.apasListAtom),
-        apbx: jotaiStore.get(TxnData.apbxListAtom),
+        apid: applForm.values.apid,
+        apan: applForm.values.apan,
+        apap: applForm.values.apap,
+        apsu: applForm.values.apsu,
+        apgs_nui: applForm.values.apgs_nui,
+        apgs_nbs: applForm.values.apgs_nbs,
+        apls_nui: applForm.values.apls_nui,
+        apls_nbs: applForm.values.apls_nbs,
+        apep: applForm.values.apep,
+        apaa: apaaList.map((apaaAtom) => jotaiStore.get(apaaAtom).value ?? ''),
+        apat: apatList.map((apatAtom) => jotaiStore.get(apatAtom).value ?? ''),
+        apfa: apfaList.map((apfaAtom) => jotaiStore.get(apfaAtom).value ?? ''),
+        apas: apasList.map((apasAtom) => jotaiStore.get(apasAtom).value ?? ''),
+        apbx: apbxList.map((apbxAtom) => ({
+          i: jotaiStore.get(apbxAtom.i).value ?? '',
+          n: jotaiStore.get(apbxAtom.n).value ?? '',
+        })),
       };
     }
 
-    setSubmittingForm(true);
-    // Store transaction data into local/session storage
+    jotaiStore.set(TxnData.showFormErrorsAtom, false); // Finished checking the form
+    setSubmittingForm(true); // Going to "submit" the form data
+
+    // "Submit" transaction data by storing it into local/session storage
     jotaiStore.set(TxnData.storedTxnDataAtom, {
       ...baseTxnData,
       ...specificTxnData,
@@ -451,11 +780,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
     router.push(`/${lng}/txn/sign` + (currentURLParams.size ? `?${currentURLParams}` : ''));
   };
 
-  return (
+  return (<>
     <button type='submit' className='btn btn-primary w-full' onClick={submitData}>
       {t('sign_txn_btn')}
       <IconArrowRight aria-hidden className='rtl:hidden' />
       <IconArrowLeft aria-hidden className='hidden rtl:inline' />
     </button>
-  );
+  </>);
 }

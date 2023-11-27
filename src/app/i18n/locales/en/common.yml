@@ -22,3 +22,11 @@ toast: # Toast = an in-app notification
 
 form: # For forms
   required: Required # When a field is required
+  error:
+    required: This is required.
+    string:
+      length: This must be {{count, number}} characters long.
+      max: This must be at most {{count, number}} characters long.
+    number:
+      min: This must be at least {{min, number}}.
+      max: This must be at most {{max, number}}.

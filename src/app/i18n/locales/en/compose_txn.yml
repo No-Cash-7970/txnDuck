@@ -42,6 +42,8 @@ fields:
     placeholder: Enter note…
   fv: # First valid round
     label: Transaction’s first valid round
+    max_error: >
+      The first valid round must be at least the last valid round ({{max, number}}).
   lv: # Last valid round
     label: Transaction’s last valid round
   lx: # Lease
@@ -143,6 +145,8 @@ fields:
     placeholder: State proof key
   votefst: # First voting round
     label: First voting round
+    max_error: >
+      The first voting round must be at least the last voting round ({{max, number}}).
   votelst: # Last voting round
     label: Last voting round
   votekd: # Voting key dilution
@@ -179,6 +183,7 @@ fields:
     label: Number of local byte slices
   apep: # Number of extra pages
     label: Number of extra pages
+    section_title: Extra pages
   apaa: # Arguments
     label: "Argument #{{index}}"
     placeholder: "Argument #{{index}} value"
@@ -187,6 +192,7 @@ fields:
     empty: Empty argument
     add_btn: Add argument
     remove_btn: Remove argument
+    max_error: There must be at most {{count}} arguments.
     no_abi_support: ABI method calls are not supported…for now.
   apat: # Account references
     label: "Account #{{index}}"
@@ -195,6 +201,7 @@ fields:
     none: No account references
     add_btn: Add account
     remove_btn: Remove account
+    max_error: There must be at most {{count}} account references.
   apfa: # Application references
     label: "Application #{{index}}"
     placeholder: "Application #{{index}} ID"
@@ -224,7 +231,16 @@ fields:
     placeholder: "Box #{{index}} name"
     title: "Name: <1>{{name}}</1>"
   app_props_title: Application properties
-  global_state_title: Global state
-  local_state_title: Local state
-  extra_pages_title: Extra pages
-  app_deps_title: Application dependencies
+  app_global_state:
+    title: Global state
+    max_error: >
+      The combined number of global integers and byte slices must not exceed {{max, number}}.
+  app_local_state:
+    title: Local state
+    max_error: >
+      The combined number of local integers and byte slices must not exceed {{max, number}}.
+  app_deps:
+    title: Application dependencies
+    max_error: >
+      The combined number of account, application, asset and box references must not exceed
+      {{count}}.

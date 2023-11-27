@@ -27,7 +27,6 @@ export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const txnType = useAtomValue(txnDataAtoms.txnType);
   const preset = useSearchParams().get(Preset.ParamName);
-
   return (
     <form
       id='compose-txn-form'
@@ -44,12 +43,12 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.TxnType t={t} />
       <GeneralFields.Sender t={t} />
 
-      {txnType === TransactionType.pay && (!preset || preset === Preset.TransferAlgos) && <>
+      {txnType.value === TransactionType.pay && (!preset || preset === Preset.TransferAlgos) && <>
         <PaymentFields.Receiver t={t} />
         <PaymentFields.Amount t={t} />
       </>}
 
-      {txnType === TransactionType.axfer && <>
+      {txnType.value === TransactionType.axfer && <>
         {preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut &&
           <AssetTransferFields.Receiver t={t} />
         }
@@ -63,7 +62,7 @@ export default function ComposeForm({ lng }: Props) {
         {(!preset || preset === Preset.AssetClawback) && <AssetTransferFields.Sender t={t} />}
       </>}
 
-      {txnType === TransactionType.acfg && <>
+      {txnType.value === TransactionType.acfg && <>
         {preset !== Preset.AssetCreate && <AssetConfigFields.AssetId t={t} />}
 
         {(!preset || preset === Preset.AssetCreate) && <>
@@ -76,13 +75,13 @@ export default function ComposeForm({ lng }: Props) {
         </>}
       </>}
 
-      {txnType === TransactionType.afrz && <>
+      {txnType.value === TransactionType.afrz && <>
         <AssetFreezeFields.AssetId t={t} />
         <AssetFreezeFields.TargetAddr t={t} />
         <AssetFreezeFields.Freeze t={t} />
       </>}
 
-      {txnType === TransactionType.keyreg && (!preset || preset === Preset.RegOnline) && <>
+      {txnType.value === TransactionType.keyreg && (!preset || preset === Preset.RegOnline) && <>
         <KeyRegFields.VoteKey t={t} />
         <KeyRegFields.SelectionKey t={t} />
         <KeyRegFields.StateProofKey t={t} />
@@ -91,7 +90,7 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.KeyDilution t={t} />
       </>}
 
-      {txnType === TransactionType.appl && <>
+      {txnType.value === TransactionType.appl && <>
         <AppCallFields.OnComplete t={t} />
 
         {preset !== Preset.AppDeploy && <AppCallFields.AppId t={t} />}
@@ -108,7 +107,7 @@ export default function ComposeForm({ lng }: Props) {
       <GeneralFields.Fee t={t} />
       <GeneralFields.Note t={t} />
 
-      {txnType === TransactionType.acfg && preset !== Preset.AssetDestroy && <>
+      {txnType.value === TransactionType.acfg && preset !== Preset.AssetDestroy && <>
         <AssetConfigFields.ManagerAddr t={t} />
         <AssetConfigFields.FreezeAddr t={t} />
         <AssetConfigFields.ClawbackAddr t={t} />
@@ -117,7 +116,7 @@ export default function ComposeForm({ lng }: Props) {
         {(!preset || preset === Preset.AssetCreate) && <AssetConfigFields.MetadataHash t={t} />}
       </>}
 
-      {txnType === TransactionType.keyreg && (!preset || preset === Preset.RegNonpart) &&
+      {txnType.value === TransactionType.keyreg && (!preset || preset === Preset.RegNonpart) &&
         <KeyRegFields.Nonparticipation t={t} />
       }
 
@@ -128,11 +127,11 @@ export default function ComposeForm({ lng }: Props) {
 
       {(!preset || preset === Preset.RekeyAccount) && <GeneralFields.Rekey t={t} />}
 
-      {(txnType === TransactionType.pay) && (!preset || preset === Preset.CloseAccount) &&
+      {(txnType.value === TransactionType.pay) && (!preset || preset === Preset.CloseAccount) &&
         <PaymentFields.CloseTo t={t} />
       }
 
-      {txnType === TransactionType.axfer && (!preset || preset === Preset.AssetOptOut) &&
+      {txnType.value === TransactionType.axfer && (!preset || preset === Preset.AssetOptOut) &&
         <AssetTransferFields.CloseTo t={t} />
       }
 

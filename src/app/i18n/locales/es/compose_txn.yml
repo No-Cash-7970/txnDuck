@@ -42,6 +42,8 @@ fields:
     placeholder: Introduzca la nota…
   fv: # First valid round
     label: Primera ronda válida de la transacción
+    max_error: >
+      La primera ronda válida debe ser al menos la última ronda válida ({{max, number}}).
   lv: # Last valid round
     label: Última ronda válida de la transacción
   lx: # Lease
@@ -143,6 +145,9 @@ fields:
     placeholder: Llave de prueba de estado
   votefst: # First voting round
     label: Primera ronda de votaciones
+    max_error: >
+      La primera ronda de votaciones debe ser al menos la última ronda de votaciones
+      ({{max, number}}).
   votelst: # Last voting round
     label: Última ronda de votaciones
   votekd: # Voting key dilution
@@ -179,6 +184,7 @@ fields:
     label: Número de bytes locales
   apep: # Number of extra pages
     label: Número de páginas adicionales
+    section_title: Páginas adicionales
   apaa: # Arguments
     label: "Argumento #{{index}}"
     placeholder: "Valor de argumento #{{index}}"
@@ -187,6 +193,7 @@ fields:
     empty: Argumento vacío
     add_btn: Añada un argumento
     remove_btn: Elimine un argumento
+    max_error: Debe haber como máximo {{count, number}} argumentos.
     no_abi_support: Las llamadas a métodos ABI no son compatibles…por ahora.
   apat: # Account references
     label: "Cuenta #{{index}}"
@@ -194,6 +201,7 @@ fields:
     title: Referencias de cuentas
     none: No referencias de cuentas
     add_btn: Añada una cuenta
+    max_error: Debe haber como máximo {{count, number}} referencias de cuentas.
     remove_btn: Elimine una cuenta
   apfa: # Application references
     label: "Aplicación #{{index}}"
@@ -224,7 +232,16 @@ fields:
     placeholder: "Nombre de Caja #{{index}}"
     title: "Nombre: <1>{{name}}</1>"
   app_props_title: Propiedades de aplicación
-  global_state_title: Estado global
-  local_state_title: Estado local
-  extra_pages_title: Páginas adicionales
-  app_deps_title: Dependencias de la aplicación
+  app_global_state:
+    title: Estado global
+    max_error: >
+      El número combinado de enteros globales y bytes no debe exceder de {{max, number}}.
+  app_local_state:
+    title: Estado local
+    max_error: >
+      El número combinado de enteros locales y bytes no debe exceder de {{max, number}}.
+  app_deps:
+    title: Dependencias de la aplicación
+    max_error: >
+      El número combinado de referencias de cuentas, solicitudes, activos y cajas no debe ser
+      superior a {{count, number}}.

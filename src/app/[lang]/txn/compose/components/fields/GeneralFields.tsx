@@ -1,26 +1,42 @@
 /** Fields for the compose-transaction form that every transaction has */
 
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NumberField, SelectField, TextAreaField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
-import { useAtom } from 'jotai';
-import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { useAtomValue, useSetAtom } from 'jotai';
+import {
+  ADDRESS_LENGTH,
+  LEASE_MAX_LENGTH,
+  NOTE_MAX_LENGTH,
+  MIN_TX_FEE,
+  Preset,
+  generalFormControlAtom,
+  fvLvFormControlAtom,
+  presetAtom,
+  rekeyConditionalRequireAtom,
+  showFormErrorsAtom,
+} from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
-import { TransactionType } from 'algosdk';
-
-const LEASE_MAX_LENGTH = 32;
+import {TransactionType, microalgosToAlgos } from 'algosdk';
+import FieldErrorMessage from './FieldErrorMessage';
 
 export function TxnType({ t }: { t: TFunction }) {
-  const [txnType, setTxnType] = useAtom(txnDataAtoms.txnType);
+  const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
-  return (
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <SelectField label={t('fields.type.label')}
       name='type'
-      id='type-field'
+      id='txnType-input'
       required={true}
       requiredText={t('form.required')}
+      containerId='txnType-field'
       containerClass='max-w-xs'
+      inputClass={
+        ((showFormErrors || form.touched.txnType) && form.fieldErrors.txnType) ? 'select-error' : ''
+      }
       placeholder={t('fields.type.placeholder')}
       disabled={!!preset}
       options={[
@@ -31,114 +47,212 @@ export function TxnType({ t }: { t: TFunction }) {
         { value: TransactionType.appl, text: t('fields.type.options.appl') },
         { value: TransactionType.keyreg, text: t('fields.type.options.keyreg') },
       ]}
-      value={txnType as string}
-      onChange={(e) => setTxnType(e.target.value as TransactionType)}
+      value={form.values.txnType as string}
+      onChange={(e) => form.handleOnChange('txnType')(e.target.value)}
+      onFocus={form.handleOnFocus('txnType')}
+      onBlur={form.handleOnBlur('txnType')}
     />
-  );
+    {(showFormErrors || form.touched.txnType) && form.fieldErrors.txnType &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.txnType.message.key}
+        dict={form.fieldErrors.txnType.message.dict}
+      />
+    }
+  </>);
 }
 
 export function Sender({ t }: { t: TFunction }) {
-  const [snd, setSnd] = useAtom(txnDataAtoms.snd);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <TextField label={t('fields.snd.label')}
       name='snd'
-      id='snd-field'
+      id='snd-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.snd.placeholder')}
+      containerId='snd-field'
       containerClass='mt-4'
-      maxLength={ADDRESS_MAX_LENGTH}
-      value={snd}
-      onChange={(e) => setSnd(e.target.value)}
+      inputClass={
+        ((showFormErrors || form.touched.snd) && form.fieldErrors.snd) ? 'input-error' : ''
+      }
+      maxLength={ADDRESS_LENGTH}
+      value={form.values.snd as string}
+      onChange={(e) => form.handleOnChange('snd')(e.target.value)}
+      onFocus={form.handleOnFocus('snd')}
+      onBlur={form.handleOnBlur('snd')}
     />
-  );
+    {(showFormErrors || form.touched.snd) && form.fieldErrors.snd &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.snd.message.key}
+        dict={form.fieldErrors.snd.message.dict}
+      />
+    }
+  </>);
 }
 
 export function Fee({ t }: { t: TFunction }) {
-  const [fee, setFee] = useAtom(txnDataAtoms.fee);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <NumberField label={t('fields.fee.label')}
       name='fee'
-      id='fee-field'
+      id='fee-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      containerId='fee-field'
       containerClass='mt-4 max-w-xs'
+      inputClass={
+        ((showFormErrors || form.touched.fee) && form.fieldErrors.fee) ? 'input-error' : ''
+      }
       afterSideLabel={t('algo_other')}
-      min={0.001}
+      min={microalgosToAlgos(MIN_TX_FEE)}
       step={0.000001}
-      helpMsg={t('fields.fee.help_msg', { count: 0.001 })}
-      value={fee ?? ''}
-      onChange={(e) => setFee(parseFloat(e.target.value))}
+      helpMsg={t('fields.fee.help_msg', { count: microalgosToAlgos(MIN_TX_FEE) })}
+      value={form.values.fee as number ?? ''}
+      onChange={(e) =>
+        form.handleOnChange('fee')(e.target.value === '' ? undefined : parseFloat(e.target.value))
+      }
+      onFocus={form.handleOnFocus('fee')}
+      onBlur={form.handleOnBlur('fee')}
     />
-  );
+    {(showFormErrors || form.touched.fee) && form.fieldErrors.fee &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.fee.message.key}
+        dict={form.fieldErrors.fee.message.dict}
+      />
+    }
+  </>);
 }
 
 export function Note({ t }: { t: TFunction }) {
-  const [note, setNote] = useAtom(txnDataAtoms.note);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <TextAreaField label={t('fields.note.label')}
       name='note'
-      id='note-field'
+      id='note-input'
       inputInsideLabel={false}
       placeholder={t('fields.note.placeholder')}
+      containerId='note-field'
       containerClass='mt-4 max-w-lg'
-      value={note}
-      onChange={(e) => setNote(e.target.value)}
+      inputClass={
+        ((showFormErrors || form.touched.note) && form.fieldErrors.note) ? 'textarea-error' : ''
+      }
+      maxLength={NOTE_MAX_LENGTH}
+      value={form.values.note as string}
+      onChange={(e) => form.handleOnChange('note')(e.target.value)}
+      onFocus={form.handleOnFocus('note')}
+      onBlur={form.handleOnBlur('note')}
     />
-  );
+    {(showFormErrors || form.touched.note) && form.fieldErrors.note &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.note.message.key}
+        dict={form.fieldErrors.note.message.dict}
+      />
+    }
+  </>);
 }
 
 export function FirstValid({ t }: { t: TFunction }) {
-  const [fv, setFv] = useAtom(txnDataAtoms.fv);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const fvLvGroup = useAtomValue(fvLvFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <NumberField label={t('fields.fv.label')}
       name='fv'
-      id='fv-field'
+      id='fv-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      containerId='fv-field'
       containerClass='mt-4 max-w-xs'
+      inputClass={((showFormErrors || form.touched.fv) &&
+          (form.fieldErrors.fv || (!fvLvGroup.isValid && fvLvGroup.error))
+        )
+        ? 'input-error' : ''
+      }
       min={1}
       step={1}
-      value={fv ||''}
-      onChange={(e) => setFv(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      value={form.values.fv as number ?? ''}
+      onChange={(e) =>
+        form.handleOnChange('fv')(e.target.value === '' ? undefined : parseInt(e.target.value))
+      }
+      onFocus={form.handleOnFocus('fv')}
+      onBlur={form.handleOnBlur('fv')}
     />
-  );
+    {(showFormErrors || form.touched.fv) && form.fieldErrors.fv &&
+      <FieldErrorMessage
+        t={t} i18nkey={form.fieldErrors.fv.message.key}
+        dict={form.fieldErrors.fv.message.dict}
+      />
+    }
+    {!fvLvGroup.isValid && fvLvGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(fvLvGroup.error as any).message.key}
+        dict={(fvLvGroup.error as any).message.dict}
+      />
+    }
+  </>);
 }
 
 export function LastValid({ t }: { t: TFunction }) {
-  const [lv, setLv] = useAtom(txnDataAtoms.lv);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <NumberField label={t('fields.lv.label')}
       name='lv'
-      id='lv-field'
+      id='lv-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      containerId='lv-field'
       containerClass='mt-4 max-w-xs'
+      inputClass={((showFormErrors || form.touched.lv) && form.fieldErrors.lv) ? 'input-error' : ''}
       min={1}
       step={1}
-      value={lv ?? ''}
-      onChange={(e) => setLv(e.target.value === '' ? undefined : parseInt(e.target.value))}
+      value={form.values.lv as number ?? ''}
+      onChange={(e) =>
+        form.handleOnChange('lv')(e.target.value === '' ? undefined : parseInt(e.target.value))
+      }
+      onFocus={form.handleOnFocus('lv')}
+      onBlur={form.handleOnBlur('lv')}
     />
-  );
+    {(showFormErrors || form.touched.lv) && form.fieldErrors.lv &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.lv.message.key}
+        dict={form.fieldErrors.lv.message.dict}
+      />
+    }
+  </>);
 }
 
 export function Lease({ t }: { t: TFunction }) {
-  const [lx, setLx] = useAtom(txnDataAtoms.lx);
-  return (
+  const form = useAtomValue(generalFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <TextField label={t('fields.lx.label')}
       name='lx'
-      id='lx-field'
+      id='lx-input'
       inputInsideLabel={false}
+      containerId='lx-field'
       containerClass='mt-4 max-w-sm'
+      inputClass={((showFormErrors || form.touched.lx) && form.fieldErrors.lx) ? 'input-error' : ''}
       maxLength={LEASE_MAX_LENGTH}
-      value={lx}
-      onChange={(e) => setLx(e.target.value)}
+      value={form.values.lx as string}
+      onChange={(e) => form.handleOnChange('lx')(e.target.value)}
+      onFocus={form.handleOnFocus('lx')}
+      onBlur={form.handleOnBlur('lx')}
     />
-  );
+    {(showFormErrors || form.touched.lx) && form.fieldErrors.lx &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.lx.message.key}
+        dict={form.fieldErrors.lx.message.dict}
+      />
+    }
+  </>);
 }
 
 /** Rekey field WITH the notice */
@@ -165,21 +279,49 @@ export function Rekey({ t }: { t: TFunction }) {
   );
 }
 
-function RekeyField({ t }: { t: TFunction }) {
-  const [rekey, setRekey] = useAtom(txnDataAtoms.rekey);
+export function RekeyField({ t }: { t: TFunction }) {
+  const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
-  return (
+  const setPresetAtom = useSetAtom(presetAtom);
+  const rekeyCondReqGroup = useAtomValue(rekeyConditionalRequireAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setPresetAtom(preset), [preset]);
+
+  return (<>
     <TextField label={t('fields.rekey.label')}
       name='rekey'
-      id='rekey-field'
+      id='rekey-input'
       required={preset === Preset.RekeyAccount}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.rekey.placeholder')}
+      containerId='rekey-field'
       containerClass='mt-4'
-      maxLength={ADDRESS_MAX_LENGTH}
-      value={rekey}
-      onChange={(e) => setRekey(e.target.value)}
+      inputClass={((showFormErrors || form.touched.rekey) &&
+          (form.fieldErrors.rekey || (!rekeyCondReqGroup.isValid && rekeyCondReqGroup.error))
+        )
+        ? 'input-error' : ''
+      }
+      maxLength={ADDRESS_LENGTH}
+      value={form.values.rekey as string}
+      onChange={(e) => form.handleOnChange('rekey')(e.target.value)}
+      onFocus={form.handleOnFocus('rekey')}
+      onBlur={form.handleOnBlur('rekey')}
     />
-  );
+    {(showFormErrors || form.touched.rekey) && form.fieldErrors.rekey &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.rekey.message.key}
+        dict={form.fieldErrors.rekey.message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.rekey) && !rekeyCondReqGroup.isValid
+      && rekeyCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(rekeyCondReqGroup.error as any).message.key}
+        dict={(rekeyCondReqGroup.error as any).message.dict}
+      />
+    }
+  </>);
 }

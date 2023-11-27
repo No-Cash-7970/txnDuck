@@ -14,6 +14,8 @@ jest.mock('next/navigation', () => ({
     get: () => presetMockValue
   }),
 }));
+// Mock the scrollIntoView() function
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 import ComposeForm from './ComposeForm';
 import { JotaiProvider } from '@/app/[lang]/components';
@@ -21,16 +23,17 @@ import { JotaiProvider } from '@/app/[lang]/components';
 describe('Compose Form Component', () => {
   afterEach(() => {
     presetMockValue = '';
+    sessionStorage.removeItem('txnData');
   });
 
-  it('has instructions', () => {
+  it('has instructions', async () => {
     render(<ComposeForm />);
-    expect(screen.getByText(/instructions/)).toBeInTheDocument();
+    expect(await screen.findByText(/instructions/)).toBeInTheDocument();
   });
 
-  it('has base transaction fields', () => {
+  it('has base transaction fields', async () => {
     render(<ComposeForm />);
-    expect(screen.getByText('fields.type.label')).toBeInTheDocument();
+    expect(await screen.findByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
@@ -55,7 +58,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.close.label')).toBeInTheDocument();
   });
 
-  it('has fields for payment transaction type if "Asset Transfer" transaction type is selected',
+  it('has fields for asset transfer transaction type if "Asset Transfer" transaction type is'
+  +' selected',
   async () => {
     render(<ComposeForm />);
 
@@ -74,8 +78,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
-  it(
-  'has fields for payment transaction type if "Asset Configuration" transaction type is selected',
+  it('has fields for asset configuration transaction type if "Asset Configuration" transaction type'
+    + ' is selected',
   async () => {
     render(<ComposeForm />);
 
@@ -108,7 +112,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
   });
 
-  it('has fields for payment transaction type if "Asset Freeze" transaction type is selected',
+  it('has fields for asset freeze transaction type if "Asset Freeze" transaction type is selected',
   async () => {
     render(<ComposeForm />);
 
@@ -123,7 +127,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
   });
 
-  it('has fields for payment transaction type if "Key Registration" transaction type is selected',
+  it('has fields for key registration transaction type if "Key Registration" transaction type is'
+  +' selected',
   async () => {
     render(<ComposeForm />);
 
@@ -146,7 +151,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
   });
 
-  it('has fields for payment transaction type if "Application Call" transaction type is selected',
+  it('has fields for application call transaction type if "Application Call" transaction type is'
+  +' selected',
   async () => {
     render(<ComposeForm />);
 
@@ -183,15 +189,16 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
   });
 
-  it('has "transaction presets" button', () => {
+  it('has "transaction presets" button', async () => {
     render(<ComposeForm />);
-    expect(screen.getByText('txn_presets_btn')).toBeInTheDocument();
+    expect(await screen.findByText('txn_presets_btn')).toBeInTheDocument();
   });
 
-  it('has "sign transaction" button', () => {
+  it('has "sign transaction" button', async () => {
     render(<ComposeForm />);
-    expect(screen.getByText('sign_txn_btn')).toBeEnabled();
+    expect(await screen.findByText('sign_txn_btn')).toBeEnabled();
   });
+
 
   it('goes to sign-transaction page if valid transaction data is submitted', async () => {
     sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
@@ -523,7 +530,8 @@ describe('Compose Form Component', () => {
     });
   }, 10000);
 
-  it('can retrieve transaction data from session storage', () => {
+
+  it('can retrieve transaction data from session storage', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       type: 'pay',
       snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
@@ -538,7 +546,7 @@ describe('Compose Form Component', () => {
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
     );
-    expect(screen.getByRole('form')).toHaveFormValues({
+    expect(await screen.findByRole('form')).toHaveFormValues({
       type: 'pay',
       snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
       fee: 0.001,
@@ -550,15 +558,12 @@ describe('Compose Form Component', () => {
     });
   });
 
-  // it('does not go to sign-transaction page if invalid data is submitted', () => {
 
-  // });
-
-  it('has fields for "transfer algos" preset', () => {
+  it('has fields for "transfer algos" preset', async () => {
     presetMockValue = 'transfer_algos';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('pay');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.rcv.label/)).toBeRequired();
     expect(screen.getByLabelText(/fields.amt.label/)).toBeRequired();
@@ -568,11 +573,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "rekey account" preset', () => {
+  it('has fields for "rekey account" preset', async () => {
     presetMockValue = 'rekey_account';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('pay');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
@@ -582,11 +587,11 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.rekey.label/)).toBeRequired();
   });
 
-  it('has fields for "close account" preset', () => {
+  it('has fields for "close account" preset', async () => {
     presetMockValue = 'close_account';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('pay');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.rcv.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.amt.label')).not.toBeInTheDocument();
@@ -596,11 +601,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "transfer asset" preset', () => {
+  it('has fields for "transfer asset" preset', async () => {
     presetMockValue = 'asset_transfer';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('axfer');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
     expect(screen.getByLabelText(/fields.arcv.label/)).toBeRequired();
@@ -612,11 +617,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "opt in asset" preset', () => {
+  it('has fields for "opt in asset" preset', async () => {
     presetMockValue = 'asset_opt_in';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('axfer');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
     expect(screen.queryByText(/fields.arcv.label/)).not.toBeInTheDocument();
@@ -628,11 +633,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "opt out asset" preset', () => {
+  it('has fields for "opt out asset" preset', async () => {
     presetMockValue = 'asset_opt_out';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('axfer');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
     expect(screen.queryByText(/fields.arcv.label/)).not.toBeInTheDocument();
@@ -644,11 +649,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "create asset" preset', () => {
+  it('has fields for "create asset" preset', async () => {
     presetMockValue = 'asset_create';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('acfg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.caid.label')).not.toBeInTheDocument();
     expect(screen.getByLabelText(/fields.apar_un.label/)).not.toBeRequired();
@@ -667,11 +672,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "reconfigure asset" preset', () => {
+  it('has fields for "reconfigure asset" preset', async () => {
     presetMockValue = 'asset_reconfig';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('acfg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.caid.label/)).toBeRequired();
     expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
@@ -690,11 +695,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "revoke (claw back) asset" preset', () => {
+  it('has fields for "revoke (claw back) asset" preset', async () => {
     presetMockValue = 'asset_clawback';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('axfer');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('axfer');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.xaid.label/)).toBeRequired();
     expect(screen.getByLabelText(/fields.arcv.label/)).toBeRequired();
@@ -706,11 +711,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "destroy asset" preset', () => {
+  it('has fields for "destroy asset" preset', async () => {
     presetMockValue = 'asset_destroy';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('acfg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('acfg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.getByLabelText(/fields.caid.label/)).toBeRequired();
     expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
@@ -729,11 +734,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "freeze asset" preset', () => {
+  it('has fields for "freeze asset" preset', async () => {
     presetMockValue = 'asset_freeze';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('afrz');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('afrz');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.faid.label/)).toBeRequired();
@@ -745,11 +750,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "unfreeze asset" preset', () => {
+  it('has fields for "unfreeze asset" preset', async () => {
     presetMockValue = 'asset_unfreeze';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('afrz');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('afrz');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.faid.label/)).toBeRequired();
@@ -761,11 +766,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "run application" preset', () => {
+  it('has fields for "run application" preset', async () => {
     presetMockValue = 'app_run';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('0'); // NoOp
@@ -789,11 +794,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "opt in application" preset', () => {
+  it('has fields for "opt in application" preset', async () => {
     presetMockValue = 'app_opt_in';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('1'); // Opt in
@@ -817,11 +822,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "deploy application" preset', () => {
+  it('has fields for "deploy application" preset', async () => {
     presetMockValue = 'app_deploy';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('0'); // NoOp
@@ -845,11 +850,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "update application" preset', () => {
+  it('has fields for "update application" preset', async () => {
     presetMockValue = 'app_update';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('4'); // Update
@@ -873,11 +878,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "close out application" preset', () => {
+  it('has fields for "close out application" preset', async () => {
     presetMockValue = 'app_close';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('2'); // Close Out
@@ -901,11 +906,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "clear application" preset', () => {
+  it('has fields for "clear application" preset', async () => {
     presetMockValue = 'app_clear';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('3'); // Clear
@@ -929,11 +934,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "delete application" preset', () => {
+  it('has fields for "delete application" preset', async () => {
     presetMockValue = 'app_delete';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('appl');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('appl');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.apan.label/)).toHaveValue('5'); // Delete
@@ -957,11 +962,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "register online" preset', () => {
+  it('has fields for "register online" preset', async () => {
     presetMockValue = 'reg_online';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('keyreg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
 
     expect(screen.getByLabelText(/fields.votekey.label/)).toBeRequired();
@@ -977,11 +982,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "register offline" preset', () => {
+  it('has fields for "register offline" preset', async () => {
     presetMockValue = 'reg_offline';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('keyreg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
@@ -995,11 +1000,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
   });
 
-  it('has fields for "register nonparticipation" preset', () => {
+  it('has fields for "register nonparticipation" preset', async () => {
     presetMockValue = 'reg_nonpart';
     render(<ComposeForm />);
 
-    expect(screen.getByLabelText(/fields.type.label/)).toHaveValue('keyreg');
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('keyreg');
     expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
     expect(screen.queryByText('fields.votekey.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.selkey.label')).not.toBeInTheDocument();
@@ -1012,6 +1017,961 @@ describe('Compose Form Component', () => {
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+
+  it('does not proceed and shows errors if invalid data is submitted', async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid *payment* transaction data is submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.rcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.amt.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.close.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid *asset transfer* transaction data is submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.arcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.asnd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.aclose.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(7);
+  });
+
+  it('does not proceed and shows errors if invalid *asset configuration* transaction data is'
+  + ' submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.caid.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_un.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_an.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_t.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_dc.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_au.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid *asset freeze* transaction data is submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid *key registration* transaction data is'
+  + ' submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.votekey.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.selkey.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.sprfkey.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votefst.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votelst.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votekd.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+  });
+
+  it('does not proceed and shows errors if invalid *application call* transaction data is'
+  + ' submitted',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apap.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apsu.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apgs_nui.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apgs_nbs.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apls_nui.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apls_nbs.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apep.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(15);
+  });
+
+
+  it('does not proceed and shows errors if invalid data using "transfer algos" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'transfer_algos';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.rcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.amt.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid data using "rekey account" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'rekey_account';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid data using "close account" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'close_account';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.close.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid data using "transfer asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_transfer';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.arcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(7);
+  });
+
+  it('does not proceed and shows errors if invalid data using "opt in asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_opt_in';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid data using "opt out asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_opt_out';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.aclose.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid data using "create asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_create';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apar_un.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_an.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_t.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_dc.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_au.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid data using "reconfigure asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_reconfig';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.caid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid data using "revoke (claw back) asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_clawback';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.arcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.asnd.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
+  });
+
+  it('does not proceed and shows errors if invalid data using "destroy asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_destroy';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.caid.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('does not proceed and shows errors if invalid data using "freeze asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_freeze';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid data using "unfreeze asset" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'asset_unfreeze';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+  });
+
+  it('does not proceed and shows errors if invalid data using "run application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_run';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+  });
+
+  it('does not proceed and shows errors if invalid data using "opt in application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_opt_in';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+  });
+
+  it('does not proceed and shows errors if invalid data using "deploy application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_deploy';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apap.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apsu.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apgs_nui.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apgs_nbs.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apls_nui.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apls_nbs.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apep.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(15);
+  });
+
+  it('does not proceed and shows errors if invalid data using "update application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_update';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apap.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apsu.label/)).toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(11);
+  });
+
+  it('does not proceed and shows errors if invalid data using "close out application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_close';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+  });
+
+  it('does not proceed and shows errors if invalid data using "clear application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_clear';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+  });
+
+  it('does not proceed and shows errors if invalid data using "delete application" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'app_delete';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
+    await Promise.all([
+      userEvent.click(screen.getByText('fields.apaa.add_btn')),
+      userEvent.click(screen.getByText('fields.apat.add_btn')),
+      userEvent.click(screen.getByText('fields.apfa.add_btn')),
+      userEvent.click(screen.getByText('fields.apas.add_btn')),
+      userEvent.click(screen.getByText('fields.apbx.add_btn')),
+    ]);
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.apan.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.apid.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apaa.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apat.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apfa.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apas.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+  });
+
+  it('does not proceed and shows errors if invalid data using "register online" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'reg_online';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.votekey.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.selkey.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.sprfkey.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votefst.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votelst.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.votekd.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(10);
+  });
+
+  it('does not proceed and shows errors if invalid data using "register offline" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'reg_offline';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+  });
+
+  it('does not proceed and shows errors if invalid data using "register nonparticipation" preset is'
+  + ' submitted',
+  async () => {
+    presetMockValue = 'reg_nonpart';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(await screen.findByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
 });

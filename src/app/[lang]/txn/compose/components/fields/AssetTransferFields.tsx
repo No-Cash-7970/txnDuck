@@ -1,86 +1,163 @@
 /** Fields for the compose-transaction form that are for asset-transfer transaction */
 
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { NumberField, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
-import { useAtom } from 'jotai';
-import { ADDRESS_MAX_LENGTH, Preset, txnDataAtoms } from '@/app/lib/txn-data';
+import { useAtomValue, useSetAtom } from 'jotai';
+import {
+  ADDRESS_LENGTH,
+  Preset,
+  acloseConditionalRequireAtom,
+  asndConditionalRequireAtom,
+  assetTransferFormControlAtom,
+  presetAtom,
+  showFormErrorsAtom,
+} from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
+import FieldErrorMessage from './FieldErrorMessage';
 
 export function Sender({ t }: { t: TFunction }) {
-  const [asnd, setAsnd] = useAtom(txnDataAtoms.asnd);
+  const form = useAtomValue(assetTransferFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
-  return (
+  const setPresetAtom = useSetAtom(presetAtom);
+  const asndCondReqGroup = useAtomValue(asndConditionalRequireAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setPresetAtom(preset), [preset]);
+
+  return (<>
     <TextField label={t('fields.asnd.label')}
       name='asnd'
-      id='asnd-field'
+      id='asnd-input'
       required={preset === Preset.AssetClawback}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.asnd.placeholder')}
+      containerId='asnd-field'
       containerClass='mt-4'
-      maxLength={ADDRESS_MAX_LENGTH}
-      value={asnd}
-      onChange={(e) => setAsnd(e.target.value)}
+      inputClass={((showFormErrors || form.touched.asnd) &&
+          (form.fieldErrors.asnd || (!asndCondReqGroup.isValid && asndCondReqGroup.error))
+        )
+        ? 'input-error' : ''
+      }
+      maxLength={ADDRESS_LENGTH}
+      value={form.values.asnd as string}
+      onChange={(e) => form.handleOnChange('asnd')(e.target.value)}
+      onFocus={form.handleOnFocus('asnd')}
+      onBlur={form.handleOnBlur('asnd')}
     />
-  );
+    {(showFormErrors || form.touched.asnd) && form.fieldErrors.asnd &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.asnd.message.key}
+        dict={form.fieldErrors.asnd.message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.asnd) && !asndCondReqGroup.isValid && asndCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(asndCondReqGroup.error as any).message.key}
+        dict={(asndCondReqGroup.error as any).message.dict}
+      />
+    }
+  </>);
 }
 
 export function Receiver({ t }: { t: TFunction }) {
-  const [arcv, setArcv] = useAtom(txnDataAtoms.arcv);
-  return (
+  const form = useAtomValue(assetTransferFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <TextField label={t('fields.arcv.label')}
       name='arcv'
-      id='arcv-field'
+      id='arcv-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.arcv.placeholder')}
+      containerId='arcv-field'
       containerClass='mt-4'
-      maxLength={ADDRESS_MAX_LENGTH}
-      value={arcv}
-      onChange={(e) => setArcv(e.target.value)}
+      inputClass={
+        ((showFormErrors || form.touched.arcv) && form.fieldErrors.arcv) ? 'input-error' : ''
+      }
+      maxLength={ADDRESS_LENGTH}
+      value={form.values.arcv as string}
+      onChange={(e) => form.handleOnChange('arcv')(e.target.value)}
+      onFocus={form.handleOnFocus('arcv')}
+      onBlur={form.handleOnBlur('arcv')}
     />
-  );
+    {(showFormErrors || form.touched.arcv) && form.fieldErrors.arcv &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.arcv.message.key}
+        dict={form.fieldErrors.arcv.message.dict}
+      />
+    }
+  </>);
 }
 
 export function AssetId({ t }: { t: TFunction }) {
-  const [assetId, setAssetId] = useAtom(txnDataAtoms.xaid);
-  return (
+  const form = useAtomValue(assetTransferFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <TextField label={t('fields.xaid.label')}
       name='xaid'
-      id='xaid-field'
+      id='xaid-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      containerId='xaid-field'
       containerClass='mt-4 max-w-xs'
-      value={assetId ?? ''}
+      inputClass={
+        ((showFormErrors || form.touched.xaid) && form.fieldErrors.xaid) ? 'input-error' : ''
+      }
+      value={form.values.xaid as number ?? ''}
       onChange={(e) => {
         const value = e.target.value.replace(/[^0-9]/gm, '');
-        setAssetId(value === '' ? undefined : parseInt(value));
+        form.handleOnChange('xaid')(value === '' ? undefined : parseInt(value));
       }}
+      onFocus={form.handleOnFocus('xaid')}
+      onBlur={form.handleOnBlur('xaid')}
       inputMode='numeric'
     />
-  );
+    {(showFormErrors || form.touched.xaid) && form.fieldErrors.xaid &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.xaid.message.key}
+        dict={form.fieldErrors.xaid.message.dict}
+      />
+    }
+  </>);
 }
 
 export function Amount({ t }: { t: TFunction }) {
-  const [aamt, setAamt] = useAtom(txnDataAtoms.aamt);
-  return (
+  const form = useAtomValue(assetTransferFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
     <NumberField label={t('fields.aamt.label')}
       name='aamt'
-      id='aamt-field'
+      id='aamt-input'
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      containerId='aamt-field'
       containerClass='mt-4 max-w-xs'
+      inputClass={
+        ((showFormErrors || form.touched.aamt) && form.fieldErrors.aamt) ? 'input-error' : ''
+      }
+      afterSideLabel={t('algo_other')}
       min={0}
-      step={1}
-      value={aamt ?? ''}
-      onChange={(e) => setAamt(e.target.value === '' ? '' : BigInt(e.target.value).toString())}
+      step={0.000001}
+      value={form.values.aamt ?? ''}
+      onChange={(e) => form.handleOnChange('aamt')(e.target.value)}
+      onFocus={form.handleOnFocus('aamt')}
+      onBlur={form.handleOnBlur('aamt')}
     />
-  );
+    {(showFormErrors || form.touched.aamt) && form.fieldErrors.aamt &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.aamt.message.key}
+        dict={form.fieldErrors.aamt.message.dict}
+      />
+    }
+  </>);
 }
 
 /** The "Close To" field WITH the notice */
@@ -100,20 +177,48 @@ export function CloseTo({ t }: { t: TFunction }) {
 }
 
 function CloseToField({ t }: { t: TFunction }) {
-  const [aclose, setAclose] = useAtom(txnDataAtoms.aclose);
+  const form = useAtomValue(assetTransferFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
-  return (
+  const setPresetAtom = useSetAtom(presetAtom);
+  const acloseCondReqGroup = useAtomValue(acloseConditionalRequireAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => setPresetAtom(preset), [preset]);
+
+  return (<>
     <TextField label={t('fields.aclose.label')}
       name='aclose'
-      id='aclose-field'
+      id='aclose-input'
       required={preset === Preset.AssetOptOut}
       requiredText={t('form.required')}
       inputInsideLabel={false}
       placeholder={t('fields.aclose.placeholder')}
+      containerId='aclose-field'
       containerClass='mt-4'
-      maxLength={ADDRESS_MAX_LENGTH}
-      value={aclose}
-      onChange={(e) => setAclose(e.target.value)}
+      inputClass={((showFormErrors || form.touched.aclose) &&
+          (form.fieldErrors.aclose || (!acloseCondReqGroup.isValid && acloseCondReqGroup.error))
+        )
+        ? 'input-error' : ''
+      }
+      maxLength={ADDRESS_LENGTH}
+      value={form.values.aclose as string}
+      onChange={(e) => form.handleOnChange('aclose')(e.target.value)}
+      onFocus={form.handleOnFocus('aclose')}
+      onBlur={form.handleOnBlur('aclose')}
     />
-  );
+    {(showFormErrors || form.touched.aclose) && form.fieldErrors.aclose &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.aclose.message.key}
+        dict={form.fieldErrors.aclose.message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.aclose) && !acloseCondReqGroup.isValid
+      && acloseCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(acloseCondReqGroup.error as any).message.key}
+        dict={(acloseCondReqGroup.error as any).message.dict}
+      />
+    }
+  </>);
 }
