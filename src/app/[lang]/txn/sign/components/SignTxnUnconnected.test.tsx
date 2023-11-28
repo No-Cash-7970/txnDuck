@@ -68,18 +68,10 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     render(<SignTxn />);
 
     await userEvent.click(screen.getByRole('button'));
-    await userEvent.click(screen.getByText('wallet.providers.fooWallet'));
+    // "Foo wallet" should be the first one listed
+    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[0]);
 
     expect(fooConnectFn).toBeCalledTimes(1);
-    expect(barConnectFn).not.toBeCalled();
-  });
-
-  it('does not try to connect to unavailable wallet provider when it is selected', async () => {
-    render(<SignTxn />);
-
-    await userEvent.click(screen.getByRole('button'));
-    await userEvent.click(screen.getByText('wallet.providers.barWallet'));
-
     expect(barConnectFn).not.toBeCalled();
   });
 

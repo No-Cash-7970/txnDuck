@@ -5,11 +5,8 @@ export const fooDisconnectFn = jest.fn();
 /**  Mock "connect" functions for fake "bar" wallet */
 export const barConnectFn = jest.fn();
 
-/**
- * Mock for the use-wallet library that DOES NOT mock a connected wallet (Assumed no wallet is
+/** Mock for the use-wallet library that DOES NOT mock a connected wallet (Assumed no wallet is
  * connected).
- *
- * From https://react.i18next.com/misc/testing
  *
  * NOTE: In test files, run `jest.mock` for this module before importing any modules that will use
  * this mock module.
@@ -40,10 +37,7 @@ export const useWalletUnconnectedMock = {
   })
 };
 
-/**
- * Mock for the use-wallet library that also mocks a connected wallet.
- *
- * From https://react.i18next.com/misc/testing
+/** Mock for the use-wallet library that also mocks a connected wallet.
  *
  * NOTE: In test files, run `jest.mock` for this module before importing any modules that will use
  * this mock module.
@@ -70,11 +64,13 @@ export const useWalletConnectedMock = {
     },
     providers: [
       {
+        isActive: true,
         connect: fooConnectFn,
         disconnect: fooDisconnectFn,
         metadata: { id: 'fooWallet', icon: 'data:image/svg+xml;base64,' },
       },
       {
+        isActive: false,
         connect: barConnectFn,
         metadata: { id: 'barWallet', icon: 'data:image/svg+xml;base64,' },
       },

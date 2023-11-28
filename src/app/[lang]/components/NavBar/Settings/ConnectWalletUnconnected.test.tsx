@@ -43,13 +43,4 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     expect(barConnectFn).not.toBeCalled();
   });
 
-  it('does not try to connect to unavailable wallet provider when it is selected', async () => {
-    render(<ConnectWallet t={t} />);
-
-    await userEvent.click(screen.getByRole('button'));
-    await userEvent.click(screen.getByText('wallet.providers.barWallet'));
-
-    expect(barConnectFn).not.toBeCalled();
-  });
-
 });

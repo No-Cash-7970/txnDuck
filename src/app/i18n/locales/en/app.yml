@@ -36,7 +36,6 @@ wallet:
   is_not_connected: No wallet connected.
   is_connected: "Account: {{address}}" # Address is displayed when wallet is connected
   provider_icon_alt: "{{provider}} icon"
-  provider_unavailable: " (Unavailable)" # Note the space at the beginning
   providers:
     pera: Pera
     defly: Defly

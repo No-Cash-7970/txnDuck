@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import algosdk from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
+import { useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue } from 'jotai';
@@ -14,8 +14,9 @@ import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
 import {
   walletTypes,
-  disconnectWallet as utilsDisconnectWallet,
-  getWalletClient as utilsGetClient,
+  disconnectWallet,
+  getWalletClient,
+  getActiveProvider,
 } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
@@ -31,15 +32,18 @@ type Props = {
 /** Buttons for connecting to wallet and signing transaction */
 export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
-  const storedTxnData = useAtomValue(storedTxnDataAtom);
-  const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
-  const { providers, activeAccount, clients, signTransactions } = useWallet();
   const currentURLParams = useSearchParams();
-  const [hasSignTxnError, setHasSignTxnError] = useState(false);
   const nodeConfig = useAtomValue(nodeConfigAtom);
 
-  const disconnectWallet = () => utilsDisconnectWallet(clients, activeAccount);
-  const getWalletClient = (providerId?: PROVIDER_ID) => utilsGetClient(providerId, clients);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
+  const [hasSignTxnError, setHasSignTxnError] = useState(false);
+
+  const { providers, activeAccount, clients, signTransactions } = useWallet();
+  const walletClient = useMemo(
+    () => getWalletClient(activeAccount?.providerId, clients),
+    [activeAccount, clients]
+  );
 
   /** Get genesis ID and genesis hash */
   const getGenesisInfo = async () => {
@@ -95,11 +99,16 @@ export default function SignTxn({ lng }: Props) {
         if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
       });
     });
+  /*
+   * NOTE: The node configuration is added as a dependency because the transaction may need to be
+   * signed again if it is for a different network.
+   */
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [storedTxnData, storedSignedTxn]);
+  }, [storedTxnData, storedSignedTxn, nodeConfig]);
 
   return (<>
-    {(!activeAccount && !storedSignedTxn) &&
+    {// No wallet connected and transaction has not been signed yet
+      (!activeAccount && !storedSignedTxn) &&
       <Dialog.Root modal={false}>
         <Dialog.Trigger asChild>
           <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
@@ -119,46 +128,28 @@ export default function SignTxn({ lng }: Props) {
               <Dialog.Description className='text-sm'>
                 {t('wallet.choose_provider_description')}
               </Dialog.Description>
-
+              {/* List of available wallet providers */}
               <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
                 {providers?.map(provider => (
-                  <div
-                    key={provider.metadata.id}
-                    onClick={(e) => {
-                      getWalletClient(provider.metadata.id)
-                        ? provider.connect()
-                        : e.preventDefault();
-                    }}
-                    className={
-                      'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
-                      + (getWalletClient(provider.metadata.id) ? '' : ' opacity-50')
-                    }
-                  >
-                    <Image
-                      src={provider.metadata.icon}
+                  <div key={provider.metadata.id} className={
+                    'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
+                  }>
+                    <Image src={provider.metadata.icon}
                       alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
                       width={80}
                       height={80}
                       className={'not-prose h-16 w-auto sm:h-24'}
                     />
-
+                    {/* Wallet provider info + button */}
                     <div className='w-full'>
                       <div>
-                        <h3 className='m-0'>
-                          {t('wallet.providers.' + provider.metadata.id)}
-                          {
-                            getWalletClient(provider.metadata.id)
-                            ? ''
-                            : <i>{t('wallet.provider_unavailable')}</i>
-                          }
-                        </h3>
+                        <h3 className='m-0'>{t('wallet.providers.' + provider.metadata.id)}</h3>
                         <p className='italic opacity-70 m-0'>
                           {t('wallet.type.' + walletTypes[provider.metadata.id])}
                         </p>
                       </div>
-                      <button
-                        className='btn btn-block btn-sm btn-secondary mt-2'
-                        disabled={!getWalletClient(provider.metadata.id)}
+                      <button className='btn btn-block btn-sm btn-secondary mt-2'
+                        onClick={provider.connect}
                       >
                         {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
                       </button>
@@ -166,14 +157,11 @@ export default function SignTxn({ lng }: Props) {
                   </div>
                 ))}
               </div>
-
+              {/* Upper corner close button */}
               <Dialog.Close asChild>
-                <button
-                  className={
-                    'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
-                  }
-                  title={t('close')}
-                >
+                <button title={t('close')} className={
+                  'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
+                }>
                   <Icons.IconX aria-hidden />
                 </button>
               </Dialog.Close>
@@ -182,13 +170,15 @@ export default function SignTxn({ lng }: Props) {
         </Dialog.Portal>
       </Dialog.Root>
     }
-    {hasSignTxnError &&
+    {// Transaction signing failed for some reason
+      hasSignTxnError &&
       <div className='alert alert-error mt-8'>
         <Icons.IconCircleX aria-hidden size={32} />
         {t('sign_txn:sign_error')}
       </div>
     }
-    {(activeAccount && !storedSignedTxn && !hasSignTxnError) &&
+    {// Connected to wallet but transaction has not been signed yet
+      (activeAccount && !storedSignedTxn && !hasSignTxnError) &&
       <div className='mt-8'>
         <button
           className='btn btn-primary btn-block min-h-[5em] h-auto'
@@ -197,29 +187,28 @@ export default function SignTxn({ lng }: Props) {
           <Icons.IconBallpenFilled aria-hidden />
           {t('sign_txn:sign_txn_btn')}
         </button>
-
         <div className='not-prose text-center mt-3'>
           <div className='truncate align-middle px-2'>
-            <Image
-              src={getWalletClient(activeAccount.providerId)?.metadata.icon || ''}
-              alt={t(
-                'wallet.provider_icon_alt',
-                {provider: getWalletClient(activeAccount.providerId)?.metadata.name}
-              )}
+            {walletClient && <Image
+              src={walletClient.metadata.icon}
+              alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
               width={24}
               height={24}
               className='inline-block me-2'
-            />
+            />}
             <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
           </div>
-          <button className='btn btn-sm btn-link text-secondary' onClick={disconnectWallet}>
+          <button className='btn btn-sm btn-link text-secondary'
+            onClick={() => disconnectWallet(getActiveProvider(providers))}
+          >
             <Icons.IconWalletOff aria-hidden />
             {t('wallet.disconnect')}
           </button>
         </div>
       </div>
     }
-    {(storedSignedTxn && !hasSignTxnError) &&
+    {// Transaction is signed!
+      (storedSignedTxn && !hasSignTxnError) &&
       <div className='alert alert-success mt-8'>
         <Icons.IconCircleCheck aria-hidden size={32} />
         {t('sign_txn:txn_signed')}
@@ -228,9 +217,9 @@ export default function SignTxn({ lng }: Props) {
 
     {/* Buttons */}
     <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
-      <div>
-        <NextStepButton lng={lng} />
-      </div>
+      {/* Next step */}
+      <div><NextStepButton lng={lng} /></div>
+      {/* Previous step */}
       <div className={'' + (hasSignTxnError ? 'order-first' : 'sm:order-first')}>
         <Link href={{
           pathname: `/${lng}/txn/compose`,
@@ -242,8 +231,7 @@ export default function SignTxn({ lng }: Props) {
         </Link>
         {storedSignedTxn &&
           <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
-            <Icons.IconAlertTriangleFilled
-              aria-hidden
+            <Icons.IconAlertTriangleFilled aria-hidden
               className='text-warning align-middle my-auto me-2'
             />
             <small>{t('sign_txn:compose_txn_btn_warning')}</small>
