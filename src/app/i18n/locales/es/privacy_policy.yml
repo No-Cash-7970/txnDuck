@@ -1,0 +1,25 @@
+title: Política de privacidad
+personal_info:
+  title: Recogida de datos personales
+  details: >
+    TxnPato no recopila ni almacena información personal (nombre, dirección de correo electrónico,
+    etc.) ni datos de diagnóstico. No registra ninguna información de uso. No utiliza plataformas
+    analíticas ni publicitarias de terceros.
+app_state_data:
+  title: Almacenamiento de datos de estado de la aplicación
+  details: >
+    Todos los datos del estado de la aplicación de TxnPato (datos de transacciones temporales,
+    preferencias del usuario e idioma seleccionado, etc.) se almacenan <strong>sólo</strong> en su
+    dispositivo. TxnPato <strong>nunca</strong> transmitirá ninguno de los datos de estado de la
+    aplicación a ningún lugar fuera de su dispositivo sin su permiso.
+wallet_security:
+  title: Cuenta de cartera y las claves privadas
+  details: >
+    TxnPato nunca recopilará ni almacenará directamente ninguna de sus claves privadas o
+    contraseñas. En su lugar, txnPato utiliza un servicio de cartera, como
+    <wc>WalletConnect (sitio web en inglés)</wc> o
+    <pcdocs>Pera Connect (sitio web en inglés)</pcdocs>, para conectarse a su cuenta de cartera sin
+    acceder a su(s) clave(s) privada(s). Esto significa que txnPato no puede y no accederá a sus
+    fondos o a sus activos sin su permiso explícito, que usted concede a través de una aplicación de
+    cartera, como <pera>Pera (sitio web en inglés)</pera> y
+    <defly>Defly (sitio web en inglés)</defly>.

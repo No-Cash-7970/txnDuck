@@ -12,10 +12,11 @@ builder_steps:
   sign: Sign
   send: Send
 footer:
+  privacy_policy_link: Privacy policy
   github_link: Source on GitHub
   license_notice: >
     By using, downloading or installing this software, you agree to the terms outlined in the
-    software’s <1>license</1>.
+    software’s <a>license</a>.
 settings:
   heading: Settings
   reset_button: Reset all to default

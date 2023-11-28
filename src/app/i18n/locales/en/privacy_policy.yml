@@ -1,0 +1,21 @@
+title: Privacy Policy
+personal_info:
+  title: Collection of personal information
+  details: >
+    TxnDuck does not collect or store any personal information (name, email address, etc) or any
+    diagnostic data. It does not log any usage information. It does not use any third-party
+    analytics or advertising platforms.
+app_state_data:
+  title: Storage of application state data
+  details: All of txnDuck’s application state data (temporary transaction data, user preferences and
+    selected language, etc.) is stored <strong>only</strong> your device. TxnDuck will
+    <strong>never</strong> transmit any of the application state data to anywhere outside your
+    device without your permission.
+wallet_security:
+  title: Wallet account and private keys
+  details: >
+    TxnDuck will never directly collect or store any of your private keys or passphrases. Instead,
+    txnDuck uses a wallet service, such as <wc>WalletConnect</wc> or <pcdocs>Pera Connect</pcdocs>,
+    to connect to your wallet account without accessing your private key(s). This means txnDuck
+    cannot and will not access your funds or your assets without your explicit permission, which you
+    grant through a wallet application, such as <pera>Pera</pera> and <defly>Defly</defly>.
