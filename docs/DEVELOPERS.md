@@ -9,6 +9,8 @@ This is documentation contains information useful for developers.
 - [Technology Stack](#technology-stack)
 - [Requirements for the development environment](#requirements-for-the-development-environment)
 - [Installing the development environment](#installing-the-development-environment)
+- [Updating the development environment](#updating-the-development-environment)
+- [Uninstalling the development environment](#uninstalling-the-development-environment)
 - [Running the development web server](#running-the-development-web-server)
 - [Building for production](#building-for-production)
   - [Deploying to somewhere other than localhost or Vercel](#deploying-to-somewhere-other-than-localhost-or-vercel)
@@ -59,6 +61,29 @@ This is documentation contains information useful for developers.
     ```bash
     yarn install:dev
     ```
+
+## Updating the development environment
+
+1. Pull the changes.
+
+    ```bash
+    git pull
+    ```
+
+2. Update the dependencies.
+
+    ```bash
+    yarn install:dev
+    ```
+
+## Uninstalling the development environment
+
+1. Delete the project directory that was created when cloning the repository.
+   (Step #1 of the
+   [installation instructions](#installing-the-development-environment))
+2. OPTIONAL: Uninstall the software listed in the
+   [requirements for the development environment](#requirements-for-the-development-environment)
+   if you do not need them for something else.
 
 ## Running the development web server
 
@@ -189,9 +214,10 @@ git commit --no-verify
 ```
 
 Or, the shortcut:
+
 ```bash
 git commit -n
-``` 
+```
 
 ### `pre-commit` hook
 

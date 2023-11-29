@@ -21,8 +21,9 @@ software development knowledge.
 - [:computer: Setting up and running locally](#computer-setting-up-and-running-locally)
   - [Requirements for local setup](#requirements-for-local-setup)
   - [Installing the local setup](#installing-the-local-setup)
-  - [Uninstalling and removing local setup](#uninstalling-and-removing-local-setup)
-- [:hammer\_and\_wrench: Installing for development](#hammer_and_wrench-installing-for-development)
+  - [Uninstalling and removing the local setup](#uninstalling-and-removing-the-local-setup)
+  - [Updating the local setup](#updating-the-local-setup)
+- [:hammer\_and\_wrench: Installation for development](#hammer_and_wrench-installation-for-development)
 - [:handshake: Contributing](#handshake-contributing)
 - [:trophy: Acknowledgments](#trophy-acknowledgments)
 
@@ -78,12 +79,13 @@ your own computer that does not rely on an external website.
 
 - Access to your machine's command line interface (CLI), such as Terminal,
   PowerShell or Command Prompt
-- [Node.js](https://nodejs.org/en) version 18.0.0 or higher installed
+- [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
+  20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed
 
 ### Installing the local setup
 
-1. Download the source code.
+1. Download the latest source code.
     - Production (`stable` branch):
       <https://github.com/No-Cash-7970/txnDuck/archive/refs/heads/stable.zip>
     - Preview (`main` branch):
@@ -125,16 +127,36 @@ your own computer that does not rely on an external website.
    while in the <abbr title="Command Line Interface">CLI</abbr>. You can start
    the web server again by following Steps #6 and #7.
 
-### Uninstalling and removing local setup
+### Uninstalling and removing the local setup
 
 1. Make sure the web server is not running. Stop the server if it is. Refer to
-   step #7 in the ["Installing local setup" instructions](#installing-the-local-setup).
-2. Delete the source code folder.
+   step #7 in the [installation instructions](#installing-the-local-setup).
+2. Delete the source code folder. (The folder created in Step #2 of the
+   [installation instructions](#installing-the-local-setup))
+3. OPTIONAL: Uninstall the software listed in the
+   [requirements for local setup](#requirements-for-local-setup) if you do not
+   need them for something else.
 
-## :hammer_and_wrench: Installing for development
+### Updating the local setup
 
-Refer to the [installation instructions in the Developers
-Documentation](docs/DEVELOPERS.md#installing-the-development-environment).
+Some time after [installing the local setup](#installing-the-local-setup), a new
+version of txnDuck may be
+[released](https://github.com/No-Cash-7970/txnDuck/releases). It is recommended
+that you update to the latest version to have the latest features and bug fixes.
+
+1. OPTIONAL: Uninstall the old version by following [Steps #1 and #2 of the
+   uninstallation instructions](#uninstalling-and-removing-the-local-setup).
+2. If you have not already, make sure the web server is not running. Stop the
+   server if it is. Refer to step #7 in the
+   [installation instructions](#installing-the-local-setup), if needed.
+3. Follow the [installation instructions](#installing-the-local-setup) again.
+   Make sure you download the latest source code.
+
+## :hammer_and_wrench: Installation for development
+
+Refer to the [Developers
+Documentation](docs/DEVELOPERS.md#installing-the-development-environment) for
+instructions on how to install, update or uninstall the development environment.
 
 ## :handshake: Contributing
 
