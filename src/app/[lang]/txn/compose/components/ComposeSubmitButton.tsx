@@ -7,6 +7,7 @@ import { OnApplicationComplete, TransactionType } from 'algosdk';
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
 import { FormControls } from 'jotai-form/dist/src/atomWithFormControls';
+import { ignoreFormErrorsAtom } from '@/app/lib/app-settings';
 
 type Props = {
   /** Language */
@@ -20,6 +21,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
+  const ignoreFormErrors = useAtomValue(ignoreFormErrorsAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(TxnData.Preset.ParamName);
@@ -647,7 +649,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const submitData = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    if (!isFormValid()) {
+    // Check if the form is valid only if the "ignore form error" setting is off
+    if (!ignoreFormErrors && !isFormValid()) {
       jotaiStore.set(TxnData.showFormErrorsAtom, true);
       return;
     }

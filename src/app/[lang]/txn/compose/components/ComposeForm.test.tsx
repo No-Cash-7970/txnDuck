@@ -23,7 +23,8 @@ import { JotaiProvider } from '@/app/[lang]/components';
 describe('Compose Form Component', () => {
   afterEach(() => {
     presetMockValue = '';
-    sessionStorage.removeItem('txnData');
+    sessionStorage.clear();
+    localStorage.clear();
   });
 
   it('has instructions', async () => {
@@ -201,7 +202,6 @@ describe('Compose Form Component', () => {
 
 
   it('goes to sign-transaction page if valid transaction data is submitted', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -227,7 +227,6 @@ describe('Compose Form Component', () => {
   });
 
   it('can store submitted *payment* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -262,7 +261,6 @@ describe('Compose Form Component', () => {
   });
 
   it('can store submitted *asset transfer* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -299,7 +297,6 @@ describe('Compose Form Component', () => {
   });
 
   it('can store submitted *asset configuration* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -360,7 +357,6 @@ describe('Compose Form Component', () => {
   }, 10000);
 
   it('can store submitted *asset freeze* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -397,7 +393,6 @@ describe('Compose Form Component', () => {
   });
 
   it('can store submitted *key registration* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -446,7 +441,6 @@ describe('Compose Form Component', () => {
   });
 
   it('can store submitted *application call* transaction data', async () => {
-    sessionStorage.removeItem('txnData'); // Clear transaction data in session storage
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -1041,6 +1035,20 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
 
     expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+  });
+
+  it('continues to sign-transaction page if invalid transaction data is submitted and the "ignore'
+  +' compose form validation errors" setting is on',
+  async () => {
+    localStorage.setItem('ignoreFormErrors', 'true');
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.click(screen.getByText('sign_txn_btn')); // Submit data
+
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   it('does not proceed and shows errors if invalid *payment* transaction data is submitted',

@@ -27,6 +27,7 @@ settings:
     light: Light
     dark: Dark
     auto: Automatic
+  ignore_form_errors: Allow forms to be submitted with errors
 wallet:
   connect: Connect wallet
   disconnect: Disconnect wallet

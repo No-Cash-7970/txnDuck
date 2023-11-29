@@ -68,17 +68,19 @@ describe('Settings Dialog', () => {
       </ToastProvider>
     );
     // Change settings to non-default values
-    await userEvent.click(screen.getByLabelText('settings.theme_switcher.light'));
-    // TODO: Add more settings here
-
+    Promise.all([
+      userEvent.click(screen.getByLabelText('settings.theme_switcher.light')),
+      userEvent.click(screen.getByLabelText('settings.ignore_form_errors')),
+      // TODO: Add more settings here
+    ]);
     // Click reset button
     await userEvent.click(screen.getByText('settings.reset_button'));
-
-    // Toast notification
+    // Check for toast notification
     expect(screen.getByText('settings.reset_message')).toBeInTheDocument();
 
     // Check settings
     expect(screen.getByLabelText('settings.theme_switcher.auto')).toBeChecked();
+    expect(screen.getByLabelText('settings.ignore_form_errors')).not.toBeChecked();
     // TODO: Add more settings here
 
     // Check if wallet disconnects
@@ -116,6 +118,28 @@ describe('Settings Dialog', () => {
     );
     // Look for disconnect button because it is assumed a wallet is connected
     expect(screen.getByText(/wallet.disconnect/)).toBeInTheDocument();
+  });
+
+  it('has "ignore compose-form validation errors" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.ignore_form_errors/)).toBeInTheDocument();
+  });
+
+  it('notifies when "ignore compose-form validation errors" setting is changed', async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
 });
