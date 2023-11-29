@@ -105,7 +105,6 @@ export default function ComposeSubmitButton({ lng }: Props) {
         );
         jotaiStore.set(TxnData.txnDataAtoms.amt, (storedTxnData as TxnData.PaymentTxnData)?.amt);
       }
-
       if (!preset || preset === TxnData.Preset.CloseAccount) {
         jotaiStore.set(TxnData.txnDataAtoms.close,
           (storedTxnData as TxnData.PaymentTxnData)?.close || ''
@@ -114,7 +113,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
 
     // Restore asset transfer transaction data, if applicable
-    if (txnType === TransactionType.axfer) {
+    else if (txnType === TransactionType.axfer) {
       jotaiStore.set(TxnData.txnDataAtoms.xaid,
         (storedTxnData as TxnData.AssetTransferTxnData)?.xaid
       );
@@ -127,13 +126,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
           (storedTxnData as TxnData.AssetTransferTxnData)?.aamt || ''
         );
       }
-
       if (!preset || preset === TxnData.Preset.AssetClawback) {
         jotaiStore.set(TxnData.txnDataAtoms.asnd,
           (storedTxnData as TxnData.AssetTransferTxnData)?.asnd || ''
         );
       }
-
       if (!preset || preset === TxnData.Preset.AssetOptOut) {
         jotaiStore.set(TxnData.txnDataAtoms.aclose,
           (storedTxnData as TxnData.AssetTransferTxnData)?.aclose || ''
@@ -142,13 +139,12 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
 
     // Restore asset configuration transaction data, if applicable
-    if (txnType === TransactionType.acfg) {
+    else if (txnType === TransactionType.acfg) {
       if (preset !== TxnData.Preset.AssetCreate) {
         jotaiStore.set(TxnData.txnDataAtoms.caid,
           (storedTxnData as TxnData.AssetConfigTxnData)?.caid
         );
       }
-
       jotaiStore.set(TxnData.txnDataAtoms.apar_un,
         (storedTxnData as TxnData.AssetConfigTxnData)?.apar_un || ''
       );
@@ -185,7 +181,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
 
     // Restore asset freeze transaction data, if applicable
-    if (txnType === TransactionType.afrz) {
+    else if (txnType === TransactionType.afrz) {
       jotaiStore.set(TxnData.txnDataAtoms.faid, (
         storedTxnData as TxnData.AssetFreezeTxnData)?.faid
       );
@@ -203,8 +199,9 @@ export default function ComposeSubmitButton({ lng }: Props) {
         );
       }
     }
+
     // Restore key registration transaction data, if applicable
-    if (txnType === TransactionType.keyreg) {
+    else if (txnType === TransactionType.keyreg) {
       if (!preset || preset === TxnData.Preset.RegOnline) {
         jotaiStore.set(TxnData.txnDataAtoms.votekey,
           (storedTxnData as TxnData.KeyRegTxnData)?.votekey || ''
@@ -225,19 +222,18 @@ export default function ComposeSubmitButton({ lng }: Props) {
           (storedTxnData as TxnData.KeyRegTxnData)?.votekd
         );
       }
-
       if (!preset) {
         jotaiStore.set(TxnData.txnDataAtoms.nonpart,
           (storedTxnData as TxnData.KeyRegTxnData)?.nonpart
         );
       }
-
       if (preset === TxnData.Preset.RegNonpart) {
         jotaiStore.set(TxnData.txnDataAtoms.nonpart, true);
       }
     }
+
     // Restore application call transaction data, if applicable
-    if (txnType === TransactionType.appl) {
+    else if (txnType === TransactionType.appl) {
       switch (preset) {
         case TxnData.Preset.AppRun:
         case TxnData.Preset.AppDeploy:
@@ -268,7 +264,6 @@ export default function ComposeSubmitButton({ lng }: Props) {
       if (preset !== TxnData.Preset.AppDeploy) {
         jotaiStore.set(TxnData.txnDataAtoms.apid, (storedTxnData as TxnData.AppCallTxnData)?.apid);
       }
-
       if (!preset || preset === TxnData.Preset.AppDeploy || preset === TxnData.Preset.AppUpdate) {
         jotaiStore.set(TxnData.txnDataAtoms.apap,
           (storedTxnData as TxnData.AppCallTxnData)?.apap || ''
@@ -277,7 +272,6 @@ export default function ComposeSubmitButton({ lng }: Props) {
           (storedTxnData as TxnData.AppCallTxnData)?.apsu || ''
         );
       }
-
       if (!preset || preset === TxnData.Preset.AppDeploy) {
         jotaiStore.set(TxnData.txnDataAtoms.apgs_nui,
           (storedTxnData as TxnData.AppCallTxnData)?.apgs_nui
@@ -336,9 +330,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedTxnData]);
 
-  /**
-   * Focus and scroll to the first invalid field.
-   *
+  /** Focus and scroll to the first invalid field.
    * @param invalidFields Names of the fields that are invalid
    */
   const scrollToFirstInvalidField = (invalidFields: Set<string>) => {
@@ -356,9 +348,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
     }
   };
 
-  /**
-   * Get all of the invalid fields within the given form
-   *
+  /** Get all of the invalid fields within the given form.
    * @param form Collection of validation form controls to check
    * @returns List of all the invalid fields
    */
@@ -370,14 +360,10 @@ export default function ComposeSubmitButton({ lng }: Props) {
       );
   };
 
-  /**
-   * "Submit" the form by processing the form data and saving the data into local storage if there
-   * are no form validation errors
+  /** Check if the form is valid and show all validation errors, if there are any.
+   * @returns Whether or not the form is valid
    */
-  const submitData = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    jotaiStore.set(TxnData.showFormErrorsAtom, true);
-
+  const isFormValid = (): boolean => {
     const generalForm = jotaiStore.get(TxnData.generalFormControlAtom);
     const txnType = generalForm.values.txnType;
 
@@ -394,27 +380,14 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
     scrollToFirstInvalidField(invalidGeneralFields);
 
-    // Stop and cancel form submission if no transaction type was specified.
-    if (!txnType) return;
-
     /*
      * Continue, even if there are invalid general, so we can find and highlight more invalid fields
      */
 
-    let baseTxnData: any = {
-      // Gather base transaction data
-      type: txnType,
-      snd: generalForm.values.snd,
-      note: generalForm.values.note,
-      fee: generalForm.values.fee as number,
-      fv: generalForm.values.fv as number,
-      lv: generalForm.values.lv as number,
-      lx: generalForm.values.lx || undefined,
-      rekey: generalForm.values.rekey || undefined,
-    };
-    let specificTxnData: any = {};
+    /** Are the other (non-general) field invalid? */
+    let areOtherFieldsInvalid = false;
 
-    // Gather payment transaction data
+    // Check payment transaction data
     if (txnType === TransactionType.pay) {
       // Gather all invalid payment fields in the main validation rules
       const paymentForm = jotaiStore.get(TxnData.paymentFormControlAtom);
@@ -433,34 +406,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidPaymentFields);
 
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidPaymentFields.size || invalidGeneralFields.size) return;
-
-      specificTxnData = {
-        rcv: paymentForm.values.rcv,
-        amt: paymentForm.values.amt,
-        close: paymentForm.values.close || undefined,
-      };
-
-      if (preset === TxnData.Preset.TransferAlgos) {
-        specificTxnData.close = undefined;
-        baseTxnData.rekey = undefined;
-      }
-
-      if (preset === TxnData.Preset.RekeyAccount) {
-        specificTxnData.rcv = baseTxnData.snd;
-        specificTxnData.amt = 0;
-      }
-
-      if (preset === TxnData.Preset.CloseAccount) {
-        specificTxnData.rcv = specificTxnData.close;
-        specificTxnData.amt = 0;
-        baseTxnData.rekey = undefined;
-      }
+      areOtherFieldsInvalid = !!invalidPaymentFields.size;
     }
 
-    // Gather asset transfer transaction data
-    if (txnType === TransactionType.axfer) {
+    // Check asset transfer transaction data
+    else if (txnType === TransactionType.axfer) {
       // Gather all invalid asset transfer fields in the main validation rules
       const assetTransferForm = jotaiStore.get(TxnData.assetTransferFormControlAtom);
       const invalidAssetTransferFields = getInvalidFields(assetTransferForm);
@@ -483,30 +433,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetTransferFields);
 
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidAssetTransferFields.size || invalidGeneralFields.size) return;
-
-      specificTxnData = {
-        arcv: assetTransferForm.values.arcv,
-        xaid: assetTransferForm.values.xaid,
-        aamt: assetTransferForm.values.aamt,
-        asnd: assetTransferForm.values.asnd || undefined,
-        aclose: assetTransferForm.values.aclose || undefined,
-      };
-
-      if (preset === TxnData.Preset.AssetOptIn) {
-        specificTxnData.arcv = baseTxnData.snd;
-        specificTxnData.aamt = 0;
-      }
-
-      if (preset === TxnData.Preset.AssetOptOut) {
-        specificTxnData.arcv = specificTxnData.aclose;
-        specificTxnData.aamt = 0;
-      }
+      areOtherFieldsInvalid = !!invalidAssetTransferFields.size;
     }
 
-    // Gather asset configuration transaction data
-    if (txnType === TransactionType.acfg) {
+    // Check asset configuration transaction data
+    else if (txnType === TransactionType.acfg) {
       // Gather all invalid asset transfer fields in the main validation rules
       const assetConfigForm = jotaiStore.get(TxnData.assetConfigFormControlAtom);
       const invalidAssetConfigFields = getInvalidFields(assetConfigForm);
@@ -529,52 +460,22 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetConfigFields);
 
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidAssetConfigFields.size || invalidGeneralFields.size) return;
-
-      specificTxnData = {
-        caid: assetConfigForm.values.caid,
-        apar_un: assetConfigForm.values.apar_un,
-        apar_an: assetConfigForm.values.apar_an,
-        apar_t: assetConfigForm.values.apar_t,
-        apar_dc: assetConfigForm.values.apar_dc,
-        apar_df: assetConfigForm.values.apar_df,
-        apar_au: assetConfigForm.values.apar_au,
-        apar_m: assetConfigForm.values.apar_m,
-        apar_f: assetConfigForm.values.apar_f,
-        apar_c: assetConfigForm.values.apar_c,
-        apar_r: assetConfigForm.values.apar_r,
-        apar_am: assetConfigForm.values.apar_am,
-      };
-
-      if (preset === TxnData.Preset.AssetDestroy) {
-        specificTxnData.apar_m = undefined;
-        specificTxnData.apar_f = undefined;
-        specificTxnData.apar_c = undefined;
-        specificTxnData.apar_r = undefined;
-      }
+      areOtherFieldsInvalid = !!invalidAssetConfigFields.size;
     }
 
-    // Gather asset freeze transaction data
-    if (txnType === TransactionType.afrz) {
+    // Check asset freeze transaction data
+    else if (txnType === TransactionType.afrz) {
       // Gather all invalid asset freeze fields in the main validation rules
       const assetFreezeForm = jotaiStore.get(TxnData.assetFreezeFormControlAtom);
       const invalidAssetFreezeFields = getInvalidFields(assetFreezeForm);
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetFreezeFields);
 
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidAssetFreezeFields.size || invalidGeneralFields.size) return;
-
-      specificTxnData = {
-        faid: assetFreezeForm.values.faid,
-        fadd: assetFreezeForm.values.fadd,
-        afrz: assetFreezeForm.values.afrz,
-      };
+      areOtherFieldsInvalid = !!invalidAssetFreezeFields.size;
     }
 
-    // Gather key registration transaction data
-    if (txnType === TransactionType.keyreg) {
+    // Check key registration transaction data
+    else if (txnType === TransactionType.keyreg) {
       // Gather all invalid key registration fields in the main validation rules
       const keyRegForm = jotaiStore.get(TxnData.keyRegFormControlAtom);
       const invalidKeyRegFields = getInvalidFields(keyRegForm);
@@ -617,22 +518,12 @@ export default function ComposeSubmitButton({ lng }: Props) {
       }
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidKeyRegFields);
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidKeyRegFields.size || invalidGeneralFields.size) return;
 
-      specificTxnData = {
-        votekey: keyRegForm.values.votekey,
-        selkey: keyRegForm.values.selkey,
-        sprfkey: keyRegForm.values.sprfkey,
-        votefst: keyRegForm.values.votefst,
-        votelst: keyRegForm.values.votelst,
-        votekd: keyRegForm.values.votekd,
-        nonpart: keyRegForm.values.nonpart,
-      };
+      areOtherFieldsInvalid = !!invalidKeyRegFields.size;
     }
 
-    // Gather application call transaction data
-    if (txnType === TransactionType.appl) {
+    // Check application call transaction data
+    else if (txnType === TransactionType.appl) {
       // Gather all invalid application call fields in the main validation rules
       const applForm = jotaiStore.get(TxnData.applFormControlAtom);
       const invalidApplFields = getInvalidFields(applForm);
@@ -744,8 +635,142 @@ export default function ComposeSubmitButton({ lng }: Props) {
 
       if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidApplFields);
 
-      // Stop and cancel the form submission if there are any invalid fields
-      if (invalidApplFields.size || invalidGeneralFields.size) return;
+      areOtherFieldsInvalid = !!invalidApplFields.size;
+    }
+
+    return !invalidGeneralFields.size && !areOtherFieldsInvalid;
+  };
+
+  /** "Submit" the form by processing the form data and saving the data into local storage if there
+   * are no form validation errors.
+   */
+  const submitData = async (e: React.MouseEvent) => {
+    e.preventDefault();
+
+    if (!isFormValid()) {
+      jotaiStore.set(TxnData.showFormErrorsAtom, true);
+      return;
+    }
+
+    const generalForm = jotaiStore.get(TxnData.generalFormControlAtom);
+    const txnType = generalForm.values.txnType;
+
+    // Gather base transaction data
+    let baseTxnData: any = {
+      type: txnType,
+      snd: generalForm.values.snd,
+      note: generalForm.values.note,
+      fee: generalForm.values.fee as number,
+      fv: generalForm.values.fv as number,
+      lv: generalForm.values.lv as number,
+      lx: generalForm.values.lx || undefined,
+      rekey: generalForm.values.rekey || undefined,
+    };
+    let specificTxnData: any = {};
+
+    // Gather payment transaction data
+    if (txnType === TransactionType.pay) {
+      const paymentForm = jotaiStore.get(TxnData.paymentFormControlAtom);
+
+      specificTxnData = {
+        rcv: paymentForm.values.rcv,
+        amt: paymentForm.values.amt,
+        close: paymentForm.values.close || undefined,
+      };
+
+      if (preset === TxnData.Preset.TransferAlgos) {
+        specificTxnData.close = undefined;
+        baseTxnData.rekey = undefined;
+      }
+      else if (preset === TxnData.Preset.RekeyAccount) {
+        specificTxnData.rcv = baseTxnData.snd;
+        specificTxnData.amt = 0;
+      }
+      else if (preset === TxnData.Preset.CloseAccount) {
+        specificTxnData.rcv = specificTxnData.close;
+        specificTxnData.amt = 0;
+        baseTxnData.rekey = undefined;
+      }
+    }
+
+    // Gather asset transfer transaction data
+    else if (txnType === TransactionType.axfer) {
+      const assetTransferForm = jotaiStore.get(TxnData.assetTransferFormControlAtom);
+
+      specificTxnData = {
+        arcv: assetTransferForm.values.arcv,
+        xaid: assetTransferForm.values.xaid,
+        aamt: assetTransferForm.values.aamt,
+        asnd: assetTransferForm.values.asnd || undefined,
+        aclose: assetTransferForm.values.aclose || undefined,
+      };
+
+      if (preset === TxnData.Preset.AssetOptIn) {
+        specificTxnData.arcv = baseTxnData.snd;
+        specificTxnData.aamt = 0;
+      }
+      else if (preset === TxnData.Preset.AssetOptOut) {
+        specificTxnData.arcv = specificTxnData.aclose;
+        specificTxnData.aamt = 0;
+      }
+    }
+
+    // Gather asset configuration transaction data
+    else if (txnType === TransactionType.acfg) {
+      const assetConfigForm = jotaiStore.get(TxnData.assetConfigFormControlAtom);
+
+      specificTxnData = {
+        caid: assetConfigForm.values.caid,
+        apar_un: assetConfigForm.values.apar_un,
+        apar_an: assetConfigForm.values.apar_an,
+        apar_t: assetConfigForm.values.apar_t,
+        apar_dc: assetConfigForm.values.apar_dc,
+        apar_df: assetConfigForm.values.apar_df,
+        apar_au: assetConfigForm.values.apar_au,
+        apar_m: assetConfigForm.values.apar_m,
+        apar_f: assetConfigForm.values.apar_f,
+        apar_c: assetConfigForm.values.apar_c,
+        apar_r: assetConfigForm.values.apar_r,
+        apar_am: assetConfigForm.values.apar_am,
+      };
+
+      if (preset === TxnData.Preset.AssetDestroy) {
+        specificTxnData.apar_m = undefined;
+        specificTxnData.apar_f = undefined;
+        specificTxnData.apar_c = undefined;
+        specificTxnData.apar_r = undefined;
+      }
+    }
+
+    // Gather asset freeze transaction data
+    else if (txnType === TransactionType.afrz) {
+      const assetFreezeForm = jotaiStore.get(TxnData.assetFreezeFormControlAtom);
+
+      specificTxnData = {
+        faid: assetFreezeForm.values.faid,
+        fadd: assetFreezeForm.values.fadd,
+        afrz: assetFreezeForm.values.afrz,
+      };
+    }
+
+    // Gather key registration transaction data
+    else if (txnType === TransactionType.keyreg) {
+      const keyRegForm = jotaiStore.get(TxnData.keyRegFormControlAtom);
+
+      specificTxnData = {
+        votekey: keyRegForm.values.votekey,
+        selkey: keyRegForm.values.selkey,
+        sprfkey: keyRegForm.values.sprfkey,
+        votefst: keyRegForm.values.votefst,
+        votelst: keyRegForm.values.votelst,
+        votekd: keyRegForm.values.votekd,
+        nonpart: keyRegForm.values.nonpart,
+      };
+    }
+
+    // Gather application call transaction data
+    else if (txnType === TransactionType.appl) {
+      const applForm = jotaiStore.get(TxnData.applFormControlAtom);
 
       specificTxnData = {
         apid: applForm.values.apid,
@@ -757,25 +782,29 @@ export default function ComposeSubmitButton({ lng }: Props) {
         apls_nui: applForm.values.apls_nui,
         apls_nbs: applForm.values.apls_nbs,
         apep: applForm.values.apep,
-        apaa: apaaList.map((apaaAtom) => jotaiStore.get(apaaAtom).value ?? ''),
-        apat: apatList.map((apatAtom) => jotaiStore.get(apatAtom).value ?? ''),
-        apfa: apfaList.map((apfaAtom) => jotaiStore.get(apfaAtom).value ?? ''),
-        apas: apasList.map((apasAtom) => jotaiStore.get(apasAtom).value ?? ''),
-        apbx: apbxList.map((apbxAtom) => ({
+        apaa: jotaiStore.get(TxnData.apaaListAtom).map(
+          (apaaAtom) => jotaiStore.get(apaaAtom).value ?? ''
+        ),
+        apat: jotaiStore.get(TxnData.apatListAtom).map(
+          (apatAtom) => jotaiStore.get(apatAtom).value ?? ''
+        ),
+        apfa: jotaiStore.get(TxnData.apfaListAtom).map(
+          (apfaAtom) => jotaiStore.get(apfaAtom).value ?? ''
+        ),
+        apas: jotaiStore.get(TxnData.apasListAtom).map(
+          (apasAtom) => jotaiStore.get(apasAtom).value ?? ''
+        ),
+        apbx: jotaiStore.get(TxnData.apbxListAtom).map((apbxAtom) => ({
           i: jotaiStore.get(apbxAtom.i).value ?? '',
           n: jotaiStore.get(apbxAtom.n).value ?? '',
         })),
       };
     }
 
-    jotaiStore.set(TxnData.showFormErrorsAtom, false); // Finished checking the form
-    setSubmittingForm(true); // Going to "submit" the form data
-
+    // Going to "submit" the form data
+    setSubmittingForm(true);
     // "Submit" transaction data by storing it into local/session storage
-    jotaiStore.set(TxnData.storedTxnDataAtom, {
-      ...baseTxnData,
-      ...specificTxnData,
-    });
+    jotaiStore.set(TxnData.storedTxnDataAtom, { ...baseTxnData, ...specificTxnData });
     // Go to sign-transaction page
     router.push(`/${lng}/txn/sign` + (currentURLParams.size ? `?${currentURLParams}` : ''));
   };
