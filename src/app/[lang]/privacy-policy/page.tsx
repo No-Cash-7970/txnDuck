@@ -15,6 +15,7 @@ export async function generateMetadata(
   };
 }
 
+/** Privacy policy page */
 export default function PrivacyPolicyPage({ params: { lang } }: {
   params: { lang: string }
 }) {
