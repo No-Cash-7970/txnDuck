@@ -28,7 +28,6 @@ appreciation, which we would also be very happy about:
 - [Submitting translations](#submitting-translations)
   - [Before submitting or editing a translation](#before-submitting-or-editing-a-translation)
   - [How do I submit a new translation?](#how-do-i-submit-a-new-translation)
-    - [Font for new translation](#font-for-new-translation)
   - [How do I fix or edit an existing translation?](#how-do-i-fix-or-edit-an-existing-translation)
 - [Reporting bugs](#reporting-bugs)
   - [Before submitting a bug report](#before-submitting-a-bug-report)
@@ -146,9 +145,9 @@ translation:
    - If updating a translation, describe those updates in the pull request
      description **in English**.
 
-#### Font for new translation
+<!-- #### Font for new translation -->
 
-TODO: Add instructions on how to add font for a language that needs more than Latin characters
+<!-- TODO: Add instructions on how to add font for a language that needs more than Latin characters -->
 
 ### How do I fix or edit an existing translation?
 
