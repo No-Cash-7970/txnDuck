@@ -16,7 +16,7 @@ jest.mock('next/navigation', () => ({
 // Mock i18next because it is used by child components
 jest.mock('react-i18next', () => i18nextClientMock);
 
-import NavBar from '.';
+import NavBar  from './NavBar';
 
 describe('Nav Bar Component', () => {
 
