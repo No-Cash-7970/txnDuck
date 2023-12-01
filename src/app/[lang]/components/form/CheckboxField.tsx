@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { CheckboxFieldProps } from './types';
 
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
@@ -21,6 +22,7 @@ export default function CheckboxField({
   onChange = undefined,
   onFocus = undefined,
   onBlur = undefined,
+  tip = undefined,
 }: CheckboxFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -58,6 +60,7 @@ export default function CheckboxField({
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
         {(inputInsideLabel && inputPosition === 'end') &&
           <input

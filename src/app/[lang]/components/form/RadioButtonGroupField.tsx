@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { RadioButtonGroupFieldProps } from './types';
 
 /** Radio button group form field */
@@ -19,12 +20,16 @@ export default function SelectField({
   onChange = undefined,
   onFocus = undefined,
   onBlur = undefined,
+  tip = undefined,
 }: RadioButtonGroupFieldProps) {
   return (
     <fieldset role='radiogroup' className={containerClass} id={containerId} disabled={disabled}>
       <legend className={`label ${labelClass}`}>
-        <span className={`label-text ${labelTextClass}`}>{label}</span>
-        {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+        <span className={`label-text ${labelTextClass}`}>
+          {label}
+          {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
+        </span>
       </legend>
       <div className='join'>
         {

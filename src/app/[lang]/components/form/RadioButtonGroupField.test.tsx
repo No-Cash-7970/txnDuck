@@ -208,4 +208,9 @@ describe('Form Components - RadioButtonGroupField', () => {
     expect(screen.getByText('foobar')).toHaveClass('foo-label-text');
   });
 
+  it('has field tip button when `tip` is specified', () => {
+    render(<RadioButtonGroupField tip={{btnTitle: 'Foo tip'}} />);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
+  });
+
 });

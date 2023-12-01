@@ -211,4 +211,9 @@ describe('Form Components - NumberField', () => {
     expect(screen.getByText('foo')).toHaveClass('foo-label-text');
   });
 
+  it('has field tip button when `tip` is specified', () => {
+    render(<NumberField tip={{btnTitle: 'Foo tip'}} />);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
+  });
+
 });

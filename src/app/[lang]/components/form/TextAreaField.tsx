@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { TextAreaFieldProps } from './types';
 
 /** Text area form field. Includes a `<label>` element and a `<textarea>` element */
@@ -26,6 +27,7 @@ export default function TextAreaField({
   onFocus = undefined,
   onBlur = undefined,
   maxLength = undefined,
+  tip = undefined,
 }: TextAreaFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -33,6 +35,7 @@ export default function TextAreaField({
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
           {(!beforeSideLabel && !afterSideLabel) &&

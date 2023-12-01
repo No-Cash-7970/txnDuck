@@ -201,4 +201,9 @@ describe('Form Components - TextAreaField', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '5');
   });
 
+  it('has field tip button when `tip` is specified', () => {
+    render(<TextAreaField tip={{btnTitle: 'Foo tip'}} />);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
+  });
+
 });

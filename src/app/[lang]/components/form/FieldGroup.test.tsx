@@ -48,4 +48,9 @@ describe('Form Components - FieldGroup', () => {
     expect(screen.getByRole('group')).not.toBeDisabled();
   });
 
+  it('has field tip button in heading when `tip` and a heading are specified', () => {
+    render(<FieldGroup heading='Foo Group' tip={{btnTitle: 'Foo tip'}}></FieldGroup>);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
+  });
+
 });

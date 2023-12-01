@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { ToggleFieldProps } from './types';
 
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
@@ -21,6 +22,7 @@ export default function ToggleField({
   onChange = undefined,
   onFocus = undefined,
   onBlur = undefined,
+  tip = undefined,
 }: ToggleFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -58,6 +60,7 @@ export default function ToggleField({
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
         {(inputInsideLabel && inputPosition === 'end') &&
           <input

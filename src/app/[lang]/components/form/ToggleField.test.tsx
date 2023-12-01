@@ -190,4 +190,9 @@ describe('Form Components - ToggleField', () => {
     expect(screen.getByText('foo')).toHaveClass('foo-label-text');
   });
 
+  it('has field tip button when `tip` is specified', () => {
+    render(<ToggleField tip={{btnTitle: 'Foo tip'}} />);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
+  });
+
 });

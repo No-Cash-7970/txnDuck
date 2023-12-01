@@ -1,3 +1,5 @@
+import { Props as FieldTipProps } from "./FieldTip";
+
 /** General properties for the form inputs in *Field components */
 interface InputProps {
   /** If the field is required to be non-empty */
@@ -24,6 +26,8 @@ interface InputProps {
   onFocus?: React.ChangeEventHandler<HTMLInputElement>;
   /** Event handler function for the when the field loses focus */
   onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Properties for the field tip. If undefined, there will no field tip */
+  tip?: FieldTipProps;
 }
 /** General properties for fields */
 interface FieldProps {
@@ -182,4 +186,6 @@ export interface FieldGroupProps {
   containerClass?: string;
   /** If all inputs contained within the group should be disabled */
   disabled?: boolean;
+  /** Properties for the field group tip. If undefined, there will no field group tip */
+  tip?: FieldTipProps;
 }

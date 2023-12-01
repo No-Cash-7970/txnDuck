@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { TextFieldProps } from './types';
 
 /** Plain text form field. Includes a `<label>` element and an `<input>` element */
@@ -7,6 +8,8 @@ export default function TextField({
   inputClass = '',
   placeholder = '',
   label = '',
+  labelClass = '',
+  labelTextClass = '',
   inputInsideLabel = false,
   containerId = undefined,
   containerClass = '',
@@ -26,13 +29,15 @@ export default function TextField({
   inputMode = undefined,
   type = undefined,
   maxLength = undefined,
+  tip = undefined,
 }: TextFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
-      <label className='label' htmlFor={id || undefined}>
-        <span className={`label-text ${inputInsideLabel? 'flex-1' : ''}`}>
+      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+        <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
           {(!beforeSideLabel && !afterSideLabel) &&

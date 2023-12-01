@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { SelectFieldProps } from './types';
 
 /** Selection box form field. Includes a `<label>` element and a `<select>` element */
@@ -25,6 +26,7 @@ export default function SelectField({
   onChange = undefined,
   onFocus = undefined,
   onBlur = undefined,
+  tip = undefined,
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -32,6 +34,7 @@ export default function SelectField({
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
           {(!beforeSideLabel && !afterSideLabel) &&

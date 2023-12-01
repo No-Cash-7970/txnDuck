@@ -1,3 +1,4 @@
+import FieldTip from './FieldTip';
 import type { NumberFieldProps } from './types';
 
 /** Number form field. Includes a `<label>` element and an `<input>` element */
@@ -26,6 +27,7 @@ export default function NumberField({
   onChange = undefined,
   onFocus = undefined,
   onBlur = undefined,
+  tip = undefined,
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -33,6 +35,7 @@ export default function NumberField({
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
+          {tip && <FieldTip tipProps={tip} />}
         </span>
 
         {inputInsideLabel && <>

@@ -201,9 +201,24 @@ describe('Form Components - TextField', () => {
     expect(screen.getByRole('textbox')).toHaveAttribute('type', 'email');
   });
 
+  it('has label with class(es) specified in `labelClass` property', () => {
+    const { container } = render(<TextField labelClass='foo-label' />);
+    expect(container.getElementsByClassName('label')[0]).toHaveClass('foo-label');
+  });
+
+  it('has label text element with class(es) specified in `labelTextClass` property', () => {
+    render(<TextField label='foo' labelTextClass='foo-label-text' />);
+    expect(screen.getByText('foo')).toHaveClass('foo-label-text');
+  });
+
   it('has max length specified in `maxlength` property', () => {
     render(<TextField maxLength={5} />);
     expect(screen.getByRole('textbox')).toHaveAttribute('maxlength', '5');
+  });
+
+  it('has field tip button when `tip` is specified', () => {
+    render(<TextField tip={{btnTitle: 'Foo tip'}} />);
+    expect(screen.getByTitle('Foo tip')).toBeInTheDocument();
   });
 
 });
