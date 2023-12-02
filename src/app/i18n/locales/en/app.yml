@@ -54,3 +54,8 @@ node_selector:
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet
+page_not_found:
+  title: Page Not Found
+  quack: Quack.
+  details: The page you are looking for does not exist. Check if the URL is correct.
+  duck_img_alt: Duck

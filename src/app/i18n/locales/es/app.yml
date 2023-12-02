@@ -55,3 +55,8 @@ node_selector:
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet
+page_not_found:
+  title: Página no encontrada
+  quack: Cua.
+  details: La página que usted busca no existe. Compruebe si la URL es correcta.
+  duck_img_alt: Pato

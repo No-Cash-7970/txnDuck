@@ -11,8 +11,10 @@ acceptLanguage.languages(SUPPORTED_LANGS);
 
 export const config = {
   // matcher: '/:lng*'
+  // This matcher contains a list of files to exclude from redirection to /[lang]/*
   matcher: [
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|opengraph-image.png|sw.js).*)'
+    // eslint-disable-next-line max-len
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|duck.svg|opengraph-image.png|sw.js).*)'
   ]
 };
 
