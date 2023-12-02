@@ -17,6 +17,8 @@ import {
   presetAtom,
   rekeyConditionalRequireAtom,
   showFormErrorsAtom,
+  tipContentClass,
+  tipBtnClass,
 } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import {TransactionType, microalgosToAlgos } from 'algosdk';
@@ -26,10 +28,17 @@ export function TxnType({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+
   return (<>
     <SelectField label={t('fields.type.label')}
       name='type'
       id='txnType-input'
+      tip={{
+        content: t('fields.type.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       containerId='txnType-field'
@@ -64,10 +73,30 @@ export function TxnType({ t }: { t: TFunction }) {
 export function Sender({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const preset = useSearchParams().get(Preset.ParamName);
+  let tip = t('fields.snd.tip');
+
+  if (form.values.txnType === TransactionType.pay) {
+    tip = t('fields.snd.tip_pay');
+  } else if (preset === Preset.AssetClawback) {
+    tip = t('fields.snd.tip_clawback');
+  } else if (preset === Preset.AssetOptIn || preset === Preset.AppOptIn) {
+    tip = t('fields.snd.tip_opt_in');
+  } else if (preset === Preset.AssetOptOut) {
+    tip = t('fields.snd.tip_opt_out');
+  }
+
   return (<>
     <TextField label={t('fields.snd.label')}
       name='snd'
       id='snd-input'
+      tip={{
+        btnIcon: 'info',
+        content: tip,
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -99,6 +128,12 @@ export function Fee({ t }: { t: TFunction }) {
     <NumberField label={t('fields.fee.label')}
       name='fee'
       id='fee-input'
+      tip={{
+        content: t('fields.fee.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -134,6 +169,12 @@ export function Note({ t }: { t: TFunction }) {
     <TextAreaField label={t('fields.note.label')}
       name='note'
       id='note-input'
+      tip={{
+        content: t('fields.note.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.note.placeholder')}
       containerId='note-field'
@@ -164,6 +205,12 @@ export function FirstValid({ t }: { t: TFunction }) {
     <NumberField label={t('fields.fv.label')}
       name='fv'
       id='fv-input'
+      tip={{
+        content: t('fields.fv.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -205,6 +252,12 @@ export function LastValid({ t }: { t: TFunction }) {
     <NumberField label={t('fields.lv.label')}
       name='lv'
       id='lv-input'
+      tip={{
+        content: t('fields.lv.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -236,6 +289,12 @@ export function Lease({ t }: { t: TFunction }) {
     <TextField label={t('fields.lx.label')}
       name='lx'
       id='lx-input'
+      tip={{
+        content: t('fields.lx.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       containerId='lx-field'
       containerClass='mt-4 max-w-sm'
@@ -259,7 +318,7 @@ export function Lease({ t }: { t: TFunction }) {
 export function Rekey({ t }: { t: TFunction }) {
   return (
     <>
-      <RekeyField t={t} />
+      <RekeyInput t={t} />
 
       <div className='alert alert-warning not-prose my-1'>
         <IconAlertTriangle aria-hidden />
@@ -279,7 +338,7 @@ export function Rekey({ t }: { t: TFunction }) {
   );
 }
 
-export function RekeyField({ t }: { t: TFunction }) {
+export function RekeyInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -293,6 +352,12 @@ export function RekeyField({ t }: { t: TFunction }) {
     <TextField label={t('fields.rekey.label')}
       name='rekey'
       id='rekey-input'
+      tip={{
+        content: t('fields.rekey.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={preset === Preset.RekeyAccount}
       requiredText={t('form.required')}
       inputInsideLabel={false}

@@ -11,6 +11,8 @@ import {
   selkeyConditionalRequireAtom,
   showFormErrorsAtom,
   sprfkeyConditionalRequireAtom,
+  tipBtnClass,
+  tipContentClass,
   votefstConditionalRequireAtom,
   votekdConditionalRequireAtom,
   votekeyConditionalRequireAtom,
@@ -33,6 +35,12 @@ export function VoteKey({ t }: { t: TFunction }) {
     <TextField label={t('fields.votekey.label')}
       name='votekey'
       id='votekey-input'
+      tip={{
+        content: t('fields.votekey.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -82,6 +90,12 @@ export function SelectionKey({ t }: { t: TFunction }) {
     <TextField label={t('fields.selkey.label')}
       name='selkey'
       id='selkey-input'
+      tip={{
+        content: t('fields.selkey.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -131,6 +145,12 @@ export function StateProofKey({ t }: { t: TFunction }) {
     <TextAreaField label={t('fields.sprfkey.label')}
       name='sprfkey'
       id='sprfkey-input'
+      tip={{
+        content: t('fields.sprfkey.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -180,6 +200,12 @@ export function FirstVoteRound({ t }: { t: TFunction }) {
     <NumberField label={t('fields.votefst.label')}
       name='votefst'
       id='votefst-input'
+      tip={{
+        content: t('fields.votefst.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -232,6 +258,12 @@ export function LastVoteRound({ t }: { t: TFunction }) {
     <NumberField label={t('fields.votelst.label')}
       name='votelst'
       id='votelst-input'
+      tip={{
+        content: t('fields.votelst.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -284,6 +316,12 @@ export function KeyDilution({ t }: { t: TFunction }) {
     <NumberField label={t('fields.votekd.label')}
       name='votekd'
       id='votekd-input'
+      tip={{
+        content: t('fields.votekd.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={!!(form.values.votekey || form.values.selkey || form.values.sprfkey
         || form.values.votefst || form.values.votelst || form.values.votekd
         || preset === Preset.RegOnline
@@ -332,6 +370,12 @@ export function Nonparticipation({ t }: { t: TFunction }) {
     <ToggleField label={t('fields.nonpart.label')}
       name='nonpart'
       id='nonpart-input'
+      tip={{
+        content: t('fields.nonpart.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={true}
       containerId='nonpart-field'
       containerClass='mt-4 max-w-xs'

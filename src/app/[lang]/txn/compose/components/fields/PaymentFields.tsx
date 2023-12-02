@@ -13,7 +13,9 @@ import {
   closeConditionalRequireAtom,
   paymentFormControlAtom,
   presetAtom,
-  showFormErrorsAtom
+  showFormErrorsAtom,
+  tipBtnClass,
+  tipContentClass
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from './FieldErrorMessage';
 
@@ -24,6 +26,12 @@ export function Receiver({ t }: { t: TFunction }) {
     <TextField label={t('fields.rcv.label')}
       name='rcv'
       id='rcv-input'
+      tip={{
+        content: t('fields.rcv.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -55,6 +63,12 @@ export function Amount({ t }: { t: TFunction }) {
     <NumberField label={t('fields.amt.label')}
       name='amt'
       id='amt-input'
+      tip={{
+        content: t('fields.amt.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -86,7 +100,7 @@ export function Amount({ t }: { t: TFunction }) {
 export function CloseTo({ t }: { t: TFunction }) {
   return (
     <>
-      <CloseToField t={t} />
+      <CloseToInput t={t} />
 
       <div className='alert alert-warning not-prose my-1'>
         <IconAlertTriangle aria-hidden />
@@ -101,7 +115,7 @@ export function CloseTo({ t }: { t: TFunction }) {
   );
 }
 
-function CloseToField({ t }: { t: TFunction }) {
+function CloseToInput({ t }: { t: TFunction }) {
   const form = useAtomValue(paymentFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -115,6 +129,12 @@ function CloseToField({ t }: { t: TFunction }) {
     <TextField label={t('fields.close.label')}
       name='close'
       id='close-input'
+      tip={{
+        content: t('fields.close.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={preset === Preset.CloseAccount}
       requiredText={t('form.required')}
       inputInsideLabel={false}

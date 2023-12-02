@@ -19,6 +19,8 @@ import {
   caidConditionalRequireAtom,
   presetAtom,
   showFormErrorsAtom,
+  tipBtnClass,
+  tipContentClass,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from './FieldErrorMessage';
 
@@ -36,6 +38,12 @@ export function AssetId({ t }: { t: TFunction }) {
     <TextField label={t('fields.caid.label')}
       name='caid'
       id='caid-input'
+      tip={{
+        content: t('fields.caid.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={preset === Preset.AssetReconfig || preset === Preset.AssetDestroy}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -78,6 +86,12 @@ export function UnitName({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_un.label')}
       name='apar_un'
       id='apar_un-input'
+      tip={{
+        content: t('fields.apar_un.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_un.placeholder')}
       containerId='apar_un-field'
@@ -108,6 +122,12 @@ export function AssetName({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_an.label')}
       name='apar_an'
       id='apar_an-input'
+      tip={{
+        content: t('fields.apar_an.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_an.placeholder')}
       containerId='apar_an-field'
@@ -145,6 +165,12 @@ export function Total({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apar_t.label')}
       name='apar_t'
       id='apar_t-input'
+      tip={{
+        content: t('fields.apar_t.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -193,6 +219,12 @@ export function DecimalPlaces({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apar_dc.label')}
       name='apar_dc'
       id='apar_dc-input'
+      tip={{
+        content: t('fields.apar_dc.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -236,6 +268,12 @@ export function DefaultFrozen({ t }: { t: TFunction }) {
     <ToggleField label={t('fields.apar_df.label')}
       name='apar_df'
       id='apar_df-input'
+      tip={{
+        content: t('fields.apar_df.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={true}
       containerId='apar_df-field'
       containerClass='mt-4 max-w-xs'
@@ -255,6 +293,12 @@ export function Url({ t }: { t: TFunction }) {
       type='url'
       name='apar_au'
       id='apar_au-input'
+      tip={{
+        content: t('fields.apar_au.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_au.placeholder')}
       containerId='apar_au-field'
@@ -284,6 +328,12 @@ export function ManagerAddr({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_m.label')}
       name='apar_m'
       id='apar_m-input'
+      tip={{
+        content: t('fields.apar_m.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_m.placeholder')}
       containerId='apar_m-field'
@@ -313,6 +363,12 @@ export function FreezeAddr({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_f.label')}
       name='apar_f'
       id='apar_f-input'
+      tip={{
+        content: t('fields.apar_f.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_f.placeholder')}
       containerId='apar_f-field'
@@ -342,6 +398,12 @@ export function ClawbackAddr({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_c.label')}
       name='apar_c'
       id='apar_c-input'
+      tip={{
+        content: t('fields.apar_c.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_c.placeholder')}
       containerId='apar_c-field'
@@ -371,6 +433,12 @@ export function ReserveAddr({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_r.label')}
       name='apar_r'
       id='apar_r-input'
+      tip={{
+        content: t('fields.apar_r.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apar_r.placeholder')}
       containerId='apar_r-field'
@@ -401,6 +469,12 @@ export function MetadataHash({ t }: { t: TFunction }) {
     <TextField label={t('fields.apar_am.label')}
       name='apar_am'
       id='apar_am-input'
+      tip={{
+        content: t('fields.apar_am.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       containerId='apar_am-field'
       containerClass='mt-4 max-w-sm'

@@ -18,8 +18,8 @@ import {
 } from 'yup';
 
 export const ADDRESS_LENGTH = 58;
-export const LEASE_MAX_LENGTH = 32; // The max length if only ASCII characters are used
-export const NOTE_MAX_LENGTH = 250; // In UTF-8 characters, not bytes
+export const LEASE_MAX_LENGTH = 32; // Bytes, The max length if only ASCII characters are used
+export const NOTE_MAX_LENGTH = 1000; // In bytes, not UTF-8 characters
 export const MIN_TX_FEE = ALGORAND_MIN_TX_FEE;
 
 // eslint-disable-next-line max-len
@@ -245,8 +245,14 @@ export type TxnData = BaseTxnData
 
 
 
+export const tipContentClass = 'text-sm rounded-md py-2 px-4 bg-accent text-accent-content'
+  + ' stroke-accent fill-accent sm:max-w-sm max-w-[var(--radix-popover-content-available-width)]';
+export const tipBtnClass = 'ms-2 opacity-70';
+
+
+
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
-const storage = createJSONStorage<any>(() => sessionStorage);
+const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
 /** Transaction form data that is temporarily stored locally */
 export const storedTxnDataAtom = atomWithStorage<TxnData|undefined>('txnData', undefined, storage);
 /** Signed transaction, as a Data URI string, that is stored locally */
@@ -367,7 +373,8 @@ export const txnDataAtoms = {
   /** Note */
   note: atomWithValidate<string|undefined>(undefined, {
     validate: v => {
-      YupString().max(NOTE_MAX_LENGTH).validateSync(v === '' ? undefined : v);
+      // When using UTF-8, the maximum number of characters is around (max bytes / 4)
+      YupString().max(NOTE_MAX_LENGTH / 4).validateSync(v === '' ? undefined : v);
       return v;
     }
   }),

@@ -46,7 +46,9 @@ import {
   apbxIValidateOptions,
   apbxNValidateOptions,
   BoxRefAtomGroup,
-  MAX_APP_KEY_LENGTH
+  MAX_APP_KEY_LENGTH,
+  tipBtnClass,
+  tipContentClass
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from './FieldErrorMessage';
 
@@ -58,6 +60,12 @@ export function OnComplete({ t }: { t: TFunction }) {
     <SelectField label={t('fields.apan.label')}
       name='apan'
       id='apan-input'
+      tip={{
+        content: t('fields.apan.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       containerId='apan-field'
@@ -102,6 +110,12 @@ export function AppId({ t }: { t: TFunction }) {
     <TextField label={t('fields.apid.label')}
       name='apid'
       id='apid-input'
+      tip={{
+        content: t('fields.apid.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={form.values.apan !== OnApplicationComplete.NoOpOC
         || (!!preset && preset !== Preset.AppDeploy)
       }
@@ -143,7 +157,16 @@ export function AppId({ t }: { t: TFunction }) {
 export function AppArgs({ t }: { t: TFunction }) {
   const [appArgs, dispatch] = useAtom(txnDataAtoms.apaa);
   return (
-    <FieldGroup headingLevel={2} heading={t('fields.apaa.title')}>
+    <FieldGroup
+      headingLevel={2}
+      heading={t('fields.apaa.title')}
+      tip={{
+        content: t('fields.apaa.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info_section'),
+        contentClass: tipContentClass
+      }}
+    >
       {appArgs.length > MAX_APP_ARGS &&
         <div className='alert alert-error text-start' id='apaa-field'>
           <IconExclamationCircle aria-hidden />
@@ -224,6 +247,12 @@ function ApprovalProg({ t }: { t: TFunction }) {
     <TextAreaField label={t('fields.apap.label')}
       name='apap'
       id='apap-input'
+      tip={{
+        content: t('fields.apap.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -271,6 +300,12 @@ function ClearStateProg({ t }: { t: TFunction }) {
     <TextAreaField label={t('fields.apsu.label')}
       name='apsu'
       id='apsu-input'
+      tip={{
+        content: t('fields.apsu.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -319,6 +354,12 @@ function GlobalInts({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apgs_nui.label')}
       name='apgs_nui'
       id='apgs_nui-input'
+      tip={{
+        content: t('fields.apgs_nui.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -382,6 +423,12 @@ function GlobalByteSlices({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apgs_nbs.label')}
       name='apgs_nbs'
       id='apgs_nbs-input'
+      tip={{
+        content: t('fields.apgs_nbs.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -445,6 +492,12 @@ function LocalInts({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apls_nui.label')}
       name='apls_nui'
       id='apls_nui-input'
+      tip={{
+        content: t('fields.apls_nui.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -508,6 +561,12 @@ function LocalByteSlices({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apls_nbs.label')}
       name='apls_nbs'
       id='apls_nbs-input'
+      tip={{
+        content: t('fields.apls_nbs.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -570,6 +629,12 @@ function ExtraPages({ t }: { t: TFunction }) {
     <NumberField label={t('fields.apep.label')}
       name='apep'
       id='apep-input'
+      tip={{
+        content: t('fields.apep.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -930,6 +995,12 @@ function BoxIdInput({ t, boxAtom, index }:
     <TextField label={t('fields.apbx_i.label', { index: index + 1 })}
       name={`apbx_i-${index}`}
       id={`apbx_i-${index}-input`}
+      tip={{
+        content: t('fields.apbx_i.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -963,6 +1034,12 @@ function BoxNameInput({ t, boxAtom, index }:
     <TextField label={t('fields.apbx_n.label', { index: index + 1 })}
       name={`apbx_n-${index}`}
       id={`apbx_n-${index}-input`}
+      tip={{
+        content: t('fields.apbx_n.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={false}
       placeholder={t('fields.apbx_n.placeholder', { index: index + 1 })}
       containerId={`apbx_n-${index}-field`}
@@ -989,7 +1066,7 @@ export function AppDependencies({ t }: { t: TFunction }) {
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (
-    <FieldGroup headingLevel={2} heading={t('fields.app_deps_title')}>
+    <FieldGroup headingLevel={2} heading={t('fields.app_deps.title')}>
       {
         ((appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length)
           > MAX_APP_TOTAL_DEPS)
@@ -999,16 +1076,52 @@ export function AppDependencies({ t }: { t: TFunction }) {
           {t('form.error.app.max_deps', {count: MAX_APP_TOTAL_DEPS})}
         </div>
       }
-      <FieldGroup headingLevel={3} heading={t('fields.apat.title')}>
+      <FieldGroup
+        headingLevel={3}
+        heading={t('fields.apat.title')}
+        tip={{
+          content: t('fields.apat.tip'),
+          btnClass: tipBtnClass,
+          btnTitle: t('fields.more_info_section'),
+          contentClass: tipContentClass
+        }}
+      >
         <AppAccts t={t} />
       </FieldGroup>
-      <FieldGroup headingLevel={3} heading={t('fields.apfa.title')}>
+      <FieldGroup
+        headingLevel={3}
+        heading={t('fields.apfa.title')}
+        tip={{
+          content: t('fields.apfa.tip'),
+          btnClass: tipBtnClass,
+          btnTitle: t('fields.more_info_section'),
+          contentClass: tipContentClass
+        }}
+      >
         <ForeignApps t={t} />
       </FieldGroup>
-      <FieldGroup headingLevel={3} heading={t('fields.apas.title')}>
+      <FieldGroup
+        headingLevel={3}
+        heading={t('fields.apas.title')}
+        tip={{
+          content: t('fields.apas.tip'),
+          btnClass: tipBtnClass,
+          btnTitle: t('fields.more_info_section'),
+          contentClass: tipContentClass
+        }}
+      >
         <ForeignAssets t={t} />
       </FieldGroup>
-      <FieldGroup headingLevel={3} heading={t('fields.apbx.title')}>
+      <FieldGroup
+        headingLevel={3}
+        heading={t('fields.apbx.title')}
+        tip={{
+          content: t('fields.apbx.tip'),
+          btnClass: tipBtnClass,
+          btnTitle: t('fields.more_info_section'),
+          contentClass: tipContentClass
+        }}
+      >
         <Boxes t={t} />
       </FieldGroup>
     </FieldGroup>

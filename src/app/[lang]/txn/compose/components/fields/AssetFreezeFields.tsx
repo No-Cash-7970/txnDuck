@@ -11,6 +11,8 @@ import {
   assetFreezeFormControlAtom,
   presetAtom,
   showFormErrorsAtom,
+  tipBtnClass,
+  tipContentClass,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from './FieldErrorMessage';
 
@@ -27,6 +29,12 @@ export function AssetId({ t }: { t: TFunction }) {
     <TextField label={t('fields.faid.label')}
       name='faid'
       id='faid-input'
+      tip={{
+        content: t('fields.faid.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -66,6 +74,12 @@ export function TargetAddr({ t }: { t: TFunction }) {
     <TextField label={t('fields.fadd.label')}
       name='fadd'
       id='fadd-input'
+      tip={{
+        content: t('fields.fadd.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -98,6 +112,12 @@ export function Freeze({ t }: { t: TFunction }) {
     <ToggleField label={t('fields.afrz.label')}
       name='afrz'
       id='afrz-input'
+      tip={{
+        content: t('fields.afrz.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       inputInsideLabel={true}
       containerId='afrz-field'
       containerClass='mt-4 max-w-xs'

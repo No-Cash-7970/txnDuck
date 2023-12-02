@@ -7,6 +7,7 @@ sign_txn_btn: Review & sign
 fields:
   type: # Transaction type
     label: Transaction type
+    tip: Specifies the type of transaction.
     placeholder: Choose one
     options:
       pay: Payment
@@ -30,26 +31,55 @@ fields:
       keyreg_nonpart: Key registration (nonparticipation)
   snd: # Sender
     label: Sender
+    tip: The address of the account that pays the fee.
+    tip_pay: The address of the account that pays the fee and amount.
+    tip_clawback: >
+      The asset’s clawback address, which is also the address of the account that pays the fee.
+    tip_opt_in: >
+      The address of the account that is opting in, which is also the address of the account
+      that pays the fee.
+    tip_opt_out: >
+      The address of the account that is opting out, which is also the address of the account
+      that pays the fee.
     placeholder: Sender address
   fee: # Fee
     label: Fee
+    tip: >
+      Fees for transactions on Algorand are set as a function of network congestion and based on the
+      size in bytes of the transaction. Every transaction must at least cover the minimum fee.
     help_msg_one: "Minimum: {{count, number}} Algo"
     help_msg_other: "Minimum: {{count, number}} Algos"
     in_algos_one: "{{count, number}} Algo"
     in_algos_other: "{{count, number}} Algos"
   note: # Note
     label: Note
+    tip: >
+      Data to attach to this transaction. Examples: message in text, JSON data, byte data
     placeholder: Enter note…
   fv: # First valid round
     label: Transaction’s first valid round
+    tip: >
+      The first round for when the transaction is valid. If the transaction is sent prior to this
+      round it will be rejected by the network.
     max_error: >
       The first valid round must be at least the last valid round ({{max, number}}).
   lv: # Last valid round
     label: Transaction’s last valid round
+    tip: >
+      The ending round for which the transaction is valid. After this round, the transaction will
+      be rejected by the network.
   lx: # Lease
     label: Lease
+    tip: >
+      A lease enforces mutual exclusion of transactions. If this field is nonzero, then once the
+      transaction is confirmed, it acquires the lease identified by the sender-lease pair of the
+      transaction until the transaction’s last valid round passes. While the transaction possesses
+      the lease, no other transaction specifying this lease can be confirmed.
   rekey: # Rekey to
     label: Rekey to
+    tip: >
+      Specifies the authorized address. This address will be used to authorize (sign) all future
+      transactions.
     placeholder: Address to rekey to
     warning: >
       <strong>Rekeying a wallet account can result in losing access to your funds</strong> if the
@@ -58,13 +88,19 @@ fields:
   # Fields for payment type
   rcv: # Receiver of payment
     label: Receiver
+    tip: The address of the account that receives the amount specified.
     placeholder: Receiver address
   amt: # Amount to pay (in Algos)
     label: Amount
+    tip: The total amount to be sent.
     in_algos_one: "{{count, number}} Algo"
     in_algos_other: "{{count, number}} Algos"
   close: # Close remainder to
     label: Close remainder to
+    tip: >
+      When set, it indicates that the transaction is requesting that the sender account should be
+      closed, and all remaining funds, after the fee and amount are paid, be transferred to this
+      address.
     placeholder: Address to close remainder of funds to
     warning: >
       If an address is specified, <strong>all funds in the sender account will be sent to the
@@ -73,16 +109,27 @@ fields:
   # Fields for asset transfer type
   arcv: # Asset receiver
     label: Asset receiver
+    tip: The recipient of the asset transfer.
     placeholder: Receiver address
   xaid: # Asset ID
     label: Asset ID
+    tip: The unique ID of the asset.
   aamt: # Amount of asset to transfer
     label: Asset amount
+    tip: >
+      The amount of the asset to be transferred. A zero amount transferred to self opts the account
+      into that asset.
   asnd: # Revocation target (the account from which the asset will be revoked)
     label: Clawback target
+    tip: >
+      In a clawback transaction, the address from which the funds will be withdrawn and sent to the
+      asset receiver.
     placeholder: Target address
   aclose: # Close remainder of asset to
     label: Close remainder to of asset to
+    tip: >
+      Specify this field to remove the asset holding from the sender account and reduce the
+      account’s minimum balance (i.e. opt-out of the asset).
     placeholder: Address to close remainder of asset to
     warning: >
       If an address is specified, <strong>all of the asset in the sender account will be sent to the
@@ -91,73 +138,124 @@ fields:
   # Fields for asset configuration type
   caid: # Asset ID
     label: Asset ID
+    tip: The unique ID of the asset.
   apar_un: # Unit name
     label: Unit name
+    tip: "The name of a unit of this asset. Example: USDT"
     placeholder: ASSET
   apar_an: # Asset name
     label: Asset name
+    tip: "The name of the asset. Example: Tether"
     placeholder: My Asset
   apar_t: # Total
     label: Total
+    tip: The total number of base units of the asset to create. This number cannot be changed.
   apar_dc: # Number of decimals places
     label: Number of decimals places
+    tip: >
+      The number of digits to use after the decimal point when displaying the asset. If 0, the asset
+      is not divisible. If 1, the base unit of the asset is in tenths. If 2, the base unit of the
+      asset is in hundredths, if 3, the base unit of the asset is in thousandths, and so on.
   apar_df: # Frozen by default?
     label: Frozen by default?
+    tip: Freeze holdings for this asset by default.
     is_frozen: Yes
     is_not_frozen: No
   apar_au: # URL
     label: URL
+    tip: A URL where more information about the asset can be retrieved.
     placeholder: "ipfs://"
   apar_m: # Manager
     label: Manager address
+    tip: >
+      The address of the account that can manage the configuration of the asset and destroy it. If
+      empty, reconfiguring is not permitted.
     placeholder: Manager address
   apar_f: # Freeze address
     label: Freeze address
+    tip: >
+      The address of the account used to freeze holdings of this asset. If empty, freezing is not
+      permitted.
     placeholder: Freeze address
   apar_c: # Clawback address
     label: Clawback address
+    tip: >
+      The address of the account that can clawback holdings of this asset. If empty, clawback is not
+      permitted.
     placeholder: Clawback address
   apar_r: # Reserve address
     label: Reserve address
+    tip: >
+      The address of the account that holds the reserve (non-minted) units of the asset. This
+      address has no specific authority in the protocol itself. It is used in the case where you
+      want to signal to holders of your asset that the non-minted units of the asset reside in an
+      account that is different from the default creator account (the sender).
     placeholder: Reserve address
   apar_am: # Metadata hash
     label: Metadata hash
+    tip: >
+      This field is intended to be a 32-byte hash of some metadata that is relevant to your asset
+      and/or asset holders. The format of this metadata is up to the application. This field can
+      only be specified upon creation. An example might be the hash of some certificate that
+      acknowledges the digitized asset as the official representation of a particular real-world
+      asset.
     placeholder: Metadata hash
   # Fields for asset freeze type
   faid: # Asset ID
     label: Asset ID
+    tip: The asset ID being frozen or unfrozen.
   fadd: # Freeze target address
     label: Freeze target
+    tip: The address of the account whose asset is being frozen or unfrozen.
     placeholder: Freeze target address
   afrz: # Freeze?
     label: Freeze asset?
+    tip: If the asset is to be frozen or not.
     is_frozen: Yes
     is_not_frozen: No
   # Fields for key registration type
   votekey: # Voting key
     label: Voting key
+    tip: The root participation public key encoded in base64.
     placeholder: Voting key
   selkey: # Selection key
     label: Selection key
+    tip: The VRF public key encoded in base64.
     placeholder: Selection key
   sprfkey: # State proof key
     label: State proof key
+    tip: The 64 byte state proof public key commitment encoded in base64.
     placeholder: State proof key
   votefst: # First voting round
     label: First voting round
+    tip: >
+      The first round that the participation key is valid. Not to be confused with the “first valid
+      round” of this key registration transaction.
     max_error: >
       The first voting round must be at least the last voting round ({{max, number}}).
   votelst: # Last voting round
     label: Last voting round
+    tip: >
+      The last round that the participation key is valid. Not to be confused with the “last valid
+      round” of the key registration transaction.
   votekd: # Voting key dilution
     label: Voting key dilution
+    tip: >
+      This is the dilution for the 2-level participation key. It determines the interval (number of
+      rounds) for generating new ephemeral keys.
   nonpart: # Nonparticipation
-    label: Nonparticipation
+    label: Nonparticipating?
+    tip: >
+      All new Algorand accounts are participating by default. This means that they earn rewards. By
+      setting this value to “on” (“yes”), this account will marked as “nonparticipating” and no
+      longer earn rewards. It is unlikely that you will ever need to do this and exists mainly for
+      economic-related functions on the network.
     is_nonpart: Yes
     is_not_nonpart: No
   # Fields for application call type
   apan: # OnComplete
     label: Application action type
+    tip: Defines what additional actions occur with the transaction.
     options:
       no_op: Call (NoOp)
       opt_in: Opt in
@@ -167,25 +265,52 @@ fields:
       delete: Delete
   apid: # Application ID
     label: Application ID
+    tip: ID of the application. Empty if creating.
   apap: # Approval program
     label: Approval program
+    tip: >
+      Logic executed for every application transaction, except when the application action type is
+      set to “clear state”. It can read and write global state for the application, as well as
+      account-specific local state. Approval programs may reject the transaction.
     placeholder: Enter compiled approval program as base64 text
-  apsu: # Clear state program
-    label: Clear state program
-    placeholder: Enter compiled clear state program as base64 text
+  apsu: # Clear-state program
+    label: Clear-state program
+    tip: >
+      Logic executed for application transactions with the application action type set to “clear
+      state”. It can read and write global state for the application, as well as account-specific
+      local state. Clear-state programs cannot reject the transaction.
+    placeholder: Enter compiled clear-state program as base64 text
   apgs_nui: # Number of global ints
     label: Number of global integers
+    tip: >
+      Maximum number of integer values that may be stored in the global application key-value store.
+      Once set, it cannot be changed.
   apgs_nbs: # Number of global byte slices
     label: Number of global byte slices
+    tip: >
+      Maximum number of byte slices values that may be stored in the global application key-value
+      store. Once set, it cannot be changed.
   apls_nui: # Number of local ints
     label: Number of local integers
+    tip: >
+      Maximum number of integer values that may be stored in the local application key-value store.
+      Once set, it cannot be changed.
   apls_nbs: # Number of local byte slices
     label: Number of local byte slices
+    tip: >
+      Maximum number of byte slices values that may be stored in the local application key-value
+      store. Once set, it cannot be changed.
   apep: # Number of extra pages
     label: Number of extra pages
+    tip: >
+      Number of additional pages allocated to the application’s approval and clear state programs.
+      Once set, it cannot be changed.
     section_title: Extra pages
   apaa: # Arguments
     label: "Argument #{{index}}"
+    tip: >
+      Transaction-specific arguments accessed from the application’s approval program and
+      clear-state program.
     placeholder: "Argument #{{index}} value"
     title: Application arguments
     none: No application arguments
@@ -196,6 +321,9 @@ fields:
     no_abi_support: ABI method calls are not supported…for now.
   apat: # Account references
     label: "Account #{{index}}"
+    tip: >
+      List of accounts in addition to the sender that may be accessed from the application’s
+      approval program and clear-state program.
     placeholder: "Account #{{index}} address"
     title: Account references
     none: No account references
@@ -204,6 +332,9 @@ fields:
     max_error: There must be at most {{count}} account references.
   apfa: # Application references
     label: "Application #{{index}}"
+    tip: >
+      List of applications in addition to the application ID whose global states may be accessed by
+      this application’s approval program and clear-state program. The access is read-only.
     placeholder: "Application #{{index}} ID"
     title: Application references
     none: No application references
@@ -211,6 +342,9 @@ fields:
     remove_btn: Remove application
   apas: # Asset references
     label: "Asset #{{index}}"
+    tip: >
+      Lists the assets whose asset properties may be accessed by this application’s approval program
+      and clear-state program. The access is read-only.
     placeholder: "Asset #{{index}} ID"
     title: Asset references
     none: No asset references
@@ -218,25 +352,34 @@ fields:
     remove_btn: Remove asset
   apbx: # Box references
     title: Box references
+    tip: The boxes that should be made available for the runtime of the program.
     box_title: "Box #{{index}}"
     none: No box references
     add_btn: Add box
     remove_btn: Remove box
-  apbx_i: # Box application ID
-    label: "Box #{{index}} application ID"
-    placeholder: "Box #{{index}} application ID"
+  apbx_i: # Box Index
+    label: "Box #{{index}} index"
+    tip: >
+      The index in the “Application references” list of the application the box reference is for. If
+      0 the box reference is for the application being called.
+    placeholder: "Box #{{index}} index"
     title: "App ID: {{id}}"
   apbx_n: # Box name
     label: "Box #{{index}} name"
+    tip: >
+      The name of the box the application will use to refer to the box. If empty, this adds an empty
+      box reference.
     placeholder: "Box #{{index}} name"
     title: "Name: <1>{{name}}</1>"
   app_props_title: Application properties
   app_global_state:
     title: Global state
+    tip: The maximum number of global state values.
     max_error: >
       The combined number of global integers and byte slices must not exceed {{max, number}}.
   app_local_state:
     title: Local state
+    tip: The maximum number of local state values.
     max_error: >
       The combined number of local integers and byte slices must not exceed {{max, number}}.
   app_deps:
@@ -244,3 +387,5 @@ fields:
     max_error: >
       The combined number of account, application, asset and box references must not exceed
       {{count}}.
+  more_info: More information about this field.
+  more_info_section: More information about this section.

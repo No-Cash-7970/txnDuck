@@ -14,6 +14,8 @@ import {
   assetTransferFormControlAtom,
   presetAtom,
   showFormErrorsAtom,
+  tipBtnClass,
+  tipContentClass,
 } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import FieldErrorMessage from './FieldErrorMessage';
@@ -32,6 +34,12 @@ export function Sender({ t }: { t: TFunction }) {
     <TextField label={t('fields.asnd.label')}
       name='asnd'
       id='asnd-input'
+      tip={{
+        content: t('fields.asnd.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={preset === Preset.AssetClawback}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -71,6 +79,12 @@ export function Receiver({ t }: { t: TFunction }) {
     <TextField label={t('fields.arcv.label')}
       name='arcv'
       id='arcv-input'
+      tip={{
+        content: t('fields.arcv.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -102,6 +116,12 @@ export function AssetId({ t }: { t: TFunction }) {
     <TextField label={t('fields.xaid.label')}
       name='xaid'
       id='xaid-input'
+      tip={{
+        content: t('fields.xaid.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -135,6 +155,12 @@ export function Amount({ t }: { t: TFunction }) {
     <NumberField label={t('fields.aamt.label')}
       name='aamt'
       id='aamt-input'
+      tip={{
+        content: t('fields.aamt.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
@@ -164,7 +190,7 @@ export function Amount({ t }: { t: TFunction }) {
 export function CloseTo({ t }: { t: TFunction }) {
   return (
     <>
-      <CloseToField t={t} />
+      <CloseToInput t={t} />
 
       <div className='alert alert-warning not-prose my-1'>
         <IconAlertTriangle aria-hidden />
@@ -176,7 +202,7 @@ export function CloseTo({ t }: { t: TFunction }) {
   );
 }
 
-function CloseToField({ t }: { t: TFunction }) {
+function CloseToInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -190,6 +216,12 @@ function CloseToField({ t }: { t: TFunction }) {
     <TextField label={t('fields.aclose.label')}
       name='aclose'
       id='aclose-input'
+      tip={{
+        content: t('fields.aclose.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
       required={preset === Preset.AssetOptOut}
       requiredText={t('form.required')}
       inputInsideLabel={false}
