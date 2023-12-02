@@ -9,7 +9,7 @@ import {
   ADDRESS_LENGTH,
   ASSET_NAME_MAX_LENGTH,
   MAX_DECIMAL_PLACES,
-  METADATA_HASH_MAX_LENGTH,
+  METADATA_HASH_LENGTH,
   Preset,
   UNIT_NAME_MAX_LENGTH,
   URL_MAX_LENGTH,
@@ -481,7 +481,7 @@ export function MetadataHash({ t }: { t: TFunction }) {
       inputClass={
         ((showFormErrors || form.touched.apar_am) && form.fieldErrors.apar_am) ? 'input-error' : ''
       }
-      maxLength={METADATA_HASH_MAX_LENGTH+1}
+      maxLength={METADATA_HASH_LENGTH}
       value={form.values.apar_am as string}
       onChange={(e) => form.handleOnChange('apar_am')(e.target.value)}
       onFocus={form.handleOnFocus('apar_am')}

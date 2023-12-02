@@ -27,7 +27,7 @@ export const MIN_TX_FEE = ALGORAND_MIN_TX_FEE;
 export const UNIT_NAME_MAX_LENGTH = 8;
 export const ASSET_NAME_MAX_LENGTH = 32;
 export const URL_MAX_LENGTH = 96;
-export const METADATA_HASH_MAX_LENGTH = 32;
+export const METADATA_HASH_LENGTH = 32;
 export const MAX_DECIMAL_PLACES = 19;
 
 // https://developer.algorand.org/docs/get-details/parameter_tables/
@@ -540,7 +540,7 @@ export const txnDataAtoms = {
   /** Asset configuration - Metadata hash */
   apar_am: atomWithValidate<string>('', {
     validate: v => {
-      YupString().max(METADATA_HASH_MAX_LENGTH).validateSync(v === '' ? undefined : v);
+      YupString().length(METADATA_HASH_LENGTH).validateSync(v === '' ? undefined : v);
       return v;
     }
   }),
