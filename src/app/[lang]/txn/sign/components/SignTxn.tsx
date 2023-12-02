@@ -14,7 +14,6 @@ import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
 import {
   walletTypes,
-  disconnectWallet,
   getWalletClient,
   getActiveProvider,
 } from '@/app/lib/wallet-utils';
@@ -199,7 +198,7 @@ export default function SignTxn({ lng }: Props) {
             <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
           </div>
           <button className='btn btn-sm btn-link text-secondary'
-            onClick={() => disconnectWallet(getActiveProvider(providers))}
+            onClick={() => getActiveProvider(providers)?.disconnect()}
           >
             <Icons.IconWalletOff aria-hidden />
             {t('wallet.disconnect')}

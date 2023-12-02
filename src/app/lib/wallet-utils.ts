@@ -9,14 +9,6 @@ export const walletTypes: {[id: string]: string} = {
   [PROVIDER_ID.DAFFI]: 'mobile',
 };
 
-/** Disconnect the current wallet provider. (Only one wallet provider is allowed for now).
- * @param clients  Collection of clients returned by `useWallet()`
- * @param activeAccount The wallet account that is currently active, as returned by `useWallet()`
- */
-export const disconnectWallet = (provider?: Provider) => {
-    provider?.disconnect();
-};
-
 /** Get the client for the provider with the given provider ID.
  * @param providerId Provider ID
  * @param clients  Collection of clients returned by `useWallet()`

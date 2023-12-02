@@ -5,7 +5,6 @@ import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { useWallet } from '@txnlab/use-wallet';
 import {
   walletTypes,
-  disconnectWallet,
   getWalletClient,
   getActiveProvider,
 } from '@/app/lib/wallet-utils';
@@ -78,7 +77,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
         </div>
         <button type='button'
           className='btn btn-sm btn-secondary btn-block'
-          onClick={() => disconnectWallet(getActiveProvider(providers))}
+          onClick={() => getActiveProvider(providers)?.disconnect()}
         >
           <IconWalletOff aria-hidden />
           {t('wallet.disconnect')}
