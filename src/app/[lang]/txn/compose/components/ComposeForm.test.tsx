@@ -209,16 +209,18 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.rcv.label/),
-      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.amt.label/), '5');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.rcv.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    await userEvent.click(screen.getByLabelText(/fields.amt.label/));
+    await userEvent.paste('5');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -234,16 +236,18 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.rcv.label/),
-      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.amt.label/), '5');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.rcv.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    await userEvent.click(screen.getByLabelText(/fields.amt.label/));
+    await userEvent.paste('5');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -268,17 +272,20 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.arcv.label/),
-      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.xaid.label/), '123456789');
-    await userEvent.type(screen.getByLabelText(/fields.aamt.label/), '5');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.arcv.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    await userEvent.click(screen.getByLabelText(/fields.xaid.label/));
+    await userEvent.paste('123456789');
+    await userEvent.click(screen.getByLabelText(/fields.aamt.label/));
+    await userEvent.paste('5');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -304,33 +311,36 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.apar_un.label/), 'FAKE');
-    await userEvent.type(screen.getByLabelText(/fields.apar_an.label/), 'Fake Token');
-    await userEvent.type(screen.getByLabelText(/fields.apar_t.label/), '10000000');
-    await userEvent.type(screen.getByLabelText(/fields.apar_dc.label/), '3');
+
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.apar_un.label/));
+    await userEvent.paste('FAKE');
+    await userEvent.click(screen.getByLabelText(/fields.apar_an.label/));
+    await userEvent.paste('Fake Token');
+    await userEvent.click(screen.getByLabelText(/fields.apar_t.label/));
+    await userEvent.paste('10000000');
+    await userEvent.click(screen.getByLabelText(/fields.apar_dc.label/));
+    await userEvent.paste('3');
     await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
-    await userEvent.type(screen.getByLabelText(/fields.apar_au.label/), 'https://fake.token');
-    await userEvent.type(screen.getByLabelText(/fields.apar_m.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.apar_f.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.apar_c.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.apar_r.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.apar_am.label/),
-      'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG'
-    );
+    await userEvent.click(screen.getByLabelText(/fields.apar_au.label/));
+    await userEvent.paste('https://fake.token');
+    await userEvent.click(screen.getByLabelText(/fields.apar_m.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_f.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_c.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_r.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_am.label/));
+    await userEvent.paste('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -364,16 +374,18 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.faid.label/), '123456789');
-    await userEvent.type(screen.getByLabelText(/fields.fadd.label/),
-      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
-    );
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.faid.label/));
+    await userEvent.paste('123456789');
+    await userEvent.click(screen.getByLabelText(/fields.fadd.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     await userEvent.click(screen.getByLabelText(/fields.afrz.label/));
 
     // Submit data
@@ -400,24 +412,28 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
-    await userEvent.type(screen.getByLabelText(/fields.votekey.label/),
-      'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo='
-    );
-    await userEvent.type(screen.getByLabelText(/fields.selkey.label/),
-      'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk='
-    );
-    await userEvent.type(screen.getByLabelText(/fields.sprfkey.label/),
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
+    await userEvent.click(screen.getByLabelText(/fields.votekey.label/));
+    await userEvent.paste('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
+    await userEvent.click(screen.getByLabelText(/fields.selkey.label/));
+    await userEvent.paste('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=');
+    await userEvent.click(screen.getByLabelText(/fields.sprfkey.label/));
+    await userEvent.paste(
       'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
     );
-    await userEvent.type(screen.getByLabelText(/fields.votefst.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.votelst.label/), '6100000');
-    await userEvent.type(screen.getByLabelText(/fields.votekd.label/), '1730');
+    await userEvent.click(screen.getByLabelText(/fields.votefst.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.votelst.label/));
+    await userEvent.paste('6100000');
+    await userEvent.click(screen.getByLabelText(/fields.votekd.label/));
+    await userEvent.paste('1730');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -448,55 +464,72 @@ describe('Compose Form Component', () => {
 
     // Enter data
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
-    await userEvent.type(screen.getByLabelText(/fields.snd.label/),
-      'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4'
-    );
-    await userEvent.type(screen.getByLabelText(/fields.fee.label/), '0.001');
-    await userEvent.type(screen.getByLabelText(/fields.fv.label/), '6000000');
-    await userEvent.type(screen.getByLabelText(/fields.lv.label/), '6001000');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
+    await userEvent.paste('0.001');
+    await userEvent.click(screen.getByLabelText(/fields.fv.label/));
+    await userEvent.paste('6000000');
+    await userEvent.click(screen.getByLabelText(/fields.lv.label/));
+    await userEvent.paste('6001000');
 
-    await userEvent.type(screen.getByLabelText(/fields.apap.label/), 'BYEB');
-    await userEvent.type(screen.getByLabelText(/fields.apsu.label/), 'BYEB');
-    await userEvent.type(screen.getByLabelText(/fields.apgs_nui.label/), '1');
-    await userEvent.type(screen.getByLabelText(/fields.apgs_nbs.label/), '2');
-    await userEvent.type(screen.getByLabelText(/fields.apls_nui.label/), '3');
-    await userEvent.type(screen.getByLabelText(/fields.apls_nbs.label/), '4');
-    await userEvent.type(screen.getByLabelText(/fields.apep.label/), '1');
+    await userEvent.click(screen.getByLabelText(/fields.apap.label/));
+    await userEvent.paste('BYEB');
+    await userEvent.click(screen.getByLabelText(/fields.apsu.label/));
+    await userEvent.paste('BYEB');
+    await userEvent.click(screen.getByLabelText(/fields.apgs_nui.label/));
+    await userEvent.paste('1');
+    await userEvent.click(screen.getByLabelText(/fields.apgs_nbs.label/));
+    await userEvent.paste('2');
+    await userEvent.click(screen.getByLabelText(/fields.apls_nui.label/));
+    await userEvent.paste('3');
+    await userEvent.click(screen.getByLabelText(/fields.apls_nbs.label/));
+    await userEvent.paste('4');
+    await userEvent.click(screen.getByLabelText(/fields.apep.label/));
+    await userEvent.paste('1');
 
     // Add and enter arguments
     await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
     await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
     await userEvent.click(screen.getByText(/fields.apaa.add_btn/));
     const argInputs = screen.getAllByLabelText(/fields.apaa.label/);
-    await userEvent.type(argInputs[0], 'foo');
-    await userEvent.type(argInputs[1], '42');
+    await userEvent.click(argInputs[0]);
+    await userEvent.paste('foo');
+    await userEvent.click(argInputs[1]);
+    await userEvent.paste('42');
 
     // Add and enter foreign accounts
     await userEvent.click(screen.getByText(/fields.apat.add_btn/));
-    await userEvent.type(screen.getByLabelText(/fields.apat.label/),
-      'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'
-    );
+    await userEvent.click(screen.getByLabelText(/fields.apat.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
 
     // Add and enter foreign applications
     await userEvent.click(screen.getByText(/fields.apfa.add_btn/));
     await userEvent.click(screen.getByText(/fields.apfa.add_btn/));
     const appInputs = screen.getAllByLabelText(/fields.apfa.label/);
-    await userEvent.type(appInputs[0], '11111111');
-    await userEvent.type(appInputs[1], '22222222');
+    await userEvent.click(appInputs[0]);
+    await userEvent.paste('11111111');
+    await userEvent.click(appInputs[1]);
+    await userEvent.paste('22222222');
 
     // Add and enter foreign assets
     await userEvent.click(screen.getByText(/fields.apas.add_btn/));
     await userEvent.click(screen.getByText(/fields.apas.add_btn/));
     await userEvent.click(screen.getByText(/fields.apas.add_btn/));
     const assetInputs = screen.getAllByLabelText(/fields.apas.label/);
-    await userEvent.type(assetInputs[0], '33333333');
-    await userEvent.type(assetInputs[1], '44444444');
-    await userEvent.type(assetInputs[2], '55555555');
+    await userEvent.click(assetInputs[0]);
+    await userEvent.paste('33333333');
+    await userEvent.click(assetInputs[1]);
+    await userEvent.paste('44444444');
+    await userEvent.click(assetInputs[2]);
+    await userEvent.paste('55555555');
 
     // Add and enter box information
     await userEvent.click(screen.getByText(/fields.apbx.add_btn/));
-    await userEvent.type(screen.getByLabelText(/fields.apbx_i.label/), '99999999');
-    await userEvent.type(screen.getByLabelText(/fields.apbx_n.label/), 'Boxy box');
+    await userEvent.click(screen.getByLabelText(/fields.apbx_i.label/));
+    await userEvent.paste('99999999');
+    await userEvent.click(screen.getByLabelText(/fields.apbx_n.label/));
+    await userEvent.paste('Boxy box');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
