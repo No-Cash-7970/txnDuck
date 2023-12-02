@@ -11,7 +11,6 @@ import {
   NavBar,
   ToastProvider,
   ToastViewport,
-  WalletProvider
 } from './components';
 
 /**
@@ -93,15 +92,13 @@ export default function RootLayout(
             swipeDirection={langDir === 'rtl'? 'left' : 'right'}
             label={t('toast.provider_label')}
           >
-            <WalletProvider>
-              <NavBar lng={lang} />
-              {children}
-              <ToastViewport
-                toastPosition={langDir === 'rtl'? 'left' : 'right'}
-                label={t('toast.viewport_label')}
-              />
-              <Footer lng={lang} />
-            </WalletProvider>
+            <NavBar lng={lang} />
+            {children}
+            <ToastViewport
+              toastPosition={langDir === 'rtl'? 'left' : 'right'}
+              label={t('toast.viewport_label')}
+            />
+            <Footer lng={lang} />
           </ToastProvider>
         </JotaiProvider>
       </body>

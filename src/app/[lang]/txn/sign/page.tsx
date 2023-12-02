@@ -1,6 +1,6 @@
 import { Suspense, use } from 'react';
 import { useTranslation } from '@/app/i18n';
-import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
+import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
 import SignTxnLoading from './components/SignTxnLoading';
@@ -17,7 +17,7 @@ export default function SignTxnPage({ params: { lang } }: {
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
       <TxnDataTable lng={lang} />
       <Suspense fallback={<SignTxnLoading />}>
-        <SignTxn lng={lang} />
+        <WalletProvider><SignTxn lng={lang} /></WalletProvider>
       </Suspense>
     </main>
   );

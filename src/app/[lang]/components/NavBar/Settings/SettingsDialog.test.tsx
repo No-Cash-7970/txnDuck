@@ -9,6 +9,8 @@ import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWa
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock use-wallet
 jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
+// Mock the wallet provider
+jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 
 import SettingsDialog from './SettingsDialog';
 

@@ -1,15 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { useAtom, useStore } from 'jotai';
+import { useAtom } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
-import ToastNotification from './ToastNotification';
+import { useWallet } from '@txnlab/use-wallet';
 import { CheckboxField, RadioButtonGroupField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
+import { getActiveProvider } from '@/app/lib/wallet-utils';
+import { WalletProvider } from '@/app/[lang]/components';
+import ToastNotification from './ToastNotification';
 import ConnectWallet from './ConnectWallet';
-import { useWallet } from '@txnlab/use-wallet';
 
 type Props = {
   /** Language */
@@ -21,7 +23,7 @@ type Props = {
 /** Dialog that allows the user to change app settings */
 export default function SettingsDialog({ lng, open = false }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
-  const { clients, activeAccount } = useWallet();
+  const { activeAccount, providers } = useWallet();
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
@@ -58,9 +60,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
     // TODO: Add more settings here
 
     // Disconnect wallet
-    if (activeAccount && clients) {
-      clients[activeAccount.providerId]?.disconnect();
-    }
+    if (activeAccount) getActiveProvider(providers)?.disconnect();
 
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
@@ -99,7 +99,9 @@ export default function SettingsDialog({ lng, open = false }: Props) {
                 onChange={(e) => applyTheme(e.target.value as Settings.Themes)}
               />
               {/* Connect wallet */}
-              <div className='mt-4'><ConnectWallet t={t} /></div>
+              <div className='mt-4'>
+                <WalletProvider><ConnectWallet t={t} /></WalletProvider>
+              </div>
               {/* Ignore form validation errors setting */}
               <CheckboxField
                 name='ignore-form-errors'

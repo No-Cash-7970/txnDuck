@@ -64,7 +64,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
       </DropdownMenu.Root>
     </>}
 
-    {!!activeAccount &&
+    {!!activeAccount && walletClient &&
       <div className='bg-base-200 rounded-btn p-4'>
         <div className='not-prose truncate align-middle mb-3 px-1'>
           <Image src={walletClient.metadata.icon}
