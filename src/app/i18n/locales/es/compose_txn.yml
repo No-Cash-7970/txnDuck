@@ -313,11 +313,11 @@ fields:
       estado claro. Una vez establecido, no se puede modificar.
     section_title: Páginas adicionales
   apaa: # Arguments
-    label: "Argumento #{{index}}"
+    label: "Argumento nº {{index}}"
     tip: >
       Argumentos específicos de la transacción a los que se accede desde el programa de aprobación
       de la aplicación y el programa clear-state.
-    placeholder: "Valor de argumento #{{index}}"
+    placeholder: "Valor de argumento nº {{index}}"
     title: Argumento de aplicación
     none: No argumento de aplicación
     empty: Argumento vacío
@@ -326,11 +326,11 @@ fields:
     max_error: Debe haber como máximo {{count, number}} argumentos.
     no_abi_support: Las llamadas a métodos ABI no son compatibles…por ahora.
   apat: # Account references
-    label: "Cuenta #{{index}}"
+    label: "Cuenta nº {{index}}"
     tip: >
       Lista de cuentas, además del remitente, a las que se puede acceder desde el programa de
       aprobación de la aplicación y el programa de estado claro.
-    placeholder: "Dirección de cuenta #{{index}}"
+    placeholder: "Dirección de cuenta nº {{index}}"
     title: Referencias de cuentas
     none: No referencias de cuentas
     add_btn: Añada una cuenta
@@ -348,11 +348,11 @@ fields:
     add_btn: Añada una aplicación
     remove_btn: Elimine una aplicación
   apas: # Asset references
-    label: "Activo #{{index}}"
+    label: "Activo nº {{index}}"
     tip: >
       Enumera los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
       de borrado de esta aplicación. El acceso es de sólo lectura.
-    placeholder: "Identificación de activo #{{index}}"
+    placeholder: "Identificación de activo nº {{index}}"
     title: Referencias de activo
     none: No referencias de activo
     add_btn: Añada un activo
@@ -360,12 +360,12 @@ fields:
   apbx: # Box references
     title: Referencias de caja
     tip: Las cajas que deben estar disponibles para el tiempo de ejecución del programa.
-    box_title: "Caja #{{index}}"
+    box_title: "Caja nº {{index}}"
     none: No referencias de caja
     add_btn: Añada una caja
     remove_btn: Elimine una caja
   apbx_i: # Box application index
-    label: "Indice para Caja #{{index}}"
+    label: "Indice para Caja nº {{index}}"
     tip: >
       Índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere la caja.
       Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
@@ -376,11 +376,11 @@ fields:
       El índice de la caja debe ser un índice válido en la lista «Referencias de aplicación», como
       máximo {{max}}.
   apbx_n: # Box name
-    label: "Nombre de Caja #{{index}}"
+    label: "Nombre de Caja nº {{index}}"
     tip: >
       El nombre de la caja que la aplicación utilizará para referirse a la caja. Si está vacía,
       añade una referencia de caja vacía.
-    placeholder: "Nombre de Caja #{{index}}"
+    placeholder: "Nombre de Caja nº {{index}}"
     title: "Nombre: <1>{{name}}</1>"
   app_props_title: Propiedades de aplicación
   app_global_state:
