@@ -629,8 +629,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
       apbxList.forEach((apbxAtom, i) => {
         const apbxI = jotaiStore.get(apbxAtom.i);
         const apbxN = jotaiStore.get(apbxAtom.n);
-        // If this "application box ID" field is invalid
-        if (!apbxI.isValid) invalidApplFields.add(`apbx_i-${i}`);
+        // If this "application box index" field is invalid (fails validation or the value is
+        // greater than the number of foreign apps, which is an invalid box index)
+        if (!apbxI.isValid || (apbxI.value ?? 0) > apaaList.length) {
+          invalidApplFields.add(`apbx_i-${i}`);
+        }
         // If this "application box name" field is invalid
         if (!apbxN.isValid) invalidApplFields.add(`apbx_n-${i}`);
       });

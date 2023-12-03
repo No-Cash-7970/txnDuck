@@ -339,7 +339,7 @@ export default function TxnDataTable({ lng }: Props) {
                   {(storedTxnData as TxnData.AppCallTxnData).apbx.map((box, i) => (
                     <li key={`box-${i}`}>
                       <ul className='m-0'>
-                        <li className='m-0'>{t('fields.apbx_i.title', {id: box.i})}</li>
+                        <li className='m-0'>{t('fields.apbx_i.title', {index: box.i})}</li>
                         <li className='m-0'>
                           <Trans t={t} i18nKey='fields.apbx_n.title'
                             values={{ name: box.n || t('none') }}

@@ -949,7 +949,7 @@ function Boxes({ t }: { t: TFunction }) {
           heading={t('fields.apbx.box_title', { index: i + 1 })}
           key={`${boxAtom}`}
         >
-          <BoxIdInput t={t} boxAtom={boxAtom} index={i} />
+          <BoxIndexInput t={t} boxAtom={boxAtom} index={i} />
           <BoxNameInput t={t} boxAtom={boxAtom} index={i} />
         </FieldGroup>
     )}
@@ -985,14 +985,15 @@ function Boxes({ t }: { t: TFunction }) {
     </div>
   </>);
 }
-function BoxIdInput({ t, boxAtom, index }:
+function BoxIndexInput({ t, boxAtom, index }:
   { t: TFunction, boxAtom: PrimitiveAtom<BoxRefAtomGroup>, index: number }
 ) {
-  const [boxId, setBoxId] = useAtom(useAtomValue(boxAtom).i);
+  const [boxIndex, setBoxIndex] = useAtom(useAtomValue(boxAtom).i);
   const [touched, setTouched] = useState(false);
+  const appForeignApps = useAtomValue(txnDataAtoms.apfa);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
   return (<>
-    <TextField label={t('fields.apbx_i.label', { index: index + 1 })}
+    <NumberField label={t('fields.apbx_i.label', { index: index + 1 })}
       name={`apbx_i-${index}`}
       id={`apbx_i-${index}-input`}
       tip={{
@@ -1004,22 +1005,32 @@ function BoxIdInput({ t, boxAtom, index }:
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
-      placeholder={t('fields.apbx_i.placeholder', { index: index + 1 })}
       containerId={`apbx_i-${index}-field`}
       containerClass='mt-4 max-w-xs'
-      inputClass={((showFormErrors || touched) && !boxId.isValid) ? 'input-error': ''}
-      value={boxId.value ?? ''}
+      inputClass={((showFormErrors || touched) &&
+        (!boxIndex.isValid
+          || (boxIndex.value && (boxIndex.value > appForeignApps.length))
+        )
+      ) ? 'input-error': ''}
+      min={0}
+      max={appForeignApps.length}
+      step={1}
+      value={boxIndex.value ?? ''}
       onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/gm, '');
-        setBoxId(value === '' ? null : parseInt(value));
+        setBoxIndex(e.target.value === '' ? null : parseInt(e.target.value));
       }}
       onBlur={() => setTouched(true)}
-      inputMode='numeric'
     />
-    {(showFormErrors || touched) && !boxId.isValid &&
+    {(showFormErrors || touched) && !boxIndex.isValid &&
       <FieldErrorMessage t={t}
-        i18nkey={((boxId.error as any).message as ValidationMessage).key}
-        dict={((boxId.error as any).message as ValidationMessage).dict}
+        i18nkey={((boxIndex.error as any).message as ValidationMessage).key}
+        dict={((boxIndex.error as any).message as ValidationMessage).dict}
+      />
+    }
+    {(showFormErrors || touched) && !!boxIndex.value && (boxIndex.value > appForeignApps.length) &&
+      <FieldErrorMessage t={t}
+        i18nkey='fields.apbx_i.max_error'
+        dict={{max: appForeignApps.length}}
       />
     }
   </>);

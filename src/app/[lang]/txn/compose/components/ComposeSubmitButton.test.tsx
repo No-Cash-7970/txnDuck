@@ -348,7 +348,7 @@ describe('Compose Form Component', () => {
     // Add and enter box information
     await userEvent.click(screen.getByText(/fields.apbx.add_btn/));
     await userEvent.click(screen.getByLabelText(/fields.apbx_i.label/));
-    await userEvent.paste('99999999');
+    await userEvent.paste('2');
     await userEvent.click(screen.getByLabelText(/fields.apbx_n.label/));
     await userEvent.paste('Boxy box');
 
@@ -374,7 +374,7 @@ describe('Compose Form Component', () => {
       apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
       apfa: [11111111, 22222222],
       apas: [33333333, 44444444, 55555555],
-      apbx: [{i: 99999999, n: 'Boxy box' }],
+      apbx: [{i: 2, n: 'Boxy box' }],
     });
   }, 10000);
 

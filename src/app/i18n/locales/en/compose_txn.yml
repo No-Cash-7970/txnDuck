@@ -361,9 +361,12 @@ fields:
     label: "Box #{{index}} index"
     tip: >
       The index in the “Application references” list of the application the box reference is for. If
-      0 the box reference is for the application being called.
-    placeholder: "Box #{{index}} index"
-    title: "App ID: {{id}}"
+      0 the box reference is for the application being called. If 1 the box reference is for the
+      application set as “Application #1.” If 2 the box reference is for the application set as
+      “Application #2,” and so on.
+    title: "Index: {{index}}"
+    max_error: >
+      The box index must be a valid index in the “Application references” list, at most {{max}}.
   apbx_n: # Box name
     label: "Box #{{index}} name"
     tip: >

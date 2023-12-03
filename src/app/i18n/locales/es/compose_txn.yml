@@ -157,7 +157,7 @@ fields:
     tip: >
       El número de dígitos a utilizar después del punto decimal al mostrar el activo. Si es 0, el
       activo no es divisible. Si es 1, la unidad base del bien está en décimas. Si es 2, la unidad
-      base del activo está en centésimas, si es 3, la unidad base del activo está en milésimas, y
+      base del activo está en centésimas, si es 3, la unidad base del activo está en milésimas y
       así sucesivamente.
   apar_df: # Frozen by default?
     label: ¿Congelado por defecto?
@@ -337,12 +337,12 @@ fields:
     max_error: Debe haber como máximo {{count, number}} referencias de cuentas.
     remove_btn: Elimine una cuenta
   apfa: # Application references
-    label: "Aplicación #{{index}}"
+    label: "Aplicación nº {{index}}"
     tip: >
       Lista de aplicaciones, además de la identificación de la aplicación, a cuyos estados globales
       puede acceder el programa de aprobación y el programa de borrado de estados de esta
       aplicación. El acceso es de sólo lectura.
-    placeholder: "Identificación de aplicación #{{index}}"
+    placeholder: "Identificación de aplicación nº {{index}}"
     title: Referencias de aplicación
     none: No referencias de aplicación
     add_btn: Añada una aplicación
@@ -367,10 +367,14 @@ fields:
   apbx_i: # Box application index
     label: "Indice para Caja #{{index}}"
     tip: >
-      Índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere el cuadro.
-      Si es 0, la referencia de casilla es para la aplicación que se está llamando.
-    placeholder: "Indice para Caja #{{index}}"
-    title: "Identificación de app: {{id}}"
+      Índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere la caja.
+      Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
+      referencia de caja es para la aplicación definida como «Aplicación nº 1». Si es 2 la
+      referencia de caja es para la aplicación definida como «Aplicación nº 2» y así sucesivamente.
+    title: "Índice: {{index}}"
+    max_error: >
+      El índice de la caja debe ser un índice válido en la lista «Referencias de aplicación», como
+      máximo {{max}}.
   apbx_n: # Box name
     label: "Nombre de Caja #{{index}}"
     tip: >
