@@ -290,35 +290,35 @@ export default function ComposeSubmitButton({ lng }: Props) {
         jotaiStore.set(TxnData.txnDataAtoms.apep, (storedTxnData as TxnData.AppCallTxnData)?.apep);
       }
 
-      jotaiStore.set(TxnData.apaaListAtom,
+      jotaiStore.set(TxnData.txnDataAtoms.apaaListAtom,
         (storedTxnData as TxnData.AppCallTxnData)?.apaa
           ? ((storedTxnData as TxnData.AppCallTxnData)?.apaa).map(
             arg => atomWithValidate(arg, TxnData.apaaValidateOptions)
           )
           : []
       );
-      jotaiStore.set(TxnData.apatListAtom,
+      jotaiStore.set(TxnData.txnDataAtoms.apatListAtom,
         (storedTxnData as TxnData.AppCallTxnData)?.apat
           ? ((storedTxnData as TxnData.AppCallTxnData)?.apat).map(
             acct => atomWithValidate(acct, TxnData.apatValidateOptions)
           )
           : []
       );
-      jotaiStore.set(TxnData.apfaListAtom,
+      jotaiStore.set(TxnData.txnDataAtoms.apfaListAtom,
         (storedTxnData as TxnData.AppCallTxnData)?.apfa
           ? ((storedTxnData as TxnData.AppCallTxnData)?.apfa).map(
             app => atomWithValidate(app, TxnData.apfaValidateOptions)
           )
           : []
       );
-      jotaiStore.set(TxnData.apasListAtom,
+      jotaiStore.set(TxnData.txnDataAtoms.apasListAtom,
         (storedTxnData as TxnData.AppCallTxnData)?.apas
           ? ((storedTxnData as TxnData.AppCallTxnData)?.apas).map(
             asset => atomWithValidate(asset, TxnData.apasValidateOptions)
           )
           : []
       );
-      jotaiStore.set(TxnData.apbxListAtom,
+      jotaiStore.set(TxnData.txnDataAtoms.apbxListAtom,
         (storedTxnData as TxnData.AppCallTxnData)?.apbx
           ? ((storedTxnData as TxnData.AppCallTxnData)?.apbx).map(
             box => ({
@@ -535,7 +535,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
         invalidApplFields.add('apid');
       }
 
-      const apaaList = jotaiStore.get(TxnData.apaaListAtom);
+      const apaaList = jotaiStore.get(TxnData.txnDataAtoms.apaaListAtom);
       // If there are too many "application argument" fields
       if (apaaList.length > TxnData.MAX_APP_ARGS) {
         invalidApplFields.add('apaa');
@@ -596,10 +596,10 @@ export default function ComposeSubmitButton({ lng }: Props) {
         invalidApplFields.add('apep');
       }
 
-      const apatList = jotaiStore.get(TxnData.apatListAtom);
-      const apfaList = jotaiStore.get(TxnData.apfaListAtom);
-      const apasList = jotaiStore.get(TxnData.apasListAtom);
-      const apbxList = jotaiStore.get(TxnData.apbxListAtom);
+      const apatList = jotaiStore.get(TxnData.txnDataAtoms.apatListAtom);
+      const apfaList = jotaiStore.get(TxnData.txnDataAtoms.apfaListAtom);
+      const apasList = jotaiStore.get(TxnData.txnDataAtoms.apasListAtom);
+      const apbxList = jotaiStore.get(TxnData.txnDataAtoms.apbxListAtom);
 
       // If there are too many application dependencies
       if ((apatList.length + apfaList.length + apasList.length + apbxList.length)
@@ -785,19 +785,19 @@ export default function ComposeSubmitButton({ lng }: Props) {
         apls_nui: applForm.values.apls_nui,
         apls_nbs: applForm.values.apls_nbs,
         apep: applForm.values.apep,
-        apaa: jotaiStore.get(TxnData.apaaListAtom).map(
+        apaa: jotaiStore.get(TxnData.txnDataAtoms.apaaListAtom).map(
           (apaaAtom) => jotaiStore.get(apaaAtom).value ?? ''
         ),
-        apat: jotaiStore.get(TxnData.apatListAtom).map(
+        apat: jotaiStore.get(TxnData.txnDataAtoms.apatListAtom).map(
           (apatAtom) => jotaiStore.get(apatAtom).value ?? ''
         ),
-        apfa: jotaiStore.get(TxnData.apfaListAtom).map(
+        apfa: jotaiStore.get(TxnData.txnDataAtoms.apfaListAtom).map(
           (apfaAtom) => jotaiStore.get(apfaAtom).value ?? ''
         ),
-        apas: jotaiStore.get(TxnData.apasListAtom).map(
+        apas: jotaiStore.get(TxnData.txnDataAtoms.apasListAtom).map(
           (apasAtom) => jotaiStore.get(apasAtom).value ?? ''
         ),
-        apbx: jotaiStore.get(TxnData.apbxListAtom).map((apbxAtom) => ({
+        apbx: jotaiStore.get(TxnData.txnDataAtoms.apbxListAtom).map((apbxAtom) => ({
           i: jotaiStore.get(apbxAtom.i).value ?? '',
           n: jotaiStore.get(apbxAtom.n).value ?? '',
         })),

@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { type Address, TransactionType, encodeAddress, OnApplicationComplete } from 'algosdk';
-import * as tdp from './txn-data-processor';
+import * as processor from './processor';
 
 /* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
 import { TextEncoder, TextDecoder } from 'util';
@@ -14,7 +14,7 @@ describe('Transaction Data Processor', () => {
   describe('createTxnFromData()', () => {
 
     it('returns `Transaction` object with given data for a payment transaction', () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.pay,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -52,7 +52,7 @@ describe('Transaction Data Processor', () => {
     });
 
     it('returns `Transaction` object with given data for a asset transfer transaction', () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.axfer,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -97,7 +97,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a asset configuration (creation)'
     + ' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -156,7 +156,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a asset configuration (destroy)'
     + ' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -192,7 +192,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a asset configuration (reconfiguration)'
     + ' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -237,7 +237,7 @@ describe('Transaction Data Processor', () => {
     });
 
     it('returns `Transaction` object with given data for a asset freeze transaction', () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.afrz,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
@@ -274,7 +274,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a key registration (online) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -319,7 +319,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a key registration (offline) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -359,7 +359,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a key registration (nonparticipating)'
     +' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -398,7 +398,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a application call (create) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -449,7 +449,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a application call (update) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -494,7 +494,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a application call (delete) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -530,7 +530,7 @@ describe('Transaction Data Processor', () => {
 
     it('returns `Transaction` object with given data for a application call (opt-in) transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -567,7 +567,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a application call (close out)'
     + ' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -604,7 +604,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a application call (clear state)'
     +' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
@@ -646,7 +646,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a application call (no-op call)'
     + ' transaction',
     () => {
-      const txn = tdp.createTxnFromData(
+      const txn = processor.createTxnFromData(
         {
           type: TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',

@@ -18,8 +18,7 @@ import {
   getActiveProvider,
 } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import { createTxnFromData } from '@/app/lib/txn-data-processor';
+import { createTxnFromData, storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import NextStepButton from './NextStepButton';
 

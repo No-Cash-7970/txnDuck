@@ -38,7 +38,6 @@ import {
   maxAppGlobalsCheckAtom,
   maxAppLocalsCheckAtom,
   presetAtom,
-  txnDataAtoms,
   validationAtom,
   apatValidateOptions,
   apfaValidateOptions,
@@ -50,6 +49,7 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
+import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from './FieldErrorMessage';
 
 export function OnComplete({ t }: { t: TFunction }) {

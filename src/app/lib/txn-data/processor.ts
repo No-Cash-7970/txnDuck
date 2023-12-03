@@ -2,7 +2,11 @@ import * as algosdk from 'algosdk';
 import { encodeTransactionNote, getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 import type * as TxnData from '@/app/lib/txn-data';
 
-/** Creates an `Transaction` object that represents an Algorand transaction */
+/** Creates a `Transaction` object that represents an Algorand transaction
+ * @param txnData Transaction data from which to create a `Transaction` object
+ * @param genesisID Genesis ID of the network the transaction will be sent
+ * @param genesisHash Genesis hash of the network the transaction will be sent
+ */
 export function createTxnFromData(
   txnData: TxnData.TxnData,
   genesisID: string,
@@ -26,7 +30,7 @@ export function createTxnFromData(
   }
 }
 
-/** Creates an `Transaction` object that represents an Algorand payment transaction */
+/** Creates a `Transaction` object that represents an Algorand payment transaction */
 function createPayTxn(payTxnData: TxnData.PaymentTxnData, genesisID: string, genesisHash: string) {
   const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     from: payTxnData.snd,
@@ -52,7 +56,7 @@ function createPayTxn(payTxnData: TxnData.PaymentTxnData, genesisID: string, gen
   return txn;
 }
 
-/** Creates an `Transaction` object that represents an Algorand asset transfer transaction */
+/** Creates a `Transaction` object that represents an Algorand asset transfer transaction */
 function createAxferTxn(
   axferTxnData: TxnData.AssetTransferTxnData,
   genesisID: string,
@@ -84,7 +88,7 @@ function createAxferTxn(
   return txn;
 }
 
-/** Creates an `Transaction` object that represents an Algorand asset configuration transaction */
+/** Creates a `Transaction` object that represents an Algorand asset configuration transaction */
 function createAcfgTxn(
   acfgTxnData: TxnData.AssetConfigTxnData,
   genesisID: string,
@@ -163,7 +167,7 @@ function createAcfgTxn(
   return txn;
 }
 
-/** Creates an `Transaction` object that represents an Algorand asset freeze transaction */
+/** Creates a `Transaction` object that represents an Algorand asset freeze transaction */
 function createAfrzTxn(
   afrzTxnData: TxnData.AssetFreezeTxnData,
   genesisID: string,
@@ -193,7 +197,7 @@ function createAfrzTxn(
   return txn;
 }
 
-/** Creates an `Transaction` object that represents an Algorand key registration transaction */
+/** Creates a `Transaction` object that represents an Algorand key registration transaction */
 function createKeyRegTxn(
   keyRegTxnData: TxnData.KeyRegTxnData,
   genesisID: string,
@@ -233,7 +237,7 @@ function createKeyRegTxn(
   return txn;
 }
 
-/** Creates an `Transaction` object that represents an Algorand application call transaction */
+/** Creates a `Transaction` object that represents an Algorand application call transaction */
 function createApplTxn(
   applTxnData: TxnData.AppCallTxnData,
   genesisID: string,
