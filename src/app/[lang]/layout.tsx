@@ -20,16 +20,9 @@ export async function generateMetadata(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, 'app');
 
-  // Calculate base URL for metadata purposes. This is similar to what Next.js does by default if
-  // the metadata base is not specified.
-  let metadataBase: string = `http://localhost:${process.env.PORT || 3000}`;
-  if (process.env.VERCEL_URL) metadataBase = `https://${process.env.VERCEL_URL}`;
-  if (process.env.BASE_URL) metadataBase = `https://${process.env.BASE_URL}`;
-
   return {
     title: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
     description: t('description.long'),
-    metadataBase: new URL(metadataBase),
     alternates: {
       canonical: `/${params.lang}`,
       languages: generateLangAltsMetadata()
@@ -46,7 +39,7 @@ export function generateStaticParams(): { lang: string }[] {
   return Object.keys(supportedLangs).map((lang) => ({ lang }));
 }
 
-export default function RootLayout(
+export default function HomeLayout(
   {
     children,
     params: { lang }
