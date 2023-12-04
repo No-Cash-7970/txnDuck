@@ -1,11 +1,11 @@
 'use client';
 
-import '/node_modules/flag-icons/css/flag-icons.css';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { supportedLangs } from '@/app/i18n/settings';
 import { IconLanguage } from '@tabler/icons-react';
+import Flag from 'react-world-flags';
 
 type Props = {
   /** Language */
@@ -35,7 +35,7 @@ export default function LanguageSelector({ lng }: Props) {
             + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
           }>
             {Object.keys(supportedLangs).map((l: string) => (
-              <li key={l}>
+              <li key={l} className='mb-1'>
                 <Link
                   className={l === lng ? 'active': ''}
                   href={{
@@ -46,9 +46,11 @@ export default function LanguageSelector({ lng }: Props) {
                   scroll={false}
                   prefetch={false}
                 >
-                  <span
-                    className={`mask mask-circle h-5 w-5 fis fi-${supportedLangs[l].country}`}
-                  ></span>
+                  <span className={`mask mask-circle h-6 w-6`}>
+                    <Flag code={supportedLangs[l].country}
+                      className='object-cover object-center h-full'
+                    />
+                  </span>
                   {supportedLangs[l].listName}
                 </Link>
               </li>
