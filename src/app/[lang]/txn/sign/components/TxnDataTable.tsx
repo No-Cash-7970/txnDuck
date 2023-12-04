@@ -26,9 +26,7 @@ export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
 
-  /**
-   * Get the part of the i18n translation key for the given transaction type
-   *
+  /** Get the part of the i18n translation key for the given transaction type
    * @returns Part of the i18n translation key for the transaction type
    */
   const txnTypeKeyPart = useMemo((): string => {

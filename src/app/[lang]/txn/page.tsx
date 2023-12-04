@@ -12,7 +12,6 @@ export async function generateMetadata(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['txn_presets', 'app']);
   const path = '/txn';
-
   return {
     title: t('page_title', {page: t('title'), site: t('site_name')}),
     alternates: {

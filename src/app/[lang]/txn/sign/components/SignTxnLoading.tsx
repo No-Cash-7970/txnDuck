@@ -1,4 +1,3 @@
-
 /** Placeholder skeleton when the sign-transaction button is loading */
 export default function SignTxnLoading() {
   return (<>
