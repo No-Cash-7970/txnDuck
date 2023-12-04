@@ -3,9 +3,9 @@
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
-import { Preset, ValidationMessage } from './types';
-import { MAX_APP_GLOBALS, MAX_APP_KEY_LENGTH, MAX_APP_LOCALS } from './constants';
 import * as txnDataAtoms from './atoms';
+import { ValidationMessage } from './types';
+import { Preset, MAX_APP_GLOBALS, MAX_APP_KEY_LENGTH, MAX_APP_LOCALS } from './constants';
 import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './validation-rules';
 
 /** Atom containing flag for triggering the form errors to be shown */

@@ -4,60 +4,6 @@ import { OnApplicationComplete, TransactionType } from "algosdk";
 import { SetStateAction, WritableAtom } from "jotai";
 import { SyncState } from "jotai-form/dist/src/atomWithValidate";
 
-/** Collection of keys, or "names" of the transaction presets */
-export enum Preset {
-  /** Preset query parameter name */
-  ParamName = 'preset',
-
-  /** Transfer algos */
-  TransferAlgos = 'transfer_algos',
-  /** Rekey account */
-  RekeyAccount = 'rekey_account',
-  /** Close account */
-  CloseAccount = 'close_account',
-
-  /** Asset transfer */
-  AssetTransfer = 'asset_transfer',
-  /** Asset opt in */
-  AssetOptIn = 'asset_opt_in',
-  /** Asset opt out */
-  AssetOptOut = 'asset_opt_out',
-  /** Asset create */
-  AssetCreate = 'asset_create',
-  /** Asset reconfigure */
-  AssetReconfig = 'asset_reconfig',
-  /** Asset revoke (claw back) */
-  AssetClawback = 'asset_clawback',
-  /** Asset destroy */
-  AssetDestroy = 'asset_destroy',
-  /** Asset freeze */
-  AssetFreeze = 'asset_freeze',
-  /** Asset unfreeze */
-  AssetUnfreeze = 'asset_unfreeze',
-
-  /** Application run */
-  AppRun = 'app_run',
-  /** Application opt in */
-  AppOptIn = 'app_opt_in',
-  /** Application deploy */
-  AppDeploy = 'app_deploy',
-  /** Application update */
-  AppUpdate = 'app_update',
-  /** Application close */
-  AppClose = 'app_close',
-  /** Application clear */
-  AppClear = 'app_clear',
-  /** Application delete */
-  AppDelete = 'app_delete',
-
-  /** Register online */
-  RegOnline = 'reg_online',
-  /** Register offline */
-  RegOffline = 'reg_offline',
-  /** Register nonparticipation */
-  RegNonpart = 'reg_nonpart'
-}
-
 /** Box reference */
 export type BoxRef = {
   /** ID of the application that contains the box */

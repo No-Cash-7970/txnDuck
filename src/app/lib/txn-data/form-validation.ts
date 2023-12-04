@@ -4,9 +4,8 @@ import { type useStore } from "jotai";
 import { type FormControls } from "jotai-form/dist/src/atomWithFormControls";
 import * as FieldValidation from "./field-validation";
 import { TransactionType } from "algosdk";
-import { Preset } from "./types";
 import { apaaListAtom, apasListAtom, apatListAtom, apbxListAtom, apfaListAtom } from "./atoms";
-import { MAX_APP_ACCTS, MAX_APP_ARGS, MAX_APP_TOTAL_DEPS } from "./constants";
+import { Preset, MAX_APP_ACCTS, MAX_APP_ARGS, MAX_APP_TOTAL_DEPS } from "./constants";
 
 /** Check if the form is valid and show all validation errors, if there are any.
  * @param preset The current preset being used

@@ -1,6 +1,11 @@
 /** @file Collection of atoms for stored transaction data */
 
+import { OnApplicationComplete, TransactionType } from 'algosdk';
+import { type useStore } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
+import { atomWithValidate } from 'jotai-form';
+import * as txnDataAtoms from './atoms';
+import { Preset } from './constants';
 import {
   type AppCallTxnData,
   type AssetConfigTxnData,
@@ -9,12 +14,7 @@ import {
   type KeyRegTxnData,
   type PaymentTxnData,
   type TxnData,
-  Preset,
 } from './types';
-import { atomWithValidate } from 'jotai-form';
-import { type useStore } from 'jotai';
-import { OnApplicationComplete, TransactionType } from 'algosdk';
-import * as txnDataAtoms from './atoms';
 import {
   apaaValidateOptions,
   apasValidateOptions,
