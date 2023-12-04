@@ -38,9 +38,9 @@ export async function generateMetadata(
  * the project.
  * @returns List of languages as parameters
  */
-export function generateStaticParams(): { lng: string }[] {
+export function generateStaticParams(): { lang: string }[] {
   // Output should look something like [ { lng: 'en' }, { lng: 'es' } ]
-  return Object.keys(supportedLangs).map((lng) => ({ lng }));
+  return Object.keys(supportedLangs).map((lang) => ({ lang }));
 }
 
 export default function RootLayout(

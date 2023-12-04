@@ -8,7 +8,18 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['app']);
-  return { title: t('page_title', {page: t('page_not_found.title'), site: t('site_name')}) };
+  return {
+    title: t('page_title', {page: t('page_not_found.title'), site: t('site_name')}),
+    robots: { index: false, follow: false }
+  };
+}
+
+/** For each supported language, make Next JS generate a static page for the language when building
+ * the project.
+ * @returns List of languages as parameters
+ */
+export function generateStaticParams() {
+  return [{notFound: ['not-found']}];
 }
 
 /** 404 Not Found page */

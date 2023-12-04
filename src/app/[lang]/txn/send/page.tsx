@@ -16,6 +16,9 @@ export async function generateMetadata(
   };
 }
 
+/** Make Next JS generate at static version of this page */
+export function generateStaticParams() { return ['send']; }
+
 /** Send Transaction page */
 export default function SendTxnPage({ params: { lang } }: {
   params: { lang: string }

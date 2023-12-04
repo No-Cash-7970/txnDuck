@@ -15,6 +15,9 @@ export async function generateMetadata(
   };
 }
 
+/** Make Next JS generate at static version of this page */
+export function generateStaticParams() { return ['privacy-policy']; }
+
 /** Privacy policy page */
 export default function PrivacyPolicyPage({ params: { lang } }: {
   params: { lang: string }

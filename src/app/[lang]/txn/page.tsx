@@ -18,6 +18,9 @@ export async function generateMetadata(
   };
 }
 
+/** Make Next JS generate at static version of this page */
+export function generateStaticParams() { return ['txn']; }
+
 /** Choose Transaction Presets page */
 export default function TxnPresetsPage({ params: { lang } }: {
   params: { lang: string }
