@@ -1,4 +1,4 @@
-/** @file Collection of variables, atoms, etc. for form validation */
+/** @file Collection of variables, atoms, etc. for validating individual fields */
 
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
@@ -12,7 +12,8 @@ import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './valid
 export const showFormErrorsAtom = atom(false);
 
 /** Validation atom that should contain the name of the current transaction preset, which is usually
- * determined by a URL query parameter.
+ * determined by a URL query parameter. Used to pass in the current preset in to a form group to use
+ * when validating fields.
  */
 export const presetAtom = atomWithValidate<string|null>(null, {validate: v => v});
 
@@ -33,7 +34,7 @@ export const apfaValidateOptions = {
 export const apasValidateOptions = {
   validate: (v: number|null) => { idSchema.required().validateSync(v); return v; }
 };
-/** Application box ID validation options */
+/** Application box index validation options */
 export const apbxIValidateOptions = {
   validate: (v: number|null) => { YupNumber().min(0).required().validateSync(v); return v; }
 };
