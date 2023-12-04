@@ -1,4 +1,4 @@
-/** @file Collection of variables that contain the global state for app settings */
+/** @file Collection of variables and constants that contain the global state for app settings */
 
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 

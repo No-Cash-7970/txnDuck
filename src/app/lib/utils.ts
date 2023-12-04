@@ -1,3 +1,5 @@
+/** @file Collection of general-use utility functions */
+
 /** Converts bytes as a Uint8Array buffer to data URL.
  * Adapted from:
  * https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data

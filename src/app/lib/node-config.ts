@@ -1,3 +1,5 @@
+/** @file Collection of variables and constants for managing node configuration */
+
 import { type NodeConfig } from '@txnlab/use-wallet';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 

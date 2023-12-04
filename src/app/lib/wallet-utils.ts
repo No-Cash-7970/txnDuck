@@ -1,3 +1,5 @@
+/** @file Collection of constants and functions for managing wallet connections */
+
 import { PROVIDER_ID, type Provider } from '@txnlab/use-wallet';
 
 /** The type of wallet for each supported wallet provider */
