@@ -1,9 +1,22 @@
 import { use } from 'react';
-import { useTranslation } from '@/app/i18n';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
+import { type Metadata } from 'next';
 import Link from 'next/link';
 import { IconArrowBigRightLinesFilled, IconArrowBigLeftLinesFilled } from '@tabler/icons-react';
 import { PageTitleHeading } from '@/app/[lang]/components';
 import TxnPresetsList from './TxnPresetsList';
+
+export async function generateMetadata(
+  { params }: { params: { lang: string } },
+): Promise<Metadata> {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(params.lang, ['txn_presets', 'app']);
+
+  return {
+    title: t('page_title', {page: t('title'), site: t('site_name')}),
+    alternates: generateLangAltsMetadata('/txn'),
+  };
+}
 
 /** Choose Transaction Presets page */
 export default function TxnPresetsPage({ params: { lang } }: {

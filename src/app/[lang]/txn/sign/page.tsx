@@ -1,9 +1,22 @@
 import { Suspense, use } from 'react';
-import { useTranslation } from '@/app/i18n';
+import { type Metadata } from 'next';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/components';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
 import SignTxnLoading from './components/SignTxnLoading';
+
+export async function generateMetadata(
+  { params }: { params: { lang: string } },
+): Promise<Metadata> {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(params.lang, ['sign_txn', 'app']);
+
+  return {
+    title: t('page_title', {page: t('title'), site: t('site_name')}),
+    alternates: generateLangAltsMetadata('/txn/sign'),
+  };
+}
 
 /**  Sign Transaction page */
 export default function SignTxnPage({ params: { lang } }: {

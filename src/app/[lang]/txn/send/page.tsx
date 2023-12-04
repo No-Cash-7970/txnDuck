@@ -1,7 +1,20 @@
 import { Suspense, use } from 'react';
-import { useTranslation } from '@/app/i18n';
+import { type Metadata } from 'next';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import SendTxn from './components/SendTxn';
+
+export async function generateMetadata(
+  { params }: { params: { lang: string } },
+): Promise<Metadata> {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { t } = await useTranslation(params.lang, ['send_txn', 'app']);
+
+  return {
+    title: t('page_title', {page: t('title'), site: t('site_name')}),
+    alternates: generateLangAltsMetadata('/txn/send'),
+  };
+}
 
 /** Send Transaction page */
 export default function SendTxnPage({ params: { lang } }: {
