@@ -132,12 +132,13 @@ export default function SignTxn({ lng }: Props) {
                   <div key={provider.metadata.id} className={
                     'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
                   }>
-                    <Image src={provider.metadata.icon}
-                      alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
-                      width={80}
-                      height={80}
-                      className={'not-prose h-16 w-auto sm:h-24'}
-                    />
+                    <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
+                      <Image src={provider.metadata.icon}
+                        alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
+                        fill
+                        aria-hidden
+                      />
+                    </span>
                     {/* Wallet provider info + button */}
                     <div className='w-full'>
                       <div>
@@ -187,14 +188,18 @@ export default function SignTxn({ lng }: Props) {
         </button>
         <div className='not-prose text-center mt-3'>
           <div className='truncate align-middle px-2'>
-            {walletClient && <Image
-              src={walletClient.metadata.icon}
-              alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
-              width={24}
-              height={24}
-              className='inline-block me-2'
-            />}
-            <span>{t('wallet.is_connected', {address: activeAccount.address})}</span>
+            {walletClient &&
+              <span className='relative h-6 w-6 inline-block me-2 align-middle'>
+                <Image
+                  src={walletClient.metadata.icon}
+                  alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
+                  fill
+                />
+              </span>
+            }
+            <span className='align-middle'>
+              {t('wallet.is_connected', {address: activeAccount.address})}
+            </span>
           </div>
           <button className='btn btn-sm btn-link text-secondary'
             onClick={() => getActiveProvider(providers)?.disconnect()}

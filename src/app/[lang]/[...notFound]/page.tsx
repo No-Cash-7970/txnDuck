@@ -35,7 +35,7 @@ export default function NotFound({ params: { lang } }: {
           {t('page_not_found.quack')}
         </div>
         <div className='h-40 w-40 sm:h-72 sm:w-72 relative not-prose mx-auto mt-10 sm:mt-12'>
-          <Image src='/duck.svg' alt={t('page_not_found.duck_img_alt')} fill={true} />
+          <Image src='/duck.svg' alt={t('page_not_found.duck_img_alt')} fill />
         </div>
       </div>
       <div className='text-4xl sm:text-5xl text-center font-mono mt-[1em]'>
