@@ -36,23 +36,26 @@ export default function LanguageSelector({ lng }: Props) {
           }>
             {Object.keys(supportedLangs).map((l: string) => (
               <li key={l} className='mb-1'>
-                <Link
-                  className={l === lng ? 'active': ''}
-                  href={{
-                    pathname: `/${l}` + currentURLPath.replace(`/${lng}`, ''),
-                    query: currentURLParams.toString()
-                  }}
-                  replace={true}
-                  scroll={false}
-                  prefetch={false}
-                >
-                  <span className={`mask mask-circle h-6 w-6`}>
-                    <Flag code={supportedLangs[l].country}
-                      className='object-cover object-center h-full'
-                    />
-                  </span>
-                  {supportedLangs[l].listName}
-                </Link>
+                <DropdownMenu.Item asChild>
+                  <Link
+                    className={l === lng ? 'active': ''}
+                    href={{
+                      pathname: `/${l}` + currentURLPath.replace(`/${lng}`, ''),
+                      query: currentURLParams.toString()
+                    }}
+                    replace={true}
+                    scroll={false}
+                    prefetch={false}
+                  >
+                    <span className={`mask mask-circle h-6 w-6`}>
+                      <Flag code={supportedLangs[l].country}
+                        aria-hidden
+                        className='object-cover object-center h-full'
+                      />
+                    </span>
+                    {supportedLangs[l].listName}
+                  </Link>
+                </DropdownMenu.Item>
               </li>
             ))}
           </ul>
