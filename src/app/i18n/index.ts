@@ -60,20 +60,21 @@ export async function useTranslation<
   };
 }
 
-/** Generate the canonical URL and the language alternate URLs for the given path. The URLs
- * generated are meant to be use to generate the `canonical` and `alternates` metadata.
+/** Generate the language alternate URLs for the given path. The URLs generated are meant to be used
+ * generate the `alternates` metadata.
  * @param path The path for which to generate the URLs. The path is relative to the site's base URL
- *             and must have a leading slash ("/"). (Example: `/path/to/somewhere`)
- * @returns The canonical and alternate URLs
+ *             and must have a leading slash ("/"), unless it is the home page.
+ *             (Example: `/path/to/somewhere`)
+ * @returns Collection of language alternate URLs
  */
-export function generateLangAltsMetadata(
-  path: string = '/'
-): Pick<MetadataAlternateURLs, 'canonical' | 'languages'> {
+export function generateLangAltsMetadata(path: string = '/'): { [lng: string]: string } {
   const langUrls: {[lang: string]: string} = {};
-  Object.keys(supportedLangs).forEach((lng: string) => langUrls[lng] = lng + path);
+  Object.keys(supportedLangs).forEach(
+    // By default, Next.js redirects a URL with a trailing slash to one without a trailing slash.
+    // We want to avoid setting a language alternate URL to one that is redirected, so avoid putting
+    // a trailing slash for the home URL.
+    (lng: string) => langUrls[lng] = lng + (path === '/' ? '': path)
+  );
 
-  return {
-    canonical: path,
-    languages: langUrls
-  };
+  return { ...langUrls, 'x-default': path };
 }

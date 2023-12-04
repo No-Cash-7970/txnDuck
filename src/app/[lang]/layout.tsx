@@ -30,7 +30,10 @@ export async function generateMetadata(
     title: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
     description: t('description.long'),
     metadataBase: new URL(metadataBase),
-    alternates: generateLangAltsMetadata(),
+    alternates: {
+      canonical: `/${params.lang}`,
+      languages: generateLangAltsMetadata()
+    },
   };
 }
 

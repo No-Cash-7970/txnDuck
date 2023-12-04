@@ -10,10 +10,14 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['compose_txn', 'app']);
+  const path = '/txn/compose';
 
   return {
     title: t('page_title', {page: t('title'), site: t('site_name')}),
-    alternates: generateLangAltsMetadata('/txn/compose'),
+    alternates: {
+      canonical: `/${params.lang}${path}`,
+      languages: generateLangAltsMetadata(path)
+    },
   };
 }
 
