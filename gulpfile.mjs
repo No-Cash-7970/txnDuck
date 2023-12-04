@@ -133,3 +133,12 @@ export const precommitHook = gulp.series(
   // Clean up if everything succeeds
   stashPop
 );
+
+/** Series of tasks after making a release */
+export const postRelease = gulp.series(
+  // Update the "stable" branch and push the update to remote
+  task('git checkout stable'),
+  task('git merge main'),
+  task('git push'),
+  task('git checkout main'),
+);

@@ -13,6 +13,7 @@
     "preprod": "yarn build",
     "prod": "next start",
     "release": "release-it --ci",
+    "postrelease": "gulp postRelease",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "pretest:e2e": "yarn compile-locales",
