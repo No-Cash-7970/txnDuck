@@ -10,9 +10,7 @@ type LanguageData = {
   }
 };
 
-/**
- * Collection of supported languages
- */
+/** Collection of supported languages */
 export const supportedLangs: LanguageData = {
   en: {
     name: 'English',

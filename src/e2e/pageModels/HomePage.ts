@@ -26,8 +26,7 @@ export class HomePage {
     this.sendTxnBtn = page.getByTestId('sendTxnBtn');
   }
 
-  /**
-   * Get the URL with language prefix.
+  /** Get the URL with language prefix.
    * @param lang The language prefix. Must be an ISO??? code
    * @returns The URL with the language prefix
    */
@@ -35,8 +34,7 @@ export class HomePage {
     return '/' + lang + HomePage.url;
   }
 
-  /**
-   * Go to the page
+  /** Go to the page
    * @param lang The language prefix of the page to go to.
    */
   async goto(lang: string = 'en') {

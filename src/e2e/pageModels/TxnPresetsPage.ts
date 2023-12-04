@@ -17,8 +17,7 @@ export class TxnPresetsPage {
     this.main = page.getByRole('main');
   }
 
-  /**
-   * Get the URL with language prefix.
+  /** Get the URL with language prefix.
    * @param lang The language prefix. Must be an ISO??? code
    * @returns The URL with the language prefix
    */
@@ -26,8 +25,7 @@ export class TxnPresetsPage {
     return '/' + lang + TxnPresetsPage.url;
   }
 
-  /**
-   * Go to the page
+  /** Go to the page
    * @param lang The language prefix of the page to go to.
    */
   async goto(lang: string = 'en') {

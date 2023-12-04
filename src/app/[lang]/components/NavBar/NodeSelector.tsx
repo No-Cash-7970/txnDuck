@@ -19,9 +19,7 @@ export default function NodeSelector({ lng }: Props) {
   const router = useRouter();
   const [nodeConfig, setNodeConfig] = useAtom(NodeConfigLib.nodeConfigAtom);
 
-  /**
-   * Set the node configuration to the given configuration and apply the change
-   *
+  /** Set the node configuration to the given configuration and apply the change
    * @param newConfig The new node configuration to apply
    */
   const updateNodeConfig = (newConfig: NodeConfig) => {

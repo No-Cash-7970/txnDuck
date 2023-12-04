@@ -62,9 +62,7 @@ export default function SendTxn({ lng }: Props) {
     token: (nodeConfig.nodeToken || '') as string,
   });
 
-  /**
-   * Extract information about a failed transaction from the given error object
-   *
+  /** Extract information about a failed transaction from the given error object
    * @param err Object containing the error information
    * @returns Message data about the failure
    */
@@ -107,10 +105,8 @@ export default function SendTxn({ lng }: Props) {
     }
   };
 
-  /**
-   * Wait for the confirmation of transaction with the given transaction ID for the given number of
+  /** Wait for the confirmation of transaction with the given transaction ID for the given number of
    * rounds.
-   *
    * @param txId Transaction ID of the transaction to wait for
    * @param wait Number of rounds to wait
    */
@@ -131,8 +127,7 @@ export default function SendTxn({ lng }: Props) {
     }
   };
 
-  /**
-   * Attempt to send stored signed transaction. This function is designed to be able to be used
+  /** Attempt to send stored signed transaction. This function is designed to be able to be used
    * with `useEffect()` or by itself. (`useEffect` does not accept asynchronous functions)
    */
   const attemptSendTxn = () => {

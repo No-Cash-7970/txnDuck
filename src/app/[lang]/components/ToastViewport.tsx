@@ -2,8 +2,7 @@
 
 import { Viewport } from '@radix-ui/react-toast';
 
-/**
- *  Wrapper for the Radix UI Toast Viewport to convert it to a client component so it is compatible
+/** Wrapper for the Radix UI Toast Viewport to convert it to a client component so it is compatible
  *  with Next.js server-side rendering (SSR)
  */
 export default function ToastViewport({

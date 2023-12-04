@@ -287,8 +287,7 @@ export function loadStoredTxnData(
   }
 }
 
-/**
- * Extract the transaction data from Jotai atoms and compile the data into a single object
+/** Extract the transaction data from Jotai atoms and compile the data into a single object
  * @param preset The current preset being used
  * @param jotaiStore The Jotai Store for the atoms that contains the transaction data
  * @return Object containing the transaction data

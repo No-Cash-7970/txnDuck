@@ -1,5 +1,4 @@
-/**
- * This mock makes sure any components using the translate hook can use it without a warning being
+/** This mock makes sure any components using the translate hook can use it without a warning being
  * shown.
  *
  * From https://react.i18next.com/misc/testing

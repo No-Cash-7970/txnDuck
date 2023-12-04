@@ -13,9 +13,7 @@ import {
   ToastViewport,
 } from './components';
 
-/**
- * Generate the base metadata for the site. Parts may be overwritten by child pages.
- */
+/** Generate the base metadata for the site. Parts may be overwritten by child pages. */
 export async function generateMetadata(
   { params }: { params: { lang: string } }
 ): Promise<Metadata> {
@@ -36,10 +34,8 @@ export async function generateMetadata(
   };
 }
 
-/**
- * For each supported language, make Next JS generate a static page for the language when building
+/** For each supported language, make Next JS generate a static page for the language when building
  * the project.
- *
  * @returns List of languages as parameters
  */
 export function generateStaticParams(): { lng: string }[] {

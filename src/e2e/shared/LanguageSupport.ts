@@ -17,8 +17,7 @@ type LangRegExList = {
 };
 
 export class LanguageSupport {
-  /**
-   * A mapping the Regular Expressions (RegExp) for detecting each language. It is best to pick an
+  /** A mapping the Regular Expressions (RegExp) for detecting each language. It is best to pick an
    * identifying word or small phrase to put in the Regular Expressions.
    *
    * Example:
@@ -43,8 +42,7 @@ export class LanguageSupport {
     this.langRegExList = langRegExList;
   }
 
-  /**
-   * Runs all the tests for the language support in the page with the given page URL
+  /** Runs all the tests for the language support in the page with the given page URL
    * @param test Playwright "test" object
    * @param pageUrl URL of the page WITHOUT the language prefix
    */

@@ -8,8 +8,7 @@ interface Props {
   lng?: string;
   /** Message the toast notification should contain */
   message?: string;
-  /**
-   * The controlled open state of the toast notification. Must be used in conjunction with
+  /** The controlled open state of the toast notification. Must be used in conjunction with
    * `onOpenChange`.
    */
   open?: boolean;

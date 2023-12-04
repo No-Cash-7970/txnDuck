@@ -16,8 +16,7 @@ import {
 } from 'next/dist/lib/metadata/types/alternative-urls-types';
 import { supportedLangs, getOptions } from './settings';
 
-/**
- *
+/** Initialize i18Next and load relevant local files
  * @param lng Language
  * @param ns Translation namespace
  * @returns i18next instance
@@ -39,8 +38,7 @@ const initI18next = async (lng: string, ns: string | string[]) => {
   return i18nInstance;
 };
 
-/**
- * Hook for retrieving translations
+/** Hook for retrieving translations
  * @param lng Language
  * @param ns Translation Namespace
  * @param options Key prefix option
@@ -62,8 +60,7 @@ export async function useTranslation<
   };
 }
 
-/**
- * Generate the canonical URL and the language alternate URLs for the given path. The URLs
+/** Generate the canonical URL and the language alternate URLs for the given path. The URLs
  * generated are meant to be use to generate the `canonical` and `alternates` metadata.
  * @param path The path for which to generate the URLs. The path is relative to the site's base URL
  *             and must have a leading slash ("/"). (Example: `/path/to/somewhere`)

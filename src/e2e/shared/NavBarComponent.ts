@@ -10,8 +10,7 @@ import {
 import { HomePage } from '../pageModels/HomePage';
 
 export class NavBarComponent {
-  /**
-   * Checks if the navigation bar has a link to the home page, which is usually the site name.
+  /** Checks if the navigation bar has a link to the home page, which is usually the site name.
    * @param page Playwright Page fixture
    * @param lang Language prefix for the page
    */
@@ -20,8 +19,7 @@ export class NavBarComponent {
     await expect(page).toHaveURL(HomePage.getFullUrl(lang));
   }
 
-  /**
-   * Runs all the tests for the navigation bar in the page with the given page URL
+  /** Runs all the tests for the navigation bar in the page with the given page URL
    * @param test Playwright "test" object
    * @param pageFullUrl URL of the page WITH the language prefix
    * @param lang Language prefix for the page
