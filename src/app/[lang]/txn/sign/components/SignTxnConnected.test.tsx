@@ -59,7 +59,7 @@ describe('Sign Transaction Component (Connected wallet)', () => {
   it('has "disconnect wallet" button', async () => {
     render(<SignTxn />);
     await userEvent.click(screen.getByText('wallet.disconnect'));
-    expect(fooDisconnectFn).toBeCalledTimes(1);
+    expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
   });
 
   it('removes stored signed transaction if it is different from stored unsigned transaction',

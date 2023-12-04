@@ -71,7 +71,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     // "Foo wallet" should be the first one listed
     await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[0]);
 
-    expect(fooConnectFn).toBeCalledTimes(1);
+    expect(fooConnectFn).toHaveBeenCalledTimes(1);
     expect(barConnectFn).not.toBeCalled();
   });
 

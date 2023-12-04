@@ -39,7 +39,7 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     await userEvent.click(screen.getByRole('button'));
     await userEvent.click(screen.getByText('wallet.providers.fooWallet'));
 
-    expect(fooConnectFn).toBeCalledTimes(1);
+    expect(fooConnectFn).toHaveBeenCalledTimes(1);
     expect(barConnectFn).not.toBeCalled();
   });
 

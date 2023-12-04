@@ -150,7 +150,7 @@ describe('Form Components - RadioButtonGroupField', () => {
 
       await userEvent.click(fooInput);
 
-      expect(onChangeFn).toBeCalledTimes(1);
+      expect(onChangeFn).toHaveBeenCalledTimes(1);
     }
   );
 
@@ -166,7 +166,7 @@ describe('Form Components - RadioButtonGroupField', () => {
 
     await userEvent.click(fooInput);
 
-    expect(onFocusFn).toBeCalledTimes(1);
+    expect(onFocusFn).toHaveBeenCalledTimes(1);
     expect(fooInput).toHaveFocus();
   });
 
@@ -183,7 +183,7 @@ describe('Form Components - RadioButtonGroupField', () => {
     await userEvent.click(fooInput);
     await userEvent.tab(); // Tab away to lose focus
 
-    expect(onBlurFn).toBeCalledTimes(1);
+    expect(onBlurFn).toHaveBeenCalledTimes(1);
     expect(fooInput).not.toHaveFocus();
   });
 

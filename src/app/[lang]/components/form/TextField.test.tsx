@@ -160,7 +160,7 @@ describe('Form Components - TextField', () => {
     await userEvent.type(input, 'bar'); // Enter 'bar' into the box
 
     expect(input).toHaveValue('bar');
-    expect(onChangeFn).toBeCalledTimes(3);
+    expect(onChangeFn).toHaveBeenCalledTimes(3);
   });
 
   it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
@@ -170,7 +170,7 @@ describe('Form Components - TextField', () => {
     const input = screen.getByRole('textbox');
     await userEvent.click(input); // Click on input
 
-    expect(onFocusFn).toBeCalledTimes(1);
+    expect(onFocusFn).toHaveBeenCalledTimes(1);
     expect(input).toHaveFocus();
   });
 
@@ -182,7 +182,7 @@ describe('Form Components - TextField', () => {
     await userEvent.click(input); // Click on input
     await userEvent.tab(); // Tab away to lose focus
 
-    expect(onBlurFn).toBeCalledTimes(1);
+    expect(onBlurFn).toHaveBeenCalledTimes(1);
     expect(input).not.toHaveFocus();
   });
 

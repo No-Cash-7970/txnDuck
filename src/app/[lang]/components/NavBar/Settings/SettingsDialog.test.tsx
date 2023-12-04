@@ -86,7 +86,7 @@ describe('Settings Dialog', () => {
     // TODO: Add more settings here
 
     // Check if wallet disconnects
-    expect(fooDisconnectFn).toBeCalledTimes(1);
+    expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
   });
 
   it('has theme mode setting', () => {

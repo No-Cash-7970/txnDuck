@@ -24,7 +24,7 @@ describe('Wallet Connect (in Settings) (Connected wallet)', () => {
   it('disconnects wallet when "disconnect" button is clicked', async () => {
     render(<ConnectWallet t={t} />);
     await userEvent.click(screen.getByRole('button'));
-    expect(fooDisconnectFn).toBeCalledTimes(1);
+    expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
   });
 
 });

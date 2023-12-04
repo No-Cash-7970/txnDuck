@@ -193,7 +193,7 @@ describe('Form Components - SelectField', () => {
     await userEvent.selectOptions(input, 'bar'); // Select 'bar'
 
     expect(input).toHaveValue('bar');
-    expect(onChangeFn).toBeCalledTimes(1);
+    expect(onChangeFn).toHaveBeenCalledTimes(1);
   });
 
   it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
@@ -208,7 +208,7 @@ describe('Form Components - SelectField', () => {
     const input = screen.getByRole('combobox');
     await userEvent.click(input); // Click on input
 
-    expect(onFocusFn).toBeCalledTimes(1);
+    expect(onFocusFn).toHaveBeenCalledTimes(1);
     expect(input).toHaveFocus();
   });
 
@@ -225,7 +225,7 @@ describe('Form Components - SelectField', () => {
     await userEvent.click(input); // Click on input
     await userEvent.tab(); // Tab away to lose focus
 
-    expect(onBlurFn).toBeCalledTimes(1);
+    expect(onBlurFn).toHaveBeenCalledTimes(1);
     expect(input).not.toHaveFocus();
   });
 

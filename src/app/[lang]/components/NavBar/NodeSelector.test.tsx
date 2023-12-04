@@ -46,7 +46,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('testnet');
-    expect(routerRefreshMockFn).toBeCalledTimes(1);
+    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to MainNet configuration when "MainNet" is selected', async () => {
@@ -59,7 +59,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('mainnet');
-    expect(routerRefreshMockFn).toBeCalledTimes(1);
+    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to BetaNet configuration when "BetaNet" is selected', async () => {
@@ -72,7 +72,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('betanet');
-    expect(routerRefreshMockFn).toBeCalledTimes(1);
+    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
   });
 
 });

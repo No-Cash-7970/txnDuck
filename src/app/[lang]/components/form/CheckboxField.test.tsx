@@ -154,7 +154,7 @@ describe('Form Components - CheckboxField', () => {
     await userEvent.click(input); // Check the box
 
     expect(input).toBeChecked();
-    expect(onChangeFn).toBeCalledTimes(1);
+    expect(onChangeFn).toHaveBeenCalledTimes(1);
   });
 
   it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
@@ -164,7 +164,7 @@ describe('Form Components - CheckboxField', () => {
     const input = screen.getByRole('checkbox');
     await userEvent.click(input); // Click on box
 
-    expect(onFocusFn).toBeCalledTimes(1);
+    expect(onFocusFn).toHaveBeenCalledTimes(1);
     expect(input).toHaveFocus();
   });
 
@@ -176,7 +176,7 @@ describe('Form Components - CheckboxField', () => {
     await userEvent.click(input); // Click on box
     await userEvent.tab(); // Tab away to lose focus
 
-    expect(onBlurFn).toBeCalledTimes(1);
+    expect(onBlurFn).toHaveBeenCalledTimes(1);
     expect(input).not.toHaveFocus();
   });
 

@@ -82,7 +82,7 @@ describe('Send Transaction Component', () => {
 
     await userEvent.click(await screen.findByText('retry_btn'));
 
-    expect(sendRawTxnSpy).toBeCalledTimes(2);
+    expect(sendRawTxnSpy).toHaveBeenCalledTimes(2);
   });
 
   it('shows warning message if transaction is not confirmed in specified number of rounds',
@@ -103,8 +103,8 @@ describe('Send Transaction Component', () => {
 
     await userEvent.click(await screen.findByText('retry_btn'));
 
-    expect(sendRawTxnSpy).toBeCalledTimes(2);
-    expect(waitConfirmSpy).toBeCalledTimes(2);
+    expect(sendRawTxnSpy).toHaveBeenCalledTimes(2);
+    expect(waitConfirmSpy).toHaveBeenCalledTimes(2);
   });
 
   it('has "wait longer" button when transaction is not confirmed in specified number of rounds',
@@ -115,7 +115,7 @@ describe('Send Transaction Component', () => {
 
     await userEvent.click(await screen.findByText('wait_longer_btn'));
 
-    expect(waitConfirmSpy).toBeCalledTimes(2);
-    expect(sendRawTxnSpy).toBeCalledTimes(1);
+    expect(waitConfirmSpy).toHaveBeenCalledTimes(2);
+    expect(sendRawTxnSpy).toHaveBeenCalledTimes(1);
   });
 });

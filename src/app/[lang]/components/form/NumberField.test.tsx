@@ -175,7 +175,7 @@ describe('Form Components - NumberField', () => {
     await userEvent.type(input, '42'); // Enter '42' into the box
 
     expect(input).toHaveValue(42);
-    expect(onChangeFn).toBeCalledTimes(2);
+    expect(onChangeFn).toHaveBeenCalledTimes(2);
   });
 
   it('has input with "on-focus" event function specified by `onFocus` attribute', async () => {
@@ -185,7 +185,7 @@ describe('Form Components - NumberField', () => {
     const input = screen.getByRole('spinbutton');
     await userEvent.click(input); // Click on input
 
-    expect(onFocusFn).toBeCalledTimes(1);
+    expect(onFocusFn).toHaveBeenCalledTimes(1);
     expect(input).toHaveFocus();
   });
 
@@ -197,7 +197,7 @@ describe('Form Components - NumberField', () => {
     await userEvent.click(input); // Click on input
     await userEvent.tab(); // Tab away to lose focus
 
-    expect(onBlurFn).toBeCalledTimes(1);
+    expect(onBlurFn).toHaveBeenCalledTimes(1);
     expect(input).not.toHaveFocus();
   });
 
