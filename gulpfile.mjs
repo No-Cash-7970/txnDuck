@@ -4,18 +4,13 @@ import rename from 'gulp-rename';
 import { Transform } from 'stream';
 import yaml from 'js-yaml';
 
-/**
- * The directory where compiled locales will go
- */
+/** The directory where compiled locales will go */
 const COMPILED_DEST = `src/app/i18n/locales/.dist`;
 
-/**
- * Remove the directory for compiled locales
- */
+/** Remove the directory for compiled locales */
 const cleanLocales = task(`rm -r ${COMPILED_DEST}`, { reject: false });
 
-/**
- * Convert the YAML local files to JSON
+/** Convert the YAML local files to JSON
  * @returns {NodeJS.ReadWriteStream}
  */
 const convertLocales = () => {
@@ -26,8 +21,7 @@ const convertLocales = () => {
     .on('finish', () => { console.log(`Compiled locales to ${COMPILED_DEST}`); });
 };
 
-/**
- * A mini inline Gulp plugin that takes in a YAML file and converts it to a JSON file.
+/** A mini inline Gulp plugin that takes in a YAML file and converts it to a JSON file.
  * As a bonus, the JSON files are minified.
  *
  * Code based on:
@@ -49,8 +43,7 @@ const jsonToYamlConverter = new Transform({
   }
 });
 
-/**
- * Lint subtask for the Git pre-commit hook
+/** Lint subtask for the Git pre-commit hook
  * @returns {ExecaChildProcess|Promise}
  */
 const precommitLint = () => {
@@ -58,8 +51,7 @@ const precommitLint = () => {
     .catch(() => stashPopFail('Lint failed')); // Clean up if fail
 };
 
-/**
- * End-to-end testing subtask for the Git pre-commit hook
+/** End-to-end testing subtask for the Git pre-commit hook
  * @returns {ExecaChildProcess|Promise}
  */
 const precommitE2eTest = () => {
@@ -67,8 +59,7 @@ const precommitE2eTest = () => {
     .catch(() => stashPopFail('E2E testing failed')); // Clean up if fail
 };
 
-/**
- * Unit testing subtask for the Git pre-commit hook
+/** Unit testing subtask for the Git pre-commit hook
  * @returns {ExecaChildProcess|Promise}
  */
 const precommitUnitTest = () => {
@@ -76,13 +67,10 @@ const precommitUnitTest = () => {
   .catch(() => stashPopFail('Unit testing failed')); // Clean up if fail
 };
 
-/**
- * Restore the Git repository to its original state before the stashing
- */
+/**  Restore the Git repository to its original state before the stashing */
 const stashPop = task('git stash pop', { reject: false });
 
-/**
- * Restore the Git repository to its original state before the stashing and return an error. For
+/** Restore the Git repository to its original state before the stashing and return an error. For
  * cleaning up after a task fails.
  *
  * @param {string} errorMsg Message for the thrown error
@@ -99,20 +87,19 @@ const stashPopFail = async (errorMsg = '') => {
  *******************************************************************************
  */
 
-/**
- * Compiles the YAML files for language translations (locales) to minified JSON
+/** Compiles the YAML files for language translations (locales) to minified JSON
  *
  * Code based on: https://gulpjs.com/docs/en/getting-started/using-plugins#inline-plugins
  */
 export const compileLocales = gulp.series(cleanLocales, convertLocales);
 
-/**
- * Install and set up developer tools
- */
-export const installDev = task('lefthook install');
+/** Install and set up developer tools */
+export const installDev = gulp.parallel(
+  task('lefthook install'),
+  task('yarn playwright install')
+);
 
-/**
- * Things that need to be done before building the project. The "prebuild". Usually consists
+/** Things that need to be done before building the project. The "prebuild". Usually consists
  * of compiling files that will be used in the building process.
  */
 export const prebuild = gulp.parallel(
@@ -121,8 +108,7 @@ export const prebuild = gulp.parallel(
   task('yarn svg-to-ico ./src/app/icon.svg ./src/app/favicon.ico'),
 );
 
-/**
- * Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
+/** Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to
  * restore the Git repository to its original state before the stashing in the first task.
  */
 export const precommitHook = gulp.series(
