@@ -14,7 +14,7 @@ export const config = {
   // This matcher contains a list of files to exclude from redirection to /[lang]/*
   matcher: [
     // eslint-disable-next-line max-len
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|duck.svg|opengraph-image.png|sw.js).*)'
+    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|duck.svg|opengraph-image.png|sw.js|robots.txt).*)'
   ]
 };
 
