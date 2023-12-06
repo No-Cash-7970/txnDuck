@@ -41,16 +41,16 @@ export default function FieldTip({tipProps}: {tipProps: Props}) {
           onBlur={() => setOpen(false)}
         >
           {(!tipProps?.btnIcon || tipProps?.btnIcon === 'info') &&
-            <IconInfoCircle aria-hidden size={tipProps?.btnIconSize ?? 20} />
+            <IconInfoCircle aria-hidden size={tipProps?.btnIconSize ?? 22} />
           }
           {tipProps?.btnIcon === 'help' &&
-            <IconHelpCircle aria-hidden size={tipProps?.btnIconSize ?? 20} />
+            <IconHelpCircle aria-hidden size={tipProps?.btnIconSize ?? 22} />
           }
           {tipProps?.btnIcon === 'warning' &&
-            <IconAlertTriangle aria-hidden size={tipProps?.btnIconSize ?? 20} />
+            <IconAlertTriangle aria-hidden size={tipProps?.btnIconSize ?? 22} />
           }
           {tipProps?.btnIcon === 'error' &&
-            <IconAlertSquare aria-hidden size={tipProps?.btnIconSize ?? 20} />
+            <IconAlertSquare aria-hidden size={tipProps?.btnIconSize ?? 22} />
           }
         </a>
       </Popover.Trigger>
