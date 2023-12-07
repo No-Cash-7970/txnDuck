@@ -44,6 +44,7 @@ export default function HomePage({ params: { lang } }: {
               <Link data-testid='composeTxnBtn'
                 className='btn btn-accent btn-sm h-auto p-2'
                 href={`${lang}/txn/compose`}
+                prefetch={false}
               >
                 {t('home:how_it_works.compose.button')}
               </Link>
@@ -58,6 +59,7 @@ export default function HomePage({ params: { lang } }: {
               <Link data-testid='signTxnBtn'
                 className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
                 href={`${lang}/txn/sign`}
+                prefetch={false}
                 aria-disabled
                 tabIndex={-1}
               >
@@ -74,6 +76,7 @@ export default function HomePage({ params: { lang } }: {
               <Link data-testid='sendTxnBtn'
                 className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
                 href={`${lang}/txn/send`}
+                prefetch={false}
                 aria-disabled
                 tabIndex={-1}
               >
