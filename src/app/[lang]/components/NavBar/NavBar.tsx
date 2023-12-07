@@ -1,9 +1,9 @@
-import { Suspense, use } from 'react';
+import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import Settings from './Settings';
 import NodeSelector from './NodeSelector';
-import LanguageSelector from './LanguageSelector';
+import { LanguageSelector } from './LanguageSelector';
 
 type Props = {
   /** Language */
@@ -27,7 +27,7 @@ export default function NavBar({ lng }: Props) {
         <NodeSelector lng={lng} />
       </div>
       <div className='navbar-end'>
-        <Suspense><LanguageSelector lng={lng} /></Suspense>
+        <LanguageSelector lng={lng} />
         <Settings lng={lng} />
       </div>
     </nav>

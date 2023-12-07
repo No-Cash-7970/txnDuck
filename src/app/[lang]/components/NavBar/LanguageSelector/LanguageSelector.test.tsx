@@ -13,17 +13,15 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock I18n settings
-jest.mock('../../../../app/i18n/settings', () => ({
+jest.mock('../../../../../app/i18n/settings', () => ({
   supportedLangs: {
     foo: {
       name: 'Foo Language',
       listName: 'Foo Language (Machine-translated)',
-      country: 'foo-o'
     },
     bar: {
       name: 'Bar Language',
       listName: 'Bar Language (42)',
-      country: 'baz-z'
     }
   }
 }));

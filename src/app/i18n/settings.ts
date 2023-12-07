@@ -5,8 +5,6 @@ type LanguageData = {
     name: string,
     /** Name used in list of supported languages. Usually the same as the full name. */
     listName: string,
-    /** ISO 3166-1-alpha-2 code for the country associated with the language */
-    country: string, // Must be all lowercase
   }
 };
 
@@ -15,12 +13,10 @@ export const supportedLangs: LanguageData = {
   en: {
     name: 'English',
     listName: 'English (US)',
-    country: 'us'
   },
   es: {
     name: 'Español',
     listName: 'Español (Traducción automática)',
-    country: 'es'
   },
   // ADD DATA FOR NEW LANGUAGE HERE
 };

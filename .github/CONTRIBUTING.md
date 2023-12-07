@@ -111,7 +111,6 @@ translation:
      en: {
        name: 'English', // Shown on language button if it is the current language
        listName: 'English (US)', // Shown in language menu
-       country: 'us' // ISO 3166-1-alpha-2 code for the country associated with the language
      },
      // ADD DATA FOR NEW LANGUAGE HERE
    };
@@ -129,18 +128,16 @@ translation:
      en: {
        name: 'English', // Shown on language button if it is the current language
        listName: 'English (US)', // Shown in language menu
-       country: 'us' // ISO 3166-1-alpha-2 code for the country associated with the language
      },
      es: {
        name: 'Español',
        listName: 'Español (Traducción automática)',
-       country: 'es'
      },
      // ADD DATA FOR NEW LANGUAGE HERE
    };
    ```
 
-1. Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
+3. Open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
    - Provide the language of the translation in the title **in English**.
    - If updating a translation, describe those updates in the pull request
      description **in English**.
