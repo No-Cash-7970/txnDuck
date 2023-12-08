@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
@@ -9,14 +10,162 @@ import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 import { Preset } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
-import * as GeneralFields from './fields/GeneralFields';
-import * as PaymentFields from './fields/PaymentFields';
-import * as AssetTransferFields from './fields/AssetTransferFields';
-import * as AssetConfigFields from './fields/AssetConfigFields';
-import * as AssetFreezeFields from './fields/AssetFreezeFields';
-import * as KeyRegFields from './fields/KeyRegFields';
-import * as AppCallFields from './fields/AppCallFields';
 import ComposeSubmitButton from './ComposeSubmitButton';
+import { Fee, FirstValid, LastValid, Note, Sender, TxnType } from './fields/GeneralFields';
+import {
+  ArrayFieldGroup,
+  ExtraSmallField,
+  FullWidthField,
+  LargeAreaField,
+  LargeField,
+  SmallField,
+  SwitchField
+} from './fields/LoadingPlaceholders';
+
+// General
+const Lease = dynamic(() => import('./fields/GeneralFields/Lease'),
+  { ssr: false, loading: () => <SmallField containerClass='mt-6' /> },
+);
+const Rekey = dynamic(() => import('./fields/GeneralFields/Rekey'),
+  { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+);
+
+// Payment
+const PaymentFields = {
+  Receiver: dynamic(() => import('./fields/PaymentFields/Receiver'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  Amount: dynamic(() => import('./fields/PaymentFields/Amount'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  CloseTo: dynamic(() => import('./fields/PaymentFields/CloseTo'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+};
+
+// Asset transfer
+const AssetTransferFields = {
+  Receiver: dynamic(() => import('./fields/AssetTransferFields/Receiver'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  AssetId: dynamic(() => import('./fields/AssetTransferFields/AssetId'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  Amount: dynamic(() => import('./fields/AssetTransferFields/Amount'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  ClawbackTarget: dynamic(() => import('./fields/AssetTransferFields/ClawbackTarget'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  CloseTo: dynamic(() => import('./fields/AssetTransferFields/CloseTo'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+};
+
+// Asset configuration
+const AssetConfigFields = {
+  AssetId: dynamic(() => import('./fields/AssetConfigFields/AssetId'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  UnitName: dynamic(() => import('./fields/AssetConfigFields/UnitName'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  AssetName: dynamic(() => import('./fields/AssetConfigFields/AssetName'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  Total: dynamic(() => import('./fields/AssetConfigFields/Total'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  DecimalPlaces: dynamic(() => import('./fields/AssetConfigFields/DecimalPlaces'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  DefaultFrozen: dynamic(() => import('./fields/AssetConfigFields/DefaultFrozen'),
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+  ),
+  URL: dynamic(() => import('./fields/AssetConfigFields/URL'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  ManagerAddr: dynamic(() => import('./fields/AssetConfigFields/ManagerAddr'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  FreezeAddr: dynamic(() => import('./fields/AssetConfigFields/FreezeAddr'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  ClawbackAddr: dynamic(() => import('./fields/AssetConfigFields/ClawbackAddr'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  ReserveAddr: dynamic(() => import('./fields/AssetConfigFields/ReserveAddr'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  MetadataHash: dynamic(() => import('./fields/AssetConfigFields/MetadataHash'),
+    { ssr: false, loading: () => <SmallField containerClass='mt-6' /> },
+  ),
+};
+
+// Asset Freeze
+const AssetFreezeFields = {
+  AssetId: dynamic(() => import('./fields/AssetFreezeFields/AssetId'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  TargetAddr: dynamic(() => import('./fields/AssetFreezeFields/TargetAddr'),
+    { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
+  ),
+  Freeze: dynamic(() => import('./fields/AssetFreezeFields/Freeze'),
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+  ),
+};
+
+// Application
+const AppCallFields = {
+  OnComplete: dynamic(() => import('./fields/AppCallFields/OnComplete'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  AppId: dynamic(() => import('./fields/AppCallFields/AppId'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  AppArgs: dynamic(() => import('./fields/AppCallFields/AppArgs'),
+    { ssr: false, loading: () => <ArrayFieldGroup containerClass='mt-6' /> },
+  ),
+  AppProperties: dynamic(() => import('./fields/AppCallFields/AppProperties'),
+    { ssr: false, loading: () => <>
+      <LargeAreaField containerClass='mt-6' />
+      <LargeAreaField containerClass='mt-6' />
+    </> },
+  ),
+  AppDependencies: dynamic(() => import('./fields/AppCallFields/AppDependencies'),
+    { ssr: false, loading: () => <>
+      <ArrayFieldGroup containerClass='mt-6' />
+      <ArrayFieldGroup containerClass='mt-6' />
+      <ArrayFieldGroup containerClass='mt-6' />
+      <ArrayFieldGroup containerClass='mt-6' />
+    </> },
+  ),
+};
+
+// Key Registration
+const KeyRegFields = {
+  VoteKey: dynamic(() => import('./fields/KeyRegFields/VoteKey'),
+    { ssr: false, loading: () => <LargeField containerClass='mt-6' /> },
+  ),
+  SelectionKey: dynamic(() => import('./fields/KeyRegFields/SelectionKey'),
+    { ssr: false, loading: () => <LargeField containerClass='mt-6' /> },
+  ),
+  StateProofKey: dynamic(() => import('./fields/KeyRegFields/StateProofKey'),
+    { ssr: false, loading: () => <LargeField containerClass='mt-6' /> },
+  ),
+  FirstVoteRound: dynamic(() => import('./fields/KeyRegFields/FirstVoteRound'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  LastVoteRound: dynamic(() => import('./fields/KeyRegFields/LastVoteRound'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  KeyDilution: dynamic(() => import('./fields/KeyRegFields/KeyDilution'),
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+  ),
+  Nonparticipation: dynamic(() => import('./fields/KeyRegFields/Nonparticipation'),
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+  ),
+};
 
 type Props = {
   /** Language */
@@ -41,8 +190,8 @@ export default function ComposeForm({ lng }: Props) {
         </Trans>
       </p>
 
-      <GeneralFields.TxnType t={t} />
-      <GeneralFields.Sender t={t} />
+      <TxnType t={t} />
+      <Sender t={t} />
 
       {txnType.value === TransactionType.pay && (!preset || preset === Preset.TransferAlgos) && <>
         <PaymentFields.Receiver t={t} />
@@ -60,7 +209,9 @@ export default function ComposeForm({ lng }: Props) {
           <AssetTransferFields.Amount t={t} />
         }
 
-        {(!preset || preset === Preset.AssetClawback) && <AssetTransferFields.Sender t={t} />}
+        {(!preset || preset === Preset.AssetClawback) &&
+          <AssetTransferFields.ClawbackTarget t={t} />
+        }
       </>}
 
       {txnType.value === TransactionType.acfg && <>
@@ -72,7 +223,7 @@ export default function ComposeForm({ lng }: Props) {
           <AssetConfigFields.Total t={t} />
           <AssetConfigFields.DecimalPlaces t={t} />
           <AssetConfigFields.DefaultFrozen t={t} />
-          <AssetConfigFields.Url t={t} />
+          <AssetConfigFields.URL t={t} />
         </>}
       </>}
 
@@ -105,8 +256,8 @@ export default function ComposeForm({ lng }: Props) {
         <AppCallFields.AppDependencies t={t} />
       </>}
 
-      <GeneralFields.Fee t={t} />
-      <GeneralFields.Note t={t} />
+      <Fee t={t} />
+      <Note t={t} />
 
       {txnType.value === TransactionType.acfg && preset !== Preset.AssetDestroy && <>
         <AssetConfigFields.ManagerAddr t={t} />
@@ -121,12 +272,12 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.Nonparticipation t={t} />
       }
 
-      <GeneralFields.FirstValid t={t} />
-      <GeneralFields.LastValid t={t} />
+      <FirstValid t={t} />
+      <LastValid t={t} />
 
-      {(!preset || preset === Preset.AppRun) && <GeneralFields.Lease t={t} />}
+      {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
 
-      {(!preset || preset === Preset.RekeyAccount) && <GeneralFields.Rekey t={t} />}
+      {(!preset || preset === Preset.RekeyAccount) && <Rekey t={t} />}
 
       {(txnType.value === TransactionType.pay) && (!preset || preset === Preset.CloseAccount) &&
         <PaymentFields.CloseTo t={t} />

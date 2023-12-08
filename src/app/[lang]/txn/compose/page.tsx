@@ -1,9 +1,28 @@
-import { Suspense, use } from 'react';
+import { use } from 'react';
 import { type Metadata } from 'next';
+import dynamic from 'next/dynamic';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
-import ComposeForm from './components/ComposeForm';
-import ComposeFormLoading from './components/ComposeFormLoading';
+import {
+  ExtraSmallField,
+  FullWidthField,
+  LargeAreaField
+} from './components/fields/LoadingPlaceholders';
+
+const ComposeForm = dynamic(() => import('./components/ComposeForm'),
+  { ssr: false,
+    loading: () =>
+      <div className='max-w-2xl mx-auto mt-12'>
+        <div className='skeleton rounded-md h-4 max-w-md mt-4 mb-8'></div>
+        <ExtraSmallField />
+        <FullWidthField containerClass='mt-6' />
+        <ExtraSmallField containerClass='mt-6' />
+        <LargeAreaField containerClass='mt-6' />
+        <ExtraSmallField containerClass='mt-6' />
+        <ExtraSmallField containerClass='mt-6' />
+      </div>
+  },
+);
 
 export async function generateMetadata(
   { params }: { params: { lang: string } },
@@ -33,9 +52,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='compose' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
-      <Suspense fallback={<ComposeFormLoading />}>
-        <ComposeForm lng={lang} />
-      </Suspense>
+      <ComposeForm lng={lang} />
     </main>
   );
 }
