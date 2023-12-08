@@ -46,7 +46,7 @@ This is documentation contains information useful for developers.
 - [Node.js](https://nodejs.org/en) version 18.0.0 or higher installed
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed
 - (OPTIONAL BUT RECOMMENDED) [Visual Studio Code](https://code.visualstudio.com/)
-  <abbr title="integrated development environment">IDE</abbr>
+  IDE (integrated development environment)
 
 ## Installing the development environment
 
