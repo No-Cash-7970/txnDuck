@@ -60,8 +60,8 @@ representative at an online or offline event.
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-<a href='&#109;ail&#116;o&#58;tx%6ED%75%&#54;&#51;k&#64;p%&#55;&#50;oton%&#50;E&#37;6D&#101;'>
-    t&#120;nDuck&#64;p&#114;oton&#46;me</a>.
+<a href='&#109;a&#105;l&#116;o&#58;&#116;xn&#37;4&#52;&#117;%&#54;&#51;&#107;+c&#37;6Fnd&#117;ct&#64;pr&#111;%&#55;4o%6E&#46;me'>
+    tx&#110;Duc&#107;&#43;condu&#99;t&#64;&#112;roton&#46;me</a>.
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the

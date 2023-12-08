@@ -9,8 +9,8 @@ vulnerability, please report it to us as described below.
 issues.**
 
 Instead, please report them by sending an email to
-<a href='&#109;ail&#116;o&#58;tx%6ED%75%&#54;&#51;k&#64;p%&#55;&#50;oton%&#50;E&#37;6D&#101;'>
-    t&#120;nDuck&#64;p&#114;oton&#46;me</a>.
+<a href='mail&#116;&#111;&#58;%&#55;&#52;xnDuc&#37;6B&#43;sec&#117;%&#55;2it&#121;%40&#112;r&#111;t&#111;&#110;&#46;me'>
+    txnDuc&#107;+secu&#114;i&#116;y&#64;&#112;&#114;oto&#110;&#46;&#109;e</a>.
 If possible, encrypt your message with our PGP key:
 
 ```text
