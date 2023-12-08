@@ -389,12 +389,12 @@ export const votefstVotelstFormControlAtom = validateAtoms({
   votefst: txnDataAtoms.votefst,
   votelst: txnDataAtoms.votelst,
 }, (values) => {
-    if (values.votelst !== undefined) { // If a last round has been entered yet
-      // First voting round must be less than the last voting round
-      YupNumber()
-        .max((values.votelst as number), ({max}): ValidationMessage => (
-          {key: 'fields.votefst.max_error', dict: {max}}
-        ))
-        .validateSync(values.votefst);
-    }
+  if (values.votelst !== undefined) { // If a last round has been entered yet
+    // First voting round must be less than the last voting round
+    YupNumber()
+      .max((values.votelst as number), ({max}): ValidationMessage => (
+        {key: 'fields.votefst.max_error', dict: {max}}
+      ))
+      .validateSync(values.votefst);
+  }
 });

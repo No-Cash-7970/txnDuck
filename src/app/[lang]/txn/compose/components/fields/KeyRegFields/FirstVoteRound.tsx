@@ -10,6 +10,7 @@ import {
   tipBtnClass,
   tipContentClass,
   votefstConditionalRequireAtom,
+  votefstVotelstFormControlAtom,
 } from '@/app/lib/txn-data';
 import { useEffect } from 'react';
 import FieldErrorMessage from '../FieldErrorMessage';
@@ -19,6 +20,7 @@ export default function FirstVoteRound({ t }: { t: TFunction }) {
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
   const votefstCondReqGroup = useAtomValue(votefstConditionalRequireAtom);
+  const votefstVotelstGroup = useAtomValue(votefstVotelstFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,7 +45,10 @@ export default function FirstVoteRound({ t }: { t: TFunction }) {
       containerId='votefst-field'
       containerClass='mt-4 max-w-xs'
       inputClass={((showFormErrors || form.touched.votefst) &&
-          (form.fieldErrors.votefst || (!votefstCondReqGroup.isValid && votefstCondReqGroup.error))
+          (form.fieldErrors.votefst
+            || (!votefstCondReqGroup.isValid && votefstCondReqGroup.error)
+            || (!votefstVotelstGroup.isValid && votefstVotelstGroup.error)
+          )
         )
         ? 'input-error' : ''
       }
@@ -67,6 +72,13 @@ export default function FirstVoteRound({ t }: { t: TFunction }) {
       <FieldErrorMessage t={t}
         i18nkey={(votefstCondReqGroup.error as any).message.key}
         dict={(votefstCondReqGroup.error as any).message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.votefst) && !votefstVotelstGroup.isValid
+      && votefstVotelstGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(votefstVotelstGroup.error as any).message.key}
+        dict={(votefstVotelstGroup.error as any).message.dict}
       />
     }
   </>);
