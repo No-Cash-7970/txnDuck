@@ -14,6 +14,9 @@ loading: Cargando…
 algo_one: Algo # 1 Algo
 algo_other: Algos # Multiple Algos
 
+unit_one: unidad # 1 unit
+unit_other: unidades # Multiple units
+
 # These labels are used to help screen readers
 # More information: https://www.radix-ui.com/primitives/docs/components/toast#api-reference
 toast: # Toast = an in-app notification

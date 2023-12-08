@@ -30,7 +30,7 @@ export default function Amount({ t }: { t: TFunction }) {
       inputClass={
         ((showFormErrors || form.touched.aamt) && form.fieldErrors.aamt) ? 'input-error' : ''
       }
-      afterSideLabel={t('algo_other')}
+      afterSideLabel={t('unit_other')}
       min={0}
       step={0.000001}
       value={form.values.aamt ?? ''}
