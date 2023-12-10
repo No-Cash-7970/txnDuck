@@ -3,7 +3,8 @@
     Transaction Builder UI
 </h1>
 
-![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)&nbsp;
+![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck?ref=badge_shield)
+&nbsp;
 ![Next.js badge](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js)&nbsp;
 ![Tailwindcss badge](https://img.shields.io/badge/Tailwindcss-0ea5e9?style=for-the-badge&logo=tailwindcss&logoColor=white)&nbsp;
 ![License MIT badge](https://img.shields.io/github/license/No-Cash-7970/txnDuck?style=for-the-badge&color=8e5548)
@@ -168,3 +169,7 @@ to learn how to contribute to this project.
 - [SilentRhetoric](https://github.com/SilentRhetoric) - Proposed the idea of a
   transaction builder for Algorand
 - [Wes](https://github.com/WesleyMiller1998) - Recommended the name "txnDuck"
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck?ref=badge_large)
