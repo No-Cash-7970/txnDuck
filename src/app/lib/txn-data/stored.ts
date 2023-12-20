@@ -7,13 +7,13 @@ import { atomWithValidate } from 'jotai-form';
 import * as txnDataAtoms from './atoms';
 import { Preset } from './constants';
 import {
+  StoredTxnData,
   type AppCallTxnData,
   type AssetConfigTxnData,
   type AssetFreezeTxnData,
   type AssetTransferTxnData,
   type KeyRegTxnData,
   type PaymentTxnData,
-  type TxnData,
 } from './types';
 import {
   apaaValidateOptions,
@@ -35,7 +35,9 @@ import {
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
 
 /** Transaction form data that is temporarily stored locally */
-export const storedTxnDataAtom = atomWithStorage<TxnData|undefined>('txnData', undefined, storage);
+export const storedTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
+  'txnData', undefined, storage
+);
 
 /** Signed transaction, as a Data URI string, that is stored locally */
 export const storedSignedTxnAtom =
@@ -51,7 +53,7 @@ export function loadStoredTxnData(
   submittingForm: boolean,
   preset: string|null,
   jotaiStore: ReturnType<typeof useStore>,
-  storedTxnData?: TxnData,
+  storedTxnData?: StoredTxnData,
 ) {
   // Check if the form is being submitted. The transaction data is put into storage when the form
   // is submitted. If the form is being submitted, the transaction data does not need to be
@@ -67,7 +69,7 @@ export function loadStoredTxnData(
    * Set transaction type according to preset
    */
 
-  let txnType = storedTxnData?.type;
+  let txnType = storedTxnData?.txn?.type;
 
   switch (preset) {
     case Preset.TransferAlgos:
@@ -111,91 +113,101 @@ export function loadStoredTxnData(
    */
 
   jotaiStore.set(txnDataAtoms.txnType, txnType);
-  jotaiStore.set(txnDataAtoms.snd, storedTxnData?.snd || '');
-  jotaiStore.set(txnDataAtoms.note, storedTxnData?.note);
-  jotaiStore.set(txnDataAtoms.fee, storedTxnData?.fee);
-  jotaiStore.set(txnDataAtoms.fv, storedTxnData?.fv);
-  jotaiStore.set(txnDataAtoms.lv, storedTxnData?.lv);
+  jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
+  jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note);
+  jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? true);
+
+  // Do not set the fee if the suggested fee is to be used
+  if (!(storedTxnData?.useSugFee ?? true)) {
+    jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
+  }
+
+  // TODO: Set suggested 1st & last valid rounds
+
+  jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
+  jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
 
   if (!preset || preset === Preset.AppRun) {
-    jotaiStore.set(txnDataAtoms.lx, storedTxnData?.lx || '');
+    jotaiStore.set(txnDataAtoms.lx, storedTxnData?.txn?.lx || '');
   }
 
   if (!preset || preset === Preset.RekeyAccount) {
-    jotaiStore.set(txnDataAtoms.rekey, storedTxnData?.rekey || '');
+    jotaiStore.set(txnDataAtoms.rekey, storedTxnData?.txn?.rekey || '');
   }
 
   // Restore payment transaction data, if applicable
   if (txnType === TransactionType.pay) {
     if (!preset || preset === Preset.TransferAlgos) {
-      jotaiStore.set(txnDataAtoms.rcv, (storedTxnData as PaymentTxnData)?.rcv || '');
-      jotaiStore.set(txnDataAtoms.amt, (storedTxnData as PaymentTxnData)?.amt);
+      jotaiStore.set(txnDataAtoms.rcv, (storedTxnData?.txn as PaymentTxnData)?.rcv || '');
+      jotaiStore.set(txnDataAtoms.amt, (storedTxnData?.txn as PaymentTxnData)?.amt);
     }
     if (!preset || preset === Preset.CloseAccount) {
-      jotaiStore.set(txnDataAtoms.close, (storedTxnData as PaymentTxnData)?.close || '');
+      jotaiStore.set(txnDataAtoms.close, (storedTxnData?.txn as PaymentTxnData)?.close || '');
     }
   }
 
   // Restore asset transfer transaction data, if applicable
   else if (txnType === TransactionType.axfer) {
-    jotaiStore.set(txnDataAtoms.xaid, (storedTxnData as AssetTransferTxnData)?.xaid);
+    jotaiStore.set(txnDataAtoms.xaid, (storedTxnData?.txn as AssetTransferTxnData)?.xaid);
 
     if (preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut) {
-      jotaiStore.set(txnDataAtoms.arcv, (storedTxnData as AssetTransferTxnData)?.arcv || '');
-      jotaiStore.set(txnDataAtoms.aamt, (storedTxnData as AssetTransferTxnData)?.aamt || '');
+      jotaiStore.set(txnDataAtoms.arcv, (storedTxnData?.txn as AssetTransferTxnData)?.arcv || '');
+      jotaiStore.set(txnDataAtoms.aamt, (storedTxnData?.txn as AssetTransferTxnData)?.aamt || '');
     }
     if (!preset || preset === Preset.AssetClawback) {
-      jotaiStore.set(txnDataAtoms.asnd, (storedTxnData as AssetTransferTxnData)?.asnd || '');
+      jotaiStore.set(txnDataAtoms.asnd, (storedTxnData?.txn as AssetTransferTxnData)?.asnd || '');
     }
     if (!preset || preset === Preset.AssetOptOut) {
-      jotaiStore.set(txnDataAtoms.aclose, (storedTxnData as AssetTransferTxnData)?.aclose || '');
+      jotaiStore.set(txnDataAtoms.aclose,
+        (storedTxnData?.txn as AssetTransferTxnData)?.aclose || ''
+      );
     }
   }
 
   // Restore asset configuration transaction data, if applicable
   else if (txnType === TransactionType.acfg) {
     if (preset !== Preset.AssetCreate) {
-      jotaiStore.set(txnDataAtoms.caid, (storedTxnData as AssetConfigTxnData)?.caid);
+      jotaiStore.set(txnDataAtoms.caid, (storedTxnData?.txn as AssetConfigTxnData)?.caid);
     }
-    jotaiStore.set(txnDataAtoms.apar_un, (storedTxnData as AssetConfigTxnData)?.apar_un || '');
-    jotaiStore.set(txnDataAtoms.apar_an, (storedTxnData as AssetConfigTxnData)?.apar_an || '');
-    jotaiStore.set(txnDataAtoms.apar_t, (storedTxnData as AssetConfigTxnData)?.apar_t || '');
-    jotaiStore.set(txnDataAtoms.apar_dc, (storedTxnData as AssetConfigTxnData)?.apar_dc);
-    jotaiStore.set(txnDataAtoms.apar_df, !!((storedTxnData as AssetConfigTxnData)?.apar_df));
-    jotaiStore.set(txnDataAtoms.apar_au, (storedTxnData as AssetConfigTxnData)?.apar_au || '');
-    jotaiStore.set(txnDataAtoms.apar_m, (storedTxnData as AssetConfigTxnData)?.apar_m || '');
-    jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData as AssetConfigTxnData)?.apar_f || '');
-    jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData as AssetConfigTxnData)?.apar_c || '');
-    jotaiStore.set(txnDataAtoms.apar_r, (storedTxnData as AssetConfigTxnData)?.apar_r || '');
-    jotaiStore.set(txnDataAtoms.apar_am, (storedTxnData as AssetConfigTxnData)?.apar_am || '');
+    jotaiStore.set(txnDataAtoms.apar_un, (storedTxnData?.txn as AssetConfigTxnData)?.apar_un || '');
+    jotaiStore.set(txnDataAtoms.apar_an, (storedTxnData?.txn as AssetConfigTxnData)?.apar_an || '');
+    jotaiStore.set(txnDataAtoms.apar_t, (storedTxnData?.txn as AssetConfigTxnData)?.apar_t || '');
+    jotaiStore.set(txnDataAtoms.apar_dc, (storedTxnData?.txn as AssetConfigTxnData)?.apar_dc);
+    jotaiStore.set(txnDataAtoms.apar_df, !!((storedTxnData?.txn as AssetConfigTxnData)?.apar_df));
+    jotaiStore.set(txnDataAtoms.apar_au, (storedTxnData?.txn as AssetConfigTxnData)?.apar_au || '');
+    jotaiStore.set(txnDataAtoms.apar_m, (storedTxnData?.txn as AssetConfigTxnData)?.apar_m || '');
+    jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData?.txn as AssetConfigTxnData)?.apar_f || '');
+    jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData?.txn as AssetConfigTxnData)?.apar_c || '');
+    jotaiStore.set(txnDataAtoms.apar_r, (storedTxnData?.txn as AssetConfigTxnData)?.apar_r || '');
+    jotaiStore.set(txnDataAtoms.apar_am, (storedTxnData?.txn as AssetConfigTxnData)?.apar_am || '');
   }
 
   // Restore asset freeze transaction data, if applicable
   else if (txnType === TransactionType.afrz) {
-    jotaiStore.set(txnDataAtoms.faid, (storedTxnData as AssetFreezeTxnData)?.faid);
-    jotaiStore.set(txnDataAtoms.fadd, (storedTxnData as AssetFreezeTxnData)?.fadd || '');
+    jotaiStore.set(txnDataAtoms.faid, (storedTxnData?.txn as AssetFreezeTxnData)?.faid);
+    jotaiStore.set(txnDataAtoms.fadd, (storedTxnData?.txn as AssetFreezeTxnData)?.fadd || '');
 
     if (preset === Preset.AssetFreeze) {
       jotaiStore.set(txnDataAtoms.afrz, true);
     } else if (preset === Preset.AssetUnfreeze) {
       jotaiStore.set(txnDataAtoms.afrz, false);
     } else {
-      jotaiStore.set(txnDataAtoms.afrz, (storedTxnData as AssetFreezeTxnData)?.afrz ?? false);
+      jotaiStore.set(txnDataAtoms.afrz, (storedTxnData?.txn as AssetFreezeTxnData)?.afrz ?? false);
     }
   }
 
   // Restore key registration transaction data, if applicable
   else if (txnType === TransactionType.keyreg) {
     if (!preset || preset === Preset.RegOnline) {
-      jotaiStore.set(txnDataAtoms.votekey, (storedTxnData as KeyRegTxnData)?.votekey || '');
-      jotaiStore.set(txnDataAtoms.selkey, (storedTxnData as KeyRegTxnData)?.selkey || '');
-      jotaiStore.set(txnDataAtoms.sprfkey, (storedTxnData as KeyRegTxnData)?.sprfkey || '');
-      jotaiStore.set(txnDataAtoms.votefst, (storedTxnData as KeyRegTxnData)?.votefst);
-      jotaiStore.set(txnDataAtoms.votelst, (storedTxnData as KeyRegTxnData)?.votelst);
-      jotaiStore.set(txnDataAtoms.votekd, (storedTxnData as KeyRegTxnData)?.votekd);
+      jotaiStore.set(txnDataAtoms.votekey, (storedTxnData?.txn as KeyRegTxnData)?.votekey || '');
+      jotaiStore.set(txnDataAtoms.selkey, (storedTxnData?.txn as KeyRegTxnData)?.selkey || '');
+      jotaiStore.set(txnDataAtoms.sprfkey, (storedTxnData?.txn as KeyRegTxnData)?.sprfkey || '');
+      jotaiStore.set(txnDataAtoms.votefst, (storedTxnData?.txn as KeyRegTxnData)?.votefst);
+      jotaiStore.set(txnDataAtoms.votelst, (storedTxnData?.txn as KeyRegTxnData)?.votelst);
+      jotaiStore.set(txnDataAtoms.votekd, (storedTxnData?.txn as KeyRegTxnData)?.votekd);
     }
     if (!preset) {
-      jotaiStore.set(txnDataAtoms.nonpart, (storedTxnData as KeyRegTxnData)?.nonpart);
+      jotaiStore.set(txnDataAtoms.nonpart, (storedTxnData?.txn as KeyRegTxnData)?.nonpart);
     }
     if (preset === Preset.RegNonpart) {
       jotaiStore.set(txnDataAtoms.nonpart, true);
@@ -226,57 +238,57 @@ export function loadStoredTxnData(
         break;
       default:
         jotaiStore.set(txnDataAtoms.apan,
-          (storedTxnData as AppCallTxnData)?.apan
+          (storedTxnData?.txn as AppCallTxnData)?.apan
         );
         break;
     }
 
     if (preset !== Preset.AppDeploy) {
-      jotaiStore.set(txnDataAtoms.apid, (storedTxnData as AppCallTxnData)?.apid);
+      jotaiStore.set(txnDataAtoms.apid, (storedTxnData?.txn as AppCallTxnData)?.apid);
     }
     if (!preset || preset === Preset.AppDeploy || preset === Preset.AppUpdate) {
-      jotaiStore.set(txnDataAtoms.apap, (storedTxnData as AppCallTxnData)?.apap || '');
-      jotaiStore.set(txnDataAtoms.apsu, (storedTxnData as AppCallTxnData)?.apsu || '');
+      jotaiStore.set(txnDataAtoms.apap, (storedTxnData?.txn as AppCallTxnData)?.apap || '');
+      jotaiStore.set(txnDataAtoms.apsu, (storedTxnData?.txn as AppCallTxnData)?.apsu || '');
     }
     if (!preset || preset === Preset.AppDeploy) {
-      jotaiStore.set(txnDataAtoms.apgs_nui, (storedTxnData as AppCallTxnData)?.apgs_nui);
-      jotaiStore.set(txnDataAtoms.apgs_nbs, (storedTxnData as AppCallTxnData)?.apgs_nbs);
-      jotaiStore.set(txnDataAtoms.apls_nui, (storedTxnData as AppCallTxnData)?.apls_nui);
-      jotaiStore.set(txnDataAtoms.apls_nbs, (storedTxnData as AppCallTxnData)?.apls_nbs);
-      jotaiStore.set(txnDataAtoms.apep, (storedTxnData as AppCallTxnData)?.apep);
+      jotaiStore.set(txnDataAtoms.apgs_nui, (storedTxnData?.txn as AppCallTxnData)?.apgs_nui);
+      jotaiStore.set(txnDataAtoms.apgs_nbs, (storedTxnData?.txn as AppCallTxnData)?.apgs_nbs);
+      jotaiStore.set(txnDataAtoms.apls_nui, (storedTxnData?.txn as AppCallTxnData)?.apls_nui);
+      jotaiStore.set(txnDataAtoms.apls_nbs, (storedTxnData?.txn as AppCallTxnData)?.apls_nbs);
+      jotaiStore.set(txnDataAtoms.apep, (storedTxnData?.txn as AppCallTxnData)?.apep);
     }
 
     jotaiStore.set(txnDataAtoms.apaaListAtom,
-      (storedTxnData as AppCallTxnData)?.apaa
-        ? ((storedTxnData as AppCallTxnData)?.apaa).map(
+      (storedTxnData?.txn as AppCallTxnData)?.apaa
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apaa).map(
           arg => atomWithValidate(arg, apaaValidateOptions)
         )
         : []
     );
     jotaiStore.set(txnDataAtoms.apatListAtom,
-      (storedTxnData as AppCallTxnData)?.apat
-        ? ((storedTxnData as AppCallTxnData)?.apat).map(
+      (storedTxnData?.txn as AppCallTxnData)?.apat
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apat).map(
           acct => atomWithValidate(acct, apatValidateOptions)
         )
         : []
     );
     jotaiStore.set(txnDataAtoms.apfaListAtom,
-      (storedTxnData as AppCallTxnData)?.apfa
-        ? ((storedTxnData as AppCallTxnData)?.apfa).map(
+      (storedTxnData?.txn as AppCallTxnData)?.apfa
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apfa).map(
           app => atomWithValidate(app, apfaValidateOptions)
         )
         : []
     );
     jotaiStore.set(txnDataAtoms.apasListAtom,
-      (storedTxnData as AppCallTxnData)?.apas
-        ? ((storedTxnData as AppCallTxnData)?.apas).map(
+      (storedTxnData?.txn as AppCallTxnData)?.apas
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apas).map(
           asset => atomWithValidate(asset, apasValidateOptions)
         )
         : []
     );
     jotaiStore.set(txnDataAtoms.apbxListAtom,
-      (storedTxnData as AppCallTxnData)?.apbx
-        ? ((storedTxnData as AppCallTxnData)?.apbx).map(
+      (storedTxnData?.txn as AppCallTxnData)?.apbx
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apbx).map(
           box => ({
             i: atomWithValidate(box.i, apbxIValidateOptions),
             n: atomWithValidate(box.n, apbxNValidateOptions)
@@ -295,7 +307,7 @@ export function loadStoredTxnData(
 export function extractTxnDataFromAtoms(
   preset: string|null,
   jotaiStore: ReturnType<typeof useStore>
-): TxnData {
+): StoredTxnData {
   const generalForm = jotaiStore.get(generalFormControlAtom);
   const txnType = generalForm.values.txnType;
 
@@ -445,5 +457,8 @@ export function extractTxnDataFromAtoms(
     };
   }
 
-  return { ...baseTxnData, ...specificTxnData };
+  return {
+    txn: {...baseTxnData, ...specificTxnData},
+    useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
+  };
 }

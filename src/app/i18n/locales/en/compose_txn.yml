@@ -42,11 +42,17 @@ fields:
       The address of the account that is opting out, which is also the address of the account
       that pays the fee.
     placeholder: Sender address
+  use_sug_fee: # Use suggested fee to automatically set it?
+    label: Automatically set the fee?
+    tip: >
+      Automatically calculate and set the fee. Fees for transactions on Algorand are set as a
+      function of network congestion and based on the size in bytes of the transaction. Every
+      transaction must at least cover the minimum fee.
+    using_sug: (Automatic)
+    not_using_sug: (Manual)
   fee: # Fee
     label: Fee
-    tip: >
-      Fees for transactions on Algorand are set as a function of network congestion and based on the
-      size in bytes of the transaction. Every transaction must at least cover the minimum fee.
+    tip: Manually set the fee for this transaction.
     help_msg_one: "Minimum: {{count, number}} Algo"
     help_msg_other: "Minimum: {{count, number}} Algos"
     in_algos_one: "{{count, number}} Algo"

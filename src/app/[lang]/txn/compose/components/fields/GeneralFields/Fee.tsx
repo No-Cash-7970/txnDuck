@@ -1,4 +1,4 @@
-import { NumberField } from '@/app/[lang]/components/form';
+import { FieldGroup, NumberField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -7,13 +7,25 @@ import {
   showFormErrorsAtom,
   tipContentClass,
   tipBtnClass,
+  feeConditionalRequireAtom,
 } from '@/app/lib/txn-data';
 import { microalgosToAlgos } from 'algosdk';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Fee({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+  return (
+    <FieldGroup>
+      <UseSugFeeInput t={t} />
+      {!form.values.useSugFee && <FeeInput t={t} />}
+    </FieldGroup>
+  );
+}
+
+export function FeeInput({ t }: { t: TFunction }) {
+  const form = useAtomValue(generalFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const feeCondReqGroup = useAtomValue(feeConditionalRequireAtom);
   return (<>
     <NumberField label={t('fields.fee.label')}
       name='fee'
@@ -29,8 +41,9 @@ export default function Fee({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerId='fee-field'
       containerClass='mt-4 max-w-xs'
-      inputClass={
-        ((showFormErrors || form.touched.fee) && form.fieldErrors.fee) ? 'input-error' : ''
+      inputClass={((showFormErrors || form.touched.fee) &&
+        (form.fieldErrors.fee || (!feeCondReqGroup.isValid && feeCondReqGroup.error)))
+        ? 'input-error' : ''
       }
       afterSideLabel={t('algo_other')}
       min={microalgosToAlgos(MIN_TX_FEE)}
@@ -49,5 +62,34 @@ export default function Fee({ t }: { t: TFunction }) {
         dict={form.fieldErrors.fee.message.dict}
       />
     }
+    {(showFormErrors || form.touched.fee) && !feeCondReqGroup.isValid
+      && feeCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(feeCondReqGroup.error as any).message.key}
+        dict={(feeCondReqGroup.error as any).message.dict}
+      />
+    }
   </>);
+}
+
+export function UseSugFeeInput({ t }: { t: TFunction }) {
+  const form = useAtomValue(generalFormControlAtom);
+  return (
+    <ToggleField label={t('fields.use_sug_fee.label')}
+      name='use_sug_fee'
+      id='useSugFee-input'
+      tip={{
+        content: t('fields.use_sug_fee.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
+      inputInsideLabel={true}
+      containerId='useSugFee-field'
+      containerClass='mt-4 max-w-xs'
+      inputClass='toggle-primary'
+      value={!!form.values.useSugFee}
+      onChange={(e) => form.handleOnChange('useSugFee')(e.target.checked)}
+    />
+  );
 }

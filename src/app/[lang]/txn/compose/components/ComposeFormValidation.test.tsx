@@ -24,7 +24,8 @@ describe('Compose Form Component', () => {
     localStorage.clear();
   });
 
-  it('does not proceed and shows errors if invalid data is submitted', async () => {
+  it('does not proceed and shows errors if invalid data is submitted (using suggested parameters)',
+  async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -37,8 +38,41 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.type.label/)).toHaveFocus();
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    // TODO: Add suggested 1st & last valid rounds
+    expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.rekey.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+  });
+
+  it('does not proceed and shows errors if invalid data is submitted (not using suggested'
+  +' parameters)',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.type.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+
+    // Turn off suggested fee
+    const useSugFeeToggle = screen.getByLabelText('fields.use_sug_fee.label');
+    await userEvent.click(useSugFeeToggle);
+    expect(useSugFeeToggle).not.toBeChecked();
+
     expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    // TODO: Add suggested 1st & last valid rounds
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lx.label/)).not.toHaveClass('input-error');
@@ -80,7 +114,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -91,7 +125,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.amt.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.close.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid *asset transfer* transaction data is submitted',
@@ -109,7 +143,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -122,7 +156,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.asnd.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.aclose.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(7);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
   it('does not proceed and shows errors if invalid *asset configuration* transaction data is'
@@ -141,7 +175,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -160,7 +194,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid *asset freeze* transaction data is submitted',
@@ -178,7 +212,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -188,7 +222,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid *key registration* transaction data is'
@@ -207,7 +241,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -221,7 +255,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.votelst.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.votekd.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
   it('does not proceed and shows errors if invalid *application call* transaction data is'
@@ -247,7 +281,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -270,7 +304,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(15);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(14);
   });
 
   /*
@@ -294,7 +328,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -302,7 +336,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.rcv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.amt.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid data using "rekey account" preset is'
@@ -322,13 +356,13 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.rekey.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
   it('does not proceed and shows errors if invalid data using "close account" preset is'
@@ -348,14 +382,14 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
 
     expect(screen.getByLabelText(/fields.close.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
   it('does not proceed and shows errors if invalid data using "transfer asset" preset is'
@@ -375,7 +409,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -384,7 +418,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.aamt.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(7);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
   it('does not proceed and shows errors if invalid data using "opt in asset" preset is'
@@ -404,14 +438,14 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
 
     expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
   it('does not proceed and shows errors if invalid data using "opt out asset" preset is'
@@ -431,7 +465,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -439,7 +473,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.xaid.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.aclose.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid data using "create asset" preset is'
@@ -459,7 +493,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -475,7 +509,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid data using "reconfigure asset" preset is'
@@ -495,7 +529,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -506,7 +540,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
   it('does not proceed and shows errors if invalid data using "revoke (claw back) asset" preset is'
@@ -526,7 +560,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -536,7 +570,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.aamt.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.asnd.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(7);
   });
 
   it('does not proceed and shows errors if invalid data using "destroy asset" preset is'
@@ -556,14 +590,14 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
 
     expect(screen.getByLabelText(/fields.caid.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
   it('does not proceed and shows errors if invalid data using "freeze asset" preset is'
@@ -583,7 +617,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -591,7 +625,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid data using "unfreeze asset" preset is'
@@ -611,7 +645,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -619,7 +653,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.faid.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.fadd.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(6);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
   it('does not proceed and shows errors if invalid data using "run application" preset is'
@@ -646,7 +680,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -661,7 +695,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
   it('does not proceed and shows errors if invalid data using "opt in application" preset is'
@@ -688,7 +722,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -702,7 +736,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
   it('does not proceed and shows errors if invalid data using "deploy application" preset is'
@@ -729,7 +763,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -749,7 +783,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(15);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(14);
   });
 
   it('does not proceed and shows errors if invalid data using "update application" preset is'
@@ -776,7 +810,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -792,7 +826,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(11);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(10);
   });
 
   it('does not proceed and shows errors if invalid data using "close out application" preset is'
@@ -819,7 +853,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -833,7 +867,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
   it('does not proceed and shows errors if invalid data using "clear application" preset is'
@@ -860,7 +894,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -874,7 +908,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
   it('does not proceed and shows errors if invalid data using "delete application" preset is'
@@ -901,7 +935,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -915,7 +949,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apbx_i.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apbx_n.label/)).not.toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
   it('does not proceed and shows errors if invalid data using "register online" preset is'
@@ -934,7 +968,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
@@ -946,7 +980,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.votelst.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.votekd.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(10);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(9);
   });
 
   it('does not proceed and shows errors if invalid data using "register offline" preset is'
@@ -966,12 +1000,12 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
   it('does not proceed and shows errors if invalid data using "register nonparticipation" preset is'
@@ -991,12 +1025,12 @@ describe('Compose Form Component', () => {
     expect(await screen.findByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
-    expect(screen.getByLabelText(/fields.fee.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
     expect(screen.getByLabelText(/fields.fv.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.lv.label/)).toHaveClass('input-error');
 
-    expect(screen.getAllByText('form.error.required')).toHaveLength(4);
+    expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
 });

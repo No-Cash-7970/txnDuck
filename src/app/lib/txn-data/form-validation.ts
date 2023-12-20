@@ -21,9 +21,17 @@ export function isFormValid(
 
   // Gather all invalid general fields in the main validation rules
   const invalidGeneralFields = getInvalidFields(generalForm);
+
+  // If "fee" field did not meet the conditional validation
+  const fee = jotaiStore.get(FieldValidation.feeConditionalRequireAtom);
+  if (!fee.isValidating && !fee.isValid) invalidGeneralFields.add('fee');
+
   // If "rekey address" field did not meet the conditional validation
   const rekey = jotaiStore.get(FieldValidation.rekeyConditionalRequireAtom);
   if (!rekey.isValidating && !rekey.isValid) invalidGeneralFields.add('rekey');
+
+  // TODO: Add conditional requirement check for 1st & last valid rounds
+
   // Add "first valid round" field as an invalid general field if the first/last valid rounds did
   // not pass the special group validation
   if (!jotaiStore.get(FieldValidation.fvLvFormControlAtom).isValid) invalidGeneralFields.add('fv');
@@ -274,6 +282,7 @@ function scrollToFirstInvalidField(invalidFields: Set<string>) {
   // Focus and scroll to first invalid field
   if (invalidFields.size) {
     const firstInvalidField = invalidFields.values().next().value;
+    // The classes assigned to the field container and the input is based on atom name for the field
     const field = document.getElementById(`${firstInvalidField}-field`);
     const input = document.getElementById(`${firstInvalidField}-input`);
 

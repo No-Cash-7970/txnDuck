@@ -6,32 +6,43 @@ import type * as TxnData from '@/app/lib/txn-data';
  * @param txnData Transaction data from which to create a `Transaction` object
  * @param genesisID Genesis ID of the network the transaction will be sent
  * @param genesisHash Genesis hash of the network the transaction will be sent
+ * @param flatFee If the specified fee is to be the fee for the transaction and not the fee per byte
  */
 export function createTxnFromData(
   txnData: TxnData.TxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   switch (txnData.type) {
     case algosdk.TransactionType.pay:
-      return createPayTxn(txnData as TxnData.PaymentTxnData, genesisID, genesisHash);
+      return createPayTxn(txnData as TxnData.PaymentTxnData, genesisID, genesisHash, flatFee);
     case algosdk.TransactionType.axfer:
-      return createAxferTxn(txnData as TxnData.AssetTransferTxnData, genesisID, genesisHash);
+      return createAxferTxn(txnData as TxnData.AssetTransferTxnData,
+        genesisID,
+        genesisHash,
+        flatFee
+      );
     case algosdk.TransactionType.acfg:
-      return createAcfgTxn(txnData as TxnData.AssetConfigTxnData, genesisID, genesisHash);
+      return createAcfgTxn(txnData as TxnData.AssetConfigTxnData, genesisID, genesisHash, flatFee);
     case algosdk.TransactionType.afrz:
-      return createAfrzTxn(txnData as TxnData.AssetFreezeTxnData, genesisID, genesisHash);
+      return createAfrzTxn(txnData as TxnData.AssetFreezeTxnData, genesisID, genesisHash, flatFee);
     case algosdk.TransactionType.keyreg:
-      return createKeyRegTxn(txnData as TxnData.KeyRegTxnData, genesisID, genesisHash);
+      return createKeyRegTxn(txnData as TxnData.KeyRegTxnData, genesisID, genesisHash, flatFee);
     case algosdk.TransactionType.appl:
-      return createApplTxn(txnData as TxnData.AppCallTxnData, genesisID, genesisHash);
+      return createApplTxn(txnData as TxnData.AppCallTxnData, genesisID, genesisHash, flatFee);
     default:
       throw Error('Unsupported transaction type');
   }
 }
 
 /** Creates a `Transaction` object that represents an Algorand payment transaction */
-function createPayTxn(payTxnData: TxnData.PaymentTxnData, genesisID: string, genesisHash: string) {
+function createPayTxn(
+  payTxnData: TxnData.PaymentTxnData,
+  genesisID: string,
+  genesisHash: string,
+  flatFee = true
+) {
   const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     from: payTxnData.snd,
     to: payTxnData.rcv,
@@ -41,7 +52,7 @@ function createPayTxn(payTxnData: TxnData.PaymentTxnData, genesisID: string, gen
     closeRemainderTo: payTxnData.close || undefined,
     suggestedParams: {
       fee: algosdk.algosToMicroalgos(payTxnData.fee),
-      flatFee: true,
+      flatFee,
       firstRound: payTxnData.fv,
       lastRound: payTxnData.lv,
       genesisHash,
@@ -60,7 +71,8 @@ function createPayTxn(payTxnData: TxnData.PaymentTxnData, genesisID: string, gen
 function createAxferTxn(
   axferTxnData: TxnData.AssetTransferTxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
     from: axferTxnData.snd,
@@ -73,7 +85,7 @@ function createAxferTxn(
     rekeyTo: axferTxnData.rekey || undefined,
     suggestedParams: {
       fee: algosdk.algosToMicroalgos(axferTxnData.fee),
-      flatFee: true,
+      flatFee,
       firstRound: axferTxnData.fv,
       lastRound: axferTxnData.lv,
       genesisHash,
@@ -92,7 +104,8 @@ function createAxferTxn(
 function createAcfgTxn(
   acfgTxnData: TxnData.AssetConfigTxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   let txn;
 
@@ -114,7 +127,7 @@ function createAcfgTxn(
       reserve: acfgTxnData.apar_r || undefined,
       suggestedParams: {
         fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
-        flatFee: true,
+        flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
         genesisHash,
@@ -135,7 +148,7 @@ function createAcfgTxn(
       reserve: acfgTxnData.apar_r || undefined,
       suggestedParams: {
         fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
-        flatFee: true,
+        flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
         genesisHash,
@@ -151,7 +164,7 @@ function createAcfgTxn(
       assetIndex: acfgTxnData.caid,
       suggestedParams: {
         fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
-        flatFee: true,
+        flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
         genesisHash,
@@ -171,7 +184,8 @@ function createAcfgTxn(
 function createAfrzTxn(
   afrzTxnData: TxnData.AssetFreezeTxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
     from: afrzTxnData.snd,
@@ -182,7 +196,7 @@ function createAfrzTxn(
     freezeState: afrzTxnData.afrz,
     suggestedParams: {
       fee: algosdk.algosToMicroalgos(afrzTxnData.fee),
-      flatFee: true,
+      flatFee,
       firstRound: afrzTxnData.fv,
       lastRound: afrzTxnData.lv,
       genesisHash,
@@ -201,7 +215,8 @@ function createAfrzTxn(
 function createKeyRegTxn(
   keyRegTxnData: TxnData.KeyRegTxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   const keyRegData = keyRegTxnData.nonpart
     ? { nonParticipation: true } // Activating "nonparticipation"
@@ -222,7 +237,7 @@ function createKeyRegTxn(
     rekeyTo: keyRegTxnData.rekey || undefined,
     suggestedParams: {
       fee: algosdk.algosToMicroalgos(keyRegTxnData.fee),
-      flatFee: true,
+      flatFee,
       firstRound: keyRegTxnData.fv,
       lastRound: keyRegTxnData.lv,
       genesisHash,
@@ -241,7 +256,8 @@ function createKeyRegTxn(
 function createApplTxn(
   applTxnData: TxnData.AppCallTxnData,
   genesisID: string,
-  genesisHash: string
+  genesisHash: string,
+  flatFee = true
 ) {
   const encoder = new TextEncoder;
   const encodedAppArgs = getAppArgsForTransaction({
@@ -268,7 +284,7 @@ function createApplTxn(
     extraPages: applTxnData.apep,
     suggestedParams: {
       fee: algosdk.algosToMicroalgos(applTxnData.fee),
-      flatFee: true,
+      flatFee,
       firstRound: applTxnData.fv,
       lastRound: applTxnData.lv,
       genesisHash,

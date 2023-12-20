@@ -4,12 +4,12 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
-import algosdk from 'algosdk';
+import algosdk, { microalgosToAlgos } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import { useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
 import {
@@ -19,6 +19,7 @@ import {
 } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { createTxnFromData, storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { fee as feeAtom } from '@/app/lib/txn-data/atoms';
 import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import NextStepButton from './NextStepButton';
 
@@ -32,6 +33,7 @@ export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
   const currentURLParams = useSearchParams();
   const nodeConfig = useAtomValue(nodeConfigAtom);
+  const setFee = useSetAtom(feeAtom);
 
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
@@ -43,29 +45,42 @@ export default function SignTxn({ lng }: Props) {
     [activeAccount, clients]
   );
 
-  /** Get genesis ID and genesis hash */
-  const getGenesisInfo = async () => {
+  /** Get the suggested parameters for the network. Includes genesis ID, genesis hash, minimum fee,
+   * first valid round, and last valid round.
+   */
+  const getSuggestedParams = useMemo(() => {
     // Get suggested parameters
     const algod = algokit.getAlgoClient({
       server: nodeConfig.nodeServer,
       port: nodeConfig.nodePort,
       token: (nodeConfig.nodeToken || '') as string,
     });
-    const suggestedParams = await algokit.getTransactionParams(undefined, algod);
-
-    return { gen: suggestedParams.genesisID, gh: suggestedParams.genesisHash };
-  };
+    return algokit.getTransactionParams(undefined, algod);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [nodeConfig, storedTxnData]);
 
   /** Create transaction object from stored transaction data and sign the transaction */
   const signTransaction = async () => {
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
-    const {gen, gh} = await getGenesisInfo();
+    const suggestedParams = await getSuggestedParams;
     let unsignedTxn = new Uint8Array;
+    const unsignedTxnData = storedTxnData.txn;
+
+    // Retrieve suggested parameters if they are supposed to be used
+    if (storedTxnData.useSugFee) unsignedTxnData.fee = suggestedParams.fee;
+    // TODO: Add first valid round and last valid round
 
     try {
       // Create Transaction object and encoded it
-      unsignedTxn = algosdk.encodeUnsignedTransaction(createTxnFromData(storedTxnData, gen, gh));
+      unsignedTxn = algosdk.encodeUnsignedTransaction(
+        createTxnFromData(
+          unsignedTxnData,
+          suggestedParams.genesisID,
+          suggestedParams.genesisHash,
+          !storedTxnData.useSugFee // Enable/disable flat fee
+        )
+      );
     } catch (e) {
       setHasSignTxnError(true);
       return;
@@ -78,24 +93,48 @@ export default function SignTxn({ lng }: Props) {
   };
 
   useEffect(() => {
-    if (!storedTxnData || !storedSignedTxn) return;
+    if (!storedTxnData) return;
 
-    // Remove stored signed transaction if the transaction data was edited
-    dataUrlToBytes(storedSignedTxn).then((signedTxnBytes) => {
-      getGenesisInfo().then(({gen, gh}) => {
-        const unsignedTxn = createTxnFromData(storedTxnData, gen, gh);
-        let signedTxn: algosdk.Transaction;
+    getSuggestedParams.then(({genesisID, genesisHash, fee: feePerByte }) => {
+      // TODO: Add 1st & last valid rounds as function parameters above
 
-        try {
-          signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
-        } catch (e) { // The stored signed transaction is invalid for some reason
-          setStoredSignedTxn(RESET); // The transaction will need to be signed again
-          return;
-        }
+      const unsignedTxnData = storedTxnData.txn;
+      let unsignedTxn: algosdk.Transaction|null = null;
 
-        // The transaction has been changed and will need to be signed again
-        if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
-      });
+      // Calculate the fee if the suggested fee is to be used. The easiest way the calculate the fee
+      // is to create an algosdk `Transaction` object and set the fee-per-byte (by disabling the
+      // flat fee)
+      if (storedTxnData.useSugFee) {
+        unsignedTxnData.fee = microalgosToAlgos(feePerByte);
+        unsignedTxn = createTxnFromData(unsignedTxnData, genesisID, genesisHash, false);
+        setFee(microalgosToAlgos(unsignedTxn.fee));
+      }
+
+      // TODO: Set suggested 1st & last valid rounds
+
+      if (storedSignedTxn) {
+        // Check if transaction data has been changed after it was signed. If the data has changed,
+        // remove the stored signed transaction.
+        dataUrlToBytes(storedSignedTxn).then((signedTxnBytes) => {
+          let signedTxn: algosdk.Transaction;
+
+          try {
+            signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
+          } catch (e) { // The stored signed transaction is invalid for some reason
+            setStoredSignedTxn(RESET); // The transaction will need to be signed again
+            return;
+          }
+
+          // Create unsigned transaction if one was not already created when calculating the
+          // suggested fee
+          if (unsignedTxn === null) {
+            unsignedTxn = createTxnFromData(unsignedTxnData, genesisID, genesisHash);
+          }
+
+          // The transaction has been changed and will need to be signed again
+          if (unsignedTxn.txID() !== signedTxn.txID()) setStoredSignedTxn(RESET);
+        });
+      }
     });
   /*
    * NOTE: The node configuration is added as a dependency because the transaction may need to be

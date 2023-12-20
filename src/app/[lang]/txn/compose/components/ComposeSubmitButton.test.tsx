@@ -32,8 +32,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -59,8 +57,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -75,13 +71,15 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'pay',
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-      amt: 5,
+      txn: {
+        type: 'pay',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        fv: 6000000,
+        lv: 6001000,
+        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amt: 5,
+      },
+      useSugFee: true,
     });
   });
 
@@ -95,8 +93,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -113,14 +109,16 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'axfer',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-      xaid: 123456789,
-      aamt: '5',
+      txn: {
+        type: 'axfer',
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        xaid: 123456789,
+        aamt: '5',
+      },
+      useSugFee: true,
     });
   });
 
@@ -135,8 +133,6 @@ describe('Compose Form Component', () => {
 
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -168,22 +164,24 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'acfg',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apar_un: 'FAKE',
-      apar_an: 'Fake Token',
-      apar_t: '10000000',
-      apar_dc: 3,
-      apar_df: true,
-      apar_au: 'https://fake.token',
-      apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+      txn: {
+        type: 'acfg',
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_un: 'FAKE',
+        apar_an: 'Fake Token',
+        apar_t: '10000000',
+        apar_dc: 3,
+        apar_df: true,
+        apar_au: 'https://fake.token',
+        apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+      },
+      useSugFee: true,
     });
   }, 10000);
 
@@ -197,8 +195,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -214,14 +210,16 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'afrz',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      faid: 123456789,
-      fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-      afrz: true,
+      txn: {
+        type: 'afrz',
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        faid: 123456789,
+        fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        afrz: true,
+      },
+      useSugFee: true,
     });
   });
 
@@ -235,8 +233,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'keyreg');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -261,19 +257,21 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'keyreg',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
-      votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
-      selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-      // eslint-disable-next-line max-len
-      sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
-      votefst: 6000000,
-      votelst: 6100000,
-      votekd: 1730,
-      nonpart: false,
+      txn: {
+        type: 'keyreg',
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+        selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+        // eslint-disable-next-line max-len
+        sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+        votefst: 6000000,
+        votelst: 6100000,
+        votekd: 1730,
+        nonpart: false,
+      },
+      useSugFee: true,
     });
   });
 
@@ -287,8 +285,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.fee.label/));
-    await userEvent.paste('0.001');
     await userEvent.click(screen.getByLabelText(/fields.fv.label/));
     await userEvent.paste('6000000');
     await userEvent.click(screen.getByLabelText(/fields.lv.label/));
@@ -357,37 +353,44 @@ describe('Compose Form Component', () => {
 
     // Check session storage
     expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
-      type: 'appl',
-      fee: 0.001,
-      fv: 6000000,
-      lv: 6001000,
-      snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-      apan: 0,
-      apap: 'BYEB',
-      apsu: 'BYEB',
-      apgs_nui: 1,
-      apgs_nbs: 2,
-      apls_nui: 3,
-      apls_nbs: 4,
-      apep: 1,
-      apaa: ['foo', '42', ''],
-      apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-      apfa: [11111111, 22222222],
-      apas: [33333333, 44444444, 55555555],
-      apbx: [{i: 2, n: 'Boxy box' }],
+      txn: {
+        type: 'appl',
+        fv: 6000000,
+        lv: 6001000,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apan: 0,
+        apap: 'BYEB',
+        apsu: 'BYEB',
+        apgs_nui: 1,
+        apgs_nbs: 2,
+        apls_nui: 3,
+        apls_nbs: 4,
+        apep: 1,
+        apaa: ['foo', '42', ''],
+        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+        apfa: [11111111, 22222222],
+        apas: [33333333, 44444444, 55555555],
+        apbx: [{i: 2, n: 'Boxy box' }],
+      },
+      useSugFee: true,
     });
   }, 10000);
 
-  it('can retrieve transaction data from session storage', async () => {
+  it('can retrieve transaction data from session storage (not using suggested parameters)',
+  async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      type: 'pay',
-      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      fee: 0.001,
-      fv: 5,
-      lv: 1005,
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      amt: 42,
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.001,
+        fv: 5,
+        lv: 1005,
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        amt: 42,
+      },
+      useSugFee: false,
+      // TODO: Add suggested 1st & last valid rounds
     }));
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -396,7 +399,40 @@ describe('Compose Form Component', () => {
     expect(await screen.findByRole('form')).toHaveFormValues({
       type: 'pay',
       snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      use_sug_fee: false,
       fee: 0.001,
+      fv: 5,
+      lv: 1005,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
+    });
+  });
+
+  it('can retrieve transaction data from session storage (using suggested parameters)',
+  async () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.001, // This should be ignored
+        fv: 5,
+        lv: 1005,
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        amt: 42,
+      },
+      useSugFee: true,
+      // TODO: Add suggested 1st & last valid rounds
+    }));
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+    expect(await screen.findByRole('form')).toHaveFormValues({
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      use_sug_fee: true,
       fv: 5,
       lv: 1005,
       rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',

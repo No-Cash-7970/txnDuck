@@ -39,10 +39,12 @@ jest.mock('next/navigation', () => ({
 jest.mock('@algorandfoundation/algokit-utils', () => ({
   ...jest.requireActual('@algorandfoundation/algokit-utils'),
   getAlgoClient: () => ({}),
-  getTransactionParams: () => ({
+  getTransactionParams: () => new Promise((resolve) => resolve({
     genesisID: 'testnet-v1.0',
-    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='
-  }),
+    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+    fee: 1,
+    // TODO: Add suggested 1st & last valid rounds
+  }))
 }));
 
 import SignTxn from './SignTxn';
@@ -78,9 +80,11 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
   it('removes stored signed transaction if it is different from stored unsigned transaction',
   async () => {
     sessionStorage.setItem('txnData',
-      '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.002,"fv":1,"lv":2,' // Change the fee
-      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}'
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false}'
+      // TODO: Add suggested 1st & last valid rounds
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
@@ -95,7 +99,9 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     sessionStorage.setItem('txnData',
       '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,'
-      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0}'
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false}'
+      // TODO: Add 1st & last valid rounds
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,..."');

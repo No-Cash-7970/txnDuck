@@ -6,7 +6,8 @@ import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
 import {
   ExtraSmallField,
   FullWidthField,
-  LargeAreaField
+  LargeAreaField,
+  SwitchField
 } from './components/fields/LoadingPlaceholders';
 
 const ComposeForm = dynamic(() => import('./components/ComposeForm'),
@@ -16,7 +17,7 @@ const ComposeForm = dynamic(() => import('./components/ComposeForm'),
         <div className='skeleton rounded-md h-4 max-w-md mt-4 mb-8'></div>
         <ExtraSmallField />
         <FullWidthField containerClass='mt-6' />
-        <ExtraSmallField containerClass='mt-6' />
+        <SwitchField containerClass='max-w-xs mt-6' />
         <LargeAreaField containerClass='mt-6' />
         <ExtraSmallField containerClass='mt-6' />
         <ExtraSmallField containerClass='mt-6' />

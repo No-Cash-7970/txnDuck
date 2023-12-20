@@ -20,7 +20,7 @@ export interface BaseTxnData {
   snd: string;
   /** Note */
   note?: string;
-  /** Fee */
+  /** Fee (in Algos, not microAlgos) */
   fee: number;
   /** First valid round */
   fv: number;
@@ -153,6 +153,14 @@ export type TxnData = BaseTxnData
   | AssetFreezeTxnData
   | KeyRegTxnData
   | AppCallTxnData;
+
+/** Transaction data temporarily stored */
+export interface StoredTxnData {
+  /** Transaction data */
+  txn: TxnData;
+  /** Use suggested fee? */
+  useSugFee: boolean;
+}
 
 /** Validation error message */
 export type ValidationMessage = {

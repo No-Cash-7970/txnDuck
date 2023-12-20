@@ -53,12 +53,24 @@ export const generalFormControlAtom = atomWithFormControls({
   txnType: txnDataAtoms.txnType,
   snd: txnDataAtoms.snd,
   fee: txnDataAtoms.fee,
+  useSugFee: txnDataAtoms.useSugFee,
   note: txnDataAtoms.note,
   fv: txnDataAtoms.fv,
   lv: txnDataAtoms.lv,
   lx: txnDataAtoms.lx,
   rekey: txnDataAtoms.rekey,
 });
+export const feeConditionalRequireAtom = validateAtoms({
+  fee: txnDataAtoms.fee,
+  useSugFee: txnDataAtoms.useSugFee,
+}, (values) => {
+  if (!values.useSugFee) {
+    YupNumber().required().validateSync(values.fee);
+  }
+});
+
+// TODO: Add condtional require check for 1st & last valid rounds
+
 export const rekeyConditionalRequireAtom = validateAtoms({
   preset: presetAtom,
   rekey: txnDataAtoms.rekey,

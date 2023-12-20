@@ -35,13 +35,15 @@ export const snd = atomWithValidate<string>('', {
   }
 });
 
-/** Fee */
+/** Fee (in Algos, not microAlgos) */
 export const fee = atomWithValidate<number|undefined>(undefined, {
   validate: v => {
-    YupNumber().required().min(microalgosToAlgos(MIN_TX_FEE)).validateSync(v);
+    YupNumber().min(microalgosToAlgos(MIN_TX_FEE)).validateSync(v);
     return v;
   }
 });
+/** Use suggested fee */
+export const useSugFee = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Note */
 export const note = atomWithValidate<string|undefined>(undefined, {
@@ -61,6 +63,8 @@ export const fv = atomWithValidate<number|undefined>(undefined, {
 export const lv = atomWithValidate<number|undefined>(undefined, {
   validate: v => { YupNumber().required().min(1).validateSync(v); return v; }
 });
+
+// TODO: Add atom for using suggested rounds
 
 /** Lease */
 export const lx = atomWithValidate<string>('', {

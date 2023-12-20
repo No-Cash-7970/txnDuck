@@ -15,6 +15,17 @@ jest.mock('next/navigation', () => ({
 }));
 // Mock the wallet provider
 jest.mock('../../components/WalletProvider.tsx', () => 'div');
+// Mock algokit because it is used by a child components
+jest.mock('@algorandfoundation/algokit-utils', () => ({
+  ...jest.requireActual('@algorandfoundation/algokit-utils'),
+  getAlgoClient: () => ({}),
+  getTransactionParams: () => new Promise((resolve) => resolve({
+    genesisID: 'testnet-v1.0',
+    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+    fee: 1,
+    // TODO: Add first & last valid rounds
+  }))
+}));
 
 import SignTxnPage from './page';
 

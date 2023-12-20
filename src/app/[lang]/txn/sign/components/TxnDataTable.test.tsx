@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import { TFunction } from 'i18next';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
@@ -9,18 +8,20 @@ jest.mock('react-i18next', () => i18nextClientMock);
 import TxnDataTable from './TxnDataTable';
 
 describe('Transaction Data Table Component', () => {
-  const t = i18nextClientMock.useTranslation().t as TFunction;
 
-  it('displays general transaction data', () => {
+  it('displays general transaction data (using suggested parameters)', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      type: 'pay',
-      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      fee: 0.0042,
-      note: 'Hello world',
-      fv: 42,
-      lv: 43,
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        note: 'Hello world',
+        fv: 42,
+        lv: 43,
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      },
+      useSugFee: true,
+      // TODO: Add suggested 1st & last valid rounds
     }));
     render(<TxnDataTable />);
 
@@ -32,10 +33,58 @@ describe('Transaction Data Table Component', () => {
       .toBeInTheDocument();
 
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.use_sug_fee.using_sug')).toBeInTheDocument();
     expect(screen.getByText('fields.fee.in_algos')).toBeInTheDocument();
 
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
     expect(screen.getByText('Hello world')).toBeInTheDocument();
+
+    // TODO: Add suggested 1st & last valid rounds
+
+    expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
+    expect(screen.getAllByText('number_value')).toHaveLength(2);
+
+    expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
+    expect(screen.getByText('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')).toBeInTheDocument();
+
+    expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
+    expect(screen.getByText('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'))
+      .toBeInTheDocument();
+  });
+
+  it('displays general transaction data (not using suggested parameters)', () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.0042,
+        note: 'Hello world',
+        fv: 42,
+        lv: 43,
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      },
+      useSugFee: false,
+      // TODO: Add suggested 1st & last valid rounds
+    }));
+    render(<TxnDataTable />);
+
+    expect(screen.getByText('fields.type.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.type.options.pay')).toBeInTheDocument();
+
+    expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
+    expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
+      .toBeInTheDocument();
+
+    expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.use_sug_fee.not_using_sug')).toBeInTheDocument();
+    expect(screen.getByText('fields.fee.in_algos')).toBeInTheDocument();
+
+    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
+    expect(screen.getByText('Hello world')).toBeInTheDocument();
+
+    // TODO: Add suggested 1st & last valid rounds
 
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
@@ -51,9 +100,11 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no note', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: '',
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      txn: {
+        note: '',
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -61,9 +112,11 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no lease', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: 'Hello world',
-      lx: '',
-      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      txn: {
+        note: 'Hello world',
+        lx: '',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -71,9 +124,11 @@ describe('Transaction Data Table Component', () => {
 
   it('displays "none" when there is no rekey address', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
-      note: 'Hello world',
-      lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-      rekey: '',
+      txn: {
+        note: 'Hello world',
+        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+        rekey: '',
+      }
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
@@ -83,10 +138,12 @@ describe('Transaction Data Table Component', () => {
 
     it('displays payment transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'pay',
-        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        amt: 42,
-        close: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        txn: {
+          type: 'pay',
+          rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          amt: 42,
+          close: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
       }));
       render(<TxnDataTable />);
 
@@ -104,13 +161,15 @@ describe('Transaction Data Table Component', () => {
 
     it('displays "none" when there is no close-to address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'pay',
-        note: 'Hello world',
-        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        amt: 42,
-        close: ''
+        txn: {
+          type: 'pay',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          amt: 42,
+          close: ''
+        }
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();
@@ -122,12 +181,14 @@ describe('Transaction Data Table Component', () => {
 
     it('displays asset transfer transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'axfer',
-        arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        xaid: 1234,
-        aamt: 42,
-        asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-        aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        txn: {
+          type: 'axfer',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
       }));
       render(<TxnDataTable />);
 
@@ -151,15 +212,17 @@ describe('Transaction Data Table Component', () => {
 
     it('displays "none" when there is no clawback target address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'axfer',
-        note: 'Hello world',
-        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        xaid: 1234,
-        aamt: 42,
-        asnd: '',
-        aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        txn: {
+          type: 'axfer',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: '',
+          aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
+        }
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();
@@ -167,15 +230,17 @@ describe('Transaction Data Table Component', () => {
 
     it('displays "none" when there is no close-to address', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'axfer',
-        note: 'Hello world',
-        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        xaid: 1234,
-        aamt: 42,
-        asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-        aclose: ''
+        txn: {
+          type: 'axfer',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          xaid: 1234,
+          aamt: 42,
+          asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          aclose: ''
+        }
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();
@@ -187,18 +252,20 @@ describe('Transaction Data Table Component', () => {
 
     it('displays asset configuration transaction data for asset creation', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'acfg',
-        apar_un: 'FAKE',
-        apar_an: 'Fake Token',
-        apar_t: 10000000,
-        apar_dc: 5,
-        apar_df: true,
-        apar_au: 'https://fake.token',
-        apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-        apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        txn: {
+          type: 'acfg',
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
       }));
       render(<TxnDataTable />);
 
@@ -245,19 +312,21 @@ describe('Transaction Data Table Component', () => {
 
     it('displays asset configuration transaction data for asset reconfiguration', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'acfg',
-        caid: 1234,
-        apar_un: 'FAKE',
-        apar_an: 'Fake Token',
-        apar_t: 10000000,
-        apar_dc: 5,
-        apar_df: true,
-        apar_au: 'https://fake.token',
-        apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-        apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        txn: {
+          type: 'acfg',
+          caid: 1234,
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
       }));
       render(<TxnDataTable />);
 
@@ -291,18 +360,20 @@ describe('Transaction Data Table Component', () => {
 
     it('displays asset configuration transaction data for asset deletion', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'acfg',
-        note: 'Hello world',
-        lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        caid: 1234,
-        apar_un: 'FAKE',
-        apar_an: 'Fake Token',
-        apar_t: 10000000,
-        apar_dc: 5,
-        apar_df: true,
-        apar_au: 'https://fake.token',
-        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        txn: {
+          type: 'acfg',
+          note: 'Hello world',
+          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
+          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          caid: 1234,
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+        }
       }));
       render(<TxnDataTable />);
 
@@ -325,21 +396,23 @@ describe('Transaction Data Table Component', () => {
 
     it('displays "none" when there is no metadata hash', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'acfg',
-        note: 'Hello world',
-        lx: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-        rekey: 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
-        apar_un: 'FAKE',
-        apar_an: 'Fake Token',
-        apar_t: 10000000,
-        apar_dc: 5,
-        apar_df: true,
-        apar_au: 'https://fake.token',
-        apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-        apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-        apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        apar_am: '',
+        txn: {
+          type: 'acfg',
+          note: 'Hello world',
+          lx: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+          rekey: 'FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF',
+          apar_un: 'FAKE',
+          apar_an: 'Fake Token',
+          apar_t: 10000000,
+          apar_dc: 5,
+          apar_df: true,
+          apar_au: 'https://fake.token',
+          apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          apar_am: '',
+        }
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();
@@ -351,10 +424,12 @@ describe('Transaction Data Table Component', () => {
 
     it('displays asset freeze transaction data', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'afrz',
-        faid: 1234,
-        fadd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-        afrz: true,
+        txn: {
+          type: 'afrz',
+          faid: 1234,
+          fadd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          afrz: true,
+        }
       }));
       render(<TxnDataTable />);
 
@@ -374,15 +449,17 @@ describe('Transaction Data Table Component', () => {
 
     it('displays key registration transaction data for marking "online"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'keyreg',
-        votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
-        selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-        // eslint-disable-next-line max-len
-        sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
-        votefst: 6000000,
-        votelst: 6100000,
-        votekd: 1730,
-        nonpart: false,
+        txn: {
+          type: 'keyreg',
+          votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+          selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+          // eslint-disable-next-line max-len
+          sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+          votefst: 6000000,
+          votelst: 6100000,
+          votekd: 1730,
+          nonpart: false,
+        }
       }));
       render(<TxnDataTable />);
 
@@ -408,10 +485,12 @@ describe('Transaction Data Table Component', () => {
 
     it('displays key registration transaction data for marking "offline"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'keyreg',
-        votekey: '',
-        selkey: '',
-        sprfkey: '',
+        txn: {
+          type: 'keyreg',
+          votekey: '',
+          selkey: '',
+          sprfkey: '',
+        }
       }));
       render(<TxnDataTable />);
 
@@ -427,8 +506,10 @@ describe('Transaction Data Table Component', () => {
 
     it('displays key registration transaction data for marking "nonparticipating"', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'keyreg',
-        nonpart: true,
+        txn: {
+          type: 'keyreg',
+          nonpart: true,
+        }
       }));
       render(<TxnDataTable />);
 
@@ -450,20 +531,22 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application creation', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apan: 0,
-        apap: 'BYEB',
-        apsu: 'BYEB',
-        apgs_nui: 1,
-        apgs_nbs: 2,
-        apls_nui: 3,
-        apls_nbs: 4,
-        apep: 1,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apan: 0,
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apgs_nui: 1,
+          apgs_nbs: 2,
+          apls_nui: 3,
+          apls_nbs: 4,
+          apep: 1,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -489,16 +572,18 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application update', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 4,
-        apap: 'BYEB',
-        apsu: 'BYEB',
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 4,
+          apap: 'BYEB',
+          apsu: 'BYEB',
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -524,14 +609,16 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application deletion', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 5,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 5,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -557,14 +644,16 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application opt-in', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 1,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 1,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -590,14 +679,16 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application close-out', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 2,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 2,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -623,14 +714,16 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application clear-state', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 3,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 3,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 
@@ -656,14 +749,16 @@ describe('Transaction Data Table Component', () => {
 
     it('displays application call transaction data for application no-op call', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
-        type: 'appl',
-        apid: 12345678,
-        apan: 0,
-        apaa: ['foo', '42', ''],
-        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        apfa: [11111111, 22222222],
-        apas: [33333333, 44444444, 55555555],
-        apbx: [{i: 2, n: 'Boxy box' }],
+        txn: {
+          type: 'appl',
+          apid: 12345678,
+          apan: 0,
+          apaa: ['foo', '42', ''],
+          apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+          apfa: [11111111, 22222222],
+          apas: [33333333, 44444444, 55555555],
+          apbx: [{i: 2, n: 'Boxy box' }],
+        }
       }));
       render(<TxnDataTable />);
 

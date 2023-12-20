@@ -24,12 +24,33 @@ describe('Compose Form Component', () => {
     expect(await screen.findByText(/instructions/)).toBeInTheDocument();
   });
 
-  it('has base transaction fields', async () => {
+  it('has base transaction fields (using suggested parameters)', async () => {
     render(<ComposeForm />);
     expect(await screen.findByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.use_sug_fee.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.fee.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
+    // TODO: Add suggested 1st & last valid rounds
+    expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
+  });
+
+  it('has base transaction fields (not using suggested parameters)', async () => {
+    render(<ComposeForm />);
+    expect(await screen.findByText('fields.type.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
+
+    // Turn off suggested fee
+    const useSugFeeToggle = screen.getByLabelText('fields.use_sug_fee.label');
+    await userEvent.click(useSugFeeToggle);
+    expect(useSugFeeToggle).not.toBeChecked();
+
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
+    // TODO: Add suggested 1st & last valid rounds
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();

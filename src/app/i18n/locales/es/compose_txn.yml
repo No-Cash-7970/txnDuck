@@ -43,11 +43,17 @@ fields:
       La dirección de la cuenta que se excluye, que es también la dirección de la cuenta que paga la
       tarifa.
     placeholder: Dirección del remitente
+  use_sug_fee: # Use suggested fee to automatically set it?
+    label: ¿Fijar automáticamente la tarifa?
+    tip: >
+      Calcular y fijar automáticamente la tarifa. Las tarifas de las transacciones en Algorand se
+      fijan en función de la congestión de la red y del tamaño en bytes de la transacción. Cada
+      transacción debe cubrir al menos la tarifa mínima.
+    using_sug: (Automática)
+    not_using_sug: (Manual)
   fee: # Fee
     label: Tarifa
-    tip: >
-      Las tarifas de las transacciones en Algorand se fijan en función de la congestión de la red y
-      del tamaño en bytes de la transacción. Cada transacción debe cubrir al menos la tarifa mínima.
+    tip: Establezca manualmente la tarifa para esta transacción.
     help_msg_one: "Mínimo: {{count, number}} Algo" # If the fee is exactly 1 Algo
     help_msg_other: "Mínimo: {{count, number}} Algos" # If the fee is something other than 1 Algo
     in_algos_one: "{{count, number}} Algo"
