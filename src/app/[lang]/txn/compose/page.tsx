@@ -19,8 +19,7 @@ const ComposeForm = dynamic(() => import('./components/ComposeForm'),
         <FullWidthField containerClass='mt-6' />
         <SwitchField containerClass='max-w-xs mt-6' />
         <LargeAreaField containerClass='mt-6' />
-        <ExtraSmallField containerClass='mt-6' />
-        <ExtraSmallField containerClass='mt-6' />
+        <SwitchField containerClass='max-w-xs mt-6' />
       </div>
   },
 );

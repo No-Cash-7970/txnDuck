@@ -463,15 +463,26 @@ export default function TxnDataTable({ lng }: Props) {
           </tr>
         }
 
-        {/* TODO: Add suggested 1st & last valid rounds */}
         <tr>
-          <th role='rowheader' className='align-top'>{t('fields.fv.label')}</th>
+          <th role='rowheader' className='align-top'>
+            {t('fields.fv.label')}
+            <span className='ms-2'>{
+              storedTxnData?.useSugRounds
+                ? t('fields.use_sug_rounds.using_sug') : t('fields.use_sug_rounds.not_using_sug')
+            }</span>
+          </th>
           <td>
             {storedTxnData ? t('number_value', {value: storedTxnData?.txn?.fv}) : t('loading')}
           </td>
         </tr>
         <tr>
-          <th role='rowheader' className='align-top'>{t('fields.lv.label')}</th>
+          <th role='rowheader' className='align-top'>
+            {t('fields.lv.label')}
+            <span className='ms-2'>{
+              storedTxnData?.useSugRounds
+                ? t('fields.use_sug_rounds.using_sug') : t('fields.use_sug_rounds.not_using_sug')
+            }</span>
+          </th>
           <td>
             {storedTxnData ? t('number_value', {value: storedTxnData?.txn?.lv}) : t('loading')}
           </td>

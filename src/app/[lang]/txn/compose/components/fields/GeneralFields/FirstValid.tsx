@@ -7,12 +7,14 @@ import {
   showFormErrorsAtom,
   tipContentClass,
   tipBtnClass,
+  fvConditionalRequireAtom,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function FirstValid({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const fvLvGroup = useAtomValue(fvLvFormControlAtom);
+  const fvCondReqGroup = useAtomValue(fvConditionalRequireAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
   return (<>
     <NumberField label={t('fields.fv.label')}
@@ -29,8 +31,11 @@ export default function FirstValid({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerId='fv-field'
       containerClass='mt-4 max-w-xs'
-      inputClass={((showFormErrors || form.touched.fv) &&
-          (form.fieldErrors.fv || (!fvLvGroup.isValid && fvLvGroup.error))
+      inputClass={(
+          (showFormErrors || form.touched.fv) &&
+          (form.fieldErrors.fv
+            || (!fvLvGroup.isValid && fvLvGroup.error)
+            || (!fvCondReqGroup.isValid && fvCondReqGroup.error))
         )
         ? 'input-error' : ''
       }
@@ -53,6 +58,13 @@ export default function FirstValid({ t }: { t: TFunction }) {
       <FieldErrorMessage t={t}
         i18nkey={(fvLvGroup.error as any).message.key}
         dict={(fvLvGroup.error as any).message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.fv) && !fvCondReqGroup.isValid
+      && fvCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(fvCondReqGroup.error as any).message.key}
+        dict={(fvCondReqGroup.error as any).message.dict}
       />
     }
   </>);

@@ -116,16 +116,18 @@ export function loadStoredTxnData(
   jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
   jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note);
   jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? true);
+  jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? true);
 
   // Do not set the fee if the suggested fee is to be used
   if (!(storedTxnData?.useSugFee ?? true)) {
     jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
   }
 
-  // TODO: Set suggested 1st & last valid rounds
-
+  // Do not set the first & last valid rounds if the suggested rounds are to be used
+  if (!(storedTxnData?.useSugRounds ?? true)) {
   jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
   jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
+  }
 
   if (!preset || preset === Preset.AppRun) {
     jotaiStore.set(txnDataAtoms.lx, storedTxnData?.txn?.lx || '');
@@ -460,5 +462,6 @@ export function extractTxnDataFromAtoms(
   return {
     txn: {...baseTxnData, ...specificTxnData},
     useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
+    useSugRounds: jotaiStore.get(txnDataAtoms.useSugRounds).value,
   };
 }

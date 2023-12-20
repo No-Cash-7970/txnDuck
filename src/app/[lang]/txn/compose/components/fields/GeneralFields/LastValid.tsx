@@ -6,11 +6,13 @@ import {
   showFormErrorsAtom,
   tipContentClass,
   tipBtnClass,
+  lvConditionalRequireAtom,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function LastValid({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+  const lvCondReqGroup = useAtomValue(lvConditionalRequireAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
   return (<>
     <NumberField label={t('fields.lv.label')}
@@ -27,7 +29,10 @@ export default function LastValid({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerId='lv-field'
       containerClass='mt-4 max-w-xs'
-      inputClass={((showFormErrors || form.touched.lv) && form.fieldErrors.lv) ? 'input-error' : ''}
+      inputClass={((showFormErrors || form.touched.lv) &&
+        (form.fieldErrors.lv || (!lvCondReqGroup.isValid && lvCondReqGroup.error)))
+        ? 'input-error' : ''
+      }
       min={1}
       step={1}
       value={form.values.lv as number ?? ''}
@@ -41,6 +46,13 @@ export default function LastValid({ t }: { t: TFunction }) {
       <FieldErrorMessage t={t}
         i18nkey={form.fieldErrors.lv.message.key}
         dict={form.fieldErrors.lv.message.dict}
+      />
+    }
+    {(showFormErrors || form.touched.lv) && !lvCondReqGroup.isValid
+      && lvCondReqGroup.error &&
+      <FieldErrorMessage t={t}
+        i18nkey={(lvCondReqGroup.error as any).message.key}
+        dict={(lvCondReqGroup.error as any).message.dict}
       />
     }
   </>);

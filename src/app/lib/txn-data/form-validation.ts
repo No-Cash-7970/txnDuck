@@ -26,15 +26,22 @@ export function isFormValid(
   const fee = jotaiStore.get(FieldValidation.feeConditionalRequireAtom);
   if (!fee.isValidating && !fee.isValid) invalidGeneralFields.add('fee');
 
-  // If "rekey address" field did not meet the conditional validation
-  const rekey = jotaiStore.get(FieldValidation.rekeyConditionalRequireAtom);
-  if (!rekey.isValidating && !rekey.isValid) invalidGeneralFields.add('rekey');
+  // If "first valid round" field did not meet the conditional validation
+  const fv = jotaiStore.get(FieldValidation.fvConditionalRequireAtom);
+  if (!fv.isValidating && !fv.isValid) invalidGeneralFields.add('fv');
 
-  // TODO: Add conditional requirement check for 1st & last valid rounds
+  // If "last valid round" field did not meet the conditional validation
+  const lv = jotaiStore.get(FieldValidation.lvConditionalRequireAtom);
+  if (!lv.isValidating && !lv.isValid) invalidGeneralFields.add('lv');
 
   // Add "first valid round" field as an invalid general field if the first/last valid rounds did
   // not pass the special group validation
-  if (!jotaiStore.get(FieldValidation.fvLvFormControlAtom).isValid) invalidGeneralFields.add('fv');
+  const fvLvComparison = jotaiStore.get(FieldValidation.fvLvFormControlAtom);
+  if (!fvLvComparison.isValidating && !fvLvComparison.isValid) invalidGeneralFields.add('fv');
+
+  // If "rekey address" field did not meet the conditional validation
+  const rekey = jotaiStore.get(FieldValidation.rekeyConditionalRequireAtom);
+  if (!rekey.isValidating && !rekey.isValid) invalidGeneralFields.add('rekey');
 
   scrollToFirstInvalidField(invalidGeneralFields);
 

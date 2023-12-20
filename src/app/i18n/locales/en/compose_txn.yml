@@ -42,8 +42,8 @@ fields:
       The address of the account that is opting out, which is also the address of the account
       that pays the fee.
     placeholder: Sender address
-  use_sug_fee: # Use suggested fee to automatically set it?
-    label: Automatically set the fee?
+  use_sug_fee: # Use suggested fee?
+    label: Automatically set the fee
     tip: >
       Automatically calculate and set the fee. Fees for transactions on Algorand are set as a
       function of network congestion and based on the size in bytes of the transaction. Every
@@ -62,6 +62,13 @@ fields:
     tip: >
       Data to attach to this transaction. Examples: message in text, JSON data, byte data
     placeholder: Enter note…
+  use_sug_rounds: # Use suggested first & last rounds?
+    label: Automatically set valid rounds
+    tip: >
+      Automatically set the first valid round and the last valid round according to the current
+      round.
+    using_sug: (Automatic)
+    not_using_sug: (Manual)
   fv: # First valid round
     label: Transaction’s first valid round
     tip: >

@@ -19,7 +19,11 @@ import {
 } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { createTxnFromData, storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import { fee as feeAtom } from '@/app/lib/txn-data/atoms';
+import {
+  fee as feeAtom,
+  fv as firstRoundAtom,
+  lv as lastRoundAtom
+} from '@/app/lib/txn-data/atoms';
 import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import NextStepButton from './NextStepButton';
 
@@ -34,6 +38,8 @@ export default function SignTxn({ lng }: Props) {
   const currentURLParams = useSearchParams();
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const setFee = useSetAtom(feeAtom);
+  const setFirstRound = useSetAtom(firstRoundAtom);
+  const setLastRound = useSetAtom(lastRoundAtom);
 
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
@@ -64,12 +70,17 @@ export default function SignTxn({ lng }: Props) {
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     const suggestedParams = await getSuggestedParams;
-    let unsignedTxn = new Uint8Array;
     const unsignedTxnData = storedTxnData.txn;
+    let unsignedTxn = new Uint8Array;
 
-    // Retrieve suggested parameters if they are supposed to be used
+    // Set fee to suggested fee if suggested fee is to be used
     if (storedTxnData.useSugFee) unsignedTxnData.fee = suggestedParams.fee;
-    // TODO: Add first valid round and last valid round
+
+    if (storedTxnData.useSugRounds) {
+      // Set first & last valid rounds to suggested first & last rounds
+      unsignedTxnData.fv = suggestedParams.firstRound;
+      unsignedTxnData.lv = suggestedParams.lastRound;
+    }
 
     try {
       // Create Transaction object and encoded it
@@ -95,11 +106,19 @@ export default function SignTxn({ lng }: Props) {
   useEffect(() => {
     if (!storedTxnData) return;
 
-    getSuggestedParams.then(({genesisID, genesisHash, fee: feePerByte }) => {
-      // TODO: Add 1st & last valid rounds as function parameters above
-
+    getSuggestedParams.then(({genesisID, genesisHash, fee: feePerByte, firstRound, lastRound }) => {
       const unsignedTxnData = storedTxnData.txn;
       let unsignedTxn: algosdk.Transaction|null = null;
+
+      // If the suggested first & valid rounds are to be used, set first & valid rounds to suggested
+      // first & valid rounds. Do this before suggested fee is potentially when a algosdk
+      // `Transaction` object is created.
+      if (storedTxnData.useSugRounds) {
+        unsignedTxnData.fv = firstRound;
+        setFirstRound(firstRound);
+        unsignedTxnData.lv = lastRound;
+        setLastRound(lastRound);
+      }
 
       // Calculate the fee if the suggested fee is to be used. The easiest way the calculate the fee
       // is to create an algosdk `Transaction` object and set the fee-per-byte (by disabling the
@@ -109,8 +128,6 @@ export default function SignTxn({ lng }: Props) {
         unsignedTxn = createTxnFromData(unsignedTxnData, genesisID, genesisHash, false);
         setFee(microalgosToAlgos(unsignedTxn.fee));
       }
-
-      // TODO: Set suggested 1st & last valid rounds
 
       if (storedSignedTxn) {
         // Check if transaction data has been changed after it was signed. If the data has changed,

@@ -23,7 +23,8 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     genesisID: 'testnet-v1.0',
     genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
     fee: 1,
-    // TODO: Add first & last valid rounds
+    firstRound: 10000,
+    lastRound: 11000,
   }))
 }));
 

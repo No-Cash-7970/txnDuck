@@ -55,6 +55,7 @@ export const generalFormControlAtom = atomWithFormControls({
   fee: txnDataAtoms.fee,
   useSugFee: txnDataAtoms.useSugFee,
   note: txnDataAtoms.note,
+  useSugRounds: txnDataAtoms.useSugRounds,
   fv: txnDataAtoms.fv,
   lv: txnDataAtoms.lv,
   lx: txnDataAtoms.lx,
@@ -68,9 +69,6 @@ export const feeConditionalRequireAtom = validateAtoms({
     YupNumber().required().validateSync(values.fee);
   }
 });
-
-// TODO: Add condtional require check for 1st & last valid rounds
-
 export const rekeyConditionalRequireAtom = validateAtoms({
   preset: presetAtom,
   rekey: txnDataAtoms.rekey,
@@ -79,18 +77,35 @@ export const rekeyConditionalRequireAtom = validateAtoms({
     YupString().required().validateSync(values.rekey);
   }
 });
+export const fvConditionalRequireAtom = validateAtoms({
+  fv: txnDataAtoms.fv,
+  useSugRounds: txnDataAtoms.useSugRounds,
+}, (values) => {
+  if (!values.useSugRounds) {
+    YupNumber().required().validateSync(values.fv);
+  }
+});
+export const lvConditionalRequireAtom = validateAtoms({
+  lv: txnDataAtoms.lv,
+  useSugRounds: txnDataAtoms.useSugRounds,
+}, (values) => {
+  if (!values.useSugRounds) {
+    YupNumber().required().validateSync(values.lv);
+  }
+});
 export const fvLvFormControlAtom = validateAtoms({
   fv: txnDataAtoms.fv,
   lv: txnDataAtoms.lv,
 }, (values) => {
-    if (values.lv !== undefined) { // If a last round has been entered yet
-      // First valid round must be less than the last valid round
-      YupNumber()
-        .max((values.lv as number),
-          ({max}): ValidationMessage => ({key: 'fields.fv.max_error', dict: {max}})
-        )
-        .validateSync(values.fv);
-    }
+  // If both the first round and the last round are not empty
+  if (values.fv !== undefined && values.lv !== undefined) {
+    // First valid round must be less than the last valid round
+    YupNumber()
+      .max((values.lv as number),
+        ({max}): ValidationMessage => ({key: 'fields.fv.max_error', dict: {max}})
+      )
+      .validateSync(values.fv);
+  }
 });
 
 /*

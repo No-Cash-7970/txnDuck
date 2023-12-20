@@ -44,7 +44,7 @@ fields:
       tarifa.
     placeholder: Dirección del remitente
   use_sug_fee: # Use suggested fee to automatically set it?
-    label: ¿Fijar automáticamente la tarifa?
+    label: Fijar automáticamente la tarifa
     tip: >
       Calcular y fijar automáticamente la tarifa. Las tarifas de las transacciones en Algorand se
       fijan en función de la congestión de la red y del tamaño en bytes de la transacción. Cada
@@ -63,6 +63,13 @@ fields:
     tip: >
       Datos a adjuntar a esta transacción. Ejemplos: mensaje en texto, datos JSON, datos en bytes
     placeholder: Introduzca la nota…
+  use_sug_rounds: # Use suggested first & last rounds?
+    label: Establecer automáticamente rondas válidas
+    tip: >
+      Establecer automáticamente la primera ronda válida y la última ronda válida en función de la
+      ronda actual.
+    using_sug: (Automática)
+    not_using_sug: (Manual)
   fv: # First valid round
     label: Primera ronda válida de la transacción
     tip: >

@@ -11,7 +11,7 @@ import { useAtomValue } from 'jotai';
 import { Preset } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import ComposeSubmitButton from './ComposeSubmitButton';
-import { Fee, FirstValid, LastValid, Note, Sender, TxnType } from './fields/GeneralFields';
+import { Fee, Note, Sender, TxnType, ValidRounds } from './fields/GeneralFields';
 import {
   ArrayFieldGroup,
   ExtraSmallField,
@@ -272,8 +272,7 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.Nonparticipation t={t} />
       }
 
-      <FirstValid t={t} />
-      <LastValid t={t} />
+      <ValidRounds t={t} />
 
       {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
 

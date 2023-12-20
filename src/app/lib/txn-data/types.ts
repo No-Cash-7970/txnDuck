@@ -160,6 +160,8 @@ export interface StoredTxnData {
   txn: TxnData;
   /** Use suggested fee? */
   useSugFee: boolean;
+  /** Use suggested first & last valid rounds? */
+  useSugRounds: boolean;
 }
 
 /** Validation error message */

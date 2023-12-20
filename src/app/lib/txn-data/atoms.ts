@@ -56,15 +56,16 @@ export const note = atomWithValidate<string|undefined>(undefined, {
 
 /** First round */
 export const fv = atomWithValidate<number|undefined>(undefined, {
-  validate: v => { YupNumber().required().min(1).validateSync(v); return v; }
+  validate: v => { YupNumber().min(1).validateSync(v); return v; }
 });
 
 /** Last round */
 export const lv = atomWithValidate<number|undefined>(undefined, {
-  validate: v => { YupNumber().required().min(1).validateSync(v); return v; }
+  validate: v => { YupNumber().min(1).validateSync(v); return v; }
 });
 
-// TODO: Add atom for using suggested rounds
+/** Use suggested first & last valid rounds */
+export const useSugRounds = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Lease */
 export const lx = atomWithValidate<string>('', {

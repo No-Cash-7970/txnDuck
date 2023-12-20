@@ -31,9 +31,9 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.use_sug_fee.label')).toBeInTheDocument();
     expect(screen.queryByText('fields.fee.label')).not.toBeInTheDocument();
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
-    // TODO: Add suggested 1st & last valid rounds
-    expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.use_sug_rounds.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.fv.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.lv.label')).not.toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
   });
@@ -47,12 +47,16 @@ describe('Compose Form Component', () => {
     const useSugFeeToggle = screen.getByLabelText('fields.use_sug_fee.label');
     await userEvent.click(useSugFeeToggle);
     expect(useSugFeeToggle).not.toBeChecked();
-
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
-    // TODO: Add suggested 1st & last valid rounds
+
+    // Turn off suggested rounds
+    const useSugRoundsToggle = screen.getByLabelText('fields.use_sug_rounds.label');
+    await userEvent.click(useSugRoundsToggle);
+    expect(useSugRoundsToggle).not.toBeChecked();
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
+
+    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
   });

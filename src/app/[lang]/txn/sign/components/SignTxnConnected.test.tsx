@@ -39,7 +39,8 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     genesisID: 'testnet-v1.0',
     genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
     fee: 1,
-    // TODO: Add suggested 1st & last valid rounds
+    firstRound: 10000,
+    lastRound: 11000,
   }))
 }));
 
@@ -70,8 +71,7 @@ describe('Sign Transaction Component (Connected wallet)', () => {
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.002,"fv":1,"lv":2,' // Change the fee
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false}'
-      // TODO: Add 1st & last valid rounds
+      + '"useSugFee":false,"useSugRounds":false}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
@@ -87,8 +87,7 @@ describe('Sign Transaction Component (Connected wallet)', () => {
       '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,'
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false}'
-      // TODO: Add 1st & last valid rounds
+      + '"useSugFee":false,"useSugRounds":false}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,..."');
