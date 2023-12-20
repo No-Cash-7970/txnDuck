@@ -84,9 +84,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByLabelText('settings.theme_switcher.auto')).toBeChecked();
     expect(screen.getByLabelText('settings.ignore_form_errors')).not.toBeChecked();
     // TODO: Add more settings here
-
-    // Check if wallet disconnects
-    expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
   });
 
   it('has theme mode setting', () => {

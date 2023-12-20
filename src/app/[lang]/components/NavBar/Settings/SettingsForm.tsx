@@ -2,11 +2,9 @@
 
 import { useState } from 'react';
 import { useAtom } from 'jotai';
-import { useWallet } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
 import { CheckboxField, RadioButtonGroupField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
-import { getActiveProvider } from '@/app/lib/wallet-utils';
 import { WalletProvider } from '@/app/[lang]/components';
 import ConnectWallet from './ConnectWallet';
 import ToastNotification from './ToastNotification';
@@ -19,7 +17,6 @@ type Props = {
 /** Form that contains the settings fields and the reset button */
 export default function SettingsForm(props: Props) {
   const { t } = useTranslation(props.lng || '', ['app', 'common']);
-  const { activeAccount, providers } = useWallet();
   const [toastOpen, setToastOpen] = useState(false);
   const [toastMsg, setToastMsg] = useState('');
 
@@ -54,9 +51,6 @@ export default function SettingsForm(props: Props) {
     applyTheme(Settings.defaults.theme, false);
     setIgnoreFormErrors(Settings.defaults.ignoreFormErrors);
     // TODO: Add more settings here
-
-    // Disconnect wallet
-    if (activeAccount) getActiveProvider(providers)?.disconnect();
 
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
