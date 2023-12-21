@@ -178,31 +178,55 @@ fields:
     label: URL
     tip: A URL where more information about the asset can be retrieved.
     placeholder: "ipfs://"
+  apar_m_use_snd: # Use sender as manager?
+    label: Set the manager address to the sender address
+    tip: >
+      Use this transaction’s sender address as the manager address. The manager address is the
+      address of the account that can change the configuration of this asset and destroy it.
   apar_m: # Manager
     label: Manager address
     tip: >
-      The address of the account that can manage the configuration of the asset and destroy it. If
-      empty, reconfiguring is not permitted.
+      Set the manager address. It is the address of the account that can manage the configuration of
+      the asset and destroy it. If empty, reconfiguring is not permitted.
     placeholder: Manager address
+  apar_f_use_snd: # Use sender as freeze?
+    label: Set the freeze address to the sender address
+    tip: >
+      Use this transaction’s sender address as the freeze address. The freeze address is the address
+      of the account that can freeze holdings of this asset.
   apar_f: # Freeze address
     label: Freeze address
     tip: >
-      The address of the account used to freeze holdings of this asset. If empty, freezing is not
-      permitted.
+      Set the freeze address. It is the address of the account that can freeze holdings of this
+      asset. If empty, freezing is not permitted.
     placeholder: Freeze address
+  apar_c_use_snd: # Use sender as clawback?
+    label: Set the clawback address to the sender address
+    tip: >
+      Use this transaction’s sender address as the clawback address. The clawback address is the
+      address of the account that can clawback holdings of this asset.
   apar_c: # Clawback address
     label: Clawback address
     tip: >
-      The address of the account that can clawback holdings of this asset. If empty, clawback is not
-      permitted.
+      Set the clawback address. It is the address of the account that can clawback holdings of this
+      asset. If empty, clawback is not permitted.
     placeholder: Clawback address
+  apar_r_use_snd: # Use sender as reserve?
+    label: Set the reserve address to the sender address
+    tip: >
+      Use this transaction’s sender address as the reserve address. The reserve address is the
+      address of the account that holds the reserve (non-minted) units of the asset. This address
+      has no specific authority in the protocol itself. It is used in the case where you want to
+      signal to holders of your asset that the non-minted units of the asset reside in an account
+      that is different from the default creator account (the sender).
   apar_r: # Reserve address
     label: Reserve address
     tip: >
-      The address of the account that holds the reserve (non-minted) units of the asset. This
-      address has no specific authority in the protocol itself. It is used in the case where you
-      want to signal to holders of your asset that the non-minted units of the asset reside in an
-      account that is different from the default creator account (the sender).
+      Set the clawback address. The reserve address is the address of the account that holds the
+      reserve (non-minted) units of the asset. This address has no specific authority in the
+      protocol itself. It is used in the case where you want to signal to holders of your asset that
+      the non-minted units of the asset reside in an account that is different from the default
+      creator account (the sender).
     placeholder: Reserve address
   apar_am: # Metadata hash
     label: Metadata hash

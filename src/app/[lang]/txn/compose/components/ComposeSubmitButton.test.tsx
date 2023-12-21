@@ -10,7 +10,7 @@ jest.mock('react-i18next', () => i18nextClientMock);
 const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
-  useSearchParams: () => ({ get: () => '' }),
+  useSearchParams: () => ({ get: () => null }),
 }));
 // Mock the scrollIntoView() function
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -108,7 +108,9 @@ describe('Compose Form Component', () => {
     });
   });
 
-  it('can store submitted *asset configuration* transaction data', async () => {
+  // eslint-disable-next-line max-len
+  it('can store submitted *asset configuration* transaction data (with asset addresses set to sender)',
+  async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -130,14 +132,6 @@ describe('Compose Form Component', () => {
     await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
     await userEvent.click(screen.getByLabelText(/fields.apar_au.label/));
     await userEvent.paste('https://fake.token');
-    await userEvent.click(screen.getByLabelText(/fields.apar_m.label/));
-    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.apar_f.label/));
-    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.apar_c.label/));
-    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-    await userEvent.click(screen.getByLabelText(/fields.apar_r.label/));
-    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
     await userEvent.click(screen.getByLabelText(/fields.apar_am.label/));
     await userEvent.paste('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
 
@@ -163,8 +157,85 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      apar_mUseSnd: true,
+      apar_fUseSnd: true,
+      apar_cUseSnd: true,
+      apar_rUseSnd: true,
     });
-  }, 10000);
+  });
+
+  // eslint-disable-next-line max-len
+  it('can store submitted *asset configuration* transaction data (without asset addresses set to sender)',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_un.label/));
+    await userEvent.paste('FAKE');
+    await userEvent.click(screen.getByLabelText(/fields.apar_an.label/));
+    await userEvent.paste('Fake Token');
+    await userEvent.click(screen.getByLabelText(/fields.apar_t.label/));
+    await userEvent.paste('10000000');
+    await userEvent.click(screen.getByLabelText(/fields.apar_dc.label/));
+    await userEvent.paste('3');
+    await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
+    await userEvent.click(screen.getByLabelText(/fields.apar_au.label/));
+    await userEvent.paste('https://fake.token');
+
+    await userEvent.click(screen.getByLabelText(/fields.apar_m_use_snd.label/)); // Toggle to "off"
+    await userEvent.click(screen.getByLabelText(/fields.apar_m.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+
+    await userEvent.click(screen.getByLabelText(/fields.apar_f_use_snd.label/)); // Toggle to "off"
+    await userEvent.click(screen.getByLabelText(/fields.apar_f.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+
+    await userEvent.click(screen.getByLabelText(/fields.apar_c_use_snd.label/)); // Toggle to "off"
+    await userEvent.click(screen.getByLabelText(/fields.apar_c.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+
+    await userEvent.click(screen.getByLabelText(/fields.apar_r_use_snd.label/)); // Toggle to "off"
+    await userEvent.click(screen.getByLabelText(/fields.apar_r.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+
+    await userEvent.click(screen.getByLabelText(/fields.apar_am.label/));
+    await userEvent.paste('GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      txn: {
+        type: 'acfg',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_un: 'FAKE',
+        apar_an: 'Fake Token',
+        apar_t: '10000000',
+        apar_dc: 3,
+        apar_df: true,
+        apar_au: 'https://fake.token',
+        apar_m: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        apar_f: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        apar_c: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        apar_r: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
+      },
+      useSugFee: true,
+      useSugRounds: true,
+      apar_mUseSnd: false,
+      apar_fUseSnd: false,
+      apar_cUseSnd: false,
+      apar_rUseSnd: false,
+    });
+  });
 
   it('can store submitted *asset freeze* transaction data', async () => {
     render(
@@ -406,5 +477,6 @@ describe('Compose Form Component', () => {
       amt: 42,
     });
   });
+
 
 });

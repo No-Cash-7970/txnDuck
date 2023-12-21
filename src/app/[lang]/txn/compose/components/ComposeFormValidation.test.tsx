@@ -8,7 +8,7 @@ import { JotaiProvider } from '@/app/[lang]/components'; // Must be imported aft
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock useRouter
 const routerPushMock = jest.fn();
-let presetMockValue = '';
+let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
   useSearchParams: () => ({ get: () => presetMockValue }),
@@ -20,7 +20,7 @@ import ComposeForm from './ComposeForm';
 
 describe('Compose Form Component', () => {
   afterEach(() => {
-    presetMockValue = '';
+    presetMockValue = null;
     localStorage.clear();
   });
 
@@ -159,8 +159,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
-  it('does not proceed and shows errors if invalid *asset configuration* transaction data is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid *asset configuration* transaction data is submitted',
   async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -187,10 +187,10 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_t.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_dc.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_au.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_m_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_f_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_c_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_r_use_snd.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
 
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
@@ -492,10 +492,10 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_t.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_dc.label/)).toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_au.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toHaveClass('input-error');
-    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_m_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_f_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_c_use_snd.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.apar_r_use_snd.label/)).not.toHaveClass('input-error');
     expect(screen.getByLabelText(/fields.apar_am.label/)).not.toHaveClass('input-error');
 
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);

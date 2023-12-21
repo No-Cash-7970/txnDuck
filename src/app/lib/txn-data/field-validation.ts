@@ -164,9 +164,13 @@ export const assetConfigFormControlAtom = atomWithFormControls({
   apar_df: txnDataAtoms.apar_df,
   apar_au: txnDataAtoms.apar_au,
   apar_m: txnDataAtoms.apar_m,
+  apar_mUseSnd: txnDataAtoms.apar_mUseSnd,
   apar_f: txnDataAtoms.apar_f,
+  apar_fUseSnd: txnDataAtoms.apar_fUseSnd,
   apar_c: txnDataAtoms.apar_c,
+  apar_cUseSnd: txnDataAtoms.apar_cUseSnd,
   apar_r: txnDataAtoms.apar_r,
+  apar_rUseSnd: txnDataAtoms.apar_rUseSnd,
   apar_am: txnDataAtoms.apar_am,
 });
 export const caidConditionalRequireAtom = validateAtoms({

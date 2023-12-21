@@ -6,7 +6,7 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock useRouter
-let presetMockValue = '';
+let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
   useSearchParams: () => ({ get: () => presetMockValue }),
@@ -16,7 +16,7 @@ import ComposeForm from './ComposeForm';
 
 describe('Compose Form Component', () => {
   afterEach(() => {
-    presetMockValue = '';
+    presetMockValue = null;
   });
 
   it('has instructions', async () => {
@@ -96,8 +96,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
-  it('has fields for asset configuration transaction type if "Asset Configuration" transaction type'
-    + ' is selected',
+  // eslint-disable-next-line max-len
+  it('has fields (with asset addresses set to sender) for asset configuration transaction type if "Asset Configuration" type is selected',
   async () => {
     render(<ComposeForm />);
 
@@ -108,9 +108,13 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
 
@@ -123,11 +127,74 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apar_dc.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apar_au.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_m_use_snd.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apar_f_use_snd.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apar_c_use_snd.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+    expect(screen.getByText('fields.apar_r_use_snd.label')).toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+  });
+
+  // eslint-disable-next-line max-len
+  it('has fields (without asset addresses set to sender) for asset configuration transaction type if "Asset Configuration" type is selected',
+  async () => {
+    render(<ComposeForm />);
+
+    expect(screen.queryByText('fields.caid.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_t.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_dc.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_df.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m_use_snd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f_use_snd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c_use_snd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r_use_snd.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+
+    expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_un.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_an.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_t.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_dc.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_au.label')).toBeInTheDocument();
+    expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+
+    // Turn off using sender for manager address
+    const aparMSndToggle = screen.getByLabelText('fields.apar_m_use_snd.label');
+    await userEvent.click(aparMSndToggle);
+    expect(aparMSndToggle).not.toBeChecked();
+    expect(screen.getByText('fields.apar_m.label')).toBeInTheDocument();
+
+    // Turn off using sender for freeze address
+    const aparFSndToggle = screen.getByLabelText('fields.apar_f_use_snd.label');
+    await userEvent.click(aparFSndToggle);
+    expect(aparFSndToggle).not.toBeChecked();
+    expect(screen.getByText('fields.apar_f.label')).toBeInTheDocument();
+
+    // Turn off using sender for clawback address
+    const aparCSndToggle = screen.getByLabelText('fields.apar_c_use_snd.label');
+    await userEvent.click(aparCSndToggle);
+    expect(aparCSndToggle).not.toBeChecked();
+    expect(screen.getByText('fields.apar_c.label')).toBeInTheDocument();
+
+    // Turn off using sender for reserve address
+    const aparRSndToggle = screen.getByLabelText('fields.apar_r_use_snd.label');
+    await userEvent.click(aparRSndToggle);
+    expect(aparRSndToggle).not.toBeChecked();
+    expect(screen.getByText('fields.apar_r.label')).toBeInTheDocument();
+
   });
 
   it('has fields for asset freeze transaction type if "Asset Freeze" transaction type is selected',
@@ -320,10 +387,10 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apar_dc.label/)).toBeRequired();
     expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
     expect(screen.getByLabelText(/fields.apar_au.label/)).not.toBeRequired();
-    expect(screen.getByLabelText(/fields.apar_m.label/)).not.toBeRequired();
-    expect(screen.getByLabelText(/fields.apar_f.label/)).not.toBeRequired();
-    expect(screen.getByLabelText(/fields.apar_c.label/)).not.toBeRequired();
-    expect(screen.getByLabelText(/fields.apar_r.label/)).not.toBeRequired();
+    expect(screen.getByLabelText(/fields.apar_m_use_snd.label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_f_use_snd.label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_c_use_snd.label/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/fields.apar_r_use_snd.label/)).toBeInTheDocument();
     expect(screen.getByLabelText(/fields.apar_am.label/)).not.toBeRequired();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();

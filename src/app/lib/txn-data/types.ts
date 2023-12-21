@@ -162,6 +162,14 @@ export interface StoredTxnData {
   useSugFee: boolean;
   /** Use suggested first & last valid rounds? */
   useSugRounds: boolean;
+  /** Set manager address to the sender address? */
+  apar_mUseSnd?: boolean;
+  /** Set freeze address to the sender address? */
+  apar_fUseSnd?: boolean;
+  /** Set clawback address to the sender address? */
+  apar_cUseSnd?: boolean;
+  /** Set reseve address to the sender address? */
+  apar_rUseSnd?: boolean;
 }
 
 /** Validation error message */

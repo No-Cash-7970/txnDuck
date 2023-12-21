@@ -44,7 +44,7 @@ fields:
       tarifa.
     placeholder: Dirección del remitente
   use_sug_fee: # Use suggested fee to automatically set it?
-    label: Fijar automáticamente la tarifa
+    label: Establecer automáticamente la tarifa
     tip: >
       Calcular y fijar automáticamente la tarifa. Las tarifas de las transacciones en Algorand se
       fijan en función de la congestión de la red y del tamaño en bytes de la transacción. Cada
@@ -181,31 +181,59 @@ fields:
     label: URL
     tip: Una URL donde se puede obtener más información sobre el activo.
     placeholder: "ipfs://"
+  apar_m_use_snd: # Use sender as manager?
+    label: Establecer la dirección del remitente como dirección del administrador
+    tip: >
+      Utilizar la dirección del remitente de esta transacción como dirección del administrador. La
+      dirección del gestor es la dirección de la cuenta que puede cambiar la configuración de este
+      activo y destruirlo.
   apar_m: # Manager
     label: Administrador
     tip: >
-      La dirección de la cuenta que puede gestionar la configuración del activo y destruirlo. Si
-      está vacía, no se permite la reconfiguración.
+      Establezca la dirección del administrador. Es la dirección de la cuenta que puede cambiar la
+      configuración del activo y destruirlo. Si está vacía, no se permite la reconfiguración.
     placeholder: Dirección del administrador
+  apar_f_use_snd: # Use sender as freeze?
+    label: Establecer la dirección para congelar en la dirección del remitente
+    tip: >
+      Utilizar la dirección del remitente de esta transacción como dirección de congelación. La
+      dirección para congelar es la dirección de la cuenta que puede congelar las tenencias de este
+      activo.
   apar_f: # Freeze address
     label: Dirección para congelar
     tip: >
-      Dirección de la cuenta utilizada para congelar las tenencias de este activo. Si está vacía, no
-      se permite la congelación.
+      Establezca la dirección para congelar. Es la dirección de la cuenta que puede congelar las
+      tenencias de este activo. Si está vacía, no se permite la congelación.
     placeholder: Dirección para congelar
+  apar_c_use_snd: # Use sender as clawback?
+    label: Establecer la dirección para revocar a la dirección del remitente
+    tip: >
+      Utilizar la dirección del remitente de esta transacción como dirección para revocar. La
+      dirección para revocar es la dirección de la cuenta que puede revocar las tenencias de este
+      activo.
   apar_c: # Clawback address
     label: Dirección para revocar
     tip: >
-      Dirección de la cuenta que puede recuperar las tenencias de este activo. Si está vacía, no se
-      permite la recuperación.
+      Establezca la dirección para revocar. Es la dirección de la cuenta que puede revocar las
+      tenencias de este activo. Si está vacía, no se permite la revocación.
     placeholder: Dirección para revocar
+  apar_r_use_snd: # Use sender as reserve?
+    label: Establecer la dirección de reserva en la dirección del remitente
+    tip: >
+      Utilizar la dirección del remitente de esta transacción como dirección de reserva. La
+      dirección de reserva es la dirección de la cuenta que mantiene las unidades de reserva (no
+      acuñadas) del activo. Esta dirección no tiene ninguna autoridad específica en el propio
+      protocolo. Se utiliza en el caso de que desee indicar a los titulares de su activo que las
+      unidades no acuñadas del activo residen en una cuenta distinta de la cuenta del creador por
+      defecto (el remitente).
   apar_r: # Reserve address
     label: Dirección de la reserva
     tip: >
-      Dirección de la cuenta que mantiene las unidades de reserva (no acuñadas) del activo. Esta
-      dirección no tiene autoridad específica en el propio protocolo. Se utiliza en el caso de que
-      desee indicar a los titulares de su activo que las unidades no acuñadas del activo residen en
-      una cuenta distinta de la cuenta del creador por defecto (el remitente).
+      Establezca la dirección de reserva. La dirección de reserva es la dirección de la cuenta que
+      mantiene las unidades de reserva (no acuñadas) del activo. Esta dirección no tiene ninguna
+      autoridad específica en el propio protocolo. Se utiliza en el caso de que desee indicar a los
+      titulares de su activo que las unidades no acuñadas del activo residen en una cuenta distinta
+      de la cuenta del creador por defecto (el remitente).
     placeholder: Dirección de la reserva
   apar_am: # Metadata hash
     label: Hash de metadatos

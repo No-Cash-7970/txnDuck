@@ -179,11 +179,34 @@ export function loadStoredTxnData(
     jotaiStore.set(txnDataAtoms.apar_dc, (storedTxnData?.txn as AssetConfigTxnData)?.apar_dc);
     jotaiStore.set(txnDataAtoms.apar_df, !!((storedTxnData?.txn as AssetConfigTxnData)?.apar_df));
     jotaiStore.set(txnDataAtoms.apar_au, (storedTxnData?.txn as AssetConfigTxnData)?.apar_au || '');
-    jotaiStore.set(txnDataAtoms.apar_m, (storedTxnData?.txn as AssetConfigTxnData)?.apar_m || '');
-    jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData?.txn as AssetConfigTxnData)?.apar_f || '');
-    jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData?.txn as AssetConfigTxnData)?.apar_c || '');
-    jotaiStore.set(txnDataAtoms.apar_r, (storedTxnData?.txn as AssetConfigTxnData)?.apar_r || '');
-    jotaiStore.set(txnDataAtoms.apar_am, (storedTxnData?.txn as AssetConfigTxnData)?.apar_am || '');
+
+    jotaiStore.set(txnDataAtoms.apar_mUseSnd, storedTxnData?.apar_mUseSnd ?? true);
+
+    // Do not set the manager address if the sender is to be used
+    if (!(storedTxnData?.apar_mUseSnd ?? true)) {
+      jotaiStore.set(txnDataAtoms.apar_m, (storedTxnData?.txn as AssetConfigTxnData)?.apar_m || '');
+    }
+
+    jotaiStore.set(txnDataAtoms.apar_fUseSnd, storedTxnData?.apar_fUseSnd ?? true);
+
+    // Do not set the freeze address if the sender is to be used
+    if (!(storedTxnData?.apar_fUseSnd ?? true)) {
+      jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData?.txn as AssetConfigTxnData)?.apar_f || '');
+    }
+
+    jotaiStore.set(txnDataAtoms.apar_cUseSnd, storedTxnData?.apar_cUseSnd ?? true);
+
+    // Do not set the clawback address if the sender is to be used
+    if (!(storedTxnData?.apar_cUseSnd ?? true)) {
+      jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData?.txn as AssetConfigTxnData)?.apar_c || '');
+    }
+
+    jotaiStore.set(txnDataAtoms.apar_rUseSnd, storedTxnData?.apar_rUseSnd ?? true);
+
+    // Do not set the reserve address if the sender is to be used
+    if (!(storedTxnData?.apar_rUseSnd ?? true)) {
+      jotaiStore.set(txnDataAtoms.apar_r, (storedTxnData?.txn as AssetConfigTxnData)?.apar_r || '');
+    }
   }
 
   // Restore asset freeze transaction data, if applicable
@@ -328,6 +351,13 @@ export function extractTxnDataFromAtoms(
   };
   let specificTxnData: any = {};
 
+  let acfgOptions: {
+    apar_mUseSnd?: boolean,
+    apar_fUseSnd?: boolean,
+    apar_cUseSnd?: boolean,
+    apar_rUseSnd?: boolean,
+  } = {};
+
   // Gather payment transaction data
   if (txnType === TransactionType.pay) {
     const paymentForm = jotaiStore.get(paymentFormControlAtom);
@@ -393,6 +423,22 @@ export function extractTxnDataFromAtoms(
       apar_r: assetConfigForm.values.apar_r,
       apar_am: assetConfigForm.values.apar_am,
     };
+
+    // If creating an asset
+    if ((!specificTxnData.caid && preset === null) || preset === Preset.AssetCreate) {
+      // Set the asset addresses to sender, if applicable
+      if (assetConfigForm.values.apar_mUseSnd) specificTxnData.apar_m = baseTxnData.snd;
+      if (assetConfigForm.values.apar_fUseSnd) specificTxnData.apar_f = baseTxnData.snd;
+      if (assetConfigForm.values.apar_cUseSnd) specificTxnData.apar_c = baseTxnData.snd;
+      if (assetConfigForm.values.apar_rUseSnd) specificTxnData.apar_r = baseTxnData.snd;
+
+      acfgOptions = {
+        apar_mUseSnd: !!assetConfigForm.values.apar_mUseSnd,
+        apar_fUseSnd: !!assetConfigForm.values.apar_fUseSnd,
+        apar_cUseSnd: !!assetConfigForm.values.apar_cUseSnd,
+        apar_rUseSnd: !!assetConfigForm.values.apar_rUseSnd,
+      };
+    }
 
     if (preset === Preset.AssetDestroy) {
       specificTxnData.apar_m = undefined;
@@ -465,5 +511,6 @@ export function extractTxnDataFromAtoms(
     txn: {...baseTxnData, ...specificTxnData},
     useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
     useSugRounds: jotaiStore.get(txnDataAtoms.useSugRounds).value,
+    ...acfgOptions
   };
 }

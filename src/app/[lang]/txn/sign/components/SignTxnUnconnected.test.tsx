@@ -84,7 +84,8 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.002,"fv":1,"lv":2,' // Change the fee
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false,"useSugRounds":false}'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
@@ -100,7 +101,8 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
       '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,'
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false,"useSugRounds":false}'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,..."');

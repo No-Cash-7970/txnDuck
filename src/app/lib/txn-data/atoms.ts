@@ -211,6 +211,8 @@ export const apar_m = atomWithValidate<string>('', {
     return v;
   }
 });
+/** Asset configuration - Use sender as manager address */
+export const apar_mUseSnd = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Asset configuration - Freeze address */
 export const apar_f = atomWithValidate<string>('', {
@@ -219,6 +221,8 @@ export const apar_f = atomWithValidate<string>('', {
     return v;
   }
 });
+/** Asset configuration - Use sender as freeze address */
+export const apar_fUseSnd = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Asset configuration - Clawback address */
 export const apar_c = atomWithValidate<string>('', {
@@ -227,6 +231,8 @@ export const apar_c = atomWithValidate<string>('', {
     return v;
   }
 });
+/** Asset configuration - Use sender as clawback address */
+export const apar_cUseSnd = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Asset configuration - Reserve address */
 export const apar_r = atomWithValidate<string>('', {
@@ -235,6 +241,8 @@ export const apar_r = atomWithValidate<string>('', {
     return v;
   }
 });
+/** Asset configuration - Use sender as reserve address */
+export const apar_rUseSnd = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Asset configuration - Metadata hash */
 export const apar_am = atomWithValidate<string>('', {
