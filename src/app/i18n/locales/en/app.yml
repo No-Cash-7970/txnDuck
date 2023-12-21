@@ -28,6 +28,8 @@ settings:
     dark: Dark
     auto: Automatic
   ignore_form_errors: Allow forms to be submitted with errors
+  default_use_sug_fee: Set fee automatically by default
+  default_use_sug_rounds: Set valid rounds automatically by default
 wallet:
   connect: Connect wallet
   disconnect: Disconnect wallet

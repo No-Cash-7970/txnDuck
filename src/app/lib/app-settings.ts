@@ -23,6 +23,12 @@ export const defaults = {
    * (default: `false` - Do not ignore)
    */
   ignoreFormErrors: false,
+  /** Use the suggested fee by default (default: `true` - Use suggested fee by default) */
+  defaultUseSugFee: true,
+  /** Use the suggested first & last valid round by default
+   * (default: `true` - Use suggested rounds by default)
+   */
+  defaultUseSugRounds: true,
 };
 
 /** Theme mode */
@@ -30,3 +36,9 @@ export const themeAtom = atomWithStorage<Themes>('theme', defaults.theme, storag
 /** Ignore validation errors? */
 export const ignoreFormErrorsAtom =
   atomWithStorage<boolean>('ignoreFormErrors', defaults.ignoreFormErrors, storage);
+/** Use suggested fee by default */
+export const defaultUseSugFee =
+  atomWithStorage<boolean>('defaultUseSugFee', defaults.defaultUseSugFee, storage);
+/** Use suggested first & last valid rounds by default */
+export const defaultUseSugRounds =
+  atomWithStorage<boolean>('defaultUseSugRounds', defaults.defaultUseSugRounds, storage);

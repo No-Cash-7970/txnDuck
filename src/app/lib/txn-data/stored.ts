@@ -30,6 +30,7 @@ import {
   keyRegFormControlAtom,
   paymentFormControlAtom
 } from './field-validation';
+import * as AppSettings from '../app-settings';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
@@ -59,11 +60,6 @@ export function loadStoredTxnData(
   // is submitted. If the form is being submitted, the transaction data does not need to be
   // restored into the atoms, so we can stop here to save time and effort.
   if (submittingForm) return;
-  // Nothing else to do if there is no stored transaction data and not using a preset
-  if (!storedTxnData && !preset) return;
-
-  // NOTE: At this point, there is stored transaction and/or using a preset.  Certain field atoms
-  // may be set according the preset being used.
 
   /*
    * Set transaction type according to preset
@@ -72,6 +68,8 @@ export function loadStoredTxnData(
   let txnType = storedTxnData?.txn?.type;
 
   switch (preset) {
+    case undefined:
+      break; // Shortcut out. No need to evaluate the rest of the cases.
     case Preset.TransferAlgos:
     case Preset.RekeyAccount:
     case Preset.CloseAccount:
@@ -115,18 +113,22 @@ export function loadStoredTxnData(
   jotaiStore.set(txnDataAtoms.txnType, txnType);
   jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
   jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note);
-  jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? true);
-  jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? true);
+
+  const defaultUseSugFee = jotaiStore.get(AppSettings.defaultUseSugFee);
+  jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? defaultUseSugFee);
 
   // Do not set the fee if the suggested fee is to be used
-  if (!(storedTxnData?.useSugFee ?? true)) {
+  if (!(storedTxnData?.useSugFee ?? defaultUseSugFee)) {
     jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
   }
 
+  const defaultUseSugRounds = jotaiStore.get(AppSettings.defaultUseSugRounds);
+  jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? defaultUseSugRounds);
+
   // Do not set the first & last valid rounds if the suggested rounds are to be used
-  if (!(storedTxnData?.useSugRounds ?? true)) {
-  jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
-  jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
+  if (!(storedTxnData?.useSugRounds ?? defaultUseSugRounds)) {
+    jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
+    jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
   }
 
   if (!preset || preset === Preset.AppRun) {

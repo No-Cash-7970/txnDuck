@@ -28,6 +28,8 @@ settings:
     dark: Oscuro
     auto: Automático
   ignore_form_errors: Permita que los formularios se envíen con errores
+  default_use_sug_fee: Fijar la tarifa automáticamente por defecto
+  default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
 wallet:
   connect: Conecte la cartera
   disconnect: Desconecte la cartera

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useAtom } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
-import { CheckboxField, RadioButtonGroupField } from '@/app/[lang]/components/form';
+import { CheckboxField, RadioButtonGroupField, ToggleField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
 import { WalletProvider } from '@/app/[lang]/components';
 import ConnectWallet from './ConnectWallet';
@@ -23,7 +23,9 @@ export default function SettingsForm(props: Props) {
   /* Settings Data */
   const [theme, setTheme] = useAtom(Settings.themeAtom);
   const [ignoreFormErrors, setIgnoreFormErrors] = useAtom(Settings.ignoreFormErrorsAtom);
-  // TODO: Add more settings here
+  const [defaultUseSugFee, setDefaultUseSugFee] = useAtom(Settings.defaultUseSugFee);
+  const [defaultUseSugRounds, setDefaultUseSugRounds] = useAtom(Settings.defaultUseSugRounds);
+  // XXX: Add more settings here
 
   /** Notify user that the updated settings have been saved */
   const notifySave = () => {
@@ -50,7 +52,9 @@ export default function SettingsForm(props: Props) {
     // Set to defaults
     applyTheme(Settings.defaults.theme, false);
     setIgnoreFormErrors(Settings.defaults.ignoreFormErrors);
-    // TODO: Add more settings here
+    setDefaultUseSugFee(Settings.defaults.defaultUseSugFee);
+    setDefaultUseSugRounds(Settings.defaults.defaultUseSugRounds);
+    // XXX: Add more settings here
 
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
@@ -81,7 +85,7 @@ export default function SettingsForm(props: Props) {
 
       {/* Setting: Ignore form validation errors setting */}
       <CheckboxField
-        name='ignore-form-errors'
+        name='ignore_form_errors'
         label={t('settings.ignore_form_errors')}
         labelClass='justify-start cursor-pointer'
         inputClass='checkbox-primary me-4'
@@ -90,7 +94,27 @@ export default function SettingsForm(props: Props) {
         onChange={(e) => {setIgnoreFormErrors(e.target.checked); notifySave();}}
       />
 
-      {/* TODO: Add more settings here */}
+      {/* Setting: Use suggested fee by default */}
+      <ToggleField
+        name='default_use_sug_fee'
+        label={t('settings.default_use_sug_fee')}
+        inputClass='toggle-primary'
+        containerClass='mt-4'
+        value={defaultUseSugFee}
+        onChange={(e) => {setDefaultUseSugFee(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Use suggested rounds by default */}
+      <ToggleField
+        name='default_use_sug_rounds'
+        label={t('settings.default_use_sug_rounds')}
+        inputClass='toggle-primary'
+        containerClass='mt-4'
+        value={defaultUseSugRounds}
+        onChange={(e) => {setDefaultUseSugRounds(e.target.checked); notifySave();}}
+      />
+
+      {/* XXX: Add more settings here */}
     </form>
     <div className='action mt-8 grid justify-end'>
       <button className='btn btn-sm btn-link text-base-content p-0' onClick={resetSettings}>

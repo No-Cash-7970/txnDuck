@@ -3,7 +3,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { IconArrowLeft, IconArrowRight } from '@tabler/icons-react';
 import { useAtomValue, useStore } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
-import { ignoreFormErrorsAtom } from '@/app/lib/app-settings';
+import * as AppSettings from '@/app/lib/app-settings';
 import {
   Preset,
   extractTxnDataFromAtoms,
@@ -25,10 +25,15 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
   const storedTxnData = useAtomValue(storedTxnDataAtom);
-  const ignoreFormErrors = useAtomValue(ignoreFormErrorsAtom);
+  const ignoreFormErrors = useAtomValue(AppSettings.ignoreFormErrorsAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(Preset.ParamName);
+
+  // Load these settings from localStorage so they are ready to be used by `loadStoredTxnData()` in
+  // the `useEffect` hook because loading from localStorage takes a little bit of time.
+  useAtomValue(AppSettings.defaultUseSugFee);
+  useAtomValue(AppSettings.defaultUseSugRounds);
 
   useEffect(
     () => loadStoredTxnData(submittingForm, preset, jotaiStore, storedTxnData),

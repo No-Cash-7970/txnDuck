@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { Provider as ToastProvider, Viewport as ToastViewport } from '@radix-ui/react-toast';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
-import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
+import { useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -70,11 +70,12 @@ describe('Settings Dialog', () => {
       </ToastProvider>
     );
     // Change settings to non-default values
-    Promise.all([
-      userEvent.click(screen.getByLabelText('settings.theme_switcher.light')),
-      userEvent.click(screen.getByLabelText('settings.ignore_form_errors')),
-      // TODO: Add more settings here
-    ]);
+    await userEvent.click(screen.getByLabelText('settings.theme_switcher.light'));
+    await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
+    await userEvent.click(screen.getByLabelText('settings.default_use_sug_fee'));
+    await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
+    // XXX: Add more settings here
+
     // Click reset button
     await userEvent.click(screen.getByText('settings.reset_button'));
     // Check for toast notification
@@ -83,7 +84,9 @@ describe('Settings Dialog', () => {
     // Check settings
     expect(screen.getByLabelText('settings.theme_switcher.auto')).toBeChecked();
     expect(screen.getByLabelText('settings.ignore_form_errors')).not.toBeChecked();
-    // TODO: Add more settings here
+    expect(screen.getByLabelText('settings.default_use_sug_fee')).toBeChecked();
+    expect(screen.getByLabelText('settings.default_use_sug_rounds')).toBeChecked();
+    // XXX: Add more settings here
   });
 
   it('has theme mode setting', () => {
