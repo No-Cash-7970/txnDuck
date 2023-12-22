@@ -21,6 +21,10 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
   reporter: 'list',
+  /* Timeout for a test */
+  timeout: 60 * 1000, // 1 minute
+  /* Timeout for an `expect` assertion */
+  expect: { timeout: 10000 },
   /* Shared settings for all the projects below.
    * See https://playwright.dev/docs/api/class-testoptions.
    */
@@ -75,6 +79,5 @@ export default defineConfig({
     command: 'yarn prod',
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes
   },
 });
