@@ -86,8 +86,9 @@ export function UseSugFeeInput({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='useSugFee-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-4 max-w-lg'
       inputClass='toggle-primary'
+      labelClass='gap-3'
       value={!!form.values.useSugFee}
       onChange={(e) => {
         form.setTouched('useSugFee', true);

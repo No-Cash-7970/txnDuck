@@ -20,6 +20,7 @@ export default function DefaultFrozen({ t }: { t: TFunction }) {
       containerId='apar_df-field'
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
+      labelClass='gap-3'
       value={!!form.values.apar_df}
       onChange={(e) => {
         form.setTouched('apar_df', true);

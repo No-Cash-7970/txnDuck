@@ -25,8 +25,9 @@ export default function Freeze({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='afrz-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-4 max-w-lg'
       inputClass='toggle-primary'
+      labelClass='gap-3'
       disabled={preset === Preset.AssetFreeze || preset === Preset.AssetUnfreeze}
       value={!!form.values.afrz}
       onChange={(e) => {

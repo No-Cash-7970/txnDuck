@@ -34,8 +34,9 @@ export function UseSugRoundsInput({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='useSugRounds-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-4 max-w-lg'
       inputClass='toggle-primary'
+      labelClass='gap-3'
       value={!!form.values.useSugRounds}
       onChange={(e) => {
         form.setTouched('useSugRounds', true);

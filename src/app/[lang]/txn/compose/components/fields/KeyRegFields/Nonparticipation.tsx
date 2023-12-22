@@ -27,8 +27,9 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='nonpart-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-4 max-w-lg'
       inputClass='toggle-primary'
+      labelClass='gap-3'
       disabled={preset === Preset.RegNonpart}
       value={!!form.values.nonpart}
       onChange={(e) => {

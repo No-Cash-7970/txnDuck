@@ -80,7 +80,7 @@ const AssetConfigFields = {
     { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
   ),
   DefaultFrozen: dynamic(() => import('./fields/AssetConfigFields/DefaultFrozen'),
-    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-lg mt-6' /> },
   ),
   URL: dynamic(() => import('./fields/AssetConfigFields/URL'),
     { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
@@ -111,7 +111,7 @@ const AssetFreezeFields = {
     { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
   ),
   Freeze: dynamic(() => import('./fields/AssetFreezeFields/Freeze'),
-    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-lg mt-6' /> },
   ),
 };
 
@@ -163,7 +163,7 @@ const KeyRegFields = {
     { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
   ),
   Nonparticipation: dynamic(() => import('./fields/KeyRegFields/Nonparticipation'),
-    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-lg mt-6' /> },
   ),
 };
 
