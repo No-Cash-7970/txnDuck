@@ -3,10 +3,10 @@
     Transaction Builder UI
 </h1>
 
-![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)&nbsp;
-![Next.js badge](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js)&nbsp;
-![Tailwindcss badge](https://img.shields.io/badge/Tailwindcss-0ea5e9?style=for-the-badge&logo=tailwindcss&logoColor=white)&nbsp;
-![License MIT badge](https://img.shields.io/github/license/No-Cash-7970/txnDuck?style=for-the-badge&color=8e5548)&nbsp;
+[![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)](https://developer.algorand.org/)&nbsp;
+[![Next.js badge](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)&nbsp;
+[![Tailwindcss badge](https://img.shields.io/badge/Tailwindcss-0ea5e9?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)&nbsp;
+[![License MIT badge](https://img.shields.io/github/license/No-Cash-7970/txnDuck?style=for-the-badge&color=8e5548)](LICENSE.md)&nbsp;
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck?ref=badge_small)
 
 A free and open source web-based tool that serves as a graphical user interface
