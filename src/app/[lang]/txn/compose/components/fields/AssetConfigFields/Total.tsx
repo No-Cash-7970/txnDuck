@@ -45,7 +45,7 @@ export default function Total({ t }: { t: TFunction }) {
         )
         ? 'input-error' : ''
       }
-      min={1}
+      min={0}
       step={1}
       value={(form.values.apar_t as string) ?? ''}
       onChange={(e) => form.handleOnChange('apar_t')(e.target.value)}

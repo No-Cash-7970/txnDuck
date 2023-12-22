@@ -180,7 +180,7 @@ export const apar_an = atomWithValidate<string>('', {
 /** Asset configuration - Total */
 export const apar_t = atomWithValidate<number|string>('', {
   validate: v => {
-    YupNumber().min(1).validateSync(v === '' ? undefined : v);
+    YupNumber().min(0).validateSync(v === '' ? undefined : v);
     return v;
   }
 });
