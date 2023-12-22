@@ -89,7 +89,10 @@ export function UseSugFeeInput({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
       value={!!form.values.useSugFee}
-      onChange={(e) => form.handleOnChange('useSugFee')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('useSugFee', true);
+        form.handleOnChange('useSugFee')(e.target.checked);
+      }}
     />
   );
 }

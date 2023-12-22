@@ -29,7 +29,10 @@ export default function Freeze({ t }: { t: TFunction }) {
       inputClass='toggle-primary'
       disabled={preset === Preset.AssetFreeze || preset === Preset.AssetUnfreeze}
       value={!!form.values.afrz}
-      onChange={(e) => form.handleOnChange('afrz')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('afrz', true);
+        form.handleOnChange('afrz')(e.target.checked);
+      }}
     />
   );
 }

@@ -21,7 +21,10 @@ export default function DefaultFrozen({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
       value={!!form.values.apar_df}
-      onChange={(e) => form.handleOnChange('apar_df')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('apar_df', true);
+        form.handleOnChange('apar_df')(e.target.checked);
+      }}
     />
   );
 }

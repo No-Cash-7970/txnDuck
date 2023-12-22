@@ -37,7 +37,10 @@ export function UseSugRoundsInput({ t }: { t: TFunction }) {
       containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
       value={!!form.values.useSugRounds}
-      onChange={(e) => form.handleOnChange('useSugRounds')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('useSugRounds', true);
+        form.handleOnChange('useSugRounds')(e.target.checked);
+      }}
     />
   );
 }

@@ -31,7 +31,10 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
       inputClass='toggle-primary'
       disabled={preset === Preset.RegNonpart}
       value={!!form.values.nonpart}
-      onChange={(e) => form.handleOnChange('nonpart')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('nonpart', true);
+        form.handleOnChange('nonpart')(e.target.checked);
+      }}
     />
   );
 }
