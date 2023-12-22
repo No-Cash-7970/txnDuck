@@ -182,7 +182,7 @@ fields:
     tip: Una URL donde se puede obtener más información sobre el activo.
     placeholder: "ipfs://"
   apar_m_use_snd: # Use sender as manager?
-    label: Establecer la dirección del remitente como dirección del administrador
+    label: Establecer la dirección del administrador en la dirección del remitente
     tip: >
       Utilizar la dirección del remitente de esta transacción como dirección del administrador. La
       dirección del gestor es la dirección de la cuenta que puede cambiar la configuración de este
@@ -206,7 +206,7 @@ fields:
       tenencias de este activo. Si está vacía, no se permite la congelación.
     placeholder: Dirección para congelar
   apar_c_use_snd: # Use sender as clawback?
-    label: Establecer la dirección para revocar a la dirección del remitente
+    label: Establecer la dirección para revocar en la dirección del remitente
     tip: >
       Utilizar la dirección del remitente de esta transacción como dirección para revocar. La
       dirección para revocar es la dirección de la cuenta que puede revocar las tenencias de este
