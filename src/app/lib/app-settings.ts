@@ -29,6 +29,22 @@ export const defaults = {
    * (default: `true` - Use suggested rounds by default)
    */
   defaultUseSugRounds: true,
+  /** Set manager address to the sender address by default?
+   * (default: `true` - Set manager address to the sender address by default)
+   */
+  defaultApar_mUseSnd: true,
+  /** Set freeze address to the sender address by default?
+   * (default: `true` - Set freeze address to the sender address by default)
+   */
+  defaultApar_fUseSnd: true,
+  /** Set clawback address to the sender address by default?
+   * (default: `true` - Set clawback address to the sender address by default)
+   */
+  defaultApar_cUseSnd: true,
+  /** Set reserve address to the sender address by default?
+   * (default: `true` - Set reserve address to the sender address by default)
+   */
+  defaultApar_rUseSnd: true,
 };
 
 /** Theme mode */
@@ -42,3 +58,15 @@ export const defaultUseSugFee =
 /** Use suggested first & last valid rounds by default */
 export const defaultUseSugRounds =
   atomWithStorage<boolean>('defaultUseSugRounds', defaults.defaultUseSugRounds, storage);
+/**  Set manager address to the sender address by default? */
+export const defaultApar_mUseSnd =
+  atomWithStorage<boolean>('defaultApar_mUseSnd', defaults.defaultApar_mUseSnd, storage);
+/**  Set freeze address to the sender address by default? */
+export const defaultApar_fUseSnd =
+  atomWithStorage<boolean>('defaultApar_fUseSnd', defaults.defaultApar_fUseSnd, storage);
+/**  Set clawback address to the sender address by default? */
+export const defaultApar_cUseSnd =
+  atomWithStorage<boolean>('defaultApar_cUseSnd', defaults.defaultApar_cUseSnd, storage);
+/**  Set reserve address to the sender address by default? */
+export const defaultApar_rUseSnd =
+  atomWithStorage<boolean>('defaultApar_rUseSnd', defaults.defaultApar_rUseSnd, storage);

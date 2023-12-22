@@ -25,6 +25,10 @@ export default function SettingsForm(props: Props) {
   const [ignoreFormErrors, setIgnoreFormErrors] = useAtom(Settings.ignoreFormErrorsAtom);
   const [defaultUseSugFee, setDefaultUseSugFee] = useAtom(Settings.defaultUseSugFee);
   const [defaultUseSugRounds, setDefaultUseSugRounds] = useAtom(Settings.defaultUseSugRounds);
+  const [defaultApar_mUseSnd, setDefaultApar_mUseSnd] = useAtom(Settings.defaultApar_mUseSnd);
+  const [defaultApar_fUseSnd, setDefaultApar_fUseSnd] = useAtom(Settings.defaultApar_fUseSnd);
+  const [defaultApar_cUseSnd, setDefaultApar_cUseSnd] = useAtom(Settings.defaultApar_cUseSnd);
+  const [defaultApar_rUseSnd, setDefaultApar_rUseSnd] = useAtom(Settings.defaultApar_rUseSnd);
   // XXX: Add more settings here
 
   /** Notify user that the updated settings have been saved */
@@ -54,6 +58,10 @@ export default function SettingsForm(props: Props) {
     setIgnoreFormErrors(Settings.defaults.ignoreFormErrors);
     setDefaultUseSugFee(Settings.defaults.defaultUseSugFee);
     setDefaultUseSugRounds(Settings.defaults.defaultUseSugRounds);
+    setDefaultApar_mUseSnd(Settings.defaults.defaultApar_mUseSnd);
+    setDefaultApar_fUseSnd(Settings.defaults.defaultApar_fUseSnd);
+    setDefaultApar_cUseSnd(Settings.defaults.defaultApar_cUseSnd);
+    setDefaultApar_rUseSnd(Settings.defaults.defaultApar_rUseSnd);
     // XXX: Add more settings here
 
     // Notify user of reset
@@ -112,6 +120,48 @@ export default function SettingsForm(props: Props) {
         containerClass='mt-4'
         value={defaultUseSugRounds}
         onChange={(e) => {setDefaultUseSugRounds(e.target.checked); notifySave();}}
+      />
+
+      <h3>{t('settings.asset_create_title')}</h3>
+
+      {/* Setting: Set manager address to the sender address by default */}
+      <ToggleField
+        name='default_apar_m_use_snd'
+        label={t('settings.default_apar_m_use_snd')}
+        inputClass='toggle-primary'
+        containerClass='mt-3'
+        value={defaultApar_mUseSnd}
+        onChange={(e) => {setDefaultApar_mUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set freeze address to the sender address by default */}
+      <ToggleField
+        name='default_apar_f_use_snd'
+        label={t('settings.default_apar_f_use_snd')}
+        inputClass='toggle-primary'
+        containerClass='mt-3'
+        value={defaultApar_fUseSnd}
+        onChange={(e) => {setDefaultApar_fUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set clawback address to the sender address by default */}
+      <ToggleField
+        name='default_apar_c_use_snd'
+        label={t('settings.default_apar_c_use_snd')}
+        inputClass='toggle-primary'
+        containerClass='mt-3'
+        value={defaultApar_cUseSnd}
+        onChange={(e) => {setDefaultApar_cUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set reserve address to the sender address by default */}
+      <ToggleField
+        name='default_apar_r_use_snd'
+        label={t('settings.default_apar_r_use_snd')}
+        inputClass='toggle-primary'
+        containerClass='mt-3'
+        value={defaultApar_rUseSnd}
+        onChange={(e) => {setDefaultApar_rUseSnd(e.target.checked); notifySave();}}
       />
 
       {/* XXX: Add more settings here */}

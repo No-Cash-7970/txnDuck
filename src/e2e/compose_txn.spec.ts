@@ -76,6 +76,178 @@ test.describe('Compose Transaction Page', () => {
     await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
   });
 
+  test('uses the "manager address to the sender address by default" value set in the settings',
+  async ({ page }) => {
+    // Change setting when on the home page
+    await (new HomePage(page)).goto();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await page.getByLabel('Set the manager address to the sender address by default')
+      .click(); // Switch to "off"
+
+    // Go to "Compose Transaction" page
+    await (new ComposeTxnPage(page)).goto();
+    const useSenderSetting = page.getByLabel(
+      'Set the manager address to the sender address by default'
+    );
+    const useSenderField = page.getByLabel('Set the manager address to the sender address');
+
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSenderSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSenderSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSenderField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSenderField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSenderSetting.click(); // Switch to "off"
+    await useSenderSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSenderField).not.toBeChecked();
+
+    // Refresh the "Compose Transaction" page to see if the form has the new default value
+    await page.reload();
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).toBeChecked();
+  });
+
+  test('uses the "freeze address to the sender address by default" value set in the settings',
+  async ({ page }) => {
+    // Change setting when on the home page
+    await (new HomePage(page)).goto();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await page.getByLabel('Set the freeze address to the sender address by default')
+      .click(); // Switch to "off"
+
+    // Go to "Compose Transaction" page
+    await (new ComposeTxnPage(page)).goto();
+    const useSenderSetting = page.getByLabel(
+      'Set the freeze address to the sender address by default'
+    );
+    const useSenderField = page.getByLabel('Set the freeze address to the sender address');
+
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSenderSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSenderSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSenderField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSenderField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSenderSetting.click(); // Switch to "off"
+    await useSenderSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSenderField).not.toBeChecked();
+
+    // Refresh the "Compose Transaction" page to see if the form has the new default value
+    await page.reload();
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).toBeChecked();
+  });
+
+  test('uses the "clawback address to the sender address by default" value set in the settings',
+  async ({ page }) => {
+    // Change setting when on the home page
+    await (new HomePage(page)).goto();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await page.getByLabel('Set the clawback address to the sender address by default')
+      .click(); // Switch to "off"
+
+    // Go to "Compose Transaction" page
+    await (new ComposeTxnPage(page)).goto();
+    const useSenderSetting = page.getByLabel(
+      'Set the clawback address to the sender address by default'
+    );
+    const useSenderField = page.getByLabel('Set the clawback address to the sender address');
+
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSenderSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSenderSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSenderField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSenderField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSenderSetting.click(); // Switch to "off"
+    await useSenderSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSenderField).not.toBeChecked();
+
+    // Refresh the "Compose Transaction" page to see if the form has the new default value
+    await page.reload();
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).toBeChecked();
+  });
+
+  test('uses the "reserve address to the sender address by default" value set in the settings',
+  async ({ page }) => {
+    // Change setting when on the home page
+    await (new HomePage(page)).goto();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await page.getByLabel('Set the reserve address to the sender address by default')
+      .click(); // Switch to "off"
+
+    // Go to "Compose Transaction" page
+    await (new ComposeTxnPage(page)).goto();
+    const useSenderSetting = page.getByLabel(
+      'Set the reserve address to the sender address by default'
+    );
+    const useSenderField = page.getByLabel('Set the reserve address to the sender address');
+
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSenderSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSenderSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSenderField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSenderField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSenderSetting.click(); // Switch to "off"
+    await useSenderSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSenderField).not.toBeChecked();
+
+    // Refresh the "Compose Transaction" page to see if the form has the new default value
+    await page.reload();
+    await page.getByLabel(/Transaction type/).selectOption('acfg');
+    await expect(useSenderField).toBeChecked();
+  });
+
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Compose/, title: /Compose/ },

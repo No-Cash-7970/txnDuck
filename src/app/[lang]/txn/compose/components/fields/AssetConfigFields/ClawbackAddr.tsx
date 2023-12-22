@@ -1,16 +1,20 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { FieldGroup, TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   ADDRESS_LENGTH,
   Preset,
   assetConfigFormControlAtom,
   showFormErrorsAtom,
+  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass,
+  txnDataAtoms,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { defaultApar_cUseSnd as defaultApar_cUseSndAtom } from '@/app/lib/app-settings';
 
 export default function ClawbackAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
@@ -31,6 +35,17 @@ export default function ClawbackAddr({ t }: { t: TFunction }) {
 
 function UseSenderAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const defaultApar_cUseSnd = useAtomValue(defaultApar_cUseSndAtom);
+  const setApar_cUseSnd = useSetAtom(txnDataAtoms.apar_cUseSnd);
+
+  useEffect(() => {
+    if (storedTxnData?.apar_cUseSnd === undefined && !form.touched.apar_cUseSnd) {
+      setApar_cUseSnd(defaultApar_cUseSnd);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[defaultApar_cUseSnd, storedTxnData]);
+
   return (
     <ToggleField label={t('fields.apar_c_use_snd.label')}
       name='apar_c_use_snd'
@@ -47,7 +62,10 @@ function UseSenderAddr({ t }: { t: TFunction }) {
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.apar_cUseSnd}
-      onChange={(e) => form.handleOnChange('apar_cUseSnd')(e.target.checked)}
+      onChange={(e) => {
+        form.setTouched('apar_cUseSnd', true);
+        form.handleOnChange('apar_cUseSnd')(e.target.checked);
+      }}
     />
   );
 }

@@ -30,6 +30,11 @@ settings:
   ignore_form_errors: Permita que los formularios se envíen con errores
   default_use_sug_fee: Fijar la tarifa automáticamente por defecto
   default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
+  asset_create_title: Creación de activos
+  default_apar_m_use_snd: Establecer la dirección del administrador en la dirección del remitente
+  default_apar_f_use_snd: Establecer la dirección para congelar en la dirección del remitente
+  default_apar_c_use_snd: Establecer la dirección para revocar en la dirección del remitente
+  default_apar_r_use_snd: Establecer la dirección de reserva en la dirección del remitente
 wallet:
   connect: Conecte la cartera
   disconnect: Desconecte la cartera

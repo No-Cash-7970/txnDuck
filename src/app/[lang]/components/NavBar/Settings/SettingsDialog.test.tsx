@@ -74,6 +74,10 @@ describe('Settings Dialog', () => {
     await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_fee'));
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
+    await userEvent.click(screen.getByLabelText('settings.default_apar_m_use_snd'));
+    await userEvent.click(screen.getByLabelText('settings.default_apar_f_use_snd'));
+    await userEvent.click(screen.getByLabelText('settings.default_apar_c_use_snd'));
+    await userEvent.click(screen.getByLabelText('settings.default_apar_r_use_snd'));
     // XXX: Add more settings here
 
     // Click reset button
@@ -86,6 +90,10 @@ describe('Settings Dialog', () => {
     expect(screen.getByLabelText('settings.ignore_form_errors')).not.toBeChecked();
     expect(screen.getByLabelText('settings.default_use_sug_fee')).toBeChecked();
     expect(screen.getByLabelText('settings.default_use_sug_rounds')).toBeChecked();
+    expect(screen.getByLabelText('settings.default_apar_m_use_snd')).toBeChecked();
+    expect(screen.getByLabelText('settings.default_apar_f_use_snd')).toBeChecked();
+    expect(screen.getByLabelText('settings.default_apar_c_use_snd')).toBeChecked();
+    expect(screen.getByLabelText('settings.default_apar_r_use_snd')).toBeChecked();
     // XXX: Add more settings here
   });
 
@@ -143,5 +151,101 @@ describe('Settings Dialog', () => {
     await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
+
+  // TODO: Add missing tests for suggested parameters
+
+  it('has "manager address to the sender address by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_apar_m_use_snd/)).toBeInTheDocument();
+  });
+
+  it('notifies when "manager address to the sender address by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_apar_m_use_snd'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('has "freeze address to the sender address by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_apar_f_use_snd/)).toBeInTheDocument();
+  });
+
+  it('notifies when "freeze address to the sender address by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_apar_f_use_snd'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('has "clawback address to the sender address by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_apar_c_use_snd/)).toBeInTheDocument();
+  });
+
+  it('notifies when "clawback address to the sender address by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_apar_c_use_snd'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('has "reserve address to the sender address by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_apar_r_use_snd/)).toBeInTheDocument();
+  });
+
+  it('notifies when "reserve address to the sender address by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_apar_r_use_snd'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  // XXX: Add tests for more settings here
 
 });
