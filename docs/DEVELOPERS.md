@@ -14,6 +14,7 @@ This is documentation contains information useful for developers.
 - [Running the development web server](#running-the-development-web-server)
 - [Building for production](#building-for-production)
   - [Deploying to somewhere other than localhost or Vercel](#deploying-to-somewhere-other-than-localhost-or-vercel)
+- [Project structure](#project-structure)
 - [Testing](#testing)
   - [Unit testing](#unit-testing)
   - [End-to-end (E2E) testing](#end-to-end-e2e-testing)
@@ -31,7 +32,8 @@ This is documentation contains information useful for developers.
 
 - TypeScript (except for a few configuration files)
 - [Next.js](https://nextjs.org/) - Web development framework built on React
-- [Jotai](https://jotai.org/) - Global state management for React (similar to React Redux)
+- [Jotai](https://jotai.org/) - Global state management for React (similar to
+  React Redux)
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
 - [daisyUI](https://daisyui.com/) - Library of UI components built with Tailwind
   CSS
@@ -101,9 +103,9 @@ use the development server:
 
 2. Open a web browser and go to <http://localhost:3000>.
 3. Edit a file in the `src/app` directory and see the result!
-4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd>
-   (or <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can start the web
-   server again by following Step #1.
+4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or
+   <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can start the web server again by
+   following Step #1.
 
 ## Building for production
 
@@ -113,8 +115,8 @@ To build for production run:
 yarn build
 ```
 
-To run the build locally in a local web server, which would be
-served at <http://localhost:3000>:
+To run the build locally in a local web server, which would be served at
+<http://localhost:3000>:
 
 ```bash
 yarn start
@@ -134,7 +136,8 @@ to be set to the URL of what will be the home page of the deployed website. The
 `BASE_URL` can be set in a `.env.local` file, which can be created by copying
 the `.env.local.example` file and renaming it to `.env.local`. Alternatively,
 the `BASE_URL` can be set in the `.env.production` file. However, it is best to
-set the `BASE_URL` in the `.env.local` file because it will not be overwritten when upgrading to a new version.
+set the `BASE_URL` in the `.env.local` file because it will not be overwritten
+when upgrading to a new version.
 
 Here is an example to show what setting the `BASE_URL` looks like:
 
@@ -147,13 +150,74 @@ BASE_URL=https://example.com
 # some more settings here...
 ```
 
+## Project structure
+
+- `/.github/`: Contains the code of conduct, contributing guidelines, security
+  policy, and other files for setting up the repository for this project on
+  GitHub.
+- `/docs/`: Additional documentation (like this file)
+- `/public/`: Static assets to be served. Part of the
+  [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/src/`: Application source directory. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+  - `/src/app/`: App Router. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure).
+    - `/src/app/[lang]/`: The root of the routing for this project. This
+      directory is a “dynamic segment.”  See the [Next.js documentation](https://nextjs.org/docs/app/building-your-application/routing)
+      for more information about routing.
+    - `/src/app/i18n/`: Contains scripts and translation files for
+      internationalization (abbreviated as “i18n”)
+      - `/src/app/i18n/locales/`: Contains the translations files for each
+        supported language/locale
+    - `/src/app/lib/`: Utilities used throughout the project. There are no
+      JSX/TSX files here. Shared JSX/TSX files are usually in one of the
+      `component/` directories within `/src/app/[lang]/`.
+  - `/src/e2e/`: End-to-end tests
+  - `/src/middleware.ts`: Request middleware. Part of the
+    [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/.editorconfig`: [EditorConfig](https://editorconfig.org/) file that contains
+   the preferred coding style settings for IDEs
+- `/.env`: Default values of for the environment variables. Part of the
+   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/.env.development`: Development environment variables. Part of the
+   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/.env.local`: Local environment variables. Copy the `.env.local.example` file
+   to create this file. It must **never** be committed to the project Git
+   repository.
+- `/.env.local.example`: An example of an `.env.local` file. Does not affect the
+   environment.
+- `/.env.production`: Production environment variables. Part of the
+  [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/.erclintrc.json`: ESLint configuration
+- `/.gitattributes`, `/.gitignore`: Git configurations files
+- `/.swcrc`: SWC (Speedy Web Compiler) [configuration file](https://swc.rs/docs/configuration/swcrc)
+- `/gulpfile.mjs`: Contains the scripts for to be used with [Gulp task runner](https://gulpjs.com/)
+- `/jest.config.mjs`: Configuration for [Jest](https://jestjs.io/) unit testing
+   framework
+- `/lefthook.yml`: Configuration for [Lefthook](https://github.com/evilmartians/lefthook)
+   Git hooks manager
+- `/LICENSE.md`: License for this project
+- `/next-env.d.ts`: TypeScript declaration file for Next.js. This file is not
+   committed to the project Git repository.
+- `/next.config.js`: Next.js configuration. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `/package.json`: Project dependencies and scripts
+- `/playwright.config.ts`: Configuration for [Playwright](https://playwright.dev/)
+   end-to-end testing framework
+- `/postcss.config.js`: Configuration for PostCSS, which is used with [Tailwind](https://tailwindcss.com/docs/installation/using-postcss)
+- `/README.md`: Read it. It contains introductory information about this project.
+- `/tailwind.config.js`: [Tailwind CSS](https://tailwindcss.com/) configuration.
+   The theme is specified in this file.
+- `/tsconfig.json`: Typescript configuration
+- `/yarn.lock`: File generated by Yarn in order to get consistent installs
+   across machines. It contains a list of the exact versions of dependencies
+   that were installed.
+
 ## Testing
 
 This project uses both unit testing and end-to-end (E2E) testing.
 
 ### Unit testing
 
-To run all of the unit tests once (Note that it's **j**est with a **j**, not **t**est):
+To run all of the unit tests once (Note that it's **j**est with a **j**, not
+**t**est):
 
 ```bash
 yarn jest
@@ -250,8 +314,8 @@ should be used.
 :warning: **For repository owners and maintainers only**
 
 This project uses [semantic versioning](https://semver.org/) and
-[commit messages](#git-commit-message-guidelines) to determine the version number of
- releases and generate release notes.
+[commit messages](#git-commit-message-guidelines) to determine the version
+number of releases and generate release notes.
 
 The fastest way to create a new release is:
 
@@ -265,12 +329,13 @@ messages. Then it creates a
 on the `main` branch, pushes the changes, and generates a URL for creating a
 [Release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 on GitHub with the release notes generated based on commit messages. Creating a
-Release on GitHub requires signing into the GitHub account of the repository owner or a maintainer with the right permissions.
+Release on GitHub requires signing into the GitHub account of the repository
+owner or a maintainer with the right permissions.
 
 ### Changelog
 
 This project does not keep a changelog in the form a file (e.g. CHANGELOG.md).
-[This project's "Releases" on GitHub](https://github.com/No-Cash-7970/txnDuck/releases),
+[This project's “Releases” on GitHub](https://github.com/No-Cash-7970/txnDuck/releases),
 along with their release notes, is used for that purpose instead.
 
 ### Releases on the `stable` branch
