@@ -52,11 +52,10 @@ content you contribute may be provided under the project license.
 
 ## Asking a question
 
-Before you ask a question, it is best to search for existing
-[Issues](https://github.com/No-Cash-7970/txnDuck/issues) that might help you.
-In case you have found a suitable issue and still need clarification, you can
-write your question in this issue. It is also advisable to search the internet
-for answers first.
+Before you ask a question, it is best to search for existing [Issues](https://github.com/No-Cash-7970/txnDuck/issues)
+that might help you. In case you have found a suitable issue and still need
+clarification, you can write your question in this issue. It is also advisable
+to search the internet for answers first.
 
 If you then still feel the need to ask a question and need clarification, we
 recommend the following:
@@ -81,8 +80,8 @@ is important.
 - [Install](../docs/DEVELOPERS.md#installing-the-development-environment) and
   [use](../docs/DEVELOPERS.md#running-the-development-web-server) the
   development environment to test the translations.
-- Look in the [`locales` directory](../src/app/i18n/locales/)
-  to see if the translation exists already.
+- Look in the [`locales` directory](../src/app/i18n/locales/) to see if the
+  translation exists already.
 - Check the current status of the language translations in the table in the
   [*Supported languages* section in the
   README](../README.md#speech_balloon-supported-languages).
@@ -97,8 +96,8 @@ translation:
    [`/src/app/i18n/locales`](../src/app/i18n/locales/). Use the language's
    [ISO 639-1 language code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
    as the name of the new directory.
-2. Add the language data to the object of supported languages (`supportedLangs`) in the
-   [I18n settings](../src/app/i18n/settings.ts).
+2. Add the language data to the object of supported languages (`supportedLangs`)
+   in the [Internationalization (I18n) settings](../src/app/i18n/settings.ts).
 
    For example, if `supportedLangs` in the [i18n settings](../src/app/i18n/settings.ts)
    looked something like this:
@@ -148,9 +147,9 @@ translation:
 
 ### How do I fix or edit an existing translation?
 
-Edit the files in the directory for the language in the
-[`locales` directory](../src/app/i18n/locales/). For example, edit the files
-`es` directory to edit the Spanish translation.
+Edit the files in the directory for the language in the [`locales`
+directory](../src/app/i18n/locales/). For example, edit the files `es` directory
+to edit the Spanish translation.
 
 ## Reporting bugs
 
@@ -167,8 +166,8 @@ steps in advance to help us fix any potential bug as fast as possible.
   you might want to check [this section](#asking-a-question).
 - To see if other users have experienced (and potentially already solved) the
   same issue you are having, check if there is not already a bug report existing
-  for your bug or error in the
-  [bug tracker](https://github.com/No-Cash-7970/txnDuck/labels/bug).
+  for your bug or error in the [bug
+  tracker](https://github.com/No-Cash-7970/txnDuck/labels/bug).
 - Also make sure to search the internet (including Stack Overflow) to see if
   users outside of the GitHub community have discussed the issue.
 - Collect information about the bug:
