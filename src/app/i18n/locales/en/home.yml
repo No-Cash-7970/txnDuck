@@ -2,7 +2,7 @@
 
 hero: # The attention-grabber that is first thing the user sees
   main_paragraph: Create and send almost any kind of Algorand transaction.
-  start_button: Start by create a new transaction!
+  start_button: Create a new transaction!
 how_it_works:
   heading: How does it work?
   compose:
