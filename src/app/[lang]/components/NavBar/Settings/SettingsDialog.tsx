@@ -42,12 +42,22 @@ export default function SettingsDialog({ lng, open = false }: Props) {
           onPointerDownOutside={(e) => e.preventDefault()}
           onInteractOutside={(e) => e.preventDefault()}
         >
-          <div className='modal-box prose'>
-            <Dialog.Title>{t('settings.heading')}</Dialog.Title>
-            <SettingsModalBox lng={lng} />
+          <div className='modal-box prose px-0'>
+            <Dialog.Title className='px-6'>{t('settings.heading')}</Dialog.Title>
+
+            {/* Max height = height of modal (100vh - 5em)
+                            - modal title height (2em)
+                            - modal title bottom margin (1.5em)
+                            - modal box top padding (1.5em)
+                            - modal box bottom padding (1.5em)
+            */}
+            <div className='max-h-[calc(100vh-5em-2em-1.5em-1.5em-1.5em)] overflow-auto px-6'>
+              <SettingsModalBox lng={lng} />
+            </div>
+
             <Dialog.Close asChild>
               <button
-                className='btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
+                className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
                 title={t('close')}
               >
                 <IconX aria-hidden />
