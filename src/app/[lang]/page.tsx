@@ -13,7 +13,9 @@ export default function HomePage({ params: { lang } }: {
     <main className='prose max-w-none min-h-screen pb-12'>
       {/* Hero section */}
       <section
-        className={'text-accent-content bg-gradient-to-r from-accent'
+        // Fallback background color is included in case gradient, which is set as an image, does
+        // not load
+        className={'bg-accent text-accent-content bg-gradient-to-r from-accent'
           + ' to-[color-mix(in_oklab,oklch(var(--a)),oklch(var(--bc)))] '
           + ' py-10 sm:py-12 md:py-20 px-8 font-display'
         }
