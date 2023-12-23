@@ -6,6 +6,7 @@ import { ALGORAND_MIN_TX_FEE, TransactionType, microalgosToAlgos } from 'algosdk
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { Trans } from 'react-i18next';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 import { fee as feeAtom } from '@/app/lib/txn-data/atoms';
 
 type Props = {
@@ -24,7 +25,8 @@ const appTypes = [
 
 /** Table that displays the stored transaction data */
 export default function TxnDataTable({ lng }: Props) {
-  const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
+  const { t } = useTranslation(lng || '', ['compose_txn', 'common', 'app']);
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const fee = useAtomValue(feeAtom);
 
@@ -76,6 +78,17 @@ export default function TxnDataTable({ lng }: Props) {
   return (
     <table className='table'>
       <tbody>
+        <tr>
+          <th role='rowheader' className='align-top'>{t('app:node_selector.node_network')}</th>
+          <td className='break-all'>{nodeConfig
+            ? ((nodeConfig.network === 'mainnet'
+              || nodeConfig.network === 'testnet'
+              || nodeConfig.network === 'betanet')
+              ? t(`app:node_selector.${nodeConfig.network}`)
+              : nodeConfig.network)
+            : t('loading')
+          }</td>
+        </tr>
         <tr>
           <th role='rowheader' className='align-top'>{t('fields.type.label')}</th>
           <td>{ txnTypeKeyPart !== 'undefined'

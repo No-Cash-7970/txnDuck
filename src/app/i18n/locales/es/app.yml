@@ -62,6 +62,7 @@ node_selector:
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet
+  node_network: Red de nodos
 page_not_found:
   title: Página no encontrada
   quack: Cua.
