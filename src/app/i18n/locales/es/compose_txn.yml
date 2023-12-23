@@ -1,9 +1,9 @@
-title: Componga la transacción
+title: Componer la transacción
 instructions: Los campos marcados con un asterisco (<1>*</1>) son obligatorios.
 more_fields: Más campos
-txn_presets_btn: Elija una preselección
+txn_presets_btn: Eligir una preselección
 txn_presets_btn_warning: Puede perder su progreso si elige una preselección diferente.
-sign_txn_btn: Revise y firme
+sign_txn_btn: Revisar y firmar
 fields:
   type: # Transaction type
     label: Tipo de transacción
@@ -93,7 +93,7 @@ fields:
   rekey: # Rekey to
     label: ¿A qué recodificar?
     tip: >
-      Especifica la dirección autorizada. Esta dirección se utilizará para autorizar (firmar) todas
+      Especifique la dirección autorizada. Esta dirección se utilizará para autorizar (firmar) todas
       las transacciones futuras.
     placeholder: Dirección a la que recodificar
     warning: >
@@ -174,7 +174,7 @@ fields:
       así sucesivamente.
   apar_df: # Frozen by default?
     label: ¿Congelado por defecto?
-    tip: Congele las tenencias de este activo por defecto.
+    tip: Congelar las tenencias de este activo por defecto.
     is_frozen: Sí
     is_not_frozen: No
   apar_au: # URL
@@ -302,7 +302,7 @@ fields:
     label: Tipo de acción de la aplicación
     tip: Define qué acciones adicionales se producen con la transacción.
     options:
-      no_op: Llamada (NoOp)
+      no_op: Llamar (NoOp)
       opt_in: Optar
       close_out: Cerrar
       clear: Borrar estado
@@ -362,8 +362,8 @@ fields:
     title: Argumento de aplicación
     none: No argumento de aplicación
     empty: Argumento vacío
-    add_btn: Añada un argumento
-    remove_btn: Elimine un argumento
+    add_btn: Añadir un argumento
+    remove_btn: Eliminar un argumento
     max_error: Debe haber como máximo {{count, number}} argumentos.
     no_abi_support: Las llamadas a métodos ABI no son compatibles…por ahora.
   apat: # Account references
@@ -374,9 +374,9 @@ fields:
     placeholder: "Dirección de cuenta nº {{index}}"
     title: Referencias de cuentas
     none: No referencias de cuentas
-    add_btn: Añada una cuenta
+    add_btn: Añadir una cuenta
     max_error: Debe haber como máximo {{count, number}} referencias de cuentas.
-    remove_btn: Elimine una cuenta
+    remove_btn: Eliminar una cuenta
   apfa: # Application references
     label: "Aplicación nº {{index}}"
     tip: >
@@ -386,30 +386,30 @@ fields:
     placeholder: "Identificación de aplicación nº {{index}}"
     title: Referencias de aplicación
     none: No referencias de aplicación
-    add_btn: Añada una aplicación
-    remove_btn: Elimine una aplicación
+    add_btn: Añadir una aplicación
+    remove_btn: Eliminar una aplicación
   apas: # Asset references
     label: "Activo nº {{index}}"
     tip: >
-      Enumera los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
+      Enumere los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
       de borrado de esta aplicación. El acceso es de sólo lectura.
     placeholder: "Identificación de activo nº {{index}}"
     title: Referencias de activo
     none: No referencias de activo
-    add_btn: Añada un activo
-    remove_btn: Elimine un activo
+    add_btn: Añadir un activo
+    remove_btn: Eliminar un activo
   apbx: # Box references
     title: Referencias de caja
     tip: Las cajas que deben estar disponibles para el tiempo de ejecución del programa.
     box_title: "Caja nº {{index}}"
     none: No referencias de caja
-    add_btn: Añada una caja
-    remove_btn: Elimine una caja
+    add_btn: Añadir una caja
+    remove_btn: Eliminar una caja
   apbx_i: # Box application index
     label: "Indice para Caja nº {{index}}"
     tip: >
-      Índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere la caja.
-      Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
+      El índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere la
+      caja. Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
       referencia de caja es para la aplicación definida como «Aplicación nº 1». Si es 2 la
       referencia de caja es para la aplicación definida como «Aplicación nº 2» y así sucesivamente.
     title: "Índice: {{index}}"

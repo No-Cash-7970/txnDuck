@@ -1,4 +1,4 @@
-title: Elija una preselección de transacción
+title: Eligir una preselección de transacción
 instruction: >
   Componga una transacción más rápidamente utilizando uno de las siguientes preselecciones.
 skip_btn: O sáltese esto y componga una transacción sin utilizar una preselección
@@ -7,109 +7,109 @@ all_title: Todas
 # General category
 general_title: General
 transfer_algos:
-  heading: Transfiera Algos
+  heading: Transferir Algos
   description: Transfiera Algos de una cuenta monedero a otra (o a sí mismo).
-  action: Transfiera Algos
+  action: Transferir Algos
 rekey_account:
-  heading: Recodifique una cuenta
+  heading: Recodificar una cuenta
   description: >
     Cambie la(s) clave(s) privada(s) de gasto autorizada(s) manteniendo la misma dirección
     pública.
-  action: Recodifique una cuenta
+  action: Recodificar una cuenta
 close_account:
-  heading: Cierre una cuenta
+  heading: Cierrar una cuenta
   description: Elimine una cuenta del libro mayor.
-  action: Cierre una cuenta
+  action: Cierrar una cuenta
 # Asset category
 asset_title: Activo
 asset_transfer:
-  heading: Transfiera un activo
+  heading: Transferir un activo
   description: Transfiera un activo de una cuenta monedero a otra (o a sí mismo).
-  action: Transfiera un activo
+  action: Transferir un activo
 asset_opt_in:
-  heading: Opte por un activo
+  heading: Optar por un activo
   description: Habilite la capacidad de recibir o enviar un activo concreto optando por ese activo.
-  action: Opte por un activo
+  action: Optar por un activo
 asset_opt_out:
-  heading: Opte por la exclusión de un activo
+  heading: Optar por la exclusión de un activo
   description: Elimine un activo de la cuenta, deshaciendo así el optar por el activo.
-  action: Opte por la exclusión
+  action: Optar por la exclusión
 asset_create:
-  heading: Cree un activo
+  heading: Crear un activo
   description: Cree un activo nuevo.
-  action: Cree un activo
+  action: Crear un activo
 asset_reconfig:
-  heading: Reconfigure un activo
+  heading: Reconfigurar un activo
   description: Cambie la configuración de un activo existente.
-  action: Reconfigure un activo
+  action: Reconfigurar un activo
 asset_clawback:
-  heading: Revoque (Claw back) un activo
+  heading: Revocar (Claw back) un activo
   description: Elimine un número determinado de activos de una cuenta de destino.
-  action: Revoque un activo
+  action: Revocar un activo
 asset_freeze:
-  heading: Congele un activo
+  heading: Congelar un activo
   description: Desactive la capacidad de una cuenta para enviar o recibir un determinado activo.
-  action: Congele un activo
+  action: Congelar un activo
 asset_unfreeze:
-  heading: Descongele un activo
+  heading: Descongelar un activo
   description: >
     Descongele una cuenta para un activo concreto. De este modo, se habilita la capacidad de la
     cuenta para enviar o recibir ese activo.
-  action: Descongele un activo
+  action: Descongelar un activo
 asset_destroy:
-  heading: Destruya un activo
+  heading: Destruir un activo
   description: Elimine un activo existente del libro de Algorand.
-  action: Destruya un activo
+  action: Destruir un activo
 # Application category
 app_title: Aplicación (Smart contract)
 app_run:
-  heading: Ejecute una aplicación
+  heading: Ejecutar una aplicación
   description: >
-    Realiza una llamada a la aplicación genérica para ejecutar el <code>ApprovalProgram</code> de la
-    aplicación.
-  action: Ejecute una aplicación
+    Realice una llamada a la aplicación genérica para ejecutar el <code>ApprovalProgram</code> de
+    la aplicación.
+  action: Ejecutar una aplicación
 app_opt_in:
-  heading: Opte por una aplicación
+  heading: Optar por una aplicación
   description: >
     Habilite el estado local que se utilizará. No es necesario si la aplicación no requiere ningún
     estado local. local.
-  action: Opte por una aplicación
+  action: Optar por una aplicación
 app_deploy:
-  heading: Despliegue una aplicación
+  heading: Desplegar una aplicación
   description: Despliegue una aplicación nueva.
-  action: Despliegue una aplicación
+  action: Desplegar una aplicación
 app_update:
-  heading: Actualice una aplicación
+  heading: Actualizar una aplicación
   description: >
     Actualice la lógica de la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo
     permite.
-  action: Actualice una aplicación
+  action: Actualizar una aplicación
 app_close:
-  heading: Cierre de la aplicación
+  heading: Cierrar de la aplicación
   description: Salga con gracia de una aplicación y elimine su estado local del registro de saldos.
-  action: Cierre de la aplicación
+  action: Cierrar de la aplicación
 app_clear:
-  heading: Cancele una aplicación
+  heading: Cancelar una aplicación
   description: Fuerce la eliminación del estado local del registro de saldos.
-  action: Cancele una aplicación
+  action: Cancelar una aplicación
 app_delete:
-  heading: Destruya una aplicación
+  heading: Destruir una aplicación
   description: >
     Elimine la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo permite.
-  action: Destruya una aplicación
+  action: Destruir una aplicación
 # Participation key category
 part_key_title: Clave de participación
 reg_online:
-  heading: Registre una cuenta en línea
+  heading: Registrar una cuenta en línea
   description: Registre una cuenta como «en línea» para empezar a participar en el consenso.
-  action: Registre en línea
+  action: Registrar en línea
 reg_offline:
-  heading: Registre una cuenta fuera de línea
+  heading: Registrar una cuenta fuera de línea
   description: Registre una cuenta como «desconectada» para dejar de participar en el consenso.
-  action: Registre fuera de línea
+  action: Registrar fuera de línea
 reg_nonpart:
-  heading: Registre una cuenta como no participante
+  heading: Registrar una cuenta como no participante
   description: >
     Registre una cuenta como «no participante» para dejar de ganar recompensas por participar en
     consensos.
-  action: Registre como no participante
+  action: Registrar como no participante

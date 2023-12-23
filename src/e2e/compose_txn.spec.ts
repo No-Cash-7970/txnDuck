@@ -293,7 +293,7 @@ test.describe('Compose Transaction Page', () => {
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Compose/, title: /Compose/ },
-      es: { body: /Componga/, title: /Componga/ },
+      es: { body: /Componer/, title: /Componer/ },
     })).check(test, ComposeTxnPage.url);
   });
 

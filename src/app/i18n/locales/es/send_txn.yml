@@ -1,4 +1,4 @@
-title: Envíe la transacción
+title: Enviar la transacción
 txn_confirm_wait: A la espera de que se confirme la transacción…
 click_for_details: Haga clic en «{{details_title}}» para obtener más información.
 fail:
@@ -28,9 +28,9 @@ success:
   msg: "ID de la transacción: {{txn_id}}"
   details: Más información
 done_btn: ¡Hecho!
-wait_longer_btn: Espere más
-retry_btn: Reintente
-quit_btn: Abandone
-compose_txn_btn: Edite los datos de la transacción
-sign_txn_btn: Firme la transacción de nuevo
-make_new_txn_btn: Haga otra transacción
+wait_longer_btn: Esperar más
+retry_btn: Reintentar
+quit_btn: Abandonar
+compose_txn_btn: Editar los datos de la transacción
+sign_txn_btn: Firmar la transacción de nuevo
+make_new_txn_btn: Hacer otra transacción

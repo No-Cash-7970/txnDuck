@@ -8,9 +8,9 @@ description:
   short: Generador de transacciones de Algorand
   long: Una herramienta para crear y enviar transacciones de Algorand
 builder_steps:
-  compose: Componga
-  sign: Firme
-  send: Envíe
+  compose: Componer
+  sign: Firmar
+  send: Enviar
 footer:
   privacy_policy_link: Política de privacidad
   github_link: Código fuente en GitHub
@@ -19,7 +19,7 @@ footer:
     <a>licencia (en inglés)</a> del software.
 settings:
   heading: Ajustes
-  reset_button: Restablezca todos los ajustes por defecto
+  reset_button: Restablecer todos los ajustes por defecto
   saved_message: ¡Ajustes guardados!
   reset_message: Se han restablecido todos los ajustes.
   theme_switcher:
@@ -27,7 +27,7 @@ settings:
     light: Claro
     dark: Oscuro
     auto: Automático
-  ignore_form_errors: Permita que los formularios se envíen con errores
+  ignore_form_errors: Permitir que los formularios se envíen con errores
   default_use_sug_fee: Fijar la tarifa automáticamente por defecto
   default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
   asset_create_title: Creación de activos
@@ -36,13 +36,13 @@ settings:
   default_apar_c_use_snd: Establecer la dirección para revocar en la dirección del remitente
   default_apar_r_use_snd: Establecer la dirección de reserva en la dirección del remitente
 wallet:
-  connect: Conecte la cartera
-  disconnect: Desconecte la cartera
-  choose_provider: Elija el proveedor de cartera
+  connect: Conectar la cartera
+  disconnect: Desconectar la cartera
+  choose_provider: Eligir el proveedor de cartera
   choose_provider_description: >
-    Seleccione uno de los siguientes proveedores de monederos para conectar su cuenta de monedero a
-    esta aplicación.
-  use_provider_btn: "Use {{provider}}"
+    Elija uno de los siguientes proveedores de monederos para conectar su cuenta de monedero a esta
+    aplicación.
+  use_provider_btn: "Usar {{provider}}"
   is_not_connected: No hay cartera conectada.
   is_connected: "Cuenta: {{address}}" # Address is displayed when wallet is connected
   provider_icon_alt: "Icono de {{provider}}"
@@ -58,7 +58,7 @@ wallet:
     web: Cartera web
     browser_extension: Cartera de extensión del navegador
 node_selector:
-  choose_node: Elija nodo
+  choose_node: Eligir nodo
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet

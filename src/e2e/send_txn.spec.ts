@@ -24,7 +24,7 @@ test.describe('Send Transaction Page', () => {
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Send/, title: /Send/ },
-      es: { body: /Envíe/, title: /Envíe/ },
+      es: { body: /Enviar/, title: /Enviar/ },
     })).check(test, SendTxnPage.url);
   });
 

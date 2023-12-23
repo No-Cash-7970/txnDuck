@@ -1,8 +1,8 @@
-title: Revise y firme la transacción
-compose_txn_btn: Componga
+title: Revisar y firmar la transacción
+compose_txn_btn: Componer
 compose_txn_btn_warning: Si se edita la transacción, será necesario firmarla de nuevo.
-sign_txn_btn: Firme esta transacción
-send_txn_btn: Envíe
+sign_txn_btn: Firmar esta transacción
+send_txn_btn: Enviar
 txn_signed: Transacción firmada
 sign_error: >
   No se ha podido firmar la transacción porque está malformada. Esto suele deberse a que la
