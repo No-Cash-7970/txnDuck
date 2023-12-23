@@ -1,11 +1,13 @@
+import { useEffect } from 'react';
 import { FieldGroup, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
-  generalFormControlAtom, tipBtnClass, tipContentClass,
+  generalFormControlAtom, storedTxnDataAtom, tipBtnClass, tipContentClass, txnDataAtoms,
 } from '@/app/lib/txn-data';
 import FirstValid from './FirstValid';
 import LastValid from './LastValid';
+import { defaultUseSugRounds as defaultUseSugRoundsAtom } from '@/app/lib/app-settings';
 
 export default function ValidRounds({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
@@ -22,6 +24,17 @@ export default function ValidRounds({ t }: { t: TFunction }) {
 
 export function UseSugRoundsInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const defaultUseSugRounds = useAtomValue(defaultUseSugRoundsAtom);
+  const setUseSugRounds = useSetAtom(txnDataAtoms.useSugRounds);
+
+  useEffect(() => {
+    if (storedTxnData?.useSugRounds === undefined && !form.touched.useSugRounds) {
+      setUseSugRounds(defaultUseSugRounds);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[defaultUseSugRounds, storedTxnData]);
+
   return (
     <ToggleField label={t('fields.use_sug_rounds.label')}
       name='use_sug_rounds'

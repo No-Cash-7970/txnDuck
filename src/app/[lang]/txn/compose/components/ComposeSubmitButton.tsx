@@ -30,11 +30,6 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(Preset.ParamName);
 
-  // Load these settings from localStorage so they are ready to be used by `loadStoredTxnData()` in
-  // the `useEffect` hook because loading from localStorage takes a little bit of time.
-  useAtomValue(AppSettings.defaultUseSugFee);
-  useAtomValue(AppSettings.defaultUseSugRounds);
-
   useEffect(
     () => loadStoredTxnData(submittingForm, preset, jotaiStore, storedTxnData),
     // eslint-disable-next-line react-hooks/exhaustive-deps

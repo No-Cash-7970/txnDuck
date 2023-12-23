@@ -33,23 +33,38 @@ test.describe('Compose Transaction Page', () => {
     // Change setting when on the home page
     await (new HomePage(page)).goto();
     await page.getByRole('button', { name: 'Settings' }).click();
-    await page.getByLabel('Set fee automatically by default').click(); // Switch to "off"
+    await page.getByLabel('Set fee automatically by default')
+      .click(); // Switch to "off"
 
-    // Check the "Compose Transaction" page has the correct default value
+    // Go to "Compose Transaction" page
     await (new ComposeTxnPage(page)).goto();
-    await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
-    await page.getByRole('button', { name: 'Settings' }).click();
-    await expect(page.getByLabel('Set fee automatically by default')).not.toBeChecked();
+    const useSugSetting = page.getByLabel('Set fee automatically by default');
+    const useSugField = page.getByLabel('Automatically set the fee');
 
-    // Change setting again, but we are on the "Compose Transaction" page this time
-    await page.getByLabel('Set fee automatically by default').click(); // Switch to "on"
-    await page.getByTitle('Close').click(); // Close the settings
-    // Expect current value in "Compose Transaction" page to remain unchanged
-    await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await expect(useSugField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSugSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSugSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSugField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSugField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSugSetting.click(); // Switch to "off"
+    await useSugSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSugField).not.toBeChecked();
 
     // Refresh the "Compose Transaction" page to see if the form has the new default value
     await page.reload();
-    await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+    await expect(useSugField).toBeChecked();
   });
 
   test('uses the default "Automatically set valid rounds" value set in the settings',
@@ -57,23 +72,38 @@ test.describe('Compose Transaction Page', () => {
     // Change setting when on the home page
     await (new HomePage(page)).goto();
     await page.getByRole('button', { name: 'Settings' }).click();
-    await page.getByLabel('Set valid rounds automatically by default').click(); // Switch to "off"
+    await page.getByLabel('Set valid rounds automatically by default')
+      .click(); // Switch to "off"
 
-    // Check the "Compose Transaction" page has the correct default value
+    // Go to "Compose Transaction" page
     await (new ComposeTxnPage(page)).goto();
-    await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
-    await page.getByRole('button', { name: 'Settings' }).click();
-    await expect(page.getByLabel('Set valid rounds automatically by default')).not.toBeChecked();
+    const useSugSetting = page.getByLabel('Set valid rounds automatically by default');
+    const useSugField = page.getByLabel('Automatically set valid rounds');
 
-    // Change setting again, but we are on the "Compose Transaction" page this time
-    await page.getByLabel('Set valid rounds automatically by default').click(); // Switch to "on"
-    await page.getByTitle('Close').click(); // Close the settings
-    // Expect current value in "Compose Transaction" page to remain unchanged
-    await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
+    // Check if the field on the "Compose Transaction" page has the correct default value
+    await expect(useSugField).not.toBeChecked();
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await expect(useSugSetting).not.toBeChecked();
+
+    // Change the setting again, but we are on the "Compose Transaction" page this time
+    await useSugSetting.click(); // Switch to "on"
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to change ("off" --> "on")
+    // because the field was never touched
+    await expect(useSugField).toBeChecked();
+
+    // Touch the field by changing the value in "Compose Transaction" page
+    await useSugField.click(); // Switch to "off"
+    await page.getByRole('button', { name: 'Settings' }).click();
+    await useSugSetting.click(); // Switch to "off"
+    await useSugSetting.click(); // Switch to "on" again
+    await page.getByTitle('Close').click(); // Close the settings dialog
+    // Expect current value of the field on "Compose Transaction" page to remain unchanged
+    await expect(useSugField).not.toBeChecked();
 
     // Refresh the "Compose Transaction" page to see if the form has the new default value
     await page.reload();
-    await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    await expect(useSugField).toBeChecked();
   });
 
   test('uses the "manager address to the sender address by default" value set in the settings',

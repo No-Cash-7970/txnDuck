@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
 import { FieldGroup, NumberField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
-import { useAtomValue } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   MIN_TX_FEE,
   generalFormControlAtom,
@@ -8,9 +9,12 @@ import {
   tipContentClass,
   tipBtnClass,
   feeConditionalRequireAtom,
+  storedTxnDataAtom,
+  txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { microalgosToAlgos } from 'algosdk';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { defaultUseSugFee as defaultUseSugFeeAtom } from '@/app/lib/app-settings';
 
 export default function Fee({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
@@ -74,6 +78,17 @@ export function FeeInput({ t }: { t: TFunction }) {
 
 export function UseSugFeeInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const defaultUseSugFee = useAtomValue(defaultUseSugFeeAtom);
+  const setUseSugFee = useSetAtom(txnDataAtoms.useSugFee);
+
+  useEffect(() => {
+    if (storedTxnData?.useSugFee === undefined && !form.touched.useSugFee) {
+      setUseSugFee(defaultUseSugFee);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[defaultUseSugFee, storedTxnData]);
+
   return (
     <ToggleField label={t('fields.use_sug_fee.label')}
       name='use_sug_fee'

@@ -113,23 +113,11 @@ export function loadStoredTxnData(
   jotaiStore.set(txnDataAtoms.txnType, txnType);
   jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
   jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note);
-
-  const defaultUseSugFee = jotaiStore.get(AppSettings.defaultUseSugFee);
-  jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? defaultUseSugFee);
-
-  // Do not set the fee if the suggested fee is to be used
-  if (!(storedTxnData?.useSugFee ?? defaultUseSugFee)) {
-    jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
-  }
-
-  const defaultUseSugRounds = jotaiStore.get(AppSettings.defaultUseSugRounds);
-  jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? defaultUseSugRounds);
-
-  // Do not set the first & last valid rounds if the suggested rounds are to be used
-  if (!(storedTxnData?.useSugRounds ?? defaultUseSugRounds)) {
-    jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
-    jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
-  }
+  jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? true);
+  jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
+  jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? true);
+  jotaiStore.set(txnDataAtoms.fv, storedTxnData?.txn?.fv);
+  jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
 
   if (!preset || preset === Preset.AppRun) {
     jotaiStore.set(txnDataAtoms.lx, storedTxnData?.txn?.lx || '');
