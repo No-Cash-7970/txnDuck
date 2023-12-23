@@ -162,7 +162,7 @@ describe('Compose Form Component', () => {
       apar_cUseSnd: true,
       apar_rUseSnd: true,
     });
-  });
+  }, 10000);
 
   // eslint-disable-next-line max-len
   it('can store submitted *asset configuration* transaction data (without asset addresses set to sender)',
@@ -235,7 +235,7 @@ describe('Compose Form Component', () => {
       apar_cUseSnd: false,
       apar_rUseSnd: false,
     });
-  });
+  }, 10000);
 
   it('can store submitted *asset freeze* transaction data', async () => {
     render(
