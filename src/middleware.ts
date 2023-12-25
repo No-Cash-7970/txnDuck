@@ -38,12 +38,17 @@ export function middleware(req: NextRequest) {
     lng = fallbackLng;
   }
 
+  // Remove slash if at base URL. This prevents an unnecessary redirect because URLs with ending
+  // slashes are redirected to the version without a slash (a Next.js default).
+  const urlPath = req.nextUrl.pathname === '/' ? '' : req.nextUrl.pathname;
+
   // Redirect if language (lng) in path is not supported
   if (
-    !SUPPORTED_LANGS.some(loc => req.nextUrl.pathname.startsWith(`/${loc}`)) &&
-    !req.nextUrl.pathname.startsWith('/_next')
+    !SUPPORTED_LANGS.some(loc => urlPath.startsWith(`/${loc}`)) &&
+    !urlPath.startsWith('/_next')
   ) {
-    return NextResponse.redirect(new URL(`/${lng}${req.nextUrl.pathname}`, req.url));
+    // TODO: If pathname == '/' then do not use it
+    return NextResponse.redirect(new URL(`/${lng}${urlPath}`, req.url));
   }
 
   // If the user is coming from a page in a specific language that language should override the
