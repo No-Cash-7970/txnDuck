@@ -1,4 +1,4 @@
-/** @file Collection of general-use utility functions */
+/** @file Collection of general-purpose utility functions */
 
 /** Converts bytes as a Uint8Array buffer to data URL.
  * Adapted from:
