@@ -31,8 +31,8 @@ interface InputProps {
 }
 /** General properties for fields */
 interface FieldProps {
-  /** Text for the main label */
-  label?: string;
+  /** Value for the main label. Usually a string of text. */
+  label?: any;
   /**
    * If the input should be inside in the label. If set to `false`, the `id` for the input needs to
    * be set for the label to function properly
@@ -47,8 +47,8 @@ interface FieldProps {
    * Example: "Required"
    */
   requiredText?: string;
-  /** Text for the helper message */
-  helpMsg?: string;
+  /** Value for the helper message. Usually a string of text. */
+  helpMsg?: any;
 }
 
 /** Properties for *Fields that have side-labels */
