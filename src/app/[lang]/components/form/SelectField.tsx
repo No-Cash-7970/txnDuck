@@ -67,7 +67,7 @@ export default function SelectField({
                 </span>
               }
               <select
-                className={`select-bordered select join-item ${inputClass}`}
+                className={`select-bordered select join-item flex-auto ${inputClass}`}
                 id={id || undefined}
                 required={required}
                 defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
@@ -78,6 +78,7 @@ export default function SelectField({
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                size={1}
               >
                 {placeholder && <option value='' disabled>{placeholder}</option>}
                 {
@@ -126,7 +127,7 @@ export default function SelectField({
               </span>
             }
             <select
-              className={`select-bordered select join-item ${inputClass}`}
+              className={`select-bordered select join-item flex-auto ${inputClass}`}
               id={id || undefined}
               required={required}
               defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
@@ -137,6 +138,7 @@ export default function SelectField({
               onChange={onChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              size={1}
             >
               {placeholder && <option value='' disabled>{placeholder}</option>}
               {

@@ -66,7 +66,7 @@ export default function NumberField({
                 </span>
               }
               <input
-                className={`input-bordered input join-item ${inputClass}`}
+                className={`input-bordered input join-item flex-auto ${inputClass}`}
                 type='number'
                 id={id || undefined}
                 required={required}
@@ -81,6 +81,7 @@ export default function NumberField({
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}
+                size={1}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -120,7 +121,7 @@ export default function NumberField({
               </span>
             }
             <input
-              className={`input-bordered input join-item ${inputClass}`}
+              className={`input-bordered input join-item flex-auto ${inputClass}`}
               type='number'
               id={id || undefined}
               required={required}
@@ -135,6 +136,7 @@ export default function NumberField({
               onChange={onChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              size={1}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

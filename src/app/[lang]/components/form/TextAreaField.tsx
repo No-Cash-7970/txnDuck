@@ -64,7 +64,7 @@ export default function TextAreaField({
                 </span>
               }
               <textarea
-                className={`textarea-bordered textarea join-item ${inputClass}`}
+                className={`textarea-bordered textarea join-item flex-auto ${inputClass}`}
                 id={id || undefined}
                 required={required}
                 placeholder={placeholder || undefined}
@@ -115,7 +115,7 @@ export default function TextAreaField({
               </span>
             }
             <textarea
-              className={`textarea-bordered textarea join-item ${inputClass}`}
+              className={`textarea-bordered textarea join-item flex-auto ${inputClass}`}
               id={id || undefined}
               required={required}
               placeholder={placeholder || undefined}

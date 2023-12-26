@@ -68,7 +68,7 @@ export default function TextField({
                 </span>
               }
               <input
-                className={`input-bordered input join-item ${inputClass}`}
+                className={`input-bordered input join-item flex-auto ${inputClass}`}
                 type={type ?? 'text'}
                 id={id || undefined}
                 required={required}
@@ -84,6 +84,7 @@ export default function TextField({
                 onBlur={onBlur}
                 inputMode={inputMode}
                 maxLength={maxLength}
+                size={1}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -123,7 +124,7 @@ export default function TextField({
               </span>
             }
             <input
-              className={`input-bordered input join-item ${inputClass}`}
+              className={`input-bordered input join-item flex-auto ${inputClass}`}
               type={type ?? 'text'}
               id={id || undefined}
               required={required}
@@ -139,6 +140,7 @@ export default function TextField({
               onBlur={onBlur}
               inputMode={inputMode}
               maxLength={maxLength}
+              size={1}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

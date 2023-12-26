@@ -18,8 +18,8 @@ export type Props = {
    * Recommended for making the button more accessible
    */
   btnTitle?: string,
-  /** Content of the tooltip */
-  content?: string,
+  /** Content of the tooltip. Usually a string of text. */
+  content?: any,
   /** Classes to add to the tooltip */
   contentClass?: string,
 }
