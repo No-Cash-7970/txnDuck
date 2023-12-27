@@ -107,7 +107,7 @@ export default function SignTxn({ lng }: Props) {
     if (!storedTxnData) return;
 
     getSuggestedParams.then(({genesisID, genesisHash, fee: feePerByte, firstRound, lastRound }) => {
-      const unsignedTxnData = storedTxnData.txn;
+      const unsignedTxnData = {...storedTxnData.txn}; // Copy stored transaction data
       let unsignedTxn: algosdk.Transaction|null = null;
 
       // If the suggested first & valid rounds are to be used, set first & valid rounds to suggested

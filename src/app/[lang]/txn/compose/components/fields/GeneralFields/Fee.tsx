@@ -81,6 +81,7 @@ export function UseSugFeeInput({ t }: { t: TFunction }) {
   const storedTxnData = useAtomValue(storedTxnDataAtom);
   const defaultUseSugFee = useAtomValue(defaultUseSugFeeAtom);
   const setUseSugFee = useSetAtom(txnDataAtoms.useSugFee);
+  const setFee = useSetAtom(txnDataAtoms.fee);
 
   useEffect(() => {
     if (storedTxnData?.useSugFee === undefined && !form.touched.useSugFee) {
@@ -108,6 +109,8 @@ export function UseSugFeeInput({ t }: { t: TFunction }) {
       onChange={(e) => {
         form.setTouched('useSugFee', true);
         form.handleOnChange('useSugFee')(e.target.checked);
+        // Unset the fee if suggested fee is to be used
+        if (e.target.checked) setFee(undefined);
       }}
     />
   );
