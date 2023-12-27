@@ -92,11 +92,11 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
   value?: number | string;
 
   /** Minimum value allowed */
-  min?: number | null;
+  min?: number | string | null;
   /** Maximum value allowed */
-  max?: number | null;
+  max?: number | string | null;
   /** Specifies the granularity that the value must adhere to */
-  step?: number | 'any' | null;
+  step?: number | string | null;
   /**
    * Type of auto-complete. Set to 'off' to turn off auto-complete.
    *
