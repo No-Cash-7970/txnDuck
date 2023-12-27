@@ -95,7 +95,7 @@ export default function AssetId({ t }: { t: TFunction }) {
               <span className='ms-1 align-middle'>{t('fields.caid.getting_info')}</span>
             </>}
             {assetInfoSuccess &&
-              (retrievedAssetInfo?.name ?? <i>{t('fields.caid.get_info_unknown')}</i>)
+              (retrievedAssetInfo?.value?.name ?? <i>{t('fields.caid.get_info_unknown')}</i>)
             }
             {assetInfoFail && <>
               <IconAlertTriangle size={16} aria-hidden className='inline' />

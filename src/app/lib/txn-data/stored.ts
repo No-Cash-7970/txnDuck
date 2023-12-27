@@ -384,7 +384,7 @@ export function extractTxnDataFromAtoms(
       aclose: assetTransferForm.values.aclose || undefined,
     };
 
-    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo).value;
     if (retrievedAssetInfo) {
       // Remove asset addresses from asset information
       retrievedAssetInfo = {
@@ -445,7 +445,7 @@ export function extractTxnDataFromAtoms(
         apar_rUseSnd: !!assetConfigForm.values.apar_rUseSnd,
       };
     } else { // Not creating an asset
-      retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+      retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo).value;
       if (retrievedAssetInfo) {
         // Remove asset addresses from asset information
         retrievedAssetInfo = {
@@ -476,7 +476,7 @@ export function extractTxnDataFromAtoms(
       afrz: assetFreezeForm.values.afrz,
     };
 
-    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo).value;
     if (retrievedAssetInfo) {
       // Remove asset addresses from asset information
       retrievedAssetInfo = {

@@ -3,8 +3,9 @@
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
+import { baseUnitsToDecimal } from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
-import { ValidationMessage } from './types';
+import { RetrievedAssetInfo, ValidationMessage } from './types';
 import { Preset, MAX_APP_GLOBALS, MAX_APP_KEY_LENGTH, MAX_APP_LOCALS } from './constants';
 import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './validation-rules';
 
@@ -149,6 +150,17 @@ export const acloseConditionalRequireAtom = validateAtoms({
 }, (values) => {
   if (values.preset === Preset.AssetOptOut) {
     YupString().required().validateSync(values.aclose);
+  }
+});
+export const aamtConditionalMaxAtom = validateAtoms({
+  assetInfo: txnDataAtoms.retrievedAssetInfo,
+  aamt: txnDataAtoms.aamt,
+}, (values) => {
+  if (values.assetInfo) {
+    const assetInfo = values.assetInfo as RetrievedAssetInfo;
+    YupNumber()
+      .max(parseFloat(baseUnitsToDecimal(assetInfo.total, assetInfo.decimals)))
+      .validateSync(values.aamt === '' ? undefined : values.aamt);
   }
 });
 

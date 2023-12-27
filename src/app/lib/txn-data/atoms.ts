@@ -115,7 +115,9 @@ export const close = atomWithValidate<string>('', {
  * Retrieved Asset Information
  */
 
-export const retrievedAssetInfo = atom<RetrievedAssetInfo|undefined>(undefined);
+export const retrievedAssetInfo = atomWithValidate<RetrievedAssetInfo|undefined>(undefined, {
+  validate: v => v
+});
 
 /*
  * Asset Transfer
