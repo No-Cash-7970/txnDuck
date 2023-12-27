@@ -55,6 +55,7 @@
     "svg-to-ico": "^1.0.14",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.1.6",
+    "use-debounce": "^10.0.0",
     "yup": "^1.3.2"
   },
   "devDependencies": {

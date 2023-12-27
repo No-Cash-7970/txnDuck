@@ -186,11 +186,12 @@ describe('Transaction Data Table Component', () => {
         txn: {
           type: 'axfer',
           arcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          xaid: 1234,
+          xaid: 123456789,
           aamt: 42,
           asnd: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
           aclose: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'
-        }
+        },
+        retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
       }));
       render(<TxnDataTable />);
 
@@ -198,8 +199,8 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))
         .toBeInTheDocument();
 
-      expect(screen.getByText('fields.xaid.label')).toBeInTheDocument();
-      expect(screen.getByText('1234')).toBeInTheDocument();
+      expect(screen.getByText('fields.xaid.with_name_label')).toBeInTheDocument();
+      expect(screen.getByText('fields.xaid.with_name')).toBeInTheDocument();
 
       expect(screen.getByText('fields.aamt.label')).toBeInTheDocument();
 
@@ -316,23 +317,18 @@ describe('Transaction Data Table Component', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'acfg',
-          caid: 1234,
-          apar_un: 'FAKE',
-          apar_an: 'Fake Token',
-          apar_t: 10000000,
-          apar_dc: 5,
-          apar_df: true,
-          apar_au: 'https://fake.token',
+          caid: 123456789,
           apar_m: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
           apar_f: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
           apar_c: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
           apar_r: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-        }
+        },
+        retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.caid.with_name_label')).toBeInTheDocument();
+      expect(screen.getByText('fields.caid.with_name')).toBeInTheDocument();
       expect(screen.getByText('fields.type.options.acfg_reconfig')).toBeInTheDocument();
       expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
@@ -364,22 +360,14 @@ describe('Transaction Data Table Component', () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'acfg',
-          note: 'Hello world',
-          lx: 'EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE',
-          rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-          caid: 1234,
-          apar_un: 'FAKE',
-          apar_an: 'Fake Token',
-          apar_t: 10000000,
-          apar_dc: 5,
-          apar_df: true,
-          apar_au: 'https://fake.token',
-          apar_am: 'GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG',
-        }
+          caid: 123456789,
+        },
+        retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.caid.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.caid.with_name_label')).toBeInTheDocument();
+      expect(screen.getByText('fields.caid.with_name')).toBeInTheDocument();
       expect(screen.getByText('fields.type.options.acfg_destroy')).toBeInTheDocument();
       expect(screen.queryByText('fields.apar_un.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_an.label')).not.toBeInTheDocument();
@@ -389,7 +377,6 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apar_df.is_frozen')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_au.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
-
       expect(screen.queryByText('fields.apar_m.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_f.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apar_c.label')).not.toBeInTheDocument();
@@ -431,11 +418,13 @@ describe('Transaction Data Table Component', () => {
           faid: 1234,
           fadd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
           afrz: true,
-        }
+        },
+        retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.faid.label')).toBeInTheDocument();
+      expect(screen.getByText('fields.faid.with_name_label')).toBeInTheDocument();
+      expect(screen.getByText('fields.faid.with_name')).toBeInTheDocument();
 
       expect(screen.getByText('fields.fadd.label')).toBeInTheDocument();
       expect(screen.getByText('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'))

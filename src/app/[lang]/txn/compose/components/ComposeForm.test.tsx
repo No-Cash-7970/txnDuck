@@ -11,6 +11,27 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
   useSearchParams: () => ({ get: () => presetMockValue }),
 }));
+// Mock algokit
+jest.mock('@algorandfoundation/algokit-utils', () => ({
+  getAlgoClient: () => ({
+    getAssetByID: () => ({
+      do: () => ({
+        params: {
+          name: 'Foo Token',
+          'unit-name': 'FOO',
+          total: 1000,
+          decimals: 2,
+          manager: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          freeze: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+          clawback: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+          reserve: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+        }
+      })
+    })
+  }),
+}));
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import ComposeForm from './ComposeForm';
 
@@ -76,8 +97,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.close.label')).toBeInTheDocument();
   });
 
-  it('has fields for asset transfer transaction type if "Asset Transfer" transaction type is'
-  +' selected',
+  // eslint-disable-next-line max-len
+  it('has fields for asset transfer transaction type if "Asset Transfer" transaction type is selected',
   async () => {
     render(<ComposeForm />);
 
@@ -94,6 +115,23 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.xaid.label')).toBeInTheDocument();
     expect(screen.getByText('fields.aamt.label')).toBeInTheDocument();
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
+  });
+
+  it('retrieves asset information when "asset ID" is entered in an "Asset Transfer" transaction',
+  async () => {
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.xaid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.getByText('Foo Token')).toBeInTheDocument();
+    // Check if "amount" field has correct "step" attribute
+    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveAttribute('step', '0.01');
+    // Check if "amount" field shows correct unit
+    expect(screen.getByText('FOO')).toBeInTheDocument();
   });
 
   // eslint-disable-next-line max-len
@@ -197,6 +235,21 @@ describe('Compose Form Component', () => {
 
   });
 
+  // eslint-disable-next-line max-len
+  it('retrieves asset information when "asset ID" is entered in an "Asset Configuration" transaction',
+  async () => {
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.caid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.getByText('Foo Token')).toBeInTheDocument();
+    // TODO: Check if asset addresses have the retrieved values
+  });
+
   it('has fields for asset freeze transaction type if "Asset Freeze" transaction type is selected',
   async () => {
     render(<ComposeForm />);
@@ -210,6 +263,19 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.faid.label')).toBeInTheDocument();
     expect(screen.getByText('fields.fadd.label')).toBeInTheDocument();
     expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
+  });
+
+  it('retrieves asset information when "asset ID" is entered in an "Asset Freeze" transaction',
+  async () => {
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.faid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.getByText('Foo Token')).toBeInTheDocument();
   });
 
   it('has fields for key registration transaction type if "Key Registration" transaction type is'

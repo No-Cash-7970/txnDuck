@@ -14,6 +14,7 @@ import {
   type AssetTransferTxnData,
   type KeyRegTxnData,
   type PaymentTxnData,
+  RetrievedAssetInfo,
 } from './types';
 import {
   apaaValidateOptions,
@@ -30,7 +31,7 @@ import {
   keyRegFormControlAtom,
   paymentFormControlAtom
 } from './field-validation';
-import * as AppSettings from '../app-settings';
+import { baseUnitsToDecimal, decimalToBaseUnits } from '@/app/lib/utils';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
@@ -144,7 +145,12 @@ export function loadStoredTxnData(
 
     if (preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut) {
       jotaiStore.set(txnDataAtoms.arcv, (storedTxnData?.txn as AssetTransferTxnData)?.arcv || '');
-      jotaiStore.set(txnDataAtoms.aamt, (storedTxnData?.txn as AssetTransferTxnData)?.aamt || '');
+
+      const aamt = (storedTxnData?.txn as AssetTransferTxnData)?.aamt;
+      jotaiStore.set(txnDataAtoms.aamt,
+        aamt === undefined
+          ? '' : baseUnitsToDecimal(aamt, storedTxnData?.retrievedAssetInfo?.decimals)
+      );
     }
     if (!preset || preset === Preset.AssetClawback) {
       jotaiStore.set(txnDataAtoms.asnd, (storedTxnData?.txn as AssetTransferTxnData)?.asnd || '');
@@ -154,13 +160,21 @@ export function loadStoredTxnData(
         (storedTxnData?.txn as AssetTransferTxnData)?.aclose || ''
       );
     }
+
+    if (storedTxnData?.retrievedAssetInfo) {
+      jotaiStore.set(txnDataAtoms.retrievedAssetInfo, storedTxnData?.retrievedAssetInfo);
+    }
   }
 
   // Restore asset configuration transaction data, if applicable
   else if (txnType === TransactionType.acfg) {
     if (preset !== Preset.AssetCreate) {
       jotaiStore.set(txnDataAtoms.caid, (storedTxnData?.txn as AssetConfigTxnData)?.caid);
+    } else { // Is asset-create preset
+      // Clear the asset ID in case it was set due to a different preset being used previously
+      jotaiStore.set(txnDataAtoms.caid, undefined);
     }
+
     jotaiStore.set(txnDataAtoms.apar_un, (storedTxnData?.txn as AssetConfigTxnData)?.apar_un || '');
     jotaiStore.set(txnDataAtoms.apar_an, (storedTxnData?.txn as AssetConfigTxnData)?.apar_an || '');
     jotaiStore.set(txnDataAtoms.apar_t, (storedTxnData?.txn as AssetConfigTxnData)?.apar_t || '');
@@ -171,6 +185,10 @@ export function loadStoredTxnData(
     jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData?.txn as AssetConfigTxnData)?.apar_f || '');
     jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData?.txn as AssetConfigTxnData)?.apar_c || '');
     jotaiStore.set(txnDataAtoms.apar_r, (storedTxnData?.txn as AssetConfigTxnData)?.apar_r || '');
+
+    if (storedTxnData?.retrievedAssetInfo) {
+      jotaiStore.set(txnDataAtoms.retrievedAssetInfo, storedTxnData?.retrievedAssetInfo);
+    }
   }
 
   // Restore asset freeze transaction data, if applicable
@@ -184,6 +202,10 @@ export function loadStoredTxnData(
       jotaiStore.set(txnDataAtoms.afrz, false);
     } else {
       jotaiStore.set(txnDataAtoms.afrz, (storedTxnData?.txn as AssetFreezeTxnData)?.afrz ?? false);
+    }
+
+    if (storedTxnData?.retrievedAssetInfo) {
+      jotaiStore.set(txnDataAtoms.retrievedAssetInfo, storedTxnData?.retrievedAssetInfo);
     }
   }
 
@@ -307,13 +329,16 @@ export function extractTxnDataFromAtoms(
     type: txnType,
     snd: generalForm.values.snd,
     note: generalForm.values.note,
-    fee: generalForm.values.fee as number,
-    fv: generalForm.values.fv as number,
-    lv: generalForm.values.lv as number,
+    fee: generalForm.values.fee,
+    fv: generalForm.values.fv,
+    lv: generalForm.values.lv,
     lx: generalForm.values.lx || undefined,
     rekey: generalForm.values.rekey || undefined,
   };
   let specificTxnData: any = {};
+  // Save retrieve asset information so it can be used for displaying asset information when signing
+  // the transaction
+  let retrievedAssetInfo: RetrievedAssetInfo | undefined = undefined;
 
   let acfgOptions: {
     apar_mUseSnd?: boolean,
@@ -359,6 +384,23 @@ export function extractTxnDataFromAtoms(
       aclose: assetTransferForm.values.aclose || undefined,
     };
 
+    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+    if (retrievedAssetInfo) {
+      // Remove asset addresses from asset information
+      retrievedAssetInfo = {
+        id: retrievedAssetInfo.id,
+        name: retrievedAssetInfo.name,
+        unitName: retrievedAssetInfo.unitName,
+        total: retrievedAssetInfo.total,
+        decimals: retrievedAssetInfo.decimals,
+      };
+      // Convert asset amount decimal value to base units
+      specificTxnData.aamt = decimalToBaseUnits(
+        `${specificTxnData.aamt}`,
+        retrievedAssetInfo.decimals
+      );
+    }
+
     if (preset === Preset.AssetOptIn) {
       specificTxnData.arcv = baseTxnData.snd;
       specificTxnData.aamt = 0;
@@ -402,6 +444,18 @@ export function extractTxnDataFromAtoms(
         apar_cUseSnd: !!assetConfigForm.values.apar_cUseSnd,
         apar_rUseSnd: !!assetConfigForm.values.apar_rUseSnd,
       };
+    } else { // Not creating an asset
+      retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+      if (retrievedAssetInfo) {
+        // Remove asset addresses from asset information
+        retrievedAssetInfo = {
+          id: retrievedAssetInfo.id,
+          name: retrievedAssetInfo.name,
+          unitName: retrievedAssetInfo.unitName,
+          total: retrievedAssetInfo.total,
+          decimals: retrievedAssetInfo.decimals,
+        };
+      }
     }
 
     if (preset === Preset.AssetDestroy) {
@@ -421,6 +475,18 @@ export function extractTxnDataFromAtoms(
       fadd: assetFreezeForm.values.fadd,
       afrz: assetFreezeForm.values.afrz,
     };
+
+    retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo);
+    if (retrievedAssetInfo) {
+      // Remove asset addresses from asset information
+      retrievedAssetInfo = {
+        id: retrievedAssetInfo.id,
+        name: retrievedAssetInfo.name,
+        unitName: retrievedAssetInfo.unitName,
+        total: retrievedAssetInfo.total,
+        decimals: retrievedAssetInfo.decimals,
+      };
+    }
   }
 
   // Gather key registration transaction data
@@ -475,6 +541,7 @@ export function extractTxnDataFromAtoms(
     txn: {...baseTxnData, ...specificTxnData},
     useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
     useSugRounds: jotaiStore.get(txnDataAtoms.useSugRounds).value,
-    ...acfgOptions
+    retrievedAssetInfo: retrievedAssetInfo,
+    ...acfgOptions,
   };
 }

@@ -15,7 +15,7 @@ import {
   UNIT_NAME_MAX_LENGTH,
   URL_MAX_LENGTH
 } from './constants';
-import type { BoxRefAtomGroup, validationAtom } from './types';
+import type { BoxRefAtomGroup, RetrievedAssetInfo, validationAtom } from './types';
 import { addressSchema, idSchema, YupNumber, YupString } from './validation-rules';
 
 /*
@@ -110,6 +110,12 @@ export const close = atomWithValidate<string>('', {
     return v;
   }
 });
+
+/*
+ * Retrieved Asset Information
+ */
+
+export const retrievedAssetInfo = atom<RetrievedAssetInfo|undefined>(undefined);
 
 /*
  * Asset Transfer

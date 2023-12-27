@@ -126,7 +126,12 @@ fields:
     placeholder: Receiver address
   xaid: # Asset ID
     label: Asset ID
+    with_name_label: Asset # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: The unique ID of the asset.
+    getting_info: Retrieving asset information…
+    get_info_fail: Failed to retrieve asset information.
+    get_info_unknown: Unknown asset
   aamt: # Amount of asset to transfer
     label: Asset amount
     tip: >
@@ -151,7 +156,12 @@ fields:
   # Fields for asset configuration type
   caid: # Asset ID
     label: Asset ID
+    with_name_label: Asset # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: The unique ID of the asset.
+    getting_info: Retrieving asset information…
+    get_info_fail: Failed to retrieve asset information.
+    get_info_unknown: Unknown asset
   apar_un: # Unit name
     label: Unit name
     tip: "The name of a unit of this asset. Example: USDT"
@@ -240,7 +250,12 @@ fields:
   # Fields for asset freeze type
   faid: # Asset ID
     label: Asset ID
+    with_name_label: Asset # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: The asset ID being frozen or unfrozen.
+    getting_info: Retrieving asset information…
+    get_info_fail: Failed to retrieve asset information.
+    get_info_unknown: Unknown asset
   fadd: # Freeze target address
     label: Freeze target
     tip: The address of the account whose asset is being frozen or unfrozen.

@@ -6,6 +6,7 @@ nonfungible_token: Non-Fungible Token
 close: Close # For a button to close dialog/modal
 none: None # Often used when displaying that a form field value was not given or was empty
 number_value: "{{value, number}}" # When displaying a number without any other text
+asset_amount: "{{amount, number}} {{asset}}" # For displaying amount of an asset
 loading: Loading…
 
 # Unit name of the token for Algorand

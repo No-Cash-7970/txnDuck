@@ -129,7 +129,12 @@ fields:
     placeholder: Dirección del destinatario
   xaid: # Asset ID
     label: Identificación de activo
+    with_name_label: Activo # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: El identificador único del activo.
+    getting_info: Obtener información sobre activo...
+    get_info_fail: No se ha podido obtener la información del activo.
+    get_info_unknown: Activo desconocido
   aamt: # Amount of asset to transfer
     label: Cantidad de activo
     tip: >
@@ -153,7 +158,12 @@ fields:
   # Fields for asset configuration type
   caid: # Asset ID
     label: Identificación de activo
+    with_name_label: Activo # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: La identificación único del activo.
+    getting_info: Obtener información sobre activo...
+    get_info_fail: No se ha podido obtener la información del activo.
+    get_info_unknown: Activo desconocido
   apar_un: # Unit name
     label: Nombre de la unidad
     tip: "El nombre de una unidad de este activo. Ejemplo: USDT"
@@ -247,7 +257,12 @@ fields:
   # Fields for asset freeze type
   faid: # Asset ID
     label: Identificación de activo
+    with_name_label: Activo # The label for when the asset ID is displayed with the asset name
+    with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: La identificación del activo que se congela o descongela.
+    getting_info: Obtener información sobre activo...
+    get_info_fail: No se ha podido obtener la información del activo.
+    get_info_unknown: Activo desconocido
   fadd: # Freeze target address
     label: Objetivo para congelar
     placeholder: Dirección del objetivo

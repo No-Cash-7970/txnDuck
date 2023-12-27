@@ -12,6 +12,28 @@ export type BoxRef = {
   n: string,
 };
 
+/** Retrieved asset information */
+export type RetrievedAssetInfo = {
+  /** Asset ID */
+  id: string,
+  /** Asset name */
+  name?: string,
+  /** Unit name */
+  unitName?: string,
+  /** Total number of asset (not in decimal form) */
+  total: number,
+  /** Number of decimals asset amounts should have when displayed */
+  decimals: number,
+  /** Manager address */
+  manager?: string,
+  /** Freeze address */
+  freeze?: string,
+  /** Clawback address */
+  clawback?: string,
+  /** Reserve address */
+  reserve?: string,
+};
+
 /** Data common to all transaction types */
 export interface BaseTxnData {
   /** Type */
@@ -170,6 +192,8 @@ export interface StoredTxnData {
   apar_cUseSnd?: boolean;
   /** Set reseve address to the sender address? */
   apar_rUseSnd?: boolean;
+  /** Information about the asset that was retrieved when the asset ID was given */
+  retrievedAssetInfo?: RetrievedAssetInfo;
 }
 
 /** Validation error message */

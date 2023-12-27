@@ -6,12 +6,14 @@ import {
   showFormErrorsAtom,
   tipBtnClass,
   tipContentClass,
+  txnDataAtoms,
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Amount({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
   return (<>
     <NumberField label={t('fields.aamt.label')}
       name='aamt'
@@ -30,9 +32,9 @@ export default function Amount({ t }: { t: TFunction }) {
       inputClass={
         ((showFormErrors || form.touched.aamt) && form.fieldErrors.aamt) ? 'input-error' : ''
       }
-      afterSideLabel={t('unit_other')}
+      afterSideLabel={retrievedAssetInfo?.unitName ?? t('unit_other')}
       min={0}
-      step={0.000001}
+      step={10**-(retrievedAssetInfo?.decimals ?? 0)}
       value={form.values.aamt ?? ''}
       onChange={(e) => form.handleOnChange('aamt')(e.target.value)}
       onFocus={form.handleOnFocus('aamt')}

@@ -1,5 +1,6 @@
 export * as txnDataAtoms from './atoms';
 export * from './constants';
+export * from './data-utils';
 export * from './processor';
 export * from './stored';
 export * from './types';

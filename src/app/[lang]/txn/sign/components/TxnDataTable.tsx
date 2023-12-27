@@ -8,6 +8,7 @@ import { useMemo } from 'react';
 import { Trans } from 'react-i18next';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { fee as feeAtom } from '@/app/lib/txn-data/atoms';
+import { baseUnitsToDecimal } from '@/app/lib/utils';
 
 type Props = {
   /** Language */
@@ -125,15 +126,46 @@ export default function TxnDataTable({ lng }: Props) {
             </td>
           </tr>
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.xaid.label')}</th>
-            <td>{(storedTxnData?.txn as TxnData.AssetTransferTxnData)?.xaid}</td>
+            <th role='rowheader' className='align-top'>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.xaid.with_name_label') : t('fields.xaid.label')
+              }
+            </th>
+            <td>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.xaid.with_name', {
+                  name: storedTxnData?.retrievedAssetInfo?.name,
+                  id: (storedTxnData?.txn as TxnData.AssetTransferTxnData)?.xaid
+                })
+                : (storedTxnData?.txn as TxnData.AssetTransferTxnData)?.xaid
+              }
+            </td>
           </tr>
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.aamt.label')}</th>
             <td>
-              {t('number_value', {
-                value: (storedTxnData?.txn as TxnData.AssetTransferTxnData)?.aamt
-              })}
+              {storedTxnData?.retrievedAssetInfo?.unitName
+                ? t('asset_amount', {
+                  amount: baseUnitsToDecimal(
+                    (storedTxnData?.txn as TxnData.AssetTransferTxnData)?.aamt,
+                    storedTxnData?.retrievedAssetInfo?.decimals
+                  ),
+                  asset: storedTxnData?.retrievedAssetInfo?.unitName,
+                  formatParams: {
+                    amount: {
+                      maximumFractionDigits: storedTxnData?.retrievedAssetInfo?.decimals ?? 0
+                    }
+                  }
+                })
+                : t('number_value', {
+                  value: (storedTxnData?.txn as TxnData.AssetTransferTxnData)?.aamt,
+                  formatParams: {
+                    value: {
+                      maximumFractionDigits: storedTxnData?.retrievedAssetInfo?.decimals ?? 0
+                    }
+                  }
+                })
+              }
             </td>
           </tr>
           <tr>
@@ -149,8 +181,20 @@ export default function TxnDataTable({ lng }: Props) {
           { // If NOT an asset creation transaction
           (storedTxnData?.txn as TxnData.AssetConfigTxnData).caid &&
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.caid.label')}</th>
-            <td>{(storedTxnData?.txn as TxnData.AssetConfigTxnData).caid}</td>
+            <th role='rowheader' className='align-top'>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.caid.with_name_label') : t('fields.caid.label')
+              }
+            </th>
+            <td>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.caid.with_name', {
+                  name: storedTxnData?.retrievedAssetInfo?.name,
+                  id: (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.caid
+                })
+                : (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.caid
+              }
+            </td>
           </tr>}
 
           { // If an asset creation transaction
@@ -172,9 +216,33 @@ export default function TxnDataTable({ lng }: Props) {
             <tr>
               <th role='rowheader' className='align-top'>{t('fields.apar_t.label')}</th>
               <td>
-                {t('number_value', {
-                  value: (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_t
-                })}
+                {(storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_un
+                  ? t('asset_amount', {
+                    amount: baseUnitsToDecimal(
+                      (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_t,
+                      (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_dc ?? 0
+                    ),
+                    asset: (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_un,
+                    formatParams: {
+                      amount: {
+                        minimumFractionDigits:
+                          (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_dc ?? 0
+                      }
+                    }
+                  })
+                  : t('number_value', {
+                    value: baseUnitsToDecimal(
+                      (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_t,
+                      (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_dc ?? 0
+                    ),
+                    formatParams: {
+                      value: {
+                        minimumFractionDigits:
+                        (storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_dc ?? 0
+                      }
+                    }
+                  })
+                }
               </td>
             </tr>
             <tr>
@@ -202,8 +270,20 @@ export default function TxnDataTable({ lng }: Props) {
 
         {storedTxnData?.txn?.type === TransactionType.afrz && <>
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.faid.label')}</th>
-            <td>{(storedTxnData?.txn as TxnData.AssetFreezeTxnData).faid}</td>
+            <th role='rowheader' className='align-top'>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.faid.with_name_label') : t('fields.faid.label')
+              }
+            </th>
+            <td>
+              {storedTxnData?.retrievedAssetInfo?.name
+                ? t('fields.faid.with_name', {
+                  name: storedTxnData?.retrievedAssetInfo?.name,
+                  id: (storedTxnData?.txn as TxnData.AssetFreezeTxnData)?.faid
+                })
+                : (storedTxnData?.txn as TxnData.AssetFreezeTxnData)?.faid
+              }
+            </td>
           </tr>
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.fadd.label')}</th>
