@@ -7,7 +7,7 @@ import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { Trans } from 'react-i18next';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { fee as feeAtom } from '@/app/lib/txn-data/atoms';
+import { fee as feeAtom, fv as fvAtom, lv as lvAtom } from '@/app/lib/txn-data/atoms';
 import { baseUnitsToDecimal } from '@/app/lib/utils';
 
 type Props = {
@@ -30,6 +30,8 @@ export default function TxnDataTable({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const fee = useAtomValue(feeAtom);
+  const fv = useAtomValue(fvAtom);
+  const lv = useAtomValue(lvAtom);
 
   /** Get the part of the i18n translation key for the given transaction type
    * @returns Part of the i18n translation key for the transaction type
@@ -480,13 +482,11 @@ export default function TxnDataTable({ lng }: Props) {
           </th>
           <td>
             {storedTxnData
-              ? <>
-                {t('fields.fee.in_algos', {
+              ? t('fields.fee.in_algos', {
                   count: storedTxnData?.useSugFee
                     ? (fee.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fee,
                   formatParams: { count: { maximumFractionDigits: 6 } }
-                })}
-              </>
+                })
               : t('loading')
             }
           </td>
@@ -565,7 +565,13 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {storedTxnData ? t('number_value', {value: storedTxnData?.txn?.fv}) : t('loading')}
+            {storedTxnData
+              ? t('number_value', {
+                value: storedTxnData?.useSugRounds
+                    ? (fv.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fv
+                })
+              : t('loading')
+            }
           </td>
         </tr>
         <tr>
@@ -577,7 +583,13 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {storedTxnData ? t('number_value', {value: storedTxnData?.txn?.lv}) : t('loading')}
+            {storedTxnData
+              ? t('number_value', {
+                value: storedTxnData?.useSugRounds
+                    ? (lv.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.lv
+                })
+              : t('loading')
+            }
           </td>
         </tr>
         <tr>
