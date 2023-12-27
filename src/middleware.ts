@@ -47,7 +47,6 @@ export function middleware(req: NextRequest) {
     !SUPPORTED_LANGS.some(loc => urlPath.startsWith(`/${loc}`)) &&
     !urlPath.startsWith('/_next')
   ) {
-    // TODO: If pathname == '/' then do not use it
     return NextResponse.redirect(new URL(`/${lng}${urlPath}`, req.url));
   }
 
