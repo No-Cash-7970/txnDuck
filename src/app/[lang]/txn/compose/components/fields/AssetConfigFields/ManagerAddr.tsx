@@ -73,6 +73,19 @@ function UseSenderAddr({ t }: { t: TFunction }) {
 export function ManagerAddrInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const preset = useSearchParams().get(Preset.ParamName);
+  const setApar_m = useSetAtom(txnDataAtoms.apar_m);
+  const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
+
+  useEffect(() => {
+    if (
+      preset !== Preset.AssetDestroy && !form.touched.apar_m && retrievedAssetInfo?.value?.manager
+    ) {
+      setApar_m(retrievedAssetInfo.value.manager);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[retrievedAssetInfo]);
+
   return (<>
     <TextField label={t('fields.apar_m.label')}
       name='apar_m'

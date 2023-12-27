@@ -73,6 +73,19 @@ function UseSenderAddr({ t }: { t: TFunction }) {
 export function ClawbackAddrInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const preset = useSearchParams().get(Preset.ParamName);
+  const setApar_c = useSetAtom(txnDataAtoms.apar_c);
+  const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
+
+  useEffect(() => {
+    if (
+      preset !== Preset.AssetDestroy && !form.touched.apar_c && retrievedAssetInfo?.value?.clawback
+    ) {
+      setApar_c(retrievedAssetInfo.value.clawback);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[retrievedAssetInfo]);
+
   return (<>
     <TextField label={t('fields.apar_c.label')}
       name='apar_c'

@@ -73,6 +73,19 @@ function UseSenderAddr({ t }: { t: TFunction }) {
 export function ReserveAddrInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const preset = useSearchParams().get(Preset.ParamName);
+  const setApar_r = useSetAtom(txnDataAtoms.apar_r);
+  const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
+
+  useEffect(() => {
+    if (
+      preset !== Preset.AssetDestroy && !form.touched.apar_r && retrievedAssetInfo?.value?.reserve
+    ) {
+      setApar_r(retrievedAssetInfo.value.reserve);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[retrievedAssetInfo]);
+
   return (<>
     <TextField label={t('fields.apar_r.label')}
       name='apar_r'

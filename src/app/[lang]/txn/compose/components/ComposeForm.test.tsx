@@ -247,7 +247,15 @@ describe('Compose Form Component', () => {
 
     // Check if asset name appears
     expect(screen.getByText('Foo Token')).toBeInTheDocument();
-    // TODO: Check if asset addresses have the retrieved values
+    // Check if asset addresses have the retrieved values
+    expect(screen.getByLabelText(/fields.apar_m.label/))
+      .toHaveValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    expect(screen.getByLabelText(/fields.apar_f.label/))
+      .toHaveValue('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    expect(screen.getByLabelText(/fields.apar_c.label/))
+      .toHaveValue('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC');
+    expect(screen.getByLabelText(/fields.apar_r.label/))
+      .toHaveValue('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
   });
 
   it('has fields for asset freeze transaction type if "Asset Freeze" transaction type is selected',

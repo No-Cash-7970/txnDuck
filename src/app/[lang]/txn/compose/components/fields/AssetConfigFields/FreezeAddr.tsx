@@ -73,6 +73,19 @@ function UseSenderAddr({ t }: { t: TFunction }) {
 export function FreezeAddrInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const preset = useSearchParams().get(Preset.ParamName);
+  const setApar_f = useSetAtom(txnDataAtoms.apar_f);
+  const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
+
+  useEffect(() => {
+    if (
+      preset !== Preset.AssetDestroy && !form.touched.apar_f && retrievedAssetInfo?.value?.freeze
+    ) {
+      setApar_f(retrievedAssetInfo.value.freeze);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[retrievedAssetInfo]);
+
   return (<>
     <TextField label={t('fields.apar_f.label')}
       name='apar_f'
