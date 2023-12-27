@@ -152,7 +152,51 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  // TODO: Add missing tests for suggested parameters
+  it('has "use suggested fee by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_use_sug_fee/)).toBeInTheDocument();
+  });
+
+  it('notifies when "use suggested fee by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_use_sug_fee'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('has "use suggested rounds by default" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.default_use_sug_rounds/)).toBeInTheDocument();
+  });
+
+  it('notifies when "use suggested rounds by default" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
 
   it('has "manager address to the sender address by default" setting', () => {
     render(
