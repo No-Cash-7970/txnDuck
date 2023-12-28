@@ -10,6 +10,7 @@ import * as algokit from '@algorandfoundation/algokit-utils';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
+import { useDebouncedCallback } from 'use-debounce';
 import { dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
@@ -130,7 +131,7 @@ export default function SendTxn({ lng }: Props) {
   /** Attempt to send stored signed transaction. This function is designed to be able to be used
    * with `useEffect()` or by itself. (`useEffect` does not accept asynchronous functions)
    */
-  const attemptSendTxn = () => {
+  const attemptSendTxn = useDebouncedCallback(() => {
     // If there is a signed transaction and a transaction is not currently being sent
     if (storedSignedTxn && !waiting) {
       setFailMsg(undefined); // Reset, just in case this was set before
@@ -159,7 +160,7 @@ export default function SendTxn({ lng }: Props) {
 
       sendTxn();
     }
-  };
+  }, 500, {leading: true});
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(attemptSendTxn, [storedSignedTxn]);

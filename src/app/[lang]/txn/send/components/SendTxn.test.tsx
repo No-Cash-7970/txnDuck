@@ -32,6 +32,8 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import SendTxn from './SendTxn';
 
