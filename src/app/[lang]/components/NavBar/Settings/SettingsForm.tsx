@@ -24,6 +24,7 @@ export default function SettingsForm(props: Props) {
   const [theme, setTheme] = useAtom(Settings.themeAtom);
   const [ignoreFormErrors, setIgnoreFormErrors] = useAtom(Settings.ignoreFormErrorsAtom);
   const [defaultUseSugFee, setDefaultUseSugFee] = useAtom(Settings.defaultUseSugFee);
+  const [assetInfoGet, setAssetInfoGet] = useAtom(Settings.assetInfoGet);
   const [defaultUseSugRounds, setDefaultUseSugRounds] = useAtom(Settings.defaultUseSugRounds);
   const [defaultApar_mUseSnd, setDefaultApar_mUseSnd] = useAtom(Settings.defaultApar_mUseSnd);
   const [defaultApar_fUseSnd, setDefaultApar_fUseSnd] = useAtom(Settings.defaultApar_fUseSnd);
@@ -58,6 +59,7 @@ export default function SettingsForm(props: Props) {
     setIgnoreFormErrors(Settings.defaults.ignoreFormErrors);
     setDefaultUseSugFee(Settings.defaults.defaultUseSugFee);
     setDefaultUseSugRounds(Settings.defaults.defaultUseSugRounds);
+    setAssetInfoGet(Settings.defaults.assetInfoGet);
     setDefaultApar_mUseSnd(Settings.defaults.defaultApar_mUseSnd);
     setDefaultApar_fUseSnd(Settings.defaults.defaultApar_fUseSnd);
     setDefaultApar_cUseSnd(Settings.defaults.defaultApar_cUseSnd);
@@ -120,6 +122,16 @@ export default function SettingsForm(props: Props) {
         containerClass='mt-4'
         value={defaultUseSugRounds}
         onChange={(e) => {setDefaultUseSugRounds(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Retrieve asset information */}
+      <ToggleField
+        name='get_asset_info'
+        label={t('settings.get_asset_info')}
+        inputClass='toggle-primary'
+        containerClass='mt-4'
+        value={assetInfoGet}
+        onChange={(e) => {setAssetInfoGet(e.target.checked); notifySave();}}
       />
 
       <h3>{t('settings.asset_create_title')}</h3>

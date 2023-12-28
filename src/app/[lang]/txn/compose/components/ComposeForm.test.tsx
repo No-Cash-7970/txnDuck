@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { JotaiProvider } from '@/app/[lang]/components';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -38,6 +39,7 @@ import ComposeForm from './ComposeForm';
 describe('Compose Form Component', () => {
   afterEach(() => {
     presetMockValue = null;
+    localStorage.clear();
   });
 
   it('has instructions', async () => {
@@ -117,7 +119,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
-  it('retrieves asset information when "asset ID" is entered in an "Asset Transfer" transaction',
+  // eslint-disable-next-line max-len
+  it('retrieves asset information when "asset ID" is entered in an "Asset Transfer" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
 
@@ -132,6 +135,25 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.aamt.label/)).toHaveAttribute('step', '0.01');
     // Check if "amount" field shows correct unit
     expect(screen.getByText('FOO')).toBeInTheDocument();
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not retrieve asset information when "asset ID" is entered in an "Asset Transfer" transaction when disabled in the settings)',
+  async () => {
+    localStorage.setItem('getAssetInfo', 'false');
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'axfer');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.xaid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
+    // Check if "amount" field has correct "step" attribute
+    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveAttribute('step', '1');
+    // Check if "amount" field shows correct unit
+    expect(screen.queryByText('FOO')).not.toBeInTheDocument();
   });
 
   // eslint-disable-next-line max-len
@@ -236,7 +258,7 @@ describe('Compose Form Component', () => {
   });
 
   // eslint-disable-next-line max-len
-  it('retrieves asset information when "asset ID" is entered in an "Asset Configuration" transaction',
+  it('retrieves asset information when "asset ID" is entered in an "Asset Configuration" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
 
@@ -258,6 +280,30 @@ describe('Compose Form Component', () => {
       .toHaveValue('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
   });
 
+  // eslint-disable-next-line max-len
+  it('does not retrieve asset information when "asset ID" is entered in an "Asset Configuration" transaction when disabled in the settings',
+  async () => {
+    localStorage.setItem('getAssetInfo', 'false');
+    render(<JotaiProvider><ComposeForm /></JotaiProvider>);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.caid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
+    // Check if asset addresses have the retrieved values
+    expect(screen.getByLabelText(/fields.apar_m.label/))
+      .not.toHaveValue('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
+    expect(screen.getByLabelText(/fields.apar_f.label/))
+      .not.toHaveValue('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+    expect(screen.getByLabelText(/fields.apar_c.label/))
+      .not.toHaveValue('CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC');
+    expect(screen.getByLabelText(/fields.apar_r.label/))
+      .not.toHaveValue('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
+  });
+
   it('has fields for asset freeze transaction type if "Asset Freeze" transaction type is selected',
   async () => {
     render(<ComposeForm />);
@@ -273,7 +319,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
   });
 
-  it('retrieves asset information when "asset ID" is entered in an "Asset Freeze" transaction',
+  // eslint-disable-next-line max-len
+  it('retrieves asset information when "asset ID" is entered in an "Asset Freeze" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
 
@@ -284,6 +331,21 @@ describe('Compose Form Component', () => {
 
     // Check if asset name appears
     expect(screen.getByText('Foo Token')).toBeInTheDocument();
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not retrieve asset information when "asset ID" is entered in an "Asset Freeze" transaction when disabled in the settings',
+  async () => {
+    localStorage.setItem('getAssetInfo', 'false');
+    render(<ComposeForm />);
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'afrz');
+    // Enter asset ID
+    await userEvent.click(screen.getByLabelText(/fields.faid.label/));
+    await userEvent.paste('123456789');
+
+    // Check if asset name appears
+    expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
   });
 
   it('has fields for key registration transaction type if "Key Registration" transaction type is'

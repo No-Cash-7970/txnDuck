@@ -45,6 +45,10 @@ export const defaults = {
    * (default: `true` - Set reserve address to the sender address by default)
    */
   defaultApar_rUseSnd: true,
+  /** Retrieve asset information when asset ID is entered?
+   * (default: `true` - Get asset information when ID is entered)
+   */
+  assetInfoGet: true,
 };
 
 /** Theme mode */
@@ -70,3 +74,6 @@ export const defaultApar_cUseSnd =
 /**  Set reserve address to the sender address by default? */
 export const defaultApar_rUseSnd =
   atomWithStorage<boolean>('defaultApar_rUseSnd', defaults.defaultApar_rUseSnd, storage);
+/** Retrieve asset information when asset ID is entered? */
+export const assetInfoGet =
+  atomWithStorage<boolean>('getAssetInfo', defaults.assetInfoGet, storage);

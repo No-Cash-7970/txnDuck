@@ -13,6 +13,7 @@ import {
   txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
+import { assetInfoGet as assetInfoGetSettingAtom } from '@/app/lib/app-settings';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function AssetId({ t }: { t: TFunction }) {
@@ -20,11 +21,19 @@ export default function AssetId({ t }: { t: TFunction }) {
   const showFormErrors = useAtomValue(showFormErrorsAtom);
 
   const nodeConfig = useAtomValue(nodeConfigAtom);
+  const assetInfoGetSetting = useAtomValue(assetInfoGetSettingAtom);
   const [retrievedAssetInfo, setRetrievedAssetInfo] = useAtom(txnDataAtoms.retrievedAssetInfo);
   const [assetInfoPending, setAssetInfoPending] = useState(false);
   const [assetInfoSuccess, setAssetInfoSuccess] = useState(false);
   const [assetInfoFail, setAssetInfoFail] = useState(false);
   const getAssetInfoDebounced = useDebouncedCallback(assetId => {
+    if (!assetInfoGetSetting) {
+      setAssetInfoSuccess(false);
+      setAssetInfoFail(false);
+      setAssetInfoPending(false);
+      setRetrievedAssetInfo(undefined);
+      return;
+    }
     setAssetInfoSuccess(false);
     setAssetInfoFail(false);
     setAssetInfoPending(true);

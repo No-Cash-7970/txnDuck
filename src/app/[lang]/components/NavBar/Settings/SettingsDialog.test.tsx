@@ -290,6 +290,29 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
+  it('has "retrieve asset information when ID is entered" setting', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.get_asset_info/)).toBeInTheDocument();
+  });
+
+  it('notifies when "retrieve asset information when ID is entered" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from unchecked (false) --> checked (true)
+    await userEvent.click(screen.getByLabelText('settings.get_asset_info'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
   // XXX: Add tests for more settings here
 
 });

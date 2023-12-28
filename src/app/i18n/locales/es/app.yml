@@ -30,6 +30,7 @@ settings:
   ignore_form_errors: Permitir que los formularios se envíen con errores
   default_use_sug_fee: Fijar la tarifa automáticamente por defecto
   default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
+  get_asset_info: Obtener información sobre activos cuando se introduce la identificación del activo
   asset_create_title: Creación de activos
   default_apar_m_use_snd: Establecer la dirección del administrador en la dirección del remitente
   default_apar_f_use_snd: Establecer la dirección para congelar en la dirección del remitente
