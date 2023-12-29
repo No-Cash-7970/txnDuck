@@ -112,6 +112,15 @@ describe('Transaction Data Table Component', () => {
     expect(screen.getByText('none')).toBeInTheDocument();
   });
 
+  it('indicates when note is Base64 encoded', () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      txn: { note: 'SGVsbG8gd29ybGQ=' },
+      b64Note: true,
+    }));
+    render(<TxnDataTable />);
+    expect(screen.getByText(/fields.base64.with_label/)).toBeInTheDocument();
+  });
+
   it('displays "none" when there is no lease', () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       txn: {
@@ -122,6 +131,15 @@ describe('Transaction Data Table Component', () => {
     }));
     render(<TxnDataTable />);
     expect(screen.getByText('none')).toBeInTheDocument();
+  });
+
+  it('indicates when lease is Base64 encoded', () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      txn: { lx: 'SGVsbG8gd29ybGQ=' },
+      b64Lx: true,
+    }));
+    render(<TxnDataTable />);
+    expect(screen.getByText(/fields.base64.with_label/)).toBeInTheDocument();
   });
 
   it('displays "none" when there is no rekey address', () => {
@@ -405,6 +423,18 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
       expect(screen.getByText('none')).toBeInTheDocument();
+    });
+
+    it('indicates when metadata hash is Base64 encoded', () => {
+      sessionStorage.setItem('txnData', JSON.stringify({
+        txn: {
+          type: 'acfg',
+          apar_am: 'VGhpcyBpcyBhIHZhbGlkIGhhc2ghISEhISEhISEhISE='
+        },
+        b64Apar_am: true,
+      }));
+      render(<TxnDataTable />);
+      expect(screen.getByText(/fields.base64.with_label/)).toBeInTheDocument();
     });
 
   });

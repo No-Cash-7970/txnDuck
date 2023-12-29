@@ -113,7 +113,8 @@ export function loadStoredTxnData(
 
   jotaiStore.set(txnDataAtoms.txnType, txnType);
   jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
-  jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note);
+  jotaiStore.set(txnDataAtoms.b64Note, storedTxnData?.b64Note ?? false);
+  jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note as string|undefined);
   jotaiStore.set(txnDataAtoms.useSugFee, storedTxnData?.useSugFee ?? true);
   jotaiStore.set(txnDataAtoms.fee, storedTxnData?.txn?.fee);
   jotaiStore.set(txnDataAtoms.useSugRounds, storedTxnData?.useSugRounds ?? true);
@@ -121,7 +122,8 @@ export function loadStoredTxnData(
   jotaiStore.set(txnDataAtoms.lv, storedTxnData?.txn?.lv);
 
   if (!preset || preset === Preset.AppRun) {
-    jotaiStore.set(txnDataAtoms.lx, storedTxnData?.txn?.lx || '');
+    jotaiStore.set(txnDataAtoms.lx, (storedTxnData?.txn?.lx as string|undefined) || '');
+    jotaiStore.set(txnDataAtoms.b64Lx, storedTxnData?.b64Lx ?? false);
   }
 
   if (!preset || preset === Preset.RekeyAccount) {
@@ -175,12 +177,16 @@ export function loadStoredTxnData(
       jotaiStore.set(txnDataAtoms.caid, undefined);
     }
 
-    jotaiStore.set(txnDataAtoms.apar_un, (storedTxnData?.txn as AssetConfigTxnData)?.apar_un || '');
+    jotaiStore.set(txnDataAtoms.apar_un,
+      ((storedTxnData?.txn as AssetConfigTxnData)?.apar_un as string|undefined) || '');
     jotaiStore.set(txnDataAtoms.apar_an, (storedTxnData?.txn as AssetConfigTxnData)?.apar_an || '');
     jotaiStore.set(txnDataAtoms.apar_t, (storedTxnData?.txn as AssetConfigTxnData)?.apar_t || '');
     jotaiStore.set(txnDataAtoms.apar_dc, (storedTxnData?.txn as AssetConfigTxnData)?.apar_dc);
     jotaiStore.set(txnDataAtoms.apar_df, !!((storedTxnData?.txn as AssetConfigTxnData)?.apar_df));
     jotaiStore.set(txnDataAtoms.apar_au, (storedTxnData?.txn as AssetConfigTxnData)?.apar_au || '');
+    jotaiStore.set(txnDataAtoms.apar_am,
+      ((storedTxnData?.txn as AssetConfigTxnData)?.apar_am as string|undefined) || '');
+    jotaiStore.set(txnDataAtoms.b64Apar_am, storedTxnData?.b64Apar_am ?? false);
     jotaiStore.set(txnDataAtoms.apar_m, (storedTxnData?.txn as AssetConfigTxnData)?.apar_m || '');
     jotaiStore.set(txnDataAtoms.apar_f, (storedTxnData?.txn as AssetConfigTxnData)?.apar_f || '');
     jotaiStore.set(txnDataAtoms.apar_c, (storedTxnData?.txn as AssetConfigTxnData)?.apar_c || '');
@@ -345,6 +351,7 @@ export function extractTxnDataFromAtoms(
     apar_fUseSnd?: boolean,
     apar_cUseSnd?: boolean,
     apar_rUseSnd?: boolean,
+    b64Apar_am?: boolean,
   } = {};
 
   // Gather payment transaction data
@@ -443,6 +450,7 @@ export function extractTxnDataFromAtoms(
         apar_fUseSnd: !!assetConfigForm.values.apar_fUseSnd,
         apar_cUseSnd: !!assetConfigForm.values.apar_cUseSnd,
         apar_rUseSnd: !!assetConfigForm.values.apar_rUseSnd,
+        b64Apar_am: !!assetConfigForm.values.b64Apar_am,
       };
     } else { // Not creating an asset
       retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo).value;
@@ -541,6 +549,8 @@ export function extractTxnDataFromAtoms(
     txn: {...baseTxnData, ...specificTxnData},
     useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
     useSugRounds: jotaiStore.get(txnDataAtoms.useSugRounds).value,
+    b64Note: jotaiStore.get(txnDataAtoms.b64Note).value,
+    b64Lx: jotaiStore.get(txnDataAtoms.b64Lx).value,
     retrievedAssetInfo: retrievedAssetInfo,
     ...acfgOptions,
   };

@@ -63,6 +63,7 @@ fields:
     tip: >
       Datos a adjuntar a esta transacción. Ejemplos: mensaje en texto, datos JSON, datos en bytes
     placeholder: Introduzca la nota…
+    placeholder_b64: Introduzca la nota como texto Base64…
   use_sug_rounds: # Use suggested first & last rounds?
     label: Establecer automáticamente rondas válidas
     tip: >
@@ -275,15 +276,15 @@ fields:
   # Fields for key registration type
   votekey: # Voting key
     label: Llave de votación
-    tip: La clave pública de participación raíz codificada en base64.
+    tip: La clave pública de participación raíz codificada en Base64.
     placeholder: Llave de votación
   selkey: # Selection key
     label: Llave de selección
-    tip: La clave pública VRF codificada en base64.
+    tip: La clave pública VRF codificada en Base64.
     placeholder: Llave de selección
   sprfkey: # State proof key
     label: Llave de prueba de estado
-    tip: El compromiso de clave pública de prueba de estado de 64 bytes codificado en base64.
+    tip: El compromiso de clave pública de prueba de estado de 64 bytes codificado en Base64.
     placeholder: Llave de prueba de estado
   votefst: # First voting round
     label: Primera ronda de votaciones
@@ -333,7 +334,7 @@ fields:
       la aplicación se establece en «borrar estado». Puede leer y escribir el estado global de la
       aplicación, así como el estado local específico de la cuenta. Los programas de aprobación
       pueden rechazar la transacción.
-    placeholder: Introduzca el programa compilado de aprobación como texto base64
+    placeholder: Introduzca el programa compilado de aprobación como texto Base64
   apsu: # Clear state program
     label: Programa para borrar estado
     tip: >
@@ -341,7 +342,7 @@ fields:
       establecido en «borrar estado». Puede leer y escribir el estado global de la aplicación, así
       como el estado local específico de la cuenta. Los programas de borrado de estado no pueden
       rechazar la transacción.
-    placeholder: Introduzca el programa compilado para borrar estado como texto base64
+    placeholder: Introduzca el programa compilado para borrar estado como texto Base64
   apgs_nui: # Number of global ints
     label: Número de enteros globales
     tip: >
@@ -454,3 +455,9 @@ fields:
       superior a {{count, number}}.
   more_info: Más información sobre este campo.
   more_info_section: Más información sobre esta sección.
+  base64:
+    label: Datos codificados en Base64
+    with_label: "{{label}} (Base64)"
+    tip: >
+      Interprete los datos introducidos en el campo anterior como datos codificados en Base64.
+    error: Debe contener datos válidos codificados en Base64.

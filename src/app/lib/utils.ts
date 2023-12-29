@@ -1,6 +1,13 @@
-/** @file Collection of general-purpose utility functions */
+/** @file Collection of general-purpose utility function and constants */
+
+/** Regular expression for detecting a valid Base64 string.
+ *
+ * From: https://stackoverflow.com/a/7874175
+ */
+export const base64RegExp = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 
 /** Converts bytes as a Uint8Array buffer to data URL.
+ *
  * Adapted from:
  * https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
  *
@@ -22,6 +29,7 @@ export const bytesToBase64DataUrl = async (
 };
 
 /** Converts data URL to bytes as a Uint8Array buffer
+ *
  * Adapted from:
  * https://developer.mozilla.org/en-US/docs/Glossary/Base64#converting_arbitrary_binary_data
  *

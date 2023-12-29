@@ -26,6 +26,12 @@ export function isFormValid(
   const fee = jotaiStore.get(FieldValidation.feeConditionalRequireAtom);
   if (!fee.isValidating && !fee.isValid) invalidGeneralFields.add('fee');
 
+  // If "note" field did not meet the conditional validation
+  const noteMax = jotaiStore.get(FieldValidation.noteConditionalMaxAtom);
+  if (!noteMax.isValidating && !noteMax.isValid) invalidGeneralFields.add('note');
+  const noteB64 = jotaiStore.get(FieldValidation.noteConditionalBase64Atom);
+  if (!noteB64.isValidating && !noteB64.isValid) invalidGeneralFields.add('note');
+
   // If "first valid round" field did not meet the conditional validation
   const fv = jotaiStore.get(FieldValidation.fvConditionalRequireAtom);
   if (!fv.isValidating && !fv.isValid) invalidGeneralFields.add('fv');
@@ -38,6 +44,12 @@ export function isFormValid(
   // not pass the special group validation
   const fvLvComparison = jotaiStore.get(FieldValidation.fvLvFormControlAtom);
   if (!fvLvComparison.isValidating && !fvLvComparison.isValid) invalidGeneralFields.add('fv');
+
+  // If "lease" field did not meet the conditional validation
+  const lxLength = jotaiStore.get(FieldValidation.lxConditionalLengthAtom);
+  if (!lxLength.isValidating && !lxLength.isValid) invalidGeneralFields.add('lx');
+  const lxB64 = jotaiStore.get(FieldValidation.lxConditionalBase64Atom);
+  if (!lxB64.isValidating && !lxB64.isValid) invalidGeneralFields.add('lx');
 
   // If "rekey address" field did not meet the conditional validation
   const rekey = jotaiStore.get(FieldValidation.rekeyConditionalRequireAtom);
@@ -102,17 +114,25 @@ export function isFormValid(
     const assetConfigForm = jotaiStore.get(FieldValidation.assetConfigFormControlAtom);
     const invalidAssetConfigFields = getInvalidFields(assetConfigForm);
 
-    // If "asset ID" field did not meet the condtional validation
+    // If "asset ID" field did not meet the conditional validation
     const caid = jotaiStore.get(FieldValidation.caidConditionalRequireAtom);
     if (!caid.isValidating && !caid.isValid) invalidAssetConfigFields.add('caid');
 
-    // If "asset total" field did not meet the condtional validation
+    // If "asset total" field did not meet the conditional validation
     const aparT = jotaiStore.get(FieldValidation.aparTConditionalRequireAtom);
     if (!aparT.isValidating && !aparT.isValid) invalidAssetConfigFields.add('apar_t');
 
-    // If "asset decimals" field did not meet the condtional validation
+    // If "asset decimals" field did not meet the conditional validation
     const aparDc = jotaiStore.get(FieldValidation.aparDcConditionalRequireAtom);
     if (!aparDc.isValidating && !aparDc.isValid) invalidAssetConfigFields.add('apar_dc');
+
+    // If "metadata hash" field did not meet the conditional validation
+    const aparAmLength = jotaiStore.get(FieldValidation.aparAmConditionalLengthAtom);
+    if (!aparAmLength.isValidating && !aparAmLength.isValid) {
+      invalidAssetConfigFields.add('apar_am');
+    };
+    const aparAmB64 = jotaiStore.get(FieldValidation.aparAmConditionalBase64Atom);
+    if (!aparAmB64.isValidating && !aparAmB64.isValid) invalidAssetConfigFields.add('apar_am');
 
     if (!invalidGeneralFields.size) scrollToFirstInvalidField(invalidAssetConfigFields);
 

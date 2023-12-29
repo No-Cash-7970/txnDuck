@@ -62,6 +62,7 @@ fields:
     tip: >
       Data to attach to this transaction. Examples: message in text, JSON data, byte data
     placeholder: Enter note…
+    placeholder_b64: Enter note as Base64 text…
   use_sug_rounds: # Use suggested first & last rounds?
     label: Automatically set valid rounds
     tip: >
@@ -268,15 +269,15 @@ fields:
   # Fields for key registration type
   votekey: # Voting key
     label: Voting key
-    tip: The root participation public key encoded in base64.
+    tip: The root participation public key encoded in Base64.
     placeholder: Voting key
   selkey: # Selection key
     label: Selection key
-    tip: The VRF public key encoded in base64.
+    tip: The VRF public key encoded in Base64.
     placeholder: Selection key
   sprfkey: # State proof key
     label: State proof key
-    tip: The 64 byte state proof public key commitment encoded in base64.
+    tip: The 64 byte state proof public key commitment encoded in Base64.
     placeholder: State proof key
   votefst: # First voting round
     label: First voting round
@@ -324,14 +325,14 @@ fields:
       Logic executed for every application transaction, except when the application action type is
       set to “clear state”. It can read and write global state for the application, as well as
       account-specific local state. Approval programs may reject the transaction.
-    placeholder: Enter compiled approval program as base64 text
+    placeholder: Enter compiled approval program as Base64 text
   apsu: # Clear-state program
     label: Clear-state program
     tip: >
       Logic executed for application transactions with the application action type set to “clear
       state”. It can read and write global state for the application, as well as account-specific
       local state. Clear-state programs cannot reject the transaction.
-    placeholder: Enter compiled clear-state program as base64 text
+    placeholder: Enter compiled clear-state program as Base64 text
   apgs_nui: # Number of global ints
     label: Number of global integers
     tip: >
@@ -444,3 +445,9 @@ fields:
       {{count}}.
   more_info: More information about this field.
   more_info_section: More information about this section.
+  base64:
+    label: Base64 encoded data
+    with_label: "{{label}} (Base64)"
+    tip: >
+      Interpret the data entered into the above field as Base64 encoded data.
+    error: This must be valid Base64 encoded data.

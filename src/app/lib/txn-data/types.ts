@@ -41,7 +41,7 @@ export interface BaseTxnData {
   /** Sender */
   snd: string;
   /** Note */
-  note?: string;
+  note?: string | Uint8Array;
   /** Fee (in Algos, not microAlgos) */
   fee: number;
   /** First valid round */
@@ -51,7 +51,7 @@ export interface BaseTxnData {
   /** Rekey to */
   rekey?: string;
   /** Lease */
-  lx?: string;
+  lx?: string | Uint8Array;
 }
 /** Data for a payment transaction */
 export interface PaymentTxnData extends BaseTxnData {
@@ -103,7 +103,7 @@ export interface AssetConfigTxnData extends BaseTxnData {
   /** Reserve address */
   apar_r: string;
   /** Metadata hash */
-  apar_am: string;
+  apar_am: string | Uint8Array;
 }
 /** Data for a asset freeze transaction */
 export interface AssetFreezeTxnData extends BaseTxnData {
@@ -184,6 +184,10 @@ export interface StoredTxnData {
   useSugFee: boolean;
   /** Use suggested first & last valid rounds? */
   useSugRounds: boolean;
+  /** Is the note Base64 encoded data? */
+  b64Note: boolean;
+  /** Is the lease Base64 encoded data? */
+  b64Lx: boolean;
   /** Set manager address to the sender address? */
   apar_mUseSnd?: boolean;
   /** Set freeze address to the sender address? */
@@ -192,6 +196,8 @@ export interface StoredTxnData {
   apar_cUseSnd?: boolean;
   /** Set reseve address to the sender address? */
   apar_rUseSnd?: boolean;
+  /** Is the metadata hash Base84 encoded data? */
+  b64Apar_am?: boolean;
   /** Information about the asset that was retrieved when the asset ID was given */
   retrievedAssetInfo?: RetrievedAssetInfo;
 }

@@ -492,8 +492,14 @@ export default function TxnDataTable({ lng }: Props) {
           </td>
         </tr>
         <tr>
-          <th role='rowheader' className='align-top'>{t('fields.note.label')}</th>
-          <td>{storedTxnData
+          <th role='rowheader' className='align-top'>
+            {storedTxnData?.b64Note
+              ? t('fields.base64.with_label', { label: t('fields.note.label') })
+              : t('fields.note.label')
+            }
+          </th>
+          <td>
+            {storedTxnData
             ? (storedTxnData?.txn?.note || <i className='opacity-50'>{t('none')}</i>)
             : t('loading')
           }</td>
@@ -533,7 +539,12 @@ export default function TxnDataTable({ lng }: Props) {
           { // If an asset creation transaction
           !((storedTxnData?.txn as TxnData.AssetConfigTxnData)?.caid) && <>
             <tr>
-              <th role='rowheader' className='align-top'>{t('fields.apar_am.label')}</th>
+              <th role='rowheader' className='align-top'>
+                {storedTxnData?.b64Apar_am
+                  ? t('fields.base64.with_label', { label: t('fields.apar_am.label') })
+                  : t('fields.apar_am.label')
+                }
+              </th>
               <td>
                 {((storedTxnData?.txn as TxnData.AssetConfigTxnData)?.apar_am) ||
                   <i className='opacity-50'>{t('none')}</i>}
@@ -593,11 +604,18 @@ export default function TxnDataTable({ lng }: Props) {
           </td>
         </tr>
         <tr>
-          <th role='rowheader' className='align-top'>{t('fields.lx.label')}</th>
-          <td className='break-all'>{storedTxnData
-            ? (storedTxnData?.txn?.lx || <i className='opacity-50'>{t('none')}</i>)
-            : t('loading')
-          }</td>
+          <th role='rowheader' className='align-top'>
+            {storedTxnData?.b64Lx
+              ? t('fields.base64.with_label', { label: t('fields.lx.label') })
+              : t('fields.lx.label')
+            }
+          </th>
+          <td className='break-all'>
+            {storedTxnData
+              ? (storedTxnData?.txn?.lx || <i className='opacity-50'>{t('none')}</i>)
+              : t('loading')
+            }
+          </td>
         </tr>
         <tr className={storedTxnData?.txn?.rekey ? 'bg-warning text-warning-content' : ''}>
           <th role='rowheader' className='align-top'>{t('fields.rekey.label')}</th>

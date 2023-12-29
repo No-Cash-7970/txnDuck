@@ -5,9 +5,23 @@ import { ALGORAND_MIN_TX_FEE } from "algosdk";
 /** Number of characters in a valid account address */
 export const ADDRESS_LENGTH = 58;
 /** Maximum length of a lease in bytes (or characters if only using ASCII characters) */
-export const LEASE_MAX_LENGTH = 32;
+export const LEASE_LENGTH = 32;
+/** Maximum length of a lease when encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const B64_LEASE_LENGTH = 44; // (32 + 2) / 3 * 4
 /** Maximum length of a note in bytes (or characters if only using ASCII characters) */
 export const NOTE_MAX_LENGTH = 1000;
+/** Maximum length of a note when encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const B64_NOTE_MAX_LENGTH = 1336; // (1000 + 2) / 3 * 4
 /** Minimum transaction fee in microAlgos */
 export const MIN_TX_FEE = ALGORAND_MIN_TX_FEE;
 
@@ -23,6 +37,13 @@ export const ASSET_NAME_MAX_LENGTH = 32;
 export const URL_MAX_LENGTH = 96;
 /** Allowed length of an asset's metadata hash. No more and no less (fewer), unless empty. */
 export const METADATA_HASH_LENGTH = 32;
+/** Maximum length of a metadata hash when encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const B64_METADATA_HASH_LENGTH = 44; // (32 + 2) / 3 * 4
 /** Maximum number of decimal places */
 export const MAX_DECIMAL_PLACES = 19;
 

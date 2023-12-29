@@ -3,10 +3,21 @@
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
-import { baseUnitsToDecimal } from '@/app/lib/utils';
+import { base64RegExp, baseUnitsToDecimal } from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
 import { RetrievedAssetInfo, ValidationMessage } from './types';
-import { Preset, MAX_APP_GLOBALS, MAX_APP_KEY_LENGTH, MAX_APP_LOCALS } from './constants';
+import {
+  Preset,
+  MAX_APP_GLOBALS,
+  MAX_APP_KEY_LENGTH,
+  MAX_APP_LOCALS,
+  B64_NOTE_MAX_LENGTH,
+  NOTE_MAX_LENGTH,
+  B64_LEASE_LENGTH,
+  LEASE_LENGTH,
+  B64_METADATA_HASH_LENGTH,
+  METADATA_HASH_LENGTH
+} from './constants';
 import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './validation-rules';
 
 /** Atom containing flag for triggering the form errors to be shown */
@@ -56,10 +67,12 @@ export const generalFormControlAtom = atomWithFormControls({
   fee: txnDataAtoms.fee,
   useSugFee: txnDataAtoms.useSugFee,
   note: txnDataAtoms.note,
+  b64Note: txnDataAtoms.b64Note,
   useSugRounds: txnDataAtoms.useSugRounds,
   fv: txnDataAtoms.fv,
   lv: txnDataAtoms.lv,
   lx: txnDataAtoms.lx,
+  b64Lx: txnDataAtoms.b64Lx,
   rekey: txnDataAtoms.rekey,
 });
 export const feeConditionalRequireAtom = validateAtoms({
@@ -106,6 +119,44 @@ export const fvLvFormControlAtom = validateAtoms({
         ({max}): ValidationMessage => ({key: 'fields.fv.max_error', dict: {max}})
       )
       .validateSync(values.fv);
+  }
+});
+export const noteConditionalMaxAtom = validateAtoms({
+  note: txnDataAtoms.note,
+  b64Note: txnDataAtoms.b64Note,
+}, (values) => {
+  YupString()
+    .max(values.b64Note ? B64_NOTE_MAX_LENGTH : NOTE_MAX_LENGTH)
+    .validateSync(values.note === '' ? undefined : values.note);
+});
+export const noteConditionalBase64Atom = validateAtoms({
+  note: txnDataAtoms.note,
+  b64Note: txnDataAtoms.b64Note,
+}, (values) => {
+  if (values.b64Note) {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+    }).validateSync(values.note);
+  }
+});
+export const lxConditionalLengthAtom = validateAtoms({
+  lx: txnDataAtoms.lx,
+  b64Lx: txnDataAtoms.b64Lx,
+}, (values) => {
+  YupString()
+    .length(values.b64Lx ? B64_LEASE_LENGTH : LEASE_LENGTH)
+    .validateSync(values.lx === '' ? undefined : values.lx);
+});
+export const lxConditionalBase64Atom = validateAtoms({
+  lx: txnDataAtoms.lx,
+  b64Lx: txnDataAtoms.b64Lx,
+}, (values) => {
+  if (values.b64Lx) {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+    }).validateSync(values.lx);
   }
 });
 
@@ -184,6 +235,7 @@ export const assetConfigFormControlAtom = atomWithFormControls({
   apar_r: txnDataAtoms.apar_r,
   apar_rUseSnd: txnDataAtoms.apar_rUseSnd,
   apar_am: txnDataAtoms.apar_am,
+  b64Apar_am: txnDataAtoms.b64Apar_am,
 });
 export const caidConditionalRequireAtom = validateAtoms({
   preset: presetAtom,
@@ -209,6 +261,25 @@ export const aparDcConditionalRequireAtom = validateAtoms({
 }, (values) => {
   if (values.preset === Preset.AssetCreate || !values.caid) {
     YupNumber().required().validateSync(values.apar_dc);
+  }
+});
+export const aparAmConditionalLengthAtom = validateAtoms({
+  apar_am: txnDataAtoms.apar_am,
+  b64Apar_am: txnDataAtoms.b64Apar_am,
+}, (values) => {
+  YupString()
+    .length(values.b64Apar_am ? B64_METADATA_HASH_LENGTH : METADATA_HASH_LENGTH)
+    .validateSync(values.apar_am === '' ? undefined : values.apar_am);
+});
+export const aparAmConditionalBase64Atom = validateAtoms({
+  apar_am: txnDataAtoms.apar_am,
+  b64Apar_am: txnDataAtoms.b64Apar_am,
+}, (values) => {
+  if (values.b64Apar_am) {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+    }).validateSync(values.apar_am);
   }
 });
 

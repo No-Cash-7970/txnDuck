@@ -6,12 +6,9 @@ import { splitAtom } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
 import {
   ASSET_NAME_MAX_LENGTH,
-  LEASE_MAX_LENGTH,
   MAX_APP_EXTRA_PAGES,
   MAX_DECIMAL_PLACES,
-  METADATA_HASH_LENGTH,
   MIN_TX_FEE,
-  NOTE_MAX_LENGTH,
   UNIT_NAME_MAX_LENGTH,
   URL_MAX_LENGTH
 } from './constants';
@@ -46,13 +43,10 @@ export const fee = atomWithValidate<number|undefined>(undefined, {
 export const useSugFee = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Note */
-export const note = atomWithValidate<string|undefined>(undefined, {
-  validate: v => {
-    // When using UTF-8, the maximum number of characters is around (max bytes / 4)
-    YupString().max(NOTE_MAX_LENGTH / 4).validateSync(v === '' ? undefined : v);
-    return v;
-  }
-});
+export const note = atomWithValidate<string|undefined>(undefined, { validate: v => v });
+
+/** Interpret note value as Base64 data */
+export const b64Note = atomWithValidate<boolean>(false, { validate: v => v });
 
 /** First round */
 export const fv = atomWithValidate<number|undefined>(undefined, {
@@ -68,12 +62,10 @@ export const lv = atomWithValidate<number|undefined>(undefined, {
 export const useSugRounds = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Lease */
-export const lx = atomWithValidate<string>('', {
-  validate: v => {
-    YupString().trim().max(LEASE_MAX_LENGTH).validateSync(v === '' ? undefined : v);
-    return v;
-  }
-});
+export const lx = atomWithValidate<string>('', { validate: v => v });
+
+/** Interpret lease value as Base64 data */
+export const b64Lx = atomWithValidate<boolean>(false, { validate: v => v });
 
 /** Rekey to */
 export const rekey = atomWithValidate<string>('', {
@@ -253,12 +245,10 @@ export const apar_r = atomWithValidate<string>('', {
 export const apar_rUseSnd = atomWithValidate<boolean>(true, { validate: v => v });
 
 /** Asset configuration - Metadata hash */
-export const apar_am = atomWithValidate<string>('', {
-  validate: v => {
-    YupString().length(METADATA_HASH_LENGTH).validateSync(v === '' ? undefined : v);
-    return v;
-  }
-});
+export const apar_am = atomWithValidate<string>('', { validate: v => v });
+
+/** Interpret metadata hash value as Base64 data */
+export const b64Apar_am = atomWithValidate<boolean>(false, { validate: v => v });
 
 /*
  * Asset Freeze

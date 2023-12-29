@@ -53,6 +53,51 @@ describe('Compose Form Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
+  it('can store submitted transaction data with Base64 note and lease', async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.rcv.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    await userEvent.click(screen.getByLabelText(/fields.amt.label/));
+    await userEvent.paste('5');
+
+    const b64Checkboxes = screen.getAllByLabelText('fields.base64.label');
+    // Enter note as Base64
+    await userEvent.click(b64Checkboxes[0]); // Enable base64 for note
+    await userEvent.click(screen.getByLabelText(/fields.note.label/));
+    await userEvent.paste('SGVsbG8gd29ybGQh');
+    // Enter lease as Base64
+    await userEvent.click(b64Checkboxes[1]); // Enable base64 for note
+    await userEvent.click(screen.getByLabelText(/fields.lx.label/));
+    await userEvent.paste('SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhcg==');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      txn: {
+        type: 'pay',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amt: 5,
+        note: 'SGVsbG8gd29ybGQh',
+        lx: 'SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhcg==',
+      },
+      useSugFee: true,
+      useSugRounds: true,
+      b64Note: true,
+      b64Lx: true,
+    });
+  });
+
   it('can store submitted *payment* transaction data', async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -81,6 +126,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
     });
   });
 
@@ -115,9 +162,73 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
       retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
     });
   });
+
+  it('can store submitted *asset configuration* transaction data with Base64 metadata hash',
+  async () => {
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
+
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.apar_un.label/));
+    await userEvent.paste('FAKE');
+    await userEvent.click(screen.getByLabelText(/fields.apar_an.label/));
+    await userEvent.paste('Fake Token');
+    await userEvent.click(screen.getByLabelText(/fields.apar_t.label/));
+    await userEvent.paste('10000000');
+    await userEvent.click(screen.getByLabelText(/fields.apar_dc.label/));
+    await userEvent.paste('3');
+    await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
+    await userEvent.click(screen.getByLabelText(/fields.apar_au.label/));
+    await userEvent.paste('https://fake.token');
+
+    const b64Checkboxes = screen.getAllByLabelText('fields.base64.label');
+    // Enter metadata hash as Base64
+    await userEvent.click(b64Checkboxes[1]); // Enable base64 for metadata hash
+    await userEvent.click(screen.getByLabelText(/fields.apar_am.label/));
+    await userEvent.paste('VGhpcyBpcyBhIHZhbGlkIGhhc2ghISEhISEhISEhISE=');
+
+    // Submit data
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    // Check session storage
+    expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+      txn: {
+        type: 'acfg',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_un: 'FAKE',
+        apar_an: 'Fake Token',
+        apar_t: '10000000',
+        apar_dc: 3,
+        apar_df: true,
+        apar_au: 'https://fake.token',
+        apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_am: 'VGhpcyBpcyBhIHZhbGlkIGhhc2ghISEhISEhISEhISE=',
+      },
+      useSugFee: true,
+      useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
+      b64Apar_am: true,
+      apar_mUseSnd: true,
+      apar_fUseSnd: true,
+      apar_cUseSnd: true,
+      apar_rUseSnd: true,
+    });
+  }, 10000);
 
   // eslint-disable-next-line max-len
   it('can store submitted *asset configuration* transaction data (with asset addresses set to sender)',
@@ -168,10 +279,13 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
       apar_mUseSnd: true,
       apar_fUseSnd: true,
       apar_cUseSnd: true,
       apar_rUseSnd: true,
+      b64Apar_am: false,
     });
   }, 10000);
 
@@ -235,10 +349,13 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
       apar_mUseSnd: false,
       apar_fUseSnd: false,
       apar_cUseSnd: false,
       apar_rUseSnd: false,
+      b64Apar_am: false,
     });
   }, 10000);
 
@@ -286,6 +403,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
       retrievedAssetInfo: {name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
     });
   }, 10000);
@@ -320,6 +439,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
       retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
     });
   });
@@ -368,6 +489,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
     });
   });
 
@@ -381,7 +504,6 @@ describe('Compose Form Component', () => {
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
     await userEvent.click(screen.getByLabelText(/fields.snd.label/));
     await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-
     await userEvent.click(screen.getByLabelText(/fields.apap.label/));
     await userEvent.paste('BYEB');
     await userEvent.click(screen.getByLabelText(/fields.apsu.label/));
@@ -464,6 +586,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: true,
       useSugRounds: true,
+      b64Note: false,
+      b64Lx: false,
     });
   }, 10000);
 
@@ -482,6 +606,8 @@ describe('Compose Form Component', () => {
       },
       useSugFee: false,
       useSugRounds: false,
+      b64Note: false,
+      b64Lx: false,
     }));
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -493,6 +619,8 @@ describe('Compose Form Component', () => {
       use_sug_fee: false,
       fee: 0.001,
       use_sug_rounds: false,
+      b64_note: false,
+      b64_lx: false,
       fv: 5,
       lv: 1005,
       rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
@@ -529,8 +657,48 @@ describe('Compose Form Component', () => {
       rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
       rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
       amt: 42,
+      b64_note: false,
+      b64_lx: false
     });
   });
 
+  it('can retrieve transaction data from session storage with Base64 note and lease',
+  async () => {
+    sessionStorage.setItem('txnData', JSON.stringify({
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.001, // This should be ignored
+        fv: 5, // This should be ignored
+        lv: 1005, // This should be ignored
+        note: 'SGVsbG8gd29ybGQh',
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        amt: 42,
+        lx: 'VGhpcyBpcyBhIGxlYXNl',
+      },
+      useSugFee: true,
+      useSugRounds: true,
+      b64Note: true,
+      b64Lx: true,
+    }));
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+    expect(await screen.findByRole('form')).toHaveFormValues({
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      note: 'SGVsbG8gd29ybGQh',
+      use_sug_fee: true,
+      use_sug_rounds: true,
+      b64_note: true,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
+      lx: 'VGhpcyBpcyBhIGxlYXNl',
+      b64_lx: true
+    });
+  });
 
 });

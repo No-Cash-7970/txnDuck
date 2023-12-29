@@ -20,7 +20,8 @@ export function createTxnFromData(
     case algosdk.TransactionType.pay:
       return createPayTxn(txnData as TxnData.PaymentTxnData, genesisID, genesisHash, flatFee);
     case algosdk.TransactionType.axfer:
-      return createAxferTxn(txnData as TxnData.AssetTransferTxnData,
+      return createAxferTxn(
+        txnData as TxnData.AssetTransferTxnData,
         genesisID,
         genesisHash,
         flatFee
@@ -45,15 +46,17 @@ function createPayTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(payTxnData.fee);
   const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
     from: payTxnData.snd,
     to: payTxnData.rcv,
     amount: algosdk.algosToMicroalgos(payTxnData.amt),
-    note: encodeTransactionNote(payTxnData.note),
+    note: payTxnData.note?.constructor === Uint8Array
+      ? payTxnData.note : encodeTransactionNote(payTxnData.note),
     rekeyTo: payTxnData.rekey || undefined,
     closeRemainderTo: payTxnData.close || undefined,
     suggestedParams: {
-      fee: algosdk.algosToMicroalgos(payTxnData.fee),
+      fee,
       flatFee,
       firstRound: payTxnData.fv,
       lastRound: payTxnData.lv,
@@ -63,7 +66,11 @@ function createPayTxn(
   });
 
   if (payTxnData.lx) {
-    txn.addLease((new TextEncoder).encode(payTxnData.lx));
+    txn.addLease(
+      payTxnData.lx.constructor === Uint8Array
+        ? payTxnData.lx : (new TextEncoder).encode(payTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;
@@ -76,6 +83,7 @@ function createAxferTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(axferTxnData.fee);
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
     from: axferTxnData.snd,
     to: axferTxnData.arcv,
@@ -83,10 +91,11 @@ function createAxferTxn(
     amount: BigInt(axferTxnData.aamt),
     closeRemainderTo: axferTxnData.aclose || undefined,
     revocationTarget: axferTxnData.asnd || undefined,
-    note: encodeTransactionNote(axferTxnData.note),
+    note: axferTxnData.note?.constructor === Uint8Array
+      ? axferTxnData.note : encodeTransactionNote(axferTxnData.note),
     rekeyTo: axferTxnData.rekey || undefined,
     suggestedParams: {
-      fee: algosdk.algosToMicroalgos(axferTxnData.fee),
+      fee,
       flatFee,
       firstRound: axferTxnData.fv,
       lastRound: axferTxnData.lv,
@@ -96,7 +105,11 @@ function createAxferTxn(
   });
 
   if (axferTxnData.lx) {
-    txn.addLease((new TextEncoder).encode(axferTxnData.lx));
+    txn.addLease(
+      axferTxnData.lx.constructor === Uint8Array
+        ? axferTxnData.lx : (new TextEncoder).encode(axferTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;
@@ -109,12 +122,14 @@ function createAcfgTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(acfgTxnData.fee);
   let txn;
 
   if (!acfgTxnData.caid) { // If asset creation transaction
     txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
       from: acfgTxnData.snd,
-      note: encodeTransactionNote(acfgTxnData.note),
+      note: acfgTxnData.note?.constructor === Uint8Array
+        ? acfgTxnData.note : encodeTransactionNote(acfgTxnData.note),
       rekeyTo: acfgTxnData.rekey || undefined,
       unitName: acfgTxnData.apar_un || undefined,
       assetName: acfgTxnData.apar_an || undefined,
@@ -128,7 +143,7 @@ function createAcfgTxn(
       clawback: acfgTxnData.apar_c || undefined,
       reserve: acfgTxnData.apar_r || undefined,
       suggestedParams: {
-        fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
+        fee,
         flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
@@ -149,7 +164,7 @@ function createAcfgTxn(
       clawback: acfgTxnData.apar_c || undefined,
       reserve: acfgTxnData.apar_r || undefined,
       suggestedParams: {
-        fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
+        fee,
         flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
@@ -165,7 +180,7 @@ function createAcfgTxn(
       rekeyTo: acfgTxnData.rekey || undefined,
       assetIndex: acfgTxnData.caid,
       suggestedParams: {
-        fee: algosdk.algosToMicroalgos(acfgTxnData.fee),
+        fee,
         flatFee,
         firstRound: acfgTxnData.fv,
         lastRound: acfgTxnData.lv,
@@ -176,7 +191,11 @@ function createAcfgTxn(
   }
 
   if (acfgTxnData.lx) {
-    txn.addLease((new TextEncoder).encode(acfgTxnData.lx));
+    txn.addLease(
+      acfgTxnData.lx.constructor === Uint8Array
+        ? acfgTxnData.lx : (new TextEncoder).encode(acfgTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;
@@ -189,15 +208,17 @@ function createAfrzTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(afrzTxnData.fee);
   const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
     from: afrzTxnData.snd,
-    note: encodeTransactionNote(afrzTxnData.note),
+    note: afrzTxnData.note?.constructor === Uint8Array
+      ? afrzTxnData.note : encodeTransactionNote(afrzTxnData.note),
     rekeyTo: afrzTxnData.rekey || undefined,
     assetIndex: afrzTxnData.faid,
     freezeTarget: afrzTxnData.fadd,
     freezeState: afrzTxnData.afrz,
     suggestedParams: {
-      fee: algosdk.algosToMicroalgos(afrzTxnData.fee),
+      fee,
       flatFee,
       firstRound: afrzTxnData.fv,
       lastRound: afrzTxnData.lv,
@@ -207,7 +228,11 @@ function createAfrzTxn(
   });
 
   if (afrzTxnData.lx) {
-    txn.addLease((new TextEncoder).encode(afrzTxnData.lx));
+    txn.addLease(
+      afrzTxnData.lx.constructor === Uint8Array
+        ? afrzTxnData.lx : (new TextEncoder).encode(afrzTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;
@@ -220,6 +245,7 @@ function createKeyRegTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(keyRegTxnData.fee);
   const keyRegData = keyRegTxnData.nonpart
     ? { nonParticipation: true } // Activating "nonparticipation"
     : {
@@ -235,10 +261,11 @@ function createKeyRegTxn(
   const txn = algosdk.makeKeyRegistrationTxnWithSuggestedParamsFromObject({
     ...keyRegData,
     from: keyRegTxnData.snd,
-    note: encodeTransactionNote(keyRegTxnData.note),
+    note: keyRegTxnData.note?.constructor === Uint8Array
+      ? keyRegTxnData.note : encodeTransactionNote(keyRegTxnData.note),
     rekeyTo: keyRegTxnData.rekey || undefined,
     suggestedParams: {
-      fee: algosdk.algosToMicroalgos(keyRegTxnData.fee),
+      fee,
       flatFee,
       firstRound: keyRegTxnData.fv,
       lastRound: keyRegTxnData.lv,
@@ -248,7 +275,11 @@ function createKeyRegTxn(
   });
 
   if (keyRegTxnData.lx) {
-    txn.addLease((new TextEncoder).encode(keyRegTxnData.lx));
+    txn.addLease(
+      keyRegTxnData.lx.constructor === Uint8Array
+        ? keyRegTxnData.lx : (new TextEncoder).encode(keyRegTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;
@@ -261,6 +292,7 @@ function createApplTxn(
   genesisHash: string,
   flatFee = true
 ) {
+  const fee = algosdk.algosToMicroalgos(applTxnData.fee);
   const encoder = new TextEncoder;
   const encodedAppArgs = getAppArgsForTransaction({
     accounts: applTxnData.apat,
@@ -273,7 +305,8 @@ function createApplTxn(
   const txn = algosdk.makeApplicationCallTxnFromObject({
     ...encodedAppArgs,
     from: applTxnData.snd,
-    note: encodeTransactionNote(applTxnData.note),
+    note: applTxnData.note?.constructor === Uint8Array
+      ? applTxnData.note : encodeTransactionNote(applTxnData.note),
     rekeyTo: applTxnData.rekey || undefined,
     appIndex: applTxnData.apid ?? 0,
     onComplete: applTxnData.apan,
@@ -285,7 +318,7 @@ function createApplTxn(
     numLocalByteSlices: applTxnData.apls_nbs,
     extraPages: applTxnData.apep,
     suggestedParams: {
-      fee: algosdk.algosToMicroalgos(applTxnData.fee),
+      fee,
       flatFee,
       firstRound: applTxnData.fv,
       lastRound: applTxnData.lv,
@@ -295,7 +328,11 @@ function createApplTxn(
   });
 
   if (applTxnData.lx) {
-    txn.addLease(encoder.encode(applTxnData.lx));
+    txn.addLease(
+      applTxnData.lx.constructor === Uint8Array
+        ? applTxnData.lx : (new TextEncoder).encode(applTxnData.lx as string),
+      flatFee ? 0 : fee
+    );
   }
 
   return txn;

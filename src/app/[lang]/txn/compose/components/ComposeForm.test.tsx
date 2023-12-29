@@ -49,6 +49,7 @@ describe('Compose Form Component', () => {
 
   it('has base transaction fields (using suggested parameters)', async () => {
     render(<ComposeForm />);
+
     expect(await screen.findByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
     expect(screen.getByText('fields.use_sug_fee.label')).toBeInTheDocument();
@@ -59,10 +60,12 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.lv.label')).not.toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(2);
   });
 
   it('has base transaction fields (not using suggested parameters)', async () => {
     render(<ComposeForm />);
+
     expect(await screen.findByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.snd.label')).toBeInTheDocument();
 
@@ -78,10 +81,10 @@ describe('Compose Form Component', () => {
     expect(useSugRoundsToggle).not.toBeChecked();
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
-
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.getByText('fields.rekey.label')).toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(2);
   });
 
   it('has fields for payment transaction type if "Payment" transaction type is selected',
@@ -177,6 +180,7 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apar_r_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(2);
 
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
 
@@ -196,6 +200,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apar_r_use_snd.label')).toBeInTheDocument();
     expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(3);
   });
 
   // eslint-disable-next-line max-len
@@ -219,6 +224,7 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apar_r_use_snd.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_r.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apar_am.label')).not.toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(2);
 
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'acfg');
 
@@ -230,6 +236,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apar_df.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apar_au.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apar_am.label')).toBeInTheDocument();
+    expect(screen.getAllByText('fields.base64.label')).toHaveLength(3);
 
     // Turn off using sender for manager address
     const aparMSndToggle = screen.getByLabelText('fields.apar_m_use_snd.label');
