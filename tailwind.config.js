@@ -10,6 +10,7 @@ module.exports = {
     darkTheme: 'duck_dark',
     themes: [
       {
+        // Color names from: https://colorkit.co/color-picker/
         duck: {
           'primary': '#0ebd9d', // Teal Me No Lies
           'secondary': '#804561', // Notcturn Red
