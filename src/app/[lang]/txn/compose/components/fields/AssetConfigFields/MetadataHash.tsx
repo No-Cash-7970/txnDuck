@@ -81,7 +81,6 @@ export function Base64Input({ t }: { t: TFunction }) {
       name='b64_apar_am'
       id='b64Apar_am-input'
       tip={{
-        btnIconSize: 20,
         content: t('fields.base64.tip'),
         btnClass: tipBtnClass,
         btnTitle: t('fields.more_info'),

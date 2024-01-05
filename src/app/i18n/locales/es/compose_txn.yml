@@ -459,5 +459,6 @@ fields:
     label: Datos codificados en Base64
     with_label: "{{label}} (Base64)"
     tip: >
-      Interprete los datos introducidos en el campo anterior como datos codificados en Base64.
-    error: Debe contener datos válidos codificados en Base64.
+      Interprete los datos introducidos en el campo anterior como datos codificados en Base64. Si no
+      está seguro de lo que esto significa, deje la casilla sin marcar.
+    error: Debe ser un Base64 válido. Introduzca un Base64 válido o desmarque la casilla de abajo.
