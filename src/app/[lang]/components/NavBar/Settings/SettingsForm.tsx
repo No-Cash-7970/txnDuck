@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useAtom } from 'jotai';
+import { useAtom, useSetAtom } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import { CheckboxField, RadioButtonGroupField, ToggleField } from '@/app/[lang]/components/form';
 import * as Settings from '@/app/lib/app-settings';
 import { WalletProvider } from '@/app/[lang]/components';
 import ConnectWallet from './ConnectWallet';
 import ToastNotification from './ToastNotification';
+import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { RESET } from 'jotai/utils';
 
 type Props = {
   /** Language */
@@ -30,6 +32,8 @@ export default function SettingsForm(props: Props) {
   const [defaultApar_fUseSnd, setDefaultApar_fUseSnd] = useAtom(Settings.defaultApar_fUseSnd);
   const [defaultApar_cUseSnd, setDefaultApar_cUseSnd] = useAtom(Settings.defaultApar_cUseSnd);
   const [defaultApar_rUseSnd, setDefaultApar_rUseSnd] = useAtom(Settings.defaultApar_rUseSnd);
+  const setStoredTxnData = useSetAtom(storedTxnDataAtom);
+  const setSignedTxn = useSetAtom(storedSignedTxnAtom);
   // XXX: Add more settings here
 
   /** Notify user that the updated settings have been saved */
@@ -38,14 +42,26 @@ export default function SettingsForm(props: Props) {
     setToastOpen(true);
   };
 
+  /** Notify user that the stored transaction data has been cleared */
+  const notifyTxnDataCleared = () => {
+    setToastMsg(t('settings.txn_data_cleared_msg'));
+    setToastOpen(true);
+  };
+
+  /** Notify user that all stored data has been cleared */
+  const notifyAllDataCleared = () => {
+    setToastMsg(t('settings.all_data_cleared_msg'));
+    setToastOpen(true);
+  };
+
   /** Save the user's theme preference and apply it */
   const applyTheme = (themeValue: Settings.Themes, notify = true) => {
     // Update theme value in local storage
     setTheme(themeValue);
 
-    /* Apply the theme
-    * NOTE: If there are significant changes to the following line, update the script in the
-    *`<head>` if necessary */
+    // Apply the theme
+    // NOTE: If there are significant changes to the following line, update the script in the
+    //`<head>` if necessary */
     (document.querySelector('html') as HTMLHtmlElement).dataset.theme = themeValue;
 
     // Notify user (if the user should be notified)
@@ -175,6 +191,34 @@ export default function SettingsForm(props: Props) {
         value={defaultApar_rUseSnd}
         onChange={(e) => {setDefaultApar_rUseSnd(e.target.checked); notifySave();}}
       />
+
+      <h3>{t('settings.clear_data_title')}</h3>
+
+      {/* Clear data buttons */}
+      <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
+        <button
+          className='btn btn-sm btn-error'
+          onClick={(e) => {
+            e.preventDefault();
+            setStoredTxnData(RESET);
+            setSignedTxn(RESET);
+            notifyTxnDataCleared();
+          }}
+        >
+          {t('settings.clear_txn_data_btn')}
+        </button>
+        <button
+          className='btn btn-sm btn-outline btn-error'
+          onClick={(e) => {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            notifyAllDataCleared();
+          }}
+        >
+          {t('settings.clear_all_data_btn')}
+        </button>
+      </div>
 
       {/* XXX: Add more settings here */}
     </form>

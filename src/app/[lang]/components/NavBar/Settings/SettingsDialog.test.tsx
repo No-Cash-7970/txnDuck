@@ -313,6 +313,62 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
+  it('has "clear transaction data" button', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.clear_txn_data_btn/)).toBeInTheDocument();
+  });
+
+  it('removes transaction data from storage when "clear transaction data" button is clicked',
+  async () => {
+    sessionStorage.setItem('txnData', 'Some transaction data');
+    sessionStorage.setItem('signedTxn', 'Signed transaction');
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    await userEvent.click(screen.getByText(/settings.clear_txn_data_btn/));
+    // Success message is shown
+    expect(screen.getByText('settings.txn_data_cleared_msg')).toBeInTheDocument();
+    // Data is cleared
+    expect(sessionStorage.getItem('txnData')).toBeNull();
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
+  });
+
+  it('has "clear all data" button', () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    expect(screen.getByText(/settings.clear_all_data_btn/)).toBeInTheDocument();
+  });
+
+  it('removes all data from storage when "clear all data" button is clicked',
+  async () => {
+    localStorage.setItem('local', 'This is some data stored indefinitely');
+    sessionStorage.setItem('session', 'This is some temporary data');
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    await userEvent.click(screen.getByText(/settings.clear_all_data_btn/));
+    // Success message is shown
+    expect(screen.getByText('settings.all_data_cleared_msg')).toBeInTheDocument();
+    // Data is cleared
+    expect(localStorage).toHaveLength(0);
+    expect(sessionStorage).toHaveLength(0);
+  });
+
   // XXX: Add tests for more settings here
 
 });
