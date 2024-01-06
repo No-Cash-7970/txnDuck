@@ -37,6 +37,7 @@ settings:
   default_apar_c_use_snd: Set the clawback address to the sender address by default
   default_apar_r_use_snd: Set the reserve address to the sender address by default
   default_auto_send: Automatically send transaction after signing by default
+  always_clear_after_send: Always clear saved transaction data after sending
   clear_data_title: Clear Stored Data
   clear_txn_data_btn: Clear saved transaction data
   clear_all_data_btn: Clear ALL data

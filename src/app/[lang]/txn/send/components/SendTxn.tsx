@@ -14,6 +14,7 @@ import { useDebouncedCallback } from 'use-debounce';
 import { dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
+import { alwaysClearAfterSend as alwaysClearAfterSendAtom } from '@/app/lib/app-settings';
 
 type Props = {
   /** Language */
@@ -47,6 +48,7 @@ const WAIT_ROUNDS_TO_CONFIRM = 10;
 export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
   const currentURLParams = useSearchParams();
+  const alwaysClearAfterSend = useAtomValue(alwaysClearAfterSendAtom);
 
   const [waiting, setWaiting] = useState(false);
   const [pendingTxId, setPendingTxId] = useState('');
@@ -118,9 +120,12 @@ export default function SendTxn({ lng }: Props) {
     try {
       const response = await algokit.waitForConfirmation(txId, wait, algod);
       setSuccessMsg({txId, response});
-      // Remove stored transaction data because it is not needed anymore
-      setStoredTxnData(RESET);
-      setStoredSignedTxn(RESET);
+
+      // Remove stored transaction data because it is not needed anymore, if allowed by the settings
+      if (alwaysClearAfterSend) {
+        setStoredTxnData(RESET);
+        setStoredSignedTxn(RESET);
+      }
     } catch (e) {
       setFailMsg(getFailMessage(e));
     } finally {

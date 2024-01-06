@@ -41,6 +41,7 @@ settings:
   default_apar_r_use_snd: >
     Establecer la dirección de reserva en la dirección del remitente por defecto
   default_auto_send: Enviar automáticamente la transacción después de firmar por defecto
+  always_clear_after_send: Borrar siempre los datos de transacción guardados tras el envío
   clear_data_title: Borrar datos almacenados
   clear_txn_data_btn: Borrar datos de transacciones guardados
   clear_all_data_btn: Borrar TODOS los datos

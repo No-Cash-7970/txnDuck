@@ -23,37 +23,25 @@ export const defaults = {
    * (default: `false` - Do not ignore)
    */
   ignoreFormErrors: false,
-  /** Use the suggested fee by default? (default: `true` - Use suggested fee by default) */
+  /** Use the suggested fee by default? */
   defaultUseSugFee: true,
-  /** Use the suggested first & last valid round by default?
-   * (default: `true` - Use suggested rounds by default)
-   */
+  /** Use the suggested first & last valid round by default? */
   defaultUseSugRounds: true,
-  /** Set manager address to the sender address by default?
-   * (default: `true` - Set manager address to the sender address by default)
-   */
+  /** Set manager address to the sender address by default? */
   defaultApar_mUseSnd: true,
-  /** Set freeze address to the sender address by default?
-   * (default: `true` - Set freeze address to the sender address by default)
-   */
+  /** Set freeze address to the sender address by default? */
   defaultApar_fUseSnd: true,
-  /** Set clawback address to the sender address by default?
-   * (default: `true` - Set clawback address to the sender address by default)
-   */
+  /** Set clawback address to the sender address by default? */
   defaultApar_cUseSnd: true,
-  /** Set reserve address to the sender address by default?
-   * (default: `true` - Set reserve address to the sender address by default)
-   */
+  /** Set reserve address to the sender address by default? */
   defaultApar_rUseSnd: true,
-  /** Retrieve asset information when asset ID is entered?
-   * (default: `true` - Get asset information when ID is entered)
-   */
+  /** Retrieve asset information when asset ID is entered? */
   assetInfoGet: true,
-  /** Automatically send after signing by default?
-   * (default: `true` - Automatically send after signing by default)
-   */
+  /** Automatically send after signing by default? */
   defaultAutoSend: true,
-};
+  /** Always clear transaction data after sending? */
+  alwaysClearAfterSend: true,
+} as const;
 
 /** Theme mode */
 export const themeAtom = atomWithStorage<Themes>('theme', defaults.theme, storage);
@@ -84,3 +72,6 @@ export const assetInfoGet =
 /** Automatically send after signing by default? */
 export const defaultAutoSend =
   atomWithStorage<boolean>('defaultAutoSend', defaults.defaultAutoSend, storage);
+/** Always clear transaction data after sending? */
+export const alwaysClearAfterSend =
+  atomWithStorage<boolean>('alwaysClearAfterSend', defaults.alwaysClearAfterSend, storage);

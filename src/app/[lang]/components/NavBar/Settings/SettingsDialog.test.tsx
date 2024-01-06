@@ -79,6 +79,7 @@ describe('Settings Dialog', () => {
     await userEvent.click(screen.getByLabelText('settings.default_apar_c_use_snd'));
     await userEvent.click(screen.getByLabelText('settings.default_apar_r_use_snd'));
     await userEvent.click(screen.getByLabelText('settings.default_auto_send'));
+    await userEvent.click(screen.getByLabelText('settings.always_clear_after_send'));
     // XXX: Add more settings here
 
     // Click reset button
@@ -96,6 +97,7 @@ describe('Settings Dialog', () => {
     expect(screen.getByLabelText('settings.default_apar_c_use_snd')).toBeChecked();
     expect(screen.getByLabelText('settings.default_apar_r_use_snd')).toBeChecked();
     expect(screen.getByLabelText('settings.default_auto_send')).toBeChecked();
+    expect(screen.getByLabelText('settings.always_clear_after_send')).toBeChecked();
     // XXX: Add more settings here
   });
 
@@ -325,6 +327,19 @@ describe('Settings Dialog', () => {
     );
     // Change setting from unchecked (false) --> checked (true)
     await userEvent.click(screen.getByLabelText('settings.default_auto_send'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('notifies when "always clear after sending transaction" setting is changed',
+  async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting from checked (true) -->  unchecked (false)
+    await userEvent.click(screen.getByLabelText('settings.always_clear_after_send'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 

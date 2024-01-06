@@ -33,6 +33,7 @@ export default function SettingsForm(props: Props) {
   const [defaultApar_cUseSnd, setDefaultApar_cUseSnd] = useAtom(Settings.defaultApar_cUseSnd);
   const [defaultApar_rUseSnd, setDefaultApar_rUseSnd] = useAtom(Settings.defaultApar_rUseSnd);
   const [defaultAutoSend, setDefaultAutoSend] = useAtom(Settings.defaultAutoSend);
+  const [alwaysClearAfterSend, setAlwaysClearAfterSend] = useAtom(Settings.alwaysClearAfterSend);
   const setStoredTxnData = useSetAtom(storedTxnDataAtom);
   const setSignedTxn = useSetAtom(storedSignedTxnAtom);
   // XXX: Add more settings here
@@ -82,6 +83,7 @@ export default function SettingsForm(props: Props) {
     setDefaultApar_cUseSnd(Settings.defaults.defaultApar_cUseSnd);
     setDefaultApar_rUseSnd(Settings.defaults.defaultApar_rUseSnd);
     setDefaultAutoSend(Settings.defaults.defaultAutoSend);
+    setAlwaysClearAfterSend(Settings.defaults.alwaysClearAfterSend);
     // XXX: Add more settings here
 
     // Notify user of reset
@@ -160,6 +162,16 @@ export default function SettingsForm(props: Props) {
         containerClass='mt-4'
         value={defaultAutoSend}
         onChange={(e) => {setDefaultAutoSend(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Always clear transaction data after sending */}
+      <ToggleField
+        name='always_clear_after_send'
+        label={t('settings.always_clear_after_send')}
+        inputClass='toggle-primary'
+        containerClass='mt-4'
+        value={alwaysClearAfterSend}
+        onChange={(e) => {setAlwaysClearAfterSend(e.target.checked); notifySave();}}
       />
 
       <h3>{t('settings.asset_create_title')}</h3>
