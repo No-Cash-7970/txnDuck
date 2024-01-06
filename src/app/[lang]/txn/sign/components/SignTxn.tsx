@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import algosdk, { microalgosToAlgos } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import { useWallet } from '@txnlab/use-wallet';
@@ -25,9 +25,13 @@ import {
   createTxnFromData,
   storedSignedTxnAtom,
   storedTxnDataAtom,
+  tipBtnClass,
+  tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
 import NextStepButton from './NextStepButton';
+import { CheckboxField } from '@/app/[lang]/components/form';
+import {defaultAutoSend as defaultAutoSendAtom} from '@/app/lib/app-settings';
 
 type Props = {
   /** Language */
@@ -37,13 +41,17 @@ type Props = {
 /** Buttons for connecting to wallet and signing transaction */
 export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
+  const router = useRouter();
   const currentURLParams = useSearchParams();
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const setFee = useSetAtom(txnDataAtoms.fee);
   const setFirstRound = useSetAtom(txnDataAtoms.fv);
   const setLastRound = useSetAtom(txnDataAtoms.lv);
-
+  // A `null` value indicates that the default value should be used because the user has not changed
+  // the value
+  const [autoSend, setAutoSend] = useState<boolean|null>(null);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+  const defaultAutoSend = useAtomValue(defaultAutoSendAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
 
@@ -137,6 +145,13 @@ export default function SignTxn({ lng }: Props) {
     const signedTxn = (await signTransactions([unsignedTxn]))[0];
     const signedTxnDataUrl = await bytesToBase64DataUrl(signedTxn);
     setStoredSignedTxn(signedTxnDataUrl);
+
+    // If the user checked the box, or the default should be used and it is to automatically send
+    // transaction
+    if (autoSend || (autoSend === null && defaultAutoSend)) {
+      // Go to send-transaction page
+      router.push(`/${lng}/txn/send` + (currentURLParams.size ? `?${currentURLParams}` : ''));
+    }
   };
 
   useEffect(() => {
@@ -293,6 +308,23 @@ export default function SignTxn({ lng }: Props) {
     {// Connected to wallet but transaction has not been signed yet
       (activeAccount && !storedSignedTxn && !hasSignTxnError) &&
       <div className='mt-8'>
+        <CheckboxField label={t('sign_txn:auto_send.label')}
+          name='auto_send'
+          id='autoSend-input'
+          tip={{
+            content: t('sign_txn:auto_send.tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('sign_txn:auto_send.tip_btn_title'),
+            contentClass: tipContentClass
+          }}
+          inputInsideLabel={true}
+          containerId='autoSend-field'
+          containerClass='ms-2 mb-3'
+          inputClass='checkbox-primary me-2'
+          labelClass='justify-start w-fit max-w-full'
+          value={autoSend ?? defaultAutoSend}
+          onChange={(e) => setAutoSend(e.target.checked)}
+        />
         <button
           className='btn btn-primary btn-block min-h-[5em] h-auto'
           onClick={() => signTransaction()}

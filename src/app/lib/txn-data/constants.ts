@@ -71,7 +71,7 @@ export const MAX_APP_KEY_LENGTH = 64;
 export const tipContentClass = 'text-sm rounded-md py-2 px-4 bg-accent text-accent-content'
   + ' stroke-accent fill-accent sm:max-w-sm max-w-[var(--radix-popover-content-available-width)]';
 /** Class(es) for the button that triggers the tooltip for a field */
-export const tipBtnClass = 'ms-3 mb-1 opacity-70';
+export const tipBtnClass = 'ms-3 opacity-70';
 
 /** Collection of keys, or "names" of the transaction presets */
 export enum Preset {

@@ -8,3 +8,10 @@ sign_error: >
   No se ha podido firmar la transacción porque está malformada. Esto suele deberse a que la
   información de la transacción no es válida. Vuelva al paso anterior y compruebe si hay errores en
   la información de la transacción.
+auto_send:
+  label: Enviar automáticamente la transacción después de firmar
+  tip: >
+    Si está marcada, la transacción se envía inmediatamente después de ser firmada sin necesidad de
+    pulsar el botón «Enviar».
+  tip_btn_title: Más información
+

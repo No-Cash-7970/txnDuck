@@ -11,6 +11,7 @@ jest.mock('react', () => ({
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock navigation hooks because they are used by a child components
 jest.mock('next/navigation', () => ({
+  useRouter: () => ({}),
   useSearchParams: () => ({get: () => 'foo'})
 }));
 // Mock the wallet provider

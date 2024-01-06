@@ -49,6 +49,10 @@ export const defaults = {
    * (default: `true` - Get asset information when ID is entered)
    */
   assetInfoGet: true,
+  /** Automatically send after signing by default?
+   * (default: `true` - Automatically send after signing by default)
+   */
+  defaultAutoSend: true,
 };
 
 /** Theme mode */
@@ -77,3 +81,6 @@ export const defaultApar_rUseSnd =
 /** Retrieve asset information when asset ID is entered? */
 export const assetInfoGet =
   atomWithStorage<boolean>('getAssetInfo', defaults.assetInfoGet, storage);
+/** Automatically send after signing by default? */
+export const defaultAutoSend =
+  atomWithStorage<boolean>('defaultAutoSend', defaults.defaultAutoSend, storage);

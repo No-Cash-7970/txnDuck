@@ -32,6 +32,7 @@ export default function SettingsForm(props: Props) {
   const [defaultApar_fUseSnd, setDefaultApar_fUseSnd] = useAtom(Settings.defaultApar_fUseSnd);
   const [defaultApar_cUseSnd, setDefaultApar_cUseSnd] = useAtom(Settings.defaultApar_cUseSnd);
   const [defaultApar_rUseSnd, setDefaultApar_rUseSnd] = useAtom(Settings.defaultApar_rUseSnd);
+  const [defaultAutoSend, setDefaultAutoSend] = useAtom(Settings.defaultAutoSend);
   const setStoredTxnData = useSetAtom(storedTxnDataAtom);
   const setSignedTxn = useSetAtom(storedSignedTxnAtom);
   // XXX: Add more settings here
@@ -80,6 +81,7 @@ export default function SettingsForm(props: Props) {
     setDefaultApar_fUseSnd(Settings.defaults.defaultApar_fUseSnd);
     setDefaultApar_cUseSnd(Settings.defaults.defaultApar_cUseSnd);
     setDefaultApar_rUseSnd(Settings.defaults.defaultApar_rUseSnd);
+    setDefaultAutoSend(Settings.defaults.defaultAutoSend);
     // XXX: Add more settings here
 
     // Notify user of reset
@@ -148,6 +150,16 @@ export default function SettingsForm(props: Props) {
         containerClass='mt-4'
         value={assetInfoGet}
         onChange={(e) => {setAssetInfoGet(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Automatically send after signing by default */}
+      <ToggleField
+        name='default_auto_send'
+        label={t('settings.default_auto_send')}
+        inputClass='toggle-primary'
+        containerClass='mt-4'
+        value={defaultAutoSend}
+        onChange={(e) => {setDefaultAutoSend(e.target.checked); notifySave();}}
       />
 
       <h3>{t('settings.asset_create_title')}</h3>

@@ -33,6 +33,7 @@ jest.mock('../../../../lib/utils.ts', () => ({
 }));
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
+  useRouter: () => ({}),
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
 // Mock algokit

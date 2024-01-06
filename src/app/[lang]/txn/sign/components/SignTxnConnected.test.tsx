@@ -29,6 +29,7 @@ jest.mock('../../../../lib/utils.ts', () => ({
 }));
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
+  useRouter: () => ({}),
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
 // Mock algokit
@@ -52,6 +53,11 @@ describe('Sign Transaction Component (Connected wallet)', () => {
   it('show active wallet address', () => {
     render(<SignTxn />);
     expect(screen.getByText('wallet.is_connected')).toBeInTheDocument();
+  });
+
+  it('has "automatically send transaction" checkbox', () => {
+    render(<SignTxn />);
+    expect(screen.getByLabelText(/sign_txn:auto_send.label/)).toBeChecked();
   });
 
   it('has "sign transaction" button', () => {
