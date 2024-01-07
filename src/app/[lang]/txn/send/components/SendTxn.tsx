@@ -217,14 +217,14 @@ export default function SendTxn({ lng }: Props) {
           </div>
         </details>
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
-          <Link className='btn btn-primary btn-block h-auto' href={`/${lng}`}>
+          <a className='btn btn-primary btn-block h-auto' href={`/${lng}`}>
             <Icons.IconHome aria-hidden />
             {t('done_btn')}
-          </Link>
-          <Link className='btn btn-secondary btn-block h-auto' href={`/${lng}/txn`}>
+          </a>
+          <a className='btn btn-secondary btn-block h-auto' href={`/${lng}/txn`}>
             <Icons.IconPlus aria-hidden />
             {t('make_new_txn_btn')}
-          </Link>
+          </a>
         </div>
       </>}
 
@@ -278,10 +278,10 @@ export default function SendTxn({ lng }: Props) {
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <Link className='btn btn-outline h-auto col-span-1 flex-1' href={`/${lng}`}>
+          <a className='btn btn-outline h-auto col-span-1 flex-1' href={`/${lng}`}>
             <Icons.IconBan aria-hidden />
             {t('quit_btn')}
-          </Link>
+          </a>
         </div>
       </>}
 
@@ -319,10 +319,10 @@ export default function SendTxn({ lng }: Props) {
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <Link className='btn btn-outline h-auto col-span-1' href={`/${lng}`}>
+          <a className='btn btn-outline h-auto col-span-1' href={`/${lng}`}>
             <Icons.IconBan aria-hidden />
             {t('quit_btn')}
-          </Link>
+          </a>
         </div>
       </>}
     </div>
