@@ -180,7 +180,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_fee'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -203,7 +203,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -226,7 +226,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_m_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -249,7 +249,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_f_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -272,7 +272,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_c_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -295,7 +295,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_r_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -318,7 +318,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.get_asset_info'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
@@ -330,7 +330,7 @@ describe('Settings Dialog', () => {
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
+    // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_auto_send'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });

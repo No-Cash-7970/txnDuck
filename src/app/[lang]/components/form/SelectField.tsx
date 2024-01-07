@@ -37,7 +37,8 @@ export default function SelectField({
           {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
-          {(!beforeSideLabel && !afterSideLabel) &&
+          {// Without side label
+            (!beforeSideLabel && !afterSideLabel) &&
             <select
               className={`select-bordered select ${inputClass}`}
               id={id || undefined}
@@ -59,7 +60,8 @@ export default function SelectField({
               }
             </select>
           }
-          {(beforeSideLabel || afterSideLabel) &&
+          {// With a side label
+            (beforeSideLabel || afterSideLabel) &&
             <span className='join'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -97,7 +99,8 @@ export default function SelectField({
         </>}
       </label>
       {!inputInsideLabel && <>
-        {(!beforeSideLabel && !afterSideLabel) &&
+        {// Without side label
+          (!beforeSideLabel && !afterSideLabel) &&
           <select
             className={`select-bordered select ${inputClass}`}
             id={id || undefined}
@@ -119,7 +122,8 @@ export default function SelectField({
             }
           </select>
         }
-        {(beforeSideLabel || afterSideLabel) &&
+        {// With a side label
+          (beforeSideLabel || afterSideLabel) &&
           <span className='join'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

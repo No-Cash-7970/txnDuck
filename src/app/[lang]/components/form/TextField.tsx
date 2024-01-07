@@ -40,7 +40,8 @@ export default function TextField({
           {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
-          {(!beforeSideLabel && !afterSideLabel) &&
+          {// Without side label
+            (!beforeSideLabel && !afterSideLabel) &&
             <input
               className={`input-bordered input ${inputClass}`}
               type={type ?? 'text'}
@@ -60,7 +61,8 @@ export default function TextField({
               maxLength={maxLength}
             />
           }
-          {(beforeSideLabel || afterSideLabel) &&
+          {// With a side label
+            (beforeSideLabel || afterSideLabel) &&
             <span className='join'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -96,7 +98,8 @@ export default function TextField({
         </>}
       </label>
       {!inputInsideLabel && <>
-        {(!beforeSideLabel && !afterSideLabel) &&
+        {// Without side label
+          (!beforeSideLabel && !afterSideLabel) &&
           <input
             className={`input-bordered input ${inputClass}`}
             type={type ?? 'text'}
@@ -116,7 +119,8 @@ export default function TextField({
             maxLength={maxLength}
           />
         }
-        {(beforeSideLabel || afterSideLabel) &&
+        {// With a side label
+          (beforeSideLabel || afterSideLabel) &&
           <span className='join'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

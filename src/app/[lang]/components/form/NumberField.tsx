@@ -39,7 +39,8 @@ export default function NumberField({
         </span>
 
         {inputInsideLabel && <>
-          {(!beforeSideLabel && !afterSideLabel) &&
+          {// Without side label
+            (!beforeSideLabel && !afterSideLabel) &&
             <input
               className={`input-bordered input ${inputClass}`}
               type='number'
@@ -58,7 +59,8 @@ export default function NumberField({
               onBlur={onBlur}
             />
           }
-          {(beforeSideLabel || afterSideLabel) && <>
+          {// With a side label
+            (beforeSideLabel || afterSideLabel) && <>
             <span className='join'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -94,7 +96,8 @@ export default function NumberField({
       </label>
 
       {!inputInsideLabel && <>
-        {(!beforeSideLabel && !afterSideLabel) &&
+        {// Without side label
+          (!beforeSideLabel && !afterSideLabel) &&
           <input
             className={`input-bordered input ${inputClass}`}
             type='number'
@@ -113,7 +116,8 @@ export default function NumberField({
             onBlur={onBlur}
           />
         }
-        {(beforeSideLabel || afterSideLabel) &&
+        {// With a side label
+          (beforeSideLabel || afterSideLabel) &&
           <span className='join'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

@@ -6,7 +6,7 @@ import { JotaiProvider } from '@/app/[lang]/components'; // Must be imported aft
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
-// Mock useRouter
+// Mock navigation hooks
 const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),

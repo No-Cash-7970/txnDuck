@@ -38,7 +38,8 @@ export default function TextAreaField({
           {tip && <FieldTip tipProps={tip} />}
         </span>
         {inputInsideLabel && <>
-          {(!beforeSideLabel && !afterSideLabel) &&
+          {// Without side label
+            (!beforeSideLabel && !afterSideLabel) &&
             <textarea
               className={`textarea-bordered textarea ${inputClass}`}
               id={id || undefined}
@@ -56,7 +57,8 @@ export default function TextAreaField({
               maxLength={maxLength}
             />
           }
-          {(beforeSideLabel || afterSideLabel) &&
+          {// With a side label
+            (beforeSideLabel || afterSideLabel) &&
             <span className='join'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -89,7 +91,8 @@ export default function TextAreaField({
         </>}
       </label>
       {!inputInsideLabel && <>
-        {(!beforeSideLabel && !afterSideLabel) &&
+        {// Without side label
+          (!beforeSideLabel && !afterSideLabel) &&
           <textarea
             className={`textarea-bordered textarea ${inputClass}`}
             id={id || undefined}
@@ -107,7 +110,8 @@ export default function TextAreaField({
             maxLength={maxLength}
           />
         }
-        {(beforeSideLabel || afterSideLabel) &&
+        {// With a side label
+          (beforeSideLabel || afterSideLabel) &&
           <span className='join'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

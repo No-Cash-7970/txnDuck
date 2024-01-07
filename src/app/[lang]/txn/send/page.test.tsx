@@ -24,7 +24,7 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({get: () => 'foo'})
 }));
-// Mock use-debounce
+// Mock use-debounce because it is a dependency of a child client component
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import SendTxnPage from './page';
