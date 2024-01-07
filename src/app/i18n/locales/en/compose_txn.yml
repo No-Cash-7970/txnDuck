@@ -452,4 +452,6 @@ fields:
       Interpret the data entered into the above field as Base64 encoded data. If you are unsure what
       this means, leave unchecked.
     error: >
+      This must be valid Base64.
+    error_optional: > # Error message for when entering Base64 data is optional
       This must be valid Base64. Enter valid Base64 or uncheck the checkbox below.

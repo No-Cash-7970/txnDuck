@@ -12,8 +12,14 @@ import {
   UNIT_NAME_MAX_LENGTH,
   URL_MAX_LENGTH
 } from './constants';
-import type { BoxRefAtomGroup, RetrievedAssetInfo, validationAtom } from './types';
+import type {
+  BoxRefAtomGroup,
+  RetrievedAssetInfo,
+  validationAtom,
+  ValidationMessage
+} from './types';
 import { addressSchema, idSchema, YupNumber, YupString } from './validation-rules';
+import { base64RegExp } from '../utils';
 
 /*
  * General
@@ -295,10 +301,28 @@ export const apaa = splitAtom(apaaListAtom);
  */
 
 /** Application properties - Approval program */
-export const apap = atomWithValidate<string>('', { validate: v => v });
+export const apap = atomWithValidate<string>('', {
+  validate: v => {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+    }).validateSync(v);
+
+    return v;
+  }
+});
 
 /** Application properties - Clear-state program */
-export const apsu = atomWithValidate<string>('', { validate: v => v });
+export const apsu = atomWithValidate<string>('', {
+  validate: v => {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+    }).validateSync(v);
+
+    return v;
+  }
+});
 
 /** Application properties - Number of global integers */
 export const apgs_nui = atomWithValidate<number|undefined>(undefined, {

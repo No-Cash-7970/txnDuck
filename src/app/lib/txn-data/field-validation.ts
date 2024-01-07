@@ -136,7 +136,7 @@ export const noteConditionalBase64Atom = validateAtoms({
   if (values.b64Note) {
     YupString().matches(base64RegExp, {
       excludeEmptyString: true,
-      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+      message: (): ValidationMessage => ({key: 'fields.base64.error_optional'})
     }).validateSync(values.note);
   }
 });
@@ -155,7 +155,7 @@ export const lxConditionalBase64Atom = validateAtoms({
   if (values.b64Lx) {
     YupString().matches(base64RegExp, {
       excludeEmptyString: true,
-      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+      message: (): ValidationMessage => ({key: 'fields.base64.error_optional'})
     }).validateSync(values.lx);
   }
 });
@@ -278,7 +278,7 @@ export const aparAmConditionalBase64Atom = validateAtoms({
   if (values.b64Apar_am) {
     YupString().matches(base64RegExp, {
       excludeEmptyString: true,
-      message: (): ValidationMessage => ({key: 'fields.base64.error'})
+      message: (): ValidationMessage => ({key: 'fields.base64.error_optional'})
     }).validateSync(values.apar_am);
   }
 });
