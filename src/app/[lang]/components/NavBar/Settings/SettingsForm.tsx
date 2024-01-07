@@ -306,7 +306,10 @@ export default function SettingsForm(props: Props) {
         </button>
         <button
           className='btn btn-outline btn-warning'
-          onClick={resetSettings}
+          onClick={(e) => {
+            e.preventDefault();
+            resetSettings();
+          }}
         >
           {t('settings.reset_button')}
         </button>
