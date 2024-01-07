@@ -18,7 +18,7 @@ export default function DefaultFrozen({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='apar_df-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-lg'
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.apar_df}

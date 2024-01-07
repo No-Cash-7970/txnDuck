@@ -28,7 +28,7 @@ export default function LastValid({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='lv-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mb-4 max-w-xs'
       inputClass={((showFormErrors || form.touched.lv) &&
         (form.fieldErrors.lv || (!lvCondReqGroup.isValid && lvCondReqGroup.error)))
         ? 'input-error' : ''

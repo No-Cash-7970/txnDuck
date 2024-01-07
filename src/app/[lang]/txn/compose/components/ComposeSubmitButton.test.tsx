@@ -194,7 +194,7 @@ describe('Compose Form Component', () => {
 
     const b64Checkboxes = screen.getAllByLabelText('fields.base64.label');
     // Enter metadata hash as Base64
-    await userEvent.click(b64Checkboxes[1]); // Enable base64 for metadata hash
+    await userEvent.click(b64Checkboxes[0]); // Enable base64 for metadata hash
     await userEvent.click(screen.getByLabelText(/fields.apar_am.label/));
     await userEvent.paste('VGhpcyBpcyBhIHZhbGlkIGhhc2ghISEhISEhISEhISE=');
 

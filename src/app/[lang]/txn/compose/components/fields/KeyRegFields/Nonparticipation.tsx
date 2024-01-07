@@ -27,7 +27,7 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='nonpart-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-4 max-w-xs'
       inputClass='toggle-primary'
       labelClass='gap-3'
       disabled={preset === Preset.RegNonpart}

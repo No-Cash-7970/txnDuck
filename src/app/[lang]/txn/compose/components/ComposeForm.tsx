@@ -105,13 +105,13 @@ const AssetConfigFields = {
 // Asset Freeze
 const AssetFreezeFields = {
   AssetId: dynamic(() => import('./fields/AssetFreezeFields/AssetId'),
-    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-6' /> },
+    { ssr: false, loading: () => <ExtraSmallField containerClass='mt-8' /> },
   ),
   TargetAddr: dynamic(() => import('./fields/AssetFreezeFields/TargetAddr'),
     { ssr: false, loading: () => <FullWidthField containerClass='mt-6' /> },
   ),
   Freeze: dynamic(() => import('./fields/AssetFreezeFields/Freeze'),
-    { ssr: false, loading: () => <SwitchField containerClass='max-w-lg mt-6' /> },
+    { ssr: false, loading: () => <SwitchField containerClass='max-w-xs mt-6' /> },
   ),
 };
 
@@ -222,15 +222,15 @@ export default function ComposeForm({ lng }: Props) {
           <AssetConfigFields.AssetName t={t} />
           <AssetConfigFields.Total t={t} />
           <AssetConfigFields.DecimalPlaces t={t} />
-          <AssetConfigFields.DefaultFrozen t={t} />
           <AssetConfigFields.URL t={t} />
+          <AssetConfigFields.DefaultFrozen t={t} />
         </>}
       </>}
 
       {txnType.value === TransactionType.afrz && <>
         <AssetFreezeFields.AssetId t={t} />
-        <AssetFreezeFields.TargetAddr t={t} />
         <AssetFreezeFields.Freeze t={t} />
+        <AssetFreezeFields.TargetAddr t={t} />
       </>}
 
       {txnType.value === TransactionType.keyreg && (!preset || preset === Preset.RegOnline) && <>
@@ -256,9 +256,6 @@ export default function ComposeForm({ lng }: Props) {
         <AppCallFields.AppDependencies t={t} />
       </>}
 
-      <Fee t={t} />
-      <Note t={t} />
-
       {txnType.value === TransactionType.acfg && preset !== Preset.AssetDestroy && <>
         <AssetConfigFields.ManagerAddr t={t} />
         <AssetConfigFields.FreezeAddr t={t} />
@@ -272,9 +269,6 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.Nonparticipation t={t} />
       }
 
-      <ValidRounds t={t} />
-
-      {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
 
       {(!preset || preset === Preset.RekeyAccount) && <Rekey t={t} />}
 
@@ -285,6 +279,12 @@ export default function ComposeForm({ lng }: Props) {
       {txnType.value === TransactionType.axfer && (!preset || preset === Preset.AssetOptOut) &&
         <AssetTransferFields.CloseTo t={t} />
       }
+
+      <Note t={t} />
+      <Fee t={t} />
+      <ValidRounds t={t} />
+
+      {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
 
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
         <div>

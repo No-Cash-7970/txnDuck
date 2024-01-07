@@ -44,7 +44,7 @@ export function FeeInput({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='fee-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mb-5 max-w-xs'
       inputClass={((showFormErrors || form.touched.fee) &&
         (form.fieldErrors.fee || (!feeCondReqGroup.isValid && feeCondReqGroup.error)))
         ? 'input-error' : ''

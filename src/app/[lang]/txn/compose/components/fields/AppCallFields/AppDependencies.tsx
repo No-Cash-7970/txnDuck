@@ -16,7 +16,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (
-    <FieldGroup headingLevel={2} heading={t('fields.app_deps.title')}>
+    <FieldGroup headingLevel={2} heading={t('fields.app_deps.title')} headingClass='mb-0'>
       {
         ((appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length)
           > MAX_APP_TOTAL_DEPS)

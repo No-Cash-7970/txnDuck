@@ -47,7 +47,7 @@ export function UseSugRoundsInput({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='useSugRounds-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-1 max-w-lg'
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.useSugRounds}

@@ -15,7 +15,7 @@ import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Note({ t }: { t: TFunction }) {
   return (
-    <FieldGroup>
+    <FieldGroup containerClass='mb-2'>
       <NoteInput t={t} />
       <Base64Input t={t} />
     </FieldGroup>
