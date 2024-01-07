@@ -19,7 +19,7 @@ footer:
     software’s <a>license</a>.
 settings:
   heading: Settings
-  reset_button: Reset all to default
+  reset_button: Reset all settings to default
   saved_message: Settings saved!
   reset_message: All settings have been reset.
   theme_switcher:
@@ -27,24 +27,26 @@ settings:
     light: Light
     dark: Dark
     auto: Automatic
+  compose_txn_general_heading: "Compose Transaction: General"
+  compose_txn_asset_create_heading: "Compose Transaction: Asset Creation"
+  sign_txn_heading: Sign Transaction
+  send_txn_heading: Send Transaction
+  clear_reset_heading: Clear & Reset
   ignore_form_errors: Allow forms to be submitted with errors
   default_use_sug_fee: Set fee automatically by default
   default_use_sug_rounds: Set valid rounds automatically by default
   get_asset_info: Retrieve asset information when asset ID is entered
-  asset_create_title: Asset Creation
   default_apar_m_use_snd: Set the manager address to the sender address by default
   default_apar_f_use_snd: Set the freeze address to the sender address by default
   default_apar_c_use_snd: Set the clawback address to the sender address by default
   default_apar_r_use_snd: Set the reserve address to the sender address by default
   default_auto_send: Automatically send transaction after signing by default
-  send_txn_heading: Send Transaction
   always_clear_after_send: Always clear saved transaction data after sending
   default_hide_send_info: Hide details within the “More Information” section by default
   confirm_wait_rounds: >
     Maximum number of rounds to wait for transaction confirmation (Default:&nbsp;{{default}})
-  clear_data_title: Clear Stored Data
   clear_txn_data_btn: Clear saved transaction data
-  clear_all_data_btn: Clear ALL data
+  clear_all_data_btn: Clear & reset ALL data
   txn_data_cleared_msg: All saved transaction data has been removed.
   all_data_cleared_msg: All data has been removed.
 wallet:

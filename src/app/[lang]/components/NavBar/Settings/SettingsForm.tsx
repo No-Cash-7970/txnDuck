@@ -135,10 +135,7 @@ export default function SettingsForm(props: Props) {
         onChange={(e) => applyTheme(e.target.value as Settings.Themes)}
       />
 
-      {/* Connect wallet */}
-      <div className='mt-4'>
-        <WalletProvider><ConnectWallet t={t} /></WalletProvider>
-      </div>
+      <h3>{t('settings.compose_txn_general_heading')}</h3>
 
       {/* Setting: Ignore form validation errors setting */}
       <CheckboxField
@@ -156,8 +153,8 @@ export default function SettingsForm(props: Props) {
         name='default_use_sug_fee'
         label={t('settings.default_use_sug_fee')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={defaultUseSugFee}
         onChange={(e) => {setDefaultUseSugFee(e.target.checked); notifySave();}}
       />
@@ -167,8 +164,8 @@ export default function SettingsForm(props: Props) {
         name='default_use_sug_rounds'
         label={t('settings.default_use_sug_rounds')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={defaultUseSugRounds}
         onChange={(e) => {setDefaultUseSugRounds(e.target.checked); notifySave();}}
       />
@@ -178,19 +175,67 @@ export default function SettingsForm(props: Props) {
         name='get_asset_info'
         label={t('settings.get_asset_info')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={assetInfoGet}
         onChange={(e) => {setAssetInfoGet(e.target.checked); notifySave();}}
       />
+
+      <h3>{t('settings.compose_txn_asset_create_heading')}</h3>
+
+      {/* Setting: Set manager address to the sender address by default */}
+      <ToggleField
+        name='default_apar_m_use_snd'
+        label={t('settings.default_apar_m_use_snd')}
+        labelClass='gap-3'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
+        value={defaultApar_mUseSnd}
+        onChange={(e) => {setDefaultApar_mUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set freeze address to the sender address by default */}
+      <ToggleField
+        name='default_apar_f_use_snd'
+        label={t('settings.default_apar_f_use_snd')}
+        labelClass='gap-3'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
+        value={defaultApar_fUseSnd}
+        onChange={(e) => {setDefaultApar_fUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set clawback address to the sender address by default */}
+      <ToggleField
+        name='default_apar_c_use_snd'
+        label={t('settings.default_apar_c_use_snd')}
+        labelClass='gap-3'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
+        value={defaultApar_cUseSnd}
+        onChange={(e) => {setDefaultApar_cUseSnd(e.target.checked); notifySave();}}
+      />
+
+      {/* Setting: Set reserve address to the sender address by default */}
+      <ToggleField
+        name='default_apar_r_use_snd'
+        label={t('settings.default_apar_r_use_snd')}
+        labelClass='gap-3'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
+        value={defaultApar_rUseSnd}
+        onChange={(e) => {setDefaultApar_rUseSnd(e.target.checked); notifySave();}}
+      />
+
+      <h3>{t('settings.sign_txn_heading')}</h3>
 
       {/* Setting: Automatically send after signing by default */}
       <ToggleField
         name='default_auto_send'
         label={t('settings.default_auto_send')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={defaultAutoSend}
         onChange={(e) => {setDefaultAutoSend(e.target.checked); notifySave();}}
       />
@@ -202,8 +247,8 @@ export default function SettingsForm(props: Props) {
         name='always_clear_after_send'
         label={t('settings.always_clear_after_send')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={alwaysClearAfterSend}
         onChange={(e) => {setAlwaysClearAfterSend(e.target.checked); notifySave();}}
       />
@@ -213,8 +258,8 @@ export default function SettingsForm(props: Props) {
         name='default_hide_send_info'
         label={t('settings.default_hide_send_info')}
         labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-4'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
         value={defaultHideSendInfo}
         onChange={(e) => {setDefaultHideSendInfo(e.target.checked); notifySave();}}
       />
@@ -229,7 +274,7 @@ export default function SettingsForm(props: Props) {
         }
         labelClass='gap-3'
         inputInsideLabel={true}
-        containerClass='mt-3'
+        containerClass='mt-1'
         inputClass='w-24'
         min={1}
         value={tempConfirmWaitRounds}
@@ -239,58 +284,17 @@ export default function SettingsForm(props: Props) {
         }}
       />
 
-      <h3>{t('settings.asset_create_title')}</h3>
+      {/* Connect wallet */}
+      <div className='mt-11'>
+        <WalletProvider><ConnectWallet t={t} /></WalletProvider>
+      </div>
 
-      {/* Setting: Set manager address to the sender address by default */}
-      <ToggleField
-        name='default_apar_m_use_snd'
-        label={t('settings.default_apar_m_use_snd')}
-        labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-3'
-        value={defaultApar_mUseSnd}
-        onChange={(e) => {setDefaultApar_mUseSnd(e.target.checked); notifySave();}}
-      />
-
-      {/* Setting: Set freeze address to the sender address by default */}
-      <ToggleField
-        name='default_apar_f_use_snd'
-        label={t('settings.default_apar_f_use_snd')}
-        labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-3'
-        value={defaultApar_fUseSnd}
-        onChange={(e) => {setDefaultApar_fUseSnd(e.target.checked); notifySave();}}
-      />
-
-      {/* Setting: Set clawback address to the sender address by default */}
-      <ToggleField
-        name='default_apar_c_use_snd'
-        label={t('settings.default_apar_c_use_snd')}
-        labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-3'
-        value={defaultApar_cUseSnd}
-        onChange={(e) => {setDefaultApar_cUseSnd(e.target.checked); notifySave();}}
-      />
-
-      {/* Setting: Set reserve address to the sender address by default */}
-      <ToggleField
-        name='default_apar_r_use_snd'
-        label={t('settings.default_apar_r_use_snd')}
-        labelClass='gap-3'
-        inputClass='toggle-primary'
-        containerClass='mt-3'
-        value={defaultApar_rUseSnd}
-        onChange={(e) => {setDefaultApar_rUseSnd(e.target.checked); notifySave();}}
-      />
-
-      <h3>{t('settings.clear_data_title')}</h3>
+      <h3>{t('settings.clear_reset_heading')}</h3>
 
       {/* Clear data buttons */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
         <button
-          className='btn btn-sm btn-error'
+          className='btn btn-warning'
           onClick={(e) => {
             e.preventDefault();
             setStoredTxnData(RESET);
@@ -301,7 +305,16 @@ export default function SettingsForm(props: Props) {
           {t('settings.clear_txn_data_btn')}
         </button>
         <button
-          className='btn btn-sm btn-outline btn-error'
+          className='btn btn-outline btn-warning'
+          onClick={resetSettings}
+        >
+          {t('settings.reset_button')}
+        </button>
+      </div>
+      {/* Reset button */}
+      <div className='mt-9'>
+        <button
+          className='btn btn-sm btn-block btn-outline btn-error mx-auto'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();
@@ -315,11 +328,6 @@ export default function SettingsForm(props: Props) {
 
       {/* XXX: Add more settings here */}
     </form>
-    <div className='action mt-8 grid justify-end'>
-      <button className='btn btn-sm btn-link text-base-content p-0' onClick={resetSettings}>
-        {t('settings.reset_button')}
-      </button>
-    </div>
 
     <ToastNotification
       lng={props.lng}
