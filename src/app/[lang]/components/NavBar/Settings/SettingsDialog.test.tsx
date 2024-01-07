@@ -54,14 +54,15 @@ describe('Settings Dialog', () => {
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
   });
 
-  it('has "reset" button', () => {
+  it('has connect/disconnect wallet button', () => {
     render(
       <ToastProvider>
         <SettingsDialog open={true} />
         <ToastViewport />
       </ToastProvider>
     );
-    expect(screen.getByText('settings.reset_button')).toBeInTheDocument();
+    // Look for disconnect button because it is assumed a wallet is connected
+    expect(screen.getByText(/wallet.disconnect/)).toBeInTheDocument();
   });
 
   it('can reset to defaults', async () => {
@@ -107,16 +108,6 @@ describe('Settings Dialog', () => {
     // XXX: Add more settings here
   });
 
-  it('has theme mode setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.theme_switcher.label/)).toBeInTheDocument();
-  });
-
   it('notifies when theme is changed', async () => {
     render(
       <ToastProvider>
@@ -129,27 +120,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('has connect/disconnect wallet button', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    // Look for disconnect button because it is assumed a wallet is connected
-    expect(screen.getByText(/wallet.disconnect/)).toBeInTheDocument();
-  });
-
-  it('has "ignore compose-form validation errors" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.ignore_form_errors/)).toBeInTheDocument();
-  });
-
   it('notifies when "ignore compose-form validation errors" setting is changed', async () => {
     render(
       <ToastProvider>
@@ -160,16 +130,6 @@ describe('Settings Dialog', () => {
     // Change setting from unchecked (false) --> checked (true)
     await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
-  });
-
-  it('has "use suggested fee by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_use_sug_fee/)).toBeInTheDocument();
   });
 
   it('notifies when "use suggested fee by default" setting is changed',
@@ -185,16 +145,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('has "use suggested rounds by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_use_sug_rounds/)).toBeInTheDocument();
-  });
-
   it('notifies when "use suggested rounds by default" setting is changed',
   async () => {
     render(
@@ -206,16 +156,6 @@ describe('Settings Dialog', () => {
     // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
-  });
-
-  it('has "manager address to the sender address by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_apar_m_use_snd/)).toBeInTheDocument();
   });
 
   it('notifies when "manager address to the sender address by default" setting is changed',
@@ -231,16 +171,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('has "freeze address to the sender address by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_apar_f_use_snd/)).toBeInTheDocument();
-  });
-
   it('notifies when "freeze address to the sender address by default" setting is changed',
   async () => {
     render(
@@ -252,16 +182,6 @@ describe('Settings Dialog', () => {
     // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_f_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
-  });
-
-  it('has "clawback address to the sender address by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_apar_c_use_snd/)).toBeInTheDocument();
   });
 
   it('notifies when "clawback address to the sender address by default" setting is changed',
@@ -277,16 +197,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('has "reserve address to the sender address by default" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.default_apar_r_use_snd/)).toBeInTheDocument();
-  });
-
   it('notifies when "reserve address to the sender address by default" setting is changed',
   async () => {
     render(
@@ -298,16 +208,6 @@ describe('Settings Dialog', () => {
     // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_apar_r_use_snd'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
-  });
-
-  it('has "retrieve asset information when ID is entered" setting', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.get_asset_info/)).toBeInTheDocument();
   });
 
   it('notifies when "retrieve asset information when ID is entered" setting is changed',
@@ -371,16 +271,6 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('has "clear transaction data" button', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.clear_txn_data_btn/)).toBeInTheDocument();
-  });
-
   it('removes transaction data from storage when "clear transaction data" button is clicked',
   async () => {
     sessionStorage.setItem('txnData', 'Some transaction data');
@@ -397,16 +287,6 @@ describe('Settings Dialog', () => {
     // Data is cleared
     expect(sessionStorage.getItem('txnData')).toBeNull();
     expect(sessionStorage.getItem('signedTxn')).toBeNull();
-  });
-
-  it('has "clear all data" button', () => {
-    render(
-      <ToastProvider>
-        <SettingsDialog open={true} />
-        <ToastViewport />
-      </ToastProvider>
-    );
-    expect(screen.getByText(/settings.clear_all_data_btn/)).toBeInTheDocument();
   });
 
   it('removes all data from storage when "clear all data" button is clicked',
