@@ -355,8 +355,8 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
   });
 
-  it('has fields for key registration transaction type if "Key Registration" transaction type is'
-  +' selected',
+  // eslint-disable-next-line max-len
+  it('has fields for key registration transaction type if "Key Registration" transaction type is selected',
   async () => {
     render(<ComposeForm />);
 
@@ -379,8 +379,8 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
   });
 
-  it('has fields for application call transaction type if "Application Call" transaction type is'
-  +' selected',
+  // eslint-disable-next-line max-len
+  it('has fields for application call transaction type if "Application Call" transaction type is selected',
   async () => {
     render(<ComposeForm />);
 

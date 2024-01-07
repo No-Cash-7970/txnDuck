@@ -47,8 +47,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data is submitted (not using suggested'
-  +' parameters)',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data is submitted (not using suggested parameters)',
   async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -83,8 +83,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
-  it('continues to sign-transaction page if invalid transaction data is submitted and the "ignore'
-  +' compose form validation errors" setting is on',
+  // eslint-disable-next-line max-len
+  it('continues to sign-transaction page if invalid transaction data is submitted and the "ignore compose form validation errors" setting is on',
   async () => {
     localStorage.setItem('ignoreFormErrors', 'true');
     render(
@@ -223,8 +223,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid *key registration* transaction data is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid *key registration* transaction data is submitted',
   async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -255,8 +255,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(1);
   });
 
-  it('does not proceed and shows errors if invalid *application call* transaction data is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid *application call* transaction data is submitted',
   async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
@@ -307,8 +307,7 @@ describe('Compose Form Component', () => {
    * Presets
    */
 
-  it('does not proceed and shows errors if invalid data using "transfer algos" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "transfer algos" preset is submitted',
   async () => {
     presetMockValue = 'transfer_algos';
     render(
@@ -334,8 +333,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid data using "rekey account" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "rekey account" preset is submitted',
   async () => {
     presetMockValue = 'rekey_account';
     render(
@@ -359,8 +357,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data using "close account" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "close account" preset is submitted',
   async () => {
     presetMockValue = 'close_account';
     render(
@@ -385,8 +382,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data using "transfer asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "transfer asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_transfer';
     render(
@@ -413,8 +409,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(4);
   });
 
-  it('does not proceed and shows errors if invalid data using "opt in asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "opt in asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_opt_in';
     render(
@@ -439,8 +434,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data using "opt out asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "opt out asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_opt_out';
     render(
@@ -466,8 +460,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid data using "create asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "create asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_create';
     render(
@@ -501,8 +494,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid data using "reconfigure asset" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "reconfigure asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_reconfig';
     render(
@@ -531,8 +524,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data using "revoke (claw back) asset" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "revoke (claw back) asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_clawback';
     render(
@@ -560,8 +553,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(5);
   });
 
-  it('does not proceed and shows errors if invalid data using "destroy asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "destroy asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_destroy';
     render(
@@ -586,8 +578,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(2);
   });
 
-  it('does not proceed and shows errors if invalid data using "freeze asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "freeze asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_freeze';
     render(
@@ -613,8 +604,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid data using "unfreeze asset" preset is'
-  + ' submitted',
+  it('does not proceed and shows errors if invalid data using "unfreeze asset" preset is submitted',
   async () => {
     presetMockValue = 'asset_unfreeze';
     render(
@@ -640,8 +630,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(3);
   });
 
-  it('does not proceed and shows errors if invalid data using "run application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "run application" preset is submitted',
   async () => {
     presetMockValue = 'app_run';
     render(
@@ -681,8 +671,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
-  it('does not proceed and shows errors if invalid data using "opt in application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "opt in application" preset is submitted',
   async () => {
     presetMockValue = 'app_opt_in';
     render(
@@ -721,8 +711,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
-  it('does not proceed and shows errors if invalid data using "deploy application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "deploy application" preset is submitted',
   async () => {
     presetMockValue = 'app_deploy';
     render(
@@ -767,8 +757,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(12);
   });
 
-  it('does not proceed and shows errors if invalid data using "update application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "update application" preset is submitted',
   async () => {
     presetMockValue = 'app_update';
     render(
@@ -809,8 +799,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(8);
   });
 
-  it('does not proceed and shows errors if invalid data using "close out application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "close out application" preset is submitted',
   async () => {
     presetMockValue = 'app_close';
     render(
@@ -849,8 +839,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
-  it('does not proceed and shows errors if invalid data using "clear application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "clear application" preset is submitted',
   async () => {
     presetMockValue = 'app_clear';
     render(
@@ -889,8 +879,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
-  it('does not proceed and shows errors if invalid data using "delete application" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "delete application" preset is submitted',
   async () => {
     presetMockValue = 'app_delete';
     render(
@@ -929,8 +919,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(6);
   });
 
-  it('does not proceed and shows errors if invalid data using "register online" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "register online" preset is submitted',
   async () => {
     presetMockValue = 'reg_online';
     render(
@@ -959,8 +949,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(7);
   });
 
-  it('does not proceed and shows errors if invalid data using "register offline" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "register offline" preset is submitted',
   async () => {
     presetMockValue = 'reg_offline';
     render(
@@ -983,8 +973,8 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('form.error.required')).toHaveLength(1);
   });
 
-  it('does not proceed and shows errors if invalid data using "register nonparticipation" preset is'
-  + ' submitted',
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "register nonparticipation" preset is submitted',
   async () => {
     presetMockValue = 'reg_nonpart';
     render(

@@ -359,8 +359,7 @@ describe('Compose Form Component', () => {
     });
   }, 10000);
 
-  it('can store submitted *asset configuration* transaction data (reconfigure asset)',
-  async () => {
+  it('can store submitted *asset configuration* transaction data (reconfigure asset)', async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
@@ -662,8 +661,7 @@ describe('Compose Form Component', () => {
     });
   });
 
-  it('can retrieve transaction data from session storage with Base64 note and lease',
-  async () => {
+  it('can retrieve transaction data from session storage with Base64 note and lease', async () => {
     sessionStorage.setItem('txnData', JSON.stringify({
       txn: {
         type: 'pay',

@@ -132,8 +132,7 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('notifies when "use suggested fee by default" setting is changed',
-  async () => {
+  it('notifies when "use suggested fee by default" setting is changed', async () => {
     render(
       <ToastProvider>
         <SettingsDialog open={true} />
@@ -145,8 +144,7 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('notifies when "use suggested rounds by default" setting is changed',
-  async () => {
+  it('notifies when "use suggested rounds by default" setting is changed', async () => {
     render(
       <ToastProvider>
         <SettingsDialog open={true} />
@@ -289,8 +287,7 @@ describe('Settings Dialog', () => {
     expect(sessionStorage.getItem('signedTxn')).toBeNull();
   });
 
-  it('removes all data from storage when "clear all data" button is clicked',
-  async () => {
+  it('removes all data from storage when "clear all data" button is clicked', async () => {
     localStorage.setItem('local', 'This is some data stored indefinitely');
     sessionStorage.setItem('session', 'This is some temporary data');
     render(
