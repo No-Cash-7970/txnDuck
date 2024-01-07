@@ -41,6 +41,8 @@ export const defaults = {
   defaultAutoSend: true,
   /** Always clear transaction data after sending? */
   alwaysClearAfterSend: true,
+  /** Hide send information details by default? */
+  defaultHideSendInfo: true,
 } as const;
 
 /** Theme mode */
@@ -75,3 +77,6 @@ export const defaultAutoSend =
 /** Always clear transaction data after sending? */
 export const alwaysClearAfterSend =
   atomWithStorage<boolean>('alwaysClearAfterSend', defaults.alwaysClearAfterSend, storage);
+/** Always clear transaction data after sending? */
+export const defaultHideSendInfo =
+  atomWithStorage<boolean>('defaultHideSendInfo', defaults.defaultHideSendInfo, storage);

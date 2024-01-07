@@ -14,7 +14,10 @@ import { useDebouncedCallback } from 'use-debounce';
 import { dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { alwaysClearAfterSend as alwaysClearAfterSendAtom } from '@/app/lib/app-settings';
+import {
+  alwaysClearAfterSend as alwaysClearAfterSendAtom,
+  defaultHideSendInfo as defaultHideSendInfoAtom
+} from '@/app/lib/app-settings';
 
 type Props = {
   /** Language */
@@ -49,6 +52,7 @@ export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
   const currentURLParams = useSearchParams();
   const alwaysClearAfterSend = useAtomValue(alwaysClearAfterSendAtom);
+  const defaultHideSendInfo = useAtomValue(defaultHideSendInfoAtom);
 
   const [waiting, setWaiting] = useState(false);
   const [pendingTxId, setPendingTxId] = useState('');
@@ -172,7 +176,7 @@ export default function SendTxn({ lng }: Props) {
 
   return (
     <div className='mt-12'>
-      { // Waiting...
+      {// Waiting...
       waiting &&
         <div className='not-prose pt-8'>
           <p className='text-2xl text-center mb-4'>{t('txn_confirm_wait')}</p>
@@ -180,7 +184,7 @@ export default function SendTxn({ lng }: Props) {
         </div>
       }
 
-      { // Transaction succeeded
+      {// Transaction succeeded
       (!waiting && successMsg) && <>
         <div className='alert alert-success'>
           <Icons.IconMoodHappyFilled stroke={1.5} aria-hidden className='h-14 w-14' />
@@ -194,20 +198,17 @@ export default function SendTxn({ lng }: Props) {
             <p className='break-all text-start mr-1'>
               <Trans t={t} i18nKey='success.msg' values={{ txn_id: successMsg.txId }} />
             </p>
-            <p className='text-start'>
-              <Trans
-                t={t}
-                i18nKey='click_for_details'
+            {defaultHideSendInfo && <p className='text-start'>
+              <Trans t={t} i18nKey='click_for_details'
                 values={{details_title: t('success.details')}}
               />
-            </p>
+            </p>}
           </div>
         </div>
-        <details className='collapse-plus collapse border mt-6'>
+        <details className='collapse-plus collapse border mt-6' open={!defaultHideSendInfo}>
           <summary className='collapse-title text-lg w-full'>{t('success.details')}</summary>
-          <div className='collapse-content'>
-            <code className={
-              'card font-mono bg-neutral text-neutral-content'
+          <div className='collapse-content not-prose'>
+            <code className={'card font-mono bg-neutral text-neutral-content'
               +' whitespace-pre overflow-x-scroll'
               +' mt-1 p-4'
             }>
@@ -227,7 +228,7 @@ export default function SendTxn({ lng }: Props) {
         </div>
       </>}
 
-      { // Transaction failed with an error
+      {// Transaction failed with an error
       (!waiting && failMsg?.type === 'error') && <>
         <div className='alert alert-error'>
           <Icons.IconMoodWrrr stroke={1.5} aria-hidden className='h-14 w-14' />
@@ -241,16 +242,14 @@ export default function SendTxn({ lng }: Props) {
             <p className='text-start'>
               <Trans t={t} i18nKey={failMsg?.i18nKey} values={failMsg?.i18nValues} />
             </p>
-            <p className='text-start'>
-              <Trans
-                t={t}
-                i18nKey='click_for_details'
+            {defaultHideSendInfo && <p className='text-start'>
+              <Trans t={t} i18nKey='click_for_details'
                 values={{details_title: t('fail.details')}}
               />
-            </p>
+            </p>}
           </div>
         </div>
-        <details className='collapse-plus collapse border mt-6'>
+        <details className='collapse-plus collapse border mt-6' open={!defaultHideSendInfo}>
           <summary className='collapse-title text-lg w-full'>{t('fail.details')}</summary>
           <div className='collapse-content'>
             <div className='card font-mono bg-neutral text-neutral-content mt-1 p-4'>
@@ -286,7 +285,7 @@ export default function SendTxn({ lng }: Props) {
         </div>
       </>}
 
-      { // Warning: Transaction *may* have failed
+      {// Warning: Transaction *may* have failed
       (!waiting && failMsg?.type === 'warn' ) && <>
         <div className='alert alert-warning'>
           <Icons.IconMoodConfuzed stroke={1.5} aria-hidden className='h-14 w-14' />
