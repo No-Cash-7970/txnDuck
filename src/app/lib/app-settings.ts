@@ -43,6 +43,8 @@ export const defaults = {
   alwaysClearAfterSend: true,
   /** Hide send information details by default? */
   defaultHideSendInfo: true,
+  /** Maximum number of round to wait for transaction confirmation */
+  confirmWaitRounds: 10,
 } as const;
 
 /** Theme mode */
@@ -80,3 +82,6 @@ export const alwaysClearAfterSend =
 /** Always clear transaction data after sending? */
 export const defaultHideSendInfo =
   atomWithStorage<boolean>('defaultHideSendInfo', defaults.defaultHideSendInfo, storage);
+/** Maximum number of round to wait for transaction confirmation */
+export const confirmWaitRounds =
+  atomWithStorage<number>('confirmWaitRounds', defaults.confirmWaitRounds, storage);

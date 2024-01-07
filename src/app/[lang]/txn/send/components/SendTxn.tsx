@@ -16,6 +16,7 @@ import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import {
   alwaysClearAfterSend as alwaysClearAfterSendAtom,
+  confirmWaitRounds as confirmWaitRoundsAtom,
   defaultHideSendInfo as defaultHideSendInfoAtom
 } from '@/app/lib/app-settings';
 
@@ -44,15 +45,13 @@ type SuccessMessage = {
   response: modelsv2.PendingTransactionResponse
 }
 
-/** Number of round to wait for transaction to be confirmed or to fail */
-const WAIT_ROUNDS_TO_CONFIRM = 10;
-
 /** Section for sending a transaction and showing status of the transaction */
 export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
   const currentURLParams = useSearchParams();
   const alwaysClearAfterSend = useAtomValue(alwaysClearAfterSendAtom);
   const defaultHideSendInfo = useAtomValue(defaultHideSendInfoAtom);
+  const confirmWaitRounds = useAtomValue(confirmWaitRoundsAtom);
 
   const [waiting, setWaiting] = useState(false);
   const [pendingTxId, setPendingTxId] = useState('');
@@ -88,7 +87,7 @@ export default function SendTxn({ lng }: Props) {
         return {
           type: 'warn',
           i18nKey: 'warn.not_confirmed_msg',
-          i18nValues: { count: WAIT_ROUNDS_TO_CONFIRM },
+          i18nValues: { count: confirmWaitRounds },
           details
         };
       }
@@ -117,7 +116,7 @@ export default function SendTxn({ lng }: Props) {
    * @param txId Transaction ID of the transaction to wait for
    * @param wait Number of rounds to wait
    */
-  const waitForConfirmation = async (txId: string, wait: number = WAIT_ROUNDS_TO_CONFIRM) =>  {
+  const waitForConfirmation = async (txId: string, wait: number = confirmWaitRounds) =>  {
     // Save/update transaction ID just in case the user wants to wait again
     if (txId !== pendingTxId) setPendingTxId(txId);
 

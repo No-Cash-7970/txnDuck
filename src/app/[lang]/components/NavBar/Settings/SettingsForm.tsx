@@ -1,15 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAtom, useSetAtom } from 'jotai';
+import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
-import { CheckboxField, RadioButtonGroupField, ToggleField } from '@/app/[lang]/components/form';
+import { Trans } from 'react-i18next';
+import {
+  CheckboxField,
+  NumberField,
+  RadioButtonGroupField,
+  ToggleField
+} from '@/app/[lang]/components/form';
+import { useDebouncedCallback } from 'use-debounce';
 import * as Settings from '@/app/lib/app-settings';
 import { WalletProvider } from '@/app/[lang]/components';
+import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import ConnectWallet from './ConnectWallet';
 import ToastNotification from './ToastNotification';
-import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import { RESET } from 'jotai/utils';
 
 type Props = {
   /** Language */
@@ -35,6 +42,7 @@ export default function SettingsForm(props: Props) {
   const [defaultAutoSend, setDefaultAutoSend] = useAtom(Settings.defaultAutoSend);
   const [alwaysClearAfterSend, setAlwaysClearAfterSend] = useAtom(Settings.alwaysClearAfterSend);
   const [defaultHideSendInfo, setDefaultHideSendInfo] = useAtom(Settings.defaultHideSendInfo);
+  const [confirmWaitRounds, setConfirmWaitRounds] = useAtom(Settings.confirmWaitRounds);
   const setStoredTxnData = useSetAtom(storedTxnDataAtom);
   const setSignedTxn = useSetAtom(storedSignedTxnAtom);
   // XXX: Add more settings here
@@ -60,7 +68,7 @@ export default function SettingsForm(props: Props) {
   /** Save the user's theme preference and apply it */
   const applyTheme = (themeValue: Settings.Themes, notify = true) => {
     // Update theme value in local storage
-    setTheme(themeValue);
+    setTheme(themeValue === '' ? RESET : themeValue);
 
     // Apply the theme
     // NOTE: If there are significant changes to the following line, update the script in the
@@ -75,23 +83,40 @@ export default function SettingsForm(props: Props) {
   const resetSettings = () => {
     // Set to defaults
     applyTheme(Settings.defaults.theme, false);
-    setIgnoreFormErrors(Settings.defaults.ignoreFormErrors);
-    setDefaultUseSugFee(Settings.defaults.defaultUseSugFee);
-    setDefaultUseSugRounds(Settings.defaults.defaultUseSugRounds);
-    setAssetInfoGet(Settings.defaults.assetInfoGet);
-    setDefaultApar_mUseSnd(Settings.defaults.defaultApar_mUseSnd);
-    setDefaultApar_fUseSnd(Settings.defaults.defaultApar_fUseSnd);
-    setDefaultApar_cUseSnd(Settings.defaults.defaultApar_cUseSnd);
-    setDefaultApar_rUseSnd(Settings.defaults.defaultApar_rUseSnd);
-    setDefaultAutoSend(Settings.defaults.defaultAutoSend);
-    setAlwaysClearAfterSend(Settings.defaults.alwaysClearAfterSend);
-    setDefaultHideSendInfo(Settings.defaults.defaultHideSendInfo);
+    setIgnoreFormErrors(RESET);
+    setDefaultUseSugFee(RESET);
+    setDefaultUseSugRounds(RESET);
+    setAssetInfoGet(RESET);
+    setDefaultApar_mUseSnd(RESET);
+    setDefaultApar_fUseSnd(RESET);
+    setDefaultApar_cUseSnd(RESET);
+    setDefaultApar_rUseSnd(RESET);
+    setDefaultAutoSend(RESET);
+    setAlwaysClearAfterSend(RESET);
+    setDefaultHideSendInfo(RESET);
+    setConfirmWaitRounds(RESET);
     // XXX: Add more settings here
 
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
     setToastOpen(true);
   };
+
+  /** Debounced "onChange" event function for "transaction confirm wait" setting in storage so the
+   * setting is saved only when the user stops changing the value
+   */
+  const onChangeConfirmWait = useDebouncedCallback((value) => {
+    setConfirmWaitRounds(value);
+    notifySave();
+  }, 750);
+
+  // Temporary state variable so the changes to the input value are not debounced
+  const [tempConfirmWaitRounds, setTempConfirmWaitRounds] =
+    useState<number|string>(Settings.defaults.confirmWaitRounds);
+
+  // Set the temporary state variable for "transaction confirm wait" input value to the value in
+  // storage (or default if nothing in storage)
+  useEffect(() => setTempConfirmWaitRounds(confirmWaitRounds), [confirmWaitRounds]);
 
   return (<>
     <form noValidate={true} aria-label={t('settings.heading')}>
@@ -130,6 +155,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_use_sug_fee'
         label={t('settings.default_use_sug_fee')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={defaultUseSugFee}
@@ -140,6 +166,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_use_sug_rounds'
         label={t('settings.default_use_sug_rounds')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={defaultUseSugRounds}
@@ -150,6 +177,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='get_asset_info'
         label={t('settings.get_asset_info')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={assetInfoGet}
@@ -160,6 +188,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_auto_send'
         label={t('settings.default_auto_send')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={defaultAutoSend}
@@ -172,6 +201,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='always_clear_after_send'
         label={t('settings.always_clear_after_send')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={alwaysClearAfterSend}
@@ -182,10 +212,31 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_hide_send_info'
         label={t('settings.default_hide_send_info')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-4'
         value={defaultHideSendInfo}
         onChange={(e) => {setDefaultHideSendInfo(e.target.checked); notifySave();}}
+      />
+
+      <NumberField
+        name='confirm_wait_rounds'
+        label={
+          <Trans t={t} i18nKey='settings.confirm_wait_rounds'
+            shouldUnescape={true}
+            values={{default: Settings.defaults.confirmWaitRounds}}
+          />
+        }
+        labelClass='gap-3'
+        inputInsideLabel={true}
+        containerClass='mt-3'
+        inputClass='w-24'
+        min={1}
+        value={tempConfirmWaitRounds}
+        onChange={(e) => {
+          setTempConfirmWaitRounds(e.target.value);
+          onChangeConfirmWait(e.target.value === '' ? RESET : parseInt(e.target.value));
+        }}
       />
 
       <h3>{t('settings.asset_create_title')}</h3>
@@ -194,6 +245,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_apar_m_use_snd'
         label={t('settings.default_apar_m_use_snd')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-3'
         value={defaultApar_mUseSnd}
@@ -204,6 +256,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_apar_f_use_snd'
         label={t('settings.default_apar_f_use_snd')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-3'
         value={defaultApar_fUseSnd}
@@ -214,6 +267,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_apar_c_use_snd'
         label={t('settings.default_apar_c_use_snd')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-3'
         value={defaultApar_cUseSnd}
@@ -224,6 +278,7 @@ export default function SettingsForm(props: Props) {
       <ToggleField
         name='default_apar_r_use_snd'
         label={t('settings.default_apar_r_use_snd')}
+        labelClass='gap-3'
         inputClass='toggle-primary'
         containerClass='mt-3'
         value={defaultApar_rUseSnd}

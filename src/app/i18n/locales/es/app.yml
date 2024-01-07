@@ -44,6 +44,9 @@ settings:
   send_txn_heading: Enviar transacción
   always_clear_after_send: Borrar siempre los datos de transacción guardados tras el envío
   default_hide_send_info: Ocultar los detalles de la sección «Más información» por defecto
+  confirm_wait_rounds: >
+    Número máximo de rondas de espera para la confirmación de la transacción
+    (Predeterminado:&nbsp;{{default}})
   clear_data_title: Borrar datos almacenados
   clear_txn_data_btn: Borrar datos de transacciones guardados
   clear_all_data_btn: Borrar TODOS los datos

@@ -40,6 +40,8 @@ settings:
   send_txn_heading: Send Transaction
   always_clear_after_send: Always clear saved transaction data after sending
   default_hide_send_info: Hide details within the “More Information” section by default
+  confirm_wait_rounds: >
+    Maximum number of rounds to wait for transaction confirmation (Default:&nbsp;{{default}})
   clear_data_title: Clear Stored Data
   clear_txn_data_btn: Clear saved transaction data
   clear_all_data_btn: Clear ALL data

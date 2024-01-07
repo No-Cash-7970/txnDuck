@@ -11,6 +11,8 @@ jest.mock('react-i18next', () => i18nextClientMock);
 jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
 // Mock the wallet provider
 jest.mock('../../../components/WalletProvider.tsx', () => 'div');
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import SettingsDialog from './SettingsDialog';
 
@@ -81,6 +83,7 @@ describe('Settings Dialog', () => {
     await userEvent.click(screen.getByLabelText('settings.default_auto_send'));
     await userEvent.click(screen.getByLabelText('settings.always_clear_after_send'));
     await userEvent.click(screen.getByLabelText('settings.default_hide_send_info'));
+    await userEvent.type(screen.getByLabelText('settings.confirm_wait_rounds'), '5');
     // XXX: Add more settings here
 
     // Click reset button
@@ -100,6 +103,7 @@ describe('Settings Dialog', () => {
     expect(screen.getByLabelText('settings.default_auto_send')).toBeChecked();
     expect(screen.getByLabelText('settings.always_clear_after_send')).toBeChecked();
     expect(screen.getByLabelText('settings.default_hide_send_info')).toBeChecked();
+    expect(screen.getByLabelText('settings.confirm_wait_rounds')).toHaveValue(10);
     // XXX: Add more settings here
   });
 
@@ -352,6 +356,18 @@ describe('Settings Dialog', () => {
     );
     // Change setting from checked (true) --> unchecked (false)
     await userEvent.click(screen.getByLabelText('settings.default_hide_send_info'));
+    expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
+  });
+
+  it('notifies when "max number of rounds to wait" setting is changed', async () => {
+    render(
+      <ToastProvider>
+        <SettingsDialog open={true} />
+        <ToastViewport />
+      </ToastProvider>
+    );
+    // Change setting
+    await userEvent.type(screen.getByLabelText('settings.confirm_wait_rounds'), '5');
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
