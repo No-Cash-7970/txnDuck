@@ -17,23 +17,7 @@ import {
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
 
-/** The "Close To" field WITH the notice */
 export default function CloseTo({ t }: { t: TFunction }) {
-  return (
-    <>
-      <CloseToInput t={t} />
-
-      <div className='alert alert-warning not-prose my-1'>
-        <IconAlertTriangle aria-hidden />
-        <span className='text-start'>
-          <Trans t={t} i18nKey='fields.close.warning'/>
-        </span>
-      </div>
-    </>
-  );
-}
-
-function CloseToInput({ t }: { t: TFunction }) {
   const form = useAtomValue(paymentFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -82,6 +66,12 @@ function CloseToInput({ t }: { t: TFunction }) {
         i18nkey={(closeCondReqGroup.error as any).message.key}
         dict={(closeCondReqGroup.error as any).message.dict}
       />
+    }
+    {(!!form.values.close || preset === Preset.CloseAccount) &&
+      <div className='alert alert-warning not-prose my-1'>
+        <IconAlertTriangle aria-hidden />
+        <span className='text-start'><Trans t={t} i18nKey='fields.close.warning'/></span>
+      </div>
     }
   </>);
 }

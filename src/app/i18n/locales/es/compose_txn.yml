@@ -98,10 +98,10 @@ fields:
       las transacciones futuras.
     placeholder: Dirección a la que recodificar
     warning: >
-      <strong>Recodificar una cuenta de monedero puede provocar la pérdida de acceso a sus
-      fondos</strong> si la cuenta se vuelve a teclear en una dirección a la que usted no tiene
-      acceso. Asegúrese de saber lo que está haciendo. Obtenga más información sobre el cambio de
-      claves en la <2>documentación (en inglés) de Algorand</2>.
+      <em>Recodificar una cuenta de monedero puede provocar la pérdida de acceso a sus fondos</em>
+      si la cuenta se vuelve a teclear en una dirección a la que usted no tiene acceso. Asegúrese de
+      saber lo que está haciendo. Obtenga más información sobre el cambio de claves en la
+      <a>documentación (en inglés) de Algorand</a>.
   # Fields for payment type
   rcv: # Receiver of payment
     label: Destinatario

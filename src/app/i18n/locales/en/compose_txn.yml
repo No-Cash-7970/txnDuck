@@ -96,9 +96,9 @@ fields:
       transactions.
     placeholder: Address to rekey to
     warning: >
-      <strong>Rekeying a wallet account can result in losing access to your funds</strong> if the
-      account is rekeyed to an address you do not have access to. Make sure you know what you are
-      doing. Learn more about rekeying from the <2>Algorand documentation</2>.
+      <em>Rekeying a wallet account can result in losing access to your funds</em> if the account is
+      rekeyed to an address you do not have access to. Make sure you know what you are doing. Learn
+      more about rekeying from the <a>Algorand documentation</a>.
   # Fields for payment type
   rcv: # Receiver of payment
     label: Receiver

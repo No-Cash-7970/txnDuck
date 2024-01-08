@@ -17,31 +17,7 @@ import {
 import { IconAlertTriangle } from '@tabler/icons-react';
 import FieldErrorMessage from '../FieldErrorMessage';
 
-/** Rekey field WITH the notice */
 export default function Rekey({ t }: { t: TFunction }) {
-  return (
-    <>
-      <RekeyInput t={t} />
-
-      <div className='alert alert-warning not-prose my-1'>
-        <IconAlertTriangle aria-hidden />
-        <span className='text-start'>
-          <Trans t={t} i18nKey='fields.rekey.warning'>
-            <strong>rekeying_can_result_in_loss</strong> learn_more_at
-            <a
-              href='https://developer.algorand.org/docs/get-details/accounts/rekey'
-              className='underline'
-            >
-              algo_docs
-            </a>.
-          </Trans>
-        </span>
-      </div>
-    </>
-  );
-}
-
-function RekeyInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -90,6 +66,21 @@ function RekeyInput({ t }: { t: TFunction }) {
         i18nkey={(rekeyCondReqGroup.error as any).message.key}
         dict={(rekeyCondReqGroup.error as any).message.dict}
       />
+    }
+    {(!!form.values.rekey || preset === Preset.RekeyAccount) &&
+      <div className='alert alert-warning not-prose my-1'>
+        <IconAlertTriangle aria-hidden />
+        <span className='text-start'>
+          <Trans t={t} i18nKey='fields.rekey.warning'
+            components={{
+              em: <strong />,
+              a: <a href='https://developer.algorand.org/docs/get-details/accounts/rekey'
+                className='underline'
+              />
+            }}
+          />
+        </span>
+      </div>
     }
   </>);
 }

@@ -17,23 +17,7 @@ import {
 import { IconAlertTriangle } from '@tabler/icons-react';
 import FieldErrorMessage from '../FieldErrorMessage';
 
-/** The "Close To" field WITH the notice */
 export default function CloseTo({ t }: { t: TFunction }) {
-  return (
-    <>
-      <CloseToInput t={t} />
-
-      <div className='alert alert-warning not-prose my-1'>
-        <IconAlertTriangle aria-hidden />
-        <span className='text-start'>
-          <Trans t={t} i18nKey='fields.aclose.warning'/>
-        </span>
-      </div>
-    </>
-  );
-}
-
-function CloseToInput({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
@@ -82,6 +66,12 @@ function CloseToInput({ t }: { t: TFunction }) {
         i18nkey={(acloseCondReqGroup.error as any).message.key}
         dict={(acloseCondReqGroup.error as any).message.dict}
       />
+    }
+    {(!!form.values.aclose || preset === Preset.AssetOptOut) &&
+      <div className='alert alert-warning not-prose my-1'>
+        <IconAlertTriangle aria-hidden />
+        <span className='text-start'><Trans t={t} i18nKey='fields.aclose.warning'/></span>
+      </div>
     }
   </>);
 }
