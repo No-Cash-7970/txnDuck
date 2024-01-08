@@ -204,6 +204,7 @@ fields:
       Establezca la dirección del administrador. Es la dirección de la cuenta que puede cambiar la
       configuración del activo y destruirlo. Si está vacía, no se permite la reconfiguración.
     placeholder: Dirección del administrador
+    empty_warning: Si está vacía, no se permitirá reconfigurar el activo.
   apar_f_use_snd: # Use sender as freeze?
     label: Establecer la dirección para congelar en la dirección del remitente
     tip: >
@@ -216,18 +217,20 @@ fields:
       Establezca la dirección para congelar. Es la dirección de la cuenta que puede congelar las
       tenencias de este activo. Si está vacía, no se permite la congelación.
     placeholder: Dirección para congelar
+    empty_warning: Si está vacía, no se permitirá congelar el activo.
   apar_c_use_snd: # Use sender as clawback?
-    label: Establecer la dirección para revocar en la dirección del remitente
+    label: Establecer la dirección para recuperar en la dirección del remitente
     tip: >
-      Utilizar la dirección del remitente de esta transacción como dirección para revocar. La
-      dirección para revocar es la dirección de la cuenta que puede revocar las tenencias de este
-      activo.
+      Utilizar la dirección del remitente de esta transacción como dirección para recuperar. La
+      dirección para recuperar es la dirección de la cuenta que puede recuperar las tenencias de
+      este activo.
   apar_c: # Clawback address
-    label: Dirección para revocar
+    label: Dirección para recuperar
     tip: >
-      Establezca la dirección para revocar. Es la dirección de la cuenta que puede revocar las
-      tenencias de este activo. Si está vacía, no se permite la revocación.
-    placeholder: Dirección para revocar
+      Establezca la dirección para recuperar. Es la dirección de la cuenta que puede recuperar las
+      tenencias de este activo. Si está vacía, no se permite la recuperación.
+    placeholder: Dirección para recuperar
+    empty_warning: Si está vacía, no se permitirá recuperar el activo.
   apar_r_use_snd: # Use sender as reserve?
     label: Establecer la dirección de reserva en la dirección del remitente
     tip: >

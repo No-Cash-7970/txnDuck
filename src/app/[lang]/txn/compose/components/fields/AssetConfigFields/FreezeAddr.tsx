@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { FieldGroup, TextField, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { IconAlertTriangleFilled } from '@tabler/icons-react';
 import {
   ADDRESS_LENGTH,
   Preset,
@@ -108,6 +109,15 @@ export function FreezeAddrInput({ t }: { t: TFunction }) {
       onChange={(e) => form.handleOnChange('apar_f')(e.target.value)}
       onFocus={form.handleOnFocus('apar_f')}
       onBlur={form.handleOnBlur('apar_f')}
+      helpMsg={form.values.apar_f === ''
+        ? <>
+          <IconAlertTriangleFilled aria-hidden size={18}
+            className='text-warning align-middle inline me-2'
+          />
+          {t('fields.apar_f.empty_warning')}
+        </>
+        : undefined
+      }
     />
     {(showFormErrors || form.touched.apar_f) && form.fieldErrors.apar_f &&
       <FieldErrorMessage t={t}
