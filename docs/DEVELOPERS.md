@@ -46,7 +46,8 @@ This is documentation contains information useful for developers.
   PowerShell or Command Prompt
 - [Git](https://git-scm.com/) installed
 - [Node.js](https://nodejs.org/en) version 18.0.0 or higher installed
-- [Yarn 4+](https://yarnpkg.com/getting-started/install) package manager installed
+- [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
+  Version 4 or higher.
 - (OPTIONAL BUT RECOMMENDED) [Visual Studio Code](https://code.visualstudio.com/)
   IDE (integrated development environment)
 

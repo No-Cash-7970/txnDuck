@@ -83,7 +83,8 @@ your own computer that does not rely on an external website.
   PowerShell or Command Prompt
 - [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
   20.0.0 or higher is recommended.
-- [Yarn 4+](https://yarnpkg.com/getting-started/install) package manager installed
+- [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
+  Version 4 or higher.
 
 ### Installing the local setup
 
@@ -105,7 +106,7 @@ your own computer that does not rely on an external website.
 4. Install the source code dependencies.
 
     ```bash
-    yarn install --prod
+    yarn workspaces focus --all --production
     ```
 
 5. Build the source code.
