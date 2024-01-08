@@ -269,9 +269,6 @@ export default function ComposeForm({ lng }: Props) {
         <KeyRegFields.Nonparticipation t={t} />
       }
 
-
-      {(!preset || preset === Preset.RekeyAccount) && <Rekey t={t} />}
-
       {(txnType.value === TransactionType.pay) && (!preset || preset === Preset.CloseAccount) &&
         <PaymentFields.CloseTo t={t} />
       }
@@ -280,11 +277,14 @@ export default function ComposeForm({ lng }: Props) {
         <AssetTransferFields.CloseTo t={t} />
       }
 
+      {preset === Preset.RekeyAccount && <Rekey t={t} />}
+
       <Note t={t} />
       <Fee t={t} />
       <ValidRounds t={t} />
 
       {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
+      {!preset && <Rekey t={t} />}
 
       <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
         <div>
