@@ -15,6 +15,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 20
+    - name: Enable Corepack for Yarn
+      run: corepack enable
+    - name: Set up Node cache # Set up Node cache by installing again
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
         cache: yarn
     - name: Install dependencies
       run: yarn
@@ -38,6 +44,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 20
+    - name: Enable Corepack for Yarn
+      run: corepack enable
+    - name: Set up Node cache # Set up Node cache by installing again
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
         cache: yarn
     - name: Install dependencies
       run: yarn
@@ -50,6 +62,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - name: Enable Corepack for Yarn
+      run: corepack enable
+    - name: Set up Node cache # Set up Node cache by installing again
       uses: actions/setup-node@v3
       with:
         node-version: 20
