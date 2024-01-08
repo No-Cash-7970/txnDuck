@@ -83,7 +83,7 @@ your own computer that does not rely on an external website.
   PowerShell or Command Prompt
 - [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
   20.0.0 or higher is recommended.
-- [Yarn](https://yarnpkg.com/getting-started/install) package manager installed
+- [Yarn 4+](https://yarnpkg.com/getting-started/install) package manager installed
 
 ### Installing the local setup
 

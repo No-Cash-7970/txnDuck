@@ -3,7 +3,13 @@
 # dependencies
 /node_modules
 /.pnp
-.pnp.js
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # testing
 /coverage
@@ -35,6 +41,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 /test-results/
+
+# Playwright
 /playwright-report/
 /playwright/.cache/
 
