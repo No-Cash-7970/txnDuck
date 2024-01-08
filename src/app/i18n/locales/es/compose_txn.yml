@@ -129,7 +129,7 @@ fields:
     tip: El destinatario de la transferencia de activos.
     placeholder: Dirección del destinatario
   xaid: # Asset ID
-    label: Identificación de activo
+    label: ID de activo
     with_name_label: Activo # The label for when the asset ID is displayed with the asset name
     with_name: "{{name}} ({{id}})" # The asset name and asset ID
     tip: El identificador único del activo.
@@ -158,10 +158,10 @@ fields:
       enviarán a la dirección especificada</strong>. Asegúrese de saber lo que está haciendo.
   # Fields for asset configuration type
   caid: # Asset ID
-    label: Identificación de activo
+    label: ID de activo
     with_name_label: Activo # The label for when the asset ID is displayed with the asset name
     with_name: "{{name}} ({{id}})" # The asset name and asset ID
-    tip: La identificación único del activo.
+    tip: El ID único del activo.
     getting_info: Obtener información sobre activo...
     get_info_fail: No se ha podido obtener la información del activo.
     get_info_unknown: Activo desconocido
@@ -260,10 +260,10 @@ fields:
     placeholder: Hash de metadatos
   # Fields for asset freeze type
   faid: # Asset ID
-    label: Identificación de activo
+    label: ID de activo
     with_name_label: Activo # The label for when the asset ID is displayed with the asset name
     with_name: "{{name}} ({{id}})" # The asset name and asset ID
-    tip: La identificación del activo que se congela o descongela.
+    tip: El ID del activo que se congela o descongela.
     getting_info: Obtener información sobre activo...
     get_info_fail: No se ha podido obtener la información del activo.
     get_info_unknown: Activo desconocido
@@ -331,8 +331,8 @@ fields:
       update: Actualizar
       delete: Eliminar
   apid: # Application ID
-    label: Identificación de aplicación
-    tip: La identificación de la aplicación. Vacío si se está creando.
+    label: ID de aplicación
+    tip: El ID de la aplicación. Vacío si se está creando.
   apap: # Approval program
     label: Programa de aprobación
     tip: >
@@ -402,10 +402,10 @@ fields:
   apfa: # Application references
     label: "Aplicación nº {{index}}"
     tip: >
-      Lista de aplicaciones, además de la identificación de la aplicación, a cuyos estados globales
+      Lista de aplicaciones, además de el ID de la aplicación, a cuyos estados globales
       puede acceder el programa de aprobación y el programa de borrado de estados de esta
       aplicación. El acceso es de sólo lectura.
-    placeholder: "Identificación de aplicación nº {{index}}"
+    placeholder: "ID de aplicación nº {{index}}"
     heading: Referencias de aplicación
     none: No referencias de aplicación
     add_btn: Añadir una aplicación
@@ -415,7 +415,7 @@ fields:
     tip: >
       Enumere los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
       de borrado de esta aplicación. El acceso es de sólo lectura.
-    placeholder: "Identificación de activo nº {{index}}"
+    placeholder: "ID de activo nº {{index}}"
     heading: Referencias de activo
     none: No referencias de activo
     add_btn: Añadir un activo
