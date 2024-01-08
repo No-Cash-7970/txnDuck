@@ -25,7 +25,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const [submittingForm, setSubmittingForm] = useState(false);
   const jotaiStore = useStore();
   const storedTxnData = useAtomValue(storedTxnDataAtom);
-  const ignoreFormErrors = useAtomValue(AppSettings.ignoreFormErrorsAtom);
+  const disallowFormErrors = useAtomValue(AppSettings.disallowFormErrorsAtom);
   const router = useRouter();
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(Preset.ParamName);
@@ -42,8 +42,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const submitData = async (e: React.MouseEvent) => {
     e.preventDefault();
 
-    // Check if the form is valid only if the "ignore form error" setting is off
-    if (!ignoreFormErrors && !isFormValid(preset, jotaiStore)) {
+    // Check if the form is valid only if the "do not allow form errors" setting is on
+    if (disallowFormErrors && !isFormValid(preset, jotaiStore)) {
       jotaiStore.set(showFormErrorsAtom, true);
       return;
     }

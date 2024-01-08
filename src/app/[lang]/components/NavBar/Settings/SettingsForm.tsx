@@ -31,7 +31,7 @@ export default function SettingsForm(props: Props) {
 
   /* Settings Data */
   const [theme, setTheme] = useAtom(Settings.themeAtom);
-  const [ignoreFormErrors, setIgnoreFormErrors] = useAtom(Settings.ignoreFormErrorsAtom);
+  const [disallowFormErrors, setDisallowFormErrors] = useAtom(Settings.disallowFormErrorsAtom);
   const [defaultUseSugFee, setDefaultUseSugFee] = useAtom(Settings.defaultUseSugFee);
   const [assetInfoGet, setAssetInfoGet] = useAtom(Settings.assetInfoGet);
   const [defaultUseSugRounds, setDefaultUseSugRounds] = useAtom(Settings.defaultUseSugRounds);
@@ -83,7 +83,7 @@ export default function SettingsForm(props: Props) {
   const resetSettings = () => {
     // Set to defaults
     applyTheme(Settings.defaults.theme, false);
-    setIgnoreFormErrors(RESET);
+    setDisallowFormErrors(RESET);
     setDefaultUseSugFee(RESET);
     setDefaultUseSugRounds(RESET);
     setAssetInfoGet(RESET);
@@ -137,15 +137,15 @@ export default function SettingsForm(props: Props) {
 
       <h3>{t('settings.compose_txn_general_heading')}</h3>
 
-      {/* Setting: Ignore form validation errors setting */}
-      <CheckboxField
-        name='ignore_form_errors'
-        label={t('settings.ignore_form_errors')}
-        labelClass='justify-start cursor-pointer'
-        inputClass='checkbox-primary me-4'
-        containerClass='mt-4'
-        value={ignoreFormErrors}
-        onChange={(e) => {setIgnoreFormErrors(e.target.checked); notifySave();}}
+      {/* Setting: Do not allow form errors setting */}
+      <ToggleField
+        name='disallow_form_errors'
+        label={t('settings.disallow_form_errors')}
+        labelClass='gap-3'
+        inputClass='toggle-primary toggle-sm sm:toggle-md'
+        containerClass='mt-1'
+        value={disallowFormErrors}
+        onChange={(e) => {setDisallowFormErrors(e.target.checked); notifySave();}}
       />
 
       {/* Setting: Use suggested fee by default */}
@@ -285,7 +285,7 @@ export default function SettingsForm(props: Props) {
       />
 
       {/* Connect wallet */}
-      <div className='mt-11'>
+      <div className='mt-8'>
         <WalletProvider><ConnectWallet t={t} /></WalletProvider>
       </div>
 

@@ -32,7 +32,7 @@ settings:
   sign_txn_heading: Firmar transacción
   send_txn_heading: Enviar transacción
   clear_reset_heading: Borrar y restablecer
-  ignore_form_errors: Permitir que los formularios se envíen con errores
+  disallow_form_errors: No permita que se envíen formularios con errores
   default_use_sug_fee: Fijar la tarifa automáticamente por defecto
   default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
   get_asset_info: Obtener información sobre activos cuando se introduce la identificación del activo

@@ -32,7 +32,7 @@ settings:
   sign_txn_heading: Sign Transaction
   send_txn_heading: Send Transaction
   clear_reset_heading: Clear & Reset
-  ignore_form_errors: Allow forms to be submitted with errors
+  disallow_form_errors: Do not allow forms to be submitted with errors
   default_use_sug_fee: Set fee automatically by default
   default_use_sug_rounds: Set valid rounds automatically by default
   get_asset_info: Retrieve asset information when asset ID is entered

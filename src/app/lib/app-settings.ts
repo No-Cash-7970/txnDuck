@@ -19,10 +19,10 @@ export enum Themes  {
 export const defaults = {
   /** Theme (default: `""` - automatic) */
   theme: Themes.auto,
-  /** Ignore form validation errors when submitting a form (like the "compose transaction" form)?
-   * (default: `false` - Do not ignore)
+  /** Do not allow a form (like the "compose transaction" form) to be submitted with errors?
+   * (default: `true` - Do not allow form to be submitted with errors)
    */
-  ignoreFormErrors: false,
+  disallowFormErrors: true,
   /** Use the suggested fee by default? */
   defaultUseSugFee: true,
   /** Use the suggested first & last valid round by default? */
@@ -49,9 +49,9 @@ export const defaults = {
 
 /** Theme mode */
 export const themeAtom = atomWithStorage<Themes>('theme', defaults.theme, storage);
-/** Ignore validation errors? */
-export const ignoreFormErrorsAtom =
-  atomWithStorage<boolean>('ignoreFormErrors', defaults.ignoreFormErrors, storage);
+/** Do not allow a form (like the "compose transaction" form) to be submitted with errors? */
+export const disallowFormErrorsAtom =
+  atomWithStorage<boolean>('disallowFormErrors', defaults.disallowFormErrors, storage);
 /** Use suggested fee by default? */
 export const defaultUseSugFee =
   atomWithStorage<boolean>('defaultUseSugFee', defaults.defaultUseSugFee, storage);

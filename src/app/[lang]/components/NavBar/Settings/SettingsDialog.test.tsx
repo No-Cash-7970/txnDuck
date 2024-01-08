@@ -74,7 +74,7 @@ describe('Settings Dialog', () => {
     );
     // Change settings to non-default values
     await userEvent.click(screen.getByLabelText('settings.theme_switcher.light'));
-    await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
+    await userEvent.click(screen.getByLabelText('settings.disallow_form_errors'));
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_fee'));
     await userEvent.click(screen.getByLabelText('settings.default_use_sug_rounds'));
     await userEvent.click(screen.getByLabelText('settings.default_apar_m_use_snd'));
@@ -94,7 +94,7 @@ describe('Settings Dialog', () => {
 
     // Check settings
     expect(screen.getByLabelText('settings.theme_switcher.auto')).toBeChecked();
-    expect(screen.getByLabelText('settings.ignore_form_errors')).not.toBeChecked();
+    expect(screen.getByLabelText('settings.disallow_form_errors')).toBeChecked();
     expect(screen.getByLabelText('settings.default_use_sug_fee')).toBeChecked();
     expect(screen.getByLabelText('settings.default_use_sug_rounds')).toBeChecked();
     expect(screen.getByLabelText('settings.default_apar_m_use_snd')).toBeChecked();
@@ -120,15 +120,15 @@ describe('Settings Dialog', () => {
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 
-  it('notifies when "ignore compose-form validation errors" setting is changed', async () => {
+  it('notifies when "Do not allow form errors" setting is changed', async () => {
     render(
       <ToastProvider>
         <SettingsDialog open={true} />
         <ToastViewport />
       </ToastProvider>
     );
-    // Change setting from unchecked (false) --> checked (true)
-    await userEvent.click(screen.getByLabelText('settings.ignore_form_errors'));
+    // Change setting from checked (true) --> unchecked (false)
+    await userEvent.click(screen.getByLabelText('settings.disallow_form_errors'));
     expect(screen.getByText('settings.saved_message')).toBeInTheDocument();
   });
 

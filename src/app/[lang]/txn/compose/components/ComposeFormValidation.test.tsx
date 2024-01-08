@@ -84,9 +84,9 @@ describe('Compose Form Component', () => {
   });
 
   // eslint-disable-next-line max-len
-  it('continues to sign-transaction page if invalid transaction data is submitted and the "ignore compose form validation errors" setting is on',
+  it('continues to sign-transaction page if invalid transaction data is submitted and the "do not allow form errors" setting is off',
   async () => {
-    localStorage.setItem('ignoreFormErrors', 'true');
+    localStorage.setItem('disallowFormErrors', 'false');
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
       <JotaiProvider><ComposeForm /></JotaiProvider>
