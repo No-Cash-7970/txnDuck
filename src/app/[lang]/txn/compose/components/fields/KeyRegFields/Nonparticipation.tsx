@@ -8,6 +8,7 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
+import { IconAlertTriangle } from '@tabler/icons-react';
 
 export default function Nonparticipation({ t }: { t: TFunction }) {
   const form = useAtomValue(keyRegFormControlAtom);
@@ -15,7 +16,7 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
   return (!(
       form.values.votekey || form.values.selkey || form.values.sprfkey
       || form.values.votefst || form.values.votelst || form.values.votekd
-    ) &&
+    ) && <>
     <ToggleField label={t('fields.nonpart.label')}
       name='nonpart'
       id='nonpart-input'
@@ -37,5 +38,12 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
         form.handleOnChange('nonpart')(e.target.checked);
       }}
     />
-  );
+    {!!form.values.nonpart
+      ? <div className='alert alert-warning'>
+        <IconAlertTriangle aria-hidden />
+        <span>{t('fields.nonpart.warning')}</span>
+      </div>
+      : undefined
+    }
+  </>);
 }

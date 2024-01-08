@@ -302,12 +302,14 @@ fields:
   nonpart: # Nonparticipation
     label: Nonparticipating?
     tip: >
-      All new Algorand accounts are participating by default. This means that they earn rewards. By
-      setting this value to “on” (“yes”), this account will marked as “nonparticipating” and no
-      longer earn rewards. It is unlikely that you will ever need to do this and exists mainly for
-      economic-related functions on the network.
+      By setting this value to “on” (“yes”), this account will be offline, permanently marked as
+      “nonparticipating,” and no longer earn rewards. It is unlikely that you will ever need to do
+      this and exists mainly for economic-related functions on the network.
     is_nonpart: Yes
     is_not_nonpart: No
+    warning: >
+      Nonparticipation is permanent. Once an account is marked as nonparticipating, it can never be
+      marked as “online” or “offline” again.
   # Fields for application call type
   apan: # OnComplete
     label: Application action type

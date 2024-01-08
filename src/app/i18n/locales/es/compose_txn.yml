@@ -310,12 +310,15 @@ fields:
   nonpart: # Nonparticipation
     label: ¿No participar?
     tip: >
-      Todas las cuentas nuevas de Algorand participan por defecto. Esto significa que ganan
-      recompensas. Al establecer este valor en «on» («sí»), esta cuenta se marcará como «no
-      participante» y dejará de ganar recompensas. Es poco probable que alguna vez necesite hacer
-      esto y existe principalmente para funciones relacionadas con la economía en la red.
+      Al establecer este valor en «encendido» («sí»), esta cuenta se desconectará, se marcará
+      permanentemente como «nonparticipating» (no participante) y dejará de ganar recompensas. Es
+      poco probable que necesites hacer esto y existe principalmente para funciones relacionadas con
+      la economía en la red.
     is_nonpart: Sí
     is_not_nonpart: No
+    warning: >
+      La no participación es permanente. Una vez que una cuenta se marca como no participante, nunca
+      puede volver a marcarse como «en línea» o «fuera de línea».
   # Fields for application call type
   apan: # OnComplete
     label: Tipo de acción de la aplicación

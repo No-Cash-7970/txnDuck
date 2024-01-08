@@ -210,7 +210,9 @@ export default function TxnPresetsList({ lng }: Props) {
           actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.RegNonpart}`}
           color='secondary'
         >
-          {t(`${Preset.RegNonpart}.description`)}
+          <Trans t={t} i18nKey={`${Preset.RegNonpart}.description`}
+            components={{em: <strong />}}
+          />
         </TxnPreset>
       </section>
     </>}

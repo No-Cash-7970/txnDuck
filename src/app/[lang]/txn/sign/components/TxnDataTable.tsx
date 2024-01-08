@@ -556,7 +556,10 @@ export default function TxnDataTable({ lng }: Props) {
 
         {storedTxnData?.txn?.type === TransactionType.keyreg &&
         txnTypeKeyPart === 'keyreg_nonpart' &&
-          <tr>
+          <tr className={(storedTxnData?.txn as TxnData.KeyRegTxnData)?.nonpart
+            ? 'bg-warning text-warning-content'
+            : ''
+          }>
             <th role='rowheader' className='align-top'>{t('fields.nonpart.label')}</th>
             <td>
               {(storedTxnData?.txn as TxnData.KeyRegTxnData).nonpart
