@@ -123,12 +123,6 @@ export default function SendTxn({ lng }: Props) {
     try {
       const response = await algokit.waitForConfirmation(txId, wait, algod);
       setSuccessMsg({txId, response});
-
-      // Remove stored transaction data because it is not needed anymore, if allowed by the settings
-      if (alwaysClearAfterSend) {
-        setStoredTxnData(RESET);
-        setStoredSignedTxn(RESET);
-      }
     } catch (e) {
       setFailMsg(getFailMessage(e));
     } finally {
@@ -172,6 +166,19 @@ export default function SendTxn({ lng }: Props) {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(attemptSendTxn, [storedSignedTxn]);
+
+  useEffect(() => {
+    // After the transaction has been confirmed, remove stored transaction data because it is not
+    // needed anymore, if allowed by the settings.
+    // NOTE: This needs to be in a `useEffect` instead of right after waiting for the confirmation
+    // because the "clear" setting from storage may not have loaded immediately after the
+    // transaction is confirmed.
+    if (!waiting && successMsg && alwaysClearAfterSend) {
+      setStoredTxnData(RESET);
+      setStoredSignedTxn(RESET);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [alwaysClearAfterSend, successMsg, waiting]);
 
   return (
     <div className='mt-12'>
