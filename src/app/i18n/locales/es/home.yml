@@ -40,7 +40,7 @@ uses:
     list:
       0: Marcar una cuenta como «en línea» to start participating consensus
       1: Actualizar una aplicación (smart contract)
-      2: Revocar (Claw back) un activo
+      2: Recuperar (Claw back) un activo
       3: Y más
   dangerous_things:
     heading: Cosas peligrosas

@@ -34,7 +34,7 @@ fields:
     tip: La dirección de la cuenta que paga la tasa.
     tip_pay: La dirección de la cuenta que paga la tasa y el importe.
     tip_clawback: >
-      La dirección de revocación del activo, que es también la dirección de la cuenta que paga la
+      La dirección de recuperación del activo, que es también la dirección de la cuenta que paga la
       tarifa.
     tip_opt_in: >
       La dirección de la cuenta que se opta, que es también la dirección de la cuenta que paga la
@@ -142,7 +142,7 @@ fields:
       El importe del activo a transferir. Un importe cero transferido a sí mismo opta la cuenta en
       ese activo.
   asnd: # Revocation target (the account from which the asset will be revoked)
-    label: Objetivo para revocar
+    label: Objetivo para recuperar
     tip: >
       En una operación de recuperación, la dirección de la que se retirarán los fondos y se enviarán
       al receptor de los activos.
