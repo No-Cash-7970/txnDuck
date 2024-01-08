@@ -2,7 +2,6 @@
 
 import { OnApplicationComplete, TransactionType } from "algosdk";
 import { SetStateAction, WritableAtom } from "jotai";
-import { SyncState } from "jotai-form/dist/src/atomWithValidate";
 
 /** Box reference */
 export type BoxRef = {
@@ -210,7 +209,7 @@ export type ValidationMessage = {
   dict?: {[k: string]: any}
 }
 /** Type of validation atom */
-export type validationAtom<T> = WritableAtom<SyncState<T>, [SetStateAction<T>], void>
+export type validationAtom<T> = WritableAtom<any, [SetStateAction<T>], void>
 /** Type for a group of atoms that represent a box reference */
 export type BoxRefAtomGroup = {
   /** ID of the application that contains the box */

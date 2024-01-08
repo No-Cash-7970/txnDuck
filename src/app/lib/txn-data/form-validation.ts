@@ -1,7 +1,7 @@
 /** @file Collection of functions for validating the whole form */
 
 import { type useStore } from "jotai";
-import { type FormControls } from "jotai-form/dist/src/atomWithFormControls";
+import * as jotaiForm from "jotai-form";
 import * as FieldValidation from "./field-validation";
 import { TransactionType } from "algosdk";
 import { apaaListAtom, apasListAtom, apatListAtom, apbxListAtom, apfaListAtom } from "./atoms";
@@ -325,7 +325,7 @@ function scrollToFirstInvalidField(invalidFields: Set<string>) {
  * @param form Collection of validation form controls to check
  * @returns List of all the invalid fields
  */
-function getInvalidFields(form: FormControls<string, any>) {
+function getInvalidFields(form: any) {
   return form.isValid
     ? new Set<string>()
     : new Set<string>(Object.keys(form.fieldErrors)
