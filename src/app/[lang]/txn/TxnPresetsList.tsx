@@ -24,18 +24,18 @@ export default function TxnPresetsList({ lng }: Props) {
       labelClass='grid-cols-1 sm:grid-cols-2'
       labelTextClass='text-lg'
       options={[
-        { value: 'all', text: t('all_title') },
-        { value: 'general', text: t('general_title') },
-        { value: 'asset', text: t('asset_title') },
-        { value: 'app', text: t('app_title') },
-        { value: 'part_key', text: t('part_key_title') },
+        { value: 'all', text: t('all_heading') },
+        { value: 'general', text: t('general_heading') },
+        { value: 'asset', text: t('asset_heading') },
+        { value: 'app', text: t('app_heading') },
+        { value: 'part_key', text: t('part_key_heading') },
       ]}
       value={category}
       onChange={(e) => setCategory(e.target.value)}
     />
 
     {(category === 'general' || category === 'all') && <>
-      <h2 className='ps-2' id='general'>{t('general_title')}</h2>
+      <h2 className='ps-2' id='general'>{t('general_heading')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.TransferAlgos}.heading`)}
           actionText={t(`${Preset.TransferAlgos}.action`)}
@@ -61,7 +61,7 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'asset' || category === 'all') && <>
-      <h2 className='ps-2' id='asset'>{t('asset_title')}</h2>
+      <h2 className='ps-2' id='asset'>{t('asset_heading')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.AssetTransfer}.heading`)}
           actionText={t(`${Preset.AssetTransfer}.action`)}
@@ -129,7 +129,7 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'app' || category === 'all') && <>
-      <h2 className='ps-2' id='application'>{t('app_title')}</h2>
+      <h2 className='ps-2' id='application'>{t('app_heading')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.AppRun}.heading`)}
           actionText={t(`${Preset.AppRun}.action`)}
@@ -189,7 +189,7 @@ export default function TxnPresetsList({ lng }: Props) {
       </section>
     </>}
     {(category === 'part_key' || category === 'all') && <>
-      <h2 className='ps-2' id='part-key'>{t('part_key_title')}</h2>
+      <h2 className='ps-2' id='part-key'>{t('part_key_heading')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.RegOnline}.heading`)}
           actionText={t(`${Preset.RegOnline}.action`)}

@@ -374,14 +374,14 @@ fields:
     tip: >
       Número de páginas adicionales asignadas a la aprobación de la solicitud y a los programas de
       estado claro. Una vez establecido, no se puede modificar.
-    section_title: Páginas adicionales
+    section_heading: Páginas adicionales
   apaa: # Arguments
     label: "Argumento nº {{index}}"
     tip: >
       Argumentos específicos de la transacción a los que se accede desde el programa de aprobación
       de la aplicación y el programa clear-state.
     placeholder: "Valor de argumento nº {{index}}"
-    title: Argumento de aplicación
+    heading: Argumento de aplicación
     none: No argumento de aplicación
     empty: Argumento vacío
     add_btn: Añadir un argumento
@@ -394,7 +394,7 @@ fields:
       Lista de cuentas, además del remitente, a las que se puede acceder desde el programa de
       aprobación de la aplicación y el programa de estado claro.
     placeholder: "Dirección de cuenta nº {{index}}"
-    title: Referencias de cuentas
+    heading: Referencias de cuentas
     none: No referencias de cuentas
     add_btn: Añadir una cuenta
     max_error: Debe haber como máximo {{count, number}} referencias de cuentas.
@@ -406,7 +406,7 @@ fields:
       puede acceder el programa de aprobación y el programa de borrado de estados de esta
       aplicación. El acceso es de sólo lectura.
     placeholder: "Identificación de aplicación nº {{index}}"
-    title: Referencias de aplicación
+    heading: Referencias de aplicación
     none: No referencias de aplicación
     add_btn: Añadir una aplicación
     remove_btn: Eliminar una aplicación
@@ -416,14 +416,14 @@ fields:
       Enumere los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
       de borrado de esta aplicación. El acceso es de sólo lectura.
     placeholder: "Identificación de activo nº {{index}}"
-    title: Referencias de activo
+    heading: Referencias de activo
     none: No referencias de activo
     add_btn: Añadir un activo
     remove_btn: Eliminar un activo
   apbx: # Box references
-    title: Referencias de caja
+    heading: Referencias de caja
     tip: Las cajas que deben estar disponibles para el tiempo de ejecución del programa.
-    box_title: "Caja nº {{index}}"
+    box_heading: "Caja nº {{index}}"
     none: No referencias de caja
     add_btn: Añadir una caja
     remove_btn: Eliminar una caja
@@ -434,7 +434,7 @@ fields:
       caja. Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
       referencia de caja es para la aplicación definida como «Aplicación nº 1». Si es 2 la
       referencia de caja es para la aplicación definida como «Aplicación nº 2» y así sucesivamente.
-    title: "Índice: {{index}}"
+    heading: "Índice: {{index}}"
     max_error: >
       El índice de la caja debe ser un índice válido en la lista «Referencias de aplicación», como
       máximo {{max}}.
@@ -444,18 +444,18 @@ fields:
       El nombre de la caja que la aplicación utilizará para referirse a la caja. Si está vacía,
       añade una referencia de caja vacía.
     placeholder: "Nombre de Caja nº {{index}}"
-    title: "Nombre: <1>{{name}}</1>"
-  app_props_title: Propiedades de aplicación
+    heading: "Nombre: <1>{{name}}</1>"
+  app_props_heading: Propiedades de aplicación
   app_global_state:
-    title: Estado global
+    heading: Estado global
     max_error: >
       El número combinado de enteros globales y bytes no debe exceder de {{max, number}}.
   app_local_state:
-    title: Estado local
+    heading: Estado local
     max_error: >
       El número combinado de enteros locales y bytes no debe exceder de {{max, number}}.
   app_deps:
-    title: Dependencias de la aplicación
+    heading: Dependencias de la aplicación
     max_error: >
       El número combinado de referencias de cuentas, solicitudes, activos y cajas no debe ser
       superior a {{count, number}}.

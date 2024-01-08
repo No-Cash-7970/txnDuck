@@ -32,13 +32,13 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
     <main className='prose min-h-screen mx-auto pt-4 px-4 pb-12'>
       <PageTitleHeading lng={lang}>{t('title')}</PageTitleHeading>
 
-      <h2>{t('personal_info.title')}</h2>
+      <h2>{t('personal_info.heading')}</h2>
       <p><Trans t={t} i18nKey='personal_info.details' /></p>
 
-      <h2>{t('app_state_data.title')}</h2>
+      <h2>{t('app_state_data.heading')}</h2>
       <p><Trans t={t} i18nKey='app_state_data.details' /></p>
 
-      <h2>{t('wallet_security.title')}</h2>
+      <h2>{t('wallet_security.heading')}</h2>
       <p>
         <Trans t={t} i18nKey='wallet_security.details'
           components={{

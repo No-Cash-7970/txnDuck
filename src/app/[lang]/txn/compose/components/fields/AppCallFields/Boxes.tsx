@@ -30,7 +30,7 @@ export default function Boxes({ t }: { t: TFunction }) {
     {boxes.map(
       (boxAtom, i) =>
         <FieldGroup headingLevel={4}
-          heading={t('fields.apbx.box_title', { index: i + 1 })}
+          heading={t('fields.apbx.box_heading', { index: i + 1 })}
           key={`${boxAtom}`}
         >
           <BoxIndexInput t={t} boxAtom={boxAtom} index={i} />

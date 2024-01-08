@@ -16,7 +16,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (
-    <FieldGroup headingLevel={2} heading={t('fields.app_deps.title')} headingClass='mb-0'>
+    <FieldGroup headingLevel={2} heading={t('fields.app_deps.heading')} headingClass='mb-0'>
       {
         ((appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length)
           > MAX_APP_TOTAL_DEPS)
@@ -28,7 +28,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
       }
       <FieldGroup
         headingLevel={3}
-        heading={t('fields.apat.title')}
+        heading={t('fields.apat.heading')}
         tip={{
           content: t('fields.apat.tip'),
           btnClass: tipBtnClass,
@@ -40,7 +40,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
       </FieldGroup>
       <FieldGroup
         headingLevel={3}
-        heading={t('fields.apfa.title')}
+        heading={t('fields.apfa.heading')}
         tip={{
           content: t('fields.apfa.tip'),
           btnClass: tipBtnClass,
@@ -52,7 +52,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
       </FieldGroup>
       <FieldGroup
         headingLevel={3}
-        heading={t('fields.apas.title')}
+        heading={t('fields.apas.heading')}
         tip={{
           content: t('fields.apas.tip'),
           btnClass: tipBtnClass,
@@ -64,7 +64,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
       </FieldGroup>
       <FieldGroup
         headingLevel={3}
-        heading={t('fields.apbx.title')}
+        heading={t('fields.apbx.heading')}
         tip={{
           content: t('fields.apbx.tip'),
           btnClass: tipBtnClass,

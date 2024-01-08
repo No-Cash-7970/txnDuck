@@ -363,14 +363,14 @@ fields:
     tip: >
       Number of additional pages allocated to the application’s approval and clear state programs.
       Once set, it cannot be changed.
-    section_title: Extra pages
+    section_heading: Extra pages
   apaa: # Arguments
     label: "Argument #{{index}}"
     tip: >
       Transaction-specific arguments accessed from the application’s approval program and
       clear-state program.
     placeholder: "Argument #{{index}} value"
-    title: Application arguments
+    heading: Application arguments
     none: No application arguments
     empty: Empty argument
     add_btn: Add argument
@@ -383,7 +383,7 @@ fields:
       List of accounts in addition to the sender that may be accessed from the application’s
       approval program and clear-state program.
     placeholder: "Account #{{index}} address"
-    title: Account references
+    heading: Account references
     none: No account references
     add_btn: Add account
     remove_btn: Remove account
@@ -394,7 +394,7 @@ fields:
       List of applications in addition to the application ID whose global states may be accessed by
       this application’s approval program and clear-state program. The access is read-only.
     placeholder: "Application #{{index}} ID"
-    title: Application references
+    heading: Application references
     none: No application references
     add_btn: Add application
     remove_btn: Remove application
@@ -404,14 +404,14 @@ fields:
       Lists the assets whose asset properties may be accessed by this application’s approval program
       and clear-state program. The access is read-only.
     placeholder: "Asset #{{index}} ID"
-    title: Asset references
+    heading: Asset references
     none: No asset references
     add_btn: Add asset
     remove_btn: Remove asset
   apbx: # Box references
-    title: Box references
+    heading: Box references
     tip: The boxes that should be made available for the runtime of the program.
-    box_title: "Box #{{index}}"
+    box_heading: "Box #{{index}}"
     none: No box references
     add_btn: Add box
     remove_btn: Remove box
@@ -422,7 +422,7 @@ fields:
       0 the box reference is for the application being called. If 1 the box reference is for the
       application set as “Application #1.” If 2 the box reference is for the application set as
       “Application #2,” and so on.
-    title: "Index: {{index}}"
+    heading: "Index: {{index}}"
     max_error: >
       The box index must be a valid index in the “Application references” list, at most {{max}}.
   apbx_n: # Box name
@@ -431,20 +431,20 @@ fields:
       The name of the box the application will use to refer to the box. If empty, this adds an empty
       box reference.
     placeholder: "Box #{{index}} name"
-    title: "Name: <1>{{name}}</1>"
-  app_props_title: Application properties
+    heading: "Name: <1>{{name}}</1>"
+  app_props_heading: Application properties
   app_global_state:
-    title: Global state
+    heading: Global state
     tip: The maximum number of global state values.
     max_error: >
       The combined number of global integers and byte slices must not exceed {{max, number}}.
   app_local_state:
-    title: Local state
+    heading: Local state
     tip: The maximum number of local state values.
     max_error: >
       The combined number of local integers and byte slices must not exceed {{max, number}}.
   app_deps:
-    title: Application dependencies
+    heading: Application dependencies
     max_error: >
       The combined number of account, application, asset and box references must not exceed
       {{count}}.

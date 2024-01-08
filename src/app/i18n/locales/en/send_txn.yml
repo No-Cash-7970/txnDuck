@@ -1,6 +1,6 @@
 title: Send Transaction
 txn_confirm_wait: Waiting for transaction to be confirmed…
-click_for_details: Click “{{details_title}}” below for more information.
+click_for_details: Click “{{details_name}}” below for more information.
 fail:
   heading: Transaction failed.
   rejected_msg: >

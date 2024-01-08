@@ -199,7 +199,7 @@ export default function SendTxn({ lng }: Props) {
             </p>
             {defaultHideSendInfo && <p className='text-start'>
               <Trans t={t} i18nKey='click_for_details'
-                values={{details_title: t('success.details')}}
+                values={{details_name: t('success.details')}}
               />
             </p>}
           </div>
@@ -243,7 +243,7 @@ export default function SendTxn({ lng }: Props) {
             </p>
             {defaultHideSendInfo && <p className='text-start'>
               <Trans t={t} i18nKey='click_for_details'
-                values={{details_title: t('fail.details')}}
+                values={{details_name: t('fail.details')}}
               />
             </p>}
           </div>

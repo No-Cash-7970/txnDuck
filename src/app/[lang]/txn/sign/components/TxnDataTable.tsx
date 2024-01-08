@@ -352,7 +352,7 @@ export default function TxnDataTable({ lng }: Props) {
             <td>{(storedTxnData?.txn as TxnData.AppCallTxnData).apid}</td>
           </tr>}
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apaa.title')}</th>
+            <th role='rowheader' className='align-top'>{t('fields.apaa.heading')}</th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apaa.length)
                 ? <i className='opacity-50'>{t('none')}</i>
@@ -401,7 +401,7 @@ export default function TxnDataTable({ lng }: Props) {
             </tr>
           </>}
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apat.title')}</th>
+            <th role='rowheader' className='align-top'>{t('fields.apat.heading')}</th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apat.length)
                 ? <i className='opacity-50'>{t('none')}</i>
@@ -414,7 +414,7 @@ export default function TxnDataTable({ lng }: Props) {
             </td>
           </tr>
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apfa.title')}</th>
+            <th role='rowheader' className='align-top'>{t('fields.apfa.heading')}</th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apfa.length)
                 ? <i className='opacity-50'>{t('none')}</i>
@@ -427,7 +427,7 @@ export default function TxnDataTable({ lng }: Props) {
             </td>
           </tr>
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apas.title')}</th>
+            <th role='rowheader' className='align-top'>{t('fields.apas.heading')}</th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apas.length)
                 ? <i className='opacity-50'>{t('none')}</i>
@@ -440,7 +440,7 @@ export default function TxnDataTable({ lng }: Props) {
             </td>
           </tr>
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apbx.title')}</th>
+            <th role='rowheader' className='align-top'>{t('fields.apbx.heading')}</th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apbx.length)
                 ? <i className='opacity-50'>{t('none')}</i>
@@ -448,9 +448,9 @@ export default function TxnDataTable({ lng }: Props) {
                   {(storedTxnData?.txn as TxnData.AppCallTxnData).apbx.map((box, i) => (
                     <li key={`box-${i}`}>
                       <ul className='m-0'>
-                        <li className='m-0'>{t('fields.apbx_i.title', {index: box.i})}</li>
+                        <li className='m-0'>{t('fields.apbx_i.heading', {index: box.i})}</li>
                         <li className='m-0'>
-                          <Trans t={t} i18nKey='fields.apbx_n.title'
+                          <Trans t={t} i18nKey='fields.apbx_n.heading'
                             values={{ name: box.n || t('none') }}
                           >
                             name:

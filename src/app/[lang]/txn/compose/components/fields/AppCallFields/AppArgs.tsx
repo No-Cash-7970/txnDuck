@@ -22,7 +22,7 @@ export default function AppArgs({ t }: { t: TFunction }) {
   return (
     <FieldGroup
       headingLevel={2}
-      heading={t('fields.apaa.title')}
+      heading={t('fields.apaa.heading')}
       tip={{
         content: t('fields.apaa.tip'),
         btnClass: tipBtnClass,

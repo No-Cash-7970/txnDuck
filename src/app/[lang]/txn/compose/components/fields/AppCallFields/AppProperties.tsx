@@ -36,20 +36,20 @@ export default function AppProperties({ t }: { t: TFunction }) {
       // updating application
       || form.values.apan === OnApplicationComplete.UpdateApplicationOC
     ) &&
-    <FieldGroup headingLevel={2} heading={t('fields.app_props_title')}>
+    <FieldGroup headingLevel={2} heading={t('fields.app_props_heading')}>
       <ApprovalProg t={t} />
       <ClearStateProg t={t} />
       {// Creating app
       form.values.apan === OnApplicationComplete.NoOpOC && <>
-        <FieldGroup headingLevel={3} heading={t('fields.app_global_state.title')}>
+        <FieldGroup headingLevel={3} heading={t('fields.app_global_state.heading')}>
           <GlobalInts t={t} />
           <GlobalByteSlices t={t} />
         </FieldGroup>
-        <FieldGroup headingLevel={3} heading={t('fields.app_local_state.title')}>
+        <FieldGroup headingLevel={3} heading={t('fields.app_local_state.heading')}>
           <LocalInts t={t} />
           <LocalByteSlices t={t} />
         </FieldGroup>
-        <FieldGroup headingLevel={3} heading={t('fields.apep.section_title')}>
+        <FieldGroup headingLevel={3} heading={t('fields.apep.section_heading')}>
           <ExtraPages t={t} />
         </FieldGroup>
       </>}

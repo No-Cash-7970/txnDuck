@@ -584,11 +584,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apls_nui.label')).toBeInTheDocument();
       expect(screen.getByText('fields.apls_nbs.label')).toBeInTheDocument();
       expect(screen.getByText('fields.apep.label')).toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application update', () => {
@@ -621,11 +621,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application deletion', () => {
@@ -656,11 +656,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application opt-in', () => {
@@ -691,11 +691,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application close-out', () => {
@@ -726,11 +726,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application clear-state', () => {
@@ -761,11 +761,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
     it('displays application call transaction data for application no-op call', () => {
@@ -796,11 +796,11 @@ describe('Transaction Data Table Component', () => {
       expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
       expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-      expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-      expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+      expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+      expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
   });

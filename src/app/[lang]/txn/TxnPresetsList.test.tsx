@@ -15,7 +15,7 @@ describe('Transaction Presets List', () => {
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'general'); // Select 'general'
 
-    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('general_title');
+    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('general_heading');
     expect(screen.getByText('transfer_algos.description')).toBeInTheDocument();
     expect(screen.getByText('rekey_account.description')).toBeInTheDocument();
     expect(screen.getByText('close_account.description')).toBeInTheDocument();
@@ -26,7 +26,7 @@ describe('Transaction Presets List', () => {
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'asset'); // Select 'asset'
 
-    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('asset_title');
+    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('asset_heading');
     expect(screen.getByText('asset_transfer.description')).toBeInTheDocument();
     expect(screen.getByText('asset_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('asset_opt_out.description')).toBeInTheDocument();
@@ -43,7 +43,7 @@ describe('Transaction Presets List', () => {
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'app'); // Select 'app'
 
-    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('app_title');
+    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('app_heading');
     expect(screen.getByText('app_run.description')).toBeInTheDocument();
     expect(screen.getByText('app_opt_in.description')).toBeInTheDocument();
     expect(screen.getByText('app_deploy.description')).toBeInTheDocument();
@@ -59,7 +59,7 @@ describe('Transaction Presets List', () => {
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'part_key'); // Select 'part_key'
 
-    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('part_key_title');
+    expect(screen.getByRole('heading', {level: 2})).toHaveTextContent('part_key_heading');
     expect(screen.getByText('reg_online.description')).toBeInTheDocument();
     expect(screen.getByText('reg_offline.description')).toBeInTheDocument();
     expect(screen.getByText('reg_nonpart.description')).toBeInTheDocument();

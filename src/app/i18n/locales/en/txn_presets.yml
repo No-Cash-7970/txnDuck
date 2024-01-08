@@ -2,9 +2,9 @@ title: Choose a Transaction Preset
 instruction: Compose a transaction faster by using one of the following presets.
 skip_btn: Or skip this and compose a transaction without using a preset
 category_label: Category
-all_title: All
+all_heading: All
 # General category
-general_title: General
+general_heading: General
 transfer_algos:
   heading: Transfer Algos
   description: Transfer Algos from one wallet account to another (or itself).
@@ -19,7 +19,7 @@ close_account:
   description: Remove an account from the ledger.
   action: Close account
 # Asset category
-asset_title: Asset
+asset_heading: Asset
 asset_transfer:
   heading: Transfer asset
   description: Transfer an asset from one wallet account to another (or itself).
@@ -59,7 +59,7 @@ asset_destroy:
   description: Remove an existing asset from the ledger.
   action: Destroy asset
 # Application category
-app_title: Application (Smart contract)
+app_heading: Application (Smart contract)
 app_run:
   heading: Run application
   description: >
@@ -94,7 +94,7 @@ app_delete:
   description: Delete the application, if the application’s <code>ApprovalProgram</code> allows it.
   action: Delete application
 # Participation key category
-part_key_title: Participation key
+part_key_heading: Participation key
 reg_online:
   heading: Register account online
   description: Register an account as “online” to start participating in consensus.

@@ -393,11 +393,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.queryByText('fields.apat.title')).not.toBeInTheDocument();
-    expect(screen.queryByText('fields.apaa.title')).not.toBeInTheDocument();
-    expect(screen.queryByText('fields.apfa.title')).not.toBeInTheDocument();
-    expect(screen.queryByText('fields.apas.title')).not.toBeInTheDocument();
-    expect(screen.queryByText('fields.apbx.title')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apat.heading')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apaa.heading')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apfa.heading')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apas.heading')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.apbx.heading')).not.toBeInTheDocument();
 
     await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'appl');
 
@@ -410,11 +410,11 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.apls_nui.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apls_nbs.label')).toBeInTheDocument();
     expect(screen.getByText('fields.apep.label')).toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
   });
 
   it('has "transaction presets" button', async () => {
@@ -652,11 +652,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -680,11 +680,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -708,11 +708,11 @@ describe('Compose Form Component', () => {
     expect(screen.getByLabelText(/fields.apls_nui.label/)).toBeRequired();
     expect(screen.getByLabelText(/fields.apls_nbs.label/)).toBeRequired();
     expect(screen.getByLabelText(/fields.apep.label/)).toBeRequired();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -736,11 +736,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -764,11 +764,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -792,11 +792,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
@@ -820,11 +820,11 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('fields.apls_nui.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apls_nbs.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.apep.label')).not.toBeInTheDocument();
-    expect(screen.getByText('fields.apaa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apat.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apfa.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apas.title')).toBeInTheDocument();
-    expect(screen.getByText('fields.apbx.title')).toBeInTheDocument();
+    expect(screen.getByText('fields.apaa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apat.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apfa.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apas.heading')).toBeInTheDocument();
+    expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();

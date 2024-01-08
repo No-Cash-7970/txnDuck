@@ -3,9 +3,9 @@ instruction: >
   Componga una transacción más rápidamente utilizando uno de las siguientes preselecciones.
 skip_btn: O sáltese esto y componga una transacción sin utilizar una preselección
 category_label: Categorías
-all_title: Todas
+all_heading: Todas
 # General category
-general_title: General
+general_heading: General
 transfer_algos:
   heading: Transferir Algos
   description: Transfiera Algos de una cuenta monedero a otra (o a sí mismo).
@@ -21,7 +21,7 @@ close_account:
   description: Elimine una cuenta del libro mayor.
   action: Cierrar una cuenta
 # Asset category
-asset_title: Activo
+asset_heading: Activo
 asset_transfer:
   heading: Transferir un activo
   description: Transfiera un activo de una cuenta monedero a otra (o a sí mismo).
@@ -61,7 +61,7 @@ asset_destroy:
   description: Elimine un activo existente del libro de Algorand.
   action: Destruir un activo
 # Application category
-app_title: Aplicación (Smart contract)
+app_heading: Aplicación (Smart contract)
 app_run:
   heading: Ejecutar una aplicación
   description: >
@@ -98,7 +98,7 @@ app_delete:
     Elimine la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo permite.
   action: Destruir una aplicación
 # Participation key category
-part_key_title: Clave de participación
+part_key_heading: Clave de participación
 reg_online:
   heading: Registrar una cuenta en línea
   description: Registre una cuenta como «en línea» para empezar a participar en el consenso.
