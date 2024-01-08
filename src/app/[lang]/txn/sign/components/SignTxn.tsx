@@ -234,159 +234,161 @@ export default function SignTxn({ lng }: Props) {
   }, [storedTxnData, storedSignedTxn, nodeConfig]);
 
   return (<>
-    {// No wallet connected and transaction has not been signed yet
-      (!activeAccount && !storedSignedTxn) &&
-      <Dialog.Root modal={false}>
-        <Dialog.Trigger asChild>
-          <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
-            <Icons.IconWallet aria-hidden />
-            {t('wallet.connect')}
-          </button>
-        </Dialog.Trigger>
-        <Dialog.Portal>
-          <Dialog.Overlay />
-          <Dialog.Content
-            className='modal data-[state=open]:modal-open'
-            onPointerDownOutside={(e) => e.preventDefault()}
-            onInteractOutside={(e) => e.preventDefault()}
-          >
-            <div className='modal-box prose max-w-4xl'>
-              <Dialog.Title className='mb-3'>{t('wallet.choose_provider')}</Dialog.Title>
-              <Dialog.Description className='text-sm'>
-                {t('wallet.choose_provider_description')}
-              </Dialog.Description>
-              {/* List of available wallet providers */}
-              <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
-                {providers?.map(provider => (
-                  <div key={provider.metadata.id} className={
-                    'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
-                  }>
-                    <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
-                      <Image src={provider.metadata.icon}
-                        alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
-                        fill
-                        aria-hidden
-                      />
-                    </span>
-                    {/* Wallet provider info + button */}
-                    <div className='w-full'>
-                      <div>
-                        <h3 className='m-0'>{t('wallet.providers.' + provider.metadata.id)}</h3>
-                        <p className='italic opacity-70 m-0'>
-                          {t('wallet.type.' + walletTypes[provider.metadata.id])}
-                        </p>
+    {!!storedTxnData && <>
+      {// No wallet connected and transaction has not been signed yet
+        (!activeAccount && !storedSignedTxn) &&
+        <Dialog.Root modal={false}>
+          <Dialog.Trigger asChild>
+            <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
+              <Icons.IconWallet aria-hidden />
+              {t('wallet.connect')}
+            </button>
+          </Dialog.Trigger>
+          <Dialog.Portal>
+            <Dialog.Overlay />
+            <Dialog.Content
+              className='modal data-[state=open]:modal-open'
+              onPointerDownOutside={(e) => e.preventDefault()}
+              onInteractOutside={(e) => e.preventDefault()}
+            >
+              <div className='modal-box prose max-w-4xl'>
+                <Dialog.Title className='mb-3'>{t('wallet.choose_provider')}</Dialog.Title>
+                <Dialog.Description className='text-sm'>
+                  {t('wallet.choose_provider_description')}
+                </Dialog.Description>
+                {/* List of available wallet providers */}
+                <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
+                  {providers?.map(provider => (
+                    <div key={provider.metadata.id} className={
+                      'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
+                    }>
+                      <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
+                        <Image src={provider.metadata.icon}
+                          alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
+                          fill
+                          aria-hidden
+                        />
+                      </span>
+                      {/* Wallet provider info + button */}
+                      <div className='w-full'>
+                        <div>
+                          <h3 className='m-0'>{t('wallet.providers.' + provider.metadata.id)}</h3>
+                          <p className='italic opacity-70 m-0'>
+                            {t('wallet.type.' + walletTypes[provider.metadata.id])}
+                          </p>
+                        </div>
+                        <button className='btn btn-block btn-sm btn-secondary mt-2'
+                          onClick={provider.connect}
+                        >
+                          {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
+                        </button>
                       </div>
-                      <button className='btn btn-block btn-sm btn-secondary mt-2'
-                        onClick={provider.connect}
-                      >
-                        {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
-                      </button>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+                {/* Upper corner close button */}
+                <Dialog.Close asChild>
+                  <button title={t('close')} className={
+                    'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
+                  }>
+                    <Icons.IconX aria-hidden />
+                  </button>
+                </Dialog.Close>
               </div>
-              {/* Upper corner close button */}
-              <Dialog.Close asChild>
-                <button title={t('close')} className={
-                  'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
-                }>
-                  <Icons.IconX aria-hidden />
-                </button>
-              </Dialog.Close>
-            </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-    }
-    {// Transaction signing failed for some reason
-      hasSignTxnError &&
-      <div className='alert alert-error mt-8'>
-        <Icons.IconCircleX aria-hidden size={32} />
-        {t('sign_txn:sign_error')}
-      </div>
-    }
-    {// Connected to wallet but transaction has not been signed yet
-      (activeAccount && !storedSignedTxn && !hasSignTxnError) &&
-      <div className='mt-8'>
-        <CheckboxField label={t('sign_txn:auto_send.label')}
-          name='auto_send'
-          id='autoSend-input'
-          tip={{
-            content: t('sign_txn:auto_send.tip'),
-            btnClass: tipBtnClass,
-            btnTitle: t('sign_txn:auto_send.tip_btn_title'),
-            contentClass: tipContentClass
-          }}
-          inputInsideLabel={true}
-          containerId='autoSend-field'
-          containerClass='ms-2 mb-3'
-          inputClass='checkbox-primary me-2'
-          labelClass='justify-start w-fit max-w-full'
-          value={autoSend ?? defaultAutoSend}
-          onChange={(e) => setAutoSend(e.target.checked)}
-        />
-        <button
-          className='btn btn-primary btn-block min-h-[5em] h-auto'
-          onClick={() => signTransaction()}
-        >
-          <Icons.IconBallpenFilled aria-hidden />
-          {t('sign_txn:sign_txn_btn')}
-        </button>
-        <div className='not-prose text-center mt-3'>
-          <div className='truncate align-middle px-2'>
-            {walletClient &&
-              <span className='relative h-6 w-6 inline-block me-2 align-middle'>
-                <Image
-                  src={walletClient.metadata.icon}
-                  alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
-                  fill
-                />
-              </span>
-            }
-            <span className='align-middle'>
-              {t('wallet.is_connected', {address: activeAccount.address})}
-            </span>
-          </div>
-          <button className='btn btn-sm btn-link text-secondary'
-            onClick={() => getActiveProvider(providers)?.disconnect()}
+            </Dialog.Content>
+          </Dialog.Portal>
+        </Dialog.Root>
+      }
+      {// Transaction signing failed for some reason
+        hasSignTxnError &&
+        <div className='alert alert-error mt-8'>
+          <Icons.IconCircleX aria-hidden size={32} />
+          {t('sign_txn:sign_error')}
+        </div>
+      }
+      {// Connected to wallet but transaction has not been signed yet
+        (activeAccount && !storedSignedTxn && !hasSignTxnError) &&
+        <div className='mt-8'>
+          <CheckboxField label={t('sign_txn:auto_send.label')}
+            name='auto_send'
+            id='autoSend-input'
+            tip={{
+              content: t('sign_txn:auto_send.tip'),
+              btnClass: tipBtnClass,
+              btnTitle: t('sign_txn:auto_send.tip_btn_title'),
+              contentClass: tipContentClass
+            }}
+            inputInsideLabel={true}
+            containerId='autoSend-field'
+            containerClass='ms-2 mb-3'
+            inputClass='checkbox-primary me-2'
+            labelClass='justify-start w-fit max-w-full'
+            value={autoSend ?? defaultAutoSend}
+            onChange={(e) => setAutoSend(e.target.checked)}
+          />
+          <button
+            className='btn btn-primary btn-block min-h-[5em] h-auto'
+            onClick={() => signTransaction()}
           >
-            <Icons.IconWalletOff aria-hidden />
-            {t('wallet.disconnect')}
+            <Icons.IconBallpenFilled aria-hidden />
+            {t('sign_txn:sign_txn_btn')}
           </button>
+          <div className='not-prose text-center mt-3'>
+            <div className='truncate align-middle px-2'>
+              {walletClient &&
+                <span className='relative h-6 w-6 inline-block me-2 align-middle'>
+                  <Image
+                    src={walletClient.metadata.icon}
+                    alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
+                    fill
+                  />
+                </span>
+              }
+              <span className='align-middle'>
+                {t('wallet.is_connected', {address: activeAccount.address})}
+              </span>
+            </div>
+            <button className='btn btn-sm btn-link text-secondary'
+              onClick={() => getActiveProvider(providers)?.disconnect()}
+            >
+              <Icons.IconWalletOff aria-hidden />
+              {t('wallet.disconnect')}
+            </button>
+          </div>
+        </div>
+      }
+      {// Transaction is signed!
+        (storedSignedTxn && !hasSignTxnError) &&
+        <div className='alert alert-success mt-8'>
+          <Icons.IconCircleCheck aria-hidden size={32} />
+          {t('sign_txn:txn_signed')}
+        </div>
+      }
+
+      {/* Buttons */}
+      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
+        {/* Next step */}
+        <div><NextStepButton lng={lng} /></div>
+        {/* Previous step */}
+        <div className={'' + (hasSignTxnError ? 'order-first' : 'sm:order-first')}>
+          <Link href={{
+            pathname: `/${lng}/txn/compose`,
+            query: currentURLParams.toString(),
+          }} className={'btn w-full' + (hasSignTxnError ? ' btn-primary' : '')}>
+            <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
+            <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
+            {t('sign_txn:compose_txn_btn')}
+          </Link>
+          {storedSignedTxn &&
+            <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
+              <Icons.IconAlertTriangleFilled aria-hidden
+                className='text-warning align-middle my-auto me-2'
+              />
+              <small>{t('sign_txn:compose_txn_btn_warning')}</small>
+            </div>
+          }
         </div>
       </div>
-    }
-    {// Transaction is signed!
-      (storedSignedTxn && !hasSignTxnError) &&
-      <div className='alert alert-success mt-8'>
-        <Icons.IconCircleCheck aria-hidden size={32} />
-        {t('sign_txn:txn_signed')}
-      </div>
-    }
-
-    {/* Buttons */}
-    <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
-      {/* Next step */}
-      <div><NextStepButton lng={lng} /></div>
-      {/* Previous step */}
-      <div className={'' + (hasSignTxnError ? 'order-first' : 'sm:order-first')}>
-        <Link href={{
-          pathname: `/${lng}/txn/compose`,
-          query: currentURLParams.toString(),
-        }} className={'btn w-full' + (hasSignTxnError ? ' btn-primary' : '')}>
-          <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
-          <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
-          {t('sign_txn:compose_txn_btn')}
-        </Link>
-        {storedSignedTxn &&
-          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
-            <Icons.IconAlertTriangleFilled aria-hidden
-              className='text-warning align-middle my-auto me-2'
-            />
-            <small>{t('sign_txn:compose_txn_btn_warning')}</small>
-          </div>
-        }
-      </div>
-    </div>
+    </>}
   </>);
 }

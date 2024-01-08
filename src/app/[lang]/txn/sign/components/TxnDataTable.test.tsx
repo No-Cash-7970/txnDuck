@@ -35,15 +35,16 @@ describe('Transaction Data Table Component', () => {
 
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
     expect(screen.getByText('fields.use_sug_fee.using_sug')).toBeInTheDocument();
-    expect(screen.getByText('fields.fee.in_algos')).toBeInTheDocument();
-
-    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
-    expect(screen.getByText('Hello world')).toBeInTheDocument();
 
     expect(screen.getByText('fields.fv.label')).toBeInTheDocument();
     expect(screen.getByText('fields.lv.label')).toBeInTheDocument();
-    expect(screen.getAllByText('number_value')).toHaveLength(2);
     expect(screen.getAllByText('fields.use_sug_rounds.using_sug')).toHaveLength(2);
+
+    // The fee and the valid rounds should be "loading"
+    expect(screen.getAllByText('loading')).toHaveLength(3);
+
+    expect(screen.getByText('fields.note.label')).toBeInTheDocument();
+    expect(screen.getByText('Hello world')).toBeInTheDocument();
 
     expect(screen.getByText('fields.lx.label')).toBeInTheDocument();
     expect(screen.getByText('EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE')).toBeInTheDocument();

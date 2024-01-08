@@ -481,7 +481,9 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {storedTxnData
+            {// Show fee when the store transaction data is loaded and the suggested fee is loaded
+             // (if it is to be used)
+            (storedTxnData && (!storedTxnData?.useSugFee || !!fee.value))
               ? t('fields.fee.in_algos', {
                   count: storedTxnData?.useSugFee
                     ? (fee.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fee,
@@ -579,7 +581,9 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {storedTxnData
+            {// Show first round when the store transaction data is loaded and the suggested rounds
+             // is loaded (if it is to be used)
+            (storedTxnData && (!storedTxnData?.useSugRounds || !!fv.value))
               ? t('number_value', {
                 value: storedTxnData?.useSugRounds
                     ? (fv.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fv
@@ -597,7 +601,9 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {storedTxnData
+            {// Show last round when the store transaction data is loaded and the suggested rounds
+             // is loaded (if it is to be used)
+            (storedTxnData && (!storedTxnData?.useSugRounds || !!lv.value))
               ? t('number_value', {
                 value: storedTxnData?.useSugRounds
                     ? (lv.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.lv

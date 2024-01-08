@@ -14,6 +14,11 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({}),
   useSearchParams: () => ({get: () => 'foo'})
 }));
+// Mock the utils library because of the use of `fetch()`. This needs to be mocked because it is a
+// dependency of a child client component.
+jest.mock('../../../lib/utils.ts', () => ({
+  dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
+}));
 // Mock the wallet provider
 jest.mock('../../components/WalletProvider.tsx', () => 'div');
 // Mock algokit because it is used by a child components
@@ -49,25 +54,53 @@ describe('Sign Transaction Page', () => {
   });
 
   it('has connect wallet/sign button', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText('wallet.connect')).toBeInTheDocument();
   });
 
   it('has "compose transaction" (back) button', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText('sign_txn:compose_txn_btn')).toBeEnabled();
   });
 
   it('has disabled "send transaction" (next step) button if transaction is NOT signed', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     sessionStorage.removeItem('signedTxn');
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText('send_txn_btn')).toHaveClass('btn-disabled');
   });
 
-  it('has enabled "send transaction" (next step) button if transaction is signed', () => {
+  it('has enabled "send transaction" (next step) button if transaction is signed', async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     sessionStorage.setItem('signedTxn', JSON.stringify('a signed transaction'));
     render(<SignTxnPage params={{lang: ''}} />);
-    expect(screen.getByText('send_txn_btn')).not.toHaveClass('btn-disabled');
+    expect(await screen.findByText('send_txn_btn')).not.toHaveClass('btn-disabled');
   });
 
 });

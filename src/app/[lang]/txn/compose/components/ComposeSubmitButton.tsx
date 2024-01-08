@@ -57,10 +57,18 @@ export default function ComposeSubmitButton({ lng }: Props) {
   };
 
   return (<>
-    <button type='submit' className='btn btn-primary w-full' onClick={submitData}>
-      {t('sign_txn_btn')}
-      <IconArrowRight aria-hidden className='rtl:hidden' />
-      <IconArrowLeft aria-hidden className='hidden rtl:inline' />
+    <button type='submit' className='btn btn-primary w-full'
+      onClick={submitData}
+      disabled={submittingForm}
+    >
+      {submittingForm
+        ? <span className='loading loading-spinner' />
+        : <>
+          {t('sign_txn_btn')}
+          <IconArrowRight aria-hidden className='rtl:hidden' />
+          <IconArrowLeft aria-hidden className='hidden rtl:inline' />
+        </>
+      }
     </button>
   </>);
 }

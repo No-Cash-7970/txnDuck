@@ -51,21 +51,49 @@ describe('Sign Transaction Component (Connected wallet)', () => {
   const t = i18nextClientMock.useTranslation().t as TFunction;
 
   it('show active wallet address', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxn />);
     expect(screen.getByText('wallet.is_connected')).toBeInTheDocument();
   });
 
   it('has "automatically send transaction" checkbox', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxn />);
     expect(screen.getByLabelText(/sign_txn:auto_send.label/)).toBeChecked();
   });
 
   it('has "sign transaction" button', () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxn />);
     expect(screen.getByText(/sign_txn_btn/)).toBeInTheDocument();
   });
 
   it('has "disconnect wallet" button', async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
     render(<SignTxn />);
     await userEvent.click(screen.getByText('wallet.disconnect'));
     expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
@@ -91,8 +119,8 @@ describe('Sign Transaction Component (Connected wallet)', () => {
   it('does not remove stored signed transaction if it is the same as stored unsigned transaction',
   async () => {
     sessionStorage.setItem('txnData',
-      '{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,'
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
       + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
       + '"apar_cUseSnd":false,"apar_rUseSnd":false}'

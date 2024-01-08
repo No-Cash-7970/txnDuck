@@ -26,13 +26,17 @@ export function generateStaticParams() { return ['send']; }
 export default function SendTxnPage({ params: { lang } }: {
   params: { lang: string }
 }) {
-  const { t } = use(useTranslation(lang, 'send_txn'));
+  const { t } = use(useTranslation(lang, ['send_txn', 'common']));
 
   return (
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='send' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
-      <Suspense><SendTxn lng={lang} /></Suspense>
+      <Suspense fallback={
+        <p className='text-center text-2xl'>{t('loading')}</p>
+      }>
+        <SendTxn lng={lang} />
+      </Suspense>
     </main>
   );
 }
