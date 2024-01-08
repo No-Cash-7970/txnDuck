@@ -14,6 +14,7 @@ import {
   tipContentClass
 } from '@/app/lib/txn-data';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function AppId({ t }: { t: TFunction }) {
   const form = useAtomValue(applFormControlAtom);
@@ -49,7 +50,7 @@ export default function AppId({ t }: { t: TFunction }) {
       }
       value={form.values.apid ?? ''}
       onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/gm, '');
+        const value = removeNonNumericalChars(e.target.value);
         form.handleOnChange('apid')(value === '' ? undefined : parseInt(value));
       }}
       onFocus={form.handleOnFocus('apid')}

@@ -13,6 +13,7 @@ import {
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { removeNonNumericalChars } from '@/app/lib/utils';
 
 /** List of application foreign apps */
 export default function ForeignApps({ t }: { t: TFunction }) {
@@ -75,7 +76,7 @@ function ForeignAppInput({ t, appAtom, index }:
       inputClass={((showFormErrors || touched) && !app.isValid) ? 'input-error': ''}
       value={app.value ?? ''}
       onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/gm, '');
+        const value = removeNonNumericalChars(e.target.value);
         setApp(value === '' ? null : parseInt(value));
       }}
       onBlur={() => setTouched(true)}

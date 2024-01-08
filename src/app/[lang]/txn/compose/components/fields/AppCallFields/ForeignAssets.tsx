@@ -13,6 +13,7 @@ import {
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { removeNonNumericalChars } from '@/app/lib/utils';
 
 /** List of application foreign assets */
 export default function ForeignAssets({ t }: { t: TFunction }) {
@@ -76,7 +77,7 @@ function ForeignAssetInput({ t, assetAtom, index }:
       inputClass={((showFormErrors || touched) && !asset.isValid) ? 'input-error': ''}
       value={asset.value ?? ''}
       onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/gm, '');
+        const value = removeNonNumericalChars(e.target.value);
         setAsset(value === '' ? null : parseInt(value));
       }}
       onBlur={() => setTouched(true)}

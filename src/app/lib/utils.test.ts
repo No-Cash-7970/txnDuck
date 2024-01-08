@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import { baseUnitsToDecimal, decimalToBaseUnits } from './utils';
+import { baseUnitsToDecimal, decimalToBaseUnits, removeNonNumericalChars } from './utils';
 
 describe('Utilities Functions', () => {
   describe('decimalToBaseUnits()', () => {
@@ -103,6 +103,38 @@ describe('Utilities Functions', () => {
       expect(baseUnitsToDecimal(decimalToBaseUnits('.25', 3), 3)).toBe('0.25');
       expect(baseUnitsToDecimal(decimalToBaseUnits('0.025'))).toBe('0');
       expect(baseUnitsToDecimal(decimalToBaseUnits(4.2, 1), 3)).toBe('0.042');
+    });
+
+  });
+
+  describe('removeNonNumericalChars()', () => {
+
+    it('removes whitespace', () => {
+      expect(removeNonNumericalChars('12 34\t5')).toBe('12345');
+    });
+
+    it('removes letters', () => {
+      expect(removeNonNumericalChars('12hr34min5sec')).toBe('12345');
+    });
+
+    it('removes punctuation', () => {
+      expect(removeNonNumericalChars('($12.34+5)')).toBe('12345');
+    });
+
+    it('removes non-ASCII characters', () => {
+      expect(removeNonNumericalChars('©123🦆45°)')).toBe('12345');
+    });
+
+    it('does not remove any characters if all characters in given string are numbers', () => {
+      expect(removeNonNumericalChars('12345')).toBe('12345');
+    });
+
+    it('removes all characters if given string has no numbers', () => {
+      expect(removeNonNumericalChars('foobar')).toBe('');
+    });
+
+    it('returns empty string if given empty string', () => {
+      expect(removeNonNumericalChars('')).toBe('');
     });
 
   });

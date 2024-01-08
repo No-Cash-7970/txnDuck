@@ -18,6 +18,7 @@ import {
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { assetInfoGet as assetInfoGetSettingAtom } from '@/app/lib/app-settings';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function AssetId({ t }: { t: TFunction }) {
   const form = useAtomValue(assetFreezeFormControlAtom);
@@ -84,7 +85,7 @@ export default function AssetId({ t }: { t: TFunction }) {
       }
       value={form.values.faid as number ?? ''}
       onChange={(e) => {
-        const value = e.target.value.replace(/[^0-9]/gm, '');
+        const value = removeNonNumericalChars(e.target.value);
         const parsedValue = value === '' ? undefined : parseInt(value);
         form.handleOnChange('faid')(parsedValue);
         getAssetInfoDebounced(parsedValue);

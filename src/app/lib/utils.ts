@@ -128,3 +128,9 @@ export const baseUnitsToDecimal = (
   // Trim trailing periods
   return resultInDecimal.replace(/\.+$/, '');
 };
+
+/** Removes all characters that are not numbers (0-9) from the given text
+ * @param text Text in which all non-numerical characters will be removed
+ * @returns The text with all non-numerical characters removed
+ */
+export const removeNonNumericalChars = (text: string) => text.replace(/[^0-9]/gm, '');
