@@ -84,7 +84,9 @@ your own computer that does not rely on an external website.
 - [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
   20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
-  Version 4 or higher.
+  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.  
+  NOTE: Install and switch to Yarn 2.0.0 or higher by running
+  `corepack enable && yarn set version berry`
 
 ### Installing the local setup
 

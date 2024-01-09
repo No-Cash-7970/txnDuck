@@ -45,9 +45,12 @@ This is documentation contains information useful for developers.
 - Access to your machine's command-line interface (CLI), such as Terminal,
   PowerShell or Command Prompt
 - [Git](https://git-scm.com/) installed
-- [Node.js](https://nodejs.org/en) version 18.0.0 or higher installed
+- [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
+  20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
-  Version 4 or higher.
+  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.  
+  NOTE: Install and switch to Yarn 2.0.0 or higher by running
+  `corepack enable && yarn set version berry`
 - (OPTIONAL BUT RECOMMENDED) [Visual Studio Code](https://code.visualstudio.com/)
   IDE (integrated development environment)
 
