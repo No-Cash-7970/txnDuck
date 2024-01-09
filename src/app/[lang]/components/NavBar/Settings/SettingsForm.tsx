@@ -17,6 +17,7 @@ import { WalletProvider } from '@/app/[lang]/components';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import ConnectWallet from './ConnectWallet';
 import ToastNotification from './ToastNotification';
+import { IconExclamationCircle } from '@tabler/icons-react';
 
 type Props = {
   /** Language */
@@ -305,7 +306,7 @@ export default function SettingsForm(props: Props) {
           {t('settings.clear_txn_data_btn')}
         </button>
         <button
-          className='btn btn-outline btn-warning'
+          className='btn btn-neutral'
           onClick={(e) => {
             e.preventDefault();
             resetSettings();
@@ -317,7 +318,7 @@ export default function SettingsForm(props: Props) {
       {/* Reset button */}
       <div className='mt-9'>
         <button
-          className='btn btn-sm btn-block btn-outline btn-error mx-auto'
+          className='btn btn-sm btn-block btn-error mx-auto'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();
@@ -325,6 +326,7 @@ export default function SettingsForm(props: Props) {
             notifyAllDataCleared();
           }}
         >
+          <IconExclamationCircle aria-hidden size={20} />
           {t('settings.clear_all_data_btn')}
         </button>
       </div>
