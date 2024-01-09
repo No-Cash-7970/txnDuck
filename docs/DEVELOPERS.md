@@ -65,7 +65,7 @@ This is documentation contains information useful for developers.
 2. Install the dependencies.
 
     ```bash
-    yarn install:dev
+    yarn install && gulp installDev
     ```
 
 ## Updating the development environment
