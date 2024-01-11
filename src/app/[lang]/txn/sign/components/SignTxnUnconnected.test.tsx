@@ -11,8 +11,10 @@ import {
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet', () => useWalletUnconnectedMock);
+
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array([
@@ -63,7 +65,19 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
       + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
     );
     render(<SignTxn />);
-    expect(screen.getByRole('button')).toHaveTextContent('wallet.connect');
+    expect(screen.getByText('wallet.connect')).toBeInTheDocument();
+  });
+
+  it('has "download unsigned transaction" button', async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
+    render(<SignTxn />);
+    expect(screen.getByText('sign_txn:download_unsigned_btn')).toBeInTheDocument();
   });
 
   it('shows modal with selection of wallets', async () => {
@@ -76,7 +90,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     );
     render(<SignTxn />);
 
-    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByText('wallet.connect'));
 
     expect(screen.getByText('wallet.choose_provider')).toBeInTheDocument();
     expect(screen.getByText('wallet.providers.fooWallet')).toBeInTheDocument();
@@ -92,7 +106,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     );
     render(<SignTxn />);
 
-    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByText('wallet.connect'));
     // "Foo wallet" should be the first one listed
     await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[0]);
 

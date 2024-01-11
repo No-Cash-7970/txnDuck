@@ -15,7 +15,7 @@ export const base64RegExp = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA
  * @param type The MIME type of the data
  * @returns The bytes in the form of a data URL
  */
-export const bytesToBase64DataUrl = async (
+export const bytesToDataUrl = async (
   bytes: Uint8Array,
   type = 'application/octet-stream'
 ): Promise<string> => {

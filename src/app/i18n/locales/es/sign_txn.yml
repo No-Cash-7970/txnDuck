@@ -3,6 +3,10 @@ compose_txn_btn: Componer
 compose_txn_btn_warning: Si se edita la transacción, será necesario firmarla de nuevo.
 sign_txn_btn: Firmar esta transacción
 send_txn_btn: Enviar
+download_unsigned_btn: Descargar transacción sin firma
+download_signed_btn: Descargar transacción firmada
+unsigned_file_name: sin_firma
+signed_file_name: firmada
 txn_signed: Transacción firmada
 sign_error: >
   No se ha podido firmar la transacción porque está malformada. Esto suele deberse a que la

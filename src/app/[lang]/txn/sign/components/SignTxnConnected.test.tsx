@@ -99,6 +99,34 @@ describe('Sign Transaction Component (Connected wallet)', () => {
     expect(fooDisconnectFn).toHaveBeenCalledTimes(1);
   });
 
+  it('has "download unsigned transaction" button when transaction is unsigned', async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
+    render(<SignTxn />);
+    expect(screen.getByText('sign_txn:download_unsigned_btn')).toBeInTheDocument();
+    expect(screen.queryByText('sign_txn:download_signed_btn')).not.toBeInTheDocument();
+  });
+
+  it('has both "download transaction" buttons when transaction is signed', async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
+    // The function that converts a data URL to bytes is mocked, so any value can be put in storage
+    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
+    render(<SignTxn />);
+    expect(screen.getByText('sign_txn:download_unsigned_btn')).toBeInTheDocument();
+    expect(screen.getByText('sign_txn:download_signed_btn')).toBeInTheDocument();
+  });
+
   it('removes stored signed transaction if it is different from stored unsigned transaction',
   async () => {
     sessionStorage.setItem('txnData',

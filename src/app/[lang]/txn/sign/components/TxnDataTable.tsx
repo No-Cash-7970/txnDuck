@@ -79,7 +79,7 @@ export default function TxnDataTable({ lng }: Props) {
   }, [storedTxnData]);
 
   return (
-    <table className='table'>
+    <table className='table mb-4'>
       <tbody>
         {/* Node network */}
         <tr>

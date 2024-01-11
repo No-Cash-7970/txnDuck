@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -18,7 +18,7 @@ import {
   getActiveProvider,
 } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { bytesToBase64DataUrl, dataUrlToBytes } from '@/app/lib/utils';
+import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import {
   AssetConfigTxnData,
   StoredTxnData,
@@ -43,6 +43,7 @@ export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
   const router = useRouter();
   const currentURLParams = useSearchParams();
+  const TxnFileLinkRef = useRef<any>(null);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const setFee = useSetAtom(txnDataAtoms.fee);
   const setFirstRound = useSetAtom(txnDataAtoms.fv);
@@ -108,13 +109,11 @@ export default function SignTxn({ lng }: Props) {
     return newTxnData;
   };
 
-  /** Create transaction object from stored transaction data and sign the transaction */
-  const signTransaction = async () => {
+  const encodeUnsignedTxn = async () => {
     if (!storedTxnData) throw Error('No transaction data exists in session storage');
 
     const suggestedParams = await getSuggestedParams;
     const unsignedTxnData = {...storedTxnData.txn};
-    let unsignedTxn = new Uint8Array;
 
     // Set fee to suggested fee if suggested fee is to be used
     if (storedTxnData.useSugFee) unsignedTxnData.fee = suggestedParams.fee;
@@ -126,16 +125,23 @@ export default function SignTxn({ lng }: Props) {
       unsignedTxnData.lv = suggestedParams.lastRound;
     }
 
+    return algosdk.encodeUnsignedTransaction(
+      createTxnFromData(
+        (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
+        suggestedParams.genesisID,
+        suggestedParams.genesisHash,
+        !storedTxnData.useSugFee // Enable/disable flat fee
+      )
+    );
+  };
+
+  /** Create transaction object from stored transaction data and sign the transaction */
+  const signTransaction = async () => {
+    let unsignedTxn = new Uint8Array;
+
     try {
       // Create Transaction object and encoded it
-      unsignedTxn = algosdk.encodeUnsignedTransaction(
-        createTxnFromData(
-          (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
-          suggestedParams.genesisID,
-          suggestedParams.genesisHash,
-          !storedTxnData.useSugFee // Enable/disable flat fee
-        )
-      );
+      unsignedTxn = await encodeUnsignedTxn();
     } catch (e) {
       setHasSignTxnError(true);
       return;
@@ -143,7 +149,7 @@ export default function SignTxn({ lng }: Props) {
 
     // Sign the transaction and store it
     const signedTxn = (await signTransactions([unsignedTxn]))[0];
-    const signedTxnDataUrl = await bytesToBase64DataUrl(signedTxn);
+    const signedTxnDataUrl = await bytesToDataUrl(signedTxn);
     setStoredSignedTxn(signedTxnDataUrl);
 
     // If the user checked the box, or the default should be used and it is to automatically send
@@ -235,6 +241,42 @@ export default function SignTxn({ lng }: Props) {
 
   return (<>
     {!!storedTxnData && <>
+
+    <div className='mt-0 mb-0 text-center'>
+      <button
+        className='btn btn-link btn-sm text-base-content'
+        onClick={async (e) => {
+          e.preventDefault();
+          TxnFileLinkRef.current.href = await bytesToDataUrl(await encodeUnsignedTxn());
+          TxnFileLinkRef.current.download = t('sign_txn:unsigned_file_name') + '.txn.msgpack';
+          TxnFileLinkRef.current.click();
+        }}
+      >
+        <Icons.IconFileDownload aria-hidden size={22} />
+        {t('sign_txn:download_unsigned_btn')}
+      </button>
+      {storedSignedTxn &&
+        <button
+          className='btn btn-link text-accent btn-sm mt-4 sm:ms-4 sm:mt-0 '
+          onClick={async (e) => {
+            e.preventDefault();
+            TxnFileLinkRef.current.href = storedSignedTxn;
+            TxnFileLinkRef.current.download = t('sign_txn:signed_file_name') + '.txn.msgpack';
+            TxnFileLinkRef.current.click();
+          }}
+        >
+          <Icons.IconCircleKey aria-hidden size={22} />
+          {t('sign_txn:download_signed_btn')}
+        </button>
+      }
+      <a ref={TxnFileLinkRef}
+        className='hidden'
+        href=''
+        download=''
+        tabIndex={-1}
+      />
+    </div>
+
       {// No wallet connected and transaction has not been signed yet
         (!activeAccount && !storedSignedTxn) &&
         <Dialog.Root modal={false}>
