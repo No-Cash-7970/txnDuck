@@ -1,10 +1,13 @@
 import '@testing-library/jest-dom';
-import { type Address, TransactionType, encodeAddress, OnApplicationComplete } from 'algosdk';
+import * as algosdk from 'algosdk';
 import * as processor from './processor';
 
 /* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
-import { TextEncoder, TextDecoder } from 'util';
+import { TextEncoder, TextDecoder } from 'node:util';
+import { getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 global.TextEncoder = TextEncoder;
+// @ts-expect-error
+global.TextDecoder = TextDecoder;
 // NOTE: For some reason, the Uint8Array class that the polyfills use is different from the actual
 // Uint8Array class, so polyfilling Uint8array is necessary too
 // @ts-ignore
@@ -16,7 +19,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a payment transaction', () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.pay,
+          type: algosdk.TransactionType.pay,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -32,7 +35,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.pay);
+      expect(txn.type).toBe(algosdk.TransactionType.pay);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
@@ -52,12 +55,13 @@ describe('Transaction Data Processor', () => {
     });
 
     // eslint-disable-next-line max-len
-    it('returns `Transaction` object with given data for a payment transaction with byte array properties', () => {
+    it('returns `Transaction` object with given data for a payment transaction with byte array properties',
+    () => {
       const textEncoder = new TextEncoder;
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.pay,
+          type: algosdk.TransactionType.pay,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -73,7 +77,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.pay);
+      expect(txn.type).toBe(algosdk.TransactionType.pay);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
@@ -92,7 +96,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a asset transfer transaction', () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.axfer,
+          type: algosdk.TransactionType.axfer,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -110,7 +114,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.axfer);
+      expect(txn.type).toBe(algosdk.TransactionType.axfer);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
@@ -139,7 +143,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.axfer,
+          type: algosdk.TransactionType.axfer,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -157,7 +161,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.axfer);
+      expect(txn.type).toBe(algosdk.TransactionType.axfer);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
@@ -181,7 +185,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -205,7 +209,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
@@ -242,7 +246,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -266,7 +270,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
@@ -298,7 +302,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -312,7 +316,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
@@ -336,7 +340,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -350,7 +354,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
@@ -369,7 +373,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -387,7 +391,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
@@ -418,7 +422,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.acfg,
+          type: algosdk.TransactionType.acfg,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -436,7 +440,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.acfg);
+      expect(txn.type).toBe(algosdk.TransactionType.acfg);
       expect(addrToStr(txn.from))
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
@@ -460,7 +464,7 @@ describe('Transaction Data Processor', () => {
     it('returns `Transaction` object with given data for a asset freeze transaction', () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.afrz,
+          type: algosdk.TransactionType.afrz,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: 'Hello world',
           fee: 0.001,
@@ -476,7 +480,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.afrz);
+      expect(txn.type).toBe(algosdk.TransactionType.afrz);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -500,7 +504,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.afrz,
+          type: algosdk.TransactionType.afrz,
           snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -516,7 +520,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.afrz);
+      expect(txn.type).toBe(algosdk.TransactionType.afrz);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
@@ -534,7 +538,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
@@ -554,7 +558,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -582,7 +586,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -602,7 +606,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
@@ -624,7 +628,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
@@ -641,7 +645,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -666,7 +670,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -683,7 +687,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
@@ -703,7 +707,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
@@ -720,7 +724,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -745,7 +749,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.keyreg,
+          type: algosdk.TransactionType.keyreg,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -762,7 +766,7 @@ describe('Transaction Data Processor', () => {
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.keyreg);
+      expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
@@ -781,7 +785,7 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
@@ -799,13 +803,13 @@ describe('Transaction Data Processor', () => {
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -835,7 +839,7 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
@@ -853,13 +857,13 @@ describe('Transaction Data Processor', () => {
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
@@ -883,14 +887,14 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.UpdateApplicationOC,
+          apan: algosdk.OnApplicationComplete.UpdateApplicationOC,
           apid: 88888888,
           apap: 'BYEB',
           apsu: 'BYEB',
@@ -898,13 +902,13 @@ describe('Transaction Data Processor', () => {
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -913,7 +917,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.UpdateApplicationOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
       expect(txn.appIndex).toBe(88888888);
       expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
       expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
@@ -931,14 +935,14 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.UpdateApplicationOC,
+          apan: algosdk.OnApplicationComplete.UpdateApplicationOC,
           apid: 88888888,
           apap: 'BYEB',
           apsu: 'BYEB',
@@ -946,19 +950,19 @@ describe('Transaction Data Processor', () => {
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.UpdateApplicationOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
       expect(txn.appIndex).toBe(88888888);
       expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
       expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
@@ -973,26 +977,26 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.DeleteApplicationOC,
+          apan: algosdk.OnApplicationComplete.DeleteApplicationOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -1001,7 +1005,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.DeleteApplicationOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1012,32 +1016,32 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.DeleteApplicationOC,
+          apan: algosdk.OnApplicationComplete.DeleteApplicationOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.DeleteApplicationOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1045,26 +1049,26 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.OptInOC,
+          apan: algosdk.OnApplicationComplete.OptInOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -1073,7 +1077,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.OptInOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1084,32 +1088,32 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.OptInOC,
+          apan: algosdk.OnApplicationComplete.OptInOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.OptInOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1118,26 +1122,26 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.CloseOutOC,
+          apan: algosdk.OnApplicationComplete.CloseOutOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -1146,7 +1150,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.CloseOutOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1157,32 +1161,32 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.CloseOutOC,
+          apan: algosdk.OnApplicationComplete.CloseOutOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.CloseOutOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1191,26 +1195,26 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.ClearStateOC,
+          apan: algosdk.OnApplicationComplete.ClearStateOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -1219,7 +1223,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.ClearStateOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
       expect(txn.appIndex).toBe(88888888);
       expect(txn.appArgs).toHaveLength(3);
       expect(txn.appAccounts).toHaveLength(1);
@@ -1235,32 +1239,32 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.ClearStateOC,
+          apan: algosdk.OnApplicationComplete.ClearStateOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.ClearStateOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
       expect(txn.appIndex).toBe(88888888);
       expect(txn.appArgs).toHaveLength(3);
       expect(txn.appAccounts).toHaveLength(1);
@@ -1274,26 +1278,26 @@ describe('Transaction Data Processor', () => {
     () => {
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: 'Hello world',
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          apan: OnApplicationComplete.NoOpOC,
+          apan: algosdk.OnApplicationComplete.NoOpOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
@@ -1302,7 +1306,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.NoOpOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
       expect(txn.appIndex).toBe(88888888);
     });
 
@@ -1313,40 +1317,268 @@ describe('Transaction Data Processor', () => {
       const textDecoder = new TextDecoder;
       const txn = processor.createTxnFromData(
         {
-          type: TransactionType.appl,
+          type: algosdk.TransactionType.appl,
           snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
           note: textEncoder.encode('Hello world'), // byte array
           fee: 0.001,
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
-          apan: OnApplicationComplete.NoOpOC,
+          apan: algosdk.OnApplicationComplete.NoOpOC,
           apid: 88888888,
           apaa: ['foo', '42', ''],
           apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
           apfa: [11111111, 22222222],
           apas: [33333333, 44444444, 55555555],
-          apbx: [{i: 2, n: 'Box 1' }, {i: 99999999, n: 'Boxy box' }],
+          apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
-      expect(txn.type).toBe(TransactionType.appl);
+      expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
       expect(txn.fee).toBe(1000);
       expect(txn.firstRound).toBe(6000000);
       expect(txn.lastRound).toBe(6001000);
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(OnApplicationComplete.NoOpOC);
+      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
       expect(txn.appIndex).toBe(88888888);
+    });
+
+  });
+
+  describe('createDataFromTxn', () => {
+
+    it('returns payment transaction data when given a payment transaction', async () => {
+      const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        to: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amount: 5_000_000, // 5 Algos
+        note: (new TextEncoder).encode('Hello world'),
+        closeRemainderTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+        type: 'pay',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        note: 'Hello world',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amt: 5,
+        close: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      });
+    });
+
+    it('returns asset transfer transaction data when given a asset transfer transaction',
+    async () => {
+      const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        to: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        assetIndex: 88888888,
+        amount: 500,
+        closeRemainderTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        rekeyTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        note: (new TextEncoder).encode('Hello world'),
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn, {b64Note: true})).toStrictEqual({
+        type: 'axfer',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        rekey: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        note: 'SGVsbG8gd29ybGQ=',
+        arcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        xaid: 88888888,
+        aamt: '500',
+        aclose: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      });
+    });
+
+    it('returns asset configuration transaction data when given a asset configuration transaction',
+    async () => {
+      const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
+        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        unitName: 'FAKE',
+        assetName: 'Fake Token',
+        total: 10000000,
+        decimals: 5,
+        defaultFrozen: true,
+        assetURL: 'https://fake.token',
+        manager: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        freeze: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        clawback: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        reserve: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        assetMetadataHash: (new TextEncoder).encode('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'),
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+        type: 'acfg',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        apar_un: 'FAKE',
+        apar_an: 'Fake Token',
+        apar_t: '10000000',
+        apar_dc: 5,
+        apar_df: true,
+        apar_au: 'https://fake.token',
+        apar_m: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        apar_am: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      });
+    });
+
+    it('returns asset freeze transaction data when given a asset freeze transaction', async () => {
+      const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
+        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        assetIndex: 88888888,
+        freezeTarget: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        freezeState: true,
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+        type: 'afrz',
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        faid: 88888888,
+        fadd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        afrz: true,
+      });
+    });
+
+    it('returns key registration transaction data when given a key registration transaction',
+    async () => {
+      const txn = algosdk.makeKeyRegistrationTxnWithSuggestedParamsFromObject({
+        from: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        voteKey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+        selectionKey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+        // eslint-disable-next-line max-len
+        stateProofKey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+        voteFirst: 6000000,
+        voteLast: 6100000,
+        voteKeyDilution: 1730,
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+        type: 'keyreg',
+        snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
+        selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+        // eslint-disable-next-line max-len
+        sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+        votefst: 6000000,
+        votelst: 6100000,
+        votekd: 1730,
+        nonpart: false,
+      });
+    });
+
+    it('returns application call transaction data when given a application call transaction',
+    async () => {
+      const encodedAppArgs = getAppArgsForTransaction({
+        accounts: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+        appArgs: ['foo', '42', ''],
+        apps: [11111111, 22222222],
+        assets: [33333333, 44444444, 55555555],
+        boxes: [{appId: 2, name: 'Box 1' }, {appId: 1, name: 'Boxy box' }],
+      });
+      const textEncoder = new TextEncoder;
+      const txn = algosdk.makeApplicationCallTxnFromObject({
+        ...encodedAppArgs,
+        from: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        onComplete: 0,
+        appIndex: 0,
+        approvalProgram: textEncoder.encode('BYEB'),
+        clearProgram: textEncoder.encode('BYEB'),
+        numGlobalInts: 1,
+        numGlobalByteSlices: 2,
+        numLocalInts: 3,
+        numLocalByteSlices: 4,
+        extraPages: 1,
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstRound: 6000000,
+          lastRound: 6001000,
+          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          genesisID: 'testnet-v1.0',
+        }
+      });
+      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+        type: 'appl',
+        snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        apan: 0,
+        apap: 'BYEB',
+        apsu: 'BYEB',
+        apgs_nui: 1,
+        apgs_nbs: 2,
+        apls_nui: 3,
+        apls_nbs: 4,
+        apep: 1,
+        apaa: ['foo', '42', ''],
+        apat: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+        apfa: [11111111, 22222222],
+        apas: [33333333, 44444444, 55555555],
+        apbx: [{i: 2, n: 'Box 1' }, {i: 1, n: 'Boxy box' }],
+      });
     });
 
   });
 });
 
 /** Converts an Address object to a string */
-function addrToStr(addr?: Address) {
+function addrToStr(addr?: algosdk.Address) {
   if (!addr) return undefined;
-  return encodeAddress(addr.publicKey);
+  return algosdk.encodeAddress(addr.publicKey);
 }

@@ -134,3 +134,12 @@ export const baseUnitsToDecimal = (
  * @returns The text with all non-numerical characters removed
  */
 export const removeNonNumericalChars = (text: string) => text.replace(/[^0-9]/gm, '');
+
+/** Converts bytes as a Uint8Array buffer to a Base64-encoded string
+ * @param bytes The bytes to convert to a Base64-encoded string
+ * @returns The bytes in the form of a Base64-encoded string
+ */
+export const bytesToBase64 = async (bytes: Uint8Array) => {
+  const dataUrl = await bytesToDataUrl(bytes);
+  return dataUrl.slice(dataUrl.indexOf(',') + 1);
+};
