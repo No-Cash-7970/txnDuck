@@ -1,6 +1,6 @@
 import { Props as FieldTipProps } from "./FieldTip";
 
-/** General properties for the form inputs in *Field components */
+/** General properties for the form inputs in Field components */
 interface InputProps {
   /** If the field is required to be non-empty */
   required?: boolean;
@@ -8,10 +8,6 @@ interface InputProps {
   id?: string;
   /** Classes to add to the input element for the field */
   inputClass?: string;
-  /** Classes to add to the label element for the field */
-  labelClass?: string;
-  /** Classes to add to the element for the text content of the label for the field */
-  labelTextClass?: string;
   /** Data key */
   name?: string;
   /** Default value */
@@ -26,13 +22,15 @@ interface InputProps {
   onFocus?: React.ChangeEventHandler<HTMLInputElement>;
   /** Event handler function for the when the field loses focus */
   onBlur?: React.ChangeEventHandler<HTMLInputElement>;
-  /** Properties for the field tip. If undefined, there will no field tip */
-  tip?: FieldTipProps;
 }
 /** General properties for fields */
 interface FieldProps {
   /** Value for the main label. Usually a string of text. */
   label?: any;
+  /** Classes to add to the label element for the field */
+  labelClass?: string;
+  /** Classes to add to the element for the text content of the label for the field */
+  labelTextClass?: string;
   /**
    * If the input should be inside in the label. If set to `false`, the `id` for the input needs to
    * be set for the label to function properly
@@ -49,6 +47,8 @@ interface FieldProps {
   requiredText?: string;
   /** Value for the helper message. Usually a string of text. */
   helpMsg?: any;
+  /** Properties for the field tip. If undefined, there will no field tip */
+  tip?: FieldTipProps;
 }
 
 /** Properties for *Fields that have side-labels */
@@ -141,8 +141,7 @@ export interface CheckboxFieldProps extends InputProps, FieldProps {
   defaultValue?: boolean;
   /** If the field is checked or unchecked */
   value?: boolean;
-  /**
-   * The position of the input relative to the label.
+  /** The position of the input relative to the label.
    *
    * `start` = input positioned before the label
    *
@@ -153,6 +152,25 @@ export interface CheckboxFieldProps extends InputProps, FieldProps {
 
 /** Properties for the ToggleField component */
 export interface ToggleFieldProps extends CheckboxFieldProps {}
+
+/** Properties for the FileField component */
+export interface FileFieldProps extends Omit<InputProps, 'defaultValue'|'value'>, FieldProps {
+  /** Comma-separated list of unique file type specifiers that defines the file types the file
+   * input should accept
+   *
+   * More information: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#accept
+   */
+  accept?: string;
+  /** Specifies which camera to use for capture of image or video data. A value of "user" indicates
+   * that the user-facing camera and/or microphone should be used. A value of environment specifies
+   * that the outward-facing camera and/or microphone should be used.
+   *
+   * More information: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file#capture
+   */
+  capture?: boolean | 'user' | 'environment';
+  /** If the user is allowed to select more than one file */
+  multiple?: boolean;
+}
 
 /** Properties for the RadioButtonGroupField component */
 export interface RadioButtonGroupFieldProps

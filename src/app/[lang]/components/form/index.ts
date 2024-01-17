@@ -1,4 +1,5 @@
 export { default as CheckboxField } from './CheckboxField';
+export { default as FileField } from './FileField';
 export { default as FieldGroup } from './FieldGroup';
 export { default as NumberField } from './NumberField';
 export { default as RadioButtonGroupField } from './RadioButtonGroupField';
