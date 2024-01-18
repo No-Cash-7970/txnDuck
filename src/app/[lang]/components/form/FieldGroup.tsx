@@ -15,7 +15,12 @@ export default function FieldGroup({
 }: FieldGroupProps) {
   return (
     <fieldset className={containerClass || undefined} id={containerId} disabled={disabled}>
-      {heading && <>
+      {/* Putting a heading inside a legend is acceptable: "By adding a heading screen reader users
+        * can navigate to the heading and the legend text is also included as part of navigable
+        * document structure."
+        * Source: https://www.tpgi.com/fieldsets-legends-and-screen-readers-again/
+        */}
+      {heading && <legend>
         {headingLevel === 1 &&
           <h1 id={headingId || undefined} className={headingClass || undefined}>
             {heading}
@@ -52,7 +57,7 @@ export default function FieldGroup({
             {tip && <FieldTip tipProps={tip} />}
           </h6>
         }
-      </>}
+      </legend>}
 
       {children}
     </fieldset>
