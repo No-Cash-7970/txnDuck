@@ -12,11 +12,7 @@ import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
-import {
-  walletTypes,
-  getWalletClient,
-  getActiveProvider,
-} from '@/app/lib/wallet-utils';
+import { walletTypes, getWalletClient, getActiveProvider } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import {
@@ -29,9 +25,9 @@ import {
   tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
-import NextStepButton from './NextStepButton';
 import { CheckboxField } from '@/app/[lang]/components/form';
 import {defaultAutoSend as defaultAutoSendAtom} from '@/app/lib/app-settings';
+import NextStepButton from './NextStepButton';
 
 type Props = {
   /** Language */
@@ -241,47 +237,46 @@ export default function SignTxn({ lng }: Props) {
 
   return (<>
     {!!storedTxnData && <>
-
-    <div className='mt-0 mb-0 text-center'>
-      <button
-        className='btn btn-link btn-sm text-base-content'
-        onClick={async (e) => {
-          e.preventDefault();
-          TxnFileLinkRef.current.href = await bytesToDataUrl(await encodeUnsignedTxn());
-          TxnFileLinkRef.current.download = t('sign_txn:unsigned_file_name') + '.txn.msgpack';
-          TxnFileLinkRef.current.click();
-        }}
-      >
-        <Icons.IconFileDownload aria-hidden size={22} />
-        {t('sign_txn:download_unsigned_btn')}
-      </button>
-      {storedSignedTxn &&
+      <div className='mt-0 mb-0 text-center'>
         <button
-          className='btn btn-link text-accent btn-sm mt-4 sm:ms-4 sm:mt-0 '
+          className='btn btn-link btn-sm text-base-content'
           onClick={async (e) => {
             e.preventDefault();
-            TxnFileLinkRef.current.href = storedSignedTxn;
-            TxnFileLinkRef.current.download = t('sign_txn:signed_file_name') + '.txn.msgpack';
+            TxnFileLinkRef.current.href = await bytesToDataUrl(await encodeUnsignedTxn());
+            TxnFileLinkRef.current.download = t('sign_txn:unsigned_file_name') + '.txn.msgpack';
             TxnFileLinkRef.current.click();
           }}
         >
-          <Icons.IconCircleKey aria-hidden size={22} />
-          {t('sign_txn:download_signed_btn')}
+          <Icons.IconFileDownload aria-hidden size={22} />
+          {t('sign_txn:download_unsigned_btn')}
         </button>
-      }
-      <a ref={TxnFileLinkRef}
-        className='hidden'
-        href=''
-        download=''
-        tabIndex={-1}
-      />
-    </div>
+        {storedSignedTxn &&
+          <button
+            className='btn btn-link text-accent btn-sm mt-4 sm:ms-4 sm:mt-0 '
+            onClick={async (e) => {
+              e.preventDefault();
+              TxnFileLinkRef.current.href = storedSignedTxn;
+              TxnFileLinkRef.current.download = t('sign_txn:signed_file_name') + '.txn.msgpack';
+              TxnFileLinkRef.current.click();
+            }}
+          >
+            <Icons.IconCircleKey aria-hidden size={22} />
+            {t('sign_txn:download_signed_btn')}
+          </button>
+        }
+        <a ref={TxnFileLinkRef}
+          className='hidden'
+          href=''
+          download=''
+          tabIndex={-1}
+        />
+      </div>
 
       {// No wallet connected and transaction has not been signed yet
         (!activeAccount && !storedSignedTxn) &&
         <Dialog.Root modal={false}>
           <Dialog.Trigger asChild>
-            <button className='btn btn-secondary btn-block min-h-[5em] h-auto'>
+            <button className='btn btn-secondary btn-block min-h-[5em] h-auto mt-8'>
               <Icons.IconWallet aria-hidden />
               {t('wallet.connect')}
             </button>

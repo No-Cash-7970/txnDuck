@@ -78,7 +78,8 @@ export default function TxnDataTable({ lng }: Props) {
     return `${type}` ?? '';
   }, [storedTxnData]);
 
-  return (
+  return (<>
+    {!!storedTxnData &&
     <table className='table mb-4'>
       <tbody>
         {/* Node network */}
@@ -86,10 +87,9 @@ export default function TxnDataTable({ lng }: Props) {
           <th role='rowheader' className='align-top'>{t('app:node_selector.node_network')}</th>
           <td className='break-all'>{nodeConfig
             ? ((nodeConfig.network === 'mainnet'
-              || nodeConfig.network === 'testnet'
-              || nodeConfig.network === 'betanet')
-              ? t(`app:node_selector.${nodeConfig.network}`)
-              : nodeConfig.network)
+                || nodeConfig.network === 'testnet'
+                || nodeConfig.network === 'betanet')
+              ? t(`app:node_selector.${nodeConfig.network}`) : nodeConfig.network)
             : t('loading')
           }</td>
         </tr>
@@ -715,7 +715,9 @@ export default function TxnDataTable({ lng }: Props) {
           }
           </td>
         </tr>
+
       </tbody>
     </table>
-  );
+    }
+  </>);
 }
