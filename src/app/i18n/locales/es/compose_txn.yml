@@ -86,11 +86,11 @@ fields:
   lx: # Lease
     label: Arrendamiento
     tip: >
-      Un contrato de arrendamiento impone la exclusión mutua de las transacciones. Si este campo es
-      distinto de cero, una vez confirmada la transacción, ésta adquiere el contrato de
-      arrendamiento identificado por el par remitente-arrendatario de la transacción hasta que pase
-      la última ronda válida de la transacción. Mientras la transacción posea el arrendamiento, no
-      se podrá confirmar ninguna otra transacción que especifique este arrendamiento.
+      Un arrendamiento impone la exclusión mutua de las transacciones. Si este campo es distinto de
+      cero, una vez confirmada la transacción, ésta adquiere el arrendamiento identificado por el
+      par remitente-arrendatario de la transacción hasta que pase la última ronda válida de la
+      transacción. Mientras la transacción posea el arrendamiento, no se podrá confirmar ninguna
+      otra transacción que especifique este arrendamiento.
   rekey: # Rekey to
     label: ¿A qué recodificar?
     tip: >
