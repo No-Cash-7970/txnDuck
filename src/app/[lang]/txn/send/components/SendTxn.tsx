@@ -11,7 +11,7 @@ import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useDebouncedCallback } from 'use-debounce';
-import { dataUrlToBytes } from '@/app/lib/utils';
+import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import {
@@ -19,6 +19,7 @@ import {
   confirmWaitRounds as confirmWaitRoundsAtom,
   defaultHideSendInfo as defaultHideSendInfoAtom
 } from '@/app/lib/app-settings';
+import { FileField } from '@/app/[lang]/components/form';
 
 type Props = {
   /** Language */
@@ -67,6 +68,22 @@ export default function SendTxn({ lng }: Props) {
     port: nodeConfig.nodePort,
     token: (nodeConfig.nodeToken || '') as string,
   });
+
+  /** Processes the given file as a signed transaction file
+   * @param file File to process
+   */
+  const processTxnFile = async (file: File) => {
+    const fileData = await new Promise((resolve, reject) => {
+      const reader = Object.assign(new FileReader(), {
+        onload: () => resolve(reader.result),
+        onerror: () => reject(reader.error),
+      });
+      reader.readAsArrayBuffer(file);
+    });
+    const txnByteData = new Uint8Array(fileData as ArrayBuffer);
+
+    setStoredSignedTxn(await bytesToDataUrl(txnByteData));
+  };
 
   /** Extract information about a failed transaction from the given error object
    * @param err Object containing the error information
@@ -159,7 +176,6 @@ export default function SendTxn({ lng }: Props) {
 
         await waitForConfirmation(sendTxnResponse.txId);
       };
-
       sendTxn();
     }
   }, 500, {leading: true});
@@ -173,14 +189,31 @@ export default function SendTxn({ lng }: Props) {
     // NOTE: This needs to be in a `useEffect` instead of right after waiting for the confirmation
     // because the "clear" setting from storage may not have loaded immediately after the
     // transaction is confirmed.
-    if (!waiting && successMsg && alwaysClearAfterSend) {
-      setStoredTxnData(RESET);
+    if (!waiting && successMsg) {
+      if (alwaysClearAfterSend) setStoredTxnData(RESET);
+      // Always clear stored signed transaction because it cannot be sent again
       setStoredSignedTxn(RESET);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [alwaysClearAfterSend, successMsg, waiting]);
 
-  return (
+  return (<>
+    {!storedSignedTxn && !successMsg && !failMsg && <>
+      <FileField label={t('import_txn.label')}
+        id='txn-import'
+        containerId='txn-import-field'
+        containerClass='max-w-full sm:mt-12'
+        inputClass='file-input sm:file-input-lg file-input-primary'
+        labelClass=''
+        labelTextClass='sm:text-lg'
+        onChange={(e) => {
+          if (!!e.target.files?.length) {
+            processTxnFile(e.target.files[0]);
+          }
+        }}
+      />
+    </>}
+
     <div className='mt-12'>
       {// Waiting...
       waiting &&
@@ -332,5 +365,5 @@ export default function SendTxn({ lng }: Props) {
         </div>
       </>}
     </div>
-  );
+  </>);
 }

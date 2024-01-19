@@ -34,3 +34,5 @@ quit_btn: Abandonar
 compose_txn_btn: Editar los datos de la transacción
 sign_txn_btn: Firmar la transacción de nuevo
 make_new_txn_btn: Hacer otra transacción
+import_txn:
+  label: Importar archivo de transacción firmado

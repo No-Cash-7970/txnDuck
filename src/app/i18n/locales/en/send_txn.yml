@@ -32,3 +32,5 @@ quit_btn: Quit
 compose_txn_btn: Edit transaction fields
 sign_txn_btn: Sign transaction again
 make_new_txn_btn: Make another transaction
+import_txn:
+  label: Import signed transaction file

@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
+import * as fs from "node:fs";
 import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
@@ -7,6 +8,7 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
+  ...jest.requireActual('../../../../lib/utils.ts'),
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 // Mock algokit
@@ -41,6 +43,17 @@ describe('Send Transaction Component', () => {
   beforeEach(() => {
     sendErrorMsg = '';
     confirmErrorMsg = '';
+  });
+
+  it('attempts to send signed transaction from uploaded file', async () => {
+    sessionStorage.clear();
+    const data = fs.readFileSync('src/app/lib/testing/test_signed.txn.msgpack');
+    const file = new File([data], 'signed.txn.msgpack', { type: 'application/octet-stream' });
+    render(<SendTxn />);
+
+    await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
+
+    expect(await screen.findByText('success.heading')).toBeInTheDocument();
   });
 
   it('shows "waiting" message if waiting for transaction confirmation', async () => {

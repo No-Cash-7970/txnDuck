@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { JotaiProvider } from '@/app/[lang]/components';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -41,10 +42,20 @@ describe('Send Transaction Page', () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
-  it('immediately attempts to send stored signed transaction', async () => {
+  // eslint-disable-next-line max-len
+  it('immediately attempts to send stored signed transaction if there is a stored signed transaction',
+  async () => {
     sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
-    render(<SendTxnPage params={{lang: ''}} />);
+    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
     expect(await screen.findByText('txn_confirm_wait')).toBeInTheDocument();
+  });
+
+  it('has file field for importing transaction if there is NO stored signed transaction',
+  async () => {
+    sessionStorage.clear();
+    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
+
+    expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
   });
 
 });
