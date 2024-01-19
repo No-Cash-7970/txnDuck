@@ -193,7 +193,7 @@ export interface StoredTxnData {
   apar_fUseSnd?: boolean;
   /** Set clawback address to the sender address? */
   apar_cUseSnd?: boolean;
-  /** Set reseve address to the sender address? */
+  /** Set reserve address to the sender address? */
   apar_rUseSnd?: boolean;
   /** Is the metadata hash Base84 encoded data? */
   b64Apar_am?: boolean;

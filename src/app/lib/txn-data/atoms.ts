@@ -126,7 +126,7 @@ export const xaid = atomWithValidate<number|undefined>(undefined, {
   validate: v => { idSchema.required().validateSync(v); return v; }
 });
 
-/** Asset transfer - Revocation Target (the account from which the asset will be revoked) */
+/** Asset transfer - Clawback Target (the account from which the asset will be clawed back) */
 export const asnd = atomWithValidate<string>('', {
   validate: v => {
     addressSchema.validateSync(v === '' ? undefined : v);
