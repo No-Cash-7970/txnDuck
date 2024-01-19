@@ -18,4 +18,12 @@ auto_send:
     Si está marcada, la transacción se envía inmediatamente después de ser firmada sin necesidad de
     pulsar el botón «Enviar».
   tip_btn_title: Más información
-
+import_txn:
+  label: Importar archivo de transacción firmado o sin firmar
+  options_heading: Opciones de importación
+  b64_note: Codificar en Base64 la nota
+  b64_lx: Codificar en Base64 el arrendamiento
+  b64_apar_am: Codificar en Base64 el hash de metadatos
+  no_diff_network: No importar una transacción para una red distinta
+  fail_heading: Error de importación
+  fail_msg: La transacción es para una red distinta de la seleccionada actualmente.

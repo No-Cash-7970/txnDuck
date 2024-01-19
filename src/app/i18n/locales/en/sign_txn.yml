@@ -18,3 +18,12 @@ auto_send:
     If checked, the transaction is sent immediately after it is signed without the need for clicking
     the "Send" button.
   tip_btn_title: More information
+import_txn:
+  label: Import signed or unsigned transaction file
+  options_heading: Import Options
+  b64_note: Base64 encode the note
+  b64_lx: Base64 encode the lease
+  b64_apar_am: Base64 encode the metadata hash
+  no_diff_network: Do not import a transaction for a different network
+  fail_heading: Import failed
+  fail_msg: The transaction is for a network different than the currently selected network.

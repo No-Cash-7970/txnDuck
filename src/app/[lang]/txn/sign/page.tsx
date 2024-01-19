@@ -5,6 +5,7 @@ import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/com
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
 import SignTxnLoading from './components/SignTxnLoading';
+import TxnImport from './components/TxnImport';
 
 export async function generateMetadata(
   { params }: { params: { lang: string } },
@@ -34,6 +35,7 @@ export default function SignTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='sign' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
+      <TxnImport lng={lang} />
       <TxnDataTable lng={lang} />
       <Suspense fallback={<SignTxnLoading />}>
         <WalletProvider><SignTxn lng={lang} /></WalletProvider>
