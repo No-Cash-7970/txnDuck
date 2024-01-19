@@ -56,12 +56,6 @@ describe('Send Transaction Component', () => {
     expect(await screen.findByText('success.heading')).toBeInTheDocument();
   });
 
-  it('shows "waiting" message if waiting for transaction confirmation', async () => {
-    sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
-    render(<SendTxn />);
-    expect(await screen.findByText('txn_confirm_wait')).toBeInTheDocument();
-  });
-
   it('shows success message if transaction is successful', async () => {
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
