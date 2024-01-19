@@ -17,13 +17,13 @@ how_it_works:
     paragraph: >
       Every transaction must be signed before it is sent. Connect your wallet and sign the
       transaction. If you saved a composed transaction as file, you can import it to sign.
-    button: Import & sign a transaction (Coming soon)
+    button: Import & sign a transaction
   send:
     heading: 3. Send the transaction.
     paragraph: >
       Send the signed transaction. A successful transaction is usually confirmed and final in less
       than 4 seconds. If you saved a signed transaction as a file, you can import it to send.
-    button: Import & send a signed transaction (Coming soon)
+    button: Import & send a signed transaction
 uses:
   heading: What can I use this tool for?
   simple_things:

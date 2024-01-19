@@ -4,6 +4,8 @@ import { LanguageSupport } from './shared/LanguageSupport';
 import { HomePage } from './pageModels/HomePage';
 import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
 import { TxnPresetsPage } from './pageModels/TxnPresetsPage';
+import { SignTxnPage } from './pageModels/SignTxnPage';
+import { SendTxnPage } from './pageModels/SendTxnPage';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -33,15 +35,15 @@ test.describe('Home Page', () => {
     await expect(page).toHaveURL(ComposeTxnPage.getFullUrl());
   });
 
-  // test('has "sign transaction" button link', async ({ homePage, page }) => {
-  //   await homePage.signTxnBtn.click();
-  //   await expect(page).toHaveURL(SignTxnPage.getFullUrl());
-  // });
+  test('has "sign transaction" button link', async ({ homePage, page }) => {
+    await homePage.signTxnBtn.click();
+    await expect(page).toHaveURL(SignTxnPage.getFullUrl());
+  });
 
-  // test('has "send transaction" button link', async ({ homePage, page }) => {
-  //   await homePage.sendTxnBtn.click();
-  //   await expect(page).toHaveURL(SendTxnPage.getFullUrl());
-  // });
+  test('has "send transaction" button link', async ({ homePage, page }) => {
+    await homePage.sendTxnBtn.click();
+    await expect(page).toHaveURL(SendTxnPage.getFullUrl());
+  });
 
   test.describe('Language Support', () => {
     (new LanguageSupport({

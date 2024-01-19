@@ -59,11 +59,9 @@ export default function HomePage({ params: { lang } }: {
               </h3>
               <p className='self-start md:mb-4'>{t('home:how_it_works.sign.paragraph')}</p>
               <Link data-testid='signTxnBtn'
-                className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
+                className='btn btn-accent btn-sm h-auto p-2'
                 href={`${lang}/txn/sign`}
                 prefetch={false}
-                aria-disabled
-                tabIndex={-1}
               >
                 {t('home:how_it_works.sign.button')}
               </Link>
@@ -76,11 +74,9 @@ export default function HomePage({ params: { lang } }: {
               </h3>
               <p className='self-start md:mb-4'>{t('home:how_it_works.send.paragraph')}</p>
               <Link data-testid='sendTxnBtn'
-                className='btn btn-accent btn-sm h-auto p-2 btn-disabled'
+                className='btn btn-accent btn-sm h-auto p-2'
                 href={`${lang}/txn/send`}
                 prefetch={false}
-                aria-disabled
-                tabIndex={-1}
               >
                 {t('home:how_it_works.send.button')}
               </Link>

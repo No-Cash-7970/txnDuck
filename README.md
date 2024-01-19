@@ -45,11 +45,11 @@ same.
 
 ## :sparkles: Features
 
-- Build and send a transaction to transfer algos, create a token or NFT, call an application (smart contract), etc.
-- FUTURE: Specify custom algod node
-- FUTURE: Export to a signed or unsigned transaction file that is compatible
-  with Algorand's `goal` command-line tool
-- FUTURE: Import a transaction file
+- Build and send a transaction to transfer algos, create a token or NFT, call an
+  application (smart contract), etc.
+- Import a transaction file
+- Export to a signed or unsigned transaction file that is compatible
+- FUTURE: Specify custom algod node with Algorand's `goal` command-line tool
 - FUTURE: Build transaction groups (atomic transactions)
 
 ## :speech_balloon: Supported languages
