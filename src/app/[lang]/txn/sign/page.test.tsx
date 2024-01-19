@@ -31,7 +31,7 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     fee: 1,
     firstRound: 10000,
     lastRound: 11000,
-  }))
+  })),
 }));
 
 import SignTxnPage from './page';
@@ -48,7 +48,7 @@ describe('Sign Transaction Page', () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
-  it('has transaction information', () => {
+  it('has transaction information if there is stored transaction data', () => {
     sessionStorage.setItem('txnData',
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
@@ -60,7 +60,7 @@ describe('Sign Transaction Page', () => {
     expect(screen.getByRole('table')).toBeInTheDocument();
   });
 
-  it('has connect wallet/sign button', () => {
+  it('has connect wallet/sign button if there is stored transaction data', () => {
     sessionStorage.setItem('txnData',
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
       + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
@@ -70,6 +70,12 @@ describe('Sign Transaction Page', () => {
     );
     render(<SignTxnPage params={{lang: ''}} />);
     expect(screen.getByText('wallet.connect')).toBeInTheDocument();
+  });
+
+  it('has file field for importing transaction if there is NO stored transaction data', () => {
+    sessionStorage.clear();
+    render(<SignTxnPage params={{lang: ''}} />);
+    expect(screen.getByText(/import_txn.label/)).toBeInTheDocument();
   });
 
   it('has "compose transaction" (back) button', () => {
