@@ -48,6 +48,3 @@ next-env.d.ts
 
 # compiled translation files
 src/app/i18n/locales/.dist/
-
-# generated favicon
-src/app/favicon.ico

@@ -104,8 +104,6 @@ export const installDev = gulp.parallel(
  */
 export const prebuild = gulp.parallel(
   compileLocales,
-  // Generate favicon from icon.svg
-  task('yarn svg-to-ico ./src/app/icon.svg ./src/app/favicon.ico'),
 );
 
 /** Pre-commit hook for Git. Runs the task that stashes, lints, and tests; then runs a task to

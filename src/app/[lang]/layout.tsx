@@ -77,6 +77,13 @@ export default function HomeLayout(
 
         {/*  Set app name, the name that appears when connecting a wallet to this app */}
         <meta name='name' content={t('site_name')} />
+
+        {/* Add some icon and brand color information. Generated (with modification) using:
+          * https://realfavicongenerator.net/
+          */}
+        <link rel='mask-icon' href='/silhouette-icon.svg' color='#0ebd9d'/>
+        <meta name='msapplication-TileColor' content='#332d2d' />
+        <meta name='theme-color' content='#332d2d' />
       </head>
       <body>
         <JotaiProvider>
