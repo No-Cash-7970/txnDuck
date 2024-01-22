@@ -12,6 +12,7 @@ import {
   ToastProvider,
   ToastViewport,
 } from './components';
+import * as fs from "node:fs";
 
 /** Generate the base metadata for the site. Parts may be overwritten by child pages. */
 export async function generateMetadata(
@@ -27,6 +28,7 @@ export async function generateMetadata(
       canonical: `/${params.lang}`,
       languages: generateLangAltsMetadata()
     },
+    manifest: `/manifest-${params.lang}.webmanifest`
   };
 }
 
@@ -34,9 +36,53 @@ export async function generateMetadata(
  * the project.
  * @returns List of languages as parameters
  */
-export function generateStaticParams(): { lang: string }[] {
-  // Output should look something like [ { lng: 'en' }, { lng: 'es' } ]
-  return Object.keys(supportedLangs).map((lang) => ({ lang }));
+export async function generateStaticParams(): Promise<{ lang: string }[]> {
+  // Loop through each supported language to output should look something like
+  // `[ { lang: 'en' }, { lang: 'es' } ]` while generating a manifest file for each language.
+  // The manifest file enables this website to be a Progressive Web App (PWA). Depending on the
+  // browser, each this website in each language may or may not be its own PWA, which is fine.
+  return await Promise.all(Object.keys(supportedLangs).map(async (lang) => {
+    const { t } = await useTranslation(lang, 'app');
+    const manifestData = {
+      short_name: t('site_name'),
+      name: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
+      start_url: `/${lang}`,
+      display: 'standalone',
+      background_color: '#332d2d', // "base-100" color in tailwind.config.js
+      theme_color: '#332d2d', // "base-100" color in tailwind.config.js
+      icons: [
+        // Icons created using: https://realfavicongenerator.net/
+        {
+          src: '/icon-192.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'any'
+        },
+        {
+          src: '/icon-512.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'any'
+        },
+        // Maskable icons created using: https://maskable.app/editor
+        {
+          src: '/icon-192-maskable.png',
+          sizes: '192x192',
+          type: 'image/png',
+          purpose: 'maskable'
+        },
+        {
+          src: '/icon-512-maskable.png',
+          sizes: '512x512',
+          type: 'image/png',
+          purpose: 'maskable'
+        },
+      ],
+    };
+    fs.writeFileSync(`public/manifest-${lang}.webmanifest`, JSON.stringify(manifestData));
+
+    return ({ lang });
+  }));
 }
 
 export default function HomeLayout(

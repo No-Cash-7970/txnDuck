@@ -19,6 +19,8 @@ export const config = {
      * - _next/image (image optimization files)
      * - assets
      * - sw.js (service worker script)
+     * - workbox-*
+     * - worker-*
      * And do not end with:
      * - .svg
      * - .ico (like favicon.ico)
@@ -26,7 +28,8 @@ export const config = {
      * - .txt (like robots.txt)
      * - .webmanifest (like manifest.webmanifest)
      */
-    '/((?!api|_next/static|_next/image|assets|sw.js).*(?<!\.svg|\.ico|\.png|\.txt|\.webmanifest))'
+    // eslint-disable-next-line max-len
+    '/((?!api|_next/static|_next/image|assets|sw.js|workbox-|worker-).*(?<!\.svg|\.ico|\.png|\.txt|\.webmanifest))'
   ]
 };
 

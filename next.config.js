@@ -26,4 +26,15 @@ if (process.env.STATIC_BUILD?.toLowerCase() === 'true') {
   nextConfig.output = 'export';
 }
 
-module.exports = nextConfig;
+// Create configuration for next-pwa plugin
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  // disable: process.env.NODE_ENV === 'development',
+  // register: true,
+  // scope: '/app',
+  // sw: 'service-worker.js',
+  //...
+});
+
+// Export the combined Next.js and PWA configuration
+module.exports = withPWA(nextConfig);

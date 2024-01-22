@@ -48,3 +48,12 @@ next-env.d.ts
 
 # compiled translation files
 src/app/i18n/locales/.dist/
+
+# Auto Generated PWA (Progressive Web App) files
+/public/sw.js
+/public/workbox-*.js
+/public/worker-*.js
+/public/sw.js.map
+/public/workbox-*.js.map
+/public/worker-*.js.map
+/public/**.webmanifest
