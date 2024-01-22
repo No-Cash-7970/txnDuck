@@ -143,3 +143,18 @@ export const bytesToBase64 = async (bytes: Uint8Array) => {
   const dataUrl = await bytesToDataUrl(bytes);
   return dataUrl.slice(dataUrl.indexOf(',') + 1);
 };
+
+/** Converts the given file's contents to bytes as a Uint8Array buffer
+ * @param file The file to convert to bytes
+ * @returns The file's contents as a Uint8Array buffer
+ */
+export const fileToBytes = async (file: File) => {
+  const fileData = await new Promise((resolve, reject) => {
+    const reader = Object.assign(new FileReader(), {
+      onload: () => resolve(reader.result),
+      onerror: () => reject(reader.error),
+    });
+    reader.readAsArrayBuffer(file);
+  });
+  return new Uint8Array(fileData as ArrayBuffer);
+};

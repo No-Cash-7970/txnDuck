@@ -14,7 +14,7 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import { bytesToBase64 } from '@/app/lib/utils';
+import { bytesToBase64, fileToBytes } from '@/app/lib/utils';
 import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function ClearStateProg({ t }: { t: TFunction }) {
@@ -78,16 +78,9 @@ export default function ClearStateProg({ t }: { t: TFunction }) {
               labelTextClass='sm:text-lg'
               onChange={async (e) => {
                 if (!!e.target.files?.length) {
-                  const file = e.target.files[0];
-                  const fileData = await new Promise((resolve, reject) => {
-                    const reader = Object.assign(new FileReader(), {
-                      onload: () => resolve(reader.result),
-                      onerror: () => reject(reader.error),
-                    });
-                    reader.readAsArrayBuffer(file);
-                  });
-                  const byteData = new Uint8Array(fileData as ArrayBuffer);
-                  form.handleOnChange('apsu')(await bytesToBase64(byteData));
+                  form.handleOnChange('apsu')(
+                    await bytesToBase64(await fileToBytes(e.target.files[0]))
+                  );
                   setDialogOpen(false);
                 }
               }}

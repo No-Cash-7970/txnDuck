@@ -8,7 +8,7 @@ import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
 import { createDataFromTxn, storedSignedTxnAtom, storedTxnDataAtom } from "@/app/lib/txn-data";
-import { bytesToBase64, bytesToDataUrl } from "@/app/lib/utils";
+import { bytesToBase64, bytesToDataUrl, fileToBytes } from "@/app/lib/utils";
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
@@ -34,14 +34,7 @@ export default function TxnImport({ lng }: Props) {
    * @param file File to process
    */
   const processTxnFile = async (file: File) => {
-    const fileData = await new Promise((resolve, reject) => {
-      const reader = Object.assign(new FileReader(), {
-        onload: () => resolve(reader.result),
-        onerror: () => reject(reader.error),
-      });
-      reader.readAsArrayBuffer(file);
-    });
-    const txnByteData = new Uint8Array(fileData as ArrayBuffer);
+    const txnByteData = await fileToBytes(file);
     let txn: Transaction;
     /** If the imported transaction is a signed transaction */
     let isSignedTxn = false;
@@ -102,7 +95,7 @@ export default function TxnImport({ lng }: Props) {
       </div>}
 
       <FileField label={t('import_txn.label')}
-        id='txn_import'
+        id='txn-import'
         containerId='txn-import-field'
         containerClass='max-w-full sm:mt-12'
         inputClass='file-input sm:file-input-lg file-input-primary'
