@@ -10,11 +10,22 @@ const SUPPORTED_LANGS = Object.keys(supportedLangs);
 acceptLanguage.languages(SUPPORTED_LANGS);
 
 export const config = {
-  // matcher: '/:lng*'
   // This matcher contains a list of files to exclude from redirection to /[lang]/*
   matcher: [
-    // eslint-disable-next-line max-len
-    '/((?!api|_next/static|_next/image|assets|favicon.ico|icon.svg|duck.svg|opengraph-image.png|sw.js|robots.txt).*)'
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - assets
+     * - sw.js
+     * And do not end with:
+     * - .svg
+     * - .ico (like favicon.ico)
+     * - .png
+     * - .txt (like robots.txt)
+     */
+    '/((?!api|_next/static|_next/image|assets|sw.js).*(?<!\.svg|\.ico|\.png|\.txt))'
   ]
 };
 
