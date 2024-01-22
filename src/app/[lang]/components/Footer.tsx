@@ -3,6 +3,7 @@ import { useTranslation } from '@/app/i18n';
 import { IconBrandGithubFilled } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
+import algoLogo from '@/app/lib/algo_logo.svg';
 
 type Props = {
   /** Language */
@@ -20,9 +21,21 @@ export default function Footer({ lng }: Props) {
           <Link href={`/${lng}/privacy-policy`} className='link link-hover' prefetch={false}>
             {t('footer.privacy_policy_link')}
           </Link>
-          <a href='https://github.com/No-Cash-7970/txnDuck' className='link link-hover flex gap-1'>
+          <a href='https://github.com/No-Cash-7970/txnDuck'
+            className='link link-hover flex gap-1'
+          >
             <IconBrandGithubFilled size={20} aria-hidden />
             <span>{t('footer.github_link')}</span>
+          </a>
+          <a href='https://developer.algorand.org/'
+            className='link link-hover flex gap-1'
+          >
+            {/* eslint-disable-next-line max-len */}
+            <svg className='fill-base-content stroke-none me-[2px]' height={18} width={18} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+              {/* eslint-disable-next-line max-len */}
+              <path d="M32 32H27.0095L23.7387 19.9201L16.725 32H11.1275L21.9515 13.2913L20.1981 6.76341L5.59747 32H0L18.5121 0H23.4352L25.5595 7.97476H30.6175L27.1781 13.9642L32 32Z"></path>
+            </svg>
+            <span>{('footer.algo_docs_link')}</span>
           </a>
         </div>
         {/* License notice */}

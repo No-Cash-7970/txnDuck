@@ -18,14 +18,15 @@ export const config = {
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - assets
-     * - sw.js
+     * - sw.js (service worker script)
      * And do not end with:
      * - .svg
      * - .ico (like favicon.ico)
-     * - .png
+     * - .png (like opengraph-image.png)
      * - .txt (like robots.txt)
+     * - .webmanifest (like manifest.webmanifest)
      */
-    '/((?!api|_next/static|_next/image|assets|sw.js).*(?<!\.svg|\.ico|\.png|\.txt))'
+    '/((?!api|_next/static|_next/image|assets|sw.js).*(?<!\.svg|\.ico|\.png|\.txt|\.webmanifest))'
   ]
 };
 
