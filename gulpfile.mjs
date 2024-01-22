@@ -15,7 +15,7 @@ const cleanLocales = task(`rm -r ${COMPILED_DEST}`, { reject: false });
  */
 const convertLocales = () => {
   return gulp.src(['src/app/i18n/locales/**/*.yml', 'src/app/i18n/locales/**/*.yaml'])
-    .pipe(jsonToYamlConverter)
+    .pipe(yamlToJsonConverter)
     .pipe(rename({ extname: '.json' }))
     .pipe(gulp.dest(COMPILED_DEST))
     .on('finish', () => { console.log(`Compiled locales to ${COMPILED_DEST}`); });
@@ -29,7 +29,7 @@ const convertLocales = () => {
  * - https://nodejs.org/docs/latest-v18.x/api/stream.html#new-streamtransformoptions
  * - https://stackoverflow.com/a/71459663
  */
-const jsonToYamlConverter = new Transform({
+const yamlToJsonConverter = new Transform({
   objectMode: true,
   transform: (file, encoding, callback) => {
     if (file.isBuffer()) {
