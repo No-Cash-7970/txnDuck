@@ -34,6 +34,10 @@ export default function HomePage({ params: { lang } }: {
 
       {/* Additional information section */}
       <section className='max-w-6xl mx-auto px-6'>
+        {/* What is it? */}
+        <h2 id='what-is-this'>{t('home:what_is_this.heading')}</h2>
+        <p>{t('home:what_is_this.paragraph')}</p>
+
         {/* How It Works */}
         <h2 id='how-it-works'>{t('home:how_it_works.heading')}</h2>
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
