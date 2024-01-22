@@ -11,9 +11,6 @@ import {
 import resourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next/initReactI18next';
 import { type FallbackNs } from 'react-i18next';
-import {
-  type AlternateURLs as MetadataAlternateURLs
-} from 'next/dist/lib/metadata/types/alternative-urls-types';
 import { supportedLangs, getOptions } from './settings';
 
 /** Initialize i18Next and load relevant local files
