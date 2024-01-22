@@ -331,6 +331,9 @@ fields:
       set to “clear state”. It can read and write global state for the application, as well as
       account-specific local state. Approval programs may reject the transaction.
     placeholder: Enter compiled approval program as Base64 text
+    import_btn: Import approval program file
+    import_heading: Import Approval Program File
+    import_field_label: Import compiled approval program file
   apsu: # Clear-state program
     label: Clear-state program
     tip: >
@@ -338,6 +341,9 @@ fields:
       state”. It can read and write global state for the application, as well as account-specific
       local state. Clear-state programs cannot reject the transaction.
     placeholder: Enter compiled clear-state program as Base64 text
+    import_btn: Import clear-state program file
+    import_heading: Import Clear-State Program File
+    import_field_label: Import compiled clear-state program file
   apgs_nui: # Number of global ints
     label: Number of global integers
     tip: >

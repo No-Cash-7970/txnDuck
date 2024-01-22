@@ -1,8 +1,9 @@
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { JotaiProvider } from '@/app/[lang]/components';
+import * as fs from "node:fs";
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -885,6 +886,40 @@ describe('Compose Form Component', () => {
 
     expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
     expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('can import approval program file', async () => {
+    const data = fs.readFileSync('src/app/lib/testing/test_compiled.teal');
+    const file = new File([data], 'test_compiled.teal', { type: 'application/octet-stream' });
+    presetMockValue = 'app_deploy';
+    render(<ComposeForm />);
+
+    await userEvent.click(screen.getByText('fields.apap.import_btn'));
+    await userEvent.upload(await screen.findByLabelText(/fields.apap.import_field_label/), file);
+    try {
+      await waitForElementToBeRemoved(screen.queryByRole('dialog'));
+    } catch (e) { // The element is already removed
+      // No need to do anything here
+    }
+
+    expect(screen.getByLabelText(/fields.apap.label/)).toHaveValue('BYEB');
+  });
+
+  it('can import clear-state program', async () => {
+    const data = fs.readFileSync('src/app/lib/testing/test_compiled.teal');
+    const file = new File([data], 'test_compiled.teal', { type: 'application/octet-stream' });
+    presetMockValue = 'app_deploy';
+    render(<ComposeForm />);
+
+    await userEvent.click(screen.getByText('fields.apsu.import_btn'));
+    await userEvent.upload(await screen.findByLabelText(/fields.apsu.import_field_label/), file);
+    try {
+      await waitForElementToBeRemoved(screen.queryByRole('dialog'));
+    } catch (e) { // The element is already removed
+      // No need to do anything here
+    }
+
+    expect(screen.getByLabelText(/fields.apsu.label/)).toHaveValue('BYEB');
   });
 
 });

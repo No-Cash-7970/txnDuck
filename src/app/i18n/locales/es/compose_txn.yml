@@ -341,6 +341,9 @@ fields:
       aplicación, así como el estado local específico de la cuenta. Los programas de aprobación
       pueden rechazar la transacción.
     placeholder: Introduzca el programa compilado de aprobación como texto Base64
+    import_btn: Importar archivo de programa de aprobación
+    import_heading: Importar archivo de programa de aprobación
+    import_field_label: Importe el archivo de programa compilado de aprobación
   apsu: # Clear state program
     label: Programa para borrar estado
     tip: >
@@ -349,6 +352,9 @@ fields:
       como el estado local específico de la cuenta. Los programas de borrado de estado no pueden
       rechazar la transacción.
     placeholder: Introduzca el programa compilado para borrar estado como texto Base64
+    import_btn: Importar archivo de programa para borrar estado
+    import_heading: Importar archivo de programa para borrar estado
+    import_field_label: Importe el archivo de programa compilado para borrar estado
   apgs_nui: # Number of global ints
     label: Número de enteros globales
     tip: >
