@@ -29,7 +29,7 @@ export function generateStaticParams() { return ['sign']; }
 export default function SignTxnPage({ params: { lang } }: {
   params: { lang: string }
 }) {
-  const { t } = use(useTranslation(lang, 'sign_txn'));
+  const { t } = use(useTranslation(lang, ['sign_txn', 'app']));
 
   return (
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
@@ -38,7 +38,7 @@ export default function SignTxnPage({ params: { lang } }: {
       <TxnImport lng={lang} />
       <TxnDataTable lng={lang} />
       <Suspense fallback={<SignTxnLoading />}>
-        <WalletProvider><SignTxn lng={lang} /></WalletProvider>
+        <WalletProvider sitename={t('site_name')}><SignTxn lng={lang} /></WalletProvider>
       </Suspense>
     </main>
   );

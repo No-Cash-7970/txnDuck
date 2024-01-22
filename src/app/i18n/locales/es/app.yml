@@ -71,6 +71,7 @@ wallet:
     exodus: Exodus
     myalgo: MyAlgo
     daffi: Daffi
+    lute: Lute
   type:
     mobile: Cartera móvil
     mobile_web: Cartera móvil y web

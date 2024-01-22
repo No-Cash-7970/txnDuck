@@ -2238,9 +2238,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@txnlab/use-wallet@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "@txnlab/use-wallet@npm:2.3.1"
+"@txnlab/use-wallet@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@txnlab/use-wallet@npm:2.4.0"
   dependencies:
     immer: "npm:^9.0.15"
     zustand: "npm:^4.3.8"
@@ -2263,7 +2263,7 @@ __metadata:
       optional: true
     "@walletconnect/modal-sign-html":
       optional: true
-  checksum: 3e0187a1532736aed20d90c7e820ecd94d617f0825772a3cab3578f55333ea5145f72a345493f2a16766c0dee62c4610ab66c2e64cfcccba80efbcd62dd4f129
+  checksum: 2b72cc84cc4ba1caaefb68e702a3ac2d2ae1b0569a7f608d4e44dad5da7761e15d5ebb3de68fe9f1ee8134814ff741abb48ac4824013ee0387491b9661278941
   languageName: node
   linkType: hard
 
@@ -9787,6 +9787,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lute-connect@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "lute-connect@npm:1.0.7"
+  checksum: 32741246176c8aca167dae801408dfe73b4f443fa1cd068c1527ab986b3c1bebd8a5060267cc17ca64ffafa4fe5056293215cd3e4ba9ae4a112f9ef3463b2ea5
+  languageName: node
+  linkType: hard
+
 "lz-string@npm:^1.5.0":
   version: 1.5.0
   resolution: "lz-string@npm:1.5.0"
@@ -13713,7 +13720,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.2.0"
     "@testing-library/react": "npm:^14.1.2"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@txnlab/use-wallet": "npm:^2.3.1"
+    "@txnlab/use-wallet": "npm:^2.4.0"
     "@types/jest": "npm:^29.5.11"
     "@types/node": "npm:^20.10.7"
     "@types/react": "npm:^18.2.47"
@@ -13740,6 +13747,7 @@ __metadata:
     jotai-form: "npm:^0.1.3"
     js-yaml: "npm:^4.1.0"
     lefthook: "npm:^1.5.5"
+    lute-connect: "npm:^1.0.7"
     next: "npm:^14.0.4"
     postcss: "npm:^8.4.33"
     react: "npm:^18.2.0"

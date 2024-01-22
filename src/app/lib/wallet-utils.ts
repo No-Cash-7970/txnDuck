@@ -9,6 +9,7 @@ export const walletTypes: {[id: string]: string} = {
   [PROVIDER_ID.EXODUS]: 'browser_extension',
   [PROVIDER_ID.MYALGO]: 'web',
   [PROVIDER_ID.DAFFI]: 'mobile',
+  [PROVIDER_ID.LUTE]: 'web',
 };
 
 /** Get the client for the provider with the given provider ID.

@@ -287,7 +287,7 @@ export default function SettingsForm(props: Props) {
 
       {/* Connect wallet */}
       <div className='mt-8'>
-        <WalletProvider><ConnectWallet t={t} /></WalletProvider>
+        <WalletProvider sitename={t('site_name')}><ConnectWallet t={t} /></WalletProvider>
       </div>
 
       <h3>{t('settings.clear_reset_heading')}</h3>

@@ -28,11 +28,19 @@ const getDynamicDaffiWalletConnect = async () => {
   return DaffiWalletConnect;
 };
 
+const getDynamicLuteConnect = async () => {
+  const LuteConnect = (await import('lute-connect')).default;
+  return LuteConnect;
+};
+
 /** Wrapper for initializing the use-wallet library. Also serves as a provider to convert the
  * use-wallet wallet provider to a client component so it can be used in server components with
  * Next.js server-side rendering (SSR)
  */
-export default function WalletProvider({ children }: { children: React.ReactNode }) {
+export default function WalletProvider({ sitename, children }: {
+  sitename: string,
+  children: React.ReactNode
+}) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const providers = useInitializeProviders({
     debug: process.env.NEXT_PUBLIC_WALLET_DEBUG === 'true',
@@ -46,6 +54,11 @@ export default function WalletProvider({ children }: { children: React.ReactNode
       { id: PROVIDER_ID.EXODUS },
       { id: PROVIDER_ID.MYALGO, getDynamicClient: getDynamicMyAlgoWalletConnect },
       { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
+      {
+        id: PROVIDER_ID.LUTE,
+        getDynamicClient: getDynamicLuteConnect,
+        clientOptions: { siteName: sitename }
+      }
     ],
     nodeConfig
   });
