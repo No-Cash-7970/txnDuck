@@ -23,8 +23,8 @@ test.describe('Not Found Page', () => {
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: { body: /Page Not Found/, title: /Page Not Found/ },
-      es: { body: /Página no encontrada/, title: /Página no encontrada/ },
+      en: { body: /Page Not Found/, title: /Transaction/ },
+      es: { body: /Página no encontrada/, title: /transacciones/ },
     })).check(test, NotFoundPage.url);
   });
 
