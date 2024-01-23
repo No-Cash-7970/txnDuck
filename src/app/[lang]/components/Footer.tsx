@@ -17,7 +17,7 @@ export default function Footer({ lng }: Props) {
     <footer className='footer item-center bg-neutral text-neutral-content px-8 py-10 sm:px-12'>
       <div className='w-full max-w-6xl mx-auto place-items-center'>
         {/* Links */}
-        <div className='grid grid-flow-col gap-6'>
+        <div className='grid sm:grid-flow-col sm:gap-6 gap-4'>
           <Link href={`/${lng}/privacy-policy`} className='link link-hover' prefetch={false}>
             {t('footer.privacy_policy_link')}
           </Link>
