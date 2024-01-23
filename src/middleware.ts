@@ -4,6 +4,7 @@
 import { NextResponse, NextRequest } from 'next/server';
 import acceptLanguage from 'accept-language';
 import { fallbackLng, supportedLangs } from './app/i18n/settings';
+import { url } from 'inspector';
 
 const SUPPORTED_LANGS = Object.keys(supportedLangs);
 
@@ -59,8 +60,8 @@ export function middleware(req: NextRequest) {
 
   // Redirect if language (lng) in path is not supported
   if (
-    !SUPPORTED_LANGS.some(loc => urlPath.startsWith(`/${loc}`)) &&
-    !urlPath.startsWith('/_next')
+    !SUPPORTED_LANGS.some(loc => (urlPath.startsWith(`/${loc}/`) || urlPath === (`/${loc}`)))
+    && !urlPath.startsWith('/_next')
   ) {
     return NextResponse.redirect(new URL(`/${lng}${urlPath}`, req.url));
   }
