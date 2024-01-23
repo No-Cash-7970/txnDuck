@@ -3,6 +3,7 @@
 import { useTranslation } from '../i18n/client';
 import Image from 'next/image';
 
+/** The core content of the Not-Found page */
 export default function NotFoundBody() {
   // Attempt to get the current language stored in localStorage because the Not-Found page cannot
   // use the "lang" path parameter. We also cannot get the value from the cookie because that would
