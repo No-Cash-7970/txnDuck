@@ -4,7 +4,6 @@
 import { NextResponse, NextRequest } from 'next/server';
 import acceptLanguage from 'accept-language';
 import { fallbackLng, supportedLangs } from './app/i18n/settings';
-import { url } from 'inspector';
 
 const SUPPORTED_LANGS = Object.keys(supportedLangs);
 
@@ -20,17 +19,10 @@ export const config = {
      * - _next/image (image optimization files)
      * - assets
      * - sw.js (service worker script)
-     * - workbox-*
-     * - worker-*
-     * And do not end with:
-     * - .svg
-     * - .ico (like favicon.ico)
-     * - .png (like opengraph-image.png)
-     * - .txt (like robots.txt)
-     * - .webmanifest (like manifest.webmanifest)
+     * - etc.
      */
     // eslint-disable-next-line max-len
-    '/((?!api|_next/static|_next/image|assets|sw.js|workbox-|worker-).*(?<!\.svg|\.ico|\.png|\.txt|\.webmanifest))'
+    `/((?!api|_next/static|_next/image|assets|sw.js|favicon.ico|robots.txt|icon.svg|opengraph-image.png|apple-icon.png|workbox-|worker-).*)`
   ]
 };
 
@@ -60,8 +52,8 @@ export function middleware(req: NextRequest) {
 
   // Redirect if language (lng) in path is not supported
   if (
-    !SUPPORTED_LANGS.some(loc => (urlPath.startsWith(`/${loc}/`) || urlPath === (`/${loc}`)))
-    && !urlPath.startsWith('/_next')
+    !SUPPORTED_LANGS.some(loc => urlPath.startsWith(`/${loc}`)) &&
+    !urlPath.startsWith('/_next')
   ) {
     return NextResponse.redirect(new URL(`/${lng}${urlPath}`, req.url));
   }

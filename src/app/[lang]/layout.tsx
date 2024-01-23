@@ -28,7 +28,7 @@ export async function generateMetadata(
       canonical: `/${params.lang}`,
       languages: generateLangAltsMetadata()
     },
-    manifest: `/manifest-${params.lang}.webmanifest`
+    manifest: `/assets/manifest-${params.lang}.webmanifest`,
   };
 }
 
@@ -53,33 +53,33 @@ export async function generateStaticParams(): Promise<{ lang: string }[]> {
       icons: [
         // Icons created using: https://realfavicongenerator.net/
         {
-          src: '/icon-192.png',
+          src: '/assets/icon-192.png',
           sizes: '192x192',
           type: 'image/png',
           purpose: 'any'
         },
         {
-          src: '/icon-512.png',
+          src: '/assets/icon-512.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'any'
         },
         // Maskable icons created using: https://maskable.app/editor
         {
-          src: '/icon-192-maskable.png',
+          src: '/assets/icon-192-maskable.png',
           sizes: '192x192',
           type: 'image/png',
           purpose: 'maskable'
         },
         {
-          src: '/icon-512-maskable.png',
+          src: '/assets/icon-512-maskable.png',
           sizes: '512x512',
           type: 'image/png',
           purpose: 'maskable'
         },
       ],
     };
-    fs.writeFileSync(`public/manifest-${lang}.webmanifest`, JSON.stringify(manifestData));
+    fs.writeFileSync(`public/assets/manifest-${lang}.webmanifest`, JSON.stringify(manifestData));
 
     return ({ lang });
   }));
@@ -127,7 +127,7 @@ export default function HomeLayout(
         {/* Add some icon and brand color information. Generated (with modification) using:
           * https://realfavicongenerator.net/
           */}
-        <link rel='mask-icon' href='/silhouette-icon.svg' color='#0ebd9d'/>
+        <link rel='mask-icon' href='/assets/silhouette-icon.svg' color='#0ebd9d'/>
         <meta name='msapplication-TileColor' content='#332d2d' />
         <meta name='theme-color' content='#332d2d' />
       </head>

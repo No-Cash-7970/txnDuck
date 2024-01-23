@@ -56,4 +56,4 @@ src/app/i18n/locales/.dist/
 /public/sw.js.map
 /public/workbox-*.js.map
 /public/worker-*.js.map
-/public/**.webmanifest
+/public/**/*.webmanifest
