@@ -4,16 +4,16 @@
   "private": true,
   "scripts": {
     "compile-locales": "gulp compileLocales --no-color",
-    "dev": "gulp prebuild && next dev",
-    "build": "gulp prebuild && next build",
+    "dev": "gulp prebuild --no-color && next dev",
+    "build": "gulp prebuild --no-color && next build",
     "start": "next start",
     "lint": "next lint --ext .js --ext .mjs --ext .cjs --ext .jsx --ext .ts --ext .mts --ext .cts --ext .tsx --ext .yml --ext .yaml",
     "prod": "yarn build && next start",
-    "release": "release-it --ci && gulp postRelease",
+    "release": "release-it --ci && gulp postRelease --no-color",
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "test:e2e": "yarn compile-locales && playwright test",
-    "install:dev": "yarn install && gulp installDev"
+    "install:dev": "yarn install && gulp installDev --no-color"
   },
   "dependencies": {
     "@algorandfoundation/algokit-utils": "^5.3.1",
