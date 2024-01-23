@@ -42,10 +42,12 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
       <p>
         <Trans t={t} i18nKey='wallet_security.details'
           components={{
-            wc: <a href='https://walletconnect.com/' />,
-            pcdocs: <a href='https://docs.perawallet.app/references/pera-connect' />,
-            pera: <a href='https://perawallet.app/' />,
-            defly:<a href='https://defly.app/' />
+            wc: <a href='https://walletconnect.com/' target='_blank' />,
+            pcdocs: <a href='https://docs.perawallet.app/references/pera-connect'
+              target='_blank'
+            />,
+            pera: <a href='https://perawallet.app/' target='_blank' />,
+            defly:<a href='https://defly.app/' target='_blank' />
           }}
         />
       </p>

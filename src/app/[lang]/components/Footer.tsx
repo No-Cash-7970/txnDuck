@@ -22,12 +22,14 @@ export default function Footer({ lng }: Props) {
             {t('footer.privacy_policy_link')}
           </Link>
           <a href='https://github.com/No-Cash-7970/txnDuck'
+            target='_blank'
             className='link link-hover flex gap-1'
           >
             <IconBrandGithubFilled size={20} aria-hidden />
             <span>{t('footer.github_link')}</span>
           </a>
           <a href='https://developer.algorand.org/'
+            target='_blank'
             className='link link-hover flex gap-1'
           >
             {/* eslint-disable-next-line max-len */}
@@ -42,6 +44,7 @@ export default function Footer({ lng }: Props) {
         <p className='text-sm mt-4'>
           <Trans t={t} i18nKey='footer.license_notice' components={
             {a: <a href='https://github.com/No-Cash-7970/txnDuck/blob/main/LICENSE.md'
+              target='_blank'
               className='underline'
             />}
           } />

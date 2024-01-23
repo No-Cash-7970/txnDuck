@@ -76,6 +76,7 @@ export default function Rekey({ t }: { t: TFunction }) {
               em: <strong />,
               a: <a href='https://developer.algorand.org/docs/get-details/accounts/rekey'
                 className='underline'
+                target='_blank'
               />
             }}
           />
