@@ -3,7 +3,11 @@
 import { useRouter } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { useAtom } from 'jotai';
-import { IconCircleLetterB, IconCircleLetterM, IconCircleLetterT } from '@tabler/icons-react';
+import {
+  IconTestPipe,
+  IconBox,
+  IconFlask
+} from '@tabler/icons-react';
 import { type NodeConfig } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
@@ -42,15 +46,15 @@ export default function NodeSelector({ lng }: Props) {
           title={t('node_selector.choose_node')}
         >
           {nodeConfig?.network === NodeConfigLib.TESTNET && <>
-            <IconCircleLetterT aria-hidden />
+            <IconFlask aria-hidden />
             <span className='truncate'>{t('node_selector.testnet')}</span>
           </>}
           {nodeConfig?.network === NodeConfigLib.MAINNET && <>
-            <IconCircleLetterM aria-hidden />
+            <IconBox aria-hidden />
             <span className='truncate'>{t('node_selector.mainnet')}</span>
           </>}
           {nodeConfig?.network === NodeConfigLib.BETANET && <>
-            <IconCircleLetterB aria-hidden />
+            <IconTestPipe aria-hidden />
             <span className='truncate'>{t('node_selector.betanet')}</span>
           </>}
         </button>
@@ -69,7 +73,7 @@ export default function NodeSelector({ lng }: Props) {
                 : updateNodeConfig(NodeConfigLib.testnetNodeConfig);
               }}>
                 <span>
-                  <IconCircleLetterT aria-hidden />
+                  <IconFlask aria-hidden stroke={1.5} />
                   <span>{t('node_selector.testnet')}</span>
                 </span>
               </li>
@@ -81,7 +85,7 @@ export default function NodeSelector({ lng }: Props) {
                 : updateNodeConfig(NodeConfigLib.mainnetNodeConfig);
               }}>
                 <span>
-                  <IconCircleLetterM aria-hidden />
+                  <IconBox aria-hidden stroke={1.5} />
                   <span>{t('node_selector.mainnet')}</span>
                 </span>
               </li>
@@ -93,7 +97,7 @@ export default function NodeSelector({ lng }: Props) {
                 : updateNodeConfig(NodeConfigLib.betanetNodeConfig);
               }}>
                 <span>
-                  <IconCircleLetterB aria-hidden />
+                  <IconTestPipe aria-hidden stroke={1.5} />
                   <span>{t('node_selector.betanet')}</span>
                 </span>
               </li>
