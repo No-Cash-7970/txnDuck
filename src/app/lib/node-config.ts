@@ -9,6 +9,8 @@ export const TESTNET = 'testnet';
 export const MAINNET = 'mainnet';
 /** Name for BetaNet */
 export const BETANET = 'betanet';
+/** Name for Sandbox */
+export const SANDBOX = 'sandbox';
 
 /** Default TestNet configuration */
 export const testnetNodeConfig: NodeConfig = {
@@ -32,6 +34,14 @@ export const betanetNodeConfig: NodeConfig = {
   nodeServer: 'https://betanet-api.algonode.cloud',
   nodeToken: '',
   nodePort: '443',
+  nodeHeaders: undefined,
+};
+/** Default Sandbox configuration */
+export const sandboxNodeConfig: NodeConfig = {
+  network: SANDBOX,
+  nodeServer: 'http://localhost',
+  nodeToken: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
+  nodePort: '4001',
   nodeHeaders: undefined,
 };
 

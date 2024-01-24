@@ -6,6 +6,7 @@ import { useAtom } from 'jotai';
 import {
   IconTestPipe,
   IconBox,
+  IconSandbox,
   IconFlask
 } from '@tabler/icons-react';
 import { type NodeConfig } from '@txnlab/use-wallet';
@@ -42,6 +43,7 @@ export default function NodeSelector({ lng }: Props) {
             + (nodeConfig?.network === NodeConfigLib.TESTNET ? 'btn-secondary' : '')
             + (nodeConfig?.network === NodeConfigLib.MAINNET ? 'btn-primary' : '')
             + (nodeConfig?.network === NodeConfigLib.BETANET ? 'btn-accent' : '')
+            + (nodeConfig?.network === NodeConfigLib.SANDBOX ? 'btn-neutral' : '')
           }
           title={t('node_selector.choose_node')}
         >
@@ -56,6 +58,10 @@ export default function NodeSelector({ lng }: Props) {
           {nodeConfig?.network === NodeConfigLib.BETANET && <>
             <IconTestPipe aria-hidden />
             <span className='truncate'>{t('node_selector.betanet')}</span>
+          </>}
+          {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
+            <IconSandbox aria-hidden />
+            <span className='truncate'>{t('node_selector.sandbox')}</span>
           </>}
         </button>
       </DropdownMenu.Trigger>
@@ -99,6 +105,18 @@ export default function NodeSelector({ lng }: Props) {
                 <span>
                   <IconTestPipe aria-hidden stroke={1.5} />
                   <span>{t('node_selector.betanet')}</span>
+                </span>
+              </li>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item asChild>
+              <li onClick={(e) => {
+                nodeConfig.network === NodeConfigLib.SANDBOX
+                ? e.preventDefault()
+                : updateNodeConfig(NodeConfigLib.sandboxNodeConfig);
+              }}>
+                <span>
+                  <IconSandbox aria-hidden stroke={1.5} />
+                  <span>{t('node_selector.sandbox')}</span>
                 </span>
               </li>
             </DropdownMenu.Item>

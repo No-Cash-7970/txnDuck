@@ -1,7 +1,12 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { betanetNodeConfig, mainnetNodeConfig, testnetNodeConfig } from '@/app/lib/node-config';
+import {
+  betanetNodeConfig,
+  mainnetNodeConfig,
+  testnetNodeConfig,
+  sandboxNodeConfig
+} from '@/app/lib/node-config';
 import { NodeConfig } from '@txnlab/use-wallet';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
@@ -34,6 +39,12 @@ describe('Node Selector', () => {
     sessionStorage.setItem('nodeConfig', JSON.stringify(betanetNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.betanet');
+  });
+
+  it('displays "Sandbox" button if the node configuration is set for Sandbox', () => {
+    sessionStorage.setItem('nodeConfig', JSON.stringify(sandboxNodeConfig));
+    render(<NodeSelector />);
+    expect(screen.getByRole('button')).toHaveTextContent('node_selector.sandbox');
   });
 
   it('sets node configuration to TestNet configuration when "TestNet" is selected', async () => {
@@ -72,6 +83,19 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('betanet');
+    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets node configuration to Sandbox configuration when "Sandbox" is selected', async () => {
+    // Set config to something that is not Sandbox
+    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    render(<NodeSelector />);
+
+    await userEvent.click(screen.getByRole('button'));
+    await userEvent.click(screen.getByText('node_selector.sandbox'));
+    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+
+    expect(nodeConfig.network).toBe('sandbox');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
   });
 
