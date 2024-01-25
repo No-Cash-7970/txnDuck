@@ -35,7 +35,7 @@ export default function SignTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='sign' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
-      <TxnImport lng={lang} />
+      <Suspense><TxnImport lng={lang} /></Suspense>
       <TxnDataTable lng={lang} />
       <Suspense fallback={<SignTxnLoading />}>
         <WalletProvider sitename={t('site_name')}><SignTxn lng={lang} /></WalletProvider>
