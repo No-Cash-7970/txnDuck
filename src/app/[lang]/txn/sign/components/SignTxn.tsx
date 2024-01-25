@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import algosdk, { microalgosToAlgos } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import { useWallet } from '@txnlab/use-wallet';
+import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -304,6 +304,11 @@ export default function SignTxn({ lng }: Props) {
                           alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
                           fill
                           aria-hidden
+                          className={
+                            // Add a light background to the dark-text KMD icon for visibility in
+                            // dark mode
+                            provider.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+                          }
                         />
                       </span>
                       {/* Wallet provider info + button */}
@@ -378,6 +383,11 @@ export default function SignTxn({ lng }: Props) {
                     src={walletClient.metadata.icon}
                     alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
                     fill
+                    className={
+                      // Add a light background to the dark-text KMD icon for visibility in dark
+                      // mode
+                      walletClient.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+                    }
                   />
                 </span>
               }

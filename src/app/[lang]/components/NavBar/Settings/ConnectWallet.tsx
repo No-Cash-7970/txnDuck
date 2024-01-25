@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { type TFunction } from 'i18next';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
-import { useWallet } from '@txnlab/use-wallet';
+import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import {
   walletTypes,
   getWalletClient,
@@ -47,6 +47,11 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                             alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
                             fill
                             aria-hidden
+                            className={
+                              // Add a light background to the dark-text KMD icon for visibility in
+                              // dark mode
+                              provider.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+                            }
                           />
                         </span>
                         <div className='leading-tight'>
@@ -73,6 +78,10 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
             <Image src={walletClient.metadata.icon}
               alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
               fill
+              className={
+                // Add a light background to the dark-text KMD icon for visibility in dark mode
+                walletClient.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+              }
             />
           </span>
           <span className='align-middle'>

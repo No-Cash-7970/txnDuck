@@ -67,11 +67,13 @@ wallet:
     myalgo: MyAlgo
     daffi: Daffi
     lute: Lute
+    kmd: Key Management Daemon (KMD)
   type:
     mobile: Mobile wallet
     mobile_web: Mobile & web wallet
     web: Web wallet
     browser_extension: Browser extension wallet
+    cli: Desktop CLI wallet
 node_selector:
   choose_node: Select node
   testnet: TestNet

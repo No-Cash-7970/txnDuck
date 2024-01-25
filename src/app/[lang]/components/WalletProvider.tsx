@@ -47,18 +47,18 @@ export default function WalletProvider({ sitename, children }: {
     providers: [
       { id: PROVIDER_ID.PERA,
         getDynamicClient: getDynamicPeraWalletConnect,
-        // @ts-ignore
+        // @ts-expect-error
         clientOptions: { compactMode: true }
       },
       { id: PROVIDER_ID.DEFLY, getDynamicClient: getDynamicDeflyWalletConnect },
       { id: PROVIDER_ID.EXODUS },
       { id: PROVIDER_ID.MYALGO, getDynamicClient: getDynamicMyAlgoWalletConnect },
       { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
-      {
-        id: PROVIDER_ID.LUTE,
+      { id: PROVIDER_ID.LUTE,
         getDynamicClient: getDynamicLuteConnect,
         clientOptions: { siteName: sitename }
-      }
+      },
+      { id: PROVIDER_ID.KMD },
     ],
     nodeConfig
   });
