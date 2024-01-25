@@ -18,18 +18,14 @@ export default function LanguageMenuItem({ page='', link='' }: Props) {
   const currentURLParams = useSearchParams();
   return (
     <DropdownMenu.Item asChild>
-      <Link
+      <a
         className={link === page ? 'active': ''}
-        href={{
-          pathname: `/${link}` + currentURLPath.replace(`/${page}`, ''),
-          query: currentURLParams.toString()
-        }}
-        replace={true}
-        scroll={false}
-        prefetch={false}
+        href={(`/${link}` + currentURLPath.replace(`/${page}`, ''))
+          + (currentURLParams.size ? `?${currentURLParams.toString()}`: '')
+        }
       >
         {supportedLangs[link].listName}
-      </Link>
+      </a>
     </DropdownMenu.Item>
   );
 }
