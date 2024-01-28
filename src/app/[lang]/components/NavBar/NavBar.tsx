@@ -2,7 +2,7 @@ import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import Settings from './Settings';
-import NodeSelector from './NodeSelector';
+import { NodeSelector } from './NodeSelector';
 import { LanguageSelector } from './LanguageSelector';
 
 type Props = {

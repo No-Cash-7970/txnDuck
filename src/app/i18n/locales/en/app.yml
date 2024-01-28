@@ -81,6 +81,17 @@ node_selector:
   betanet: BetaNet
   sandbox: Sandbox
   node_network: Node network
+  view_config:
+    btn: View current configuration
+    heading: Current Algod Server Configuration
+    name_heading: Name
+    url_heading: URL
+    port_heading: Port
+    token_heading: Token
+    headers_heading: Headers
+    test_btn: Test
+    test_pass: Online and working!
+    test_fail: There is a problem connecting to the node.
 page_not_found:
   title: Page Not Found
   quack: Quack.
