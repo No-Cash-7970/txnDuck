@@ -37,10 +37,11 @@ export async function generateMetadata(
  * @returns List of languages as parameters
  */
 export async function generateStaticParams(): Promise<{ lang: string }[]> {
-  // Loop through each supported language to output should look something like
+  // Loop through each supported language to output something like
   // `[ { lang: 'en' }, { lang: 'es' } ]` while generating a manifest file for each language.
   // The manifest file enables this website to be a Progressive Web App (PWA). Depending on the
-  // browser, each this website in each language may or may not be its own PWA, which is fine.
+  // browser, this web app may or may not be a separate PWA for each language. Either situation is
+  // fine.
   return await Promise.all(Object.keys(supportedLangs).map(async (lang) => {
     const { t } = await useTranslation(lang, 'app');
     const manifestData = {
