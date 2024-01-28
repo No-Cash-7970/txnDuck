@@ -83,7 +83,7 @@ export default function TxnDataTable({ lng }: Props) {
     <table className='table mb-4'>
       <tbody>
         {/* Node network */}
-        <tr>
+        <tr className='text-accent'>
           <th role='rowheader' className='align-top'>{t('app:node_selector.node_network')}</th>
           <td className='break-all'>{nodeConfig
             ? ((nodeConfig.network === 'mainnet'
