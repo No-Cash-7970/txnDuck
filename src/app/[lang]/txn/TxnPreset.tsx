@@ -31,7 +31,7 @@ export default function TxnPreset({
       + (color === 'accent' ? ' border-accent' : '')
       + (color === 'neutral' ? ' border-neutral' : '')
     }>
-      <div className='card-body items-center'>
+      <div className='card-body items-center prose-code:bg-base-100 prose-code:px-0'>
         <h3 className={
           'card-title text-center mt-0'
           + (color === 'primary' ? ' text-primary' : '')

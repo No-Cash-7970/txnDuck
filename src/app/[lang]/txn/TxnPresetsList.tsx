@@ -137,7 +137,7 @@ export default function TxnPresetsList({ lng }: Props) {
           color='primary'
         >
           <Trans t={t} i18nKey={`${Preset.AppRun}.description`}
-            components={{code: <code className='px-0' />}}
+            components={{code: <code />}}
           />
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppOptIn}.heading`)}
@@ -160,7 +160,7 @@ export default function TxnPresetsList({ lng }: Props) {
           color='primary'
         >
           <Trans t={t} i18nKey={`${Preset.AppUpdate}.description`}
-            components={{code: <code className='px-0' />}}
+            components={{code: <code />}}
           />
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppClose}.heading`)}
@@ -183,7 +183,7 @@ export default function TxnPresetsList({ lng }: Props) {
           color='primary'
         >
           <Trans t={t} i18nKey={`${Preset.AppDelete}.description`}
-            components={{code: <code className='px-0' />}}
+            components={{code: <code />}}
           />
         </TxnPreset>
       </section>
