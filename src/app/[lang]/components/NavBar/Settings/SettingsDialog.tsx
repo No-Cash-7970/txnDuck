@@ -44,7 +44,6 @@ export default function SettingsDialog({ lng, open = false }: Props) {
         >
           <div className='modal-box prose px-0 max-w-xl'>
             <Dialog.Title className='px-6 sm:px-8'>{t('settings.heading')}</Dialog.Title>
-
             {/* Max height = height of modal (100vh - 5em)
                             - modal title height (2em)
                             - modal title bottom margin (1.5em)

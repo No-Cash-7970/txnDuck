@@ -6,8 +6,7 @@ import {
   mixed as YupMixed,
 } from 'yup';
 import { ADDRESS_LENGTH } from './constants';
- // Run setup for the locales for Yup (`Yup.setLocale()`)
-import '@/app/lib/validation-set-locale';
+import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (`Yup.setLocale()`)
 
 /** Validation schema for wallet address */
 export const addressSchema = YupString().trim().length(ADDRESS_LENGTH);

@@ -49,34 +49,18 @@ export async function generateStaticParams(): Promise<{ lang: string }[]> {
       name: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
       start_url: `/${lang}`,
       display: 'standalone',
-      background_color: '#332d2d', // "base-100" color in tailwind.config.js
-      theme_color: '#332d2d', // "base-100" color in tailwind.config.js
+      background_color: '#332d2d', // "base-100" color for dark mode theme in tailwind.config.js
+      theme_color: '#332d2d', // "base-100" color for dark mode theme in tailwind.config.js
       icons: [
         // Icons created using: https://realfavicongenerator.net/
-        {
-          src: '/assets/icon-192.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'any'
-        },
-        {
-          src: '/assets/icon-512.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'any'
-        },
+        { src: '/assets/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
+        { src: '/assets/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
         // Maskable icons created using: https://maskable.app/editor
-        {
-          src: '/assets/icon-192-maskable.png',
-          sizes: '192x192',
-          type: 'image/png',
-          purpose: 'maskable'
+        { src: '/assets/icon-192-maskable.png',
+          sizes: '192x192', type: 'image/png', purpose: 'maskable'
         },
-        {
-          src: '/assets/icon-512-maskable.png',
-          sizes: '512x512',
-          type: 'image/png',
-          purpose: 'maskable'
+        { src: '/assets/icon-512-maskable.png',
+          sizes: '512x512', type: 'image/png', purpose: 'maskable'
         },
       ],
     };

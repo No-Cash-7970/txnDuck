@@ -31,15 +31,14 @@ export default function Boxes({ t }: { t: TFunction }) {
   return (<>
     {!boxes.length && <p className='italic'>{t('fields.apbx.none')}</p>}
 
-    {boxes.map(
-      (boxAtom, i) =>
-        <FieldGroup headingLevel={4}
-          heading={t('fields.apbx.box_heading', { index: i + 1 })}
-          key={`${boxAtom}`}
-        >
-          <BoxIndexInput t={t} boxAtom={boxAtom} index={i} />
-          <BoxNameInput t={t} boxAtom={boxAtom} index={i} />
-        </FieldGroup>
+    {boxes.map((boxAtom, i) =>
+      <FieldGroup headingLevel={4}
+        heading={t('fields.apbx.box_heading', { index: i + 1 })}
+        key={`${boxAtom}`}
+      >
+        <BoxIndexInput t={t} boxAtom={boxAtom} index={i} />
+        <BoxNameInput t={t} boxAtom={boxAtom} index={i} />
+      </FieldGroup>
     )}
 
     <div className='py-4'>
@@ -62,9 +61,7 @@ export default function Boxes({ t }: { t: TFunction }) {
       </button>
       <button type='button'
         className='btn btn-sm btn-error w-full sm:w-auto sm:ms-2 my-1'
-        onClick={
-          () => dispatch({ type: 'remove', atom: boxes[boxes.length - 1] })
-        }
+        onClick={() => dispatch({ type: 'remove', atom: boxes[boxes.length - 1] })}
         disabled={!boxes.length}
       >
         <IconMinus aria-hidden />

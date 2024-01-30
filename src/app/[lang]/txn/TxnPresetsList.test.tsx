@@ -65,8 +65,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('reg_nonpart.description')).toBeInTheDocument();
   });
 
-  it('only shows all items when "all" category is selected',
-  async () => {
+  it('only shows all items when "all" category is selected', async () => {
     render(<TxnPresetsList />);
 
     await userEvent.selectOptions(screen.getByRole('combobox'), 'all'); // Select 'all'
