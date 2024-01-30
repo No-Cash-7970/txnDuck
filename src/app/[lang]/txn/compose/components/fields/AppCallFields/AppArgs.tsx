@@ -6,15 +6,14 @@ import { atomWithValidate } from 'jotai-form';
 import { IconExclamationCircle, IconMinus, IconPlus } from '@tabler/icons-react';
 import {
   MAX_APP_ARGS,
-  ValidationMessage,
   apaaValidateOptions,
   showFormErrorsAtom,
-  validationAtom,
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { ValidationMessage, validationAtom } from '@/app/lib/utils';
 
 /** List of application arguments */
 export default function AppArgs({ t }: { t: TFunction }) {

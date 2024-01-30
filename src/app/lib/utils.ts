@@ -1,4 +1,5 @@
 /** @file Collection of general-purpose utility function and constants */
+import { SetStateAction, WritableAtom } from "jotai";
 
 /** Regular expression for detecting a valid Base64 string.
  *
@@ -158,3 +159,14 @@ export const fileToBytes = async (file: File) => {
   });
   return new Uint8Array(fileData as ArrayBuffer);
 };
+
+/** Validation error message */
+export type ValidationMessage = {
+  /** Translation key for the validation message */
+  key: string,
+  /** Dictionary containing values the validation message needs */
+  dict?: {[k: string]: any}
+}
+
+/** Type for validation atom */
+export type validationAtom<T> = WritableAtom<any, [SetStateAction<T>], void>

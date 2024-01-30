@@ -3,9 +3,9 @@
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
-import { base64RegExp, baseUnitsToDecimal } from '@/app/lib/utils';
+import { ValidationMessage, base64RegExp, baseUnitsToDecimal } from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
-import { RetrievedAssetInfo, ValidationMessage } from './types';
+import { RetrievedAssetInfo } from './types';
 import {
   Preset,
   MAX_APP_GLOBALS,

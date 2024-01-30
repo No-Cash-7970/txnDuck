@@ -6,7 +6,6 @@ import { atomWithValidate } from 'jotai-form';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
 import {
   MAX_APP_TOTAL_DEPS,
-  ValidationMessage,
   showFormErrorsAtom,
   apbxIValidateOptions,
   apbxNValidateOptions,
@@ -17,6 +16,7 @@ import {
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { ValidationMessage } from '@/app/lib/utils';
 
 /** List of application boxes */
 export default function Boxes({ t }: { t: TFunction }) {

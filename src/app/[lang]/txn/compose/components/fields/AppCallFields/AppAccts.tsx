@@ -8,13 +8,12 @@ import {
   ADDRESS_LENGTH,
   MAX_APP_ACCTS,
   MAX_APP_TOTAL_DEPS,
-  ValidationMessage,
   showFormErrorsAtom,
-  validationAtom,
   apatValidateOptions,
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import FieldErrorMessage from '../FieldErrorMessage';
+import { ValidationMessage, validationAtom } from '@/app/lib/utils';
 
 /** List of application accounts */
 export default function AppAccts({ t }: { t: TFunction }) {

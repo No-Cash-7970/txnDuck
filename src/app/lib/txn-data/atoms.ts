@@ -4,6 +4,7 @@ import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from '
 import { atom } from 'jotai';
 import { splitAtom } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
+import { base64RegExp, validationAtom, ValidationMessage } from '@/app/lib/utils';
 import {
   ASSET_NAME_MAX_LENGTH,
   MAX_APP_EXTRA_PAGES,
@@ -15,11 +16,8 @@ import {
 import type {
   BoxRefAtomGroup,
   RetrievedAssetInfo,
-  validationAtom,
-  ValidationMessage
 } from './types';
 import { addressSchema, idSchema, YupNumber, YupString } from './validation-rules';
-import { base64RegExp } from '../utils';
 
 /*
  * General
