@@ -88,7 +88,7 @@ node_selector:
   sandbox: Sandbox
   node_network: Red de nodos
   view_config:
-    btn: Ver la configuración actual
+    btn: Ver configuración actual
     heading: Configuración actual del servidor Algod
     name_heading: Nombre
     url_heading: URL
@@ -98,6 +98,21 @@ node_selector:
     test_btn: Probar
     test_pass: ¡En línea y funciona!
     test_fail: Hay un problema de conexión con el nodo.
+  custom_config:
+    set_btn: Establecer configuración personalizada
+    edit_btn: Editar configuración personalizada
+    heading: Configuración personalizada del servidor Algod
+    instructions: Los campos marcados con un asterisco (<marker>*</marker>) son obligatorios.
+    no_headers: No cabeceras
+    add_header_btn: Añadir una cabecera
+    remove_header_btn: Eliminar una cabecera
+    header_heading: "Cabecera nº {{index}}"
+    header_name_label: "Nombre de Cabecera nº {{index}}"
+    header_value_label: "Valor de Cabecera nº {{index}}"
+    test_btn: Probar configuración
+    submit_btn: Guardar configuración
+    clear_btn: Borrar configuración
+    cleared_msg: Se ha borrado la configuración personalizada.
 page_not_found:
   title: Página no encontrada
   quack: Cua.

@@ -1,4 +1,6 @@
 /** @file Collection of general-purpose utility function and constants */
+
+import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdk";
 import { SetStateAction, WritableAtom } from "jotai";
 
 /** Regular expression for detecting a valid Base64 string.
@@ -158,6 +160,28 @@ export const fileToBytes = async (file: File) => {
     reader.readAsArrayBuffer(file);
   });
   return new Uint8Array(fileData as ArrayBuffer);
+};
+
+/** Check if the Algod node server with the given configuration is working
+ * @param token Algod node server token
+ * @param url Algod node server URL
+ * @param port Algod node server port
+ * @param headers Algod node server headers
+ * @returns
+ */
+export const isAlgodOK = async (
+  token: string | AlgodTokenHeader | CustomTokenHeader | BaseHTTPClient,
+  url: string,
+  port?: number | string,
+  headers?: Record<string, string>
+) => {
+  try {
+    const algod = new Algodv2(token, url, port, headers);
+    await algod.ready().do();
+  } catch (e) {
+    return false;
+  }
+  return true;
 };
 
 /** Validation error message */

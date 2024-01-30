@@ -1,9 +1,9 @@
 import { Fragment, useState } from "react";
 import { IconAlertTriangleFilled, IconMoodSmileFilled } from "@tabler/icons-react";
 import { useAtomValue } from "jotai";
-import { Algodv2 } from "algosdk";
 import { useTranslation } from "@/app/i18n/client";
 import { nodeConfigAtom } from "@/app/lib/node-config";
+import { isAlgodOK } from "@/app/lib/utils";
 
 type Props = {
   /** Language */
@@ -72,20 +72,17 @@ export default function ViewConfigDialogContent({ lng }: Props) {
       </div>
       <div className='modal-action px-6 sm:px-8 grid grid-cols-3 gap-2'>
         <button type='button' className='btn btn-block col-span-1 btn-primary'
-          onClick={(e) => {
+          onClick={async (e) => {
             e.preventDefault();
             setTestingNode(true);
-            setNodeOK(undefined);
-            const algod = new Algodv2(
+            setNodeOK(undefined); // Clear test status while testing
+            setNodeOK(await isAlgodOK(
               nodeConfig.nodeToken ?? '',
               nodeConfig.nodeServer,
               nodeConfig.nodePort,
-              nodeConfig.nodeHeaders,
-            );
-            algod.ready().do()
-              .then(() => setNodeOK(true))
-              .catch(() => setNodeOK(false))
-              .finally(() => setTestingNode(false));
+              nodeConfig.nodeHeaders
+            ));
+            setTestingNode(false);
           }}
         >
           {testingNode && <span className='loading loading-spinner' />}

@@ -51,7 +51,7 @@ same.
   application (smart contract), etc.
 - Import a transaction file
 - Export to a signed or unsigned transaction file that is compatible
-- FUTURE: Specify custom algod node with Algorand's `goal` command-line tool
+- Specify custom Algod node
 - FUTURE: Build transaction groups (atomic transactions)
 
 ## :speech_balloon: Supported languages

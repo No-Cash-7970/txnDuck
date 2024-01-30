@@ -8,6 +8,8 @@ import {
   sandboxNodeConfig
 } from '@/app/lib/node-config';
 import { NodeConfig } from '@txnlab/use-wallet';
+import JotaiProvider from '@/app/[lang]/components/JotaiProvider';
+import { Provider as ToastProvider, Viewport as ToastViewport } from '@radix-ui/react-toast';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
@@ -184,6 +186,196 @@ describe('Node Selector', () => {
       await userEvent.click(screen.getByText('node_selector.view_config.btn'));
       // Click "Test" button
       await userEvent.click(screen.getByText('node_selector.view_config.test_btn'));
+
+      expect(screen.getByText(/node_selector.view_config.test_fail/)).toBeInTheDocument();
+    });
+
+  });
+
+  describe('Custom Node Configuration Dialog', () => {
+
+    it('has instructions', async () => {
+      render(<NodeSelector />);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
+
+      expect(await screen.findByText('node_selector.custom_config.instructions'))
+        .toBeInTheDocument();
+    });
+
+    it('sets current node configuration specified configuration when form is submitted',
+    async () => {
+      render(<NodeSelector />);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
+      // Fill out form fields
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
+      await userEvent.paste('https://foobar.example2.net');
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.port/));
+      await userEvent.paste('123');
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.token/));
+      await userEvent.paste('my_super_special_awesome_token');
+      await userEvent.click(screen.getByText(/node_selector.custom_config.add_header_btn/));
+      await userEvent.click(screen.getByLabelText(/node_selector.custom_config.header_name_label/));
+      await userEvent.paste('X-My-Header');
+      await userEvent.click(
+        screen.getByLabelText(/node_selector.custom_config.header_value_label/)
+      );
+      await userEvent.paste('hello');
+      // Submit
+      await userEvent.click(screen.getByText('node_selector.custom_config.submit_btn'));
+
+      // Test if dialog is closed
+      expect(screen.queryByText('node_selector.custom_config.heading'))
+        .not.toBeInTheDocument();
+      // Test if "Custom" is an item in the menu
+      expect(screen.getByText('node_selector.custom')).toBeInTheDocument();
+      // Test if button text changed: "Set custom configuration" -> "Edit custom configuration"
+      expect(screen.queryByText('node_selector.custom_config.set_btn')).not.toBeInTheDocument();
+      expect(screen.getByText('node_selector.custom_config.edit_btn')).toBeInTheDocument();
+      // Check local storage
+      expect(JSON.parse(localStorage.getItem('customNode') || '{}')).toStrictEqual({
+        nodeServer: 'https://foobar.example2.net',
+        nodeToken: 'my_super_special_awesome_token',
+        nodePort: 123,
+        nodeHeaders: {'X-My-Header': 'hello'},
+      });
+    });
+
+    it('does not set current node configuration when invalid form is submitted', async () => {
+      localStorage.clear();
+      render(<JotaiProvider><NodeSelector /></JotaiProvider>);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
+      // Put the form in to an invalid state by not entering required fields
+      await userEvent.click(screen.getByText(/node_selector.custom_config.add_header_btn/));
+      // Submit
+      await userEvent.click(screen.getByText('node_selector.custom_config.submit_btn'));
+
+      expect(await screen.findByLabelText(/node_selector.view_config.url/))
+        .toHaveClass('input-error');
+      expect(screen.getByLabelText(/node_selector.view_config.port/))
+        .not.toHaveClass('input-error');
+      expect(screen.getByLabelText(/node_selector.view_config.token/))
+        .not.toHaveClass('input-error');
+      expect(screen.getByLabelText(/node_selector.view_config.port/))
+        .not.toHaveClass('input-error');
+      expect(screen.getByLabelText(/node_selector.custom_config.header_name_label/))
+        .toHaveClass('input-error');
+      expect(screen.getByLabelText(/node_selector.custom_config.header_value_label/))
+        .not.toHaveClass('input-error');
+      expect(screen.getAllByText('form.error.required')).toHaveLength(2);
+    });
+
+    it('loads custom node configuration from storage', async () => {
+      localStorage.setItem('customNode', JSON.stringify({
+        nodeServer: 'https://foobar5.example.com',
+        nodeToken: 'HelloWorld',
+        nodePort: 4000,
+        nodeHeaders: {bar: 'baz qux'},
+      }));
+      render(<JotaiProvider><NodeSelector /></JotaiProvider>);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.edit_btn'));
+
+      expect(screen.getByLabelText(/node_selector.view_config.url/))
+        .toHaveValue('https://foobar5.example.com');
+      expect(screen.getByLabelText(/node_selector.view_config.port/)).toHaveValue('4000');
+      expect(screen.getByLabelText(/node_selector.view_config.token/)).toHaveValue('HelloWorld');
+      expect(screen.getByLabelText(/node_selector.custom_config.header_name_label/))
+        .toHaveValue('bar');
+      expect(screen.getByLabelText(/node_selector.custom_config.header_value_label/))
+        .toHaveValue('baz qux');
+    });
+
+    it('removes custom configuration if "clear" button is clicked', async () => {
+      localStorage.setItem('customNode', JSON.stringify({
+        nodeServer: 'https://foobar5.example.com',
+        nodeToken: 'HelloWorld',
+        nodePort: 4000,
+        nodeHeaders: {bar: 'baz qux'},
+      }));
+      render(
+        <ToastProvider>
+          <JotaiProvider><NodeSelector /></JotaiProvider>
+          <ToastViewport />
+        </ToastProvider>
+      );
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.edit_btn'));
+      // Click "clear" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.clear_btn'));
+
+      // Check for toast notification
+      expect(screen.getByText('node_selector.custom_config.cleared_msg')).toBeInTheDocument();
+      // Check all form fields are empty
+      expect(screen.getByLabelText(/node_selector.view_config.url/)).toHaveValue('');
+      expect(screen.getByLabelText(/node_selector.view_config.port/)).toHaveValue('');
+      expect(screen.getByLabelText(/node_selector.view_config.token/)).toHaveValue('');
+      expect(screen.queryByLabelText(/node_selector.view_config.header_name_label/))
+        .not.toBeInTheDocument();
+      // Check custom configuration is removed from localStorage
+      expect(localStorage.getItem('customNode')).toBeNull();
+
+      // Exit dialog
+      await userEvent.click(screen.getByTitle('close'));
+
+      // Test if "Custom" is NOT an item in the menu
+      expect(screen.queryByText('node_selector.custom')).not.toBeInTheDocument();
+      // Test if button text changed: "Edit custom configuration" -> "Set custom configuration"
+      expect(screen.queryByText('node_selector.custom_config.edit_btn')).not.toBeInTheDocument();
+      expect(screen.getByText('node_selector.custom_config.set_btn')).toBeInTheDocument();
+    });
+
+    it('shows node is online if node responds with "OK" after clicking "Test" button', async () => {
+      localStorage.clear();
+      render(<JotaiProvider><NodeSelector /></JotaiProvider>);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
+      // Fill out enough form fields
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
+      await userEvent.paste('https://foobar.example2.net');
+      // Click "Test" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.test_btn'));
+
+      expect(await screen.findByText(/node_selector.view_config.test_pass/)).toBeInTheDocument();
+    });
+
+    it('shows node is NOT online if node does NOT respond with "OK" after clicking "Test" button',
+    async () => {
+      localStorage.clear();
+      render(<JotaiProvider><NodeSelector /></JotaiProvider>);
+
+      // Open menu
+      await userEvent.click(screen.getByRole('button'));
+      // Click "Custom config" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
+      // Fill out enough form fields
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
+      await userEvent.paste('https://foobar.example2.net');
+      // The token set to "fail" triggers the mock node response to be an error response
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.token/));
+      await userEvent.paste('fail');
+      // Click "Test" button
+      await userEvent.click(screen.getByText('node_selector.custom_config.test_btn'));
 
       expect(screen.getByText(/node_selector.view_config.test_fail/)).toBeInTheDocument();
     });

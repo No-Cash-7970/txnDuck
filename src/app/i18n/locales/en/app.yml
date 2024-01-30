@@ -80,6 +80,7 @@ node_selector:
   mainnet: MainNet
   betanet: BetaNet
   sandbox: Sandbox
+  custom: Custom
   node_network: Node network
   view_config:
     btn: View current configuration
@@ -92,6 +93,21 @@ node_selector:
     test_btn: Test
     test_pass: Online and working!
     test_fail: There is a problem connecting to the node.
+  custom_config:
+    set_btn: Set custom configuration
+    edit_btn: Edit custom configuration
+    heading: Custom Algod Server Configuration
+    instructions: Fields marked with an asterisk (<marker>*</marker>) are required.
+    no_headers: No headers
+    add_header_btn: Add a header
+    remove_header_btn: Remove a header
+    header_heading: "Header #{{index}}"
+    header_name_label: "Header #{{index}} name"
+    header_value_label: "Header #{{index}} value"
+    test_btn: Test configuration
+    submit_btn: Save configuration
+    clear_btn: Clear configuration
+    cleared_msg: Custom configuration has been cleared.
 page_not_found:
   title: Page Not Found
   quack: Quack.

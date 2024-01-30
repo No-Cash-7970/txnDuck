@@ -4,20 +4,34 @@ import { useRouter } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import dynamic from 'next/dynamic';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import {
   IconTestPipe,
   IconBox,
   IconSandbox,
   IconFlask,
   IconEyeCog,
+  IconServerCog,
+  IconPencilCog,
   IconX,
+  IconServer2,
 } from '@tabler/icons-react';
 import { type NodeConfig } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
+import { useState } from 'react';
 
 const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'), {
+  ssr: false,
+  loading: () => (
+    <p className='text-center'>
+      <span className='loading loading-ball loading-lg text-primary'></span>
+      <span className='loading loading-ball loading-lg text-secondary'></span>
+      <span className='loading loading-ball loading-lg text-accent'></span>
+    </p>
+  ),
+});
+const CustomNodeDialogContent = dynamic(() => import('./CustomNodeDialogContent'), {
   ssr: false,
   loading: () => (
     <p className='text-center'>
@@ -38,6 +52,8 @@ export default function NodeSelector({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const router = useRouter();
   const [nodeConfig, setNodeConfig] = useAtom(NodeConfigLib.nodeConfigAtom);
+  const customNode = useAtomValue(NodeConfigLib.customNodeAtom);
+  const [customConfigOpen, setCustomConfigOpen] = useState<boolean>(false);
 
   /** Set the node configuration to the given configuration and apply the change
    * @param newConfig The new node configuration to apply
@@ -71,6 +87,10 @@ export default function NodeSelector({ lng }: Props) {
           {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
             <IconSandbox aria-hidden />
             <span className='truncate'>{t('node_selector.sandbox')}</span>
+          </>}
+          {nodeConfig?.network === NodeConfigLib.CUSTOM && <>
+            <IconServer2 aria-hidden />
+            <span className='truncate'>{t('node_selector.custom')}</span>
           </>}
         </button>
       </DropdownMenu.Trigger>
@@ -125,6 +145,16 @@ export default function NodeSelector({ lng }: Props) {
                 </span>
               </li>
             </DropdownMenu.Item>
+            {customNode && <DropdownMenu.Item asChild>
+              <li className='mb-1' onClick={
+                (e) => updateNodeConfig({network: NodeConfigLib.CUSTOM, ...customNode})
+              }>
+                <span>
+                  <IconServer2 aria-hidden stroke={1.5} />
+                  <span>{t('node_selector.custom')}</span>
+                </span>
+              </li>
+            </DropdownMenu.Item>}
             {/* View current configuration */}
             <Dialog.Root>
               <Dialog.Trigger asChild>
@@ -150,6 +180,49 @@ export default function NodeSelector({ lng }: Props) {
                       {t('node_selector.view_config.heading')}
                     </Dialog.Title>
                     <ViewConfigDialogContent lng={lng} />
+                    <Dialog.Close asChild>
+                      {/* eslint-disable-next-line max-len */}
+                      <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
+                        title={t('close')}
+                      >
+                        <IconX aria-hidden />
+                      </button>
+                    </Dialog.Close>
+                  </div>
+                </Dialog.Content>
+              </Dialog.Portal>
+            </Dialog.Root>
+            {/* Custom configuration */}
+            <Dialog.Root open={customConfigOpen} onOpenChange={setCustomConfigOpen}>
+              <Dialog.Trigger asChild>
+                <DropdownMenu.Item asChild onSelect={
+                  (e) => e.preventDefault() // Disable action so dialog can work
+                }>
+                  <li className='mb-1'>
+                    <span className='bg-secondary text-secondary-content hover:text-base-content'>
+                      {!customNode && <>
+                        <IconServerCog stroke={1.5} aria-hidden />
+                        {t('node_selector.custom_config.set_btn')}
+                      </>}
+                      {customNode && <>
+                        <IconPencilCog stroke={1.5} aria-hidden />
+                        {t('node_selector.custom_config.edit_btn')}
+                      </>}
+                    </span>
+                  </li>
+                </DropdownMenu.Item>
+              </Dialog.Trigger>
+              <Dialog.Portal>
+                <Dialog.Overlay />
+                <Dialog.Content
+                  className='modal data-[state=open]:modal-open z-[1000]'
+                  aria-describedby={undefined}
+                >
+                  <div className='modal-box prose px-0 max-w-xl'>
+                    <Dialog.Title className='px-6 sm:px-8'>
+                      {t('node_selector.custom_config.heading')}
+                    </Dialog.Title>
+                    <CustomNodeDialogContent lng={lng} setopen={setCustomConfigOpen} />
                     <Dialog.Close asChild>
                       {/* eslint-disable-next-line max-len */}
                       <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
