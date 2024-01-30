@@ -2,12 +2,12 @@ title: Privacy Policy
 personal_info:
   heading: Collection of personal information
   details: >
-    TxnDuck does not collect or store any personal information (name, email address, etc) or any
+    TxnDuck does not collect or store any personal information (name, email address, etc.) or any
     diagnostic data. It does not log any usage information. It does not use any third-party
     analytics or advertising platforms.
 app_state_data:
   heading: Storage of application state data
-  details: All of txnDuck’s application state data (temporary transaction data, user preferences and
+  details: All of txnDuck’s application state data (temporary transaction data, user preferences,
     selected language, etc.) is stored <strong>only</strong> your device. TxnDuck will
     <strong>never</strong> transmit any of the application state data to anywhere outside your
     device without your permission.

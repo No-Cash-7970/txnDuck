@@ -9,7 +9,7 @@ app_state_data:
   heading: Almacenamiento de datos de estado de la aplicación
   details: >
     Todos los datos del estado de la aplicación de TxnPato (datos de transacciones temporales,
-    preferencias del usuario e idioma seleccionado, etc.) se almacenan <strong>sólo</strong> en su
+    preferencias del usuario, idioma seleccionado, etc.) se almacenan <strong>sólo</strong> en su
     dispositivo. TxnPato <strong>nunca</strong> transmitirá ninguno de los datos de estado de la
     aplicación a ningún lugar fuera de su dispositivo sin su permiso.
 wallet_security:
