@@ -76,9 +76,12 @@ export default function NodeSelector({ lng }: Props) {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content asChild>
-          <ul className={'z-[1000] card menu shadow-md border border-base-300 bg-base-200 max-w-72'
+          <ul className={
+            'z-[1000] card menu shadow-md border border-base-300 bg-base-200 max-w-72 overflow-auto'
             + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
             + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
+            + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
+            + ' prose-li:max-w-full'
           }>
             <li className='menu-title'>{t('node_selector.choose_node')}</li>
             {/* Node Presets */}
