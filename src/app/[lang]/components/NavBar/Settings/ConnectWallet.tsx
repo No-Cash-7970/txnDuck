@@ -20,7 +20,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
 
   return (<>
     {!activeAccount && <>
-      <div className='text-secondary mb-1 text-center'>
+      <div className='text-secondary mb-2 text-center'>
         <i>{t('wallet.is_not_connected')}</i>
       </div>
       <DropdownMenu.Root>
