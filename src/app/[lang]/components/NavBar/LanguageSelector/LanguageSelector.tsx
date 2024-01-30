@@ -25,14 +25,14 @@ export default function LanguageSelector({ lng }: Props) {
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content asChild>
-          <ul className={'z-[1000] card menu shadow-md border border-base-300 bg-base-200'
+          <ul className={
+            'z-[1000] card menu shadow-md border border-base-300 bg-base-200 max-w-72 overflow-auto'
             + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
             + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
+            + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
           }>
             {Object.keys(supportedLangs).map((l: string) => (
-              <li key={l} className='mb-1'>
-                <LanguageMenuItem page={lng} link={l} />
-              </li>
+              <LanguageMenuItem key={l} page={lng} link={l} />
             ))}
           </ul>
         </DropdownMenu.Content>

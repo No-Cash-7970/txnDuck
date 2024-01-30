@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { supportedLangs } from '@/app/i18n/settings';
@@ -18,14 +17,16 @@ export default function LanguageMenuItem({ page='', link='' }: Props) {
   const currentURLParams = useSearchParams();
   return (
     <DropdownMenu.Item asChild>
-      <a
-        className={link === page ? 'active': ''}
-        href={(`/${link}` + currentURLPath.replace(`/${page}`, ''))
-          + (currentURLParams.size ? `?${currentURLParams.toString()}`: '')
-        }
-      >
-        {supportedLangs[link].listName}
-      </a>
+      <li className='mb-1 max-w-full'>
+        <a
+          className={link === page ? 'active': ''}
+          href={(`/${link}` + currentURLPath.replace(`/${page}`, ''))
+            + (currentURLParams.size ? `?${currentURLParams.toString()}`: '')
+          }
+        >
+          {supportedLangs[link].listName}
+        </a>
+      </li>
     </DropdownMenu.Item>
   );
 }
