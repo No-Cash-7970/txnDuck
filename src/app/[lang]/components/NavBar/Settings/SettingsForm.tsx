@@ -16,7 +16,7 @@ import * as Settings from '@/app/lib/app-settings';
 import { WalletProvider } from '@/app/[lang]/components';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import ConnectWallet from './ConnectWallet';
-import ToastNotification from './ToastNotification';
+import ToastNotification from '@/app/[lang]/components/ToastNotification';
 import { IconExclamationCircle } from '@tabler/icons-react';
 
 type Props = {
