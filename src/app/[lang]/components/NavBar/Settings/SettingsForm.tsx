@@ -6,7 +6,6 @@ import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import {
-  CheckboxField,
   NumberField,
   RadioButtonGroupField,
   ToggleField
@@ -318,7 +317,7 @@ export default function SettingsForm(props: Props) {
       {/* Reset button */}
       <div className='mt-9'>
         <button
-          className='btn btn-sm btn-block btn-error mx-auto'
+          className='btn btn-sm btn-block btn-error mx-auto mb-1'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();

@@ -1,7 +1,6 @@
 /** @file Collection of functions for validating the whole form */
 
 import { type useStore } from "jotai";
-import * as jotaiForm from "jotai-form";
 import * as FieldValidation from "./field-validation";
 import { TransactionType } from "algosdk";
 import { apaaListAtom, apasListAtom, apatListAtom, apbxListAtom, apfaListAtom } from "./atoms";
