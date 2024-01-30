@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { IconAlertTriangle } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
@@ -15,7 +15,6 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function CloseTo({ t }: { t: TFunction }) {
   const form = useAtomValue(paymentFormControlAtom);

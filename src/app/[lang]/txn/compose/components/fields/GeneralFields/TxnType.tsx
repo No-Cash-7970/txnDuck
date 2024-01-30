@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { SelectField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, SelectField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -10,7 +10,6 @@ import {
   tipBtnClass,
 } from '@/app/lib/txn-data';
 import { TransactionType } from 'algosdk';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function TxnType({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);

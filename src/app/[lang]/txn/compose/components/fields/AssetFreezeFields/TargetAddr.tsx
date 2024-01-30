@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -12,7 +12,6 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function TargetAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetFreezeFormControlAtom);

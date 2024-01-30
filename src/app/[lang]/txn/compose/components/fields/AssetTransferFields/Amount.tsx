@@ -1,4 +1,4 @@
-import { NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -10,7 +10,6 @@ import {
   txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { baseUnitsToDecimal } from '@/app/lib/utils';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Amount({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);

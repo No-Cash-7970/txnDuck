@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { FieldGroup, NumberField, ToggleField } from '@/app/[lang]/components/form';
+import {
+  FieldErrorMessage,
+  FieldGroup,
+  NumberField,
+  ToggleField
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -13,7 +18,6 @@ import {
   txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { microalgosToAlgos } from 'algosdk';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { defaultUseSugFee as defaultUseSugFeeAtom } from '@/app/lib/app-settings';
 
 export default function Fee({ t }: { t: TFunction }) {

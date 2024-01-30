@@ -1,4 +1,4 @@
-import { NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -9,7 +9,6 @@ import {
   tipBtnClass,
   fvConditionalRequireAtom,
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function FirstValid({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);

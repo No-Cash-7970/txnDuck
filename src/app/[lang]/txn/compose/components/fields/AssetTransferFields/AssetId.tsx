@@ -3,7 +3,7 @@ import { IconAlertTriangle } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue } from 'jotai';
 import { useDebouncedCallback } from 'use-debounce';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import {
   assetTransferFormControlAtom,
   getAssetInfo,
@@ -14,7 +14,6 @@ import {
 } from '@/app/lib/txn-data';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { assetInfoGet as assetInfoGetSettingAtom } from '@/app/lib/app-settings';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function AssetId({ t }: { t: TFunction }) {

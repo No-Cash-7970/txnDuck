@@ -1,4 +1,9 @@
-import { CheckboxField, FieldGroup, TextField } from '@/app/[lang]/components/form';
+import {
+  CheckboxField,
+  FieldErrorMessage,
+  FieldGroup,
+  TextField
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -11,7 +16,6 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function MetadataHash({ t }: { t: TFunction }) {
   return (

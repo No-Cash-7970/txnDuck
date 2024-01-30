@@ -4,7 +4,7 @@ import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconFile, IconX } from '@tabler/icons-react';
-import { FileField, TextAreaField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, FileField, TextAreaField } from '@/app/[lang]/components/form';
 import {
   Preset,
   apapConditionalRequireAtom,
@@ -15,7 +15,6 @@ import {
   tipContentClass
 } from '@/app/lib/txn-data';
 import { bytesToBase64, fileToBytes } from '@/app/lib/utils';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function ApprovalProg({ t }: { t: TFunction }) {
   const preset = useSearchParams().get(Preset.ParamName);

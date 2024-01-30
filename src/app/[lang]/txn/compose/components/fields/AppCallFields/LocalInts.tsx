@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -14,7 +14,6 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 /** Number of Local Integers field */
 export default function LocalInts({ t }: { t: TFunction }) {

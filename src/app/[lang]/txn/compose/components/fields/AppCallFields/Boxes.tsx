@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { NumberField, TextField, FieldGroup } from '@/app/[lang]/components/form';
+import {
+  NumberField,
+  TextField,
+  FieldGroup,
+  FieldErrorMessage
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
@@ -15,7 +20,6 @@ import {
   tipContentClass
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { ValidationMessage } from '@/app/lib/utils';
 
 /** List of application boxes */

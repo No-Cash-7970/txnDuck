@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { FieldGroup, TextField, ToggleField } from '@/app/[lang]/components/form';
+import {
+  FieldErrorMessage,
+  FieldGroup,
+  TextField,
+  ToggleField
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { IconAlertTriangleFilled } from '@tabler/icons-react';
@@ -14,7 +19,6 @@ import {
   tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { defaultApar_mUseSnd as defaultApar_mUseSndAtom } from '@/app/lib/app-settings';
 
 export default function ManagerAddr({ t }: { t: TFunction }) {

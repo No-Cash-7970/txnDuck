@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -12,7 +12,6 @@ import {
   votelstConditionalRequireAtom
 } from '@/app/lib/txn-data';
 import { useEffect } from 'react';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function LastVoteRound({ t }: { t: TFunction }) {
   const form = useAtomValue(keyRegFormControlAtom);

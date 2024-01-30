@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
@@ -12,7 +12,6 @@ import {
   apatValidateOptions,
 } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { ValidationMessage, validationAtom } from '@/app/lib/utils';
 
 /** List of application accounts */

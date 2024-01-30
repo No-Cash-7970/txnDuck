@@ -1,4 +1,9 @@
-import { CheckboxField, FieldGroup, TextAreaField } from '@/app/[lang]/components/form';
+import {
+  CheckboxField,
+  FieldErrorMessage,
+  FieldGroup,
+  TextAreaField
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -11,7 +16,6 @@ import {
   noteConditionalMaxAtom,
   noteConditionalBase64Atom,
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Note({ t }: { t: TFunction }) {
   return (

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
@@ -15,7 +15,6 @@ import {
   tipBtnClass,
 } from '@/app/lib/txn-data';
 import { IconAlertTriangle } from '@tabler/icons-react';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function Rekey({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);

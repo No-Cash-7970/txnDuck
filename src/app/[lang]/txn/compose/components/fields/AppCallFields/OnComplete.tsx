@@ -1,5 +1,5 @@
 import { useSearchParams } from 'next/navigation';
-import { SelectField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, SelectField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import { OnApplicationComplete } from 'algosdk';
@@ -10,7 +10,6 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 
 export default function OnComplete({ t }: { t: TFunction }) {
   const form = useAtomValue(applFormControlAtom);

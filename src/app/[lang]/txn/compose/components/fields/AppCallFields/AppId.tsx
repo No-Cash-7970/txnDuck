@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TextField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { OnApplicationComplete } from 'algosdk';
@@ -13,7 +13,6 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import FieldErrorMessage from '../FieldErrorMessage';
 import { removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function AppId({ t }: { t: TFunction }) {
