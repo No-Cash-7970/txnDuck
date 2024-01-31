@@ -7,20 +7,25 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   use: () => ({ t: (key: string) => key }),
 }));
+
 // Mock i18next before modules that use it are imported because it is used by a child component
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock navigation hooks because they are used by a child components
 jest.mock('next/navigation', () => ({
   useRouter: () => ({}),
   useSearchParams: () => ({get: () => 'foo'})
 }));
+
 // Mock the utils library because of the use of `fetch()`. This needs to be mocked because it is a
 // dependency of a child client component.
 jest.mock('../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
+
 // Mock the wallet provider
 jest.mock('../../components/WalletProvider.tsx', () => 'div');
+
 // Mock algokit because it is used by a child components
 jest.mock('@algorandfoundation/algokit-utils', () => ({
   ...jest.requireActual('@algorandfoundation/algokit-utils'),

@@ -7,6 +7,7 @@ jest.mock('react', () => ({
   ...jest.requireActual('react'),
   use: () => ({ t: (key: string) => key }),
 }));
+
 // Mock i18next before modules that use it are imported because it is used by a child component
 jest.mock('react-i18next', () => i18nextClientMock);
 

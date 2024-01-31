@@ -7,12 +7,14 @@ import * as fs from "node:fs";
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock useRouter
 let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
   useSearchParams: () => ({ get: () => presetMockValue }),
 }));
+
 // Mock algokit
 jest.mock('@algorandfoundation/algokit-utils', () => ({
   getAlgoClient: () => ({
@@ -32,6 +34,7 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     })
   }),
 }));
+
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 

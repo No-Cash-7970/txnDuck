@@ -6,11 +6,13 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   ...jest.requireActual('../../../../lib/utils.ts'),
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
+
 // Mock algokit
 let sendErrorMsg = '', confirmErrorMsg = '';
 const sendRawTxnSpy = jest.fn(), waitConfirmSpy = jest.fn();
@@ -30,10 +32,12 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
     return { get_obj_for_encoding: () => ({}) };
   }
 }));
+
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
+
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 

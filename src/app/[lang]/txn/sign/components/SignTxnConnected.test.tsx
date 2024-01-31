@@ -7,8 +7,10 @@ import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWa
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
+
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array([
@@ -27,11 +29,13 @@ jest.mock('../../../../lib/utils.ts', () => ({
     112,12,192,137,116,205,208,164,116,121,112,101,163,112,97,121
   ])
 }));
+
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
   useRouter: () => ({}),
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
+
 // Mock algokit
 jest.mock('@algorandfoundation/algokit-utils', () => ({
   ...jest.requireActual('@algorandfoundation/algokit-utils'),

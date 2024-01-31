@@ -9,6 +9,7 @@ global.TextDecoder = TextDecoder;
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock algokit
 let mockGenesisHash = '';
 jest.mock('@algorandfoundation/algokit-utils', () => ({
