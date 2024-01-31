@@ -64,7 +64,7 @@ export function middleware(req: NextRequest) {
     const refererUrl = new URL(req.headers.get('referer')!);
     const lngInReferer = SUPPORTED_LANGS.find((l) => refererUrl.pathname.startsWith(`/${l}`));
     const response = NextResponse.next();
-    if (lngInReferer) response.cookies.set(cookieName, lngInReferer);
+    if (lngInReferer) response.cookies.set(cookieName, lngInReferer, { sameSite: 'strict' });
     return response;
   }
 
