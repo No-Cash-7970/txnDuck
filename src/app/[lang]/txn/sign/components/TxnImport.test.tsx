@@ -14,7 +14,6 @@ jest.mock('react-i18next', () => i18nextClientMock);
 let mockGenesisHash = '';
 jest.mock('@algorandfoundation/algokit-utils', () => ({
   ...jest.requireActual('@algorandfoundation/algokit-utils'),
-  getAlgoClient: () => ({}),
   getTransactionParams: () => new Promise((resolve) => resolve({
     genesisID: 'some-network-id',
     genesisHash: mockGenesisHash,

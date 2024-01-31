@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';
-import { modelsv2 } from 'algosdk';
+import { Algodv2, modelsv2 } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -63,11 +63,12 @@ export default function SendTxn({ lng }: Props) {
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
 
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const algod = algokit.getAlgoClient({
-    server: nodeConfig.nodeServer,
-    port: nodeConfig.nodePort,
-    token: (nodeConfig.nodeToken || '') as string,
-  });
+  const algod = new Algodv2(
+    nodeConfig.nodeToken ?? '',
+    nodeConfig.nodeServer,
+    nodeConfig.nodePort,
+    nodeConfig.nodeHeaders
+  );
 
   /** Processes the given file as a signed transaction file
    * @param file File to process

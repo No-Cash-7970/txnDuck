@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import algosdk, { microalgosToAlgos } from 'algosdk';
+import algosdk, { Algodv2, microalgosToAlgos } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
 import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -63,11 +63,12 @@ export default function SignTxn({ lng }: Props) {
    */
   const getSuggestedParams = useMemo(() => {
     // Get suggested parameters
-    const algod = algokit.getAlgoClient({
-      server: nodeConfig.nodeServer,
-      port: nodeConfig.nodePort,
-      token: (nodeConfig.nodeToken || '') as string,
-    });
+    const algod = new Algodv2(
+      nodeConfig.nodeToken ?? '',
+      nodeConfig.nodeServer,
+      nodeConfig.nodePort,
+      nodeConfig.nodeHeaders
+    );
     return algokit.getTransactionParams(undefined, algod);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeConfig, storedTxnData]);

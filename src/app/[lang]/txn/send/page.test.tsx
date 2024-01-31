@@ -21,7 +21,6 @@ jest.mock('../../../lib/utils.ts', () => ({
 // Mock algokit to prevent sending real HTTP requests because it is a dependency of a child client
 // component.
 jest.mock('@algorandfoundation/algokit-utils', () => ({
-  getAlgoClient: () => ({ sendRawTransaction: () => ({ do: () =>  ({}) }) }),
   waitForConfirmation: () => ({ get_obj_for_encoding: () => ({}) })
 }));
 

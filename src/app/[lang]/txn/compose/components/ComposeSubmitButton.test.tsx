@@ -14,14 +14,21 @@ jest.mock('next/navigation', () => ({
 }));
 // Mock the scrollIntoView() function
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
-// Mock algokit
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  getAlgoClient: () => ({
-    getAssetByID: () => ({
-      do: () => ({ params: { name: 'Foo Token', 'unit-name': 'FOO', total: 1000, decimals: 2 } })
-    })
-  }),
+
+// Mock algosdk
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    getAssetByID() {
+      return {
+        do: () => ({ params: {name: 'Foo Token', 'unit-name': 'FOO', total: 1000, decimals: 2} })
+      };
+    }
+  }
 }));
+
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 

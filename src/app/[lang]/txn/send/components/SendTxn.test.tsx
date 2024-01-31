@@ -13,19 +13,29 @@ jest.mock('../../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 
-// Mock algokit
 let sendErrorMsg = '', confirmErrorMsg = '';
 const sendRawTxnSpy = jest.fn(), waitConfirmSpy = jest.fn();
+
+// Mock algosdk
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    sendRawTransaction() {
+      return {
+        do: async () => {
+          sendRawTxnSpy();
+          if (sendErrorMsg) throw Error(sendErrorMsg);
+          return {txId: ''};
+        }
+      };
+    }
+  }
+}));
+
+// Mock algokit
 jest.mock('@algorandfoundation/algokit-utils', () => ({
-  getAlgoClient: () => ({
-    sendRawTransaction: () => ({
-      do: () => {
-        sendRawTxnSpy();
-        if (sendErrorMsg) throw Error(sendErrorMsg);
-        return {txId: ''};
-      }
-    })
-  }),
   waitForConfirmation: () => {
     waitConfirmSpy();
     if (confirmErrorMsg) throw Error(confirmErrorMsg);
@@ -37,6 +47,7 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({toString: () => 'preset=foo'}),
 }));
+
 
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));

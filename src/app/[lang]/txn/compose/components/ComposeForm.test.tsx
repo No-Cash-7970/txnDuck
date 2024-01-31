@@ -15,12 +15,15 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => ({ get: () => presetMockValue }),
 }));
 
-// Mock algokit
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  getAlgoClient: () => ({
-    getAssetByID: () => ({
-      do: () => ({
-        params: {
+// Mock algosdk
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    getAssetByID() {
+      return {
+        do: () => ({ params: {
           name: 'Foo Token',
           'unit-name': 'FOO',
           total: 1000,
@@ -29,10 +32,10 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
           freeze: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
           clawback: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
           reserve: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        }
-      })
-    })
-  }),
+        } })
+      };
+    }
+  }
 }));
 
 // Mock use-debounce

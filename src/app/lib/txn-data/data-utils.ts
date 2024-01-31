@@ -1,6 +1,6 @@
 /** @file Useful utilities for managing transaction data */
 
-import { getAlgoClient } from "@algorandfoundation/algokit-utils";
+import { Algodv2 } from "algosdk";
 import { RetrievedAssetInfo } from "./types";
 import { NodeConfig } from "@txnlab/use-wallet";
 import { DEFAULT_NODE_CONFIG } from "@/app/lib/node-config";
@@ -20,11 +20,12 @@ export const getAssetInfo = async (
 ) => {
   if (assetId) {
     try {
-      const algod = getAlgoClient({
-        server: nodeConfig.nodeServer,
-        port: nodeConfig.nodePort,
-        token: (nodeConfig.nodeToken || '') as string,
-      });
+      const algod = new Algodv2(
+        nodeConfig.nodeToken ?? '',
+        nodeConfig.nodeServer,
+        nodeConfig.nodePort,
+        nodeConfig.nodeHeaders
+      );
       const assetInfo = await algod.getAssetByID(assetId).do();
       callback({
         id: assetInfo.id,

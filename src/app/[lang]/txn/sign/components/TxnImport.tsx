@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { IconMoodWrrr } from "@tabler/icons-react";
-import { Transaction, decodeSignedTransaction, decodeUnsignedTransaction } from "algosdk";
-import { getAlgoClient, getTransactionParams } from "@algorandfoundation/algokit-utils";
+import { Algodv2, Transaction, decodeSignedTransaction, decodeUnsignedTransaction } from "algosdk";
+import { getTransactionParams } from "@algorandfoundation/algokit-utils";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
@@ -50,11 +50,12 @@ export default function TxnImport({ lng }: Props) {
     }
 
     if (noDiffNetworkOption) {
-      const nodeGenesisHash = (await getTransactionParams(undefined, getAlgoClient({
-        server: nodeConfig.nodeServer,
-        port: nodeConfig.nodePort,
-        token: (nodeConfig.nodeToken || '') as string,
-      }))).genesisHash;
+      const nodeGenesisHash = (await getTransactionParams(undefined, new Algodv2(
+        nodeConfig.nodeToken ?? '',
+        nodeConfig.nodeServer,
+        nodeConfig.nodePort,
+        nodeConfig.nodeHeaders
+      ))).genesisHash;
       const txnGenesisHash = await bytesToBase64(txn.genesisHash);
       // Compare the network used for the transaction to currently selected node network.
       if (txnGenesisHash !== nodeGenesisHash) {
