@@ -107,21 +107,21 @@ export default function NodeSelector({ lng }: Props) {
             {/* Node Presets */}
             <DropdownMenu.Item asChild>
               <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.testnetNodeConfig)
-              }>
-                <span>
-                  <IconFlask aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.testnet')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
                 (e) => updateNodeConfig(NodeConfigLib.mainnetNodeConfig)
               }>
                 <span>
                   <IconBox aria-hidden stroke={1.5} />
                   <span>{t('node_selector.mainnet')}</span>
+                </span>
+              </li>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item asChild>
+              <li className='mb-1' onClick={
+                (e) => updateNodeConfig(NodeConfigLib.testnetNodeConfig)
+              }>
+                <span>
+                  <IconFlask aria-hidden stroke={1.5} />
+                  <span>{t('node_selector.testnet')}</span>
                 </span>
               </li>
             </DropdownMenu.Item>

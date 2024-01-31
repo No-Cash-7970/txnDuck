@@ -53,7 +53,7 @@ export const sandboxNodeConfig: NodeConfig = {
 };
 
 /** Default node configuration */
-export const DEFAULT_NODE_CONFIG = testnetNodeConfig;
+export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const sessionJSONStorage = createJSONStorage<any>(() => sessionStorage);
