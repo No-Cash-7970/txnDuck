@@ -52,6 +52,7 @@ export default function WalletProvider({ sitename, children }: {
         getDynamicClient: getDynamicLuteConnect,
         clientOptions: { siteName: sitename }
       },
+      { id: PROVIDER_ID.KIBISIS },
       { id: PROVIDER_ID.KMD },
     ],
     nodeConfig

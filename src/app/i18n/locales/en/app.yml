@@ -67,6 +67,7 @@ wallet:
     daffi: Daffi
     lute: Lute
     kmd: Key Management Daemon (KMD)
+    kibisis: Kibisis
   type:
     mobile: Mobile wallet
     mobile_web: Mobile & web wallet
