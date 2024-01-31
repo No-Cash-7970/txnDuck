@@ -3407,18 +3407,20 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@txnlab/use-wallet@npm:^2.4.0":
-  version: 2.4.0
-  resolution: "@txnlab/use-wallet@npm:2.4.0"
+"@txnlab/use-wallet@npm:^2.6.2":
+  version: 2.6.2
+  resolution: "@txnlab/use-wallet@npm:2.6.2"
   dependencies:
     immer: "npm:^9.0.15"
     zustand: "npm:^4.3.8"
   peerDependencies:
     "@blockshake/defly-connect": ^1.1.5
     "@daffiwallet/connect": ^1.0.3
+    "@magic-ext/algorand": ^17.0.0
     "@perawallet/connect": ^1.2.1
     "@randlabs/myalgo-connect": ^1.4.2
     algosdk: ^2.1.0
+    magic-sdk: ^22.0.0
     react: ^18.2.0
     react-dom: ^18.2.0
   peerDependenciesMeta:
@@ -3426,13 +3428,17 @@ __metadata:
       optional: true
     "@daffiwallet/connect":
       optional: true
+    "@magic-ext/algorand":
+      optional: true
     "@perawallet/connect":
       optional: true
     "@randlabs/myalgo-connect":
       optional: true
     "@walletconnect/modal-sign-html":
       optional: true
-  checksum: 2b72cc84cc4ba1caaefb68e702a3ac2d2ae1b0569a7f608d4e44dad5da7761e15d5ebb3de68fe9f1ee8134814ff741abb48ac4824013ee0387491b9661278941
+    magic-sdk:
+      optional: true
+  checksum: 469e8ad71e4af4be2cd779cc2c2332a2e056f1106cf0d3e5536d0577e918b2679a6ac317c72673a79f0f3a32d0a98f23ec57ddfef1332d33113aaf77a8d0f69f
   languageName: node
   linkType: hard
 
@@ -15411,7 +15417,7 @@ __metadata:
     "@testing-library/jest-dom": "npm:^6.2.1"
     "@testing-library/react": "npm:^14.1.2"
     "@testing-library/user-event": "npm:^14.5.2"
-    "@txnlab/use-wallet": "npm:^2.4.0"
+    "@txnlab/use-wallet": "npm:^2.6.2"
     "@types/jest": "npm:^29.5.11"
     "@types/next-pwa": "npm:^5.6.9"
     "@types/node": "npm:^20.11.5"
