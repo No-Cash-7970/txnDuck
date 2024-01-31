@@ -6,7 +6,7 @@ hero: # The attention-grabber that is first thing the user sees
 what_is_this:
   heading: ¿Qué es esto?
   paragraph: >
-    txnPato es una herramienta web gratuita y de código abierto que sirve de interfaz gráfica de
+    TxnPato es una herramienta web gratuita y de código abierto que sirve de interfaz gráfica de
     usuario (IGU) para crear y enviar fácilmente transacciones Algorand sin necesidad de tener
     conocimientos de desarrollo de software.
 how_it_works:
@@ -16,20 +16,20 @@ how_it_works:
     paragraph: >
       Comience a crear una nueva transacción introduciendo la información de la transacción.
       Utilice una de las preselecciones de transacciones para que este paso sea más rápido y
-      sencillo. Si desea firmar la transacción más tarde, puede exportarla como archivo.
+      sencillo.
     button: Componer una nueva transacción
   sign:
     heading: 2. Firmar la transacción.
     paragraph: >
       Cada transacción debe ser firmada antes de ser enviada. Conecte su monedero y firme la
-      transacción. Si guardaste una transacción compuesta como archivo, puedes importarla para
+      transacción. Si guardaste una transacción como un archivo, puedes importarla para
       firmarla.
     button: Importar y firmar una transacción
   send:
     heading: 3. Enviar la transacción.
     paragraph: >
-      Envíe la transacción firmada. Una transacción correcta suele confirmarse y finalizar en menos
-      de 4 segundos. Si guardaste una transacción firmada como archivo, puedes importarla para
+      Envíe la transacción firmada. Una transacción exitosa se confirma y finaliza normalmente en
+      menos de 4 segundos. Si guardaste una transacción firmada como archivo, puedes importarla para
       enviarla.
     button: Importar y enviar una transacción firmada
 uses:
