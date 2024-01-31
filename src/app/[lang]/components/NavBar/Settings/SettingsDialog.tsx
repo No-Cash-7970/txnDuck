@@ -4,16 +4,11 @@ import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
 import dynamic from 'next/dynamic';
+import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
 
 const SettingsModalBox = dynamic(() => import('./SettingsForm'), {
   ssr: false,
-  loading: () => (
-    <p className='text-center'>
-      <span className='loading loading-ball loading-lg text-primary'></span>
-      <span className='loading loading-ball loading-lg text-secondary'></span>
-      <span className='loading loading-ball loading-lg text-accent'></span>
-    </p>
-  ),
+  loading: () => <DialogLoadingPlaceholder />,
 });
 
 type Props = {

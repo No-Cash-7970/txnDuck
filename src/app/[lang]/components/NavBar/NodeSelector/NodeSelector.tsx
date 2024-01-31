@@ -20,26 +20,15 @@ import { type NodeConfig } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
 import { useState } from 'react';
+import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
 
 const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'), {
   ssr: false,
-  loading: () => (
-    <p className='text-center'>
-      <span className='loading loading-ball loading-lg text-primary'></span>
-      <span className='loading loading-ball loading-lg text-secondary'></span>
-      <span className='loading loading-ball loading-lg text-accent'></span>
-    </p>
-  ),
+  loading: () => <DialogLoadingPlaceholder />,
 });
 const CustomNodeDialogContent = dynamic(() => import('./CustomNodeDialogContent'), {
   ssr: false,
-  loading: () => (
-    <p className='text-center'>
-      <span className='loading loading-ball loading-lg text-primary'></span>
-      <span className='loading loading-ball loading-lg text-secondary'></span>
-      <span className='loading loading-ball loading-lg text-accent'></span>
-    </p>
-  ),
+  loading: () => <DialogLoadingPlaceholder />,
 });
 
 type Props = {
