@@ -42,7 +42,7 @@ export default function ApprovalProg({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apap.placeholder')}
       containerId='apap-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='max-w-lg'
       inputClass={((showFormErrors || form.touched.apap) &&
           (form.fieldErrors.apap || (!apapCondReqGroup.isValid && apapCondReqGroup.error))
         )
