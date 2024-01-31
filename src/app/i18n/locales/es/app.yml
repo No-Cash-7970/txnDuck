@@ -70,7 +70,6 @@ wallet:
     pera: Pera
     defly: Defly
     exodus: Exodus
-    myalgo: MyAlgo
     daffi: Daffi
     lute: Lute
     kmd: Key Management Daemon (KMD)

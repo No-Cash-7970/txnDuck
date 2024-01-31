@@ -3133,22 +3133,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@randlabs/communication-bridge@npm:1.0.1":
-  version: 1.0.1
-  resolution: "@randlabs/communication-bridge@npm:1.0.1"
-  checksum: 464b9185f34bb3a5266de02337173c7cefc20f4e15c8baa609742be0e24f14aa24efebe724830472da07801d3f6fdf0c34d4671e12f3dfa67d157684d3f700eb
-  languageName: node
-  linkType: hard
-
-"@randlabs/myalgo-connect@npm:^1.4.2":
-  version: 1.4.2
-  resolution: "@randlabs/myalgo-connect@npm:1.4.2"
-  dependencies:
-    "@randlabs/communication-bridge": "npm:1.0.1"
-  checksum: 4d702b966833311625422d00c505ce047fdca2c61bc8e00478f347747f7cd2ab8332ceea965d711777b38e5c35661886b1e66d181986aae44cf156723facc03a
-  languageName: node
-  linkType: hard
-
 "@release-it/conventional-changelog@npm:^8.0.1":
   version: 8.0.1
   resolution: "@release-it/conventional-changelog@npm:8.0.1"
@@ -15420,7 +15404,6 @@ __metadata:
     "@radix-ui/react-dropdown-menu": "npm:^2.0.6"
     "@radix-ui/react-popover": "npm:^1.0.7"
     "@radix-ui/react-toast": "npm:^1.1.5"
-    "@randlabs/myalgo-connect": "npm:^1.4.2"
     "@release-it/conventional-changelog": "npm:^8.0.1"
     "@swc-jotai/react-refresh": "npm:^0.1.0"
     "@tabler/icons-react": "npm:^2.46.0"

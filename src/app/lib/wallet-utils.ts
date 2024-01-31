@@ -7,7 +7,6 @@ export const walletTypes: {[id: string]: string} = {
   [PROVIDER_ID.PERA]: 'mobile_web',
   [PROVIDER_ID.DEFLY]: 'mobile',
   [PROVIDER_ID.EXODUS]: 'browser_extension',
-  [PROVIDER_ID.MYALGO]: 'web',
   [PROVIDER_ID.DAFFI]: 'mobile',
   [PROVIDER_ID.LUTE]: 'web',
   [PROVIDER_ID.KMD]: 'cli',

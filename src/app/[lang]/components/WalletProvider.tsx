@@ -18,11 +18,6 @@ const getDynamicPeraWalletConnect = async () => {
   return PeraWalletConnect;
 };
 
-const getDynamicMyAlgoWalletConnect = async () => {
-  const MyAlgoWalletConnect = (await import('@randlabs/myalgo-connect')).default;
-  return MyAlgoWalletConnect;
-};
-
 const getDynamicDaffiWalletConnect = async () => {
   const DaffiWalletConnect = (await import('@daffiwallet/connect')).DaffiWalletConnect;
   return DaffiWalletConnect;
@@ -52,7 +47,6 @@ export default function WalletProvider({ sitename, children }: {
       },
       { id: PROVIDER_ID.DEFLY, getDynamicClient: getDynamicDeflyWalletConnect },
       { id: PROVIDER_ID.EXODUS },
-      { id: PROVIDER_ID.MYALGO, getDynamicClient: getDynamicMyAlgoWalletConnect },
       { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
       { id: PROVIDER_ID.LUTE,
         getDynamicClient: getDynamicLuteConnect,

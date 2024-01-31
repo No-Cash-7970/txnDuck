@@ -16,7 +16,6 @@ export const useWalletUnconnectedMock = {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
-    MYALGO: 'myalgo',
     DAFFI: 'daffi',
   },
   useWallet: () => ({
@@ -47,7 +46,6 @@ export const useWalletConnectedMock = {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
-    MYALGO: 'myalgo',
     DAFFI: 'daffi',
   },
   useWallet: () => ({
