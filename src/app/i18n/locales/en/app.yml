@@ -1,7 +1,9 @@
 # General app/site info
 
-site_name: txnDuck
+site_name: txnDuck # Whole site name
 site_name_formatted: txn<1>Duck</1>
+site_name_pt1: txn # First part of site name
+site_name_pt2: Duck # Second part of site name
 page_title: "{{- page}} | {{- site}}" # Title metadata format for each page except the home page
 home_page_title: "{{- site}} - {{- slogan}}" # Title metadata format for the home page
 description:
