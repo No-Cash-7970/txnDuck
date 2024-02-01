@@ -47,9 +47,9 @@ same.
 
 ## :sparkles: Features
 
-- Build and send a transaction to transfer algos, create a token or NFT, call an
+- Build and send a transaction to transfer Algos, create a token or NFT, call an
   application (smart contract), etc.
-- Import a transaction file
+- Import a transaction file to sign or send
 - Export to a signed or unsigned transaction file that is compatible
 - Specify custom Algod node
 - FUTURE: Build transaction groups (atomic transactions)
@@ -76,8 +76,8 @@ development, follow the instructions for
 [installing txnDuck for development](#hammer_and_wrench-installation-for-development).**
 
 Instead of using one of the [official txnDuck websites](#globe_with_meridians-websites),
-you can choose to download the source code and run the software "locally" on
-your own computer that does not rely on an external website.
+you can choose to download the source code and run the software locally on your
+own computer that does not rely on an external website.
 
 ### Requirements for local setup
 
@@ -86,9 +86,9 @@ your own computer that does not rely on an external website.
 - [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
   20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
-  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.  
-  NOTE: Install and switch to Yarn 2.0.0 or higher by running
-  `corepack enable && yarn set version berry`
+  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
+   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
+     2.0.0 or higher by running `corepack enable && yarn set version berry`
 
 ### Installing the local setup
 
@@ -99,9 +99,9 @@ your own computer that does not rely on an external website.
       <https://github.com/No-Cash-7970/txnDuck/archive/refs/heads/main.zip>
 2. Unzip the downloaded source code. You should now have a new folder that
    contains a bunch of files and folder, which include "public" and "yarn.lock".
-3. Open the CLI (Command Line Interface) and go to the folder created in step #2
-   by running the following in the CLI. Of course, replace
-   `PATH/TO/SOURCE_CODE/FOLDER` with the actual path to the folder.
+3. Open the CLI and go to the folder created in step #2 by running the following
+   in the CLI. Of course, replace `PATH/TO/SOURCE_CODE/FOLDER` with the actual
+   path to the folder.
 
     ```bash
     cd PATH/TO/SOURCE_CODE/FOLDER
@@ -136,7 +136,7 @@ your own computer that does not rely on an external website.
 ### Uninstalling and removing the local setup
 
 1. Make sure the web server is not running. Stop the server if it is. Refer to
-   step #7 in the [installation instructions](#installing-the-local-setup).
+   step #8 in the [installation instructions](#installing-the-local-setup).
 2. Delete the source code folder. (The folder created in Step #2 of the
    [installation instructions](#installing-the-local-setup))
 3. OPTIONAL: Uninstall the software listed in the
@@ -150,19 +150,22 @@ version of txnDuck may be
 [released](https://github.com/No-Cash-7970/txnDuck/releases). It is recommended
 that you update to the latest version to have the latest features and bug fixes.
 
-1. OPTIONAL: Uninstall the old version by following [Steps #1 and #2 of the
-   uninstallation instructions](#uninstalling-and-removing-the-local-setup).
-2. If you have not already, make sure the web server is not running. Stop the
-   server if it is. Refer to step #7 in the
-   [installation instructions](#installing-the-local-setup), if needed.
+1. OPTION #1: Uninstall the old version by following [Steps #1 and #2 of the
+   uninstallation instructions](#uninstalling-and-removing-the-local-setup).  
+   OPTION #2: Keep the old version and rename the source code folder for the old
+   version.  
+   OPTION #3: Keep the old version without renaming its source code folder. When
+   installing the new version, use a different name for the new version's source
+   code folder.
+2. Make sure the web server is not running. Stop the server if it is. Refer to
+   step #8 in the [installation instructions](#installing-the-local-setup).
 3. Follow the [installation instructions](#installing-the-local-setup) again.
    Make sure you download the latest source code.
 
 ## :hammer_and_wrench: Installation for development
 
-Refer to the [Developers
-Documentation](docs/DEVELOPERS.md#installing-the-development-environment) for
-instructions on how to install, update or uninstall the development environment.
+Refer to the [Developers Documentation](docs/DEVELOPERS.md#installing-the-development-environment)
+for instructions on how to install, update or uninstall the development environment.
 
 ## :handshake: Contributing
 
