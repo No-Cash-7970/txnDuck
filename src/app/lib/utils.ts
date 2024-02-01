@@ -184,6 +184,18 @@ export const isAlgodOK = async (
   return true;
 };
 
+/** Calculate base URL for metadata purposes. This is similar to what Next.js does by default if the
+ * metadata base is not specified.
+ */
+export const getMetadataBase = () => {
+  // If using Vercel hosting
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
+  // If the base URL environment variable is specified
+  if (process.env.BASE_URL) return `https://${process.env.BASE_URL}`;
+  // Otherwise, assume localhost as the metadata base URL
+  return `http://localhost:${process.env.PORT || 3000}`;
+};
+
 /** Validation error message */
 export type ValidationMessage = {
   /** Translation key for the validation message */

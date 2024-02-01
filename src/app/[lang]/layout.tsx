@@ -1,10 +1,12 @@
 import '@/app/globals.css';
 import { use } from 'react';
 import type { Metadata } from 'next';
+import * as fs from "node:fs";
 import * as fonts from '@/app/lib/fonts';
 import { dir } from 'i18next';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { supportedLangs } from '@/app/i18n/settings';
+import { getMetadataBase } from '@/app/lib/utils';
 import {
   Footer,
   JotaiProvider,
@@ -12,18 +14,11 @@ import {
   ToastProvider,
   ToastViewport,
 } from './components';
-import * as fs from "node:fs";
 
 /** Generate the base metadata for the site. Parts may be overwritten by child pages. */
 export async function generateMetadata(
   { params }: { params: { lang: string } }
 ): Promise<Metadata> {
-  // Calculate base URL for metadata purposes. This is similar to what Next.js does by default if
-  // the metadata base is not specified.
-  let metadataBase: string = `http://localhost:${process.env.PORT || 3000}`;
-  if (process.env.VERCEL_URL) metadataBase = `https://${process.env.VERCEL_URL}`;
-  if (process.env.BASE_URL) metadataBase = `https://${process.env.BASE_URL}`;
-
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, 'app');
   return {
@@ -37,7 +32,7 @@ export async function generateMetadata(
     openGraph: {
       images: [
         {
-          url: `${metadataBase}/${params.lang}/opengraph-image.png`, // Must be an absolute URL
+          url: `${getMetadataBase()}/${params.lang}/opengraph-image.png`, // Must be an absolute URL
           width: 1200,
           height: 630,
           alt: t('home_page_title', {site: t('site_name'), slogan: t('description.short')}),
