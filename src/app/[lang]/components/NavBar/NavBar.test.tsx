@@ -29,7 +29,8 @@ describe('Nav Bar Component', () => {
 
   it('has site name', () => {
     render(<NavBar />);
-    expect(screen.getByText('site_name_formatted')).toBeInTheDocument();
+    expect(screen.getByText('site_name_pt1')).toBeInTheDocument();
+    expect(screen.getByText('site_name_pt2')).toBeInTheDocument();
   });
 
   it('has node selector button', () => {
