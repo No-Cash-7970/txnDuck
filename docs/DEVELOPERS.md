@@ -48,10 +48,10 @@ This is documentation contains information useful for developers.
 - [Node.js](https://nodejs.org/en) version 18.18.0 or higher installed. Version
   20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
-  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.  
-  NOTE: Install and switch to Yarn 2.0.0 or higher by running
-  `corepack enable && yarn set version berry`
-- (OPTIONAL BUT RECOMMENDED) [Visual Studio Code](https://code.visualstudio.com/)
+  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
+   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
+     2.0.0 or higher by running `corepack enable && yarn set version berry`
+- OPTIONAL BUT RECOMMENDED: [Visual Studio Code](https://code.visualstudio.com/)
   IDE (integrated development environment)
 
 ## Installing the development environment
@@ -156,61 +156,61 @@ BASE_URL=https://example.com
 
 ## Project structure
 
-- `/.github/`: Contains the code of conduct, contributing guidelines, security
+- `.github/`: Contains the code of conduct, contributing guidelines, security
   policy, and other files for setting up the repository for this project on
   GitHub.
-- `/docs/`: Additional documentation (like this file)
-- `/public/`: Static assets to be served. Part of the
+- `docs/`: Additional documentation (like this file)
+- `public/`: Static assets to be served. Part of the
   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/src/`: Application source directory. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-  - `/src/app/`: App Router. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure).
-    - `/src/app/[lang]/`: The root of the routing for this project. This
+- `src/`: Application source directory. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+  - `src/app/`: App Router. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure).
+    - `src/app/[lang]/`: The root of the routing for this project. This
       directory is a “dynamic segment.”  See the [Next.js documentation](https://nextjs.org/docs/app/building-your-application/routing)
       for more information about routing.
-    - `/src/app/i18n/`: Contains scripts and translation files for
+    - `src/app/i18n/`: Contains scripts and translation files for
       internationalization (abbreviated as “i18n”)
-      - `/src/app/i18n/locales/`: Contains the translations files for each
+      - `src/app/i18n/locales/`: Contains the translations files for each
         supported language/locale
-    - `/src/app/lib/`: Utilities used throughout the project. There are no
+    - `src/app/lib/`: Utilities used throughout the project. There are no
       JSX/TSX files here. Shared JSX/TSX files are usually in one of the
-      `component/` directories within `/src/app/[lang]/`.
-  - `/src/e2e/`: End-to-end tests
-  - `/src/middleware.ts`: Request middleware. Part of the
+      `component/` directories within `src/app/[lang]/`.
+  - `src/e2e/`: End-to-end tests
+  - `src/middleware.ts`: Request middleware. Part of the
     [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/.editorconfig`: [EditorConfig](https://editorconfig.org/) file that contains
+- `.editorconfig`: [EditorConfig](https://editorconfig.org/) file that contains
    the preferred coding style settings for IDEs
-- `/.env`: Default values of for the environment variables. Part of the
+- `.env`: Default values of for the environment variables. Part of the
    [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/.env.development`: Development environment variables. Part of the
+- `.env.development`: Development environment variables. Part of the
    [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/.env.local`: Local environment variables. Copy the `.env.local.example` file
+- `.env.local`: Local environment variables. Copy the `.env.local.example` file
    to create this file. It must **never** be committed to the project Git
    repository.
-- `/.env.local.example`: An example of an `.env.local` file. Does not affect the
+- `.env.local.example`: An example of an `.env.local` file. Does not affect the
    environment.
-- `/.env.production`: Production environment variables. Part of the
+- `.env.production`: Production environment variables. Part of the
   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/.erclintrc.json`: ESLint configuration
-- `/.gitattributes`, `/.gitignore`: Git configurations files
-- `/.swcrc`: SWC (Speedy Web Compiler) [configuration file](https://swc.rs/docs/configuration/swcrc)
-- `/gulpfile.mjs`: Contains the scripts for to be used with [Gulp task runner](https://gulpjs.com/)
-- `/jest.config.mjs`: Configuration for [Jest](https://jestjs.io/) unit testing
+- `.erclintrc.json`: ESLint configuration
+- `.gitattributes`, `.gitignore`: Git configurations files
+- `.swcrc`: SWC (Speedy Web Compiler) [configuration file](https://swc.rs/docs/configuration/swcrc)
+- `gulpfile.mjs`: Contains the scripts for to be used with [Gulp task runner](https://gulpjs.com/)
+- `jest.config.mjs`: Configuration for [Jest](https://jestjs.io/) unit testing
    framework
-- `/lefthook.yml`: Configuration for [Lefthook](https://github.com/evilmartians/lefthook)
+- `lefthook.yml`: Configuration for [Lefthook](https://github.com/evilmartians/lefthook)
    Git hooks manager
-- `/LICENSE.md`: License for this project
-- `/next-env.d.ts`: TypeScript declaration file for Next.js. This file is not
+- `LICENSE.md`: License for this project
+- `next-env.d.ts`: TypeScript declaration file for Next.js. This file is not
    committed to the project Git repository.
-- `/next.config.js`: Next.js configuration. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
-- `/package.json`: Project dependencies and scripts
-- `/playwright.config.ts`: Configuration for [Playwright](https://playwright.dev/)
+- `next.config.js`: Next.js configuration. Part of the [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `package.json`: Project dependencies and scripts
+- `playwright.config.ts`: Configuration for [Playwright](https://playwright.dev/)
    end-to-end testing framework
-- `/postcss.config.js`: Configuration for PostCSS, which is used with [Tailwind](https://tailwindcss.com/docs/installation/using-postcss)
-- `/README.md`: Read it. It contains introductory information about this project.
-- `/tailwind.config.js`: [Tailwind CSS](https://tailwindcss.com/) configuration.
+- `postcss.config.js`: Configuration for PostCSS, which is used with [Tailwind](https://tailwindcss.com/docs/installation/using-postcss)
+- `README.md`: Read it. It contains introductory information about this project.
+- `tailwind.config.js`: [Tailwind CSS](https://tailwindcss.com/) configuration.
    The theme is specified in this file.
-- `/tsconfig.json`: Typescript configuration
-- `/yarn.lock`: File generated by Yarn in order to get consistent installs
+- `tsconfig.json`: Typescript configuration
+- `yarn.lock`: File generated by Yarn in order to get consistent installs
    across machines. It contains a list of the exact versions of dependencies
    that were installed.
 
@@ -227,7 +227,7 @@ To run all of the unit tests once (Note that it's **j**est with a **j**, not
 yarn jest
 ```
 
-To continuously run all of the units when a file is changed (Note that it's
+To run tests in "watch mode," where tests for modified files are run when ever a file is saved (Note that it's
 **t**est with a **t**, not **j**est):
 
 ```bash
@@ -249,6 +249,8 @@ yarn test:e2e
 - Always terminate line with a semicolon in TypeScript and JavaScript files
 - The maximum length of a line in TypeScript and JavaScript files: 100
   characters
+- The maximum length of a line in a MarkDown file SHOULD be 80. This limit is
+  not enforced by a linter and some exceptions are acceptable.
 
 The code style guidelines for TypeScript, JavaScript and YAML files are enforced
 by a linter. Run the linter using the following command:
@@ -259,14 +261,14 @@ yarn lint
 
 ## Git commit message guidelines
 
-The Git commit messages for project follows the [Conventional Commits
+The Git commit messages for this project follows the [Conventional Commits
 specification](https://www.conventionalcommits.org/en/v1.0.0/). These commit
 message guidelines are enforced by
 [commitlint](https://github.com/conventional-changelog/commitlint/tree/master)
 in the `commit-msg` Git hook. You can choose to use the
-[commitizen](https://github.com/commitizen/cz-cli) tool that is installed to
-easily write properly formatted commit messages. Run the following instead of
-`git commit` when creating a commit:
+[commitizen](https://github.com/commitizen/cz-cli) tool to easily write properly
+formatted commit messages. To do so, run the following instead of `git commit`
+when creating a commit:
 
 ```bash
 yarn cz
@@ -274,7 +276,7 @@ yarn cz
 
 ## Git hooks
 
-This project uses both the `pre-commit` and the `commit-msg` hook. Use the
+This project uses both the `pre-commit` and the `commit-msg` hooks. Use the
 following commands to skip running these hooks when committing changes:
 
 ```bash
@@ -287,11 +289,24 @@ Or, the shortcut:
 git commit -n
 ```
 
+The same applies to committing changes using [commitizen](https://github.com/commitizen/cz-cli):
+
+```bash
+yarn cz --no-verify
+```
+
+Including the shortcut:
+
+```bash
+yarn cz -n
+```
+
 ### `pre-commit` hook
 
-The `pre-commit` hook runs before allowing the user to write the commit message.
+The `pre-commit` hook runs before the commit message is allowed to be written.
 It runs the tests and the linter. If any of the tests fail or there is a linter
-error, the commit will fail and the commit message prompt will not appear.
+error, the commit will fail and the prompt to write the commit message will not
+appear.
 
 ### `commit-msg` hook
 
@@ -303,7 +318,7 @@ commitlint, the commit will fail.
 
 ## Documentation
 
-External documentation is written in
+External documentation (documentation not within the code) is written in
 [Git-Flavored Markdown](https://github.github.com/gfm/) and stored in the
 [`docs` directory](./).
 
@@ -345,8 +360,8 @@ along with their release notes, is used for that purpose instead.
 ### Releases on the `stable` branch
 
 Releases happen on the `main` branch first. After a release on the `main`
-branch, those changes from the `main` branch should be merged onto the the
-`stable` branch. Therefore, the most recent commit on the `stable` branch should
-always be a release with a version
+branch, those changes from the `main` branch should immediately be merged onto
+the `stable` branch. Therefore, the most recent commit on the `stable` branch
+should always be the latest release with a version
 [tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
-This means that only “released” code is deployed to the [Production](https://txnduck.vercel.app).
+This means that only “released” code is deployed to [Production](https://txnduck.vercel.app).
