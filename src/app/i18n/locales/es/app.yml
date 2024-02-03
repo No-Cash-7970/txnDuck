@@ -81,7 +81,7 @@ wallet:
     mobile_web: Cartera móvil y web
     web: Cartera web
     browser_extension: Cartera de extensión del navegador
-    cli: Cartera CLI
+    cli_sandbox: Cartera CLI para Sandbox
 node_selector:
   choose_node: Eligir nodo
   testnet: TestNet

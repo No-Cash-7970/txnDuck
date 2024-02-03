@@ -9,7 +9,7 @@ export const walletTypes: {[id: string]: string} = {
   [PROVIDER_ID.EXODUS]: 'browser_extension',
   [PROVIDER_ID.DAFFI]: 'mobile',
   [PROVIDER_ID.LUTE]: 'web',
-  [PROVIDER_ID.KMD]: 'cli',
+  [PROVIDER_ID.KMD]: 'cli_sandbox',
   [PROVIDER_ID.KIBISIS]: 'browser_extension',
 };
 

@@ -75,7 +75,7 @@ wallet:
     mobile_web: Mobile & web wallet
     web: Web wallet
     browser_extension: Browser extension wallet
-    cli: CLI wallet
+    cli_sandbox: CLI wallet for Sandbox
 node_selector:
   choose_node: Select node
   testnet: TestNet
