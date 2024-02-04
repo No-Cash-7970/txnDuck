@@ -50,7 +50,7 @@ same.
 - Build and send a transaction to transfer Algos, create a token or NFT, call an
   application (smart contract), etc.
 - Import a transaction file to sign or send
-- Export to a signed or unsigned transaction file that is compatible
+- Export to a signed/unsigned transaction file
 - Specify custom Algod node
 - FUTURE: Build transaction groups (atomic transactions)
 
