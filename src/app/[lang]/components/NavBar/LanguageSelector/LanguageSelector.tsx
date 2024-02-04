@@ -16,7 +16,7 @@ export default function LanguageSelector({ lng }: Props) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         <button data-testid='lang-btn'
-          className='btn btn-ghost mx-2 px-2 sm:mx-4 sm:px-4 leading-tight'
+          className='btn btn-ghost mx-2 px-2 gap-1 sm:mx-4 sm:px-4 sm:gap-2 leading-tight'
         >
           <IconLanguage aria-hidden />
           <span className='hidden sm:inline truncate'>{supportedLangs[lng ?? '']?.name ?? ''}</span>
