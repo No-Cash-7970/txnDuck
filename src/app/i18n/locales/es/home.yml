@@ -12,25 +12,25 @@ what_is_this:
 how_it_works:
   heading: ¿Cómo funciona?
   compose:
-    heading: 1. Componer la transacción.
+    heading: 1. Componga la transacción.
     paragraph: >
       Comience a crear una nueva transacción introduciendo la información de la transacción.
       Utilice una de las preselecciones de transacciones para que este paso sea más rápido y
       sencillo.
     button: Componer una nueva transacción
   sign:
-    heading: 2. Firmar la transacción.
+    heading: 2. Firme la transacción.
     paragraph: >
       Cada transacción debe ser firmada antes de ser enviada. Conecte su monedero y firme la
-      transacción. Si guardaste una transacción como un archivo, puedes importarla para
+      transacción. Si usted guardó una transacción como un archivo, puede importarla para
       firmarla.
     button: Importar y firmar una transacción
   send:
-    heading: 3. Enviar la transacción.
+    heading: 3. Envíe la transacción.
     paragraph: >
       Envíe la transacción firmada. Una transacción exitosa se confirma y finaliza normalmente en
-      menos de 4 segundos. Si guardaste una transacción firmada como archivo, puedes importarla para
-      enviarla.
+      menos de 4 segundos. Si usted guardó una transacción firmada como archivo, puede importarla
+      para enviarla.
     button: Importar y enviar una transacción firmada
 uses:
   heading: ¿Para qué puedo utilizar esta herramienta?

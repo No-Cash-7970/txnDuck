@@ -110,6 +110,6 @@ reg_offline:
 reg_nonpart:
   heading: Registrar una cuenta como no participante
   description: >
-    Marcar <em>permanentemente</em> una cuenta como no participante. <em>La cuenta nunca podrá
+    Marque <em>permanentemente</em> una cuenta como no participante. <em>La cuenta nunca podrá
     conectarse o desconectarse y recibir recompensas.</em>
   action: Registrar como no participante

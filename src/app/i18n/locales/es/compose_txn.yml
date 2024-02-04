@@ -94,7 +94,7 @@ fields:
   rekey: # Rekey to
     label: ¿A qué recodificar?
     tip: >
-      Especifique la dirección autorizada. Esta dirección se utilizará para autorizar (firmar) todas
+      Especifica la dirección autorizada. Esta dirección se utilizará para autorizar (firmar) todas
       las transacciones futuras.
     placeholder: Dirección a la que recodificar
     warning: >
@@ -195,7 +195,7 @@ fields:
   apar_m_use_snd: # Use sender as manager?
     label: Establecer la dirección del administrador en la dirección del remitente
     tip: >
-      Utilizar la dirección del remitente de esta transacción como dirección del administrador. La
+      Utilice la dirección del remitente de esta transacción como dirección del administrador. La
       dirección del gestor es la dirección de la cuenta que puede cambiar la configuración de este
       activo y destruirlo.
   apar_m: # Manager
@@ -208,7 +208,7 @@ fields:
   apar_f_use_snd: # Use sender as freeze?
     label: Establecer la dirección para congelar en la dirección del remitente
     tip: >
-      Utilizar la dirección del remitente de esta transacción como dirección de congelación. La
+      Utilice la dirección del remitente de esta transacción como dirección de congelación. La
       dirección para congelar es la dirección de la cuenta que puede congelar las tenencias de este
       activo.
   apar_f: # Freeze address
@@ -221,7 +221,7 @@ fields:
   apar_c_use_snd: # Use sender as clawback?
     label: Establecer la dirección para recuperar en la dirección del remitente
     tip: >
-      Utilizar la dirección del remitente de esta transacción como dirección para recuperar. La
+      Utilice la dirección del remitente de esta transacción como dirección para recuperar. La
       dirección para recuperar es la dirección de la cuenta que puede recuperar las tenencias de
       este activo.
   apar_c: # Clawback address
@@ -234,12 +234,12 @@ fields:
   apar_r_use_snd: # Use sender as reserve?
     label: Establecer la dirección de reserva en la dirección del remitente
     tip: >
-      Utilizar la dirección del remitente de esta transacción como dirección de reserva. La
-      dirección de reserva es la dirección de la cuenta que mantiene las unidades de reserva (no
-      acuñadas) del activo. Esta dirección no tiene ninguna autoridad específica en el propio
-      protocolo. Se utiliza en el caso de que desee indicar a los titulares de su activo que las
-      unidades no acuñadas del activo residen en una cuenta distinta de la cuenta del creador por
-      defecto (el remitente).
+      Utilice la dirección del remitente de esta transacción como dirección de reserva. La dirección
+      de reserva es la dirección de la cuenta que mantiene las unidades de reserva (no acuñadas) del
+      activo. Esta dirección no tiene ninguna autoridad específica en el propio protocolo. Se
+      utiliza en el caso de que desee indicar a los titulares de su activo que las unidades no
+      acuñadas del activo residen en una cuenta distinta de la cuenta del creador por defecto (el
+      remitente).
   apar_r: # Reserve address
     label: Dirección de la reserva
     tip: >
@@ -408,7 +408,7 @@ fields:
   apfa: # Application references
     label: "Aplicación nº {{index}}"
     tip: >
-      Lista de aplicaciones, además de el ID de la aplicación, a cuyos estados globales
+      Lista de aplicaciones, además del ID de la aplicación, a cuyos estados globales
       puede acceder el programa de aprobación y el programa de borrado de estados de esta
       aplicación. El acceso es de sólo lectura.
     placeholder: "ID de aplicación nº {{index}}"
