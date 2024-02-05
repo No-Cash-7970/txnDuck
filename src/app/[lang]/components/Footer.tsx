@@ -27,7 +27,7 @@ export default function Footer({ lng }: Props) {
             <IconBrandGithubFilled size={20} aria-hidden />
             <span>{t('footer.github_link')}</span>
           </a>
-          <a href='https://developer.algorand.org/'
+          <a href='https://developer.algorand.org/docs/'
             target='_blank'
             className='link link-hover flex gap-1'
           >
