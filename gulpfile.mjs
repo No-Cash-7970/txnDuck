@@ -6,6 +6,10 @@ import yaml from 'js-yaml';
 
 /** The directory where compiled locales will go */
 const COMPILED_DEST = `src/app/i18n/locales/.dist`;
+/** Name of the "main" Git branch, which has the latest *changes* */
+const GIT_BRANCH_MAIN = 'main';
+/** Name of the "stable" Git branch, which has the latest *release* */
+const GIT_BRANCH_STABLE = 'stable';
 
 /** Remove the directory for compiled locales */
 const cleanLocales = task(`rm -r ${COMPILED_DEST}`, { reject: false });
@@ -135,8 +139,8 @@ export const precommitHook = gulp.series(
 /** Series of tasks after making a release */
 export const postRelease = gulp.series(
   // Update the "stable" branch and push the update to remote
-  task('git checkout stable'),
-  task('git merge main'),
+  task(`git checkout ${GIT_BRANCH_STABLE}`),
+  task(`git merge ${GIT_BRANCH_MAIN}`),
   task('git push'),
-  task('git checkout main'),
+  task(`git checkout ${GIT_BRANCH_MAIN}`),
 );
