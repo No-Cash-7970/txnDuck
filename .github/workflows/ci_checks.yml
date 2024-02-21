@@ -2,8 +2,12 @@ name: CI Checks
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - '**/*.md' # Do not run checks when only documentation files are changed
   pull_request:
     branches: [ main ]
+    paths-ignore:
+      - '**/*.md' # Do not run checks when only documentation files are changed
 jobs:
   e2e-test:
     timeout-minutes: 30
