@@ -66,59 +66,59 @@ export type customNodeConfig = Omit<NodeConfig, 'network'>;
 export const customNodeAtom =
   atomWithStorage<customNodeConfig|null>('customNode', null); // localStorage is used by default
 
-  /** Algod URL */
-  export const urlAtom = atomWithValidate<string>('', {
-    validate: v => {
-      YupString().required().validateSync(v === '' ? undefined : v);
-      return v;
-    }
-  });
-  /** Algod Port */
-  export const portAtom = atomWithValidate<number|string|undefined>(undefined, {
-    validate: v => {
-      YupNumber().min(0).validateSync(v);
-      return v;
-    }
-  });
-  /** Algod Token */
-  export const tokenAtom = atomWithValidate<string>('', {
-    validate: v => {
-      YupString().validateSync(v === '' ? undefined : v);
-      return v;
-    }
-  });
+/** Algod URL */
+export const urlAtom = atomWithValidate<string>('', {
+  validate: v => {
+    YupString().required().validateSync(v === '' ? undefined : v);
+    return v;
+  }
+});
+/** Algod Port */
+export const portAtom = atomWithValidate<number|string|undefined>(undefined, {
+  validate: v => {
+    YupNumber().min(0).validateSync(v);
+    return v;
+  }
+});
+/** Algod Token */
+export const tokenAtom = atomWithValidate<string>('', {
+  validate: v => {
+    YupString().validateSync(v === '' ? undefined : v);
+    return v;
+  }
+});
 
-  /** Type for a group of atoms that represent an Algod header */
-  export type HeaderAtomGroup = {
-    /** Name of the header (Example: `Content-Type`) */
-    name: validationAtom<string>,
-    /** Value of the header (Example: `application/octet-stream`) */
-    value: validationAtom<string>,
-  };
+/** Type for a group of atoms that represent an Algod header */
+export type HeaderAtomGroup = {
+  /** Name of the header (Example: `Content-Type`) */
+  name: validationAtom<string>,
+  /** Value of the header (Example: `application/octet-stream`) */
+  value: validationAtom<string>,
+};
 
-  /** Algod Headers */
-  export const headersListAtom = atomWithReset<HeaderAtomGroup[]>([]);
-  /** Collection of atoms for headers */
-  export const headersAtom = splitAtom(headersListAtom);
+/** Algod Headers */
+export const headersListAtom = atomWithReset<HeaderAtomGroup[]>([]);
+/** Collection of atoms for headers */
+export const headersAtom = splitAtom(headersListAtom);
 
-  /** Header name validation options */
-  export const headerNameValidateOptions = {
-    validate: (v: string) => {
-      YupString().required().validateSync(v === '' ? undefined : v);
-      return v;
-    }
-  };
-  /** Header value validation options */
-  export const headerValueValidateOptions = {
-    validate: (v: string) => {
-      YupString().validateSync(v);
-      return v;
-    }
-  };
+/** Header name validation options */
+export const headerNameValidateOptions = {
+  validate: (v: string) => {
+    YupString().required().validateSync(v === '' ? undefined : v);
+    return v;
+  }
+};
+/** Header value validation options */
+export const headerValueValidateOptions = {
+  validate: (v: string) => {
+    YupString().validateSync(v);
+    return v;
+  }
+};
 
-  /** Validation form group for custom-node form */
-  export const customNodeFormControlAtom = atomWithFormControls({
-    url: urlAtom,
-    port: portAtom,
-    token: tokenAtom,
-  });
+/** Validation form group for custom-node form */
+export const customNodeFormControlAtom = atomWithFormControls({
+  url: urlAtom,
+  port: portAtom,
+  token: tokenAtom,
+});
