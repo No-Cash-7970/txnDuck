@@ -98,7 +98,7 @@ fields:
       las transacciones futuras.
     placeholder: Dirección a la que recodificar
     warning: >
-      <em>Recodificar una cuenta de monedero puede provocar la pérdida de acceso a sus fondos</em>
+      <em>Recodificar una cuenta de billetera puede provocar la pérdida de acceso a sus fondos</em>
       si la cuenta se vuelve a teclear en una dirección a la que usted no tiene acceso. Asegúrese de
       saber lo que está haciendo. Obtenga más información sobre el cambio de claves en la
       <a>documentación (en inglés) de Algorand</a>.

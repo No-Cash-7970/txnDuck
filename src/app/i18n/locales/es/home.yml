@@ -21,7 +21,7 @@ how_it_works:
   sign:
     heading: 2. Firme la transacción.
     paragraph: >
-      Cada transacción debe ser firmada antes de ser enviada. Conecte su monedero y firme la
+      Cada transacción debe ser firmada antes de ser enviada. Conecte su billetera y firme la
       transacción. Si usted guardó una transacción como un archivo, puede importarla para
       firmarla.
     button: Importar y firmar una transacción

@@ -85,9 +85,9 @@ app_update:
     permite.
   action: Actualizar una aplicación
 app_close:
-  heading: Cierrar de la aplicación
+  heading: Cerrar de la aplicación
   description: Salga con gracia de una aplicación y elimine su estado local del registro de saldos.
-  action: Cierrar de la aplicación
+  action: Cerrar de la aplicación
 app_clear:
   heading: Cancelar una aplicación
   description: Fuerce la eliminación del estado local del registro de saldos.
