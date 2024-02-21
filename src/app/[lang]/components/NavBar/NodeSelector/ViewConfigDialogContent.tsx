@@ -10,6 +10,7 @@ type Props = {
   lng?: string
 };
 
+/** Content of the body of the "view node configuration" dialog */
 export default function ViewConfigDialogContent({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const nodeConfig = useAtomValue(nodeConfigAtom);

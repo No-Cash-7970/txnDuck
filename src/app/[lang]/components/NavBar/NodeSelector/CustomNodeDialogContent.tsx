@@ -25,6 +25,7 @@ type Props = {
 
 const showFormErrorsAtom = atom(false);
 
+/** Content of the body of the "custom node" dialog */
 export default function CustomNodeDialogContent({ lng, setopen }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const [toastOpen, setToastOpen] = useState(false);
