@@ -317,8 +317,9 @@ fields:
     is_nonpart: Sí
     is_not_nonpart: No
     warning: >
-      La no participación es permanente. Una vez que una cuenta se marca como no participante, nunca
-      puede volver a marcarse como «en línea» o «fuera de línea».
+      La no participación es permanente. Una vez que una cuenta se marca como no participante,
+      nunca podrá marcarse como «en línea» o «fuera de línea» hasta que se cierre y vuelva a
+      financiarse.
   # Fields for application call type
   apan: # OnComplete
     label: Tipo de acción de la aplicación

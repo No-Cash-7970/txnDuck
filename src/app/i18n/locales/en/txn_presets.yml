@@ -106,6 +106,6 @@ reg_offline:
 reg_nonpart:
   heading: Register account nonparticipating
   description: >
-    <em>Permanently</em> mark an account as not participating. <em>The account will never be able go
+    <em>Permanently</em> mark an account as not participating. <em>The account will not be able go
     online or offline and receive rewards.</em>
   action: Register as nonparticipating

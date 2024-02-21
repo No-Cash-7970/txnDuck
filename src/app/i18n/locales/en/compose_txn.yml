@@ -309,7 +309,7 @@ fields:
     is_not_nonpart: No
     warning: >
       Nonparticipation is permanent. Once an account is marked as nonparticipating, it can never be
-      marked as “online” or “offline” again.
+      marked as “online” or “offline” until it is closed and then funded again.
   # Fields for application call type
   apan: # OnComplete
     label: Application action type
