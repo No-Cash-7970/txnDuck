@@ -5,7 +5,57 @@ on:
   pull_request:
     branches: [ main ]
 jobs:
-  setup-env:
+  e2e-test:
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - name: Enable Corepack for Yarn
+      run: corepack enable
+    - name: Set up Node cache # Set up Node cache by installing again
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        cache: yarn
+    - name: Install dependencies
+      run: yarn
+    - name: Install browsers for E2E testing
+      run: yarn playwright install --with-deps
+    - name: Run E2E tests
+      run: yarn test:e2e
+    - uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: playwright-report
+        path: playwright-report/
+        retention-days: 30
+  unit-test:
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+    - name: Enable Corepack for Yarn
+      run: corepack enable
+    - name: Set up Node cache # Set up Node cache by installing again
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20
+        cache: yarn
+    - name: Install dependencies
+      run: yarn
+    - name: Run unit tests
+      run: yarn test:ci
+  lint:
     timeout-minutes: 5
     runs-on: ubuntu-latest
     steps:
@@ -24,32 +74,5 @@ jobs:
         cache: yarn
     - name: Install dependencies
       run: yarn
-  e2e-test:
-    needs: [setup-env]
-    timeout-minutes: 30
-    runs-on: ubuntu-latest
-    steps:
-    - name: Install browsers for E2E testing
-      run: yarn playwright install --with-deps
-    - name: Run E2E tests
-      run: yarn test:e2e
-    - uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
-  unit-test:
-    needs: [setup-env]
-    timeout-minutes: 10
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run unit tests
-      run: yarn test:ci
-  lint:
-    needs: [setup-env]
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    steps:
     - name: Run linter
       run: yarn lint
