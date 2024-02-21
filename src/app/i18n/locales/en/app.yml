@@ -86,7 +86,7 @@ node_selector:
   node_network: Node network
   view_config:
     btn: View current configuration
-    heading: Current Algod Server Configuration
+    heading: Current Node Configuration
     name_heading: Name
     url_heading: URL
     port_heading: Port
@@ -98,7 +98,7 @@ node_selector:
   custom_config:
     set_btn: Set custom configuration
     edit_btn: Edit custom configuration
-    heading: Custom Algod Server Configuration
+    heading: Custom Node Configuration
     instructions: Fields marked with an asterisk (<marker>*</marker>) are required.
     no_headers: No headers
     add_header_btn: Add a header
