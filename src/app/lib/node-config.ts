@@ -7,6 +7,7 @@ import { number as YupNumber, string as YupString } from 'yup';
 import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (`Yup.setLocale()`)
 import { splitAtom } from "jotai/utils";
 import { validationAtom } from "./utils";
+import { UNIT_NAME_MAX_LENGTH } from './txn-data/constants';
 
 /** Name for TestNet */
 export const TESTNET = 'testnet';
@@ -18,6 +19,11 @@ export const BETANET = 'betanet';
 export const SANDBOX = 'sandbox';
 /** Name for Sandbox */
 export const CUSTOM = 'custom';
+
+/** The default coin (native currency) name */
+export const DEFAULT_COIN_NAME = 'ALGO';
+/** Name of the coin (native currency) for Voi, an Algorand fork */
+export const VOI_COIN_NAME = 'VOI';
 
 /** Default TestNet configuration */
 export const testnetNodeConfig: NodeConfig = {
@@ -57,14 +63,18 @@ export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const sessionJSONStorage = createJSONStorage<any>(() => sessionStorage);
+
+interface StoredNodeConfig extends NodeConfig {
+  coinName?: string;
+}
 /** Node configuration that is temporarily stored locally */
 export const nodeConfigAtom =
-  atomWithStorage<NodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG, sessionJSONStorage);
+  atomWithStorage<StoredNodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG, sessionJSONStorage);
 
-export type customNodeConfig = Omit<NodeConfig, 'network'>;
+export type CustomNodeConfig = Omit<StoredNodeConfig, 'network'>;
 /** Custom node configuration that is indefinitely stored locally */
 export const customNodeAtom =
-  atomWithStorage<customNodeConfig|null>('customNode', null); // localStorage is used by default
+  atomWithStorage<CustomNodeConfig|null>('customNode', null); // localStorage is used by default
 
 /** Algod URL */
 export const urlAtom = atomWithValidate<string>('', {
@@ -116,9 +126,18 @@ export const headerValueValidateOptions = {
   }
 };
 
+/** Coin name (form field value) */
+export const coinNameFieldAtom = atomWithValidate<string>('', {
+  validate: v => {
+    YupString().max(UNIT_NAME_MAX_LENGTH).validateSync(v === '' ? undefined : v);
+    return v;
+  }
+});
+
 /** Validation form group for custom-node form */
 export const customNodeFormControlAtom = atomWithFormControls({
   url: urlAtom,
   port: portAtom,
   token: tokenAtom,
+  coinName: coinNameFieldAtom,
 });

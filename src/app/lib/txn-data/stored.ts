@@ -71,6 +71,7 @@ export function loadStoredTxnData(
   switch (preset) {
     case undefined:
       break; // Shortcut out. No need to evaluate the rest of the cases.
+    case Preset.Transfer:
     case Preset.TransferAlgos:
     case Preset.RekeyAccount:
     case Preset.CloseAccount:
@@ -132,7 +133,7 @@ export function loadStoredTxnData(
 
   // Restore payment transaction data, if applicable
   if (txnType === TransactionType.pay) {
-    if (!preset || preset === Preset.TransferAlgos) {
+    if (!preset || preset === Preset.TransferAlgos || preset === Preset.Transfer) {
       jotaiStore.set(txnDataAtoms.rcv, (storedTxnData?.txn as PaymentTxnData)?.rcv || '');
       jotaiStore.set(txnDataAtoms.amt, (storedTxnData?.txn as PaymentTxnData)?.amt);
     }
@@ -364,7 +365,7 @@ export function extractTxnDataFromAtoms(
       close: paymentForm.values.close || undefined,
     };
 
-    if (preset === Preset.TransferAlgos) {
+    if (preset === Preset.TransferAlgos || preset === Preset.Transfer) {
       specificTxnData.close = undefined;
       baseTxnData.rekey = undefined;
     }

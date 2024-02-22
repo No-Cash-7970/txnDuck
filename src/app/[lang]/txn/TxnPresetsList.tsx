@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { Trans } from "react-i18next";
+import { useAtomValue } from "jotai";
 import { useTranslation } from "@/app/i18n/client";
 import { SelectField } from "@/app/[lang]/components/form";
 import TxnPreset from "./TxnPreset";
 import { Preset } from "@/app/lib/txn-data";
+import { nodeConfigAtom } from "@/app/lib/node-config";
 
 type Props = {
   /** Language */
@@ -16,6 +18,7 @@ type Props = {
 export default function TxnPresetsList({ lng }: Props) {
   const { t } = useTranslation(lng || '', 'txn_presets');
   const [category, setCategory] = useState('all');
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   return (<div>
     <SelectField label={t('category_label')}
       name='category'
@@ -37,12 +40,21 @@ export default function TxnPresetsList({ lng }: Props) {
     {(category === 'general' || category === 'all') && <>
       <h2 className='ps-2' id='general'>{t('general_heading')}</h2>
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
-        <TxnPreset heading={t(`${Preset.TransferAlgos}.heading`)}
-          actionText={t(`${Preset.TransferAlgos}.action`)}
-          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.TransferAlgos}`}
+        <TxnPreset heading={nodeConfig.coinName
+            ? t(`${Preset.Transfer}.heading`, {coinName: nodeConfig.coinName})
+            : t(`${Preset.TransferAlgos}.heading`)
+          }
+          actionText={nodeConfig.coinName
+            ? t(`${Preset.Transfer}.action`, {coinName: nodeConfig.coinName})
+            : t(`${Preset.TransferAlgos}.action`)
+          }
+          actionURL={`/${lng}/txn/compose?${Preset.ParamName}=${Preset.Transfer}`}
           color='primary'
         >
-          {t(`${Preset.TransferAlgos}.description`)}
+          {nodeConfig.coinName
+            ? t(`${Preset.Transfer}.description`, {coinName: nodeConfig.coinName})
+            : t(`${Preset.TransferAlgos}.description`)
+          }
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.RekeyAccount}.heading`)}
           actionText={t(`${Preset.RekeyAccount}.action`)}

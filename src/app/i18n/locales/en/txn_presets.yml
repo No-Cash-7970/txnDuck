@@ -5,6 +5,10 @@ category_label: Category
 all_heading: All
 # General category
 general_heading: General
+transfer: # For transferring a native currency that is not Algo
+  heading: Transfer {{coinName}}
+  description: Transfer {{coinName}} from one wallet account to another (or itself).
+  action: Transfer {{coinName}}
 transfer_algos:
   heading: Transfer Algos
   description: Transfer Algos from one wallet account to another (or itself).

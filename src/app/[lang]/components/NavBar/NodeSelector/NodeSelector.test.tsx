@@ -228,6 +228,8 @@ describe('Node Selector', () => {
         screen.getByLabelText(/node_selector.custom_config.header_value_label/)
       );
       await userEvent.paste('hello');
+      await userEvent.click(screen.getByLabelText(/node_selector.view_config.coin_name/));
+      await userEvent.paste('COIN');
       // Submit
       await userEvent.click(screen.getByText('node_selector.custom_config.submit_btn'));
 
@@ -245,6 +247,7 @@ describe('Node Selector', () => {
         nodeToken: 'my_super_special_awesome_token',
         nodePort: 123,
         nodeHeaders: {'X-My-Header': 'hello'},
+        coinName: 'COIN',
       });
     });
 
@@ -274,6 +277,8 @@ describe('Node Selector', () => {
       expect(screen.getByLabelText(/node_selector.custom_config.header_value_label/))
         .not.toHaveClass('input-error');
       expect(screen.getAllByText('form.error.required')).toHaveLength(2);
+      expect(screen.getByLabelText(/node_selector.view_config.coin_name/))
+        .not.toHaveClass('input-error');
     });
 
     it('loads custom node configuration from storage', async () => {
@@ -282,6 +287,7 @@ describe('Node Selector', () => {
         nodeToken: 'HelloWorld',
         nodePort: 4000,
         nodeHeaders: {bar: 'baz qux'},
+        coinName: 'COIN',
       }));
       render(<JotaiProvider><NodeSelector /></JotaiProvider>);
 
@@ -298,6 +304,7 @@ describe('Node Selector', () => {
         .toHaveValue('bar');
       expect(screen.getByLabelText(/node_selector.custom_config.header_value_label/))
         .toHaveValue('baz qux');
+      expect(screen.getByLabelText(/node_selector.view_config.coin_name/)).toHaveValue('COIN');
     });
 
     it('removes custom configuration if "clear" button is clicked', async () => {
@@ -306,6 +313,7 @@ describe('Node Selector', () => {
         nodeToken: 'HelloWorld',
         nodePort: 4000,
         nodeHeaders: {bar: 'baz qux'},
+        coinName: 'COIN',
       }));
       render(
         <ToastProvider>
@@ -329,6 +337,7 @@ describe('Node Selector', () => {
       expect(screen.getByLabelText(/node_selector.view_config.token/)).toHaveValue('');
       expect(screen.queryByLabelText(/node_selector.view_config.header_name_label/))
         .not.toBeInTheDocument();
+      expect(screen.getByLabelText(/node_selector.view_config.coin_name/)).toHaveValue('');
       // Check custom configuration is removed from localStorage
       expect(localStorage.getItem('customNode')).toBeNull();
 

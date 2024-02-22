@@ -6,6 +6,10 @@ category_label: Categorías
 all_heading: Todas
 # General category
 general_heading: General
+transfer: # For transferring a native currency that is not Algo
+  heading: Transferir {{coinName}}
+  description: Transfiera {{coinName}} de una cuenta monedero a otra (o a sí mismo).
+  action: Transferir {{coinName}}
 transfer_algos:
   heading: Transferir Algos
   description: Transfiera Algos de una cuenta monedero a otra (o a sí mismo).

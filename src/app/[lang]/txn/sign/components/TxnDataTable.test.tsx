@@ -83,7 +83,7 @@ describe('Transaction Data Table Component', () => {
 
     expect(screen.getByText('fields.fee.label')).toBeInTheDocument();
     expect(screen.getByText('fields.use_sug_fee.not_using_sug')).toBeInTheDocument();
-    expect(screen.getByText('fields.fee.in_algos')).toBeInTheDocument();
+    expect(screen.getByText('fields.fee.in_coin')).toBeInTheDocument();
 
     expect(screen.getByText('fields.note.label')).toBeInTheDocument();
     expect(screen.getByText('Hello world')).toBeInTheDocument();
@@ -173,7 +173,7 @@ describe('Transaction Data Table Component', () => {
         .toBeInTheDocument();
 
       expect(screen.getByText('fields.amt.label')).toBeInTheDocument();
-      expect(screen.getByText('fields.amt.in_algos')).toBeInTheDocument();
+      expect(screen.getByText('fields.amt.in_coin')).toBeInTheDocument();
 
       expect(screen.getByText('fields.close.label')).toBeInTheDocument();
       expect(screen.getByText('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'))

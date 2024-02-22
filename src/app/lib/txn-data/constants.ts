@@ -78,7 +78,9 @@ export enum Preset {
   /** Preset query parameter name */
   ParamName = 'preset',
 
-  /** Transfer algos */
+  /** Transfer native currency */
+  Transfer = 'transfer',
+  /** Transfer algos (alternative to 'transfer') */
   TransferAlgos = 'transfer_algos',
   /** Rekey account */
   RekeyAccount = 'rekey_account',

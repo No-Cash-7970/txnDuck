@@ -15,6 +15,7 @@ import * as NodeConfigLib from "@/app/lib/node-config";
 import { FieldErrorMessage, FieldGroup, TextField } from "@/app/[lang]/components/form";
 import { ValidationMessage, isAlgodOK, removeNonNumericalChars } from "@/app/lib/utils";
 import ToastNotification from '@/app/[lang]/components/ToastNotification';
+import { UNIT_NAME_MAX_LENGTH } from "@/app/lib/txn-data/constants";
 
 type Props = {
   /** Language */
@@ -87,6 +88,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
       nodePort: config.port,
       nodeToken: config.token as string,
       nodeHeaders: config.headers,
+      coinName: config.coinName as string || undefined,
     };
     // Store custom config
     setStoredCustomNodeConfig(configToBeStored);
@@ -104,7 +106,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
   /** Clears the form field with the given name
    * @param fieldName The name of the field to clear
    */
-  const clearFormField = (fieldName: 'url' | 'port' | 'token' | 'headers') => {
+  const clearFormField = (fieldName: 'url' | 'port' | 'token' | 'headers' | 'coinName') => {
     if (fieldName !== 'headers') {
       form.handleOnChange(fieldName);
       form.setFocused(fieldName, false);
@@ -121,6 +123,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
     clearFormField('port');
     clearFormField('token');
     clearFormField('headers');
+    clearFormField('coinName');
     setShowFormErrors(false);
 
     // Clear stored custom config
@@ -154,6 +157,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
           })
         )
         : []);
+    jotaiStore.set(NodeConfigLib.coinNameFieldAtom, storedCustomNodeConfig?.coinName ?? '');
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [storedCustomNodeConfig]);
 
@@ -175,9 +179,10 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
         <TokenInput t={t} />
         <h3 className='mb-0'>{t('node_selector.view_config.headers_heading')}</h3>
         <Headers t={t} />
+        <CoinNameInput t={t} />
 
         {/* Test button */}
-        <div className='mt-6'>
+        <div className='mt-8'>
           <div className='mb-2 text-center'>
             {nodeOK && <>
               <IconMoodSmileFilled aria-hidden size={20}
@@ -411,5 +416,35 @@ function HeaderValueInput({ t, headerAtom, index }:
       value={headerValue.value ?? ''}
       onChange={(e) => setHeaderValue(e.target.value)}
     />
+  </>);
+}
+
+function CoinNameInput({ t }: { t: TFunction }) {
+  const form = useAtomValue(NodeConfigLib.customNodeFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
+    <TextField label={t('node_selector.view_config.coin_name_heading')}
+      name='coin_name'
+      id='coin_name-input'
+      inputInsideLabel={false}
+      placeholder={NodeConfigLib.DEFAULT_COIN_NAME}
+      containerId='coin_name-field'
+      containerClass='mt-2 max-w-xs'
+      inputClass={
+        ((showFormErrors || form.touched.coinName) && form.fieldErrors.coinName)
+          ? 'input-error' : ''
+      }
+      maxLength={UNIT_NAME_MAX_LENGTH}
+      value={form.values.coinName ?? ''}
+      onChange={(e) => form.handleOnChange('coinName')(e.target.value)}
+      onFocus={form.handleOnFocus('coinName')}
+      onBlur={form.handleOnBlur('coinName')}
+    />
+    {(showFormErrors || form.touched.coinName) && form.fieldErrors.coinName &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.coinName.message.key}
+        dict={form.fieldErrors.coinName.message.dict}
+      />
+    }
   </>);
 }

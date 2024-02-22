@@ -53,10 +53,10 @@ fields:
   fee: # Fee
     label: Fee
     tip: Manually set the fee for this transaction.
-    help_msg_one: "Minimum: {{count, number}} Algo"
-    help_msg_other: "Minimum: {{count, number}} Algos"
-    in_algos_one: "{{count, number}} Algo"
-    in_algos_other: "{{count, number}} Algos"
+    min_msg_one: "Minimum: {{count, number}} {{coinName}}"
+    min_msg_other: "Minimum: {{count, number}} {{coinName}}"
+    in_coin_one: "{{count, number}} {{coinName}}"
+    in_coin_other: "{{count, number}} {{coinName}}"
   note: # Note
     label: Note
     tip: >
@@ -107,8 +107,8 @@ fields:
   amt: # Amount to pay (in Algos)
     label: Amount
     tip: The total amount to be sent.
-    in_algos_one: "{{count, number}} Algo"
-    in_algos_other: "{{count, number}} Algos"
+    in_coin_one: "{{count, number}} {{coinName}}"
+    in_coin_other: "{{count, number}} {{coinName}}"
   close: # Close remainder to
     label: Close remainder to
     tip: >

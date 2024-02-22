@@ -307,7 +307,34 @@ describe('Compose Form Component', () => {
    * Presets
    */
 
-  it('does not proceed and shows errors if invalid data using "transfer algos" preset is submitted',
+  it('does not proceed and shows errors if invalid data using "transfer" preset is submitted',
+  async () => {
+    presetMockValue = 'transfer';
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByText('sign_txn_btn'));
+
+    expect(routerPushMock).not.toHaveBeenCalled();
+
+    expect(screen.getByLabelText(/fields.type.label/)).not.toHaveClass('select-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.snd.label/)).toHaveFocus();
+    expect(screen.getByLabelText(/fields.use_sug_fee.label/)).not.toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.note.label/)).not.toHaveClass('textarea-error');
+    expect(screen.getByLabelText(/fields.use_sug_rounds.label/)).not.toHaveClass('input-error');
+
+    expect(screen.getByLabelText(/fields.rcv.label/)).toHaveClass('input-error');
+    expect(screen.getByLabelText(/fields.amt.label/)).toHaveClass('input-error');
+
+    expect(screen.getAllByText('form.error.required')).toHaveLength(3);
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not proceed and shows errors if invalid data using "transfer algos" (same as "transfer") preset is submitted',
   async () => {
     presetMockValue = 'transfer_algos';
     render(

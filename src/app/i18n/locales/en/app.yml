@@ -92,6 +92,7 @@ node_selector:
     port_heading: Port
     token_heading: Token
     headers_heading: Headers
+    coin_name_heading: Name of Network's Native Currency
     test_btn: Test
     test_pass: Online and working!
     test_fail: There is a problem connecting to the node.

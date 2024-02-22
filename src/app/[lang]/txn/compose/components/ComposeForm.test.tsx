@@ -434,7 +434,21 @@ describe('Compose Form Component', () => {
     expect(await screen.findByText('sign_txn_btn')).toBeEnabled();
   });
 
-  it('has fields for "transfer algos" preset', async () => {
+  it('has fields for "transfer" preset', async () => {
+    presetMockValue = 'transfer';
+    render(<ComposeForm />);
+
+    expect(await screen.findByLabelText(/fields.type.label/)).toHaveValue('pay');
+    expect(screen.getByLabelText(/fields.type.label/)).toBeDisabled();
+    expect(screen.getByLabelText(/fields.rcv.label/)).toBeRequired();
+    expect(screen.getByLabelText(/fields.amt.label/)).toBeRequired();
+    expect(screen.queryByText('fields.close.label')).not.toBeInTheDocument();
+
+    expect(screen.queryByText('fields.lx.label')).not.toBeInTheDocument();
+    expect(screen.queryByText('fields.rekey.label')).not.toBeInTheDocument();
+  });
+
+  it('has fields for "transfer algos" preset (same as "transfer" preset)', async () => {
     presetMockValue = 'transfer_algos';
     render(<ComposeForm />);
 

@@ -7,10 +7,12 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 
 export default function Amount({ t }: { t: TFunction }) {
   const form = useAtomValue(paymentFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const nodeConfig = useAtomValue(nodeConfigAtom);
   return (<>
     <NumberField label={t('fields.amt.label')}
       name='amt'
@@ -29,7 +31,7 @@ export default function Amount({ t }: { t: TFunction }) {
       inputClass={
         ((showFormErrors || form.touched.amt) && form.fieldErrors.amt) ? 'input-error' : ''
       }
-      afterSideLabel={t('algo_other')}
+      afterSideLabel={nodeConfig.coinName || t('algo', {count: form.values.amt as number ?? 0})}
       min={0}
       step={0.000001}
       value={form.values.amt as number ?? ''}

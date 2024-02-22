@@ -193,10 +193,13 @@ export default function ComposeForm({ lng }: Props) {
       <TxnType t={t} />
       <Sender t={t} />
 
-      {txnType.value === TransactionType.pay && (!preset || preset === Preset.TransferAlgos) && <>
-        <PaymentFields.Receiver t={t} />
-        <PaymentFields.Amount t={t} />
-      </>}
+      {txnType.value === TransactionType.pay
+        && (!preset || preset === Preset.TransferAlgos || preset === Preset.Transfer)
+        && <>
+          <PaymentFields.Receiver t={t} />
+          <PaymentFields.Amount t={t} />
+        </>
+      }
 
       {txnType.value === TransactionType.axfer && <>
         {preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut &&

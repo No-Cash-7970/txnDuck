@@ -97,6 +97,7 @@ node_selector:
     port_heading: Puerto
     token_heading: Token
     headers_heading: Cabeceras
+    coin_name_heading: Nombre de la moneda nativa de la red
     test_btn: Probar
     test_pass: ¡En línea y funciona!
     test_fail: Hay un problema de conexión con el nodo.

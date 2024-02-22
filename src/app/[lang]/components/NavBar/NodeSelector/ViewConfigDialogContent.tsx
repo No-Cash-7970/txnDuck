@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { IconAlertTriangleFilled, IconMoodSmileFilled } from "@tabler/icons-react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "@/app/i18n/client";
-import { nodeConfigAtom } from "@/app/lib/node-config";
+import { DEFAULT_COIN_NAME, nodeConfigAtom } from "@/app/lib/node-config";
 import { isAlgodOK } from "@/app/lib/utils";
 
 type Props = {
@@ -70,6 +70,9 @@ export default function ViewConfigDialogContent({ lng }: Props) {
             : <p><i>{t('none')}</i></p>
           }
         </>}
+
+        <h3>{t('node_selector.view_config.coin_name_heading')}</h3>
+        <p>{nodeConfig.coinName ?? DEFAULT_COIN_NAME}</p>
       </div>
       <div className='modal-action px-6 sm:px-8 grid grid-cols-3 gap-2'>
         <button type='button' className='btn btn-block col-span-1 btn-primary'

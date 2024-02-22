@@ -121,8 +121,11 @@ export default function TxnDataTable({ lng }: Props) {
           <tr>
             <th role='rowheader' className='align-top'>{t('fields.amt.label')}</th>
             <td>
-              {t('fields.amt.in_algos', {
+              {t('fields.amt.in_coin', {
                 count: (storedTxnData?.txn as TxnData.PaymentTxnData)?.amt,
+                coinName: nodeConfig.coinName || t('algo', {
+                  count: (storedTxnData?.txn as TxnData.PaymentTxnData)?.amt
+                }),
                 formatParams: { count: { maximumFractionDigits: 6 } }
               })}
             </td>
@@ -642,9 +645,13 @@ export default function TxnDataTable({ lng }: Props) {
             {// Show fee when the store transaction data is loaded and the suggested fee is loaded
              // (if it is to be used)
             (storedTxnData && (!storedTxnData?.useSugFee || !!fee.value))
-              ? t('fields.fee.in_algos', {
+              ? t('fields.fee.in_coin', {
                   count: storedTxnData?.useSugFee
                     ? (fee.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fee,
+                  coinName: nodeConfig.coinName || t('algo', {
+                    count: storedTxnData?.useSugFee
+                      ? (fee.value ?? 0) : (storedTxnData?.txn as TxnData.BaseTxnData)?.fee
+                  }),
                   formatParams: { count: { maximumFractionDigits: 6 } }
                 })
               : t('loading')
