@@ -8,11 +8,11 @@ all_heading: Todas
 general_heading: General
 transfer: # For transferring a native currency that is not Algo
   heading: Transferir {{coinName}}
-  description: Transfiera {{coinName}} de una cuenta monedero a otra (o a sí mismo).
+  description: Transfiera {{coinName}} de una cuenta billetera a otra (o a sí mismo).
   action: Transferir {{coinName}}
 transfer_algos:
   heading: Transferir Algos
-  description: Transfiera Algos de una cuenta monedero a otra (o a sí mismo).
+  description: Transfiera Algos de una cuenta billetera a otra (o a sí mismo).
   action: Transferir Algos
 rekey_account:
   heading: Recodificar una cuenta
@@ -21,14 +21,14 @@ rekey_account:
     pública.
   action: Recodificar una cuenta
 close_account:
-  heading: Cierrar una cuenta
+  heading: Cerrar una cuenta
   description: Elimine una cuenta del libro mayor.
-  action: Cierrar una cuenta
+  action: Cerrar una cuenta
 # Asset category
 asset_heading: Activo
 asset_transfer:
   heading: Transferir un activo
-  description: Transfiera un activo de una cuenta monedero a otra (o a sí mismo).
+  description: Transfiera un activo de una cuenta billetera a otra (o a sí mismo).
   action: Transferir un activo
 asset_opt_in:
   heading: Optar por un activo
