@@ -35,7 +35,7 @@ export default function ViewConfigDialogContent({ lng }: Props) {
         <p>{nodeConfig.nodeServer}</p>
 
         <h3>{t('node_selector.view_config.port_heading')}</h3>
-        <p>{nodeConfig.nodePort === undefined ? <i>{t('none')}</i> : nodeConfig.nodePort}</p>
+        <p>{nodeConfig.nodePort ?? <i>{t('none')}</i>}</p>
 
         <h3>{t('node_selector.view_config.token_heading')}</h3>
         <p>
