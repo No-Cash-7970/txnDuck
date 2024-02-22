@@ -93,20 +93,26 @@ export default function HomePage({ params: { lang } }: {
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
           <div className='card border-2 border-success bg-opacity-80'>
             <div className='card-body items-center px-4 py-6'>
-              <h3 className='card-title self-start mt-0'>
-                {t('home:uses.simple_things.heading')}
-              </h3>
+              <h3 className='card-title self-start mt-0'>{t('home:uses.simple_things.heading')}</h3>
               <ul className='self-start marker:text-success'>
-                <li>{t('home:uses.simple_things.list.0')}</li>
                 <li>
-                  <Trans t={t} i18nKey='home:uses.simple_things.list.1'>
-                    opt_in_to_<abbr title={t('algo_std_asset')}>asa</abbr>
-                  </Trans>
+                  <Link href={`${lang}/txn/compose?preset=transfer`} className='underline'>
+                    {t('home:uses.simple_things.list.0')}
+                  </Link>
                 </li>
                 <li>
-                  <Trans t={t} i18nKey='home:uses.simple_things.list.2'>
-                    transfer_<abbr title={t('nonfungible_token')}>nft</abbr>
-                  </Trans>
+                  <Link href={`${lang}/txn/compose?preset=asset_opt_in`} className='underline'>
+                    <Trans t={t} i18nKey='home:uses.simple_things.list.1'>
+                      opt_in_to_<abbr title={t('algo_std_asset')}>asa</abbr>
+                    </Trans>
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=asset_transfer`} className='underline'>
+                    <Trans t={t} i18nKey='home:uses.simple_things.list.2'>
+                      transfer_<abbr title={t('nonfungible_token')}>nft</abbr>
+                    </Trans>
+                  </Link>
                 </li>
                 <li>{t('home:uses.simple_things.list.3')}</li>
               </ul>
@@ -118,9 +124,21 @@ export default function HomePage({ params: { lang } }: {
                 {t('home:uses.complex_things.heading')}
               </h3>
               <ul className='self-start marker:text-warning'>
-                <li>{t('home:uses.complex_things.list.0')}</li>
-                <li>{t('home:uses.complex_things.list.1')}</li>
-                <li>{t('home:uses.complex_things.list.2')}</li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=reg_online`} className='underline'>
+                    {t('home:uses.complex_things.list.0')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=app_update`} className='underline'>
+                    {t('home:uses.complex_things.list.1')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=asset_clawback`} className='underline'>
+                    {t('home:uses.complex_things.list.2')}
+                  </Link>
+                </li>
                 <li>{t('home:uses.complex_things.list.3')}</li>
               </ul>
             </div>
@@ -131,8 +149,16 @@ export default function HomePage({ params: { lang } }: {
                 {t('home:uses.dangerous_things.heading')}
               </h3>
               <ul className='self-start marker:text-error'>
-                <li>{t('home:uses.dangerous_things.list.0')}</li>
-                <li>{t('home:uses.dangerous_things.list.1')}</li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=rekey_account`} className='underline'>
+                    {t('home:uses.dangerous_things.list.0')}
+                  </Link>
+                </li>
+                <li>
+                  <Link href={`${lang}/txn/compose?preset=close_account`} className='underline'>
+                    {t('home:uses.dangerous_things.list.1')}
+                  </Link>
+                </li>
                 <li>{t('home:uses.dangerous_things.list.2')}</li>
               </ul>
             </div>
