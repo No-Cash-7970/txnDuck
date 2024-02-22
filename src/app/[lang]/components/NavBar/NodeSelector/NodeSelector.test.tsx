@@ -44,43 +44,43 @@ import NodeSelector from './NodeSelector';
 describe('Node Selector', () => {
 
   it('displays "TestNet" button if the node configuration is set for TestNet', () => {
-    sessionStorage.setItem('nodeConfig', JSON.stringify(testnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(testnetNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.testnet');
   });
 
   it('displays "MainNet" button if the node configuration is set for MainNet', () => {
-    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.mainnet');
   });
 
   it('displays "BetaNet" button if the node configuration is set for BetaNet', () => {
-    sessionStorage.setItem('nodeConfig', JSON.stringify(betanetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(betanetNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.betanet');
   });
 
   it('displays "Voi TestNet" button if the node configuration is set for Voi TestNet', () => {
-    sessionStorage.setItem('nodeConfig', JSON.stringify(voiTestnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(voiTestnetNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.voi_testnet');
   });
 
   it('displays "Sandbox" button if the node configuration is set for Sandbox', () => {
-    sessionStorage.setItem('nodeConfig', JSON.stringify(sandboxNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(sandboxNodeConfig));
     render(<NodeSelector />);
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.sandbox');
   });
 
   it('sets node configuration to TestNet configuration when "TestNet" is selected', async () => {
     // Set config to something that is not TestNet
-    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
     await userEvent.click(screen.getByText('node_selector.testnet'));
-    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('testnet');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
@@ -88,12 +88,12 @@ describe('Node Selector', () => {
 
   it('sets node configuration to MainNet configuration when "MainNet" is selected', async () => {
     // Set config to something that is not MainNet
-    sessionStorage.setItem('nodeConfig', JSON.stringify(testnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(testnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
     await userEvent.click(screen.getByText('node_selector.mainnet'));
-    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('mainnet');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
@@ -101,12 +101,12 @@ describe('Node Selector', () => {
 
   it('sets node configuration to BetaNet configuration when "BetaNet" is selected', async () => {
     // Set config to something that is not BetaNet
-    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
     await userEvent.click(screen.getByText('node_selector.betanet'));
-    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('betanet');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
@@ -115,12 +115,12 @@ describe('Node Selector', () => {
   it('sets node configuration to Voi TestNet configuration when "Voi TestNet" is selected',
   async () => {
     // Set config to something that is not Voi TestNet
-    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
     await userEvent.click(screen.getByText('node_selector.voi_testnet'));
-    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('voi_testnet');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
@@ -128,12 +128,12 @@ describe('Node Selector', () => {
 
   it('sets node configuration to Sandbox configuration when "Sandbox" is selected', async () => {
     // Set config to something that is not Sandbox
-    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
     await userEvent.click(screen.getByText('node_selector.sandbox'));
-    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('sandbox');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
@@ -144,7 +144,7 @@ describe('Node Selector', () => {
     // eslint-disable-next-line max-len
     it('shows current node configuration when "View current configuration" button is clicked in node selector menu',
     async () => {
-      sessionStorage.setItem('nodeConfig', JSON.stringify({
+      localStorage.setItem('nodeConfig', JSON.stringify({
         network: 'foo',
         nodeServer: 'https://foobar.example.com',
         nodeToken: 'beeeeeeeeeeeeeeeeeeeeeeeeeeeep',
@@ -170,7 +170,7 @@ describe('Node Selector', () => {
     });
 
     it('shows node is online if node responds with "OK" after clicking "Test" button', async () => {
-      sessionStorage.setItem('nodeConfig', JSON.stringify({
+      localStorage.setItem('nodeConfig', JSON.stringify({
         network: 'foo',
         nodeServer: 'https://foobar.example.com',
         nodeToken: '',
@@ -191,7 +191,7 @@ describe('Node Selector', () => {
 
     it('shows node is NOT online if node does NOT respond with "OK" after clicking "Test" button',
     async () => {
-      sessionStorage.setItem('nodeConfig', JSON.stringify({
+      localStorage.setItem('nodeConfig', JSON.stringify({
         network: 'foo',
         nodeServer: 'https://foobar.example.com',
         // The token set to "fail" triggers the mock node response to be an error response

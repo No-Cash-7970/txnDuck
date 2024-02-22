@@ -77,12 +77,9 @@ export const sandboxNodeConfig: StoredNodeConfig = {
 /** Default node configuration */
 export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
 
-/* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
-const sessionJSONStorage = createJSONStorage<any>(() => sessionStorage);
-
-/** Node configuration that is temporarily stored locally */
+/** Node configuration that is stored locally (in localStorage) */
 export const nodeConfigAtom =
-  atomWithStorage<StoredNodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG, sessionJSONStorage);
+  atomWithStorage<StoredNodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG);
 
 export type CustomNodeConfig = Omit<StoredNodeConfig, 'network'>;
 /** Custom node configuration that is indefinitely stored locally */
