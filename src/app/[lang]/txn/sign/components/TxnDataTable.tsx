@@ -89,6 +89,7 @@ export default function TxnDataTable({ lng }: Props) {
             ? ((nodeConfig.network === 'mainnet'
                 || nodeConfig.network === 'testnet'
                 || nodeConfig.network === 'betanet'
+                || nodeConfig.network === 'voi_testnet'
                 || nodeConfig.network === 'sandbox'
                 || nodeConfig.network === 'custom')
               ? t(`app:node_selector.${nodeConfig.network}`) : nodeConfig.network)

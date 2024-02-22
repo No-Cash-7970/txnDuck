@@ -15,6 +15,7 @@ import {
   IconPencilCog,
   IconX,
   IconServer2,
+  IconSquareRoundedLetterV,
 } from '@tabler/icons-react';
 import { type NodeConfig } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
@@ -76,6 +77,10 @@ export default function NodeSelector({ lng }: Props) {
             <IconTestPipe aria-hidden />
             <span className='truncate'>{t('node_selector.betanet')}</span>
           </>}
+          {nodeConfig?.network === NodeConfigLib.VOI_TESTNET && <>
+            <IconSquareRoundedLetterV aria-hidden />
+            <span className='truncate'>{t('node_selector.voi_testnet')}</span>
+          </>}
           {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
             <IconSandbox aria-hidden />
             <span className='truncate'>{t('node_selector.sandbox')}</span>
@@ -124,6 +129,16 @@ export default function NodeSelector({ lng }: Props) {
                 <span>
                   <IconTestPipe aria-hidden stroke={1.5} />
                   <span>{t('node_selector.betanet')}</span>
+                </span>
+              </li>
+            </DropdownMenu.Item>
+            <DropdownMenu.Item asChild>
+              <li className='mb-1' onClick={
+                (e) => updateNodeConfig(NodeConfigLib.voiTestnetNodeConfig)
+              }>
+                <span>
+                  <IconSquareRoundedLetterV aria-hidden stroke={1.5} />
+                  <span>{t('node_selector.voi_testnet')}</span>
                 </span>
               </li>
             </DropdownMenu.Item>

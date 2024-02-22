@@ -5,7 +5,8 @@ import {
   betanetNodeConfig,
   mainnetNodeConfig,
   testnetNodeConfig,
-  sandboxNodeConfig
+  sandboxNodeConfig,
+  voiTestnetNodeConfig,
 } from '@/app/lib/node-config';
 import { NodeConfig } from '@txnlab/use-wallet';
 import JotaiProvider from '@/app/[lang]/components/JotaiProvider';
@@ -60,6 +61,12 @@ describe('Node Selector', () => {
     expect(screen.getByRole('button')).toHaveTextContent('node_selector.betanet');
   });
 
+  it('displays "Voi TestNet" button if the node configuration is set for Voi TestNet', () => {
+    sessionStorage.setItem('nodeConfig', JSON.stringify(voiTestnetNodeConfig));
+    render(<NodeSelector />);
+    expect(screen.getByRole('button')).toHaveTextContent('node_selector.voi_testnet');
+  });
+
   it('displays "Sandbox" button if the node configuration is set for Sandbox', () => {
     sessionStorage.setItem('nodeConfig', JSON.stringify(sandboxNodeConfig));
     render(<NodeSelector />);
@@ -102,6 +109,20 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('betanet');
+    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets node configuration to Voi TestNet configuration when "Voi TestNet" is selected',
+  async () => {
+    // Set config to something that is not Voi TestNet
+    sessionStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    render(<NodeSelector />);
+
+    await userEvent.click(screen.getByRole('button')); // Open menu
+    await userEvent.click(screen.getByText('node_selector.voi_testnet'));
+    const nodeConfig = JSON.parse(sessionStorage.getItem('nodeConfig') || '') as NodeConfig;
+
+    expect(nodeConfig.network).toBe('voi_testnet');
     expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
   });
 

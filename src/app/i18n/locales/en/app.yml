@@ -81,6 +81,7 @@ node_selector:
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet
+  voi_testnet: Voi TestNet
   sandbox: Sandbox
   custom: Custom
   node_network: Node network

@@ -15,6 +15,8 @@ export const TESTNET = 'testnet';
 export const MAINNET = 'mainnet';
 /** Name for BetaNet */
 export const BETANET = 'betanet';
+/** Name for Voi TestNet */
+export const VOI_TESTNET = 'voi_testnet';
 /** Name for Sandbox */
 export const SANDBOX = 'sandbox';
 /** Name for Sandbox */
@@ -22,11 +24,16 @@ export const CUSTOM = 'custom';
 
 /** The default coin (native currency) name */
 export const DEFAULT_COIN_NAME = 'ALGO';
-/** Name of the coin (native currency) for Voi, an Algorand fork */
+/** Name of the coin (native currency) for Voi, an Algorand code fork */
 export const VOI_COIN_NAME = 'VOI';
 
+interface StoredNodeConfig extends NodeConfig {
+  /** Name of the network's native currency */
+  coinName?: string;
+}
+
 /** Default TestNet configuration */
-export const testnetNodeConfig: NodeConfig = {
+export const testnetNodeConfig: StoredNodeConfig = {
   network: TESTNET,
   nodeServer: 'https://testnet-api.algonode.cloud',
   nodeToken: '',
@@ -34,7 +41,7 @@ export const testnetNodeConfig: NodeConfig = {
   nodeHeaders: undefined,
 };
 /** Default MainNet configuration */
-export const mainnetNodeConfig: NodeConfig = {
+export const mainnetNodeConfig: StoredNodeConfig = {
   network: MAINNET,
   nodeServer: 'https://mainnet-api.algonode.cloud',
   nodeToken: '',
@@ -42,15 +49,24 @@ export const mainnetNodeConfig: NodeConfig = {
   nodeHeaders: undefined,
 };
 /** Default BetaNet configuration */
-export const betanetNodeConfig: NodeConfig = {
+export const betanetNodeConfig: StoredNodeConfig = {
   network: BETANET,
   nodeServer: 'https://betanet-api.algonode.cloud',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
 };
+/** Default Voi TestNet configuration */
+export const voiTestnetNodeConfig: StoredNodeConfig = {
+  network: VOI_TESTNET,
+  nodeServer: 'https://testnet-api.voi.nodly.io',
+  nodeToken: '',
+  nodePort: '443',
+  nodeHeaders: undefined,
+  coinName: VOI_COIN_NAME,
+};
 /** Default Sandbox configuration */
-export const sandboxNodeConfig: NodeConfig = {
+export const sandboxNodeConfig: StoredNodeConfig = {
   network: SANDBOX,
   nodeServer: 'http://localhost',
   nodeToken: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
@@ -64,9 +80,6 @@ export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const sessionJSONStorage = createJSONStorage<any>(() => sessionStorage);
 
-interface StoredNodeConfig extends NodeConfig {
-  coinName?: string;
-}
 /** Node configuration that is temporarily stored locally */
 export const nodeConfigAtom =
   atomWithStorage<StoredNodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG, sessionJSONStorage);
