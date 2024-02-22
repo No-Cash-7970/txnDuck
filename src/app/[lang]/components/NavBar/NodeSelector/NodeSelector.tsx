@@ -58,7 +58,10 @@ export default function NodeSelector({ lng }: Props) {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
       <button
-          className='btn btn-accent w-auto max-w-[4rem] sm:max-w-xs mx-2 px-2 sm:px-4'
+          className={
+            'btn btn-accent w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 leading-tight'
+            + ' sm:max-w-sm sm:px-4 sm:text-sm sm:gap-2'
+          }
           title={t('node_selector.choose_node')}
         >
           {nodeConfig?.network === NodeConfigLib.TESTNET && <>
