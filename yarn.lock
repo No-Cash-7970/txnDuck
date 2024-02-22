@@ -19,14 +19,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algorandfoundation/algokit-utils@npm:^5.4.0":
-  version: 5.4.0
-  resolution: "@algorandfoundation/algokit-utils@npm:5.4.0"
+"@algorandfoundation/algokit-utils@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "@algorandfoundation/algokit-utils@npm:5.5.0"
   dependencies:
     buffer: "npm:^6.0.3"
   peerDependencies:
     algosdk: ^2.7.0
-  checksum: d8c7efc52020c0a9a1a54d805fb4252ddd5661f0e77da49e296590253257b1101e8607d638a056ab125524a848d342c5457f4c5cd5ba2a45e6021ab56c67d881
+  checksum: 642885f138c24c9ca21eeecfe83564238b52fdbef706e016ebf00309e9e5148b7a14766839ca286c14728a7beb0162ebd2ea19496956f16cfc841f1eb3957279
   languageName: node
   linkType: hard
 
@@ -3652,12 +3652,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.19":
-  version: 20.11.19
-  resolution: "@types/node@npm:20.11.19"
+"@types/node@npm:^20.11.20":
+  version: 20.11.20
+  resolution: "@types/node@npm:20.11.20"
   dependencies:
     undici-types: "npm:~5.26.4"
-  checksum: f451ef0a1d78f29c57bad7b77e49ebec945f2a6d0d7a89851d7e185ee9fe7ad94d651c0dfbcb7858c9fa791310c8b40a881e2260f56bd3c1b7e7ae92723373ae
+  checksum: 8e8de211e6d54425c603388a9b5cc9c434101985d0a1c88aabbf65d10df2b1fccd71855c20e61ae8a75c7aea56cb0f64e722cf7914cff1247d0b62ce21996ac4
   languageName: node
   linkType: hard
 
@@ -8950,12 +8950,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.9.0":
-  version: 23.9.0
-  resolution: "i18next@npm:23.9.0"
+"i18next@npm:^23.10.0":
+  version: 23.10.0
+  resolution: "i18next@npm:23.10.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 84c31a825ea75b23ca6e2da43c9a27f0fc080a02bbe88d57b90998231803fe3575763b8f5e6fbff391994dc8420df1e34e833b646fb5682940ebe2e13a1e819f
+  checksum: b6161075cfc2f3238e8e293306d70f173b5d5f4b7217d29ba15d4b70bd876911ccf15ca8fed238405c735c2a2e86e26658a17ea7cfd4040abd3100fef0a7c7d4
   languageName: node
   linkType: hard
 
@@ -10503,9 +10503,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"jotai@npm:^2.6.4":
-  version: 2.6.4
-  resolution: "jotai@npm:2.6.4"
+"jotai@npm:^2.6.5":
+  version: 2.6.5
+  resolution: "jotai@npm:2.6.5"
   peerDependencies:
     "@types/react": ">=17.0.0"
     react: ">=17.0.0"
@@ -10514,7 +10514,7 @@ __metadata:
       optional: true
     react:
       optional: true
-  checksum: 2cda03cccff7f6509d5733412194543634dc496a01a88da4e81d6bf1c46c27383833e8bd9462ecbcd4b745316b54edf5aa403b42c098900561cc08a0f5fcaa54
+  checksum: f2a6ca96d6d318942b7dbcbd9eae8b9b224dbc1d348672dad97aa064450cdec5cc7bebffb67e7ea9b1c392e876c63c4978b9ce2f57a58eb725568f7c3e9fbe1d
   languageName: node
   linkType: hard
 
@@ -15414,7 +15414,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "txnduck@workspace:."
   dependencies:
-    "@algorandfoundation/algokit-utils": "npm:^5.4.0"
+    "@algorandfoundation/algokit-utils": "npm:^5.5.0"
     "@blockshake/defly-connect": "npm:^1.1.6"
     "@commitlint/cli": "npm:^18.6.1"
     "@commitlint/config-conventional": "npm:^18.6.2"
@@ -15435,7 +15435,7 @@ __metadata:
     "@txnlab/use-wallet": "npm:^2.7.0"
     "@types/jest": "npm:^29.5.12"
     "@types/next-pwa": "npm:^5.6.9"
-    "@types/node": "npm:^20.11.19"
+    "@types/node": "npm:^20.11.20"
     "@types/react": "npm:^18.2.57"
     "@types/react-dom": "npm:^18.2.19"
     accept-language: "npm:^3.0.18"
@@ -15451,12 +15451,12 @@ __metadata:
     gulp: "npm:^4.0.2"
     gulp-execa: "npm:^6.0.0"
     gulp-rename: "npm:^2.0.0"
-    i18next: "npm:^23.9.0"
+    i18next: "npm:^23.10.0"
     i18next-browser-languagedetector: "npm:^7.2.0"
     i18next-resources-to-backend: "npm:^1.2.0"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
-    jotai: "npm:^2.6.4"
+    jotai: "npm:^2.6.5"
     jotai-form: "npm:^0.1.3"
     js-yaml: "npm:^4.1.0"
     lefthook: "npm:^1.6.1"
