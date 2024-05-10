@@ -18,7 +18,10 @@ type Props = {
   lng?: string
 };
 
-/** Submit button for the "Compose Transaction" form */
+/** Submit button for the "Compose Transaction" form. This is separated from the component for the
+ * "Compose Transaction" form to reduce from React re-rendering all components in the form when
+ * transaction data is loaded or updated.
+ */
 export default function ComposeSubmitButton({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   /** A flag for indicating that the form is being submitted */
