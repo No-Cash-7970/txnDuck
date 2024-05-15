@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -12,6 +12,7 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
+import { removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function Total({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
@@ -25,7 +26,7 @@ export default function Total({ t }: { t: TFunction }) {
 
   // If creation transaction
   return (!form.values.caid && <>
-    <NumberField label={t('fields.apar_t.label')}
+    <TextField label={t('fields.apar_t.label')}
       name='apar_t'
       id='apar_t-input'
       tip={{
@@ -44,12 +45,11 @@ export default function Total({ t }: { t: TFunction }) {
         )
         ? 'input-error' : ''
       }
-      min={0}
-      step={1}
-      value={(form.values.apar_t as string) ?? ''}
-      onChange={(e) => form.handleOnChange('apar_t')(e.target.value)}
+      value={form.values.apar_t as string ?? ''}
+      onChange={(e) => form.handleOnChange('apar_t')(removeNonNumericalChars(e.target.value))}
       onFocus={form.handleOnFocus('apar_t')}
       onBlur={form.handleOnBlur('apar_t')}
+      inputMode='numeric'
     />
     {(showFormErrors || form.touched.apar_t) && form.fieldErrors.apar_t &&
       <FieldErrorMessage t={t}

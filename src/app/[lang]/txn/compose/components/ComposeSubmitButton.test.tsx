@@ -171,7 +171,7 @@ describe('Compose Form Component', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
+      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
 
@@ -313,7 +313,7 @@ describe('Compose Form Component', () => {
     await userEvent.click(screen.getByLabelText(/fields.apar_an.label/));
     await userEvent.paste('Fake Token');
     await userEvent.click(screen.getByLabelText(/fields.apar_t.label/));
-    await userEvent.paste('10000000');
+    await userEvent.paste('18446744073709551615'); // The maximum possible total (2^64 - 1)
     await userEvent.click(screen.getByLabelText(/fields.apar_dc.label/));
     await userEvent.paste('3');
     await userEvent.click(screen.getByLabelText(/fields.apar_df.label/));
@@ -344,7 +344,7 @@ describe('Compose Form Component', () => {
         snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         apar_un: 'FAKE',
         apar_an: 'Fake Token',
-        apar_t: '10000000',
+        apar_t: '18446744073709551615',
         apar_dc: 3,
         apar_df: true,
         apar_au: 'https://fake.token',
@@ -411,7 +411,7 @@ describe('Compose Form Component', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: {name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
+      retrievedAssetInfo: {name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   }, 10000);
 
@@ -447,7 +447,7 @@ describe('Compose Form Component', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 },
+      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
 

@@ -46,6 +46,8 @@ export const METADATA_HASH_LENGTH = 32;
 export const B64_METADATA_HASH_LENGTH = 44; // (32 + 2) / 3 * 4
 /** Maximum number of decimal places */
 export const MAX_DECIMAL_PLACES = 19;
+/** Maximum number for total */
+export const MAX_ASSET_TOTAL = BigInt(2**64) - BigInt(1);
 
 // Sources:
 // https://developer.algorand.org/docs/get-details/parameter_tables/

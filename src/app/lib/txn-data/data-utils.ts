@@ -31,7 +31,8 @@ export const getAssetInfo = async (
         id: assetInfo.id,
         name: assetInfo.params.name,
         unitName: assetInfo.params['unit-name'],
-        total: assetInfo.params.total,
+        // Not sure which type `params.total` is (Number? BigInt? String?), so turn it into a string
+        total: BigInt(assetInfo.params.total).toString(),
         decimals: assetInfo.params.decimals,
         manager: assetInfo.params.manager,
         freeze: assetInfo.params.freeze,

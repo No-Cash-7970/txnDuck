@@ -8,6 +8,7 @@ import { base64RegExp, validationAtom, ValidationMessage } from '@/app/lib/utils
 import {
   ASSET_NAME_MAX_LENGTH,
   MAX_APP_EXTRA_PAGES,
+  MAX_ASSET_TOTAL,
   MAX_DECIMAL_PLACES,
   MIN_TX_FEE,
   UNIT_NAME_MAX_LENGTH,
@@ -17,7 +18,7 @@ import type {
   BoxRefAtomGroup,
   RetrievedAssetInfo,
 } from './types';
-import { addressSchema, idSchema, YupNumber, YupString } from './validation-rules';
+import { addressSchema, idSchema, YupMixed, YupNumber, YupString } from './validation-rules';
 
 /*
  * General
@@ -184,7 +185,37 @@ export const apar_an = atomWithValidate<string>('', {
 /** Asset configuration - Total */
 export const apar_t = atomWithValidate<number|string>('', {
   validate: v => {
-    YupNumber().min(0).validateSync(v === '' ? undefined : v);
+    const max = MAX_ASSET_TOTAL;
+    const min = 0;
+
+    // Custom `min` and `max` validation is required because the usual `min()` and `max()`
+    // validation functions cause a loss in precision because they cast a `BigInt` into a
+    // `Number`
+    YupMixed()
+    .test({
+      name: 'min',
+      message: {
+        key: 'form.error.number.min',
+        dict: {min: min}
+      },
+      exclusive: true,
+      params: { min },
+      skipAbsent: true,
+      test: value => BigInt(value?.toString() ?? 0) >= min,
+    })
+    .test({
+      name: 'max',
+      message: {
+        key: 'form.error.number.max',
+        dict: {max: max.toString()}
+      },
+      exclusive: true,
+      params: { max },
+      skipAbsent: true,
+      test: value => BigInt(value?.toString() ?? 0) <= max,
+    })
+    .validateSync(v === '' ? undefined : v);
+
     return v;
   }
 });

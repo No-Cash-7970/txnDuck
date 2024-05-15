@@ -3,7 +3,12 @@
 import { OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
-import { ValidationMessage, base64RegExp, baseUnitsToDecimal } from '@/app/lib/utils';
+import {
+  ValidationMessage,
+  base64RegExp,
+  baseUnitsToDecimal,
+  decimalToBaseUnits,
+} from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
 import { RetrievedAssetInfo } from './types';
 import {
@@ -209,9 +214,27 @@ export const aamtConditionalMaxAtom = validateAtoms({
 }, (values) => {
   if (values.assetInfo) {
     const assetInfo = values.assetInfo as RetrievedAssetInfo;
-    YupNumber()
-      .max(parseFloat(baseUnitsToDecimal(assetInfo.total, assetInfo.decimals)))
-      .validateSync(values.aamt === '' ? undefined : values.aamt);
+    const max = BigInt(assetInfo.total);
+
+    // Custom `min` validation is required because the usual `min()` validation function causes a
+    // loss in precision because it casts a `BigInt` into a `Number`
+    YupMixed()
+      .test({
+        name: 'max',
+        message: {
+          key: 'form.error.number.max',
+          dict: {max: baseUnitsToDecimal(max.toString(), assetInfo.decimals)}
+        },
+        exclusive: true,
+        params: { max },
+        skipAbsent: true,
+        test: value => BigInt(value?.toString() ?? 0) <= max,
+      })
+      .validateSync(
+        values.aamt === ''
+          ? undefined
+          : decimalToBaseUnits((values.aamt as string|number), assetInfo.decimals)
+      );
   }
 });
 

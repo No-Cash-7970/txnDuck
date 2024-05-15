@@ -141,8 +141,6 @@ describe('Compose Form Component', () => {
 
     // Check if asset name appears
     expect(screen.getByText('Foo Token')).toBeInTheDocument();
-    // Check if "amount" field has correct "step" attribute
-    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveAttribute('step', '0.01');
     // Check if "amount" field shows correct unit
     expect(screen.getByText('FOO')).toBeInTheDocument();
   });
@@ -160,8 +158,6 @@ describe('Compose Form Component', () => {
 
     // Check if asset name appears
     expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
-    // Check if "amount" field has correct "step" attribute
-    expect(screen.getByLabelText(/fields.aamt.label/)).toHaveAttribute('step', '1');
     // Check if "amount" field shows correct unit
     expect(screen.queryByText('FOO')).not.toBeInTheDocument();
   });

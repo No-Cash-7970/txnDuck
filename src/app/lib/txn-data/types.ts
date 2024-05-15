@@ -20,7 +20,7 @@ export type RetrievedAssetInfo = {
   /** Unit name */
   unitName?: string,
   /** Total number of asset (not in decimal form) */
-  total: number,
+  total: number | string,
   /** Number of decimals asset amounts should have when displayed */
   decimals: number,
   /** Manager address */
@@ -70,7 +70,7 @@ export interface AssetTransferTxnData extends BaseTxnData {
   /** Asset ID */
   xaid: number;
   /** Asset amount */
-  aamt: number|string; // String because the number could be larger than 2^53 - 1
+  aamt: number | string; // String because the number could be larger than 2^53 - 1
   /** Revocation target */
   asnd?: string;
   /** Close remainder of asset to */
@@ -86,7 +86,7 @@ export interface AssetConfigTxnData extends BaseTxnData {
   /** Asset name */
   apar_an: string;
   /** Total */
-  apar_t: number|string; // String because the number could be larger than 2^53 - 1
+  apar_t: number | string; // String because the number could be larger than 2^53 - 1
   /** Number of decimals places */
   apar_dc?: number;
   /** Frozen by default? */

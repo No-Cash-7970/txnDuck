@@ -1,4 +1,4 @@
-import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
 import {
@@ -9,7 +9,6 @@ import {
   tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
-import { baseUnitsToDecimal } from '@/app/lib/utils';
 
 export default function Amount({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);
@@ -17,7 +16,7 @@ export default function Amount({ t }: { t: TFunction }) {
   const showFormErrors = useAtomValue(showFormErrorsAtom);
   const retrievedAssetInfo = useAtomValue(txnDataAtoms.retrievedAssetInfo);
   return (<>
-    <NumberField label={t('fields.aamt.label')}
+    <TextField label={t('fields.aamt.label')}
       name='aamt'
       id='aamt-input'
       tip={{
@@ -37,15 +36,11 @@ export default function Amount({ t }: { t: TFunction }) {
         ? 'input-error' : ''
       }
       afterSideLabel={retrievedAssetInfo?.value?.unitName ?? t('unit_other')}
-      min={0}
-      max={
-        baseUnitsToDecimal(retrievedAssetInfo?.value?.total, retrievedAssetInfo?.value?.decimals)
-      }
-      step={10**-(retrievedAssetInfo?.value?.decimals ?? 0)}
       value={form.values.aamt ?? ''}
       onChange={(e) => form.handleOnChange('aamt')(e.target.value)}
       onFocus={form.handleOnFocus('aamt')}
       onBlur={form.handleOnBlur('aamt')}
+      inputMode='numeric'
     />
     {(showFormErrors || form.touched.aamt) && form.fieldErrors.aamt &&
       <FieldErrorMessage t={t}
