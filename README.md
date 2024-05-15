@@ -71,9 +71,10 @@ Spanish  | Full         | *Yes*
 
 ## :computer: Setting up and running locally
 
-**:warning: This is not for development. To set up and run txnDuck for
-development, follow the instructions for
-[installing txnDuck for development](#hammer_and_wrench-installation-for-development).**
+> [!IMPORTANT]
+> This is not for development. To set up and run txnDuck for development,
+> follow the instructions for
+> [installing txnDuck for development](#hammer_and_wrench-installation-for-development).
 
 Instead of using one of the [official txnDuck websites](#globe_with_meridians-websites),
 you can choose to download the source code and run the software locally on your
@@ -87,8 +88,9 @@ own computer that does not rely on an external website.
   20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
   Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
-   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
-     2.0.0 or higher by running `corepack enable && yarn set version berry`
+   > [!NOTE]
+   > If you have Yarn 1.x.x installed, you can install and switch to Yarn 2.0.0
+   > or higher by running `corepack enable && yarn set version berry`
 
 ### Installing the local setup
 
