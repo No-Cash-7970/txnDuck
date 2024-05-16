@@ -23,6 +23,18 @@ type Props = {
   lng?: string
 };
 
+/*
+ * ADDING, REMOVING OR UPDATING SETTINGS
+ *
+ * When adding, removing or updating a setting, apply the relevant changes to the 3 sections here:
+ *   1. Settings data
+ *   2. Within the function to reset settings to default values
+ *   3. Settings
+ *
+ * The places where you need to make the relevant changes are mark with "XXX" comments here. Also,
+ * do not forget to update the tests for the settings dialog.
+ */
+
 /** Form that contains the settings fields and the reset button */
 export default function SettingsForm(props: Props) {
   const { t } = useTranslation(props.lng || '', ['app', 'common']);

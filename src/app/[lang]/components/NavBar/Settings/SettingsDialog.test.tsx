@@ -16,6 +16,16 @@ jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import SettingsDialog from './SettingsDialog';
 
+/*
+ * ADDING, REMOVING OR UPDATING SETTINGS
+ *
+ * When adding, removing or updating a setting, apply the relevant changes to the 3 sections here:
+ *   1. The 2 places within the reset-defaults test
+ *   2. Test for the setting itself
+ *
+ * The places where you need to make the relevant changes are mark with "XXX" comments here.
+ */
+
 describe('Settings Dialog', () => {
 
   it('appears when trigger button is clicked', async () => {
