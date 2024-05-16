@@ -241,6 +241,12 @@ To run the E2E tests:
 yarn test:e2e
 ```
 
+> [!IMPORTANT]
+> E2E tests often fail when [development web server](#running-the-development-web-server)
+> is running due to the tests being too slow, especially the tests for Firefox.
+> It is recommended that you shut down the development web server before running
+> E2E tests or making a commit without `--no-verify` or `-n`.
+
 ## Code style guidelines
 
 - Indent with spaces for all files
