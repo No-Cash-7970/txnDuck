@@ -1,6 +1,6 @@
 import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
-import { IconBrandGithubFilled } from '@tabler/icons-react';
+import { IconBrandGithubFilled, IconLockSquare } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
 
@@ -17,8 +17,12 @@ export default function Footer({ lng }: Props) {
       <div className='w-full max-w-6xl mx-auto place-items-center'>
         {/* Links */}
         <div className='grid sm:grid-flow-col sm:gap-6 gap-4'>
-          <Link href={`/${lng}/privacy-policy`} className='link link-hover' prefetch={false}>
-            {t('footer.privacy_policy_link')}
+          <Link href={`/${lng}/privacy-policy`}
+            className='link link-hover flex gap-1'
+            prefetch={false}
+          >
+            <IconLockSquare size={22} aria-hidden />
+            <span>{t('footer.privacy_policy_link')}</span>
           </Link>
           <a href='https://github.com/No-Cash-7970/txnDuck'
             target='_blank'
