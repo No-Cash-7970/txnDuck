@@ -88,9 +88,8 @@ own computer that does not rely on an external website.
   20.0.0 or higher is recommended.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
   Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
-   > [!NOTE]
-   > If you have Yarn 1.x.x installed, you can install and switch to Yarn 2.0.0
-   > or higher by running `corepack enable && yarn set version berry`
+   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
+     2.0.0 or higher by running `corepack enable && yarn set version berry
 
 ### Installing the local setup
 

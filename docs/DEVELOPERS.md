@@ -48,9 +48,8 @@ This is documentation contains information useful for developers.
 - [Node.js](https://nodejs.org/en) version 20.0.0 or higher installed.
 - [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
   Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
-   > [!NOTE]
-   > If you have Yarn 1.x.x installed, you can install and switch to Yarn 2.0.0
-   > or higher by running `corepack enable && yarn set version berry`
+   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
+     2.0.0 or higher by running `corepack enable && yarn set version berry
 - OPTIONAL BUT RECOMMENDED: [Visual Studio Code](https://code.visualstudio.com/)
   IDE (integrated development environment)
 
