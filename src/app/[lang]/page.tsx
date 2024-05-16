@@ -96,19 +96,19 @@ export default function HomePage({ params: { lang } }: {
               <h3 className='card-title self-start mt-0'>{t('home:uses.simple_things.heading')}</h3>
               <ul className='self-start marker:text-success'>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=transfer`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=transfer`} className='link'>
                     {t('home:uses.simple_things.list.0')}
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=asset_opt_in`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=asset_opt_in`} className='link'>
                     <Trans t={t} i18nKey='home:uses.simple_things.list.1'>
                       opt_in_to_<abbr title={t('algo_std_asset')}>asa</abbr>
                     </Trans>
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=asset_transfer`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=asset_transfer`} className='link'>
                     <Trans t={t} i18nKey='home:uses.simple_things.list.2'>
                       transfer_<abbr title={t('nonfungible_token')}>nft</abbr>
                     </Trans>
@@ -125,17 +125,17 @@ export default function HomePage({ params: { lang } }: {
               </h3>
               <ul className='self-start marker:text-warning'>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=reg_online`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=reg_online`} className='link'>
                     {t('home:uses.complex_things.list.0')}
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=app_update`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=app_update`} className='link'>
                     {t('home:uses.complex_things.list.1')}
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=asset_clawback`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=asset_clawback`} className='link'>
                     {t('home:uses.complex_things.list.2')}
                   </Link>
                 </li>
@@ -150,12 +150,12 @@ export default function HomePage({ params: { lang } }: {
               </h3>
               <ul className='self-start marker:text-error'>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=rekey_account`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=rekey_account`} className='link'>
                     {t('home:uses.dangerous_things.list.0')}
                   </Link>
                 </li>
                 <li>
-                  <Link href={`${lang}/txn/compose?preset=close_account`} className='underline'>
+                  <Link href={`${lang}/txn/compose?preset=close_account`} className='link'>
                     {t('home:uses.dangerous_things.list.1')}
                   </Link>
                 </li>

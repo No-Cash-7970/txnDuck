@@ -48,7 +48,7 @@ export default function Footer({ lng }: Props) {
           <Trans t={t} i18nKey='footer.license_notice' components={
             {a: <a href='https://github.com/No-Cash-7970/txnDuck/blob/main/LICENSE.md'
               target='_blank'
-              className='underline'
+              className='link'
             />}
           } />
         </p>
