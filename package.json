@@ -1,6 +1,6 @@
 {
   "name": "txnduck",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "private": true,
   "scripts": {
     "compile-locales": "gulp compileLocales --no-color",
