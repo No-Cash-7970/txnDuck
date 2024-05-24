@@ -178,4 +178,4 @@ to learn how to contribute to this project.
 
 - [SilentRhetoric](https://github.com/SilentRhetoric) - Proposed the idea of a
   transaction builder for Algorand
-- [Wes](https://github.com/WesleyMiller1998) - Recommended the name "txnDuck"
+- Wes - Recommended the name "txnDuck"
