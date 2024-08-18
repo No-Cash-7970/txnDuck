@@ -20,6 +20,8 @@ This is documentation contains information useful for developers.
   - [End-to-end (E2E) testing](#end-to-end-e2e-testing)
 - [Code style guidelines](#code-style-guidelines)
 - [Git commit message guidelines](#git-commit-message-guidelines)
+  - [Common commit message scopes](#common-commit-message-scopes)
+  - [Common commit message type and scope combinations](#common-commit-message-type-and-scope-combinations)
 - [Git hooks](#git-hooks)
   - [`pre-commit` hook](#pre-commit-hook)
   - [`commit-msg` hook](#commit-msg-hook)
@@ -278,6 +280,24 @@ when creating a commit:
 ```bash
 yarn cz
 ```
+
+### Common commit message scopes
+
+- `app`: The app in general. Usually for files in the `/src/app` directory.
+- `compose_txn`: The "Compose Transaction" page
+- `sign_txn`: The "Sign Transaction" page
+- `send_txn`: The "Send Transaction" page
+- `txn_presets`: The "Transaction Preset" page
+- `i18n`: Internationalization (I18N), language translations
+
+### Common commit message type and scope combinations
+
+- `docs(readme)`: Changing the README
+- `docs(dev)`: Changing the Developers Documentation
+- `perf(aesthetics)`: Improving the look and feel of the user interface (UI) 
+- `perf(usability)`: Improving the user experience (UX) or usability of the UI
+- `perf(a11y)`: Improving the accessibility (a11y) of the UI
+- `test(e2e)`: Adding or updating end-to-end (E2E) tests
 
 ## Git hooks
 
