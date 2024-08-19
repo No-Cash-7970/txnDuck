@@ -9,7 +9,7 @@ import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWa
 jest.mock('react-i18next', () => i18nextClientMock);
 
 // Mock use-wallet before modules that use it are imported
-jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
+jest.mock('@txnlab/use-wallet-react', () => useWalletConnectedMock);
 
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({

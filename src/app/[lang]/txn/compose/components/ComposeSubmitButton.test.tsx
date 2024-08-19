@@ -6,12 +6,14 @@ import { JotaiProvider } from '@/app/[lang]/components'; // Must be imported aft
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+
 // Mock navigation hooks
 const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
   useSearchParams: () => ({ get: () => null }),
 }));
+
 // Mock the scrollIntoView() function
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
@@ -31,6 +33,9 @@ jest.mock('algosdk', () => ({
 
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
+
+// Mock the wallet provider
+jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 

@@ -13,7 +13,7 @@ import {
 jest.mock('react-i18next', () => i18nextClientMock);
 
 // Mock use-wallet before modules that use it are imported
-jest.mock('@txnlab/use-wallet', () => useWalletUnconnectedMock);
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({

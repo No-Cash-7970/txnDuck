@@ -11,6 +11,9 @@ jest.mock('react', () => ({
 // Mock i18next before modules that use it are imported because it is used by a child component
 jest.mock('react-i18next', () => i18nextClientMock);
 
+// Mock the wallet provider
+jest.mock('../components/WalletProvider.tsx', () => 'div');
+
 import TxnPresetsPage from './page';
 
 describe('Transaction Presets Page', () => {

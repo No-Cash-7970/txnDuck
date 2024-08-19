@@ -8,7 +8,7 @@ import {
   sandboxNodeConfig,
   voiTestnetNodeConfig,
 } from '@/app/lib/node-config';
-import { NodeConfig } from '@txnlab/use-wallet';
+import { type NodeConfig } from '@/app/lib/node-config';
 import JotaiProvider from '@/app/[lang]/components/JotaiProvider';
 import { Provider as ToastProvider, Viewport as ToastViewport } from '@radix-ui/react-toast';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';

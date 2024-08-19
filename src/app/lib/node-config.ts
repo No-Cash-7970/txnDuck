@@ -1,7 +1,6 @@
 /** @file Collection of variables and constants for managing node configuration */
-
-import { type NodeConfig } from '@txnlab/use-wallet';
-import { atomWithReset, atomWithStorage, createJSONStorage } from 'jotai/utils';
+import algosdk from "algosdk";
+import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import { atomWithFormControls, atomWithValidate } from "jotai-form";
 import { number as YupNumber, string as YupString } from 'yup';
 import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (`Yup.setLocale()`)
@@ -27,7 +26,22 @@ export const DEFAULT_COIN_NAME = 'ALGO';
 /** Name of the coin (native currency) for Voi, an Algorand code fork */
 export const VOI_COIN_NAME = 'VOI';
 
-interface StoredNodeConfig extends NodeConfig {
+/** Base node configuration */
+export interface NodeConfig {
+  /** Name of the network (e.g. "mainnet", "testnet") */
+  network: string;
+  /** The URL of for the Algod node server */
+  nodeServer: string;
+  /** Authentication token for using the Algod node server */
+  // eslint-disable-next-line max-len
+  nodeToken?: string | algosdk.AlgodTokenHeader | algosdk.CustomTokenHeader | algosdk.BaseHTTPClient;
+  /** Port for the Algod node server */
+  nodePort?: string | number;
+  /** HTTP headers for the Algod node server */
+  nodeHeaders?: Record<string, string>;
+}
+
+export interface StoredNodeConfig extends NodeConfig {
   /** Name of the network's native currency */
   coinName?: string;
 }

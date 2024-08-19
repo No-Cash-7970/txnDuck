@@ -8,7 +8,7 @@ import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWa
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock use-wallet
-jest.mock('@txnlab/use-wallet', () => useWalletConnectedMock);
+jest.mock('@txnlab/use-wallet-react', () => useWalletConnectedMock);
 
 import ConnectWallet from './ConnectWallet';
 

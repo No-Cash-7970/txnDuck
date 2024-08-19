@@ -17,7 +17,6 @@ import {
   IconServer2,
   IconSquareRoundedLetterV,
 } from '@tabler/icons-react';
-import { type NodeConfig } from '@txnlab/use-wallet';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
 import { useState } from 'react';
@@ -48,7 +47,7 @@ export default function NodeSelector({ lng }: Props) {
   /** Set the node configuration to the given configuration and apply the change
    * @param newConfig The new node configuration to apply
    */
-  const updateNodeConfig = (newConfig: NodeConfig) => {
+  const updateNodeConfig = (newConfig: NodeConfigLib.NodeConfig) => {
     setNodeConfig(newConfig);
     // The new node configuration isn't used unless the wallet provider is reloaded, which happens
     // when the page is refreshed.

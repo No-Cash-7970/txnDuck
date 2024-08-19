@@ -17,6 +17,9 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => ({get: () => 'foo'})
 }));
 
+// Mock the wallet provider
+jest.mock('../../components/WalletProvider.tsx', () => 'div');
+
 import ComposeTxnPage from './page';
 
 describe('Compose Transaction Page', () => {

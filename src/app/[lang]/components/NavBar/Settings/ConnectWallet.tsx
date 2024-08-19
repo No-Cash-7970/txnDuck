@@ -2,21 +2,12 @@ import Image from 'next/image';
 import { type TFunction } from 'i18next';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
-import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
-import {
-  walletTypes,
-  getWalletClient,
-  getActiveProvider,
-} from '@/app/lib/wallet-utils';
-import { useMemo } from 'react';
+import { WalletId, useWallet } from '@txnlab/use-wallet-react';
+import { walletTypes } from '@/app/lib/wallet-utils';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
-  const { providers, activeAccount, clients } = useWallet();
-  const walletClient = useMemo(
-    () => getWalletClient(activeAccount?.providerId, clients),
-    [activeAccount, clients]
-  );
+  const { wallets, activeAccount, activeWallet } = useWallet();
 
   return (<>
     {!activeAccount && <>
@@ -42,8 +33,8 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
             }>
               <li className='menu-title'>{t('wallet.choose_provider')}</li>
               {// List of available wallet providers
-                providers?.map(provider => (
-                  <DropdownMenu.Item asChild key={provider.metadata.id}>
+                wallets?.map(provider => (
+                  <DropdownMenu.Item asChild key={provider.id}>
                     <li onClick={provider.connect}>
                       <span className='auto-cols-max'>
                         <span className='relative h-8 w-8'>
@@ -51,17 +42,12 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                             alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
                             fill
                             aria-hidden
-                            className={
-                              // Add a light background to the dark-text KMD icon for visibility in
-                              // dark mode
-                              provider.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
-                            }
                           />
                         </span>
                         <div className='leading-tight'>
-                          <div>{t('wallet.providers.' + provider.metadata.id)}</div>
+                          <div>{t('wallet.providers.' + provider.id)}</div>
                           <small className='italic opacity-70'>
-                            {t('wallet.type.' + walletTypes[provider.metadata.id])}
+                            {t('wallet.type.' + walletTypes[provider.id])}
                           </small>
                         </div>
                       </span>
@@ -75,16 +61,16 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
       </DropdownMenu.Root>
     </>}
 
-    {!!activeAccount && walletClient &&
+    {!!activeAccount && activeWallet &&
       <div className='bg-base-200 rounded-btn p-4'>
         <div className='not-prose truncate align-middle mb-3 px-1'>
           <span className='inline-block me-2 relative h-6 w-6 align-middle'>
-            <Image src={walletClient.metadata.icon}
-              alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
+            <Image src={activeWallet.metadata.icon}
+              alt={t('wallet.provider_icon_alt', {provider: activeWallet.metadata.name})}
               fill
               className={
                 // Add a light background to the dark-text KMD icon for visibility in dark mode
-                walletClient.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+                activeWallet.id === WalletId.KMD ? 'bg-gray-100' : undefined
               }
             />
           </span>
@@ -94,7 +80,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
         </div>
         <button type='button'
           className='btn btn-sm btn-secondary btn-block'
-          onClick={() => getActiveProvider(providers)?.disconnect()}
+          onClick={() => activeWallet.disconnect()}
         >
           <IconWalletOff aria-hidden />
           {t('wallet.disconnect')}

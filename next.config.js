@@ -1,10 +1,33 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   poweredByHeader: false,
-  webpack: (config) => {
-    // Add use-wallet dependency modules that cause "not found" errors
-    config.externals.push('bufferutil', 'utf-8-validate', 'encoding');
+  webpack: (config, { isServer }) => {
+    // Add use-wallet dependency modules that cause "not found" errors. Also see
+    // https://github.com/WalletConnect/walletconnect-monorepo/issues/1908#issuecomment-1487801131
+    config.externals.push('pino-pretty', 'lokijs', 'encoding');
     config.resolve.fallback = { fs: false };
+
+    /**
+     * Provide fallbacks for optional wallet dependencies.
+     * This allows the app to build and run without these packages installed, enabling users to
+     * include only the wallet packages they need. Each package is set to 'false', which means
+     * Webpack will provide an empty module if the package is not found, preventing build errors for
+     * unused wallets.
+     */
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        '@agoralabs-sh/avm-web-provider': false,
+        '@blockshake/defly-connect': false,
+        '@magic-ext/algorand': false,
+        '@perawallet/connect': false,
+        '@perawallet/connect-beta': false,
+        '@walletconnect/modal': false,
+        '@walletconnect/sign-client': false,
+        'lute-connect': false,
+        'magic-sdk': false,
+      };
+    }
 
     return config;
   },

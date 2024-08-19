@@ -2,7 +2,7 @@
 
 import { Algodv2 } from "algosdk";
 import { RetrievedAssetInfo } from "./types";
-import { NodeConfig } from "@txnlab/use-wallet";
+import { NodeConfig } from "@/app/lib/node-config";
 import { DEFAULT_NODE_CONFIG } from "@/app/lib/node-config";
 
 /** Get information about the asset with the given ID

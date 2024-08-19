@@ -32,6 +32,9 @@ jest.mock('next/navigation', () => ({
 // Mock use-debounce because it is a dependency of a child client component
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
+// Mock the wallet provider
+jest.mock('../../components/WalletProvider.tsx', () => 'div');
+
 import SendTxnPage from './page';
 
 describe('Send Transaction Page', () => {

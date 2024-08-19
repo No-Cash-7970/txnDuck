@@ -6,13 +6,13 @@ import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import algosdk, { Algodv2, microalgosToAlgos } from 'algosdk';
 import * as algokit from '@algorandfoundation/algokit-utils';
-import { PROVIDER_ID, useWallet } from '@txnlab/use-wallet';
+import { WalletId, useWallet } from '@txnlab/use-wallet-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
-import { walletTypes, getWalletClient, getActiveProvider } from '@/app/lib/wallet-utils';
+import { walletTypes } from '@/app/lib/wallet-utils';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import {
@@ -52,11 +52,7 @@ export default function SignTxn({ lng }: Props) {
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
 
-  const { providers, activeAccount, clients, signTransactions } = useWallet();
-  const walletClient = useMemo(
-    () => getWalletClient(activeAccount?.providerId, clients),
-    [activeAccount, clients]
-  );
+  const { wallets, activeAccount, activeWallet, signTransactions } = useWallet();
 
   /** Get the suggested parameters for the network. Includes genesis ID, genesis hash, minimum fee,
    * first valid round, and last valid round.
@@ -146,7 +142,7 @@ export default function SignTxn({ lng }: Props) {
 
     // Sign the transaction and store it
     const signedTxn = (await signTransactions([unsignedTxn]))[0];
-    const signedTxnDataUrl = await bytesToDataUrl(signedTxn);
+    const signedTxnDataUrl = await bytesToDataUrl(signedTxn ?? new Uint8Array);
     setStoredSignedTxn(signedTxnDataUrl);
 
     // If the user checked the box, or the default should be used and it is to automatically send
@@ -296,8 +292,8 @@ export default function SignTxn({ lng }: Props) {
                 </Dialog.Description>
                 {/* List of available wallet providers */}
                 <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
-                  {providers?.map(provider => (
-                    <div key={provider.metadata.id} className={
+                  {wallets?.map(provider => (
+                    <div key={provider.id} className={
                       'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
                     }>
                       <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
@@ -305,19 +301,14 @@ export default function SignTxn({ lng }: Props) {
                           alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
                           fill
                           aria-hidden
-                          className={
-                            // Add a light background to the dark-text KMD icon for visibility in
-                            // dark mode
-                            provider.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
-                          }
                         />
                       </span>
                       {/* Wallet provider info + button */}
                       <div className='w-full'>
                         <div>
-                          <h3 className='m-0'>{t('wallet.providers.' + provider.metadata.id)}</h3>
+                          <h3 className='m-0'>{t('wallet.providers.' + provider.id)}</h3>
                           <p className='italic opacity-70 m-0'>
-                            {t('wallet.type.' + walletTypes[provider.metadata.id])}
+                            {t('wallet.type.' + walletTypes[provider.id])}
                           </p>
                         </div>
                         <button className='btn btn-block btn-sm btn-secondary mt-2'
@@ -378,16 +369,16 @@ export default function SignTxn({ lng }: Props) {
           </button>
           <div className='not-prose text-center mt-3'>
             <div className='truncate align-middle px-2'>
-              {walletClient &&
+              {activeWallet &&
                 <span className='relative h-6 w-6 inline-block me-2 align-middle'>
                   <Image
-                    src={walletClient.metadata.icon}
-                    alt={t('wallet.provider_icon_alt', {provider: walletClient.metadata.name})}
+                    src={activeWallet.metadata.icon}
+                    alt={t('wallet.provider_icon_alt', {provider: activeWallet.metadata.name})}
                     fill
                     className={
                       // Add a light background to the dark-text KMD icon for visibility in dark
                       // mode
-                      walletClient.metadata.id === PROVIDER_ID.KMD ? 'bg-gray-100' : undefined
+                      activeWallet.id === WalletId.KMD ? 'bg-gray-100' : undefined
                     }
                   />
                 </span>
@@ -397,7 +388,7 @@ export default function SignTxn({ lng }: Props) {
               </span>
             </div>
             <button className='btn btn-sm btn-link text-secondary'
-              onClick={() => getActiveProvider(providers)?.disconnect()}
+              onClick={() => activeWallet?.disconnect()}
             >
               <Icons.IconWalletOff aria-hidden />
               {t('wallet.disconnect')}

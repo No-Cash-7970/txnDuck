@@ -41,6 +41,9 @@ jest.mock('algosdk', () => ({
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
+// Mock the wallet provider
+jest.mock('../../../components/WalletProvider.tsx', () => 'div');
+
 import ComposeForm from './ComposeForm';
 
 describe('Compose Form Component', () => {

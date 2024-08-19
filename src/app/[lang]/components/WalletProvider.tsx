@@ -2,31 +2,11 @@
 
 import {
   WalletProvider as Provider,
-  useInitializeProviders,
-  PROVIDER_ID,
-} from '@txnlab/use-wallet';
+  WalletManager,
+  WalletId,
+} from '@txnlab/use-wallet-react';
 import { useAtomValue } from 'jotai';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-
-const getDynamicDeflyWalletConnect = async () => {
-  const DeflyWalletConnect = (await import('@blockshake/defly-connect')).DeflyWalletConnect;
-  return DeflyWalletConnect;
-};
-
-const getDynamicPeraWalletConnect = async () => {
-  const PeraWalletConnect = (await import('@perawallet/connect')).PeraWalletConnect;
-  return PeraWalletConnect;
-};
-
-const getDynamicDaffiWalletConnect = async () => {
-  const DaffiWalletConnect = (await import('@daffiwallet/connect')).DaffiWalletConnect;
-  return DaffiWalletConnect;
-};
-
-const getDynamicLuteConnect = async () => {
-  const LuteConnect = (await import('lute-connect')).default;
-  return LuteConnect;
-};
 
 /** Wrapper for initializing the use-wallet library. Also serves as a provider to convert the
  * use-wallet wallet provider to a client component so it can be used in server components with
@@ -37,26 +17,27 @@ export default function WalletProvider({ sitename, children }: {
   children: React.ReactNode
 }) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const providers = useInitializeProviders({
-    debug: process.env.NEXT_PUBLIC_WALLET_DEBUG === 'true',
-    providers: [
-      { id: PROVIDER_ID.PERA,
-        getDynamicClient: getDynamicPeraWalletConnect,
-        // @ts-expect-error
-        clientOptions: { compactMode: true }
+  const walletManager = new WalletManager({
+    wallets: [
+      { id: WalletId.PERA,
+        options: { compactMode: true }
       },
-      { id: PROVIDER_ID.DEFLY, getDynamicClient: getDynamicDeflyWalletConnect },
-      { id: PROVIDER_ID.EXODUS },
-      { id: PROVIDER_ID.DAFFI, getDynamicClient: getDynamicDaffiWalletConnect },
-      { id: PROVIDER_ID.LUTE,
-        getDynamicClient: getDynamicLuteConnect,
-        clientOptions: { siteName: sitename }
+      WalletId.DEFLY,
+      WalletId.EXODUS,
+      { id: WalletId.LUTE,
+        options: { siteName: sitename }
       },
-      { id: PROVIDER_ID.KIBISIS },
-      { id: PROVIDER_ID.KMD },
+      { id: WalletId.KIBISIS },
+      { id: WalletId.KMD },
     ],
-    nodeConfig
+    algod: {
+      token: nodeConfig.nodeToken,
+      baseServer: nodeConfig.nodeServer,
+      port: nodeConfig.nodePort,
+      headers: nodeConfig.nodeHeaders,
+
+    }
   });
 
-  return <Provider value={providers}>{children}</Provider>;
+  return <Provider manager={walletManager}>{children}</Provider>;
 }

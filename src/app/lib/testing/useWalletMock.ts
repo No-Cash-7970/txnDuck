@@ -12,25 +12,23 @@ export const barConnectFn = jest.fn();
  * this mock module.
  */
 export const useWalletUnconnectedMock = {
-  PROVIDER_ID: {
+  WalletId: {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
-    DAFFI: 'daffi',
   },
   useWallet: () => ({
-    clients: {
-      fooWallet: {},
-      barWallet: null
-    },
-    providers: [
+    activeWallet: null,
+    wallets: [
       {
+        id: 'fooWallet',
         connect: fooConnectFn,
-        metadata: { id: 'fooWallet', icon: 'data:image/svg+xml;base64,' },
+        metadata: { icon: 'data:image/svg+xml;base64,' },
       },
       {
+        id: 'barWallet',
         connect: barConnectFn,
-        metadata: { id: 'barWallet', icon: 'data:image/svg+xml;base64,' },
+        metadata: { icon: 'data:image/svg+xml;base64,' },
       },
     ],
   })
@@ -42,35 +40,32 @@ export const useWalletUnconnectedMock = {
  * this mock module.
  */
 export const useWalletConnectedMock = {
-  PROVIDER_ID: {
+  WalletId: {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
-    DAFFI: 'daffi',
   },
   useWallet: () => ({
     activeAccount: {
-      address: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-      providerId: 'fooWallet'
+      address: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
     },
-    clients: {
-      fooWallet: {
-        disconnect: fooDisconnectFn,
-        metadata: { id: 'fooWallet', icon: 'data:image/svg+xml;base64,' },
-      },
-      barWallet: null
+    activeWallet: {
+      id: 'fooWallet',
+      connect: fooConnectFn,
+      disconnect: fooDisconnectFn,
+      metadata: { icon: 'data:image/svg+xml;base64,' },
     },
-    providers: [
+    wallets: [
       {
-        isActive: true,
+        id: 'fooWallet',
         connect: fooConnectFn,
         disconnect: fooDisconnectFn,
-        metadata: { id: 'fooWallet', icon: 'data:image/svg+xml;base64,' },
+        metadata: { icon: 'data:image/svg+xml;base64,' },
       },
       {
-        isActive: false,
+        id: 'barWallet',
         connect: barConnectFn,
-        metadata: { id: 'barWallet', icon: 'data:image/svg+xml;base64,' },
+        metadata: { icon: 'data:image/svg+xml;base64,' },
       },
     ],
   })
