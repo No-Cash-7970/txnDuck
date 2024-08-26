@@ -39,7 +39,7 @@ jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 
-describe('Compose Form Component', () => {
+describe('Compose Form Component - Submit Button', () => {
   afterEach(() => {
     sessionStorage.clear();
   });

@@ -12,7 +12,9 @@ jest.mock('react-i18next', () => i18nextClientMock);
 let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),
-  useSearchParams: () => ({ get: () => presetMockValue }),
+  useSearchParams: () => ({
+    get: (param: string) => (param === 'preset' ? presetMockValue : null)
+  }),
 }));
 
 // Mock algosdk

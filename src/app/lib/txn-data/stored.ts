@@ -1,11 +1,15 @@
-/** @file Collection of atoms for stored transaction data */
+/**
+ * @file Collection of atoms for stored transaction data with utility functions for loading stored
+ * transaction data and extracting transaction data from the atoms
+ */
 
-import { OnApplicationComplete, TransactionType } from 'algosdk';
+import { type ReadonlyURLSearchParams } from 'next/navigation';
+import { microalgosToAlgos, OnApplicationComplete, TransactionType } from 'algosdk';
 import { type useStore } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
 import * as txnDataAtoms from './atoms';
-import { Preset } from './constants';
+import { MAX_VALID_ROUNDS_PERIOD, MIN_TX_FEE, Preset } from './constants';
 import {
   StoredTxnData,
   type AppCallTxnData,
@@ -31,7 +35,7 @@ import {
   keyRegFormControlAtom,
   paymentFormControlAtom
 } from './field-validation';
-import { baseUnitsToDecimal, decimalToBaseUnits } from '@/app/lib/utils';
+import { baseUnitsToDecimal, decimalToBaseUnits, removeNonNumericalChars } from '@/app/lib/utils';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
@@ -53,8 +57,8 @@ export const storedSignedTxnAtom =
  */
 export function loadStoredTxnData(
   submittingForm: boolean,
-  preset: string|null,
   jotaiStore: ReturnType<typeof useStore>,
+  searchParams: ReadonlyURLSearchParams,
   storedTxnData?: StoredTxnData,
 ) {
   // Check if the form is being submitted. The transaction data is put into storage when the form
@@ -67,9 +71,11 @@ export function loadStoredTxnData(
    */
 
   let txnType = storedTxnData?.txn?.type;
+  const preset = searchParams.get(Preset.ParamName);
 
+  // Determine transaction type based on the preset being used
   switch (preset) {
-    case undefined:
+    case undefined: // No preset being used
       break; // Shortcut out. No need to evaluate the rest of the cases.
     case Preset.Transfer:
     case Preset.TransferAlgos:
@@ -108,11 +114,193 @@ export function loadStoredTxnData(
       break;
   }
 
+  // Set transaction type before setting any other transaction fields
+  jotaiStore.set(txnDataAtoms.txnType, txnType);
+
+  /*
+   * Process URL parameters
+   */
+
+  // General transaction fields URL parameters
+  const sndParam = searchParams.get('snd');
+  const noteParam = searchParams.get('note');
+  const unparsedFeeParam = searchParams.get('fee');
+  const feeParam = unparsedFeeParam === null ? null : parseFloat(unparsedFeeParam);
+  const unparsedFvParam = searchParams.get('fv');
+  const fvParam = unparsedFvParam === null ? null : parseInt(unparsedFvParam);
+  const unparsedLvParam = searchParams.get('lv');
+  const lvParam = unparsedLvParam === null ? null : parseInt(unparsedLvParam);
+  // Payment transaction fields URL parameters
+  const rcvParam = searchParams.get('rcv');
+  const unparsedAmtParam = searchParams.get('amt');
+  const amtParam = unparsedAmtParam === null ? null : parseFloat(unparsedAmtParam);
+  // Asset transfer transaction fields URL parameters
+  const unparsedXaidParam = searchParams.get('xaid');
+  const xaidParam = unparsedXaidParam === null
+    ? null : parseInt(removeNonNumericalChars(unparsedXaidParam));
+  const arcvParam = searchParams.get('arcv');
+  const unparsedAamtParam = searchParams.get('aamt');
+  const aamtParam = unparsedAamtParam === null ? null : removeNonNumericalChars(unparsedAamtParam);
+  // Asset configuration transaction fields URL parameters
+  const unparsedCaidParam = searchParams.get('caid');
+  const caidParam = unparsedCaidParam === null
+    ? null : parseInt(removeNonNumericalChars(unparsedCaidParam));
+  // Asset freeze transaction fields URL parameters
+  const unparsedFaidParam = searchParams.get('faid');
+  const faidParam = unparsedFaidParam === null
+    ? null : parseInt(removeNonNumericalChars(unparsedFaidParam));
+  const faddParam = searchParams.get('fadd');
+  // Key registration transaction fields URL parameters
+  const votekeyParam = searchParams.get('votekey');
+  const selkeyParam = searchParams.get('selkey');
+  const sprfkeyParam = searchParams.get('sprfkey');
+  const unparsedVotefstParam = searchParams.get('votefst');
+  const votefstParam = unparsedVotefstParam === null ? null : parseInt(unparsedVotefstParam);
+  const unparsedVotelstParam = searchParams.get('votelst');
+  const votelstParam = unparsedVotelstParam === null ? null : parseInt(unparsedVotelstParam);
+  const unparsedVotekdParam = searchParams.get('votekd');
+  const votekdParam = unparsedVotekdParam === null ? null : parseInt(unparsedVotekdParam);
+  // Application transaction fields URL parameters
+  const unparsedApidParam = searchParams.get('apid');
+  const apidParam = unparsedApidParam === null
+    ? null : parseInt(removeNonNumericalChars(unparsedApidParam));
+
+  if (preset && (
+    // General
+    sndParam !== null
+    || noteParam !== null
+    || feeParam !== null
+    || fvParam !== null
+    || lvParam !== null
+    // Payment
+    || rcvParam !== null || amtParam !== null
+    // Asset transfer
+    || xaidParam !== null || arcvParam !== null || aamtParam !== null
+    // Asset reconfiguration
+    || caidParam !== null
+    // Asset freeze
+    || faidParam !== null
+    // Key registration
+    || votekeyParam !== null
+    || selkeyParam !== null
+    || sprfkeyParam !== null
+    || votefstParam !== null
+    || votelstParam !== null
+    || votekdParam !== null
+    // Application
+    || apidParam !== null
+  )) {
+    if (sndParam !== null) jotaiStore.set(txnDataAtoms.snd, sndParam);
+
+    if (noteParam !== null) {
+      jotaiStore.set(txnDataAtoms.b64Note, false);
+      jotaiStore.set(txnDataAtoms.note, noteParam);
+    }
+
+    if (feeParam !== null) {
+      jotaiStore.set(txnDataAtoms.useSugFee, false);
+      jotaiStore.set(txnDataAtoms.fee, isNaN(feeParam) ? microalgosToAlgos(MIN_TX_FEE) : feeParam);
+    }
+
+    // Do not use suggested rounds if the URL parameter for the first valid round or last valid
+    // round is specified
+    if (fvParam !== null || lvParam !== null) {
+      jotaiStore.set(txnDataAtoms.useSugRounds, false);
+    }
+
+    if (fvParam !== null) {
+      jotaiStore.set(txnDataAtoms.fv, isNaN(fvParam) ? undefined : fvParam);
+      // If the first valid round (`fv`) is set to a nonempty value and the last valid round (`lv`)
+      // is not set, the last valid round will automatically be set to 1,000 rounds *after* the
+      // first valid round.
+      if (!isNaN(fvParam) && lvParam === null) {
+        jotaiStore.set(txnDataAtoms.lv, fvParam + MAX_VALID_ROUNDS_PERIOD);
+      }
+    }
+
+    if (lvParam !== null) {
+      jotaiStore.set(txnDataAtoms.lv, isNaN(lvParam) ? undefined : lvParam);
+      // If the last valid round (`lv`) is set to a nonempty value and the first valid round (`fv`)
+      // is not set, the first valid round will automatically be set to 1,000 rounds *before* the
+      // last valid round.
+      if (!isNaN(lvParam) && fvParam === null) {
+        jotaiStore.set(txnDataAtoms.fv, lvParam - MAX_VALID_ROUNDS_PERIOD);
+      }
+    }
+
+    // Payment
+    if (preset === Preset.TransferAlgos || preset === Preset.Transfer) {
+      if (rcvParam !== null) jotaiStore.set(txnDataAtoms.rcv, rcvParam);
+
+      if (amtParam !== null) {
+        jotaiStore.set(txnDataAtoms.amt, isNaN(amtParam) ? undefined : amtParam);
+      }
+    }
+
+    // Asset transfer, opt-in, opt-out or clawback
+    if (txnType === TransactionType.axfer) {
+      if (xaidParam !== null) {
+        jotaiStore.set(txnDataAtoms.xaid, isNaN(xaidParam) ? undefined : xaidParam);
+      }
+
+      if (preset === Preset.AssetTransfer && xaidParam) {
+        // Asset receiver and amount URL parameters are ignored if the asset ID is not present
+        if (arcvParam !== null) jotaiStore.set(txnDataAtoms.arcv, arcvParam);
+        if (aamtParam !== null) jotaiStore.set(txnDataAtoms.aamt, aamtParam);
+      }
+    }
+
+    // Asset reconfiguration or destroy
+    if (txnType === TransactionType.acfg && preset !== Preset.AssetCreate) {
+      if (caidParam !== null) {
+        jotaiStore.set(txnDataAtoms.caid, isNaN(caidParam) ? undefined : caidParam);
+      }
+    }
+
+    // Asset freeze or unfreeze
+    if (txnType === TransactionType.afrz) {
+      if (faidParam !== null) {
+        jotaiStore.set(txnDataAtoms.faid, isNaN(faidParam) ? undefined : faidParam);
+      }
+
+      if (faddParam !== null) jotaiStore.set(txnDataAtoms.fadd, faddParam);
+    }
+
+    // Key Registration (online)
+    if (preset === Preset.RegOnline) {
+      if (votekeyParam !== null) jotaiStore.set(txnDataAtoms.votekey, votekeyParam);
+      if (selkeyParam !== null) jotaiStore.set(txnDataAtoms.selkey, selkeyParam);
+      if (sprfkeyParam !== null) jotaiStore.set(txnDataAtoms.sprfkey, sprfkeyParam);
+
+      if (votefstParam !== null) {
+        jotaiStore.set(txnDataAtoms.votefst, isNaN(votefstParam) ? undefined : votefstParam);
+      }
+
+      if (votelstParam !== null) {
+        jotaiStore.set(txnDataAtoms.votelst, isNaN(votelstParam) ? undefined : votelstParam);
+      }
+
+      if (votekdParam !== null) {
+        jotaiStore.set(txnDataAtoms.votekd, isNaN(votekdParam) ? undefined : votekdParam);
+      }
+    }
+
+    // Application run, opt-in, update, close, clear and delete
+    if (txnType === TransactionType.appl && preset !== Preset.AppDeploy) {
+      if (apidParam !== null) {
+        jotaiStore.set(txnDataAtoms.apid, isNaN(apidParam) ? undefined : apidParam);
+      }
+    }
+
+    // Exit because the stored transaction data should not be used when URL parameters for
+    // transaction fields are specified
+    return;
+  }
+
   /*
    * Restore stored transaction data into atoms
    */
 
-  jotaiStore.set(txnDataAtoms.txnType, txnType);
   jotaiStore.set(txnDataAtoms.snd, storedTxnData?.txn?.snd || '');
   jotaiStore.set(txnDataAtoms.b64Note, storedTxnData?.b64Note ?? false);
   jotaiStore.set(txnDataAtoms.note, storedTxnData?.txn?.note as string|undefined);
@@ -149,6 +337,7 @@ export function loadStoredTxnData(
     if (preset !== Preset.AssetOptIn && preset !== Preset.AssetOptOut) {
       jotaiStore.set(txnDataAtoms.arcv, (storedTxnData?.txn as AssetTransferTxnData)?.arcv || '');
 
+      // Stored asset amount should be denominated in base units
       const aamt = (storedTxnData?.txn as AssetTransferTxnData)?.aamt;
       jotaiStore.set(txnDataAtoms.aamt,
         aamt === undefined

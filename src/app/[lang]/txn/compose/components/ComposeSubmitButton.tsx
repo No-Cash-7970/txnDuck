@@ -34,9 +34,9 @@ export default function ComposeSubmitButton({ lng }: Props) {
   const preset = currentURLParams.get(Preset.ParamName);
 
   useEffect(
-    () => loadStoredTxnData(submittingForm, preset, jotaiStore, storedTxnData),
+    () => loadStoredTxnData(submittingForm, jotaiStore, currentURLParams, storedTxnData),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [storedTxnData, preset]
+    [storedTxnData]
   );
 
   /** "Submit" the form by processing the form data and saving the data into local storage if there

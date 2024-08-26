@@ -24,6 +24,12 @@ export const NOTE_MAX_LENGTH = 1000;
 export const B64_NOTE_MAX_LENGTH = 1336; // (1000 + 2) / 3 * 4
 /** Minimum transaction fee in microAlgos */
 export const MIN_TX_FEE = ALGORAND_MIN_TX_FEE;
+/** Maximum number of rounds a transaction can be valid. In other words, the maximum difference
+ * between the first valid round (fv) and the last valid round (lv).
+ *
+ * `lv - fv <= Max`
+ */
+export const MAX_VALID_ROUNDS_PERIOD = 1000;
 
 // eslint-disable-next-line max-len
 // From https://developer.algorand.org/docs/get-details/transactions/transactions/#asset-configuration-transaction

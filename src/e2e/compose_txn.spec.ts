@@ -17,6 +17,28 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
   },
 });
 
+// Asset data for USDC token. Used to mock requests for USDC asset data. This is the exact asset
+// data for USDC on MainNet as of August 2024. Using the exact data makes the mock as close to what
+// would happen in production as much as possible.
+const usdcAssetData = {
+  index: 31566704,
+  params: {
+    creator: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
+    decimals: 6,
+    "default-frozen": false,
+    freeze: "3ERES6JFBIJ7ZPNVQJNH2LETCBQWUPGTO4ROA6VFUR25WFSYKGX3WBO5GE",
+    manager: "37XL3M57AXBUJARWMT5R7M35OERXMH3Q22JMMEFLBYNDXXADGFN625HAL4",
+    name: "USDC",
+    "name-b64": "VVNEQw==",
+    reserve: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
+    total: 18446744073709551615,
+    "unit-name": "USDC",
+    "unit-name-b64": "VVNEQw==",
+    url: "https://www.centre.io/usdc",
+    "url-b64":"aHR0cHM6Ly93d3cuY2VudHJlLmlvL3VzZGM="
+  }
+};
+
 test.describe('Compose Transaction Page', () => {
 
   test('has footer', async ({ composeTxnPage /* Adding this loads the page */, page }) => {
@@ -299,6 +321,221 @@ test.describe('Compose Transaction Page', () => {
 
   test.describe('Nav Bar', () => {
     NavBar.check(test, ComposeTxnPage.getFullUrl());
+  });
+
+  test.describe('With URL Parameters', () => {
+
+    test('fills in appropriate fields for setting up an Algo payment in a donation-like style',
+    async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        // eslint-disable-next-line max-len
+        '?preset=transfer&rcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY&amt=1&note=A%20small%20tip%20for%20No-Cash-7970%20:)'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Transfer Algos')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/)).toHaveValue('');
+      await expect(page.getByLabel(/Receiver/))
+        .toHaveValue('OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY');
+      await expect(page.getByLabel(/Amount/)).toHaveValue('1');
+      await expect(page.getByLabel('Note')).toHaveValue('A small tip for No-Cash-7970 :)');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for setting up an asset payment in a donation-like style',
+    async ({ page }) => {
+      // Mock the Algorand node call for asset data before navigating
+      await page.route('*/**/v2/assets/31566704', async route => {
+        await route.fulfill({ json: usdcAssetData });
+      });
+
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        // eslint-disable-next-line max-len
+        '?preset=asset_transfer&xaid=31566704&aamt=1&arcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Transfer asset')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/)).toHaveValue('');
+      await expect(page.getByLabel(/Asset receiver/))
+        .toHaveValue('OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY');
+      await expect(page.getByLabel(/Asset ID/)).toHaveValue('31566704');
+      await expect(page.getByText('USDC')).toHaveCount(2); // Should display correct data for asset
+      await expect(page.getByLabel(/Asset amount/)).toHaveValue('1');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for asset payment with specified fee', async ({ page }) => {
+      // Mock the Algorand node call for asset data before navigating
+      await page.route('*/**/v2/assets/31566704', async route => {
+        await route.fulfill({ json: usdcAssetData });
+      });
+
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        '?preset=asset_transfer&xaid=31566704&aamt=1&fee=.001'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Transfer asset')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/)).toHaveValue('');
+      await expect(page.getByLabel(/Asset receiver/)).toHaveValue('');
+      await expect(page.getByLabel(/Asset ID/)).toHaveValue('31566704');
+      await expect(page.getByText('USDC')).toHaveCount(2); // Should display correct data for asset
+      await expect(page.getByLabel(/Asset amount/)).toHaveValue('1');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
+      await expect(page.getByLabel(/Fee/)).toHaveValue('0.001');
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for opting into an asset', async ({ page }) => {
+      // Mock the Algorand node call for asset data before navigating
+      await page.route('*/**/v2/assets/31566704', async route => {
+        await route.fulfill({ json: usdcAssetData });
+      });
+
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        // eslint-disable-next-line max-len
+        '?preset=asset_opt_in&xaid=31566704&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Opt into asset')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/))
+        .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
+      await expect(page.getByLabel(/Asset ID/)).toHaveValue('31566704');
+      await expect(page.getByText('USDC')).toHaveCount(1); // Should display correct data for asset
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for closing an account', async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        '?preset=close_account&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Close account')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/))
+        .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
+      await expect(page.getByLabel(/Close remainder to/)).toHaveValue('');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for registering an account online', async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        // eslint-disable-next-line max-len
+        '?preset=reg_online&snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4&votekey=87iBW46PP4BpTDz6%2BIEGvxY6JqEaOtV0g%2BVWcJqoqtc%3D&selkey=1V2BE2lbFvS937H7pJebN0zxkqe1Nrv%2BaVHDTPbYRlw%3D&sprfkey=f0CYOA4yXovNBFMFX%2B1I%2FtYVBaAl7VN6e0Ki5yZA3H6jGqsU%2FLYHNaBkMQ%2FrN4M4F3UmNcpaTmbVbq%2BGgDsrhQ%3D%3D&votefst=16532750&votelst=19532750&votekd=1732'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Register account online')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/))
+        .toHaveValue('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
+      await expect(page.getByLabel(/Voting key/).first())
+        .toHaveValue('87iBW46PP4BpTDz6+IEGvxY6JqEaOtV0g+VWcJqoqtc=');
+      await expect(page.getByLabel(/Selection key/))
+        .toHaveValue('1V2BE2lbFvS937H7pJebN0zxkqe1Nrv+aVHDTPbYRlw=');
+      await expect(page.getByLabel(/State proof key/))
+        // eslint-disable-next-line max-len
+        .toHaveValue('f0CYOA4yXovNBFMFX+1I/tYVBaAl7VN6e0Ki5yZA3H6jGqsU/LYHNaBkMQ/rN4M4F3UmNcpaTmbVbq+GgDsrhQ==');
+      await expect(page.getByLabel(/First voting round/)).toHaveValue('16532750');
+      await expect(page.getByLabel(/Last voting round/)).toHaveValue('19532750');
+      await expect(page.getByLabel(/Voting key dilution/)).toHaveValue('1732');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields for registering an account offline', async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        '?preset=reg_offline&snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Register account offline')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/))
+        .toHaveValue('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
+    test('fills in appropriate fields when the only the first valid round is set',
+    async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto('en', '?preset=transfer&fv=41922740');
+      // Check if using correct preset
+      await expect(page.getByText('Transfer Algos')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/)).toHaveValue('');
+      await expect(page.getByLabel(/Receiver/))
+        .toHaveValue('');
+      await expect(page.getByLabel(/Amount/)).toHaveValue('');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
+      await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
+      await expect(page.getByLabel(/last valid round/)).toHaveValue('41923740');
+    });
+
+    test('fills in appropriate fields when both the first and last valid rounds are set',
+    async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto('en', '?preset=transfer&fv=41922740&lv=');
+      // Check if using correct preset
+      await expect(page.getByText('Transfer Algos')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/)).toHaveValue('');
+      await expect(page.getByLabel(/Receiver/))
+        .toHaveValue('');
+      await expect(page.getByLabel(/Amount/)).toHaveValue('');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
+      await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
+      await expect(page.getByLabel(/last valid round/)).toHaveValue('');
+    });
+
+    test('fills in appropriate fields for gracefully opting out of an application',
+    async ({ page }) => {
+      await (new ComposeTxnPage(page)).goto(
+        'en',
+        // eslint-disable-next-line max-len
+        '?preset=app_close&apid=1284326447&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
+      );
+      // Check if using correct preset
+      await expect(page.getByText('Close out application')).toBeVisible();
+      // Check fields
+      await expect(page.getByLabel(/Sender/))
+        .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
+      await expect(page.getByLabel(/Application ID/)).toHaveValue('1284326447');
+      await expect(page.getByLabel('Note')).toHaveValue('');
+      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
+      await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+    });
+
   });
 
 });

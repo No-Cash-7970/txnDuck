@@ -12,7 +12,9 @@ const routerPushMock = jest.fn();
 let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
-  useSearchParams: () => ({ get: () => presetMockValue }),
+  useSearchParams: () => ({
+    get: (param: string) => (param === 'preset' ? presetMockValue : null)
+  }),
 }));
 
 // Mock the scrollIntoView() function
@@ -23,7 +25,7 @@ jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 
-describe('Compose Form Component', () => {
+describe('Compose Form Component - Validation', () => {
   afterEach(() => {
     presetMockValue = null;
     localStorage.clear();
