@@ -18,6 +18,7 @@ export default function Sender({ t }: { t: TFunction }) {
   const preset = useSearchParams().get(Preset.ParamName);
   let tip = t('fields.snd.tip');
 
+  // Some presets have a different explanation of the sender in the tip message
   if (form.values.txnType === TransactionType.pay) {
     tip = t('fields.snd.tip_pay');
   } else if (preset === Preset.AssetClawback) {
