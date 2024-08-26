@@ -55,7 +55,7 @@ export function middleware(req: NextRequest) {
     !SUPPORTED_LANGS.some(loc => urlPath.startsWith(`/${loc}`)) &&
     !urlPath.startsWith('/_next')
   ) {
-    return NextResponse.redirect(new URL(`/${lng}${urlPath}`, req.url));
+    return NextResponse.redirect(new URL(`/${lng}${urlPath}${req.nextUrl.search}`, req.url));
   }
 
   // If the user is coming from a page in a specific language that language should override the
