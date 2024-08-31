@@ -3,6 +3,7 @@ instruction: Compose a transaction faster by using one of the following presets.
 skip_btn: Or skip this and compose a transaction without using a preset
 category_label: Category
 all_heading: All
+invalid_preset: Invalid preset
 # General category
 general_heading: General
 transfer: # For transferring a native currency that is not Algo

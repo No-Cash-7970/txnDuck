@@ -4,6 +4,7 @@ instruction: >
 skip_btn: O sáltese esto y componga una transacción sin utilizar una preselección
 category_label: Categorías
 all_heading: Todas
+invalid_preset: Preselección inválido
 # General category
 general_heading: General
 transfer: # For transferring a native currency that is not Algo

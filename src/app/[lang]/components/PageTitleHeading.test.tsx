@@ -1,5 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+
+// Mock i18next before modules that use it are imported
+jest.mock('react-i18next', () => i18nextClientMock);
 
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
@@ -17,12 +21,12 @@ describe('PageTitleHeading Component', () => {
 
   it('has badge with preset name if `showTxnPreset` is true', async() => {
     render(<PageTitleHeading showTxnPreset={true}></PageTitleHeading>);
-    expect(await screen.findByText('foo.heading')).toBeInTheDocument();
+    expect(await screen.findByText(/foo\.heading/)).toBeInTheDocument();
   });
 
   it('does not have badge with preset name if `showTxnPreset` is false', () => {
     render(<PageTitleHeading showTxnPreset={false}></PageTitleHeading>);
-    expect(screen.queryByText('foo.heading')).not.toBeInTheDocument();
+    expect(screen.queryByText(/foo\.heading/)).not.toBeInTheDocument();
   });
 
 });

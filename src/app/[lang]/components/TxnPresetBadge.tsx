@@ -18,7 +18,10 @@ export function TxnPresetBadge({ lng }: Props) {
   return (<>
     {!!txnPresetName &&
       <span className='badge badge-lg badge-neutral mx-1'>
-        {t(txnPresetName + '.heading', {coinName: nodeConfig.coinName ?? t('algo_other')})}
+        {t(
+          [txnPresetName + '.heading', 'invalid_preset'],
+          {coinName: nodeConfig.coinName ?? t('algo_other')}
+        )}
       </span>
     }
   </>);
