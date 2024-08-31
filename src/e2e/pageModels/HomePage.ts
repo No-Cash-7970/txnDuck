@@ -4,7 +4,7 @@ export class HomePage {
   /** Page fixture from Playwright */
   readonly page: PageFixture;
   /** URL without the language prefix */
-  static readonly url: string = '';
+  static readonly url = '';
 
   /** The "start" button link that directs the user to use the app. */
   readonly startBtn: Locator;
@@ -30,14 +30,14 @@ export class HomePage {
    * @param lang The language prefix. Must be an ISO??? code
    * @returns The URL with the language prefix
    */
-  static getFullUrl(lang: string = 'en'): string {
+  static getFullUrl(lang = 'en') {
     return '/' + lang + HomePage.url;
   }
 
   /** Go to the page
    * @param lang The language prefix of the page to go to.
    */
-  async goto(lang: string = 'en') {
+  async goto(lang = 'en') {
     await this.page.goto(HomePage.getFullUrl(lang));
   }
 }

@@ -4,7 +4,7 @@ export class SendTxnPage {
   /** Page fixture from Playwright */
   readonly page: PageFixture;
   /** URL without the language prefix */
-  static readonly url: string = '/txn/send';
+  static readonly url = '/txn/send';
 
   /** Main section of the page */
   readonly main: Locator;
@@ -21,14 +21,14 @@ export class SendTxnPage {
    * @param lang The language prefix. Must be an ISO??? code
    * @returns The URL with the language prefix
    */
-  static getFullUrl(lang: string = 'en'): string {
+  static getFullUrl(lang = 'en') {
     return '/' + lang + SendTxnPage.url;
   }
 
   /** Go to the page
    * @param lang The language prefix of the page to go to.
    */
-  async goto(lang: string = 'en') {
+  async goto(lang = 'en') {
     await this.page.goto(SendTxnPage.getFullUrl(lang));
   }
 }

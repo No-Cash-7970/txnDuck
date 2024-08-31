@@ -4,7 +4,7 @@ export class TxnPresetsPage {
   /** Page fixture from Playwright */
   readonly page: PageFixture;
   /** URL without the language prefix */
-  static readonly url: string = '/txn';
+  static readonly url = '/txn';
 
   /** Main section of the page */
   readonly main: Locator;
@@ -21,14 +21,14 @@ export class TxnPresetsPage {
    * @param lang The language prefix. Must be an ISO??? code
    * @returns The URL with the language prefix
    */
-  static getFullUrl(lang: string = 'en'): string {
+  static getFullUrl(lang = 'en') {
     return '/' + lang + TxnPresetsPage.url;
   }
 
   /** Go to the page
    * @param lang The language prefix of the page to go to.
    */
-  async goto(lang: string = 'en') {
+  async goto(lang = 'en') {
     await this.page.goto(TxnPresetsPage.getFullUrl(lang));
   }
 }
