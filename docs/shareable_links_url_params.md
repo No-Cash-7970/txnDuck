@@ -4,6 +4,7 @@
 <!-- omit in toc -->
 ## Table of contents
 
+- [Specifying language](#specifying-language)
 - [Setting node network](#setting-node-network)
 - [Compose Transaction page links](#compose-transaction-page-links)
   - [All presets](#all-presets)
@@ -41,6 +42,24 @@
   - [Example 8: Setting up a transfer with only the first valid round set](#example-8-setting-up-a-transfer-with-only-the-first-valid-round-set)
   - [Example 9: Setting up a transfer with the first and last valid rounds set](#example-9-setting-up-a-transfer-with-the-first-and-last-valid-rounds-set)
   - [Example 10: Gracefully opt out of an application (smart contract)](#example-10-gracefully-opt-out-of-an-application-smart-contract)
+  - [Example 11: Sign transaction in English](#example-11-sign-transaction-in-english)
+  - [Example 12: Choose a transaction preset in Spanish](#example-12-choose-a-transaction-preset-in-spanish)
+  - [Example 13: Send transaction in user's preferred language](#example-13-send-transaction-in-users-preferred-language)
+
+## Specifying language
+
+TxnDuck's user interface (UI) is available in multiple languages. The UI language can be specified in the URL as a path prefix, which is right after the domain name in the URL. Each language has a unique prefix, which is the language's [ISO 639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes). For example, the URL for the English version of txnDuck has the path prefix of `/en`, so the full URL for the English version of the home page would be <https://txnduck.vercel.app/en>.
+
+When the language prefix is given, txnDuck will ignore the user's preference and will try to display in the language given in the URL. When no language prefix is given in the URL, txnDuck will try display in the user's preferred language. If txnDuck is not available in the user's preferred language, it will fall back to English. Every URL can be language agnostic by omitting the language prefix.
+
+Here is a non-exhaustive list language prefixes, assuming `txnduck.vercel.app` is the domain:
+
+- Language agnostic (user preferred language is used): `/` (Omit prefix)
+  - <https://txnduck.vercel.app/>
+- English: `/en`
+  - <https://txnduck.vercel.app/en>
+- Spanish: `/es`
+  - <https://txnduck.vercel.app/es>
 
 ## Setting node network
 
@@ -228,12 +247,14 @@ Notes:
 ## Helpful tips
 
 - Pay attention to the the casing of the URL parameters and their values. They are case-sensitive.
+- Use the language agnostic version of links by removing the `/en`, `/es`, etc. in the link. This allows for a single link in various languages.
 - Although specifying a network is optional, it is best to specify the network for [Compose Transaction page links](#compose-transaction-page-links), especially for a transaction like an asset transfer transaction where it may not work if using the wrong network.
 
 ## Example links
 
 ### Example 1: Tip the developer 1 Algo :wink:
 
+- UI language: *Whatever is currently selected by user*
 - Network: MainNet
 - Sender: *To be filled in by user*
 - Receiver: OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY
@@ -245,6 +266,7 @@ Notes:
 
 ### Example 2: Tip the developer 1 USDC :wink:
 
+- UI language: *Whatever is currently selected by user*
 - Network: MainNet
 - Sender: *To be filled in by user*
 - Receiver: OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY
@@ -256,6 +278,7 @@ Notes:
 
 ### Example 3: Set up a transfer of 1 USDC
 
+- UI language: *Whatever is currently selected by user*
 - Network: MainNet
 - Sender: *To be filled in by user*
 - Receiver: *To be filled in by user*
@@ -267,6 +290,7 @@ Notes:
 
 ### Example 4: Set up a transaction for an account to opt into USDC
 
+- UI language: *Whatever is currently selected by user*
 - Network: MainNet
 - Sender (the account opting in): 7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M
 - Asset ID: 31566704 (USDC)
@@ -276,6 +300,7 @@ Notes:
 
 ### Example 5: Set up a transaction for closing an account
 
+- UI language: *Whatever is currently selected by user*
 - Network: *Whatever is currently selected by user*
 - Sender (the account to be closed): 7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M
 - Close remainder to: *Cannot be set as a URL query parameter for safety reasons, so it must be filled in by the user*
@@ -287,6 +312,7 @@ Notes:
 
 Note how the keys are URL encoded.
 
+- UI language: *Whatever is currently selected by user*
 - Network: TestNet
 - Sender (the account to be registered as "online"): MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4
 - Voting key: 87iBW46PP4BpTDz6+IEGvxY6JqEaOtV0g+VWcJqoqtc=
@@ -301,6 +327,7 @@ Note how the keys are URL encoded.
 
 ### Example 7: Register account as "offline"
 
+- UI language: *Whatever is currently selected by user*
 - Network: TestNet
 - Sender (the account to be registered as "offline"): MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4
 - Fee: *Calculated automatically by default (Usually 0.001 Algos)*
@@ -309,6 +336,7 @@ Note how the keys are URL encoded.
 
 ### Example 8: Setting up a transfer with only the first valid round set
 
+- UI language: *Whatever is currently selected by user*
 - Network: *Whatever is currently selected by user*
 - Sender: *To be filled in by user*
 - Fee: *Calculated automatically by default (Usually 0.001 Algos)*
@@ -319,6 +347,7 @@ Note how the keys are URL encoded.
 
 ### Example 9: Setting up a transfer with the first and last valid rounds set
 
+- UI language: *Whatever is currently selected by user*
 - Network: *Whatever is currently selected by user*
 - Sender: *To be filled in by user*
 - Fee: *Calculated automatically by default (Usually 0.001 Algos)*
@@ -329,6 +358,7 @@ Note how the keys are URL encoded.
 
 ### Example 10: Gracefully opt out of an application (smart contract)
 
+- UI language: *Whatever is currently selected by user*
 - Network: MainNet
 - Sender: 7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M
 - Application ID: 1284326447 (Application for [Oranges on MainNet](https://oranges.meme/#/mainnet))
@@ -336,3 +366,24 @@ Note how the keys are URL encoded.
 - Fee: *Calculated automatically by default (Usually 0.001 Algos)*
 
 <https://txnduck.vercel.app/txn/compose?network=mainnet&preset=app_close&apid=1284326447&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M>
+
+### Example 11: Sign transaction in English
+
+- UI language: English (forced)
+- Network: BetaNet
+
+<https://txnduck.vercel.app/en/txn/sign?network=betanet>
+
+### Example 12: Choose a transaction preset in Spanish
+
+- UI language: Spanish (forced)
+- Network: BetaNet
+
+<https://txnduck.vercel.app/es/txn?network=betanet>
+
+### Example 13: Send transaction in user's preferred language
+
+- UI language: *Whatever is currently selected by user*
+- Network: BetaNet
+
+<https://txnduck.vercel.app/txn/sign?network=betanet>
