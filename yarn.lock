@@ -1910,7 +1910,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/reporters@npm:^29.7.0":
+"@jest/reporters@npm:^29.6.2, @jest/reporters@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/reporters@npm:29.7.0"
   dependencies:
@@ -1967,7 +1967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jest/test-result@npm:^29.7.0":
+"@jest/test-result@npm:^29.6.4, @jest/test-result@npm:^29.7.0":
   version: 29.7.0
   resolution: "@jest/test-result@npm:29.7.0"
   dependencies:
@@ -8218,6 +8218,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"fp-ts@npm:^2.16.1":
+  version: 2.16.9
+  resolution: "fp-ts@npm:2.16.9"
+  checksum: 10c0/704fcc2e792bd17cb653e7b62b5d9d905c04327776df8bf2a1f67e1c6823b06c7c36036345279ac04f0b6b7214ad01f91f109f548e144c9f866a491392fbfbcc
+  languageName: node
+  linkType: hard
+
 "fraction.js@npm:^4.3.7":
   version: 4.3.7
   resolution: "fraction.js@npm:4.3.7"
@@ -10497,6 +10504,18 @@ __metadata:
     jest-util: "npm:^29.7.0"
     string-length: "npm:^4.0.1"
   checksum: 10c0/ec6c75030562fc8f8c727cb8f3b94e75d831fc718785abfc196e1f2a2ebc9a2e38744a15147170039628a853d77a3b695561ce850375ede3a4ee6037a2574567
+  languageName: node
+  linkType: hard
+
+"jest-wip-reporter@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "jest-wip-reporter@npm:2.1.0"
+  dependencies:
+    "@jest/reporters": "npm:^29.6.2"
+    "@jest/test-result": "npm:^29.6.4"
+    chalk: "npm:^4.1.1"
+    fp-ts: "npm:^2.16.1"
+  checksum: 10c0/8ea1916ac9a7027a153a4e676c8add6931e3b5eba213f5a2b9ce3b0cf6cd105edcaebcbf1881950fdc8043844fe5056f1120b5aff2acf025fe8ff8c609dd2653
   languageName: node
   linkType: hard
 
@@ -15208,6 +15227,7 @@ __metadata:
     i18next-resources-to-backend: "npm:^1.2.1"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
+    jest-wip-reporter: "npm:^2.1.0"
     jotai: "npm:^2.9.3"
     jotai-form: "npm:^0.1.6"
     js-yaml: "npm:^4.1.0"

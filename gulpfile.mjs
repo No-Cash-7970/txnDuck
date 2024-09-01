@@ -67,8 +67,8 @@ const precommitE2eTest = () => {
  * @returns {ExecaChildProcess|Promise}
  */
 const precommitUnitTest = () => {
-  return exec('yarn jest -b')
-  .catch(() => stashPopFail('Unit testing failed')); // Clean up if fail
+  return exec('yarn jest -b --reporters=jest-wip-reporter')
+    .catch(() => stashPopFail('Unit testing failed')); // Clean up if fail
 };
 
 /**  Restore the Git repository to its original state before the stashing */
