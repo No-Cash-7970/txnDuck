@@ -16,7 +16,7 @@ export const supportedLangs: LanguageData = {
   },
   es: {
     name: 'Español',
-    listName: 'Español (Traducción automática)',
+    listName: 'Español',
   },
   // ADD DATA FOR NEW LANGUAGE HERE
 };
