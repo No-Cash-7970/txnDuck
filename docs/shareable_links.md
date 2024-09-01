@@ -1,5 +1,5 @@
 <!-- omit in toc -->
-# URL Parameters For Making Shareable Links
+# Making Shareable Links
 
 <!-- omit in toc -->
 ## Table of contents
