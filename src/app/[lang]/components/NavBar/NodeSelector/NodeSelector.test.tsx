@@ -16,10 +16,15 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 
-// Mock useRouter
-const routerRefreshMockFn = jest.fn();
+// Mock Next navigation
+const routerPushMockFn = jest.fn();
+let networkURLParamMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ refresh: routerRefreshMockFn })
+  useRouter: () => ({ push: routerPushMockFn }),
+  usePathname: () => '/current/url/of/page',
+  useSearchParams: () => ({
+    get: (param: string) => (param === 'network' ? networkURLParamMockValue : null)
+  }),
 }));
 
 // Mock algosdk
@@ -83,7 +88,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('testnet');
-    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to MainNet configuration when "MainNet" is selected', async () => {
@@ -96,7 +101,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('mainnet');
-    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to BetaNet configuration when "BetaNet" is selected', async () => {
@@ -109,7 +114,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('betanet');
-    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to Voi TestNet configuration when "Voi TestNet" is selected',
@@ -123,7 +128,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('voi_testnet');
-    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
   it('sets node configuration to Sandbox configuration when "Sandbox" is selected', async () => {
@@ -136,7 +141,7 @@ describe('Node Selector', () => {
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
     expect(nodeConfig.network).toBe('sandbox');
-    expect(routerRefreshMockFn).toHaveBeenCalledTimes(1);
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
   describe('View Node Configuration Dialog', () => {

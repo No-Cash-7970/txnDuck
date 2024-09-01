@@ -14,7 +14,7 @@ export class NavBarComponent {
    * @param page Playwright Page fixture
    * @param lang Language prefix for the page
    */
-  static async hasHomeLink(page: Page, lang: string = 'en'): Promise<void> {
+  static async hasHomeLink(page: Page, lang = 'en'): Promise<void> {
     await page.getByRole('navigation').getByRole('link').click();
     await expect(page).toHaveURL(HomePage.getFullUrl(lang));
   }
@@ -30,13 +30,14 @@ export class NavBarComponent {
       PlaywrightWorkerArgs & PlaywrightWorkerOptions
     >,
     pageFullUrl: string,
-    lang: string = 'en',
+    lang = 'en',
   ): void {
     test.beforeEach(async ({ page }) => {
       await page.goto(pageFullUrl);
     });
 
     test('has link to home page', async({ page }) => {
+      await page.goto(pageFullUrl);
       await this.hasHomeLink(page, lang);
     });
   }

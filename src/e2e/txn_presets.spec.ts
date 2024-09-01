@@ -32,4 +32,31 @@ test.describe('Transaction Presets Page', () => {
     NavBar.check(test, TxnPresetsPage.getFullUrl());
   });
 
+  test.describe('With URL Parameters', () => {
+
+    test('overrides the preset specified in URL in links to presets', async ({ page }) => {
+      await (new TxnPresetsPage(page)).goto('en', '?preset=foo');
+      // Only check one of the links instead of all 20+ links
+      await expect(page.getByRole('link', { name: 'Transfer Algos' }))
+        .toHaveAttribute('href', '/en/txn/compose?preset=transfer');
+    });
+
+    test('overrides the preset specified with other URL parameters in URL in links to presets',
+    async ({ page }) => {
+      await (new TxnPresetsPage(page)).goto('en', '?preset=foo&a=b');
+      // Only check one of the links instead of all 20+ links
+      await expect(page.getByRole('link', { name: 'Transfer Algos' }))
+        .toHaveAttribute('href', '/en/txn/compose?a=b&preset=transfer');
+    });
+
+    test('includes current URL parameters (without preset) specified in links to presets',
+    async ({ page }) => {
+      await (new TxnPresetsPage(page)).goto('en', '?a=b&c=d');
+      // Only check one of the links instead of all 20+ links
+      await expect(page.getByRole('link', { name: 'Transfer Algos' }))
+        .toHaveAttribute('href', '/en/txn/compose?a=b&c=d&preset=transfer');
+    });
+
+  });
+
 });

@@ -36,8 +36,10 @@ export class HomePage {
 
   /** Go to the page
    * @param lang The language prefix of the page to go to.
+   * @param query The query parameter string with the question mark at the beginning
+   *              (e.g. "?a=1&b=2")
    */
-  async goto(lang = 'en') {
-    await this.page.goto(HomePage.getFullUrl(lang));
+  async goto(lang = 'en', query = '') {
+    await this.page.goto(HomePage.getFullUrl(lang) + query);
   }
 }

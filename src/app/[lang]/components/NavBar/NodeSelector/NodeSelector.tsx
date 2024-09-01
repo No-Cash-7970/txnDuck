@@ -1,6 +1,7 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import dynamic from 'next/dynamic';
 import * as Dialog from '@radix-ui/react-dialog';
@@ -19,7 +20,6 @@ import {
 } from '@tabler/icons-react';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
-import { useState } from 'react';
 import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
 
 const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'), {
@@ -43,16 +43,49 @@ export default function NodeSelector({ lng }: Props) {
   const [nodeConfig, setNodeConfig] = useAtom(NodeConfigLib.nodeConfigAtom);
   const customNode = useAtomValue(NodeConfigLib.customNodeAtom);
   const [customConfigOpen, setCustomConfigOpen] = useState<boolean>(false);
+  const pathName = usePathname();
+  const currentURLParams = useSearchParams();
+  const networkURLParam = currentURLParams.get(NodeConfigLib.networkURLParamName);
 
   /** Set the node configuration to the given configuration and apply the change
    * @param newConfig The new node configuration to apply
    */
   const updateNodeConfig = (newConfig: NodeConfigLib.NodeConfig) => {
     setNodeConfig(newConfig);
+
     // The new node configuration isn't used unless the wallet provider is reloaded, which happens
-    // when the page is refreshed.
-    router.refresh();
+    // when the page is refreshed. Also, remove the network specified in the URL, if present.
+    const newURLParams = new URLSearchParams(currentURLParams.toString());
+    newURLParams.delete(NodeConfigLib.networkURLParamName);
+    router.push(pathName + (newURLParams.size ? `?${newURLParams}` : ''));
   };
+
+  useEffect(() => {
+    // If the network is specified in the URL parameter, set the current node configuration to the
+    // node configuration for the network specified in that URL parameter
+    switch (networkURLParam) {
+      case NodeConfigLib.MAINNET:
+        setNodeConfig(NodeConfigLib.mainnetNodeConfig);
+        break;
+      case NodeConfigLib.TESTNET:
+        setNodeConfig(NodeConfigLib.testnetNodeConfig);
+        break;
+      case NodeConfigLib.BETANET:
+        setNodeConfig(NodeConfigLib.betanetNodeConfig);
+        break;
+      case NodeConfigLib.VOI_TESTNET:
+        setNodeConfig(NodeConfigLib.voiTestnetNodeConfig);
+        break;
+      case NodeConfigLib.SANDBOX:
+        setNodeConfig(NodeConfigLib.sandboxNodeConfig);
+        break;
+      default:
+        // There was no valid network specified, so use the stored node configuration (or the
+        // default if there is no stored node configuration)
+        break;
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [networkURLParam]);
 
   return (
     <DropdownMenu.Root>
@@ -64,13 +97,13 @@ export default function NodeSelector({ lng }: Props) {
           }
           title={t('node_selector.choose_node')}
         >
-          {nodeConfig?.network === NodeConfigLib.TESTNET && <>
-            <IconFlask aria-hidden />
-            <span className='truncate'>{t('node_selector.testnet')}</span>
-          </>}
           {nodeConfig?.network === NodeConfigLib.MAINNET && <>
             <IconBox aria-hidden />
             <span className='truncate'>{t('node_selector.mainnet')}</span>
+          </>}
+          {nodeConfig?.network === NodeConfigLib.TESTNET && <>
+            <IconFlask aria-hidden />
+            <span className='truncate'>{t('node_selector.testnet')}</span>
           </>}
           {nodeConfig?.network === NodeConfigLib.BETANET && <>
             <IconTestPipe aria-hidden />

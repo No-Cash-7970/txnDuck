@@ -8,7 +8,7 @@ import * as fs from "node:fs";
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 
-// Mock useRouter
+// Mock navigation hooks
 let presetMockValue: string|null = null;
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: jest.fn() }),

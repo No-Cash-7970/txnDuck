@@ -6,6 +6,13 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({
+    get: () => null
+  }),
+}));
+
 import TxnPresetsList from './TxnPresetsList';
 
 describe('Transaction Presets List', () => {

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
@@ -176,7 +177,19 @@ type Props = {
 export default function ComposeForm({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
   const txnType = useAtomValue(txnDataAtoms.txnType);
-  const preset = useSearchParams().get(Preset.ParamName);
+  const currentURLParams = useSearchParams();
+  const preset = currentURLParams.get(Preset.ParamName);
+  const [urlParams, setUrlParams] = useState(currentURLParams.toString());
+
+  useEffect(() => {
+    // Remove URL parameter for preset if it is specified.
+    // This is for the link (back button) to the Presets page
+    const newURLParams = new URLSearchParams(urlParams);
+    newURLParams.delete(Preset.ParamName);
+    setUrlParams(newURLParams.toString());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentURLParams]);
+
   return (
     <form
       id='compose-txn-form'
@@ -294,7 +307,9 @@ export default function ComposeForm({ lng }: Props) {
           <ComposeSubmitButton lng={lng} />
         </div>
         <div className='sm:order-first'>
-          <Link type='button' href={`/${lng}/txn`} className='btn w-full'>
+          <Link type='button' className='btn w-full'
+            href={`/${lng}/txn${urlParams ? '?'+urlParams : ''}`}
+          >
             <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
             <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('txn_presets_btn')}

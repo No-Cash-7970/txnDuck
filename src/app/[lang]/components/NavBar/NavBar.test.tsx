@@ -10,9 +10,12 @@ jest.mock('react', () => ({
 
 // Mock useRouter because it is used by child components
 jest.mock('next/navigation', () => ({
-  useRouter: () => ({ refresh: jest.fn() }),
+  useRouter: () => ({ push: jest.fn() }),
   usePathname: () => '/current/url/of/page',
-  useSearchParams: () => ({toString: () => 'q=yes'}),
+  useSearchParams: () => ({
+    toString: () => 'q=yes',
+    get: () => null,
+  }),
 }));
 
 // Mock i18next because it is used by child components

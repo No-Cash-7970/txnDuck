@@ -11,6 +11,13 @@ jest.mock('react', () => ({
 // Mock i18next before modules that use it are imported because it is used by a child component
 jest.mock('react-i18next', () => i18nextClientMock);
 
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({
+    get: () => null
+  }),
+}));
+
 // Mock the wallet provider
 jest.mock('../components/WalletProvider.tsx', () => 'div');
 

@@ -1,4 +1,4 @@
-import { use } from 'react';
+import { Suspense, use } from 'react';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { type Metadata } from 'next';
 import Link from 'next/link';
@@ -47,7 +47,7 @@ export default function TxnPresetsPage({ params: { lang } }: {
         </Link>
       </div>
 
-      <TxnPresetsList lng={lang} />
+      <Suspense><TxnPresetsList lng={lang} /></Suspense>
     </main>
   );
 }

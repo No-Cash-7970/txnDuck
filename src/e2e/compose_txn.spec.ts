@@ -327,11 +327,10 @@ test.describe('Compose Transaction Page', () => {
 
     test('fills in appropriate fields for setting up an Algo payment in a donation-like style',
     async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        // eslint-disable-next-line max-len
-        '?preset=transfer&rcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY&amt=1&note=A%20small%20tip%20for%20No-Cash-7970%20:)'
-      );
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'rcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY&amt=1&note=A+small+tip+for+No-Cash-7970+%3A%29';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=transfer&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Transfer Algos')).toBeVisible();
       // Check fields
@@ -343,20 +342,22 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for setting up an asset payment in a donation-like style',
     async ({ page }) => {
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'xaid=31566704&aamt=1&arcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY';
+
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
         await route.fulfill({ json: usdcAssetData });
       });
 
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        // eslint-disable-next-line max-len
-        '?preset=asset_transfer&xaid=31566704&aamt=1&arcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY'
-      );
+      await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Transfer asset')).toBeVisible();
       // Check fields
@@ -370,18 +371,21 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for asset payment with specified fee', async ({ page }) => {
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'xaid=31566704&aamt=1&fee=.001';
+
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
         await route.fulfill({ json: usdcAssetData });
       });
 
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        '?preset=asset_transfer&xaid=31566704&aamt=1&fee=.001'
-      );
+      await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Transfer asset')).toBeVisible();
       // Check fields
@@ -395,19 +399,21 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
       await expect(page.getByLabel(/Fee/)).toHaveValue('0.001');
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for opting into an asset', async ({ page }) => {
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'xaid=31566704&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
+
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
         await route.fulfill({ json: usdcAssetData });
       });
 
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        // eslint-disable-next-line max-len
-        '?preset=asset_opt_in&xaid=31566704&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
-      );
+      await (new ComposeTxnPage(page)).goto('en', `?preset=asset_opt_in&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Opt into asset')).toBeVisible();
       // Check fields
@@ -419,13 +425,16 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for closing an account', async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        '?preset=close_account&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
-      );
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=close_account&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Close account')).toBeVisible();
       // Check fields
@@ -436,14 +445,16 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for registering an account online', async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        // eslint-disable-next-line max-len
-        '?preset=reg_online&snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4&votekey=87iBW46PP4BpTDz6%2BIEGvxY6JqEaOtV0g%2BVWcJqoqtc%3D&selkey=1V2BE2lbFvS937H7pJebN0zxkqe1Nrv%2BaVHDTPbYRlw%3D&sprfkey=f0CYOA4yXovNBFMFX%2B1I%2FtYVBaAl7VN6e0Ki5yZA3H6jGqsU%2FLYHNaBkMQ%2FrN4M4F3UmNcpaTmbVbq%2BGgDsrhQ%3D%3D&votefst=16532750&votelst=19532750&votekd=1732'
-      );
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4&votekey=87iBW46PP4BpTDz6%2BIEGvxY6JqEaOtV0g%2BVWcJqoqtc%3D&selkey=1V2BE2lbFvS937H7pJebN0zxkqe1Nrv%2BaVHDTPbYRlw%3D&sprfkey=f0CYOA4yXovNBFMFX%2B1I%2FtYVBaAl7VN6e0Ki5yZA3H6jGqsU%2FLYHNaBkMQ%2FrN4M4F3UmNcpaTmbVbq%2BGgDsrhQ%3D%3D&votefst=16532750&votelst=19532750&votekd=1732';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=reg_online&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Register account online')).toBeVisible();
       // Check fields
@@ -463,13 +474,16 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for registering an account offline', async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        '?preset=reg_offline&snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4'
-      );
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=reg_offline&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Register account offline')).toBeVisible();
       // Check fields
@@ -479,11 +493,16 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields when the only the first valid round is set',
     async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto('en', '?preset=transfer&fv=41922740');
+      const formUrlParams = 'fv=41922740';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=transfer&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Transfer Algos')).toBeVisible();
       // Check fields
@@ -497,11 +516,16 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
       await expect(page.getByLabel(/last valid round/)).toHaveValue('41923740');
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields when both the first and last valid rounds are set',
     async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto('en', '?preset=transfer&fv=41922740&lv=');
+      const formUrlParams = 'fv=41922740&lv=';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=transfer&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Transfer Algos')).toBeVisible();
       // Check fields
@@ -515,15 +539,17 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
       await expect(page.getByLabel(/last valid round/)).toHaveValue('');
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
     test('fills in appropriate fields for gracefully opting out of an application',
     async ({ page }) => {
-      await (new ComposeTxnPage(page)).goto(
-        'en',
-        // eslint-disable-next-line max-len
-        '?preset=app_close&apid=1284326447&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M'
-      );
+      // eslint-disable-next-line max-len
+      const formUrlParams = 'apid=1284326447&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
+
+      await (new ComposeTxnPage(page)).goto('en', `?preset=app_close&${formUrlParams}`);
       // Check if using correct preset
       await expect(page.getByText('Close out application')).toBeVisible();
       // Check fields
@@ -534,6 +560,9 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      // Check link to presets list page
+      await expect(page.getByRole('link', { name: 'Choose Preset' }))
+        .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
     });
 
   });

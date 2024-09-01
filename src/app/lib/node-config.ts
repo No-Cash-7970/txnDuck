@@ -8,10 +8,10 @@ import { splitAtom } from "jotai/utils";
 import { validationAtom } from "./utils";
 import { UNIT_NAME_MAX_LENGTH } from './txn-data/constants';
 
-/** Name for TestNet */
-export const TESTNET = 'testnet';
 /** Name for MainNet */
 export const MAINNET = 'mainnet';
+/** Name for TestNet */
+export const TESTNET = 'testnet';
 /** Name for BetaNet */
 export const BETANET = 'betanet';
 /** Name for Voi TestNet */
@@ -46,18 +46,20 @@ export interface StoredNodeConfig extends NodeConfig {
   coinName?: string;
 }
 
-/** Default TestNet configuration */
-export const testnetNodeConfig: StoredNodeConfig = {
-  network: TESTNET,
-  nodeServer: 'https://testnet-api.algonode.cloud',
-  nodeToken: '',
-  nodePort: '443',
-  nodeHeaders: undefined,
-};
+export const networkURLParamName = 'network';
+
 /** Default MainNet configuration */
 export const mainnetNodeConfig: StoredNodeConfig = {
   network: MAINNET,
   nodeServer: 'https://mainnet-api.algonode.cloud',
+  nodeToken: '',
+  nodePort: '443',
+  nodeHeaders: undefined,
+};
+/** Default TestNet configuration */
+export const testnetNodeConfig: StoredNodeConfig = {
+  network: TESTNET,
+  nodeServer: 'https://testnet-api.algonode.cloud',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
