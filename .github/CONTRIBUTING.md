@@ -181,10 +181,11 @@ steps in advance to help us fix any potential bug as fast as possible.
 
 ### How do I submit a good bug report?
 
-**:warning: You must never report security related issues, vulnerabilities or
-bugs including sensitive information to the issue tracker, or elsewhere in
-public. Refer to the [security policy](SECURITY.md) for reporting sensitive
-bugs.**
+> [!WARNING]
+> You must never report security related issues, vulnerabilities or
+> bugs including sensitive information to the issue tracker, or elsewhere in
+> public. Refer to the [security policy](SECURITY.md) for reporting sensitive
+> bugs.
 
 We use GitHub issues to track bugs and errors. If you run into an issue with the
 project:
