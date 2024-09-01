@@ -68,10 +68,6 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
             <Image src={activeWallet.metadata.icon}
               alt={t('wallet.provider_icon_alt', {provider: activeWallet.metadata.name})}
               fill
-              className={
-                // Add a light background to the dark-text KMD icon for visibility in dark mode
-                activeWallet.id === WalletId.KMD ? 'bg-gray-100' : undefined
-              }
             />
           </span>
           <span className='align-middle'>
