@@ -30,6 +30,8 @@
     "@txnlab/use-wallet-react": "^3.1.6",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
+    "@walletconnect/modal": "^2.6.2",
+    "@walletconnect/sign-client": "^2.15.2",
     "accept-language": "^3.0.20",
     "algosdk": "^2.9.0",
     "autoprefixer": "^10.4.20",

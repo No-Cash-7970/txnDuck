@@ -76,12 +76,14 @@ wallet:
     lute: Lute
     kmd: Key Management Daemon (KMD)
     kibisis: Kibisis
+    walletconnect: WalletConnect
   type:
     mobile: Cartera móvil
     mobile_web: Cartera móvil y web
     web: Cartera web
     browser_extension: Cartera de extensión del navegador
     cli_sandbox: Cartera CLI para Sandbox
+    protocol: Protocolo para conectar carteras
 node_selector:
   choose_node: Eligir nodo
   testnet: TestNet

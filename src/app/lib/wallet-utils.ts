@@ -11,4 +11,5 @@ export const walletTypes: {[id: string]: string} = {
   [WalletId.LUTE]: 'web',
   [WalletId.KMD]: 'cli_sandbox',
   [WalletId.KIBISIS]: 'browser_extension',
+  [WalletId.WALLETCONNECT]: 'protocol',
 };

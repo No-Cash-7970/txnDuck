@@ -4,6 +4,7 @@ import {
   WalletProvider as Provider,
   WalletManager,
   WalletId,
+  type SupportedWallets,
 } from '@txnlab/use-wallet-react';
 import { useAtomValue } from 'jotai';
 import { nodeConfigAtom } from '@/app/lib/node-config';
@@ -17,19 +18,38 @@ export default function WalletProvider({ sitename, children }: {
   children: React.ReactNode
 }) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
+  const supportedWallets: SupportedWallets = [
+    { id: WalletId.PERA,
+      options: { compactMode: true }
+    },
+    WalletId.DEFLY,
+    { id: WalletId.LUTE,
+      options: { siteName: sitename }
+    },
+    { id: WalletId.KIBISIS },
+    WalletId.EXODUS,
+    { id: WalletId.KMD },
+  ];
+
+  // Add WalletConnect as a supported wallet if a WalletConnect project ID is set I
+  if (process.env.NEXT_PUBLIC_WC_PROJECT_ID) {
+    // Insert WalletConnect after Lute in the list of supported wallets
+    supportedWallets.splice(3, 0, {
+      id: WalletId.WALLETCONNECT,
+      options: {
+        projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+        themeVariables: {
+          '--wcm-z-index': '999999',
+        }
+      }
+    });
+
+    // Wallets list is now:
+    // Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, KMD
+  }
+
   const walletManager = new WalletManager({
-    wallets: [
-      { id: WalletId.PERA,
-        options: { compactMode: true }
-      },
-      WalletId.DEFLY,
-      WalletId.EXODUS,
-      { id: WalletId.LUTE,
-        options: { siteName: sitename }
-      },
-      { id: WalletId.KIBISIS },
-      { id: WalletId.KMD },
-    ],
+    wallets: supportedWallets,
     algod: {
       token: nodeConfig.nodeToken,
       baseServer: nodeConfig.nodeServer,
