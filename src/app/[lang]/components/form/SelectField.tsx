@@ -27,6 +27,7 @@ export default function SelectField({
   onFocus = undefined,
   onBlur = undefined,
   tip = undefined,
+  inputRef = undefined,
 }: SelectFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -51,6 +52,7 @@ export default function SelectField({
               onChange={onChange}
               onFocus={onFocus}
               onBlur={onBlur}
+              ref={inputRef}
             >
               {placeholder && <option value='' disabled>{placeholder}</option>}
               {
@@ -81,6 +83,7 @@ export default function SelectField({
                 onFocus={onFocus}
                 onBlur={onBlur}
                 size={1}
+                ref={inputRef}
               >
                 {placeholder && <option value='' disabled>{placeholder}</option>}
                 {
@@ -113,6 +116,7 @@ export default function SelectField({
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            ref={inputRef}
           >
             {placeholder && <option value='' disabled>{placeholder}</option>}
             {
@@ -143,6 +147,7 @@ export default function SelectField({
               onFocus={onFocus}
               onBlur={onBlur}
               size={1}
+              ref={inputRef}
             >
               {placeholder && <option value='' disabled>{placeholder}</option>}
               {

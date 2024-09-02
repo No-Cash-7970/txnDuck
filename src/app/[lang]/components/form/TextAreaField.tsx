@@ -28,6 +28,7 @@ export default function TextAreaField({
   onBlur = undefined,
   maxLength = undefined,
   tip = undefined,
+  inputRef = undefined,
 }: TextAreaFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -55,6 +56,7 @@ export default function TextAreaField({
               onFocus={onFocus}
               onBlur={onBlur}
               maxLength={maxLength}
+              ref={inputRef}
             />
           }
           {// With a side label
@@ -80,6 +82,7 @@ export default function TextAreaField({
                 onFocus={onFocus}
                 onBlur={onBlur}
                 maxLength={maxLength}
+                ref={inputRef}
               />
               {afterSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
@@ -108,6 +111,7 @@ export default function TextAreaField({
             onFocus={onFocus}
             onBlur={onBlur}
             maxLength={maxLength}
+            ref={inputRef}
           />
         }
         {// With a side label
@@ -133,6 +137,7 @@ export default function TextAreaField({
               onFocus={onFocus}
               onBlur={onBlur}
               maxLength={maxLength}
+              ref={inputRef}
             />
             {afterSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>

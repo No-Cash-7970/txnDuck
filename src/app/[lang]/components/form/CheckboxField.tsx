@@ -23,6 +23,7 @@ export default function CheckboxField({
   onFocus = undefined,
   onBlur = undefined,
   tip = undefined,
+  inputRef = undefined,
 }: CheckboxFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>

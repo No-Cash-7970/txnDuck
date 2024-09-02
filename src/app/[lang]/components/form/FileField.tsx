@@ -23,6 +23,7 @@ export default function FileField({
   accept = undefined,
   capture = undefined,
   multiple = false,
+  inputRef = undefined,
 }: FileFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -46,6 +47,7 @@ export default function FileField({
             accept={accept}
             capture={capture}
             multiple={multiple}
+            ref={inputRef}
           />
         }
       </label>
@@ -63,6 +65,7 @@ export default function FileField({
           accept={accept}
           capture={capture}
           multiple={multiple}
+          ref={inputRef}
         />
       }
 

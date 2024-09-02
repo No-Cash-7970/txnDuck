@@ -23,6 +23,7 @@ export default function ToggleField({
   onFocus = undefined,
   onBlur = undefined,
   tip = undefined,
+  inputRef = undefined,
 }: ToggleFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
@@ -39,6 +40,7 @@ export default function ToggleField({
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
+          ref={inputRef}
         />
       }
       <label className={`label ${labelClass}`} htmlFor={id || undefined}>
@@ -55,6 +57,7 @@ export default function ToggleField({
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            ref={inputRef}
           />
         }
         <span className={`label-text ${labelTextClass}`}>
@@ -75,6 +78,7 @@ export default function ToggleField({
             onChange={onChange}
             onFocus={onFocus}
             onBlur={onBlur}
+            ref={inputRef}
           />
         }
       </label>
@@ -91,6 +95,7 @@ export default function ToggleField({
           onChange={onChange}
           onFocus={onFocus}
           onBlur={onBlur}
+          ref={inputRef}
         />
       }
 

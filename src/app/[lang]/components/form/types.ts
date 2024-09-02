@@ -1,3 +1,4 @@
+import { Ref } from "react";
 import { Props as FieldTipProps } from "./FieldTip";
 
 /** General properties for the form inputs in Field components */
@@ -22,6 +23,10 @@ interface InputProps {
   onFocus?: React.ChangeEventHandler<HTMLInputElement>;
   /** Event handler function for the when the field loses focus */
   onBlur?: React.ChangeEventHandler<HTMLInputElement>;
+  /** Ref object used to refer to the input element. Useful for manipulating the input as an element
+   * in the DOM.
+   */
+  inputRef?: Ref<HTMLInputElement>;
 }
 /** General properties for fields */
 interface FieldProps {
@@ -31,8 +36,7 @@ interface FieldProps {
   labelClass?: string;
   /** Classes to add to the element for the text content of the label for the field */
   labelTextClass?: string;
-  /**
-   * If the input should be inside in the label. If set to `false`, the `id` for the input needs to
+  /** If the input should be inside in the label. If set to `false`, the `id` for the input needs to
    * be set for the label to function properly
    */
   inputInsideLabel?: boolean;
@@ -40,8 +44,7 @@ interface FieldProps {
   containerId?: string;
   /** Classes to add to the container for the field */
   containerClass?: string;
-  /**
-   * Text for the `title` attribute of the asterisk shown when the field is required.
+  /** Text for the `title` attribute of the asterisk shown when the field is required.
    * Example: "Required"
    */
   requiredText?: string;
@@ -53,13 +56,9 @@ interface FieldProps {
 
 /** Properties for *Fields that have side-labels */
 interface SideLabelProp {
-  /**
-   * A side-label attached to the left side (right side in right-to-left languages) of the input
-   */
+  /** A side-label attached to the left side (right side in right-to-left languages) of the input */
   beforeSideLabel?: string;
-  /**
-   * A side-label attached to the right side (left side in right-to-left languages) of the input
-   */
+  /** A side-label attached to the right side (left side in right-to-left languages) of the input */
   afterSideLabel?: string;
 }
 
@@ -71,8 +70,7 @@ export interface TextFieldProps extends InputProps, FieldProps, SideLabelProp {
 
   /** Placeholder text for the input */
   placeholder?: string;
-  /**
-   * Type of auto-complete. Set to 'off' to turn off auto-complete.
+  /** Type of auto-complete. Set to 'off' to turn off auto-complete.
    *
    * More information:
    * https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete#values
@@ -108,7 +106,7 @@ export interface NumberFieldProps extends InputProps, FieldProps, SideLabelProp 
 
 /** Properties for the SelectField component */
 export interface SelectFieldProps
-extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'onFocus'|'onBlur'|'type'> {
+extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'onFocus'|'onBlur'|'type'|'inputRef'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   /** Event handler function for the when the field is focused on */
@@ -122,17 +120,25 @@ extends Omit<TextFieldProps, 'spellcheck'|'onChange'|'onFocus'|'onBlur'|'type'> 
     /** Display text for the option */
     text?: string
   }[];
+  /** Ref object used to refer to the select element. Useful for manipulating the select box as an
+   * element in the DOM.
+   */
+  inputRef?: Ref<HTMLSelectElement>;
 }
 
 /** Properties for the TextAreaField component */
 export interface TextAreaFieldProps
-extends  Omit<TextFieldProps, 'onChange'|'onFocus'|'onBlur'|'type'> {
+extends  Omit<TextFieldProps, 'onChange'|'onFocus'|'onBlur'|'type'|'inputRef'> {
   /** Event handler function for the when the field value is changed */
   onChange?: React.ChangeEventHandler<HTMLTextAreaElement>;
   /** Event handler function for the when the field is focused on */
   onFocus?: React.ChangeEventHandler<HTMLTextAreaElement>;
   /** Event handler function for the when the field loses focus */
   onBlur?: React.ChangeEventHandler<HTMLTextAreaElement>;
+  /** Ref object used to refer to the text area element. Useful for manipulating the text area as an
+   * element in the DOM.
+   */
+  inputRef?: Ref<HTMLTextAreaElement>;
 }
 
 /** Properties for the CheckboxField component */
