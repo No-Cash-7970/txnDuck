@@ -32,6 +32,7 @@ form: # For forms
     string:
       length: Debe tener {{count, number}} caracteres.
       max: Debe tener como máximo {{count, number}} caracteres.
+      email: Debe ser una dirección de correo electrónico válida.
     number:
       min: Debe ser al menos {{min, number}}.
       max: Debe ser como máximo {{max, number}}.

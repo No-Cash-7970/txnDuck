@@ -12,6 +12,7 @@ setLocale({
       {key: 'form.error.string.length', dict: {count: length}}
     ),
     max: ({max}): ValidationMessage => ({key: 'form.error.string.max', dict: {count: max}}),
+    email: (): ValidationMessage => ({key: 'form.error.string.email'}),
   },
   number: {
     min: ({min}): ValidationMessage => ({key: 'form.error.number.min', dict: {min}}),
