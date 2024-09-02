@@ -48,34 +48,34 @@ import NodeSelector from './NodeSelector';
 
 describe('Node Selector', () => {
 
-  it('displays "TestNet" button if the node configuration is set for TestNet', () => {
+  it('displays "TestNet" button if the node configuration is set for TestNet', async () => {
     localStorage.setItem('nodeConfig', JSON.stringify(testnetNodeConfig));
     render(<NodeSelector />);
-    expect(screen.getByRole('button')).toHaveTextContent('node_selector.testnet');
+    expect(await screen.findByText(/node_selector.testnet/)).toBeInTheDocument();
   });
 
-  it('displays "MainNet" button if the node configuration is set for MainNet', () => {
+  it('displays "MainNet" button if the node configuration is set for MainNet', async () => {
     localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
-    expect(screen.getByRole('button')).toHaveTextContent('node_selector.mainnet');
+    expect(await screen.findByText(/node_selector.mainnet/)).toBeInTheDocument();
   });
 
-  it('displays "BetaNet" button if the node configuration is set for BetaNet', () => {
+  it('displays "BetaNet" button if the node configuration is set for BetaNet', async () => {
     localStorage.setItem('nodeConfig', JSON.stringify(betanetNodeConfig));
     render(<NodeSelector />);
-    expect(screen.getByRole('button')).toHaveTextContent('node_selector.betanet');
+    expect(await screen.findByText(/node_selector.betanet/)).toBeInTheDocument();
   });
 
-  it('displays "Voi TestNet" button if the node configuration is set for Voi TestNet', () => {
+  it('displays "Voi TestNet" button if the node configuration is set for Voi TestNet', async () => {
     localStorage.setItem('nodeConfig', JSON.stringify(voiTestnetNodeConfig));
     render(<NodeSelector />);
-    expect(screen.getByRole('button')).toHaveTextContent('node_selector.voi_testnet');
+    expect(await screen.findByText(/node_selector.voi_testnet/)).toBeInTheDocument();
   });
 
-  it('displays "Sandbox" button if the node configuration is set for Sandbox', () => {
+  it('displays "Sandbox" button if the node configuration is set for Sandbox', async () => {
     localStorage.setItem('nodeConfig', JSON.stringify(sandboxNodeConfig));
     render(<NodeSelector />);
-    expect(screen.getByRole('button')).toHaveTextContent('node_selector.sandbox');
+    expect(await screen.findByText(/node_selector.sandbox/)).toBeInTheDocument();
   });
 
   it('sets node configuration to TestNet configuration when "TestNet" is selected', async () => {

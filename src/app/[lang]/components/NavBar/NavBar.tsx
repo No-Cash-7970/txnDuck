@@ -1,4 +1,4 @@
-import { Suspense, use } from 'react';
+import { use } from 'react';
 import { useTranslation } from '@/app/i18n';
 import Settings from './Settings';
 import { NodeSelector } from './NodeSelector';
@@ -21,7 +21,7 @@ export default function NavBar({ lng }: Props) {
         </a>
       </div>
       <div className='navbar-center'>
-        <Suspense><NodeSelector lng={lng} /></Suspense>
+        <NodeSelector lng={lng} />
       </div>
       <div className='navbar-end'>
         <LanguageSelector lng={lng} />

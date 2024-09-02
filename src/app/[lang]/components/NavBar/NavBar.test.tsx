@@ -25,30 +25,30 @@ import NavBar  from './NavBar';
 
 describe('Nav Bar Component', () => {
 
-  it('renders', () => {
+  it('renders', async () => {
     render(<NavBar />);
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+    expect(await screen.findByRole('navigation')).toBeInTheDocument();
   });
 
-  it('has site name', () => {
+  it('has site name', async () => {
     render(<NavBar />);
-    expect(screen.getByText('site_name_pt1')).toBeInTheDocument();
+    expect(await screen.findByText('site_name_pt1')).toBeInTheDocument();
     expect(screen.getByText('site_name_pt2')).toBeInTheDocument();
   });
 
-  it('has node selector button', () => {
+  it('has node selector button', async () => {
     render(<NavBar />);
-    expect(screen.getByTitle('node_selector.choose_node')).toBeInTheDocument();
+    expect(await screen.findByTitle('node_selector.choose_node')).toBeInTheDocument();
   });
 
-  it('has language selector button', () => {
+  it('has language selector button', async () => {
     render(<NavBar />);
-    expect(screen.getByTestId('lang-btn')).toBeInTheDocument();
+    expect(await screen.findByTestId('lang-btn')).toBeInTheDocument();
   });
 
-  it('has settings button', () => {
+  it('has settings button', async () => {
     render(<NavBar />);
-    expect(screen.getByTitle('settings.heading')).toBeInTheDocument();
+    expect(await screen.findByTitle('settings.heading')).toBeInTheDocument();
   });
 
 });

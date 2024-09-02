@@ -1,11 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
+import { useState } from 'react';
 import dynamic from 'next/dynamic';
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import * as Dialog from '@radix-ui/react-dialog';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtomValue } from 'jotai';
 import {
   IconTestPipe,
   IconBox,
@@ -21,6 +20,7 @@ import {
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
 import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
+import NodeMenuItem from './NodeMenuItem';
 
 const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'), {
   ssr: false,
@@ -29,6 +29,10 @@ const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'
 const CustomNodeDialogContent = dynamic(() => import('./CustomNodeDialogContent'), {
   ssr: false,
   loading: () => <DialogLoadingPlaceholder />,
+});
+const NodeSelectorButtonText = dynamic(() => import('./NodeSelectorButtonText'), {
+  ssr: false,
+  loading: () => <span className='loading loading-ring loading-lg' aria-hidden />,
 });
 
 type Props = {
@@ -39,88 +43,18 @@ type Props = {
 /** Node selection menu */
 export default function NodeSelector({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
-  const router = useRouter();
-  const [nodeConfig, setNodeConfig] = useAtom(NodeConfigLib.nodeConfigAtom);
   const customNode = useAtomValue(NodeConfigLib.customNodeAtom);
   const [customConfigOpen, setCustomConfigOpen] = useState<boolean>(false);
-  const pathName = usePathname();
-  const currentURLParams = useSearchParams();
-  const networkURLParam = currentURLParams.get(NodeConfigLib.networkURLParamName);
-
-  /** Set the node configuration to the given configuration and apply the change
-   * @param newConfig The new node configuration to apply
-   */
-  const updateNodeConfig = (newConfig: NodeConfigLib.NodeConfig) => {
-    setNodeConfig(newConfig);
-
-    // The new node configuration isn't used unless the wallet provider is reloaded, which happens
-    // when the page is refreshed. Also, remove the network specified in the URL, if present.
-    const newURLParams = new URLSearchParams(currentURLParams.toString());
-    newURLParams.delete(NodeConfigLib.networkURLParamName);
-    router.push(pathName + (newURLParams.size ? `?${newURLParams}` : ''));
-  };
-
-  useEffect(() => {
-    // If the network is specified in the URL parameter, set the current node configuration to the
-    // node configuration for the network specified in that URL parameter
-    switch (networkURLParam) {
-      case NodeConfigLib.MAINNET:
-        setNodeConfig(NodeConfigLib.mainnetNodeConfig);
-        break;
-      case NodeConfigLib.TESTNET:
-        setNodeConfig(NodeConfigLib.testnetNodeConfig);
-        break;
-      case NodeConfigLib.BETANET:
-        setNodeConfig(NodeConfigLib.betanetNodeConfig);
-        break;
-      case NodeConfigLib.VOI_TESTNET:
-        setNodeConfig(NodeConfigLib.voiTestnetNodeConfig);
-        break;
-      case NodeConfigLib.SANDBOX:
-        setNodeConfig(NodeConfigLib.sandboxNodeConfig);
-        break;
-      default:
-        // There was no valid network specified, so use the stored node configuration (or the
-        // default if there is no stored node configuration)
-        break;
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [networkURLParam]);
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-      <button
-          className={
-            'btn btn-accent w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 leading-tight'
-            + ' sm:max-w-sm sm:px-4 sm:text-sm sm:gap-2'
-          }
-          title={t('node_selector.choose_node')}
+        <button title={t('node_selector.choose_node')}
+          className={ 'btn btn-accent'
+            + ' w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 leading-tight'
+            + ' sm:max-w-sm sm:px-4 sm:text-sm sm:gap-2' }
         >
-          {nodeConfig?.network === NodeConfigLib.MAINNET && <>
-            <IconBox aria-hidden />
-            <span className='truncate'>{t('node_selector.mainnet')}</span>
-          </>}
-          {nodeConfig?.network === NodeConfigLib.TESTNET && <>
-            <IconFlask aria-hidden />
-            <span className='truncate'>{t('node_selector.testnet')}</span>
-          </>}
-          {nodeConfig?.network === NodeConfigLib.BETANET && <>
-            <IconTestPipe aria-hidden />
-            <span className='truncate'>{t('node_selector.betanet')}</span>
-          </>}
-          {nodeConfig?.network === NodeConfigLib.VOI_TESTNET && <>
-            <IconSquareRoundedLetterV aria-hidden />
-            <span className='truncate'>{t('node_selector.voi_testnet')}</span>
-          </>}
-          {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
-            <IconSandbox aria-hidden />
-            <span className='truncate'>{t('node_selector.sandbox')}</span>
-          </>}
-          {nodeConfig?.network === NodeConfigLib.CUSTOM && <>
-            <IconServer2 aria-hidden />
-            <span className='truncate'>{t('node_selector.custom')}</span>
-          </>}
+          <NodeSelectorButtonText t={t} />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
@@ -134,66 +68,30 @@ export default function NodeSelector({ lng }: Props) {
           }>
             <li className='menu-title'>{t('node_selector.choose_node')}</li>
             {/* Node Presets */}
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.mainnetNodeConfig)
-              }>
-                <span>
-                  <IconBox aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.mainnet')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.testnetNodeConfig)
-              }>
-                <span>
-                  <IconFlask aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.testnet')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.betanetNodeConfig)
-              }>
-                <span>
-                  <IconTestPipe aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.betanet')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.voiTestnetNodeConfig)
-              }>
-                <span>
-                  <IconSquareRoundedLetterV aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.voi_testnet')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig(NodeConfigLib.sandboxNodeConfig)
-              }>
-                <span>
-                  <IconSandbox aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.sandbox')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>
-            {customNode && <DropdownMenu.Item asChild>
-              <li className='mb-1' onClick={
-                (e) => updateNodeConfig({network: NodeConfigLib.CUSTOM, ...customNode})
-              }>
-                <span>
-                  <IconServer2 aria-hidden stroke={1.5} />
-                  <span>{t('node_selector.custom')}</span>
-                </span>
-              </li>
-            </DropdownMenu.Item>}
+            <NodeMenuItem config={NodeConfigLib.mainnetNodeConfig}>
+              <IconBox aria-hidden stroke={1.5} />
+              <span>{t('node_selector.mainnet')}</span>
+            </NodeMenuItem>
+            <NodeMenuItem config={NodeConfigLib.testnetNodeConfig}>
+              <IconFlask aria-hidden stroke={1.5} />
+              <span>{t('node_selector.testnet')}</span>
+            </NodeMenuItem>
+            <NodeMenuItem config={NodeConfigLib.betanetNodeConfig}>
+              <IconTestPipe aria-hidden stroke={1.5} />
+              <span>{t('node_selector.betanet')}</span>
+            </NodeMenuItem>
+            <NodeMenuItem config={NodeConfigLib.voiTestnetNodeConfig}>
+              <IconSquareRoundedLetterV aria-hidden stroke={1.5} />
+              <span>{t('node_selector.voi_testnet')}</span>
+            </NodeMenuItem>
+            <NodeMenuItem config={NodeConfigLib.sandboxNodeConfig}>
+              <IconSandbox aria-hidden stroke={1.5} />
+              <span>{t('node_selector.sandbox')}</span>
+            </NodeMenuItem>
+            {customNode && <NodeMenuItem config={{network: NodeConfigLib.CUSTOM, ...customNode}}>
+              <IconServer2 aria-hidden stroke={1.5} />
+              <span>{t('node_selector.custom')}</span>
+            </NodeMenuItem>}
             {/* View current configuration */}
             <Dialog.Root>
               <Dialog.Trigger asChild>
