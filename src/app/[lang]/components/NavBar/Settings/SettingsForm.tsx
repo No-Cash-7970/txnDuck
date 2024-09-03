@@ -306,7 +306,7 @@ export default function SettingsForm(props: Props) {
       {/* Clear data buttons */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
         <button type='button'
-          className='btn btn-neutral'
+          className='btn btn-sm btn-neutral h-auto pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             setStoredTxnData(RESET);
@@ -317,7 +317,7 @@ export default function SettingsForm(props: Props) {
           {t('settings.clear_txn_data_btn')}
         </button>
         <button type='button'
-          className='btn btn-outline btn-neutral'
+          className='btn btn-sm btn-outline btn-neutral h-auto pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             resetSettings();
