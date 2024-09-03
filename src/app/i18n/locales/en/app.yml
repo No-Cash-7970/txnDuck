@@ -16,7 +16,7 @@ builder_steps:
 footer:
   privacy_policy_link: Privacy policy
   github_link: Source on GitHub
-  algo_docs_link: Algorand Documentation
+  algo_docs_link: Algorand documentation
   license_notice: >
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <a>license</a>.
@@ -71,6 +71,7 @@ wallet:
     kmd: Key Management Daemon (KMD)
     kibisis: Kibisis
     walletconnect: WalletConnect
+    magic: Magic
   type:
     mobile: Mobile wallet
     mobile_web: Mobile & web wallet
@@ -78,6 +79,20 @@ wallet:
     browser_extension: Browser extension wallet
     cli_sandbox: CLI wallet for Sandbox
     protocol: Wallet connection protocol
+    waas: Wallet-as-a-service
+  magic_prompt:
+    fail: Failed to authenticate using Magic.
+    heading: Magic
+    email_label: Email address
+    email_submit_btn: Send magic link
+    email_more_info: More information about Magic
+    email_tip: >
+      A "magic link" will be sent to the provided email address. After using that magic link to log
+      in, this app will be connected to the Algorand wallet account associated with the email
+      address.
+    disclaimer: >
+      By using Magic, you agree to the collection of certain personal information as stated in the
+      <privacy>Privacy Policy</privacy>.
 node_selector:
   choose_node: Select node
   testnet: TestNet

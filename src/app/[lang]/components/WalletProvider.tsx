@@ -31,7 +31,7 @@ export default function WalletProvider({ sitename, children }: {
     { id: WalletId.KMD },
   ];
 
-  // Add WalletConnect as a supported wallet if a WalletConnect project ID is set I
+  // Add WalletConnect as a supported wallet if a WalletConnect project ID is set
   if (process.env.NEXT_PUBLIC_WC_PROJECT_ID) {
     // Insert WalletConnect after Lute in the list of supported wallets
     supportedWallets.splice(3, 0, {
@@ -43,9 +43,23 @@ export default function WalletProvider({ sitename, children }: {
         }
       }
     });
+    /*
+     * Wallets list is now:
+     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, KMD
+     */
+  }
 
-    // Wallets list is now:
-    // Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, KMD
+  // Add Magic as a supported wallet if a Magic API key is set
+  if (process.env.NEXT_PUBLIC_MAGIC_API_KEY) {
+    // Insert Magic after Kibisis in the list of supported wallets
+    supportedWallets.splice(4, 0, {
+      id: WalletId.MAGIC,
+      options: { apiKey: process.env.NEXT_PUBLIC_MAGIC_API_KEY }
+    });
+    /*
+     * Wallets list is now:
+     * Pera, Defly, Lute, WalletConnect, Kibisis, Magic, Exodus, KMD
+     */
   }
 
   const walletManager = new WalletManager({

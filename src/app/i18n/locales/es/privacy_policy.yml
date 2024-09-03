@@ -2,9 +2,10 @@ title: Política de privacidad
 personal_info:
   heading: Recogida de datos personales
   details: >
-    TxnPato no recopila ni almacena información personal (nombre, dirección de correo electrónico,
-    etc.) ni datos de diagnóstico. No registra ninguna información de uso. No utiliza plataformas
-    analíticas ni publicitarias de terceros.
+    A excepción de <magic_section>la información personal recopilada al utilizar
+    Magic</magic_section>, txnPato no recopila ni almacena ninguna información personal (nombre,
+    dirección de correo electrónico, etc.) ni datos de diagnóstico. No registra ninguna información
+    de uso. No utiliza plataformas analíticas ni publicitarias de terceros.
 app_state_data:
   heading: Almacenamiento de datos de estado de la aplicación
   details: >
@@ -13,13 +14,40 @@ app_state_data:
     dispositivo. TxnPato <strong>nunca</strong> transmitirá ninguno de los datos de estado de la
     aplicación a ningún lugar fuera de su dispositivo sin su permiso.
 wallet_security:
-  heading: Cuenta de cartera y las claves privadas
+  heading: Cuenta de billetera y las claves privadas
   details: >
     TxnPato nunca recopilará ni almacenará directamente ninguna de sus claves privadas o
-    contraseñas. En su lugar, txnPato utiliza un servicio de cartera, como
+    contraseñas. En su lugar, txnPato utiliza un servicio de billetera, como
     <wc>WalletConnect (sitio web en inglés)</wc> o
-    <pcdocs>Pera Connect (sitio web en inglés)</pcdocs>, para conectarse a su cuenta de cartera sin
-    acceder a su(s) clave(s) privada(s). Esto significa que txnPato no puede y no accederá a sus
+    <pcdocs>Pera Connect (sitio web en inglés)</pcdocs>, para conectarse a su cuenta de billetera
+    sin acceder a su(s) clave(s) privada(s). Esto significa que txnPato no puede y no accederá a sus
     fondos o a sus activos sin su permiso explícito, que usted concede a través de una aplicación de
-    cartera, como <pera>Pera (sitio web en inglés)</pera> y
+    billetera, como <pera>Pera (sitio web en inglés)</pera> y
     <defly>Defly (sitio web en inglés)</defly>.
+magic_auth:
+  heading: La información personal recopilada al utilizar Magic
+  details_1: >
+    Cuando se utiliza <magic>Magic (sitio web en inglés)</magic> para conectarse a su billetera, se
+    recopila la siguiente información personal:
+  details_2: >
+    <ul>
+      <li>
+        Dirección de correo electrónico
+      </li>
+      <li>
+        Navegador y sistema operativo
+      </li>
+      <li>
+        Dirección IP
+      </li>
+      <li>
+        Fecha y hora en que intentó iniciar sesión con Magic, incluso si el intento no tuvo éxito
+      </li>
+    </ul>
+  details_3: >
+    Esta información personal es guardada por Magic y accesible a la desarrolladora de txnDuck por
+    <strong>hasta 30 días</strong> a través de un «Dashboard» para desarrolladores proporcionado por
+    Magic. Esta recopilación de información personal es controlada por Magic, no por la
+    desarrolladora. Consulte <magic_privacy>política de privacidad de Magic (sitio web en
+    inglés)</magic_privacy> para más información.
+  notice: Sólo se aplica cuando se utiliza Magic como método para conectar la billetera.

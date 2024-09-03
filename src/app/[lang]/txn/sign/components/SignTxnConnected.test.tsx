@@ -1,7 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TFunction } from 'i18next';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 
@@ -51,7 +50,6 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
 import SignTxn from './SignTxn';
 
 describe('Sign Transaction Component (Connected wallet)', () => {
-  const t = i18nextClientMock.useTranslation().t as TFunction;
 
   it('show active wallet address', () => {
     sessionStorage.setItem('txnData',

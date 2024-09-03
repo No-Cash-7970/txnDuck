@@ -1,64 +1,92 @@
+import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { type TFunction } from 'i18next';
+import { useAtom, useAtomValue } from 'jotai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { WalletId, useWallet } from '@txnlab/use-wallet-react';
 import { walletTypes } from '@/app/lib/wallet-utils';
+import MagicAuthPrompt, {
+  magicPromptCanceledAtom,
+  magicProviderAtom
+} from '@/app/[lang]/components/MagicAuthPrompt';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
   const { wallets, activeAccount, activeWallet } = useWallet();
+  const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
+  const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
+  const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);
+
+  useEffect(() => {
+    // Focus on "connect wallet" button only when the prompt for entering the email address to get a
+    // "magic link" was canceled
+    if (!magicProvider && magicEmailCanceled) connectWalletBtnRef.current?.focus();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [magicProvider, magicEmailCanceled]);
 
   return (<>
     {!activeAccount && <>
-      <div className='text-secondary mb-2 text-center'>
-        <i>{t('wallet.is_not_connected')}</i>
-      </div>
-      <DropdownMenu.Root>
-        <DropdownMenu.Trigger asChild>
-          <button className='btn btn-block btn-secondary'>
-            <IconWallet aria-hidden />
-            {t('wallet.connect')}
-          </button>
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Portal>
-          <DropdownMenu.Content asChild>
-            <ul className={
-              'z-[1000] card menu shadow-md border border-base-300 bg-base-200 overflow-auto'
-              + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
-              + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
-              + ' max-w-[var(--radix-dropdown-menu-trigger-width)]'
-              + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
-              + ' prose-li:max-w-full'
-            }>
-              <li className='menu-title'>{t('wallet.choose_provider')}</li>
-              {// List of available wallet providers
-                wallets?.map(provider => (
-                  <DropdownMenu.Item asChild key={provider.id}>
-                    <li onClick={provider.connect}>
-                      <span className='auto-cols-max'>
-                        <span className='relative h-8 w-8'>
-                          <Image src={provider.metadata.icon}
-                            alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
-                            fill
-                            aria-hidden
-                          />
+      {magicProvider && <MagicAuthPrompt t={t} />}
+      {!magicProvider && <>
+        <div className='text-secondary mb-2 text-center'>
+          <i>{t('wallet.is_not_connected')}</i>
+        </div>
+        <DropdownMenu.Root>
+          <DropdownMenu.Trigger asChild ref={connectWalletBtnRef}>
+            <button type='button' className='btn btn-block btn-secondary'>
+              <IconWallet aria-hidden />
+              {t('wallet.connect')}
+            </button>
+          </DropdownMenu.Trigger>
+          <DropdownMenu.Portal>
+            <DropdownMenu.Content asChild>
+              <ul className={
+                'z-[1000] card menu shadow-md border border-base-300 bg-base-200 overflow-auto'
+                + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
+                + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
+                + ' max-w-[var(--radix-dropdown-menu-trigger-width)]'
+                + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
+                + ' prose-li:max-w-full'
+              }>
+                <li className='menu-title'>{t('wallet.choose_provider')}</li>
+                {// List of available wallet providers
+                  wallets?.map(provider => (
+                    <DropdownMenu.Item asChild key={provider.id}>
+                      <li onClick={() => {
+                        if (provider.id === WalletId.MAGIC) {
+                          // Need to ask for email address
+                          setMagicProvider(provider);
+                          return;
+                        }
+                        provider.connect();
+                      }}>
+                        <span className='auto-cols-max'>
+                          <span className='relative h-8 w-8'>
+                            <Image src={provider.metadata.icon}
+                              alt={t('wallet.provider_icon_alt', {
+                                provider: provider.metadata.name
+                              })}
+                              fill
+                              aria-hidden
+                            />
+                          </span>
+                          <div className='leading-tight'>
+                            <div>{t('wallet.providers.' + provider.id)}</div>
+                            <small className='italic opacity-70'>
+                              {t('wallet.type.' + walletTypes[provider.id])}
+                            </small>
+                          </div>
                         </span>
-                        <div className='leading-tight'>
-                          <div>{t('wallet.providers.' + provider.id)}</div>
-                          <small className='italic opacity-70'>
-                            {t('wallet.type.' + walletTypes[provider.id])}
-                          </small>
-                        </div>
-                      </span>
-                    </li>
-                  </DropdownMenu.Item>
-                ))
-              }
-            </ul>
-          </DropdownMenu.Content>
-        </DropdownMenu.Portal>
-      </DropdownMenu.Root>
+                      </li>
+                    </DropdownMenu.Item>
+                  ))
+                }
+              </ul>
+            </DropdownMenu.Content>
+          </DropdownMenu.Portal>
+        </DropdownMenu.Root>
+      </>}
     </>}
 
     {!!activeAccount && activeWallet &&

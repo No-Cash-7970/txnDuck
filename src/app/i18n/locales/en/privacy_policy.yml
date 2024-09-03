@@ -2,15 +2,17 @@ title: Privacy Policy
 personal_info:
   heading: Collection of personal information
   details: >
-    TxnDuck does not collect or store any personal information (name, email address, etc.) or any
-    diagnostic data. It does not log any usage information. It does not use any third-party
-    analytics or advertising platforms.
+    Except for the <magic_section>personal information collected when using
+    Magic</magic_section>, txnDuck does not collect or store any personal information (name, email
+    address, etc.) or any diagnostic data. It does not log any usage information. It does not use
+    any third-party analytics or advertising platforms.
 app_state_data:
   heading: Storage of application state data
-  details: All of txnDuck’s application state data (temporary transaction data, user preferences,
-    selected language, etc.) is stored <strong>only</strong> your device. TxnDuck will
-    <strong>never</strong> transmit any of the application state data to anywhere outside your
-    device without your permission.
+  details: >
+    All of txnDuck’s application state data (temporary transaction data, user preferences, selected
+    language, etc.) is stored <strong>only</strong> your device. TxnDuck will <strong>never</strong>
+    transmit any of the application state data to anywhere outside your device without your
+    permission.
 wallet_security:
   heading: Wallet account and private keys
   details: >
@@ -19,3 +21,29 @@ wallet_security:
     to connect to your wallet account without accessing your private key(s). This means txnDuck
     cannot and will not access your funds or your assets without your explicit permission, which you
     grant through a wallet application, such as <pera>Pera</pera> and <defly>Defly</defly>.
+magic_auth:
+  heading: Personal information collected when using Magic
+  details_1: >
+    When using <magic>Magic</magic> to connect to your wallet, the following personal information is
+    collected:
+  details_2: >
+    <ul>
+      <li>
+        Email address
+      </li>
+      <li>
+        Browser and operating system
+      </li>
+      <li>
+        IP address
+      </li>
+      <li>
+        Date and time you attempted to log in using Magic, even if the attempt was unsuccessful
+      </li>
+    </ul>
+  details_3: >
+    This personal information is kept by Magic and accessible to the txnDuck developer for
+    <strong>up to 30 days</strong> through a developer "Dashboard" provided by Magic. This
+    collection of personal information is controlled by Magic, not the developer. Refer to
+    <magic_privacy>Magic’s privacy policy</magic_privacy> for more information.
+  notice: Only applies when using Magic as the wallet connection method.

@@ -4,6 +4,10 @@ export const fooConnectFn = jest.fn();
 export const fooDisconnectFn = jest.fn();
 /**  Mock "connect" functions for fake "bar" wallet */
 export const barConnectFn = jest.fn();
+/**  Mock "connect" functions for fake "magic" wallet */
+export const magicConnectFn = jest.fn();
+/** Mock "disconnect" functions for fake "magic" wallet */
+export const magicDisconnectFn = jest.fn();
 
 /** Mock for the use-wallet library that DOES NOT mock a connected wallet (Assumed no wallet is
  * connected).
@@ -16,6 +20,7 @@ export const useWalletUnconnectedMock = {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
+    MAGIC: 'magic',
   },
   useWallet: () => ({
     activeWallet: null,
@@ -28,6 +33,11 @@ export const useWalletUnconnectedMock = {
       {
         id: 'barWallet',
         connect: barConnectFn,
+        metadata: { icon: 'data:image/svg+xml;base64,' },
+      },
+      {
+        id: 'magic',
+        connect: magicConnectFn,
         metadata: { icon: 'data:image/svg+xml;base64,' },
       },
     ],
@@ -44,6 +54,7 @@ export const useWalletConnectedMock = {
     PERA: 'pera',
     DEFLY: 'defly',
     EXODUS: 'exodus',
+    MAGIC: 'magic',
   },
   useWallet: () => ({
     activeAccount: {
@@ -65,6 +76,12 @@ export const useWalletConnectedMock = {
       {
         id: 'barWallet',
         connect: barConnectFn,
+        metadata: { icon: 'data:image/svg+xml;base64,' },
+      },
+      {
+        id: 'magic',
+        connect: magicConnectFn,
+        disconnect: magicDisconnectFn,
         metadata: { icon: 'data:image/svg+xml;base64,' },
       },
     ],

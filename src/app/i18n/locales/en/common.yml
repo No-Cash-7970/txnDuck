@@ -9,6 +9,7 @@ empty: Empty # Often used when displaying that some field was given but contains
 number_value: "{{value, number}}" # When displaying a number without any other text
 asset_amount: "{{amount, number}} {{asset}}" # For displaying amount of an asset
 loading: Loading…
+cancel: Cancel # Often used for cancel buttons
 
 # Unit name of the token for Algorand
 # More information about specifying singular and plural versions of a word:
@@ -36,3 +37,4 @@ form: # For forms
     number:
       min: This must be at least {{min, number}}.
       max: This must be at most {{max, number}}.
+  email_placeholder: someone@example.com

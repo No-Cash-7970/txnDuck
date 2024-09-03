@@ -58,14 +58,14 @@ settings:
   txn_data_cleared_msg: Se han eliminado todos los datos de transacciones guardados.
   all_data_cleared_msg: Se han eliminado todos los datos.
 wallet:
-  connect: Conectar la cartera
-  disconnect: Desconectar la cartera
-  choose_provider: Eligir el proveedor de cartera
+  connect: Conectar la billetera
+  disconnect: Desconectar la billetera
+  choose_provider: Eligir el proveedor de billetera
   choose_provider_description: >
     Elija uno de los siguientes proveedores de billeteras para conectar su cuenta de billetera a
     esta aplicación.
   use_provider_btn: "Usar {{provider}}"
-  is_not_connected: No hay cartera conectada.
+  is_not_connected: No hay billetera conectada.
   is_connected: "Cuenta: {{address}}" # Address is displayed when wallet is connected
   provider_icon_alt: "Icono de {{provider}}"
   providers:
@@ -77,13 +77,28 @@ wallet:
     kmd: Key Management Daemon (KMD)
     kibisis: Kibisis
     walletconnect: WalletConnect
+    magic: Magic
   type:
-    mobile: Cartera móvil
-    mobile_web: Cartera móvil y web
-    web: Cartera web
-    browser_extension: Cartera de extensión del navegador
-    cli_sandbox: Cartera CLI para Sandbox
-    protocol: Protocolo para conectar carteras
+    mobile: Billetera móvil
+    mobile_web: Billetera móvil y web
+    web: Billetera web
+    browser_extension: Billetera de extensión del navegador
+    cli_sandbox: Billetera CLI para Sandbox
+    protocol: Protocolo para conectarse a una billetera
+    waas: Billetera como servicio
+  magic_prompt:
+    fail: Error al autenticar usando Magic.
+    heading: Magic
+    email_label: Dirección de correo electrónico
+    email_submit_btn: Enviar magic link
+    email_more_info: Más información sobre Magic
+    email_tip: >
+      Se enviará un «magic link» a la dirección de correo electrónico proporcionada. Después de
+      utilizar ese magic link para iniciar sesión, esta app se conectará a la cuenta de billetera
+      asociada a la dirección de correo electrónico.
+    disclaimer: >
+      Al utilizar Magic, usted acepta que se recopilen determinados datos personales, tal como se
+      indica en la <privacy>Política de privacidad</privacy>.
 node_selector:
   choose_node: Eligir nodo
   testnet: TestNet

@@ -131,7 +131,7 @@ export default function SettingsForm(props: Props) {
   useEffect(() => setTempConfirmWaitRounds(confirmWaitRounds), [confirmWaitRounds]);
 
   return (<>
-    <form noValidate={true} aria-label={t('settings.heading')}>
+    <form noValidate={true} aria-label={t('settings.heading')} onSubmit={(e) => e.preventDefault()}>
       {/* Setting: Theme setting */}
       <RadioButtonGroupField
         name='theme'
@@ -305,7 +305,7 @@ export default function SettingsForm(props: Props) {
 
       {/* Clear data buttons */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
-        <button
+        <button type='button'
           className='btn btn-neutral'
           onClick={(e) => {
             e.preventDefault();
@@ -316,7 +316,7 @@ export default function SettingsForm(props: Props) {
         >
           {t('settings.clear_txn_data_btn')}
         </button>
-        <button
+        <button type='button'
           className='btn btn-outline btn-neutral'
           onClick={(e) => {
             e.preventDefault();
@@ -328,7 +328,7 @@ export default function SettingsForm(props: Props) {
       </div>
       {/* Reset button */}
       <div className='mt-9'>
-        <button
+        <button type='button'
           className='btn btn-sm btn-block btn-error mx-auto mb-1'
           onClick={(e) => {
             e.preventDefault();

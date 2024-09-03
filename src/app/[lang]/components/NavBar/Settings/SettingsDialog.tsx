@@ -25,7 +25,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
   return (<>
     <Dialog.Root defaultOpen={open} modal={false}>
       <Dialog.Trigger asChild>
-        <button className='btn btn-ghost px-2' title={t('settings.heading')}>
+        <button type='button' className='btn btn-ghost px-2' title={t('settings.heading')}>
           <IconSettings stroke={1.5} size={32} aria-hidden />
         </button>
       </Dialog.Trigger>
@@ -52,7 +52,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
             </div>
 
             <Dialog.Close asChild>
-              <button
+              <button type='button'
                 className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
                 title={t('close')}
               >

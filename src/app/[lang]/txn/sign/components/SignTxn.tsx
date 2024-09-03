@@ -12,9 +12,8 @@ import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
-import { walletTypes } from '@/app/lib/wallet-utils';
+import { defaultAutoSend as defaultAutoSendAtom } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import {
   AssetConfigTxnData,
   StoredTxnData,
@@ -25,8 +24,10 @@ import {
   tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
+import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
+import { walletTypes } from '@/app/lib/wallet-utils';
 import { CheckboxField } from '@/app/[lang]/components/form';
-import {defaultAutoSend as defaultAutoSendAtom} from '@/app/lib/app-settings';
+import MagicAuthPrompt, { magicProviderAtom } from '@/app/[lang]/components/MagicAuthPrompt';
 import NextStepButton from './NextStepButton';
 
 type Props = {
@@ -53,6 +54,7 @@ export default function SignTxn({ lng }: Props) {
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
 
   const { wallets, activeAccount, activeWallet, signTransactions } = useWallet();
+  const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
 
   /** Get the suggested parameters for the network. Includes genesis ID, genesis hash, minimum fee,
    * first valid round, and last valid round.
@@ -269,7 +271,7 @@ export default function SignTxn({ lng }: Props) {
         />
       </div>
 
-      {// No wallet connected and transaction has not been signed yet
+      {// No wallet connected and the transaction has not been signed yet
         (!activeAccount && !storedSignedTxn) &&
         <Dialog.Root modal={false}>
           <Dialog.Trigger asChild>
@@ -286,43 +288,62 @@ export default function SignTxn({ lng }: Props) {
               onInteractOutside={(e) => e.preventDefault()}
             >
               <div className='modal-box prose max-w-4xl'>
-                <Dialog.Title className='mb-3'>{t('wallet.choose_provider')}</Dialog.Title>
-                <Dialog.Description className='text-sm'>
-                  {t('wallet.choose_provider_description')}
-                </Dialog.Description>
-                {/* List of available wallet providers */}
-                <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
-                  {wallets?.map(provider => (
-                    <div key={provider.id} className={
-                      'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
-                    }>
-                      <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
-                        <Image src={provider.metadata.icon}
-                          alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
-                          fill
-                          aria-hidden
-                        />
-                      </span>
-                      {/* Wallet provider info + button */}
-                      <div className='w-full'>
-                        <div>
-                          <h3 className='m-0'>{t('wallet.providers.' + provider.id)}</h3>
-                          <p className='italic opacity-70 m-0'>
-                            {t('wallet.type.' + walletTypes[provider.id])}
-                          </p>
+                {magicProvider && <>
+                  <Dialog.Title className='mb-3'>{t('wallet.magic_prompt.heading')}</Dialog.Title>
+                  <form
+                    noValidate={true}
+                    aria-label={t('wallet.magic_prompt.heading')}
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    <MagicAuthPrompt t={t} />
+                  </form>
+                </>}
+                {!magicProvider && <>
+                  <Dialog.Title className='mb-3'>{t('wallet.choose_provider')}</Dialog.Title>
+                  <Dialog.Description className='text-sm'>
+                    {t('wallet.choose_provider_description')}
+                  </Dialog.Description>
+                  {/* List of available wallet providers */}
+                  <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
+                    {wallets?.map(provider => (
+                      <div key={provider.id} className={
+                        'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
+                      }>
+                        <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
+                          <Image src={provider.metadata.icon}
+                            alt={t('wallet.provider_icon_alt', {provider: provider.metadata.name})}
+                            fill
+                            aria-hidden
+                          />
+                        </span>
+                        {/* Wallet provider info + button */}
+                        <div className='w-full'>
+                          <div>
+                            <h3 className='m-0'>{t('wallet.providers.' + provider.id)}</h3>
+                            <p className='italic opacity-70 m-0'>
+                              {t('wallet.type.' + walletTypes[provider.id])}
+                            </p>
+                          </div>
+                          <button className='btn btn-block btn-sm btn-secondary mt-2'
+                            onClick={() => {
+                              if (provider.id === WalletId.MAGIC) {
+                                // Need to ask for email address
+                                setMagicProvider(provider);
+                                return;
+                              }
+                              provider.connect();
+                            }}
+                          >
+                            {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
+                          </button>
                         </div>
-                        <button className='btn btn-block btn-sm btn-secondary mt-2'
-                          onClick={provider.connect}
-                        >
-                          {t('wallet.use_provider_btn', {provider: provider.metadata.name})}
-                        </button>
                       </div>
-                    </div>
-                  ))}
-                </div>
+                    ))}
+                  </div>
+                </>}
                 {/* Upper corner close button */}
                 <Dialog.Close asChild>
-                  <button title={t('close')} className={
+                  <button type="button" title={t('close')} className={
                     'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
                   }>
                     <Icons.IconX aria-hidden />
@@ -340,7 +361,7 @@ export default function SignTxn({ lng }: Props) {
           {t('sign_txn:sign_error')}
         </div>
       }
-      {// Connected to wallet but transaction has not been signed yet
+      {// Connected to wallet but the transaction has not been signed yet
         (activeAccount && !storedSignedTxn && !hasSignTxnError) &&
         <div className='mt-8'>
           <CheckboxField label={t('sign_txn:auto_send.label')}

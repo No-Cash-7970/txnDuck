@@ -1,13 +1,15 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TFunction } from 'i18next';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import {
   barConnectFn,
   fooConnectFn,
+  magicConnectFn,
   useWalletUnconnectedMock
 } from '@/app/lib/testing/useWalletMock';
+// This must be imported after the mock classes are imported
+import { JotaiProvider } from '@/app/[lang]/components';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -55,41 +57,29 @@ jest.mock('@algorandfoundation/algokit-utils', () => ({
 import SignTxn from './SignTxn';
 
 describe('Sign Transaction Component (Unconnected wallet)', () => {
-  const t = i18nextClientMock.useTranslation().t as TFunction;
-
-  it('has "connect wallet" button', () => {
+  beforeEach(() => {
     sessionStorage.setItem('txnData',
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"fee":0.001,"fv":1,"lv":2,'
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
       + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
       + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
     );
-    render(<SignTxn />);
+    sessionStorage.removeItem('signedTxn');
+  });
+
+  it('has "connect wallet" button', () => {
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
     expect(screen.getByText('wallet.connect')).toBeInTheDocument();
   });
 
   it('has "download unsigned transaction" button', async () => {
-    sessionStorage.setItem('txnData',
-      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
-      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
-      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
-    );
-    render(<SignTxn />);
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
     expect(screen.getByText('sign_txn:download_unsigned_btn')).toBeInTheDocument();
   });
 
   it('shows modal with selection of wallets', async () => {
-    sessionStorage.setItem('txnData',
-      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
-      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
-      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
-    );
-    render(<SignTxn />);
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
 
     await userEvent.click(screen.getByText('wallet.connect'));
 
@@ -98,14 +88,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
   });
 
   it('tries to connect to available wallet provider when it is selected', async () => {
-    sessionStorage.setItem('txnData',
-      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
-      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
-      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
-      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
-    );
-    render(<SignTxn />);
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
 
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Foo wallet" should be the first one listed
@@ -126,7 +109,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
-    render(<SignTxn />);
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
 
     expect(await screen.findByText('wallet.connect')).toBeInTheDocument();
     expect(screen.queryByText('sign_txn:txn_signed')).not.toBeInTheDocument();
@@ -136,17 +119,78 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
   async () => {
     sessionStorage.setItem('txnData',
       '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
-      + '"fee":0.001,"fv":1,"lv":2,' // Change the fee
+      + '"fee":0.001,"fv":1,"lv":2,'
       + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
       + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
       + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
     );
     // The function that converts a data URL to bytes is mocked, so any value can be put in storage
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,..."');
-    render(<SignTxn />);
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
 
     expect(await screen.findByText('sign_txn:txn_signed')).toBeInTheDocument();
     expect(screen.queryByText('wallet.connect')).not.toBeInTheDocument();
+  });
+
+  it('prompts for email address when "Magic" is selected as the wallet', async () => {
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
+
+    await userEvent.click(screen.getByText('wallet.connect'));
+    // "Magic wallet" should be the third one listed
+    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+
+    expect(magicConnectFn).not.toHaveBeenCalled();
+    expect(screen.getByText(/wallet.magic_prompt.heading/)).toBeInTheDocument();
+    expect(screen.getByLabelText(/wallet.magic_prompt.email_label/))
+      .toBeInTheDocument();
+    expect(screen.getByText(/wallet.magic_prompt.email_submit_btn/)).toHaveRole('button');
+    expect(screen.getByText('cancel')).toHaveRole('button');
+  });
+
+  it('shows list of wallets after the Magic wallet prompt is canceled', async () => {
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
+
+    // Trigger prompt to enter email for Magic wallet
+    await userEvent.click(screen.getByText('wallet.connect'));
+    // "Magic wallet" should be the third one listed
+    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    // Cancel prompt
+    await userEvent.click(screen.getByText('cancel'));
+
+    expect(screen.getByText('wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('wallet.providers.fooWallet')).toBeInTheDocument();
+  });
+
+  it('tries to connect using Magic if the given email address is valid', async () => {
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
+
+    // Trigger prompt to enter email for Magic wallet and submit it
+    await userEvent.click(screen.getByText('wallet.connect'));
+    // "Magic wallet" should be the third one listed
+    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
+    await userEvent.paste('magic.user@example.com');
+    await userEvent.click(screen.getByText(/wallet.magic_prompt.email_submit_btn/));
+
+    // Check if there was an attempt to connect using Magic
+    expect(magicConnectFn).toHaveBeenCalledWith({email: 'magic.user@example.com'});
+  });
+
+  it('shows error message if Magic authentication fails', async () => {
+    render(<JotaiProvider><SignTxn /></JotaiProvider>);
+    // Simulate error from attempting to connect and authenticate using Magic
+    magicConnectFn.mockRejectedValueOnce('error!');
+
+    // Trigger prompt to enter email for Magic wallet and submit it
+    await userEvent.click(screen.getByText('wallet.connect'));
+    // "Magic wallet" should be the third one listed
+    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
+    await userEvent.paste('magic.user@example.com');
+    await userEvent.click(screen.getByText(/wallet.magic_prompt.email_submit_btn/));
+
+    // Check if attempt to connect using Magic failed
+    expect(screen.getByText(/wallet.magic_prompt.fail/)).toBeInTheDocument();
   });
 
 });

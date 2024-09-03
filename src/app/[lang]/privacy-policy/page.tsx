@@ -3,6 +3,7 @@ import { type Metadata } from 'next';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { PageTitleHeading } from '@/app/[lang]/components';
+import { IconInfoCircle } from '@tabler/icons-react';
 
 export async function generateMetadata(
   { params }: { params: { lang: string } },
@@ -32,13 +33,17 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
     <main className='prose min-h-screen mx-auto pt-4 px-4 pb-12'>
       <PageTitleHeading lng={lang}>{t('title')}</PageTitleHeading>
 
-      <h2>{t('personal_info.heading')}</h2>
-      <p><Trans t={t} i18nKey='personal_info.details' /></p>
+      <h2 id="personal-info">{t('personal_info.heading')}</h2>
+      <p>
+        <Trans t={t} i18nKey='personal_info.details'
+          components={{ magic_section: <a href='#magic-auth' /> }}
+        />
+      </p>
 
-      <h2>{t('app_state_data.heading')}</h2>
+      <h2 id="app-state-data">{t('app_state_data.heading')}</h2>
       <p><Trans t={t} i18nKey='app_state_data.details' /></p>
 
-      <h2>{t('wallet_security.heading')}</h2>
+      <h2 id="wallet-security">{t('wallet_security.heading')}</h2>
       <p>
         <Trans t={t} i18nKey='wallet_security.details'
           components={{
@@ -48,6 +53,25 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
             />,
             pera: <a href='https://perawallet.app/' target='_blank' />,
             defly:<a href='https://defly.app/' target='_blank' />
+          }}
+        />
+      </p>
+
+      <h2 id="magic-auth">{t('magic_auth.heading')}</h2>
+      <div className='alert text-start'>
+        <IconInfoCircle className='stroke-info' aria-hidden />
+        {t('magic_auth.notice')}
+      </div>
+      <p>
+        <Trans t={t} i18nKey='magic_auth.details_1'
+          components={{ magic: <a href='https://magic.link/' target='_blank' /> }}
+        />
+      </p>
+      <Trans t={t} i18nKey='magic_auth.details_2' components={{ ul: <ul />, li: <li />, }} />
+      <p>
+        <Trans t={t} i18nKey='magic_auth.details_3'
+          components={{
+            magic_privacy: <a href='https://magic.link/legal/privacy-policy' target='_blank' />,
           }}
         />
       </p>
