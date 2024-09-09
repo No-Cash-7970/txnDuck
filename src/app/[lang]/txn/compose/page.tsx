@@ -2,7 +2,7 @@ import { use } from 'react';
 import { type Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
-import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
+import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/components';
 import {
   ExtraSmallField,
   FullWidthField,
@@ -55,7 +55,7 @@ export default function ComposeTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='compose' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
-      <ComposeForm lng={lang} />
+      <WalletProvider sitename={t('site_name')}><ComposeForm lng={lang} /></WalletProvider>
     </main>
   );
 }

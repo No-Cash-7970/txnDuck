@@ -53,9 +53,9 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     await userEvent.click(screen.getByText('wallet.providers.magic'));
 
     expect(magicConnectFn).not.toHaveBeenCalled();
-    expect(screen.getByLabelText(/wallet.magic_prompt.email_label/))
+    expect(screen.getByLabelText(/app:wallet.magic_prompt.email_label/))
       .toBeInTheDocument();
-    expect(screen.getByText('wallet.magic_prompt.email_submit_btn')).toHaveRole('button');
+    expect(screen.getByText('app:wallet.magic_prompt.email_submit_btn')).toHaveRole('button');
     expect(screen.getByText('cancel')).toHaveRole('button');
   });
 
@@ -78,9 +78,9 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     // Trigger prompt to enter email for Magic wallet and submit it
     await userEvent.click(screen.getByRole('button'));
     await userEvent.click(screen.getByText('wallet.providers.magic'));
-    await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
+    await userEvent.click(screen.getByLabelText(/app:wallet.magic_prompt.email_label/));
     await userEvent.paste('magic.user@example.com');
-    await userEvent.click(screen.getByText('wallet.magic_prompt.email_submit_btn'));
+    await userEvent.click(screen.getByText('app:wallet.magic_prompt.email_submit_btn'));
 
     // Check if there was an attempt to connect using Magic
     expect(magicConnectFn).toHaveBeenCalledWith({email: 'magic.user@example.com'});
@@ -94,12 +94,12 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     // Trigger prompt to enter email for Magic wallet and submit it
     await userEvent.click(screen.getByRole('button'));
     await userEvent.click(screen.getByText('wallet.providers.magic'));
-    await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
+    await userEvent.click(screen.getByLabelText(/app:wallet.magic_prompt.email_label/));
     await userEvent.paste('magic.user@example.com');
-    await userEvent.click(screen.getByText('wallet.magic_prompt.email_submit_btn'));
+    await userEvent.click(screen.getByText('app:wallet.magic_prompt.email_submit_btn'));
 
     // Check if attempt to connect using Magic failed
-    expect(screen.getByText(/wallet.magic_prompt.fail/)).toBeInTheDocument();
+    expect(screen.getByText(/app:wallet.magic_prompt.fail/)).toBeInTheDocument();
   });
 
 });

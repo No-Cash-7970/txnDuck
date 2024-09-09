@@ -11,11 +11,13 @@ import {
   tipContentClass,
   tipBtnClass,
 } from '@/app/lib/txn-data';
+import ConnectWalletFieldWidget from '../../wallet/WalletFieldWidget';
 
 export default function Sender({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
-  const preset = useSearchParams().get(Preset.ParamName);
+  const searchParams = useSearchParams();
+  const preset = searchParams.get(Preset.ParamName);
   let tip = t('fields.snd.tip');
 
   // Some presets have a different explanation of the sender in the tip message
@@ -60,6 +62,13 @@ export default function Sender({ t }: { t: TFunction }) {
         i18nkey={form.fieldErrors.snd.message.key}
         dict={form.fieldErrors.snd.message.dict}
       />
+    }
+    {/* Show wallet widget when either
+      * (1) the `snd` query parameter is NOT set
+      * (2) or the `snd` query parameter is set AND the field has been touched
+      */}
+    {(!searchParams.get('snd') || form.touched.snd) &&
+      <ConnectWalletFieldWidget t={t} setvalfn={form.handleOnChange('snd')} />
     }
   </>);
 }

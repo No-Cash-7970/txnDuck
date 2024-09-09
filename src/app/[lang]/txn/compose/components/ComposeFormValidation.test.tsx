@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 import { JotaiProvider } from '@/app/[lang]/components'; // Must be imported after i18next mock
 
 // Mock i18next before modules that use it are imported
@@ -20,6 +21,8 @@ jest.mock('next/navigation', () => ({
 // Mock the scrollIntoView() function
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
+// Mock use-wallet before modules that use it are imported
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
 jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 

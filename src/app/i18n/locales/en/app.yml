@@ -61,6 +61,8 @@ wallet:
   use_provider_btn: "Use {{provider}}"
   is_not_connected: No wallet connected.
   is_connected: "Account: {{address}}" # Address is displayed when wallet is connected
+  set_field_to_connected_addr: >  # Used for buttons that set form field values
+    Set this to connected address
   provider_icon_alt: "{{provider}} icon"
   providers:
     pera: Pera

@@ -83,8 +83,8 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
 
     await userEvent.click(screen.getByText('wallet.connect'));
 
-    expect(screen.getByText('wallet.choose_provider')).toBeInTheDocument();
-    expect(screen.getByText('wallet.providers.fooWallet')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.providers.fooWallet')).toBeInTheDocument();
   });
 
   it('tries to connect to available wallet provider when it is selected', async () => {
@@ -92,7 +92,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
 
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Foo wallet" should be the first one listed
-    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[0]);
+    await userEvent.click(screen.getAllByText('app:wallet.use_provider_btn')[0]);
 
     expect(fooConnectFn).toHaveBeenCalledTimes(1);
     expect(barConnectFn).not.toHaveBeenCalled();
@@ -137,7 +137,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
 
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Magic wallet" should be the third one listed
-    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getAllByText('app:wallet.use_provider_btn')[2]);
 
     expect(magicConnectFn).not.toHaveBeenCalled();
     expect(screen.getByText(/wallet.magic_prompt.heading/)).toBeInTheDocument();
@@ -153,12 +153,12 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     // Trigger prompt to enter email for Magic wallet
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Magic wallet" should be the third one listed
-    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getAllByText('app:wallet.use_provider_btn')[2]);
     // Cancel prompt
     await userEvent.click(screen.getByText('cancel'));
 
-    expect(screen.getByText('wallet.choose_provider')).toBeInTheDocument();
-    expect(screen.getByText('wallet.providers.fooWallet')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.providers.fooWallet')).toBeInTheDocument();
   });
 
   it('tries to connect using Magic if the given email address is valid', async () => {
@@ -167,7 +167,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     // Trigger prompt to enter email for Magic wallet and submit it
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Magic wallet" should be the third one listed
-    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getAllByText('app:wallet.use_provider_btn')[2]);
     await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
     await userEvent.paste('magic.user@example.com');
     await userEvent.click(screen.getByText(/wallet.magic_prompt.email_submit_btn/));
@@ -184,7 +184,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
     // Trigger prompt to enter email for Magic wallet and submit it
     await userEvent.click(screen.getByText('wallet.connect'));
     // "Magic wallet" should be the third one listed
-    await userEvent.click(screen.getAllByText('wallet.use_provider_btn')[2]);
+    await userEvent.click(screen.getAllByText('app:wallet.use_provider_btn')[2]);
     await userEvent.click(screen.getByLabelText(/wallet.magic_prompt.email_label/));
     await userEvent.paste('magic.user@example.com');
     await userEvent.click(screen.getByText(/wallet.magic_prompt.email_submit_btn/));

@@ -175,7 +175,7 @@ type Props = {
 
 /** Form for composing a transaction */
 export default function ComposeForm({ lng }: Props) {
-  const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
+  const { t } = useTranslation(lng || '', ['compose_txn', 'app', 'common']);
   const txnType = useAtomValue(txnDataAtoms.txnType);
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(Preset.ParamName);

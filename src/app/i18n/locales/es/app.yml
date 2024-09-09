@@ -67,6 +67,8 @@ wallet:
   use_provider_btn: "Usar {{provider}}"
   is_not_connected: No hay billetera conectada.
   is_connected: "Cuenta: {{address}}" # Address is displayed when wallet is connected
+  set_field_to_connected_addr: >  # Used for buttons that set form field values
+    Establecerlo a la dirección conectada
   provider_icon_alt: "Icono de {{provider}}"
   providers:
     pera: Pera

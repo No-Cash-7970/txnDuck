@@ -48,12 +48,12 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
       id='magic_email-input'
       inputRef={magicEmailInputRef}
       required={true}
-      label={t('wallet.magic_prompt.email_label')}
+      label={t('app:wallet.magic_prompt.email_label')}
       inputClass={ (magicEmailTouched && !magicEmail.isValid && magicEmail.isDirty)
         ? 'input-error' : undefined }
       placeholder={t('form.email_placeholder')}
       helpMsg={
-        <Trans t={t} i18nKey='wallet.magic_prompt.disclaimer'
+        <Trans t={t} i18nKey='app:wallet.magic_prompt.disclaimer'
           components={{
             privacy: <Link href='/privacy-policy#magic-auth' target='_blank' />,
           }}
@@ -61,9 +61,9 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
       }
       tip={{
         btnIcon: 'info',
-        content: t('wallet.magic_prompt.email_tip'),
+        content: t('app:wallet.magic_prompt.email_tip'),
         btnClass: tipBtnClass,
-        btnTitle: t('wallet.magic_prompt.email_more_info'),
+        btnTitle: t('app:wallet.magic_prompt.email_more_info'),
         contentClass: tipContentClass + ' z-[2000]'
       }}
       value={magicEmail.value}
@@ -76,7 +76,7 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
     {magicEmailTouched && !magicEmail.isValid && magicEmail.isDirty &&
       <FieldErrorMessage t={t} i18nkey={(magicEmail.error as any).message.key} />
     }
-    {magicAuthFailed && <FieldErrorMessage t={t} i18nkey='wallet.magic_prompt.fail' />}
+    {magicAuthFailed && <FieldErrorMessage t={t} i18nkey='app:wallet.magic_prompt.fail' />}
     <div className='mt-2 grid grid-cols-1 sm:grid-cols-5 gap-3'>
       <button className='btn sm:btn-sm btn-secondary sm:col-span-3'
         disabled={!magicEmail.isValid}
@@ -96,7 +96,7 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
       >
         {doingMagicAuth
           ? <span className='loading loading-sm loading-spinner' />
-          : t('wallet.magic_prompt.email_submit_btn')
+          : t('app:wallet.magic_prompt.email_submit_btn')
         }
       </button>
       <button type='button' className='btn btn-sm sm:col-span-2' onClick={() => {

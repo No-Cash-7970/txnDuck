@@ -1,6 +1,7 @@
 /** @file Collection of constants and functions for managing wallet connections */
 
 import { WalletId } from '@txnlab/use-wallet-react';
+import { atom } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
 import { string } from 'yup';
 import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (`Yup.setLocale()`)
@@ -18,9 +19,13 @@ export const walletTypes: {[id: string]: string} = {
   [WalletId.MAGIC]: 'waas',
 };
 
+/** Validation atom that contains the Magic email address */
 export const magicEmailAtom = atomWithValidate<string>('', {
   validate: v => {
     string().email().required().validateSync(v);
     return v;
   }
 });
+
+/** Atom used for detecting and syncing changes in wallet connection status across components */
+export const isWalletConnectedAtom = atom(false);

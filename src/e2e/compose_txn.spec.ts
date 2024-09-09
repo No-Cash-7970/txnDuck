@@ -79,6 +79,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).toHaveCount(1);
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -108,6 +109,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).toHaveCount(1);
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -136,6 +138,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
       await expect(page.getByLabel(/Fee/)).toHaveValue('0.001');
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).toHaveCount(2);
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -162,6 +165,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -182,6 +186,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -211,6 +216,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -230,6 +236,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -244,8 +251,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByText('Transfer Algos')).toBeVisible();
       // Check fields
       await expect(page.getByLabel(/Sender/)).toHaveValue('');
-      await expect(page.getByLabel(/Receiver/))
-        .toHaveValue('');
+      await expect(page.getByLabel(/Receiver/)).toHaveValue('');
       await expect(page.getByLabel(/Amount/)).toHaveValue('');
       await expect(page.getByLabel('Note')).toHaveValue('');
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
@@ -253,6 +259,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
       await expect(page.getByLabel(/last valid round/)).toHaveValue('41923740');
+      await expect(page.getByText(/Connect wallet/)).toHaveCount(2);
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -267,8 +274,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByText('Transfer Algos')).toBeVisible();
       // Check fields
       await expect(page.getByLabel(/Sender/)).toHaveValue('');
-      await expect(page.getByLabel(/Receiver/))
-        .toHaveValue('');
+      await expect(page.getByLabel(/Receiver/)).toHaveValue('');
       await expect(page.getByLabel(/Amount/)).toHaveValue('');
       await expect(page.getByLabel('Note')).toHaveValue('');
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
@@ -276,6 +282,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
       await expect(page.getByLabel(/last valid round/)).toHaveValue('');
+      await expect(page.getByText(/Connect wallet/)).toHaveCount(2);
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);
@@ -297,6 +304,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
+      await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
       // Check link to presets list page
       await expect(page.getByRole('link', { name: 'Choose Preset' }))
         .toHaveAttribute('href', `/en/txn?${formUrlParams}`);

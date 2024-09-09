@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 
 // Mock react `use` function before modules that use it are imported
 jest.mock('react', () => ({
@@ -17,6 +18,9 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => ({get: () => 'foo'})
 }));
 
+
+// Mock use-wallet before modules that use it are imported
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
 jest.mock('../../components/WalletProvider.tsx', () => 'div');
 

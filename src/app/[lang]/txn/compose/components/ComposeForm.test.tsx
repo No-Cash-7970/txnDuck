@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 import { JotaiProvider } from '@/app/[lang]/components';
 import * as fs from "node:fs";
 
@@ -43,6 +44,8 @@ jest.mock('algosdk', () => ({
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
+// Mock use-wallet before modules that use it are imported
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
 jest.mock('../../../components/WalletProvider.tsx', () => 'div');
 
