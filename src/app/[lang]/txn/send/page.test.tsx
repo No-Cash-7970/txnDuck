@@ -33,7 +33,7 @@ jest.mock('next/navigation', () => ({
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 // Mock the wallet provider
-jest.mock('../../components/WalletProvider.tsx', () => 'div');
+jest.mock('../../components/wallet/WalletProvider.tsx', () => 'div');
 
 import SendTxnPage from './page';
 

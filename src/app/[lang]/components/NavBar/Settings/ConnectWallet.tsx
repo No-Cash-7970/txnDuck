@@ -6,10 +6,11 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { WalletId, useWallet } from '@txnlab/use-wallet-react';
 import { walletTypes } from '@/app/lib/wallet-utils';
-import MagicAuthPrompt, {
+import {
+  MagicAuthPrompt,
   magicPromptCanceledAtom,
   magicProviderAtom
-} from '@/app/[lang]/components/MagicAuthPrompt';
+} from '@/app/[lang]/components/wallet';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {

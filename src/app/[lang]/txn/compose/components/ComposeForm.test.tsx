@@ -47,7 +47,7 @@ jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
-jest.mock('../../../components/WalletProvider.tsx', () => 'div');
+jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 

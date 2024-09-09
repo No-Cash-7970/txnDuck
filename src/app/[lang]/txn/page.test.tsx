@@ -19,7 +19,7 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the wallet provider
-jest.mock('../components/WalletProvider.tsx', () => 'div');
+jest.mock('../components/wallet/WalletProvider.tsx', () => 'div');
 
 import TxnPresetsPage from './page';
 

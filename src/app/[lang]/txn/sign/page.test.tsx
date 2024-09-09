@@ -27,7 +27,7 @@ jest.mock('../../../lib/utils.ts', () => ({
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
-jest.mock('../../components/WalletProvider.tsx', () => 'div');
+jest.mock('../../components/wallet/WalletProvider.tsx', () => 'div');
 
 // Mock algokit because it is used by a child components
 jest.mock('@algorandfoundation/algokit-utils', () => ({

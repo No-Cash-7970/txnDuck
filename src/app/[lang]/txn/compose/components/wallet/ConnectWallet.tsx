@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { type TFunction } from 'i18next';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useWallet } from '@txnlab/use-wallet-react';
 import { isWalletConnectedAtom } from '@/app/lib/wallet-utils';
-import ConnectWalletDialogContent from '@/app/[lang]/components/ConnectWalletDialogContent';
 import {
   magicPromptCanceledAtom,
-  magicProviderAtom
-} from '@/app/[lang]/components/MagicAuthPrompt';
+  magicProviderAtom,
+  WalletDialogContent
+} from '@/app/[lang]/components/wallet';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t, setvalfn }:{
@@ -51,7 +51,7 @@ export default function ConnectWallet({ t, setvalfn }:{
             onPointerDownOutside={(e) => e.preventDefault()}
             onInteractOutside={(e) => e.preventDefault()}
           >
-            <ConnectWalletDialogContent t={t} />
+            <WalletDialogContent t={t} />
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>

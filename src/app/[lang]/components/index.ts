@@ -5,4 +5,4 @@ export {default as NavBar} from './NavBar';
 export {default as PageTitleHeading} from './PageTitleHeading';
 export {default as ToastProvider} from './ToastProvider';
 export {default as ToastViewport} from './ToastViewport';
-export {default as WalletProvider} from './WalletProvider';
+export {default as WalletProvider} from './wallet/WalletProvider';

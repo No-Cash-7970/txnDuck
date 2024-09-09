@@ -10,7 +10,7 @@ jest.mock('react-i18next', () => i18nextClientMock);
 // Mock use-wallet
 jest.mock('@txnlab/use-wallet-react', () => useWalletConnectedMock);
 // Mock the wallet provider
-jest.mock('../../../components/WalletProvider.tsx', () => 'div');
+jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 

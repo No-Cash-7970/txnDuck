@@ -26,8 +26,8 @@ import {
 } from '@/app/lib/txn-data';
 import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
 import { CheckboxField } from '@/app/[lang]/components/form';
+import { WalletDialogContent } from '@/app/[lang]/components/wallet';
 import NextStepButton from './NextStepButton';
-import ConnectWalletDialogContent from '@/app/[lang]/components/ConnectWalletDialogContent';
 
 type Props = {
   /** Language */
@@ -285,7 +285,7 @@ export default function SignTxn({ lng }: Props) {
               onPointerDownOutside={(e) => e.preventDefault()}
               onInteractOutside={(e) => e.preventDefault()}
             >
-              <ConnectWalletDialogContent t={t} />
+              <WalletDialogContent t={t} />
             </Dialog.Content>
           </Dialog.Portal>
         </Dialog.Root>
