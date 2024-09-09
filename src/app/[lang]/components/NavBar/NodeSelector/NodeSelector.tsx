@@ -19,7 +19,7 @@ import {
 } from '@tabler/icons-react';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
-import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
+import { DialogLoadingPlaceholder } from '@/app/[lang]/components';
 import NodeMenuItem from './NodeMenuItem';
 
 const ViewConfigDialogContent = dynamic(() => import('./ViewConfigDialogContent'), {

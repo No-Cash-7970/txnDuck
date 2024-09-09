@@ -5,6 +5,7 @@ import { useAtom, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
+import { ToastNotification, WalletProvider } from '@/app/[lang]/components';
 import {
   NumberField,
   RadioButtonGroupField,
@@ -12,10 +13,8 @@ import {
 } from '@/app/[lang]/components/form';
 import { useDebouncedCallback } from 'use-debounce';
 import * as Settings from '@/app/lib/app-settings';
-import { WalletProvider } from '@/app/[lang]/components';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
 import ConnectWallet from './ConnectWallet';
-import ToastNotification from '@/app/[lang]/components/ToastNotification';
 import { IconExclamationCircle } from '@tabler/icons-react';
 
 type Props = {

@@ -12,9 +12,9 @@ import { type PrimitiveAtom, atom, useAtom, useAtomValue, useSetAtom, useStore }
 import { RESET } from "jotai/utils";
 import { atomWithValidate } from "jotai-form";
 import * as NodeConfigLib from "@/app/lib/node-config";
+import { ToastNotification } from '@/app/[lang]/components';
 import { FieldErrorMessage, FieldGroup, TextField } from "@/app/[lang]/components/form";
 import { ValidationMessage, isAlgodOK, removeNonNumericalChars } from "@/app/lib/utils";
-import ToastNotification from '@/app/[lang]/components/ToastNotification';
 import { UNIT_NAME_MAX_LENGTH } from "@/app/lib/txn-data/constants";
 
 type Props = {

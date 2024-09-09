@@ -4,7 +4,7 @@ import { useTranslation } from '@/app/i18n/client';
 import * as Dialog from '@radix-ui/react-dialog';
 import { IconSettings, IconX } from '@tabler/icons-react';
 import dynamic from 'next/dynamic';
-import DialogLoadingPlaceholder from '@/app/[lang]/components/DialogLoadingPlaceholder';
+import { DialogLoadingPlaceholder } from '@/app/[lang]/components';
 
 const SettingsModalBox = dynamic(() => import('./SettingsForm'), {
   ssr: false,

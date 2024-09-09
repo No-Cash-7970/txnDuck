@@ -9,9 +9,9 @@ import {
   voiTestnetNodeConfig,
 } from '@/app/lib/node-config';
 import { type NodeConfig } from '@/app/lib/node-config';
-import JotaiProvider from '@/app/[lang]/components/JotaiProvider';
-import { Provider as ToastProvider, Viewport as ToastViewport } from '@radix-ui/react-toast';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
+// Jotai provider must be imported after the mock classes are imported
+import { JotaiProvider, ToastProvider, ToastViewport } from '@/app/[lang]/components';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
@@ -43,6 +43,9 @@ jest.mock('algosdk', () => ({
     }
   }
 }));
+
+// Mock the wallet provider
+jest.mock('../../wallet/WalletProvider.tsx', () => 'div');
 
 import NodeSelector from './NodeSelector';
 
