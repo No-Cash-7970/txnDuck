@@ -17,7 +17,7 @@ export function TxnPresetBadge({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   return (<>
     {!!txnPresetName &&
-      <span className='badge badge-lg badge-neutral mx-1'>
+      <span className='badge sm:badge-lg badge-neutral mx-1'>
         {t(
           [txnPresetName + '.heading', 'invalid_preset'],
           {coinName: nodeConfig.coinName ?? t('algo_other')}

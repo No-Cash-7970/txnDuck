@@ -16,7 +16,7 @@ export default function PageTitleHeading({ children, lng = '', showTxnPreset = f
       {showTxnPreset && <div className='mb-2'>
         <Suspense><TxnPresetBadge lng={lng} /></Suspense>
       </div>}
-      <h1>{children}</h1>
+      <h1 className="text-3xl sm:text-4xl">{children}</h1>
     </div>
   );
 }
