@@ -329,7 +329,7 @@ export default function SettingsForm(props: Props) {
       {/* Reset button */}
       <div className='mt-9'>
         <button type='button'
-          className='btn btn-sm btn-block btn-error mx-auto mb-1'
+          className='btn btn-sm btn-block btn-error h-auto mx-auto'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();

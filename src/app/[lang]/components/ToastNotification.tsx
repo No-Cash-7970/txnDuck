@@ -24,7 +24,7 @@ export default function ToastNotification({ lng, message, open, onOpenChange }: 
   return (
     <Toast.Root
       type='foreground'
-      className={'alert alert-success text-sm py-2'
+      className={'alert alert-success text-sm py-2 text-start'
         + ' ' + (langDir === 'rtl'
           ? 'data-[state=open]:animate-toastSlideInFromLeft'
           : 'data-[state=open]:animate-toastSlideInFromRight'

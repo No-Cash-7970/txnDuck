@@ -51,7 +51,7 @@ settings:
   clear_txn_data_btn: Clear saved transaction data
   clear_all_data_btn: Clear & reset ALL data
   txn_data_cleared_msg: All saved transaction data has been removed.
-  all_data_cleared_msg: All data has been removed.
+  all_data_cleared_msg: All data has been removed. Refresh the page.
 wallet:
   connect: Connect wallet
   disconnect: Disconnect wallet
