@@ -75,7 +75,7 @@ export default function TxnDataTable({ lng }: Props) {
       return 'appl_' + appTypes[(storedTxnData?.txn as TxnData.AppCallTxnData)?.apan];
     }
 
-    return `${type}` ?? '';
+    return `${type}`;
   }, [storedTxnData]);
 
   return (<>
