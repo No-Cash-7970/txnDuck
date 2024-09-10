@@ -35,6 +35,7 @@ form: # For forms
       max: This must be at most {{count, number}} characters long.
       email: This must be a valid email address.
     number:
+      invalid: This is an invalid number.
       min: This must be at least {{min, number}}.
       max: This must be at most {{max, number}}.
   email_placeholder: someone@example.com

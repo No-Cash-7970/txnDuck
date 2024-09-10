@@ -44,11 +44,12 @@ export default function Amount({ t }: { t: TFunction }) {
     />
     {(showFormErrors || form.touched.aamt) && form.fieldErrors.aamt &&
       <FieldErrorMessage t={t}
-        i18nkey={form.fieldErrors.aamt.message.key}
+        i18nkey={form.fieldErrors.aamt.message?.key || 'form.error.number.invalid'}
         dict={form.fieldErrors.aamt.message.dict}
       />
     }
-    {(showFormErrors || form.touched.aamt) && !aamtCondMax.isValid && aamtCondMax.error &&
+    {(showFormErrors || form.touched.aamt) && !form.fieldErrors.aamt
+      && !aamtCondMax.isValid && aamtCondMax.error &&
       <FieldErrorMessage t={t}
         i18nkey={(aamtCondMax.error as any).message.key}
         dict={(aamtCondMax.error as any).message.dict}

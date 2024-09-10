@@ -35,6 +35,7 @@ form: # For forms
       max: Debe tener como máximo {{count, number}} caracteres.
       email: Debe ser una dirección de correo electrónico válida.
     number:
+      invalid: Esto es un número inválido.
       min: Debe ser al menos {{min, number}}.
       max: Debe ser como máximo {{max, number}}.
   email_placeholder: alguien@ejemplo.com
