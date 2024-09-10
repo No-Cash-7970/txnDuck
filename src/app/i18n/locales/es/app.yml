@@ -60,10 +60,7 @@ settings:
 wallet:
   connect: Conectar la billetera
   disconnect: Desconectar la billetera
-  choose_provider: Eligir el proveedor de billetera
-  choose_provider_description: >
-    Elija uno de los siguientes proveedores de billeteras para conectar su cuenta de billetera a
-    esta aplicación.
+  providers_list_title: Proveedores de billetera
   use_provider_btn: "Usar {{provider}}"
   is_not_connected: No hay billetera conectada.
   is_connected: "Cuenta: {{address}}" # Address is displayed when wallet is connected

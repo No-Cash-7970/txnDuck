@@ -27,7 +27,7 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
   }, [magicProvider, magicEmailCanceled]);
 
   return (
-    <div className='modal-box prose max-w-4xl'>
+    <div className='modal-box prose max-w-4xl overflow-hidden'>
       {magicProvider && <>
         <Dialog.Title className='mb-3'>{t('app:wallet.magic_prompt.heading')}</Dialog.Title>
         <form
@@ -39,46 +39,53 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
         </form>
       </>}
       {!magicProvider && <>
-        <Dialog.Title className='mb-3'>{t('app:wallet.choose_provider')}</Dialog.Title>
-        <Dialog.Description className='text-sm'>
-          {t('app:wallet.choose_provider_description')}
-        </Dialog.Description>
-        {/* List of available wallet providers */}
-        <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
-          {wallets?.map(provider => (
-            <div key={provider.id} className={
-              'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
-            }>
-              <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
-                <Image src={provider.metadata.icon}
-                  alt={t('app:wallet.provider_icon_alt', {provider: provider.metadata.name})}
-                  fill
-                  aria-hidden
-                />
-              </span>
-              {/* Wallet provider info + button */}
-              <div className='w-full'>
-                <div>
-                  <h3 className='m-0'>{t('app:wallet.providers.' + provider.id)}</h3>
-                  <p className='italic opacity-70 m-0'>
-                    {t('app:wallet.type.' + walletTypes[provider.id])}
-                  </p>
+        <Dialog.Title className='px-6 sm:px-8'>{t('app:wallet.providers_list_title')}</Dialog.Title>
+        {/* Max height = height of modal (100vh - 5em)
+                        - modal title height (2em)
+                        - modal title bottom margin (1.5em)
+                        - modal box top padding (1.5em)
+                        - modal box bottom padding (1.5em)
+        */}
+        <div
+          className='max-h-[calc(100vh-5em-2em-1.5em-1.5em-1.5em)] overflow-auto px-6 sm:px-8 pb-8'
+        >
+          {/* List of available wallet providers */}
+          <div className='grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-3'>
+            {wallets?.map(provider => (
+              <div key={provider.id} className={
+                'alert gap-1 sm:gap-4 content-evenly shadow-md border-base-300 bg-base-100'
+              }>
+                <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
+                  <Image src={provider.metadata.icon}
+                    alt={t('app:wallet.provider_icon_alt', {provider: provider.metadata.name})}
+                    fill
+                    aria-hidden
+                  />
+                </span>
+                {/* Wallet provider info + button */}
+                <div className='w-full'>
+                  <div>
+                    <h3 className='m-0'>{t('app:wallet.providers.' + provider.id)}</h3>
+                    <p className='italic opacity-70 m-0'>
+                      {t('app:wallet.type.' + walletTypes[provider.id])}
+                    </p>
+                  </div>
+                  <button className='btn btn-block btn-sm btn-secondary mt-2'
+                    onClick={() => {
+                      if (provider.id === WalletId.MAGIC) {
+                        // Need to ask for email address
+                        setMagicProvider(provider);
+                        return;
+                      }
+                      provider.connect();
+                    }}
+                  >
+                    {t('app:wallet.use_provider_btn', {provider: provider.metadata.name})}
+                  </button>
                 </div>
-                <button className='btn btn-block btn-sm btn-secondary mt-2'
-                  onClick={() => {
-                    if (provider.id === WalletId.MAGIC) {
-                      // Need to ask for email address
-                      setMagicProvider(provider);
-                      return;
-                    }
-                    provider.connect();
-                  }}
-                >
-                  {t('app:wallet.use_provider_btn', {provider: provider.metadata.name})}
-                </button>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </>}
       {/* Upper corner close button */}

@@ -32,7 +32,7 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
 
     await userEvent.click(screen.getByText('app:wallet.connect'));
 
-    expect(screen.getByText('app:wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.providers_list_title')).toBeInTheDocument();
     expect(screen.getByText('app:wallet.providers.fooWallet')).toBeInTheDocument();
   });
 
@@ -72,7 +72,7 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
     // Cancel prompt
     await userEvent.click(screen.getByText('cancel'));
 
-    expect(screen.getByText('app:wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('app:wallet.providers_list_title')).toBeInTheDocument();
     expect(screen.getByText('app:wallet.providers.fooWallet')).toBeInTheDocument();
   });
 

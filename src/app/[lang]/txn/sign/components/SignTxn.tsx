@@ -282,6 +282,7 @@ export default function SignTxn({ lng }: Props) {
             <Dialog.Overlay />
             <Dialog.Content
               className='modal data-[state=open]:modal-open'
+              aria-describedby={undefined}
               onPointerDownOutside={(e) => e.preventDefault()}
               onInteractOutside={(e) => e.preventDefault()}
             >

@@ -32,7 +32,7 @@ describe('Wallet Connect (in Settings) (Unconnected wallet)', () => {
 
     await userEvent.click(screen.getByRole('button'));
 
-    expect(screen.getByText('wallet.choose_provider')).toBeInTheDocument();
+    expect(screen.getByText('wallet.providers_list_title')).toBeInTheDocument();
     expect(screen.getByText('wallet.providers.fooWallet')).toBeInTheDocument();
   });
 

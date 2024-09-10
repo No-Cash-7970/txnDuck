@@ -50,7 +50,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                 + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
                 + ' prose-li:max-w-full'
               }>
-                <li className='menu-title'>{t('wallet.choose_provider')}</li>
+                <li className='menu-title'>{t('wallet.providers_list_title')}</li>
                 {// List of available wallet providers
                   wallets?.map(provider => (
                     <DropdownMenu.Item asChild key={provider.id}>
