@@ -117,7 +117,7 @@ test.describe('Compose Transaction Page', () => {
 
     test('fills in appropriate fields for asset payment with specified fee', async ({ page }) => {
       // eslint-disable-next-line max-len
-      const formUrlParams = 'xaid=31566704&aamt=1&fee=.001';
+      const formUrlParams = 'xaid=31566704&aamt=6.2831&fee=.001';
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
@@ -132,7 +132,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Asset receiver/)).toHaveValue('');
       await expect(page.getByLabel(/Asset ID/)).toHaveValue('31566704');
       await expect(page.getByText('USDC')).toHaveCount(2); // Should display correct data for asset
-      await expect(page.getByLabel(/Asset amount/)).toHaveValue('1');
+      await expect(page.getByLabel(/Asset amount/)).toHaveValue('6.2831');
       await expect(page.getByLabel('Note')).toHaveValue('');
       await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();

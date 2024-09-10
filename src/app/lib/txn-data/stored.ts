@@ -35,7 +35,12 @@ import {
   keyRegFormControlAtom,
   paymentFormControlAtom
 } from './field-validation';
-import { baseUnitsToDecimal, decimalToBaseUnits, removeNonNumericalChars } from '@/app/lib/utils';
+import {
+  baseUnitsToDecimal,
+  decimalToBaseUnits,
+  removeNonNumericalChars,
+  removeNonNumericalDecimalChars
+} from '@/app/lib/utils';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage
@@ -140,7 +145,8 @@ export function loadStoredTxnData(
     ? null : parseInt(removeNonNumericalChars(unparsedXaidParam));
   const arcvParam = searchParams.get('arcv');
   const unparsedAamtParam = searchParams.get('aamt');
-  const aamtParam = unparsedAamtParam === null ? null : removeNonNumericalChars(unparsedAamtParam);
+  const aamtParam = unparsedAamtParam === null
+    ? null : removeNonNumericalDecimalChars(unparsedAamtParam);
   // Asset configuration transaction fields URL parameters
   const unparsedCaidParam = searchParams.get('caid');
   const caidParam = unparsedCaidParam === null
