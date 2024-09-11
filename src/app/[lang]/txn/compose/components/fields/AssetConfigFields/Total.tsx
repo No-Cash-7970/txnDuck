@@ -12,7 +12,7 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
-import { removeNonNumericalChars } from '@/app/lib/utils';
+import { baseUnitsToDecimal, removeNonNumericalChars } from '@/app/lib/utils';
 
 export default function Total({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
@@ -40,6 +40,18 @@ export default function Total({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       containerId='apar_t-field'
       containerClass='mt-4 max-w-xs'
+      helpMsg={form.values.apar_t
+        ? <span className='ps-3'>
+          {t('asset_amount', {
+            amount: baseUnitsToDecimal(
+              form.values.apar_t as string, form.values.apar_dc as number ?? 0
+            ),
+            asset: form.values.apar_un,
+            formatParams: {amount: {minimumFractionDigits: form.values.apar_dc as number ?? 0 }},
+          })}
+        </span>
+        : ''
+      }
       inputClass={((showFormErrors || form.touched.apar_t) &&
           (form.fieldErrors.apar_t || (!aparTCondReqGroup.isValid && aparTCondReqGroup.error))
         )
