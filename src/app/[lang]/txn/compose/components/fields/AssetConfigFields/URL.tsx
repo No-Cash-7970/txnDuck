@@ -36,6 +36,7 @@ export default function URL({ t }: { t: TFunction }) {
       onChange={(e) => form.handleOnChange('apar_au')(e.target.value)}
       onFocus={form.handleOnFocus('apar_au')}
       onBlur={form.handleOnBlur('apar_au')}
+      inputMode='url'
     />
     {(showFormErrors || form.touched.apar_au) && form.fieldErrors.apar_au &&
       <FieldErrorMessage t={t}
