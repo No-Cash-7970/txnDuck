@@ -194,10 +194,10 @@ export const isAlgodOK = async (
  * metadata base is not specified.
  */
 export const getMetadataBase = () => {
-  // If using Vercel hosting
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   // If the base URL environment variable is specified
   if (process.env.BASE_URL) return `https://${process.env.BASE_URL}`;
+  // If using Vercel hosting
+  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   // Otherwise, assume localhost as the metadata base URL
   return `http://localhost:${process.env.PORT || 3000}`;
 };
