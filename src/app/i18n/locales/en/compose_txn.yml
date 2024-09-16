@@ -460,8 +460,8 @@ fields:
     label: Base64 encoded data
     with_label: "{{label}} (Base64)"
     tip: >
-      Interpret the data entered into the above field as Base64 encoded data. If you are unsure what
-      this means, leave unchecked.
+      If checked, the data entered into the above field will be interpreted as Base64 encoded data.
+      If you are unsure what this means, leave unchecked.
     error: >
       This must be valid Base64.
     error_optional: > # Error message for when entering Base64 data is optional
