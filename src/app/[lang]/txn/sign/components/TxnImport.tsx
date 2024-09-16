@@ -7,7 +7,13 @@ import { getTransactionParams } from "@algorandfoundation/algokit-utils";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
-import { createDataFromTxn, storedSignedTxnAtom, storedTxnDataAtom } from "@/app/lib/txn-data";
+import {
+  createDataFromTxn,
+  storedSignedTxnAtom,
+  storedTxnDataAtom,
+  tipBtnClass,
+  tipContentClass
+} from "@/app/lib/txn-data";
 import { bytesToBase64, bytesToDataUrl, fileToBytes } from "@/app/lib/utils";
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
@@ -117,6 +123,12 @@ export default function TxnImport({ lng }: Props) {
           labelClass='justify-start w-fit max-w-full'
           value={noDiffNetworkOption}
           onChange={(e) => setNoDiffNetworkOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.no_diff_network_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
         />
         <CheckboxField label={t('import_txn.b64_note')}
           inputInsideLabel={true}
@@ -125,6 +137,12 @@ export default function TxnImport({ lng }: Props) {
           labelClass='justify-start w-fit max-w-full'
           value={b64NoteOption}
           onChange={(e) => setB64NoteOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.b64_note_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
         />
         <CheckboxField label={t('import_txn.b64_lx')}
           inputInsideLabel={true}
@@ -133,6 +151,12 @@ export default function TxnImport({ lng }: Props) {
           labelClass='justify-start w-fit max-w-full'
           value={b64LxOption}
           onChange={(e) => setB64LxOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.b64_lx_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
         />
         <CheckboxField label={t('import_txn.b64_apar_am')}
           inputInsideLabel={true}
@@ -141,6 +165,12 @@ export default function TxnImport({ lng }: Props) {
           labelClass='justify-start w-fit max-w-full'
           value={b64Apar_amOption}
           onChange={(e) => setB64Apar_amOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.b64_apar_am_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
         />
       </FieldGroup>
     </>}

@@ -21,9 +21,24 @@ auto_send:
 import_txn:
   label: Import signed or unsigned transaction file
   options_heading: Import Options
-  b64_note: Base64 encode the note
-  b64_lx: Base64 encode the lease
-  b64_apar_am: Base64 encode the metadata hash
+  b64_note: Note is Base64 encoded data
+  b64_note_tip: >
+    If checked, the imported transaction’s note will be interpreted as Base64 encoded data. If you
+    are unsure what this means, leave unchecked.
+  b64_lx: Lease is Base64 encoded data
+  b64_lx_tip: >
+    If checked, the imported transaction’s lease will be interpreted as Base64 encoded data. If you
+    are unsure what this means, leave unchecked.
+  b64_apar_am: Metadata hash is Base64 encoded data
+  b64_apar_am_tip: >
+    If the imported transaction is a transaction for creating an asset, its metadata hash will be
+    interpreted as Base64 encoded data. If you are unsure what this means, leave unchecked.
   no_diff_network: Do not import a transaction for a different network
+  no_diff_network_tip: >
+    If checked, importing a transaction for a network different than the currently selected network
+    will be immediately rejected. If unchecked, all of the transaction data will be imported except
+    for the network data (genesis ID and genesis hash), and the data for the currently selected
+    network will be used instead.
   fail_heading: Import failed
   fail_msg: The transaction is for a network different than the currently selected network.
+  opt_more_info: More information about this option
