@@ -221,18 +221,16 @@ This project uses both unit testing and end-to-end (E2E) testing.
 
 ### Unit testing
 
-To run all of the unit tests once (Note that it's **j**est with a **j**, not
-**t**est):
-
-```bash
-yarn jest
-```
-
-To run tests in "watch mode," where tests for modified files are run when ever a file is saved (Note that it's
-**t**est with a **t**, not **j**est):
+To run all of the unit tests once:
 
 ```bash
 yarn test
+```
+
+To run tests in "watch mode," where tests for modified files are run when ever a file is saved:
+
+```bash
+yarn test:watch
 ```
 
 ### End-to-end (E2E) testing

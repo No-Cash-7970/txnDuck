@@ -10,7 +10,8 @@
     "lint": "next lint --ext .js --ext .mjs --ext .cjs --ext .jsx --ext .ts --ext .mts --ext .cts --ext .tsx --ext .yml --ext .yaml",
     "prod": "yarn build && next start",
     "release": "release-it --ci && gulp postRelease --no-color",
-    "test": "jest --watch",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "test:ci": "jest --ci",
     "test:e2e": "yarn compile-locales && playwright test",
     "install:dev": "yarn install && gulp installDev --no-color"
