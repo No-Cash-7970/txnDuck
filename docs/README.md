@@ -1,4 +1,4 @@
 # Extra Documentation
 
-- [Developers Documentation](./DEVELOPERS.md)
+- [Developers Documentation](./developers.md)
 - [Making Shareable Links](./shareable_links.md)

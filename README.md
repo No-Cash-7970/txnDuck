@@ -165,7 +165,7 @@ that you update to the latest version to have the latest features and bug fixes.
 
 ## :hammer_and_wrench: Installation for development
 
-Refer to the [Developers Documentation](docs/DEVELOPERS.md#installing-the-development-environment)
+Refer to the [Developers Documentation](docs/developers.md#installing-the-development-environment)
 for instructions on how to install, update or uninstall the development environment.
 
 ## :handshake: Contributing

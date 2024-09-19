@@ -77,8 +77,8 @@ is important.
 
 - Make sure you are using the latest version. Fork the `main` branch of the
   repository and make sure that fork is up to date.
-- [Install](../docs/DEVELOPERS.md#installing-the-development-environment) and
-  [use](../docs/DEVELOPERS.md#running-the-development-web-server) the
+- [Install](../docs/developers.md#installing-the-development-environment) and
+  [use](../docs/developers.md#running-the-development-web-server) the
   development environment to test the translations.
 - Look in the [`locales` directory](../src/app/i18n/locales/) to see if the
   translation exists already.
@@ -262,8 +262,8 @@ accepting your code changes.
 
 - Make sure that you are using the latest version. Fork the `main` branch of the
   repository and make sure that fork is up to date.
-- [Install](../docs/DEVELOPERS.md#installing-the-development-environment) and
-  [use](../docs/DEVELOPERS.md#running-the-development-web-server) the
+- [Install](../docs/developers.md#installing-the-development-environment) and
+  [use](../docs/developers.md#running-the-development-web-server) the
   development environment to test the translations.
 
 ### How do I submit a code change?
