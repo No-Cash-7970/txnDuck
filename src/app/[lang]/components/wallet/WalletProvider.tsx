@@ -70,7 +70,11 @@ export default function WalletProvider({ sitename, children }: {
       port: nodeConfig.nodePort,
       headers: nodeConfig.nodeHeaders,
 
-    }
+    },
+    options: {
+      // Setting `debug` to `true` same as setting `logLevel` to `LogLevel.DEBUG`
+      debug: process.env.NEXT_PUBLIC_WALLET_DEBUG === 'true',
+    },
   });
 
   return <Provider manager={walletManager}>{children}</Provider>;
