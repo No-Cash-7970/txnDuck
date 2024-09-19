@@ -1,5 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import algosdk from 'algosdkv3';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 
@@ -29,16 +30,25 @@ jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
 // Mock the wallet provider
 jest.mock('../../components/wallet/WalletProvider.tsx', () => 'div');
 
-// Mock algokit because it is used by a child components
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  ...jest.requireActual('@algorandfoundation/algokit-utils'),
-  getTransactionParams: () => new Promise((resolve) => resolve({
-    genesisID: 'testnet-v1.0',
-    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
-    fee: 1,
-    firstRound: 10000,
-    lastRound: 11000,
-  })),
+// Mock algosdk
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    getTransactionParams() {
+      return {
+        do: async () => ({
+          genesisID: 'testnet-v1.0',
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
+          fee: BigInt(1),
+          minFee: BigInt(1),
+          firstValid: BigInt(10000),
+          lastValid: BigInt(11000),
+        })
+      };
+    }
+  },
 }));
 
 import SignTxnPage from './page';

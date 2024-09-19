@@ -1,17 +1,7 @@
 import '@testing-library/jest-dom';
-import * as algosdk from 'algosdk';
-import * as processor from './processor';
-
-/* Polyfill for TextEncoder, TextDecoder and the Uint8Array they use */
-import { TextEncoder, TextDecoder } from 'node:util';
+import algosdk from 'algosdkv3';
 import { getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
-global.TextEncoder = TextEncoder;
-// @ts-expect-error
-global.TextDecoder = TextDecoder;
-// NOTE: For some reason, the Uint8Array class that the polyfills use is different from the actual
-// Uint8Array class, so polyfilling Uint8array is necessary too
-// @ts-ignore
-global.Uint8Array = (new TextEncoder).encode().constructor;
+import * as processor from './processor';
 
 describe('Transaction Data Processor', () => {
   describe('createTxnFromData()', () => {
@@ -36,21 +26,22 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.pay);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.amount).toBe(5000000);
-      expect(addrToStr(txn.closeRemainderTo))
+      expect(txn.payment?.receiver.toString())
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.payment?.amount.toString()).toBe('5000000');
+      expect(txn.payment?.closeRemainderTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
@@ -78,18 +69,19 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.pay);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.amount).toBe(5000000);
-      expect(addrToStr(txn.closeRemainderTo))
+      expect(txn.payment?.receiver.toString())
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.payment?.amount.toString()).toBe('5000000');
+      expect(txn.payment?.closeRemainderTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
@@ -115,24 +107,25 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.axfer);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(addrToStr(txn.assetRevocationTarget))
+      expect(txn.assetTransfer?.assetSender?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(txn.amount.toString()).toBe('500');
-      expect(addrToStr(txn.closeRemainderTo))
+      expect(txn.assetTransfer?.receiver.toString())
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.assetTransfer?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetTransfer?.amount.toString()).toBe('500');
+      expect(txn.assetTransfer?.closeRemainderTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
@@ -162,21 +155,22 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.axfer);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(addrToStr(txn.assetRevocationTarget))
+      expect(txn.assetTransfer?.assetSender?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.to)).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(txn.amount.toString()).toBe('500');
-      expect(addrToStr(txn.closeRemainderTo))
+      expect(txn.assetTransfer?.receiver.toString())
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+      expect(txn.assetTransfer?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetTransfer?.amount.toString()).toBe('500');
+      expect(txn.assetTransfer?.closeRemainderTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
@@ -210,33 +204,33 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetUnitName).toBe('FAKE');
-      expect(txn.assetName).toBe('Fake Token');
-      expect(txn.assetTotal.toString()).toBe('10000000');
-      expect(txn.assetDecimals).toBe(5);
-      expect(txn.assetDefaultFrozen).toBe(true);
-      expect(txn.assetURL).toBe('https://fake.token');
-      expect(addrToStr(txn.assetManager))
+      expect(txn.assetConfig?.unitName).toBe('FAKE');
+      expect(txn.assetConfig?.assetName).toBe('Fake Token');
+      expect(txn.assetConfig?.total.toString()).toBe('10000000');
+      expect(txn.assetConfig?.decimals).toBe(5);
+      expect(txn.assetConfig?.defaultFrozen).toBe(true);
+      expect(txn.assetConfig?.assetURL).toBe('https://fake.token');
+      expect(txn.assetConfig?.manager?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetFreeze))
+      expect(txn.assetConfig?.freeze?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetClawback))
+      expect(txn.assetConfig?.clawback?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetReserve))
+      expect(txn.assetConfig?.reserve?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(txn.assetMetadataHash).toHaveLength(32);
+      expect(txn.assetConfig?.assetMetadataHash).toHaveLength(32);
     });
 
     // eslint-disable-next-line max-len
@@ -264,37 +258,38 @@ describe('Transaction Data Processor', () => {
           apar_f: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           apar_c: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
           apar_r: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-          apar_am: textEncoder.encode('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB'), // byte array
+          apar_am: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
         },
         'testnet-v1.0',
         'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetUnitName).toBe('FAKE');
-      expect(txn.assetName).toBe('Fake Token');
-      expect(txn.assetTotal.toString()).toBe('10000000');
-      expect(txn.assetDecimals).toBe(5);
-      expect(txn.assetDefaultFrozen).toBe(true);
-      expect(txn.assetURL).toBe('https://fake.token');
-      expect(addrToStr(txn.assetManager))
+      expect(txn.assetConfig?.unitName).toBe('FAKE');
+      expect(txn.assetConfig?.assetName).toBe('Fake Token');
+      expect(txn.assetConfig?.total.toString()).toBe('10000000');
+      expect(txn.assetConfig?.decimals).toBe(5);
+      expect(txn.assetConfig?.defaultFrozen).toBe(true);
+      expect(txn.assetConfig?.assetURL).toBe('https://fake.token');
+      expect(txn.assetConfig?.manager?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetFreeze))
+      expect(txn.assetConfig?.freeze?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetClawback))
+      expect(txn.assetConfig?.clawback?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetReserve))
+      expect(txn.assetConfig?.reserve?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(textDecoder.decode(txn.assetMetadataHash)).toBe('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+      expect(textDecoder.decode(txn.assetConfig?.assetMetadataHash))
+        .toBe('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
     });
 
     // eslint-disable-next-line max-len
@@ -317,20 +312,20 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
 
-      expect(txn.assetIndex).toBe(88888888);
+      expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -355,17 +350,17 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
 
-      expect(txn.assetIndex).toBe(88888888);
+      expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -392,26 +387,26 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
 
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(addrToStr(txn.assetManager))
+      expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetConfig?.manager?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetFreeze))
+      expect(txn.assetConfig?.freeze?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetClawback))
+      expect(txn.assetConfig?.clawback?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetReserve))
+      expect(txn.assetConfig?.reserve?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
     });
 
@@ -441,23 +436,23 @@ describe('Transaction Data Processor', () => {
       );
 
       expect(txn.type).toBe(algosdk.TransactionType.acfg);
-      expect(addrToStr(txn.from))
+      expect(txn.sender.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(addrToStr(txn.assetManager))
+      expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetConfig?.manager?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetFreeze))
+      expect(txn.assetConfig?.freeze?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetClawback))
+      expect(txn.assetConfig?.clawback?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
-      expect(addrToStr(txn.assetReserve))
+      expect(txn.assetConfig?.reserve?.toString())
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
     });
 
@@ -485,16 +480,16 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(addrToStr(txn.freezeAccount))
+      expect(txn.assetFreeze?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetFreeze?.freezeAccount?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.freezeState).toBe(true);
+      expect(txn.assetFreeze?.frozen).toBe(true);
     });
 
     // eslint-disable-next-line max-len
@@ -522,16 +517,16 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.afrz);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(addrToStr(txn.reKeyTo))
+      expect(txn.rekeyTo?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.assetIndex).toBe(88888888);
-      expect(addrToStr(txn.freezeAccount))
+      expect(txn.assetFreeze?.assetIndex.toString()).toBe('88888888');
+      expect(txn.assetFreeze?.freezeAccount?.toString())
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
-      expect(txn.freezeState).toBe(true);
+      expect(txn.assetFreeze?.frozen).toBe(true);
     });
 
     it('returns `Transaction` object with given data for a key registration (online) transaction',
@@ -563,20 +558,21 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.voteKey.toString('base64')).toBe('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
-      expect(txn.selectionKey.toString('base64'))
+      expect(algosdk.bytesToBase64(txn.keyreg?.voteKey ?? new Uint8Array))
+        .toBe('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
+      expect(algosdk.bytesToBase64(txn.keyreg?.selectionKey ?? new Uint8Array))
         .toBe('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=');
-      expect(txn.stateProofKey.toString('base64')).toBe(
+      expect(algosdk.bytesToBase64(txn.keyreg?.stateProofKey ?? new Uint8Array)).toBe(
         'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
       );
-      expect(txn.voteFirst).toBe(6000000);
-      expect(txn.voteLast).toBe(6100000);
-      expect(txn.voteKeyDilution).toBe(1730);
-      expect(txn.nonParticipation).toBe(false);
+      expect(txn.keyreg?.voteFirst?.toString()).toBe('6000000');
+      expect(txn.keyreg?.voteLast?.toString()).toBe('6100000');
+      expect(txn.keyreg?.voteKeyDilution?.toString()).toBe('1730');
+      expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
     // eslint-disable-next-line max-len
@@ -608,20 +604,21 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.voteKey.toString('base64')).toBe('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
-      expect(txn.selectionKey.toString('base64'))
+      expect(algosdk.bytesToBase64(txn.keyreg?.voteKey ?? new Uint8Array))
+        .toBe('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=');
+      expect(algosdk.bytesToBase64(txn.keyreg?.selectionKey ?? new Uint8Array))
         .toBe('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=');
-      expect(txn.stateProofKey.toString('base64')).toBe(
+      expect(algosdk.bytesToBase64(txn.keyreg?.stateProofKey ?? new Uint8Array)).toBe(
         'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='
       );
-      expect(txn.voteFirst).toBe(6000000);
-      expect(txn.voteLast).toBe(6100000);
-      expect(txn.voteKeyDilution).toBe(1730);
-      expect(txn.nonParticipation).toBe(false);
+      expect(txn.keyreg?.voteFirst?.toString()).toBe('6000000');
+      expect(txn.keyreg?.voteLast?.toString()).toBe('6100000');
+      expect(txn.keyreg?.voteKeyDilution?.toString()).toBe('1730');
+      expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
     it('returns `Transaction` object with given data for a key registration (offline) transaction',
@@ -650,17 +647,17 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.voteKey).toBeUndefined();
-      expect(txn.selectionKey).toBeUndefined();
-      expect(txn.stateProofKey).toBeUndefined();
-      expect(txn.voteFirst).toBeUndefined();
-      expect(txn.voteLast).toBeUndefined();
-      expect(txn.voteKeyDilution).toBeUndefined();
-      expect(txn.nonParticipation).toBe(false);
+      expect(txn.keyreg?.voteKey).toBeUndefined();
+      expect(txn.keyreg?.selectionKey).toBeUndefined();
+      expect(txn.keyreg?.stateProofKey).toBeUndefined();
+      expect(txn.keyreg?.voteFirst).toBeUndefined();
+      expect(txn.keyreg?.voteLast).toBeUndefined();
+      expect(txn.keyreg?.voteKeyDilution).toBeUndefined();
+      expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
     // eslint-disable-next-line max-len
@@ -689,17 +686,17 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.voteKey).toBeUndefined();
-      expect(txn.selectionKey).toBeUndefined();
-      expect(txn.stateProofKey).toBeUndefined();
-      expect(txn.voteFirst).toBeUndefined();
-      expect(txn.voteLast).toBeUndefined();
-      expect(txn.voteKeyDilution).toBeUndefined();
-      expect(txn.nonParticipation).toBe(false);
+      expect(txn.keyreg?.voteKey).toBeUndefined();
+      expect(txn.keyreg?.selectionKey).toBeUndefined();
+      expect(txn.keyreg?.stateProofKey).toBeUndefined();
+      expect(txn.keyreg?.voteFirst).toBeUndefined();
+      expect(txn.keyreg?.voteLast).toBeUndefined();
+      expect(txn.keyreg?.voteKeyDilution).toBeUndefined();
+      expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
     // eslint-disable-next-line max-len
@@ -729,17 +726,17 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.voteKey).toBeUndefined();
-      expect(txn.selectionKey).toBeUndefined();
-      expect(txn.stateProofKey).toBeUndefined();
-      expect(txn.voteFirst).toBeUndefined();
-      expect(txn.voteLast).toBeUndefined();
-      expect(txn.voteKeyDilution).toBeUndefined();
-      expect(txn.nonParticipation).toBe(true);
+      expect(txn.keyreg?.voteKey).toBeUndefined();
+      expect(txn.keyreg?.selectionKey).toBeUndefined();
+      expect(txn.keyreg?.stateProofKey).toBeUndefined();
+      expect(txn.keyreg?.voteFirst).toBeUndefined();
+      expect(txn.keyreg?.voteLast).toBeUndefined();
+      expect(txn.keyreg?.voteKeyDilution).toBeUndefined();
+      expect(txn.keyreg?.nonParticipation).toBe(true);
     });
 
     // eslint-disable-next-line max-len
@@ -768,17 +765,17 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.keyreg);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.voteKey).toBeUndefined();
-      expect(txn.selectionKey).toBeUndefined();
-      expect(txn.stateProofKey).toBeUndefined();
-      expect(txn.voteFirst).toBeUndefined();
-      expect(txn.voteLast).toBeUndefined();
-      expect(txn.voteKeyDilution).toBeUndefined();
-      expect(txn.nonParticipation).toBe(true);
+      expect(txn.keyreg?.voteKey).toBeUndefined();
+      expect(txn.keyreg?.selectionKey).toBeUndefined();
+      expect(txn.keyreg?.stateProofKey).toBeUndefined();
+      expect(txn.keyreg?.voteFirst).toBeUndefined();
+      expect(txn.keyreg?.voteLast).toBeUndefined();
+      expect(txn.keyreg?.voteKeyDilution).toBeUndefined();
+      expect(txn.keyreg?.nonParticipation).toBe(true);
     });
 
     it('returns `Transaction` object with given data for a application call (create) transaction',
@@ -792,6 +789,7 @@ describe('Transaction Data Processor', () => {
           fv: 6000000,
           lv: 6001000,
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+          apan: algosdk.OnApplicationComplete.NoOpOC,
           apap: 'BYEB',
           apsu: 'BYEB',
           apgs_nui: 1,
@@ -814,22 +812,22 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appGlobalInts).toBe(1);
-      expect(txn.appGlobalByteSlices).toBe(2);
-      expect(txn.appLocalInts).toBe(3);
-      expect(txn.appLocalByteSlices).toBe(4);
-      expect(txn.extraPages).toBe(1);
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.approvalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.clearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.numGlobalInts).toBe(1);
+      expect(txn.applicationCall?.numGlobalByteSlices).toBe(2);
+      expect(txn.applicationCall?.numLocalInts).toBe(3);
+      expect(txn.applicationCall?.numLocalByteSlices).toBe(4);
+      expect(txn.applicationCall?.extraPages).toBe(1);
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     // eslint-disable-next-line max-len
@@ -846,6 +844,7 @@ describe('Transaction Data Processor', () => {
           fv: 6000000,
           lv: 6001000,
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
+          apan: algosdk.OnApplicationComplete.NoOpOC,
           apap: 'BYEB',
           apsu: 'BYEB',
           apgs_nui: 1,
@@ -865,22 +864,22 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appGlobalInts).toBe(1);
-      expect(txn.appGlobalByteSlices).toBe(2);
-      expect(txn.appLocalInts).toBe(3);
-      expect(txn.appLocalByteSlices).toBe(4);
-      expect(txn.extraPages).toBe(1);
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.approvalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.clearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.numGlobalInts).toBe(1);
+      expect(txn.applicationCall?.numGlobalByteSlices).toBe(2);
+      expect(txn.applicationCall?.numLocalInts).toBe(3);
+      expect(txn.applicationCall?.numLocalByteSlices).toBe(4);
+      expect(txn.applicationCall?.extraPages).toBe(1);
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     it('returns `Transaction` object with given data for a application call (update) transaction',
@@ -913,19 +912,20 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
-      expect(txn.appIndex).toBe(88888888);
-      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.onComplete)
+        .toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
+      expect(txn.applicationCall?.approvalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.clearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     // eslint-disable-next-line max-len
@@ -958,19 +958,20 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
-      expect(txn.appIndex).toBe(88888888);
-      expect(txn.appApprovalProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appClearProgram.toString()).toBe('66,89,69,66');
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.onComplete)
+        .toBe(algosdk.OnApplicationComplete.UpdateApplicationOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
+      expect(txn.applicationCall?.approvalProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.clearProgram.toString()).toBe('66,89,69,66');
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     it('returns `Transaction` object with given data for a application call (delete) transaction',
@@ -1001,12 +1002,13 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete)
+        .toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1037,12 +1039,13 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete)
+        .toBe(algosdk.OnApplicationComplete.DeleteApplicationOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     it('returns `Transaction` object with given data for a application call (opt-in) transaction',
@@ -1073,12 +1076,12 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1109,12 +1112,12 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.OptInOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1146,12 +1149,12 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1182,12 +1185,12 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.CloseOutOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1219,17 +1222,17 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
-      expect(txn.appIndex).toBe(88888888);
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     // eslint-disable-next-line max-len
@@ -1260,17 +1263,17 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
-      expect(txn.appIndex).toBe(88888888);
-      expect(txn.appArgs).toHaveLength(3);
-      expect(txn.appAccounts).toHaveLength(1);
-      expect(txn.appForeignApps).toHaveLength(2);
-      expect(txn.appForeignAssets).toHaveLength(3);
-      expect(txn.boxes).toHaveLength(2);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.ClearStateOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
+      expect(txn.applicationCall?.appArgs).toHaveLength(3);
+      expect(txn.applicationCall?.accounts).toHaveLength(1);
+      expect(txn.applicationCall?.foreignApps).toHaveLength(2);
+      expect(txn.applicationCall?.foreignAssets).toHaveLength(3);
+      expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
     // eslint-disable-next-line max-len
@@ -1302,12 +1305,12 @@ describe('Transaction Data Processor', () => {
       const noteText = (new TextDecoder).decode(txn.note);
       expect(noteText).toBe('Hello world');
 
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(txn.lease).toHaveLength(32);
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
     // eslint-disable-next-line max-len
@@ -1338,32 +1341,33 @@ describe('Transaction Data Processor', () => {
 
       expect(txn.type).toBe(algosdk.TransactionType.appl);
       expect(textDecoder.decode(txn.note)).toBe('Hello world');
-      expect(txn.fee).toBe(1000);
-      expect(txn.firstRound).toBe(6000000);
-      expect(txn.lastRound).toBe(6001000);
+      expect(txn.fee.toString()).toBe('1000');
+      expect(txn.firstValid.toString()).toBe('6000000');
+      expect(txn.lastValid.toString()).toBe('6001000');
       expect(textDecoder.decode(txn.lease)).toBe('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-      expect(txn.appOnComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
-      expect(txn.appIndex).toBe(88888888);
+      expect(txn.applicationCall?.onComplete).toBe(algosdk.OnApplicationComplete.NoOpOC);
+      expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
   });
 
-  describe('createDataFromTxn', () => {
+  describe('createDataFromTxn()', () => {
 
     it('returns payment transaction data when given a payment transaction', async () => {
       const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
-        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        to: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        receiver: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         amount: 5_000_000, // 5 Algos
         note: (new TextEncoder).encode('Hello world'),
         closeRemainderTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn)).toStrictEqual({
@@ -1382,8 +1386,8 @@ describe('Transaction Data Processor', () => {
     it('returns asset transfer transaction data when given a asset transfer transaction',
     async () => {
       const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
-        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
-        to: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        receiver: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         assetIndex: 88888888,
         amount: 500,
         closeRemainderTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
@@ -1392,10 +1396,11 @@ describe('Transaction Data Processor', () => {
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn, {b64Note: true})).toStrictEqual({
@@ -1416,7 +1421,7 @@ describe('Transaction Data Processor', () => {
     it('returns asset configuration transaction data when given a asset configuration transaction',
     async () => {
       const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
-        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         unitName: 'FAKE',
         assetName: 'Fake Token',
         total: 10000000,
@@ -1431,10 +1436,11 @@ describe('Transaction Data Processor', () => {
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn)).toStrictEqual({
@@ -1459,17 +1465,18 @@ describe('Transaction Data Processor', () => {
 
     it('returns asset freeze transaction data when given a asset freeze transaction', async () => {
       const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
-        from: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         assetIndex: 88888888,
         freezeTarget: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
-        freezeState: true,
+        frozen: true,
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn)).toStrictEqual({
@@ -1487,21 +1494,22 @@ describe('Transaction Data Processor', () => {
     it('returns key registration transaction data when given a key registration transaction',
     async () => {
       const txn = algosdk.makeKeyRegistrationTxnWithSuggestedParamsFromObject({
-        from: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
-        voteKey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
-        selectionKey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
+        sender: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        voteKey: algosdk.base64ToBytes('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo='),
+        selectionKey:  algosdk.base64ToBytes('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk='),
         // eslint-disable-next-line max-len
-        stateProofKey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
+        stateProofKey:  algosdk.base64ToBytes('RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='),
         voteFirst: 6000000,
         voteLast: 6100000,
         voteKeyDilution: 1730,
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn)).toStrictEqual({
@@ -1533,7 +1541,7 @@ describe('Transaction Data Processor', () => {
       const textEncoder = new TextEncoder;
       const txn = algosdk.makeApplicationCallTxnFromObject({
         ...encodedAppArgs,
-        from: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        sender: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         onComplete: 0,
         appIndex: 0,
         approvalProgram: textEncoder.encode('BYEB'),
@@ -1546,10 +1554,11 @@ describe('Transaction Data Processor', () => {
         suggestedParams: {
           fee: 1000, // 0.001 Algos
           flatFee: true,
-          firstRound: 6000000,
-          lastRound: 6001000,
-          genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
           genesisID: 'testnet-v1.0',
+          minFee: 1000,
         }
       });
       expect(await processor.createDataFromTxn(txn)).toStrictEqual({
@@ -1576,9 +1585,3 @@ describe('Transaction Data Processor', () => {
 
   });
 });
-
-/** Converts an Address object to a string */
-function addrToStr(addr?: algosdk.Address) {
-  if (!addr) return undefined;
-  return algosdk.encodeAddress(addr.publicKey);
-}

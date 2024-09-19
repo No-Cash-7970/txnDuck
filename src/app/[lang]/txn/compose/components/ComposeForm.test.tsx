@@ -4,10 +4,16 @@ import userEvent from '@testing-library/user-event';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 import { JotaiProvider } from '@/app/[lang]/components';
-import * as fs from "node:fs";
+import * as fs from 'node:fs';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
+// Mock use-wallet before modules that use it are imported
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
+// Mock the wallet provider
+jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
 
 // Mock navigation hooks
 let presetMockValue: string|null = null;
@@ -19,35 +25,30 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock algosdk
-jest.mock('algosdk', () => ({
-  ...jest.requireActual('algosdk'),
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }
     getAssetByID() {
       return {
-        do: () => ({ params: {
-          name: 'Foo Token',
-          'unit-name': 'FOO',
-          total: 1000,
-          decimals: 2,
-          manager: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
-          freeze: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
-          clawback: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
-          reserve: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
-        } })
+        do: () => ({
+          index: BigInt(123456789),
+          params: {
+            name: 'Foo Token',
+            unitName: 'FOO',
+            total: 1000,
+            decimals: 2,
+            manager: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+            freeze: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+            clawback: 'CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC',
+            reserve: 'DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD',
+          }
+        })
       };
     }
   }
 }));
-
-// Mock use-debounce
-jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
-
-// Mock use-wallet before modules that use it are imported
-jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
-// Mock the wallet provider
-jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 

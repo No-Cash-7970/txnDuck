@@ -1,7 +1,5 @@
 /** @file Constants used with transaction data */
 
-import { ALGORAND_MIN_TX_FEE } from "algosdk";
-
 /** Number of characters in a valid account address */
 export const ADDRESS_LENGTH = 58;
 /** Maximum length of a lease in bytes (or characters if only using ASCII characters) */
@@ -23,7 +21,7 @@ export const NOTE_MAX_LENGTH = 1000;
  */
 export const B64_NOTE_MAX_LENGTH = 1336; // (1000 + 2) / 3 * 4
 /** Minimum transaction fee in microAlgos */
-export const MIN_TX_FEE = ALGORAND_MIN_TX_FEE;
+export const MIN_TX_FEE = 1000;
 /** Maximum number of rounds a transaction can be valid. In other words, the maximum difference
  * between the first valid round (fv) and the last valid round (lv).
  *

@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { IconMoodWrrr } from "@tabler/icons-react";
-import { Algodv2, Transaction, decodeSignedTransaction, decodeUnsignedTransaction } from "algosdk";
-import { getTransactionParams } from "@algorandfoundation/algokit-utils";
+import algosdk from "algosdkv3";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
@@ -14,7 +13,7 @@ import {
   tipBtnClass,
   tipContentClass
 } from "@/app/lib/txn-data";
-import { bytesToBase64, bytesToDataUrl, fileToBytes } from "@/app/lib/utils";
+import { bytesToDataUrl, fileToBytes } from "@/app/lib/utils";
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
@@ -41,30 +40,32 @@ export default function TxnImport({ lng }: Props) {
    */
   const processTxnFile = async (file: File) => {
     const txnByteData = await fileToBytes(file);
-    let txn: Transaction;
+    let txn: algosdk.Transaction;
     /** If the imported transaction is a signed transaction */
     let isSignedTxn = false;
 
     // Try decoding file into a `Transaction` object
     try {
-      txn = decodeUnsignedTransaction(txnByteData);
+      txn = algosdk.decodeUnsignedTransaction(txnByteData);
     } catch (error) {
       // Decoding the transaction as an unsigned transaction did not work, so try to decode
       // it as a signed transaction because it may be a signed transaction
-      txn = decodeSignedTransaction(txnByteData).txn;
+      txn = algosdk.decodeSignedTransaction(txnByteData).txn;
       isSignedTxn = true;
     }
 
     if (noDiffNetworkOption) {
-      const nodeGenesisHash = (await getTransactionParams(undefined, new Algodv2(
+      const nodeGenesisHash = (await (new algosdk.Algodv2(
         nodeConfig.nodeToken ?? '',
         nodeConfig.nodeServer,
         nodeConfig.nodePort,
         nodeConfig.nodeHeaders
-      ))).genesisHash;
-      const txnGenesisHash = await bytesToBase64(txn.genesisHash);
+      )).getTransactionParams().do()).genesisHash;
+      const txnGenesisHash = txn.genesisHash ?? new Uint8Array;
+
       // Compare the network used for the transaction to currently selected node network.
-      if (txnGenesisHash !== nodeGenesisHash) {
+      if (txnGenesisHash.toString() !== nodeGenesisHash.toString()) {
+        // Trigger error and stop
         setDiffNetwork(true);
         return;
       }
@@ -81,13 +82,13 @@ export default function TxnImport({ lng }: Props) {
       txn: await createDataFromTxn(txn, {
         b64Note: b64NoteOption,
         b64Lx: b64LxOption,
-        b64Apar_am: !!txn.assetMetadataHash ? b64Apar_amOption : undefined,
+        b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
       }),
       useSugFee: false,
       useSugRounds: false,
       b64Note: b64NoteOption,
       b64Lx: b64LxOption,
-      b64Apar_am: !!txn.assetMetadataHash ? b64Apar_amOption : undefined,
+      b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
     });
   };
 

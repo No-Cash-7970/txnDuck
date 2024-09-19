@@ -4,8 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import algosdk, { Algodv2, microalgosToAlgos } from 'algosdk';
-import * as algokit from '@algorandfoundation/algokit-utils';
+import algosdk, { Algodv2, microalgosToAlgos } from 'algosdkv3';
 import { useWallet } from '@txnlab/use-wallet-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
@@ -64,7 +63,7 @@ export default function SignTxn({ lng }: Props) {
       nodeConfig.nodePort,
       nodeConfig.nodeHeaders
     );
-    return algokit.getTransactionParams(undefined, algod);
+    return algod.getTransactionParams().do();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nodeConfig, storedTxnData]);
 
@@ -109,21 +108,22 @@ export default function SignTxn({ lng }: Props) {
     const unsignedTxnData = {...storedTxnData.txn};
 
     // Set fee to suggested fee if suggested fee is to be used
-    if (storedTxnData.useSugFee) unsignedTxnData.fee = suggestedParams.fee;
+    if (storedTxnData.useSugFee) unsignedTxnData.fee = Number(suggestedParams.fee);
 
     // Set first & last valid rounds to suggested first & last rounds if suggested rounds are to be
     // used
     if (storedTxnData.useSugRounds) {
-      unsignedTxnData.fv = suggestedParams.firstRound;
-      unsignedTxnData.lv = suggestedParams.lastRound;
+      unsignedTxnData.fv = Number(suggestedParams.firstValid);
+      unsignedTxnData.lv = Number(suggestedParams.lastValid);
     }
 
     return algosdk.encodeUnsignedTransaction(
       createTxnFromData(
         (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
         suggestedParams.genesisID,
-        suggestedParams.genesisHash,
-        !storedTxnData.useSugFee // Enable/disable flat fee
+        algosdk.bytesToBase64(suggestedParams.genesisHash),
+        !storedTxnData.useSugFee, // Enable/disable flat fee
+        Number(suggestedParams.minFee),
       )
     );
   };
@@ -165,8 +165,8 @@ export default function SignTxn({ lng }: Props) {
         genesisID,
         genesisHash,
         fee: feePerByte,
-        firstRound,
-        lastRound
+        firstValid,
+        lastValid
       } = await getSuggestedParams;
       const unsignedTxnData = {...storedTxnData.txn}; // Copy stored transaction data
       let unsignedTxn: algosdk.Transaction|null = null;
@@ -174,24 +174,24 @@ export default function SignTxn({ lng }: Props) {
       // If the suggested first & valid rounds are to be used, set first & valid rounds to suggested
       // first & valid rounds.
       if (storedTxnData.useSugRounds) {
-        unsignedTxnData.fv = firstRound;
-        setFirstRound(firstRound);
-        unsignedTxnData.lv = lastRound;
-        setLastRound(lastRound);
+        unsignedTxnData.fv = Number(firstValid);
+        setFirstRound(unsignedTxnData.fv);
+        unsignedTxnData.lv = Number(lastValid);
+        setLastRound(unsignedTxnData.lv);
       }
 
       // Calculate the fee if the suggested fee is to be used. The easiest way the calculate the fee
       // is to create an algosdk `Transaction` object and set the fee-per-byte (by disabling the
       // flat fee)
       if (storedTxnData.useSugFee) {
-        unsignedTxnData.fee = microalgosToAlgos(feePerByte);
+        unsignedTxnData.fee = microalgosToAlgos(Number(feePerByte));
         unsignedTxn = createTxnFromData(
           (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
           genesisID,
-          genesisHash,
+          algosdk.bytesToBase64(genesisHash),
           false
         );
-        setFee(microalgosToAlgos(unsignedTxn.fee));
+        setFee(microalgosToAlgos(Number(unsignedTxn.fee)));
       }
 
       if (storedSignedTxn) {
@@ -214,7 +214,7 @@ export default function SignTxn({ lng }: Props) {
           unsignedTxn = createTxnFromData(
             (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
             genesisID,
-            genesisHash
+            algosdk.bytesToBase64(genesisHash),
           );
         }
 

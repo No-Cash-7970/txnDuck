@@ -1,6 +1,6 @@
 /** @file Useful utilities for managing transaction data */
 
-import { Algodv2 } from "algosdk";
+import { Algodv2 } from "algosdkv3";
 import { RetrievedAssetInfo } from "./types";
 import { NodeConfig } from "@/app/lib/node-config";
 import { DEFAULT_NODE_CONFIG } from "@/app/lib/node-config";
@@ -28,11 +28,10 @@ export const getAssetInfo = async (
       );
       const assetInfo = await algod.getAssetByID(assetId).do();
       callback({
-        id: assetInfo.id,
+        id: assetInfo.index.toString(),
         name: assetInfo.params.name,
-        unitName: assetInfo.params['unit-name'],
-        // Not sure which type `params.total` is (Number? BigInt? String?), so turn it into a string
-        total: BigInt(assetInfo.params.total).toString(),
+        unitName: assetInfo.params.unitName,
+        total: assetInfo.params.total.toString(),
         decimals: assetInfo.params.decimals,
         manager: assetInfo.params.manager,
         freeze: assetInfo.params.freeze,
@@ -40,6 +39,7 @@ export const getAssetInfo = async (
         reserve: assetInfo.params.reserve,
       });
     } catch (error) {
+      console.error(error);
       callback(undefined);
     }
   }

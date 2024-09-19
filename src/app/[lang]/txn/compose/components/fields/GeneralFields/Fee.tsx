@@ -8,7 +8,6 @@ import {
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
-  MIN_TX_FEE,
   generalFormControlAtom,
   showFormErrorsAtom,
   tipContentClass,
@@ -17,7 +16,6 @@ import {
   storedTxnDataAtom,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
-import { microalgosToAlgos } from 'algosdk';
 import { defaultUseSugFee as defaultUseSugFeeAtom } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
@@ -36,7 +34,6 @@ export function FeeInput({ t }: { t: TFunction }) {
   const showFormErrors = useAtomValue(showFormErrorsAtom);
   const feeCondReqGroup = useAtomValue(feeConditionalRequireAtom);
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const minFeeMicroAlgos = microalgosToAlgos(MIN_TX_FEE);
   return (<>
     <NumberField label={t('fields.fee.label')}
       name='fee'
@@ -59,12 +56,7 @@ export function FeeInput({ t }: { t: TFunction }) {
       afterSideLabel={
         nodeConfig.coinName || t('algo', {count: form.values.fee as number ?? 0})
       }
-      min={minFeeMicroAlgos}
       step={0.000001}
-      helpMsg={t('fields.fee.min_msg', {
-        count: minFeeMicroAlgos,
-        coinName: nodeConfig.coinName || t('algo', {count: minFeeMicroAlgos ?? 0})
-      })}
       value={form.values.fee as number ?? ''}
       onChange={(e) =>
         form.handleOnChange('fee')(e.target.value === '' ? undefined : parseFloat(e.target.value))

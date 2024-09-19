@@ -1,5 +1,5 @@
 /** @file Collection of variables and constants for managing node configuration */
-import algosdk from "algosdk";
+import algosdk from "algosdkv3";
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import { atomWithFormControls, atomWithValidate } from "jotai-form";
 import { number as YupNumber, string as YupString } from 'yup';

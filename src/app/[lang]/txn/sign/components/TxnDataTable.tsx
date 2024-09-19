@@ -2,12 +2,17 @@
 
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
-import { ALGORAND_MIN_TX_FEE, TransactionType, microalgosToAlgos } from 'algosdk';
+import { TransactionType, microalgosToAlgos } from 'algosdkv3';
 import { useAtomValue } from 'jotai';
 import { useMemo } from 'react';
 import { Trans } from 'react-i18next';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { fee as feeAtom, fv as fvAtom, lv as lvAtom } from '@/app/lib/txn-data/atoms';
+import {
+  fee as feeAtom,
+  fv as fvAtom,
+  lv as lvAtom,
+  minFee as minFeeAtom
+} from '@/app/lib/txn-data/atoms';
 import { baseUnitsToDecimal } from '@/app/lib/utils';
 
 type Props = {
@@ -30,6 +35,7 @@ export default function TxnDataTable({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const fee = useAtomValue(feeAtom);
+  const minFee = useAtomValue(minFeeAtom);
   const fv = useAtomValue(fvAtom);
   const lv = useAtomValue(lvAtom);
 
@@ -631,8 +637,7 @@ export default function TxnDataTable({ lng }: Props) {
         </tr>
         {/* Fee */}
         <tr className={(
-          (storedTxnData?.txn?.fee ?? 0) > microalgosToAlgos(ALGORAND_MIN_TX_FEE)
-          || (fee.value ?? 0) > microalgosToAlgos(ALGORAND_MIN_TX_FEE)
+          (storedTxnData?.txn?.fee ?? 0) > minFee.value || (fee.value ?? 0) > minFee.value
         ) ? 'bg-warning text-warning-content' : ''
         }>
           <th role='rowheader' className='align-top'>

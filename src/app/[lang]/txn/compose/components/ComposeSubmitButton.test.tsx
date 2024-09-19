@@ -7,6 +7,14 @@ import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
+// Mock use-wallet before modules that use it are imported
+jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
+// Mock the wallet provider
+jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
+// Mock the scrollIntoView() function
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 // Mock navigation hooks
 const routerPushMock = jest.fn();
@@ -15,30 +23,22 @@ jest.mock('next/navigation', () => ({
   useSearchParams: () => ({ get: () => null }),
 }));
 
-// Mock the scrollIntoView() function
-window.HTMLElement.prototype.scrollIntoView = jest.fn();
-
 // Mock algosdk
-jest.mock('algosdk', () => ({
-  ...jest.requireActual('algosdk'),
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }
     getAssetByID() {
       return {
-        do: () => ({ params: {name: 'Foo Token', 'unit-name': 'FOO', total: 1000, decimals: 2} })
+        do: () => ({
+          index: BigInt(123456789),
+          params: { name: 'Foo Token', unitName: 'FOO', total: 1000, decimals: 2 }
+        })
       };
     }
   }
 }));
-
-// Mock use-debounce
-jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
-
-// Mock use-wallet before modules that use it are imported
-jest.mock('@txnlab/use-wallet-react', () => useWalletUnconnectedMock);
-// Mock the wallet provider
-jest.mock('../../../components/wallet/WalletProvider.tsx', () => 'div');
 
 import ComposeForm from './ComposeForm';
 
@@ -91,7 +91,7 @@ describe('Compose Form Component - Submit Button', () => {
     // Enter lease as Base64
     await userEvent.click(b64Checkboxes[1]); // Enable base64 for note
     await userEvent.click(screen.getByLabelText(/fields.lx.label/));
-    await userEvent.paste('SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhcg==');
+    await userEvent.paste('SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhci4=');
 
     // Submit data
     await userEvent.click(screen.getByText('sign_txn_btn'));
@@ -104,7 +104,7 @@ describe('Compose Form Component - Submit Button', () => {
         rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
         amt: 5,
         note: 'SGVsbG8gd29ybGQh',
-        lx: 'SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhcg==',
+        lx: 'SSB0aGluaywgdGhlcmVmb3JlIEkgYW0uIEZvb2Jhci4=',
       },
       useSugFee: true,
       useSugRounds: true,
@@ -179,7 +179,8 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
+      // eslint-disable-next-line max-len
+      retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
 
@@ -419,7 +420,8 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: {name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
+      // eslint-disable-next-line max-len
+      retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   }, 10000);
 
@@ -455,7 +457,8 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      retrievedAssetInfo: { name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
+      // eslint-disable-next-line max-len
+      retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
 

@@ -35,6 +35,7 @@
     "@walletconnect/sign-client": "^2.16.1",
     "accept-language": "^3.0.20",
     "algosdk": "^2.9.0",
+    "algosdkv3": "npm:algosdk@^3.0.0",
     "autoprefixer": "^10.4.20",
     "daisyui": "^4.12.10",
     "gulp": "^5.0.0",

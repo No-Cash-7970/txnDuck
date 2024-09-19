@@ -4,7 +4,7 @@
  */
 
 import { type ReadonlyURLSearchParams } from 'next/navigation';
-import { microalgosToAlgos, OnApplicationComplete, TransactionType } from 'algosdk';
+import { microalgosToAlgos, OnApplicationComplete, TransactionType } from 'algosdkv3';
 import { type useStore } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';

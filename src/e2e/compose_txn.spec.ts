@@ -1,4 +1,5 @@
 import { test as base, expect } from '@playwright/test';
+import { stringifyJSON } from 'algosdkv3';
 import { NavBarComponent as NavBar } from './shared/NavBarComponent';
 import { LanguageSupport } from './shared/LanguageSupport';
 import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
@@ -19,7 +20,7 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
 // Asset data for USDC token. Used to mock requests for USDC asset data. This is the exact asset
 // data for USDC on MainNet as of August 2024. Using the exact data makes the mock as close to what
 // would happen in production as much as possible.
-const usdcAssetData = {
+const usdcAssetData = stringifyJSON({
   index: 31566704,
   params: {
     creator: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
@@ -30,13 +31,13 @@ const usdcAssetData = {
     name: "USDC",
     "name-b64": "VVNEQw==",
     reserve: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
-    total: 18446744073709551615,
+    total: BigInt('18446744073709551615'),
     "unit-name": "USDC",
     "unit-name-b64": "VVNEQw==",
     url: "https://www.centre.io/usdc",
     "url-b64":"aHR0cHM6Ly93d3cuY2VudHJlLmlvL3VzZGM="
   }
-};
+});
 
 test.describe('Compose Transaction Page', () => {
 
@@ -92,7 +93,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ json: usdcAssetData });
+        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
@@ -121,7 +122,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ json: usdcAssetData });
+        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
@@ -150,7 +151,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ json: usdcAssetData });
+        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_opt_in&${formUrlParams}`);

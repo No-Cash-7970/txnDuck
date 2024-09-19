@@ -1,6 +1,6 @@
 /** @file Collection of general-purpose utility function and constants */
 
-import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdk";
+import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdkv3";
 import { SetStateAction, WritableAtom } from "jotai";
 
 /** Regular expression for detecting a valid Base64 string.
@@ -143,15 +143,6 @@ export const removeNonNumericalChars = (text: string) => text.replace(/[^0-9]/gm
  * @returns The text with all non-numerical characters removed
  */
 export const removeNonNumericalDecimalChars = (text: string) => text.replace(/[^0-9.]/gm, '');
-
-/** Converts bytes as a Uint8Array buffer to a Base64-encoded string
- * @param bytes The bytes to convert to a Base64-encoded string
- * @returns The bytes in the form of a Base64-encoded string
- */
-export const bytesToBase64 = async (bytes: Uint8Array) => {
-  const dataUrl = await bytesToDataUrl(bytes);
-  return dataUrl.slice(dataUrl.indexOf(',') + 1);
-};
 
 /** Converts the given file's contents to bytes as a Uint8Array buffer
  * @param file The file to convert to bytes

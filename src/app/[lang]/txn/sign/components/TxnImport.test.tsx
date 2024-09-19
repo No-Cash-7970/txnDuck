@@ -1,26 +1,33 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import algosdk from 'algosdkv3';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import * as fs from "node:fs";
-import { TextDecoder } from 'node:util';
-// @ts-expect-error
-global.TextDecoder = TextDecoder;
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 
-// Mock algokit
+// Mock algosdk
 let mockGenesisHash = '';
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  ...jest.requireActual('@algorandfoundation/algokit-utils'),
-  getTransactionParams: () => new Promise((resolve) => resolve({
-    genesisID: 'some-network-id',
-    genesisHash: mockGenesisHash,
-    fee: 1,
-    firstRound: 10000,
-    lastRound: 11000,
-  }))
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    getTransactionParams() {
+      return {
+        do: async () => ({
+          genesisID: 'some-network-id',
+          genesisHash: algosdk.base64ToBytes(mockGenesisHash),
+          fee: BigInt(1),
+          minFee: BigInt(1),
+          firstValid: BigInt(10000),
+          lastValid: BigInt(11000),
+        })
+      };
+    }
+  },
 }));
 
 import TxnImport from './TxnImport';

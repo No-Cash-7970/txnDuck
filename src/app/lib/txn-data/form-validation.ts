@@ -2,7 +2,7 @@
 
 import { type useStore } from "jotai";
 import * as FieldValidation from "./field-validation";
-import { TransactionType } from "algosdk";
+import { TransactionType } from "algosdkv3";
 import { apaaListAtom, apasListAtom, apatListAtom, apbxListAtom, apfaListAtom } from "./atoms";
 import { Preset, MAX_APP_ACCTS, MAX_APP_ARGS, MAX_APP_TOTAL_DEPS } from "./constants";
 

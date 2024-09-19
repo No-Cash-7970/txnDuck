@@ -1,6 +1,6 @@
 /** @file Jotai atoms for transaction data */
 
-import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from 'algosdk';
+import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from 'algosdkv3';
 import { atom } from 'jotai';
 import { splitAtom } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
@@ -39,11 +39,14 @@ export const snd = atomWithValidate<string>('', {
 
 /** Fee (in Algos, not microAlgos) */
 export const fee = atomWithValidate<number|undefined>(undefined, {
-  validate: v => {
-    YupNumber().min(microalgosToAlgos(MIN_TX_FEE)).validateSync(v);
-    return v;
-  }
+  validate: v => { YupNumber().validateSync(v); return v; }
 });
+
+/** Minimum Fee (in Algos, not microAlgos) */
+export const minFee = atomWithValidate<number>(microalgosToAlgos(MIN_TX_FEE), {
+  validate: v => { YupNumber().validateSync(v); return v; }
+});
+
 /** Use suggested fee */
 export const useSugFee = atomWithValidate<boolean>(true, { validate: v => v });
 

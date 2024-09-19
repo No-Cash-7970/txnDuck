@@ -9,7 +9,13 @@ const createJestConfig = nextJest({
 // Add any custom config to be passed to Jest
 /** @type {import('jest').Config} */
 const config = {
-  // Add more setup options before each test is run
+  /*
+   * Add more setup options before each test is run
+   */
+
+  // Setup files to run before the test framework is installed in the environment
+  setupFiles: ['<rootDir>/src/app/lib/testing/textcoderPolyfill.js'],
+  // Setup files to run after the test framework has been installed in the environment.
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
 
   testEnvironment: 'jest-environment-jsdom',

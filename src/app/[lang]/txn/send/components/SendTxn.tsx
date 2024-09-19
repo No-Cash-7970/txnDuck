@@ -5,8 +5,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';
-import { Algodv2, modelsv2 } from 'algosdk';
-import * as algokit from '@algorandfoundation/algokit-utils';
+import algosdk from 'algosdkv3';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
@@ -43,7 +42,7 @@ type SuccessMessage = {
   /** Transaction ID of the success transaction */
   txId: string,
   /** The response data from the node */
-  response: modelsv2.PendingTransactionResponse
+  response: algosdk.modelsv2.PendingTransactionResponse
 }
 
 /** Section for sending a transaction and showing status of the transaction */
@@ -63,7 +62,7 @@ export default function SendTxn({ lng }: Props) {
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
 
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const algod = new Algodv2(
+  const algod = new algosdk.Algodv2(
     nodeConfig.nodeToken ?? '',
     nodeConfig.nodeServer,
     nodeConfig.nodePort,
@@ -139,7 +138,7 @@ export default function SendTxn({ lng }: Props) {
     if (txId !== pendingTxId) setPendingTxId(txId);
 
     try {
-      const response = await algokit.waitForConfirmation(txId, wait, algod);
+      const response = await algosdk.waitForConfirmation(algod, txId, wait);
       setSuccessMsg({txId, response});
     } catch (e) {
       setFailMsg(getFailMessage(e));
@@ -168,14 +167,14 @@ export default function SendTxn({ lng }: Props) {
         try {
           sendTxnResponse = await algod.sendRawTransaction(signedTxnBytes).do();
           // NOTE: The state variable value isn't updated until component is re-rendered
-          setPendingTxId(sendTxnResponse.txId);
+          setPendingTxId(sendTxnResponse.txid);
         } catch (e) {
           setFailMsg(getFailMessage(e));
           setWaiting(false);
           return; // Abort
         }
 
-        await waitForConfirmation(sendTxnResponse.txId);
+        await waitForConfirmation(sendTxnResponse.txid);
       };
       sendTxn();
     }
@@ -252,7 +251,7 @@ export default function SendTxn({ lng }: Props) {
               +' whitespace-pre overflow-x-scroll'
               +' mt-1 p-4'
             }>
-{JSON.stringify(successMsg.response.get_obj_for_encoding(), null, 2)}
+{algosdk.encodeJSON(successMsg.response, { space: 2 })}
             </code>
           </div>
         </details>

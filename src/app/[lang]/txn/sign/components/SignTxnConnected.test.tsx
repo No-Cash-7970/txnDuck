@@ -1,14 +1,19 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import algosdk from 'algosdkv3';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
-
 // Mock use-wallet before modules that use it are imported
 jest.mock('@txnlab/use-wallet-react', () => useWalletConnectedMock);
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
+}));
 
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
@@ -29,22 +34,25 @@ jest.mock('../../../../lib/utils.ts', () => ({
   ])
 }));
 
-// Mock navigation hooks
-jest.mock('next/navigation', () => ({
-  useRouter: () => ({}),
-  useSearchParams: () => ({toString: () => 'preset=foo'}),
-}));
-
-// Mock algokit
-jest.mock('@algorandfoundation/algokit-utils', () => ({
-  ...jest.requireActual('@algorandfoundation/algokit-utils'),
-  getTransactionParams: () => new Promise((resolve) => resolve({
-    genesisID: 'testnet-v1.0',
-    genesisHash: 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
-    fee: 1,
-    firstRound: 10000,
-    lastRound: 11000,
-  }))
+// Mock algosdk
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
+  Algodv2: class {
+    token: string;
+    constructor(token: string) { this.token = token; }
+    getTransactionParams() {
+      return {
+        do: async () => ({
+          genesisID: 'testnet-v1.0',
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
+          fee: BigInt(1),
+          minFee: BigInt(1),
+          firstValid: BigInt(10000),
+          lastValid: BigInt(11000),
+        })
+      };
+    }
+  },
 }));
 
 import SignTxn from './SignTxn';

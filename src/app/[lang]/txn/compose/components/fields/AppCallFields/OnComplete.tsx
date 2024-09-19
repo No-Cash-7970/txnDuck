@@ -2,7 +2,7 @@ import { useSearchParams } from 'next/navigation';
 import { FieldErrorMessage, SelectField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
-import { OnApplicationComplete } from 'algosdk';
+import { OnApplicationComplete } from 'algosdkv3';
 import {
   Preset,
   applFormControlAtom,

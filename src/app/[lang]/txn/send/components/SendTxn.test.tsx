@@ -6,6 +6,12 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({toString: () => 'preset=foo'}),
+}));
+// Mock use-debounce
+jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
@@ -15,10 +21,10 @@ jest.mock('../../../../lib/utils.ts', () => ({
 
 let sendErrorMsg = '', confirmErrorMsg = '';
 const sendRawTxnSpy = jest.fn(), waitConfirmSpy = jest.fn();
-
 // Mock algosdk
-jest.mock('algosdk', () => ({
-  ...jest.requireActual('algosdk'),
+jest.mock('algosdkv3', () => ({
+  ...jest.requireActual('algosdkv3'),
+  encodeJSON: jest.fn(),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }
@@ -31,26 +37,13 @@ jest.mock('algosdk', () => ({
         }
       };
     }
-  }
-}));
-
-// Mock algokit
-jest.mock('@algorandfoundation/algokit-utils', () => ({
+  },
   waitForConfirmation: () => {
     waitConfirmSpy();
     if (confirmErrorMsg) throw Error(confirmErrorMsg);
-    return { get_obj_for_encoding: () => ({}) };
-  }
+    return ({});
+  },
 }));
-
-// Mock navigation hooks
-jest.mock('next/navigation', () => ({
-  useSearchParams: () => ({toString: () => 'preset=foo'}),
-}));
-
-
-// Mock use-debounce
-jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 
 import SendTxn from './SendTxn';
 

@@ -3,6 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
+import { bytesToBase64 } from 'algosdkv3';
 import { IconFile, IconX } from '@tabler/icons-react';
 import { FieldErrorMessage, FileField, TextAreaField } from '@/app/[lang]/components/form';
 import {
@@ -14,7 +15,7 @@ import {
   tipBtnClass,
   tipContentClass
 } from '@/app/lib/txn-data';
-import { bytesToBase64, fileToBytes } from '@/app/lib/utils';
+import { fileToBytes } from '@/app/lib/utils';
 
 export default function ClearStateProg({ t }: { t: TFunction }) {
   const preset = useSearchParams().get(Preset.ParamName);
@@ -77,9 +78,7 @@ export default function ClearStateProg({ t }: { t: TFunction }) {
               labelTextClass='sm:text-lg'
               onChange={async (e) => {
                 if (!!e.target.files?.length) {
-                  form.handleOnChange('apsu')(
-                    await bytesToBase64(await fileToBytes(e.target.files[0]))
-                  );
+                  form.handleOnChange('apsu')(bytesToBase64(await fileToBytes(e.target.files[0])));
                   setDialogOpen(false);
                 }
               }}

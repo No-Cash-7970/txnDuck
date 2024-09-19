@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { useTranslation } from '@/app/i18n/client';
 import { Trans } from 'react-i18next';
 import * as Icons from '@tabler/icons-react';
-import { TransactionType } from 'algosdk';
+import { TransactionType } from 'algosdkv3';
 import { useAtomValue } from 'jotai';
 import { Preset } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';

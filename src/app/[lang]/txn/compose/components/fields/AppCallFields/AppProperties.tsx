@@ -2,7 +2,7 @@ import { useSearchParams } from 'next/navigation';
 import { FieldGroup } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
-import { OnApplicationComplete } from 'algosdk';
+import { OnApplicationComplete } from 'algosdkv3';
 import { Preset, applFormControlAtom } from '@/app/lib/txn-data';
 import ApprovalProg from './ApprovalProg';
 import ClearStateProg from './ClearStateProg';
