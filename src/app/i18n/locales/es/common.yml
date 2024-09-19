@@ -32,7 +32,9 @@ form: # For forms
     required: Esto es obligatorio.
     string:
       length: Debe tener {{count, number}} caracteres.
+      length_bytes: Debe tener {{count, number}} bytes.
       max: Debe tener como máximo {{count, number}} caracteres.
+      max_bytes: Debe tener como máximo {{count, number}} bytes.
       email: Debe ser una dirección de correo electrónico válida.
     number:
       invalid: Esto es un número inválido.

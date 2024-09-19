@@ -1,6 +1,6 @@
 /** @file Collection of variables, atoms, etc. for validating individual fields */
 
-import { OnApplicationComplete } from 'algosdkv3';
+import { base64ToBytes, OnApplicationComplete } from 'algosdkv3';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
 import {
@@ -16,14 +16,12 @@ import {
   MAX_APP_GLOBALS,
   MAX_APP_KEY_LENGTH,
   MAX_APP_LOCALS,
-  B64_NOTE_MAX_LENGTH,
   NOTE_MAX_LENGTH,
-  B64_LEASE_LENGTH,
   LEASE_LENGTH,
-  B64_METADATA_HASH_LENGTH,
   METADATA_HASH_LENGTH
 } from './constants';
 import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './validation-rules';
+import { TestConfig } from 'yup';
 
 /** Atom containing flag for triggering the form errors to be shown */
 export const showFormErrorsAtom = atom(false);
@@ -130,9 +128,13 @@ export const noteConditionalMaxAtom = validateAtoms({
   note: txnDataAtoms.note,
   b64Note: txnDataAtoms.b64Note,
 }, (values) => {
-  YupString()
-    .max(values.b64Note ? B64_NOTE_MAX_LENGTH : NOTE_MAX_LENGTH)
-    .validateSync(values.note === '' ? undefined : values.note);
+  if (values.b64Note) {
+    YupString()
+      .test(createMaxBytesTest(NOTE_MAX_LENGTH))
+      .validateSync(values.note === '' ? undefined : values.note);
+  } else {
+    YupString().length(NOTE_MAX_LENGTH).validateSync(values.note === '' ? undefined : values.note);
+  }
 });
 export const noteConditionalBase64Atom = validateAtoms({
   note: txnDataAtoms.note,
@@ -149,9 +151,13 @@ export const lxConditionalLengthAtom = validateAtoms({
   lx: txnDataAtoms.lx,
   b64Lx: txnDataAtoms.b64Lx,
 }, (values) => {
-  YupString()
-    .length(values.b64Lx ? B64_LEASE_LENGTH : LEASE_LENGTH)
-    .validateSync(values.lx === '' ? undefined : values.lx);
+  if (values.b64Lx) {
+    YupString()
+      .test(createBytesLengthTest(LEASE_LENGTH))
+      .validateSync(values.lx === '' ? undefined : values.lx);
+  } else {
+    YupString().length(LEASE_LENGTH).validateSync(values.lx === '' ? undefined : values.lx);
+  }
 });
 export const lxConditionalBase64Atom = validateAtoms({
   lx: txnDataAtoms.lx,
@@ -215,7 +221,6 @@ export const aamtConditionalMaxAtom = validateAtoms({
   if (values.assetInfo) {
     const assetInfo = values.assetInfo as RetrievedAssetInfo;
     const max = BigInt(assetInfo.total);
-
     // Custom `min` validation is required because the usual `min()` validation function causes a
     // loss in precision because it casts a `BigInt` into a `Number`
     YupMixed()
@@ -290,9 +295,15 @@ export const aparAmConditionalLengthAtom = validateAtoms({
   apar_am: txnDataAtoms.apar_am,
   b64Apar_am: txnDataAtoms.b64Apar_am,
 }, (values) => {
-  YupString()
-    .length(values.b64Apar_am ? B64_METADATA_HASH_LENGTH : METADATA_HASH_LENGTH)
-    .validateSync(values.apar_am === '' ? undefined : values.apar_am);
+  if (values.b64Apar_am) {
+    YupString()
+      .test(createBytesLengthTest(METADATA_HASH_LENGTH))
+      .validateSync(values.apar_am === '' ? undefined : values.apar_am);
+  } else {
+    YupString()
+      .length(METADATA_HASH_LENGTH)
+      .validateSync(values.apar_am === '' ? undefined : values.apar_am);
+  }
 });
 export const aparAmConditionalBase64Atom = validateAtoms({
   apar_am: txnDataAtoms.apar_am,
@@ -535,3 +546,41 @@ export const votefstVotelstFormControlAtom = validateAtoms({
       .validateSync(values.votefst);
   }
 });
+
+function createMaxBytesTest(maxBytes: number): TestConfig {
+  return {
+    name: 'max_bytes',
+    message: { key: 'form.error.string.max_bytes', dict: { max: maxBytes } },
+    exclusive: true,
+    params: { maxBytes },
+    skipAbsent: true,
+    test: (value: unknown) => {
+      try {
+        return base64ToBytes((value as string)?? '').byteLength <= maxBytes;
+      } catch (error) {
+        // The test failed because given Base64 value is invalid. Ignore the error because there
+        // is already a validation check for valid Base64.
+        return true;
+      }
+    },
+  };
+}
+
+function createBytesLengthTest(bytesLength: number): TestConfig {
+  return {
+    name: 'length_bytes',
+    message: { key: 'form.error.string.length_bytes', dict: { count: bytesLength } },
+    exclusive: true,
+    params: { bytesLength },
+    skipAbsent: true,
+    test: (value: unknown) => {
+      try {
+        return base64ToBytes((value as string)?? '').byteLength === bytesLength;
+      } catch (error) {
+        // The test failed because given Base64 value is invalid. Ignore the error because there
+        // is already a validation check for valid Base64.
+        return true;
+      }
+    },
+  };
+}
