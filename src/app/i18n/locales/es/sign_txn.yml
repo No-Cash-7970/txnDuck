@@ -8,13 +8,13 @@ download_signed_btn: Descargar transacción firmada
 unsigned_file_name: sin_firma
 signed_file_name: firmada
 txn_signed: Transacción firmada
-sign_error: >
+sign_error: >-
   No se ha podido firmar la transacción porque está mal formada. Esto suele deberse a que la
   información de la transacción no es válida. Vuelva al paso anterior y compruebe si hay errores en
   la información de la transacción.
 auto_send:
   label: Enviar automáticamente la transacción después de firmar
-  tip: >
+  tip: >-
     Si está marcada, la transacción se envía inmediatamente después de ser firmada sin necesidad de
     pulsar el botón «Enviar».
   tip_btn_title: Más información
@@ -22,20 +22,20 @@ import_txn:
   label: Importar archivo de transacción firmado o sin firmar
   options_heading: Opciones de importación
   b64_note: La nota son datos codificados en Base64
-  b64_note_tip: >
+  b64_note_tip: >-
     Si se marca, la nota de la transacción importada se interpretará como datos codificados en
     Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
   b64_lx: El arrendamiento son datos codificados en Base64
-  b64_lx_tip: >
+  b64_lx_tip: >-
     Si se marca, el arrendamiento de la transacción importada se interpretará como datos codificados
     en Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
   b64_apar_am: El hash de metadatos son datos codificados en Base64
-  b64_apar_am_tip: >
+  b64_apar_am_tip: >-
     Si la transacción importada es una transacción para crear un activo, su hash de metadatos se
     interpretará como datos codificados en Base64. Si no está seguro de lo que esto significa, deje
     la casilla sin marcar.
   no_diff_network: No importar una transacción para una red distinta
-  no_diff_network_tip: >
+  no_diff_network_tip: >-
     Si está marcada, se rechazará inmediatamente la importación de una transacción para una red
     distinta de la red seleccionada actualmente. Si no está marcada, se importarán todos los datos
     de la transacción excepto los datos de la red (ID de génesis y hash de génesis) y en su lugar se

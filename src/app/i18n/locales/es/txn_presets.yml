@@ -1,5 +1,5 @@
 title: Eligir una preselección de transacción
-instruction: >
+instruction: >-
   Componga una transacción más rápidamente utilizando uno de las siguientes preselecciones.
 skip_btn: O sáltese esto y componga una transacción sin utilizar una preselección
 category_label: Categorías
@@ -17,7 +17,7 @@ transfer_algos:
   action: Transferir Algos
 rekey_account:
   heading: Recodificar una cuenta
-  description: >
+  description: >-
     Cambie la(s) clave(s) privada(s) de gasto autorizada(s) manteniendo la misma dirección
     pública.
   action: Recodificar una cuenta
@@ -57,7 +57,7 @@ asset_freeze:
   action: Congelar un activo
 asset_unfreeze:
   heading: Descongelar un activo
-  description: >
+  description: >-
     Descongele una cuenta para un activo concreto. De este modo, se habilita la capacidad de la
     cuenta para enviar o recibir ese activo.
   action: Descongelar un activo
@@ -69,13 +69,13 @@ asset_destroy:
 app_heading: Aplicación (Smart contract)
 app_run:
   heading: Ejecutar una aplicación
-  description: >
+  description: >-
     Realice una llamada a la aplicación genérica para ejecutar el <code>ApprovalProgram</code> de
     la aplicación.
   action: Ejecutar una aplicación
 app_opt_in:
   heading: Optar por una aplicación
-  description: >
+  description: >-
     Habilite el estado local que se utilizará. No es necesario si la aplicación no requiere ningún
     estado local. local.
   action: Optar por una aplicación
@@ -85,7 +85,7 @@ app_deploy:
   action: Desplegar una aplicación
 app_update:
   heading: Actualizar una aplicación
-  description: >
+  description: >-
     Actualice la lógica de la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo
     permite.
   action: Actualizar una aplicación
@@ -99,7 +99,7 @@ app_clear:
   action: Cancelar una aplicación
 app_delete:
   heading: Destruir una aplicación
-  description: >
+  description: >-
     Elimine la aplicación, si el <code>ApprovalProgram</code> de la aplicación lo permite.
   action: Destruir una aplicación
 # Participation key category
@@ -114,7 +114,7 @@ reg_offline:
   action: Registrar fuera de línea
 reg_nonpart:
   heading: Registrar una cuenta como no participante
-  description: >
+  description: >-
     Marque <em>permanentemente</em> una cuenta como no participante. <em>La cuenta no podrá
     conectarse o desconectarse y recibir recompensas.</em>
   action: Registrar como no participante

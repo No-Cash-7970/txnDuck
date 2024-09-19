@@ -33,19 +33,19 @@ fields:
     label: Remitente
     tip: La dirección de la cuenta que paga la tasa.
     tip_pay: La dirección de la cuenta que paga la tasa y el importe.
-    tip_clawback: >
+    tip_clawback: >-
       La dirección de recuperación del activo, que es también la dirección de la cuenta que paga la
       tarifa.
-    tip_opt_in: >
+    tip_opt_in: >-
       La dirección de la cuenta que se opta, que es también la dirección de la cuenta que paga la
       tarifa.
-    tip_opt_out: >
+    tip_opt_out: >-
       La dirección de la cuenta que se excluye, que es también la dirección de la cuenta que paga la
       tarifa.
     placeholder: Dirección del remitente
   use_sug_fee: # Use suggested fee to automatically set it?
     label: Establecer automáticamente la tarifa
-    tip: >
+    tip: >-
       Calcular y fijar automáticamente la tarifa. Las tarifas de las transacciones en Algorand se
       fijan en función de la congestión de la red y del tamaño en bytes de la transacción. Cada
       transacción debe cubrir al menos la tarifa mínima.
@@ -60,32 +60,32 @@ fields:
     in_coin_other: "{{count, number}} {{coinName}}"
   note: # Note
     label: Nota
-    tip: >
+    tip: >-
       Datos a adjuntar a esta transacción. Ejemplos: mensaje en texto, datos JSON, datos en bytes
     placeholder: Introduzca la nota…
     placeholder_b64: Introduzca la nota como texto Base64…
   use_sug_rounds: # Use suggested first & last rounds?
     label: Establecer automáticamente rondas válidas
-    tip: >
+    tip: >-
       Establecer automáticamente la primera ronda válida y la última ronda válida en función de la
       ronda actual.
     using_sug: (Automática)
     not_using_sug: (Manual)
   fv: # First valid round
     label: Primera ronda válida de la transacción
-    tip: >
+    tip: >-
       La primera ronda para cuando la transacción es válida. Si la transacción se envía antes de
       esta ronda, será rechazada por la red.
-    max_error: >
+    max_error: >-
       La primera ronda válida debe ser al menos la última ronda válida ({{max, number}}).
   lv: # Last valid round
     label: Última ronda válida de la transacción
-    tip: >
+    tip: >-
       La ronda final para la que la transacción es válida. Después de esta ronda, la transacción
       será rechazada por la red.
   lx: # Lease
     label: Arrendamiento
-    tip: >
+    tip: >-
       Un arrendamiento impone la exclusión mutua de las transacciones. Si este campo es distinto de
       cero, una vez confirmada la transacción, ésta adquiere el arrendamiento identificado por el
       par remitente-arrendatario de la transacción hasta que pase la última ronda válida de la
@@ -93,11 +93,11 @@ fields:
       otra transacción que especifique este arrendamiento.
   rekey: # Rekey to
     label: ¿A qué recodificar?
-    tip: >
+    tip: >-
       Especifica la dirección autorizada. Esta dirección se utilizará para autorizar (firmar) todas
       las transacciones futuras.
     placeholder: Dirección a la que recodificar
-    warning: >
+    warning: >-
       <em>Recodificar una cuenta de billetera puede provocar la pérdida de acceso a sus fondos</em>
       si la cuenta se vuelve a teclear en una dirección a la que usted no tiene acceso. Asegúrese de
       saber lo que está haciendo. Obtenga más información sobre el cambio de claves en la
@@ -114,12 +114,12 @@ fields:
     in_coin_other: "{{count, number}} {{coinName}}"
   close: # Close remainder to
     label: ¿A qué cerra el remanente?
-    tip: >
+    tip: >-
       Cuando se establece, indica que la transacción solicita que se cierre la cuenta del remitente
       y que todos los fondos restantes, una vez pagados la comisión y el importe, se transfieran a
       esta dirección.
     placeholder: Dirección a la que cerrar el remanente de fondos
-    warning: >
+    warning: >-
       Si se especifica una dirección, <strong>todos los fondos de la cuenta del remitente se
       enviarán a la dirección especificada</strong> y la cuenta del remitente se cerrará. Asegúrese
       de saber lo que está haciendo.
@@ -138,22 +138,22 @@ fields:
     get_info_unknown: Activo desconocido
   aamt: # Amount of asset to transfer
     label: Cantidad de activo
-    tip: >
+    tip: >-
       El importe del activo a transferir. Un importe cero transferido a sí mismo opta la cuenta en
       ese activo.
   asnd: # Revocation target (the account from which the asset will be revoked)
     label: Objetivo para recuperar
-    tip: >
+    tip: >-
       En una operación de recuperación, la dirección de la que se retirarán los fondos y se enviarán
       al receptor de los activos.
     placeholder: dirección objetivo
   aclose: # Close remainder of asset to
     label: ¿A qué cerra el remanente del activo?
-    tip: >
+    tip: >-
       Especifique este campo para eliminar la tenencia del activo de la cuenta del remitente y
       reducir el saldo mínimo de la cuenta (es decir, excluir el activo).
     placeholder: Dirección a la que cerrar el remanente de activos
-    warning: >
+    warning: >-
       Si se especifica una dirección, <strong>todos los activos de la cuenta del remitente se
       enviarán a la dirección especificada</strong>. Asegúrese de saber lo que está haciendo.
   # Fields for asset configuration type
@@ -178,7 +178,7 @@ fields:
     tip: El número total de unidades base del activo a crear. Este número no se puede modificar.
   apar_dc: # Number of decimals places
     label: Número de cifras decimales
-    tip: >
+    tip: >-
       El número de dígitos a utilizar después del punto decimal al mostrar el activo. Si es 0, el
       activo no es divisible. Si es 1, la unidad base del bien está en décimas. Si es 2, la unidad
       base del activo está en centésimas, si es 3, la unidad base del activo está en milésimas y
@@ -194,46 +194,46 @@ fields:
     placeholder: "ipfs://"
   apar_m_use_snd: # Use sender as manager?
     label: Establecer la dirección del administrador en la dirección del remitente
-    tip: >
+    tip: >-
       Utilice la dirección del remitente de esta transacción como dirección del administrador. La
       dirección del gestor es la dirección de la cuenta que puede cambiar la configuración de este
       activo y destruirlo.
   apar_m: # Manager
     label: Administrador
-    tip: >
+    tip: >-
       Establezca la dirección del administrador. Es la dirección de la cuenta que puede cambiar la
       configuración del activo y destruirlo. Si está vacía, no se permite la reconfiguración.
     placeholder: Dirección del administrador
     empty_warning: Si está vacía, no se permitirá reconfigurar el activo.
   apar_f_use_snd: # Use sender as freeze?
     label: Establecer la dirección para congelar en la dirección del remitente
-    tip: >
+    tip: >-
       Utilice la dirección del remitente de esta transacción como dirección de congelación. La
       dirección para congelar es la dirección de la cuenta que puede congelar las tenencias de este
       activo.
   apar_f: # Freeze address
     label: Dirección para congelar
-    tip: >
+    tip: >-
       Establezca la dirección para congelar. Es la dirección de la cuenta que puede congelar las
       tenencias de este activo. Si está vacía, no se permite la congelación.
     placeholder: Dirección para congelar
     empty_warning: Si está vacía, no se permitirá congelar el activo.
   apar_c_use_snd: # Use sender as clawback?
     label: Establecer la dirección para recuperar en la dirección del remitente
-    tip: >
+    tip: >-
       Utilice la dirección del remitente de esta transacción como dirección para recuperar. La
       dirección para recuperar es la dirección de la cuenta que puede recuperar las tenencias de
       este activo.
   apar_c: # Clawback address
     label: Dirección para recuperar
-    tip: >
+    tip: >-
       Establezca la dirección para recuperar. Es la dirección de la cuenta que puede recuperar las
       tenencias de este activo. Si está vacía, no se permite la recuperación.
     placeholder: Dirección para recuperar
     empty_warning: Si está vacía, no se permitirá recuperar el activo.
   apar_r_use_snd: # Use sender as reserve?
     label: Establecer la dirección de reserva en la dirección del remitente
-    tip: >
+    tip: >-
       Utilice la dirección del remitente de esta transacción como dirección de reserva. La dirección
       de reserva es la dirección de la cuenta que mantiene las unidades de reserva (no acuñadas) del
       activo. Esta dirección no tiene ninguna autoridad específica en el propio protocolo. Se
@@ -242,7 +242,7 @@ fields:
       remitente).
   apar_r: # Reserve address
     label: Dirección de la reserva
-    tip: >
+    tip: >-
       Establezca la dirección de reserva. La dirección de reserva es la dirección de la cuenta que
       mantiene las unidades de reserva (no acuñadas) del activo. Esta dirección no tiene ninguna
       autoridad específica en el propio protocolo. Se utiliza en el caso de que desee indicar a los
@@ -251,7 +251,7 @@ fields:
     placeholder: Dirección de la reserva
   apar_am: # Metadata hash
     label: Hash de metadatos
-    tip: >
+    tip: >-
       Este campo debe ser un hash de 32 bytes de algunos metadatos que sean relevantes para su
       activo y/o sus titulares. El formato de estos metadatos depende de la aplicación. Este campo
       sólo puede especificarse en el momento de la creación. Un ejemplo podría ser el hash de algún
@@ -291,32 +291,32 @@ fields:
     placeholder: Llave de prueba de estado
   votefst: # First voting round
     label: Primera ronda de votaciones
-    tip: >
+    tip: >-
       La primera ronda en la que la clave de participación es válida. No confundir con la «primera
       ronda válida» de esta transacción de registro de claves.
-    max_error: >
+    max_error: >-
       La primera ronda de votaciones debe ser al menos la última ronda de votaciones
       ({{max, number}}).
   votelst: # Last voting round
     label: Última ronda de votaciones
-    tip: >
+    tip: >-
       La última ronda en la que la clave de participación es válida. No confundir con la «última
       ronda válida» de la transacción de registro de la clave.
   votekd: # Voting key dilution
     label: Dilución de la llave de voto
-    tip: >
+    tip: >-
       Es la dilución para la clave de participación de 2 niveles. Determina el intervalo (número de
       rondas) para generar nuevas claves efímeras.
   nonpart: # Nonparticipation
     label: ¿No participar?
-    tip: >
+    tip: >-
       Al establecer este valor en «encendido» («sí»), esta cuenta se desconectará, se marcará
       permanentemente como «nonparticipating» (no participante) y dejará de ganar recompensas. Es
       poco probable que necesites hacer esto y existe principalmente para funciones relacionadas con
       la economía en la red.
     is_nonpart: Sí
     is_not_nonpart: No
-    warning: >
+    warning: >-
       La no participación es permanente. Una vez que una cuenta se marca como no participante,
       nunca podrá marcarse como «en línea» o «fuera de línea» hasta que se cierre y vuelva a
       financiarse.
@@ -336,7 +336,7 @@ fields:
     tip: El ID de la aplicación. Vacío si se está creando.
   apap: # Approval program
     label: Programa de aprobación
-    tip: >
+    tip: >-
       Lógica ejecutada para cada transacción de la aplicación, excepto cuando el tipo de acción de
       la aplicación se establece en «borrar estado». Puede leer y escribir el estado global de la
       aplicación, así como el estado local específico de la cuenta. Los programas de aprobación
@@ -347,7 +347,7 @@ fields:
     import_field_label: Importe el archivo de programa compilado de aprobación
   apsu: # Clear state program
     label: Programa para borrar estado
-    tip: >
+    tip: >-
       Lógica ejecutada para transacciones de aplicación con el tipo de acción de aplicación
       establecido en «borrar estado». Puede leer y escribir el estado global de la aplicación, así
       como el estado local específico de la cuenta. Los programas de borrado de estado no pueden
@@ -358,33 +358,33 @@ fields:
     import_field_label: Importe el archivo de programa compilado para borrar estado
   apgs_nui: # Number of global ints
     label: Número de enteros globales
-    tip: >
+    tip: >-
       Número máximo de valores enteros que pueden almacenarse en el almacén global de valores clave
       de la aplicación. Una vez establecido, no se puede modificar.
   apgs_nbs: # Number of global byte slices
     label: Número de bytes globales
-    tip: >
+    tip: >-
       Número máximo de valores de bytes que pueden almacenarse en el almacén global de valores clave
       de la aplicación. Una vez establecido, no se puede modificar.
   apls_nui: # Number of local ints
     label: Número de enteros locales
-    tip: >
+    tip: >-
       Número máximo de valores enteros que pueden almacenarse en el almacén de valores clave de la
       aplicación local. Una vez establecido, no se puede modificar.
   apls_nbs: # Number of local byte slices
     label: Número de bytes locales
-    tip: >
+    tip: >-
       Número máximo de valores de bytes que pueden almacenarse en el almacén local de valores clave
       de la aplicación. Una vez establecido, no se puede modificar.
   apep: # Number of extra pages
     label: Número de páginas adicionales
-    tip: >
+    tip: >-
       Número de páginas adicionales asignadas a la aprobación de la solicitud y a los programas de
       estado claro. Una vez establecido, no se puede modificar.
     section_heading: Páginas adicionales
   apaa: # Arguments
     label: "Argumento nº {{index}}"
-    tip: >
+    tip: >-
       Argumentos específicos de la transacción a los que se accede desde el programa de aprobación
       de la aplicación y el programa clear-state.
     placeholder: "Valor de argumento nº {{index}}"
@@ -397,7 +397,7 @@ fields:
     no_abi_support: Las llamadas a métodos ABI no son compatibles…por ahora.
   apat: # Account references
     label: "Cuenta nº {{index}}"
-    tip: >
+    tip: >-
       Lista de cuentas, además del remitente, a las que se puede acceder desde el programa de
       aprobación de la aplicación y el programa de estado claro.
     placeholder: "Dirección de cuenta nº {{index}}"
@@ -408,7 +408,7 @@ fields:
     remove_btn: Eliminar una cuenta
   apfa: # Application references
     label: "Aplicación nº {{index}}"
-    tip: >
+    tip: >-
       Lista de aplicaciones, además del ID de la aplicación, a cuyos estados globales
       puede acceder el programa de aprobación y el programa de borrado de estados de esta
       aplicación. El acceso es de sólo lectura.
@@ -419,7 +419,7 @@ fields:
     remove_btn: Eliminar una aplicación
   apas: # Asset references
     label: "Activo nº {{index}}"
-    tip: >
+    tip: >-
       Enumere los activos a cuyas propiedades puede acceder el programa de aprobación y el programa
       de borrado de esta aplicación. El acceso es de sólo lectura.
     placeholder: "ID de activo nº {{index}}"
@@ -436,18 +436,18 @@ fields:
     remove_btn: Eliminar una caja
   apbx_i: # Box application index
     label: "Indice para Caja nº {{index}}"
-    tip: >
+    tip: >-
       El índice en la lista «Referencias de aplicación» de la aplicación a la que se refiere la
       caja. Si es 0, la referencia de caja es para la aplicación que se está llamando. Si es 1 la
       referencia de caja es para la aplicación definida como «Aplicación nº 1». Si es 2 la
       referencia de caja es para la aplicación definida como «Aplicación nº 2» y así sucesivamente.
     heading: "Índice: {{index}}"
-    max_error: >
+    max_error: >-
       El índice de la caja debe ser un índice válido en la lista «Referencias de aplicación», como
       máximo {{max}}.
   apbx_n: # Box name
     label: "Nombre de Caja nº {{index}}"
-    tip: >
+    tip: >-
       El nombre de la caja que la aplicación utilizará para referirse a la caja. Si está vacía,
       añade una referencia de caja vacía.
     placeholder: "Nombre de Caja nº {{index}}"
@@ -455,15 +455,15 @@ fields:
   app_props_heading: Propiedades de aplicación
   app_global_state:
     heading: Estado global
-    max_error: >
+    max_error: >-
       El número combinado de enteros globales y bytes no debe exceder de {{max, number}}.
   app_local_state:
     heading: Estado local
-    max_error: >
+    max_error: >-
       El número combinado de enteros locales y bytes no debe exceder de {{max, number}}.
   app_deps:
     heading: Dependencias de la aplicación
-    max_error: >
+    max_error: >-
       El número combinado de referencias de cuentas, solicitudes, activos y cajas no debe ser
       superior a {{count, number}}.
   more_info: Más información sobre este campo.
@@ -471,9 +471,9 @@ fields:
   base64:
     label: Datos codificados en Base64
     with_label: "{{label}} (Base64)"
-    tip: >
+    tip: >-
       Si está marcada, los datos introducidos en el campo anterior se interpretarán como datos
       codificados en Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
     error: Debe ser un Base64 válido.
-    error_optional: > # Error message for when entering Base64 data is optional
+    error_optional: >- # Error message for when entering Base64 data is optional
       Debe ser un Base64 válido. Introduzca un Base64 válido o desmarque la casilla de abajo.

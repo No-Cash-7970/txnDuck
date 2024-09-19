@@ -16,7 +16,7 @@ transfer_algos:
   action: Transfer Algos
 rekey_account:
   heading: Rekey account
-  description: >
+  description: >-
     Change the authoritative private spending key(s) while maintaining the same public address.
   action: Rekey account
 close_account:
@@ -55,7 +55,7 @@ asset_freeze:
   action: Freeze asset
 asset_unfreeze:
   heading: Unfreeze asset
-  description: >
+  description: >-
     Undo a freeze on an account for a particular asset. Thus, enabling the account’s ability to send
     or receive that asset.
   action: Unfreeze asset
@@ -67,12 +67,12 @@ asset_destroy:
 app_heading: Application (Smart contract)
 app_run:
   heading: Run application
-  description: >
+  description: >-
     Make a generic application call to run the application’s <code>ApprovalProgram</code>.
   action: Run application
 app_opt_in:
   heading: Opt into application
-  description: >
+  description: >-
     Enable the local state to be used. Not necessary if the application does not require any local
     state.
   action: Opt into application
@@ -82,12 +82,12 @@ app_deploy:
   action: Deploy application
 app_update:
   heading: Update application
-  description: >
+  description: >-
     Update the application logic, if the application’s <code>ApprovalProgram</code> allows it.
   action: Update application
 app_close:
   heading: Close out application
-  description: >
+  description: >-
     Gracefully opt out of an application and remove its local state from the balance record.
   action: Close out application
 app_clear:
@@ -110,7 +110,7 @@ reg_offline:
   action: Register as offline
 reg_nonpart:
   heading: Register account nonparticipating
-  description: >
+  description: >-
     <em>Permanently</em> mark an account as not participating. <em>The account will not be able go
     online or offline and receive rewards.</em>
   action: Register as nonparticipating

@@ -8,13 +8,13 @@ download_signed_btn: Download signed transaction
 unsigned_file_name: unsigned
 signed_file_name: signed
 txn_signed: Transaction signed
-sign_error: >
+sign_error: >-
   The transaction could not be signed because the transaction is malformed. This is usually caused
   by invalid transaction information. Go back to the previous step and check for errors in the
   transaction information.
 auto_send:
   label: Automatically send transaction after signing
-  tip: >
+  tip: >-
     If checked, the transaction is sent immediately after it is signed without the need for clicking
     the "Send" button.
   tip_btn_title: More information
@@ -22,19 +22,19 @@ import_txn:
   label: Import signed or unsigned transaction file
   options_heading: Import Options
   b64_note: Note is Base64 encoded data
-  b64_note_tip: >
+  b64_note_tip: >-
     If checked, the imported transaction’s note will be interpreted as Base64 encoded data. If you
     are unsure what this means, leave unchecked.
   b64_lx: Lease is Base64 encoded data
-  b64_lx_tip: >
+  b64_lx_tip: >-
     If checked, the imported transaction’s lease will be interpreted as Base64 encoded data. If you
     are unsure what this means, leave unchecked.
   b64_apar_am: Metadata hash is Base64 encoded data
-  b64_apar_am_tip: >
+  b64_apar_am_tip: >-
     If the imported transaction is a transaction for creating an asset, its metadata hash will be
     interpreted as Base64 encoded data. If you are unsure what this means, leave unchecked.
   no_diff_network: Do not import a transaction for a different network
-  no_diff_network_tip: >
+  no_diff_network_tip: >-
     If checked, importing a transaction for a network different than the currently selected network
     will be immediately rejected. If unchecked, all of the transaction data will be imported except
     for the network data (genesis ID and genesis hash), and the data for the currently selected

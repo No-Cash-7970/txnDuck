@@ -5,7 +5,7 @@ hero: # The attention-grabber that is first thing the user sees
   start_button: Create a new transaction!
 what_is_this:
   heading: What is this?
-  paragraph: >
+  paragraph: >-
     TxnDuck is a free and open source web-based tool that serves as a graphical user interface (GUI)
     for easily creating and sending Algorand transactions without the need for software development
     knowledge.
@@ -13,19 +13,19 @@ how_it_works:
   heading: How does it work?
   compose:
     heading: 1. Compose the transaction.
-    paragraph: >
+    paragraph: >-
       Begin creating a new transaction by entering the transaction information. Use one of the
       transaction presets to make this step faster and easier.
     button: Compose a new transaction
   sign:
     heading: 2. Sign the transaction.
-    paragraph: >
+    paragraph: >-
       Every transaction must be signed before it is sent. Connect your wallet and sign the
       transaction. If you saved a transaction as a file, you can import it to sign it.
     button: Import & sign a transaction
   send:
     heading: 3. Send the transaction.
-    paragraph: >
+    paragraph: >-
       Send the signed transaction. A successful transaction is usually confirmed and final in less
       than 4 seconds. If you saved a signed transaction as a file, you can import it to send it.
     button: Import & send a signed transaction

@@ -17,7 +17,7 @@ footer:
   privacy_policy_link: Privacy policy
   github_link: Source on GitHub
   algo_docs_link: Algorand documentation
-  license_notice: >
+  license_notice: >-
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <a>license</a>.
 settings:
@@ -46,7 +46,7 @@ settings:
   default_auto_send: Automatically send transaction after signing by default
   always_clear_after_send: Always clear saved transaction data after sending
   default_hide_send_info: Hide details within the “More Information” section by default
-  confirm_wait_rounds: >
+  confirm_wait_rounds: >-
     Maximum number of rounds to wait for transaction confirmation (Default:&nbsp;{{default}})
   clear_txn_data_btn: Clear saved transaction data
   clear_all_data_btn: Clear & reset ALL data
@@ -59,7 +59,7 @@ wallet:
   use_provider_btn: "Use {{provider}}"
   is_not_connected: No wallet connected.
   is_connected: "Account: {{address}}" # Address is displayed when wallet is connected
-  set_field_to_connected_addr: >  # Used for buttons that set form field values
+  set_field_to_connected_addr: >-  # Used for buttons that set form field values
     Set this to connected address
   provider_icon_alt: "{{provider}} icon"
   providers:
@@ -86,11 +86,11 @@ wallet:
     email_label: Email address
     email_submit_btn: Send magic link
     email_more_info: More information about Magic
-    email_tip: >
+    email_tip: >-
       A "magic link" will be sent to the provided email address. After using that magic link to log
       in, this app will be connected to the Algorand wallet account associated with the email
       address.
-    disclaimer: >
+    disclaimer: >-
       By using Magic, you agree to the collection of certain personal information as stated in the
       <privacy>Privacy Policy</privacy>.
 node_selector:
