@@ -26,7 +26,7 @@ uninstallation instructions for each of the installation methods.
   - [Uninstalling the development environment](#uninstalling-the-development-environment)
   - [Running the development web server](#running-the-development-web-server)
   - [Building for production](#building-for-production)
-- [Deploying to somewhere other than localhost or Vercel](#deploying-to-somewhere-other-than-localhost-or-vercel)
+- [Deploying to platform other than localhost](#deploying-to-platform-other-than-localhost)
 
 ## Which installation method should I choose?
 
@@ -428,18 +428,22 @@ yarn prod -p 8080
 
 </details>
 
-## Deploying to somewhere other than localhost or Vercel
+## Deploying to platform other than localhost
 
-If the build is going to deployed to somewhere other than localhost or
-[Vercel](https://vercel.com/), then the `BASE_URL` environment variable needs
-to be set to the URL of what will be the home page of the deployed website. The
-`BASE_URL` can be set in a `.env.local` file, which can be created by copying
-the `.env.local.example` file and renaming it to `.env.local`. Alternatively,
-the `BASE_URL` can be set in the `.env.production` file. However, it is best to
-set the `BASE_URL` in the `.env.local` file because it will not be overwritten
-when upgrading to a new version.
+> [!IMPORTANT]
+> This only applies to a [Source code installation](#source-code-installation)
+> or a [development installation](#development-environment-installation).
 
-Here is an example to show what setting the `BASE_URL` looks like:
+If the build is going to deployed to a platform other than localhost, then the
+`BASE_URL` environment variable needs to be set to the URL of the deployed
+website. The way in which to set environment variables for a deployment depends
+of the platform (e.g. Vercel, AWS). Refer to the documentation for the platform
+for how to set the environment variables. However, if your platform does not
+provide a way to set environment variable, the `BASE_URL` can be set in a
+`.env.local` file. Create a `.env.local` file by copying the
+`.env.local.example` file and renaming it to `.env.local`.
+
+An example of setting the `BASE_URL` in a `.env.local` file:
 
 ```shell
 # .env.local file
