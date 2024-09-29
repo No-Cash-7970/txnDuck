@@ -1,14 +1,12 @@
 # Home page
 
 hero: # The attention-grabber that is first thing the user sees
-  main_paragraph: Cree y envíe casi cualquier tipo de transacción de Algorand.
+  main_paragraph: Cree casi cualquier tipo de transacción de Algorand.
   start_button: ¡Cree una nueva transacción!
 what_is_this:
   heading: ¿Qué es esto?
   paragraph: >-
-    TxnPato es una herramienta web gratuita y de código abierto que sirve de interfaz gráfica de
-    usuario (IGU) para crear y enviar fácilmente transacciones Algorand sin necesidad de tener
-    conocimientos de desarrollo de software.
+    Una herramienta gratuita y de código abierto para crear fácilmente transacciones Algorand.
 how_it_works:
   heading: ¿Cómo funciona?
   compose:

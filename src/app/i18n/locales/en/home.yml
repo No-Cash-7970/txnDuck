@@ -1,14 +1,12 @@
 # Home page
 
 hero: # The attention-grabber that is first thing the user sees
-  main_paragraph: Create and send almost any kind of Algorand transaction.
-  start_button: Create a new transaction!
+  main_paragraph: Build almost any kind of Algorand transaction.
+  start_button: Build a new transaction!
 what_is_this:
   heading: What is this?
   paragraph: >-
-    TxnDuck is a free and open source web-based tool that serves as a graphical user interface (GUI)
-    for easily creating and sending Algorand transactions without the need for software development
-    knowledge.
+    A free and open source tool for easily building Algorand transactions.
 how_it_works:
   heading: How does it work?
   compose:

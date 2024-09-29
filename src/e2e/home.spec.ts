@@ -47,7 +47,7 @@ test.describe('Home Page', () => {
 
   test.describe('Language Support', () => {
     (new LanguageSupport({
-      en: { body: /Create/, title: /Transaction/ },
+      en: { body: /Build/, title: /Transaction/ },
       es: { body: /Cree/, title: /transacciones/ },
     })).check(test, HomePage.url);
   });
