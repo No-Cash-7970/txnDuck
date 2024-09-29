@@ -51,7 +51,7 @@ export const networkURLParamName = 'network';
 /** Default MainNet configuration */
 export const mainnetNodeConfig: StoredNodeConfig = {
   network: MAINNET,
-  nodeServer: 'https://mainnet-api.algonode.cloud',
+  nodeServer: 'https://mainnet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
@@ -59,7 +59,7 @@ export const mainnetNodeConfig: StoredNodeConfig = {
 /** Default TestNet configuration */
 export const testnetNodeConfig: StoredNodeConfig = {
   network: TESTNET,
-  nodeServer: 'https://testnet-api.algonode.cloud',
+  nodeServer: 'https://testnet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
@@ -67,7 +67,7 @@ export const testnetNodeConfig: StoredNodeConfig = {
 /** Default BetaNet configuration */
 export const betanetNodeConfig: StoredNodeConfig = {
   network: BETANET,
-  nodeServer: 'https://betanet-api.algonode.cloud',
+  nodeServer: 'https://betanet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
