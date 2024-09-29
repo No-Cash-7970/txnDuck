@@ -249,6 +249,11 @@ specification should be used.
 > [!IMPORTANT]
 > For repository owners and maintainers only
 
+> [!TIP]
+> Before creating a new release, make sure the remote `main` branch on GitHub
+> is up to date with the local `main` branch on the development machine **with all
+> of the CI checks passing** on the remote branch.
+
 This project uses [semantic versioning](https://semver.org/) and
 [commit messages](#git-commit-message-guidelines) to determine the version
 number of releases and generate release notes.
