@@ -79,6 +79,7 @@ development environment are in the [Installation Guide](installation.md#installi
    environment.
 - `.env.production`: Production environment variables. Part of the
   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
+- `.env.test`: Environment variables used for the [E2E tests](#end-to-end-e2e-testing).
 - `.erclintrc.json`: ESLint configuration
 - `.gitattributes`, `.gitignore`: Git configurations files
 - `.swcrc`: SWC (Speedy Web Compiler) [configuration file](https://swc.rs/docs/configuration/swcrc)

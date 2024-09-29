@@ -87,8 +87,18 @@ export const sandboxNodeConfig: NodeConfig = {
   nodeHeaders: undefined,
 };
 
-/** Default node configuration */
-export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
+/** Mapping of network names to their respective default configurations */
+const defaultConfigMap: {[k: string]: NodeConfig} = {
+  [MAINNET]: mainnetNodeConfig,
+  [TESTNET]: testnetNodeConfig,
+  [BETANET]: betanetNodeConfig,
+  [VOI_TESTNET]: voiTestnetNodeConfig,
+  [SANDBOX]: sandboxNodeConfig,
+};
+
+/** The default node configuration */
+export const DEFAULT_NODE_CONFIG =
+  defaultConfigMap[process.env.NEXT_PUBLIC_DEFAULT_NETWORK ?? MAINNET] ?? mainnetNodeConfig;
 
 /** Node configuration that is stored locally (in localStorage) */
 export const nodeConfigAtom =
