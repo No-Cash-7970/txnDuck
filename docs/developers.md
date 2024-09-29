@@ -1,19 +1,13 @@
 <!-- omit in toc -->
 # Developers Documentation
 
-This is documentation contains information useful for developers.
+Useful information for developers.
 
 <!-- omit in toc -->
 ## Table of Contents
 
+- [Setting up the development environment](#setting-up-the-development-environment)
 - [Technology Stack](#technology-stack)
-- [Requirements for the development environment](#requirements-for-the-development-environment)
-- [Installing the development environment](#installing-the-development-environment)
-- [Updating the development environment](#updating-the-development-environment)
-- [Uninstalling the development environment](#uninstalling-the-development-environment)
-- [Running the development web server](#running-the-development-web-server)
-- [Building for production](#building-for-production)
-  - [Deploying to somewhere other than localhost or Vercel](#deploying-to-somewhere-other-than-localhost-or-vercel)
 - [Project structure](#project-structure)
 - [Testing](#testing)
   - [Unit testing](#unit-testing)
@@ -25,10 +19,15 @@ This is documentation contains information useful for developers.
 - [Git hooks](#git-hooks)
   - [`pre-commit` hook](#pre-commit-hook)
   - [`commit-msg` hook](#commit-msg-hook)
-- [Documentation](#documentation)
+- [Writing Documentation](#writing-documentation)
 - [Releases](#releases)
   - [Changelog](#changelog)
   - [Releases on the `stable` branch](#releases-on-the-stable-branch)
+
+## Setting up the development environment
+
+Instructions for installing, updating and uninstalling the
+development environment are in the [Installation Guide](installation.md#installing-the-development-environment).
 
 ## Technology Stack
 
@@ -39,121 +38,10 @@ This is documentation contains information useful for developers.
 - [Tailwind CSS](https://tailwindcss.com/) - CSS framework
 - [daisyUI](https://daisyui.com/) - Library of UI components built with Tailwind
   CSS
+- [Radix UI Primitives](https://www.radix-ui.com/primitives) - Headless UI
+  components for React
 - [i18next](https://www.i18next.com/) - Internationalization framework
 - [Algorand blockchain](https://developer.algorand.org/)
-
-## Requirements for the development environment
-
-- Access to your machine's command-line interface (CLI), such as Terminal,
-  PowerShell or Command Prompt
-- [Git](https://git-scm.com/) installed
-- [Node.js](https://nodejs.org/en) version 20.0.0 or higher installed.
-- [Yarn](https://yarnpkg.com/getting-started/install) package manager installed.
-  Version 2.0.0 or higher, version 4.0.0 or higher is recommended.
-   > NOTE: If you have Yarn 1.x.x installed, you can install and switch to Yarn
-     2.0.0 or higher by running `corepack enable && yarn set version berry
-- OPTIONAL BUT RECOMMENDED: [Visual Studio Code](https://code.visualstudio.com/)
-  IDE (integrated development environment)
-
-## Installing the development environment
-
-1. Clone the repository.
-
-    ```bash
-    git clone https://github.com/No-Cash-7970/txnDuck.git
-    ```
-
-2. Install the dependencies.
-
-    ```bash
-    yarn install && gulp installDev
-    ```
-
-## Updating the development environment
-
-1. Pull the changes.
-
-    ```bash
-    git pull
-    ```
-
-2. Update the dependencies.
-
-    ```bash
-    yarn install:dev
-    ```
-
-## Uninstalling the development environment
-
-1. Delete the project directory that was created when cloning the repository.
-   (Step #1 of the
-   [installation instructions](#installing-the-development-environment))
-2. OPTIONAL: Uninstall the software listed in the
-   [requirements for the development environment](#requirements-for-the-development-environment)
-   if you do not need them for something else.
-
-## Running the development web server
-
-The development server runs your local copy of the repository. This local
-development server uses [Next.js's Fast
-Reload](https://nextjs.org/docs/architecture/fast-refresh) to automatically
-refresh the page in the browser as you save changes. Do the following to run and
-use the development server:
-
-1. Start the development server.
-
-    ```bash
-    yarn dev
-    ```
-
-2. Open a web browser and go to <http://localhost:3000>.
-3. Edit a file in the `src/app` directory and see the result!
-4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or
-   <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). You can start the web server again by
-   following Step #1.
-
-## Building for production
-
-To build for production run:
-
-```bash
-yarn build
-```
-
-To run the build locally in a local web server, which would be served at
-<http://localhost:3000>:
-
-```bash
-yarn start
-```
-
-Or, you can build and run with one command:
-
-```bash
-yarn prod
-```
-
-### Deploying to somewhere other than localhost or Vercel
-
-If the build is going to deployed to somewhere other than localhost or
-[Vercel](https://vercel.com/), then the `BASE_URL` environment variable needs
-to be set to the URL of what will be the home page of the deployed website. The
-`BASE_URL` can be set in a `.env.local` file, which can be created by copying
-the `.env.local.example` file and renaming it to `.env.local`. Alternatively,
-the `BASE_URL` can be set in the `.env.production` file. However, it is best to
-set the `BASE_URL` in the `.env.local` file because it will not be overwritten
-when upgrading to a new version.
-
-Here is an example to show what setting the `BASE_URL` looks like:
-
-```shell
-# .env.local file
-# ...other settings here
-
-BASE_URL=https://example.com
-
-# some more settings here...
-```
 
 ## Project structure
 
@@ -187,7 +75,7 @@ BASE_URL=https://example.com
 - `.env.local`: Local environment variables. Copy the `.env.local.example` file
    to create this file. It must **never** be committed to the project Git
    repository.
-- `.env.local.example`: An example of an `.env.local` file. Does not affect the
+- `.env.local.example`: An example of a `.env.local` file. Does not affect the
    environment.
 - `.env.production`: Production environment variables. Part of the
   [Next.js project structure](https://nextjs.org/docs/getting-started/project-structure)
@@ -227,7 +115,8 @@ To run all of the unit tests once:
 yarn test
 ```
 
-To run tests in "watch mode," where tests for modified files are run when ever a file is saved:
+To run only the unit tests in "watch mode," where tests for modified files are
+run when ever a file is saved:
 
 ```bash
 yarn test:watch
@@ -242,10 +131,10 @@ yarn test:e2e
 ```
 
 > [!IMPORTANT]
-> E2E tests often fail when [development web server](#running-the-development-web-server)
+> E2E tests often fail when [development web server](installation.md#running-the-development-web-server)
 > is running due to the tests being too slow, especially the tests for Firefox.
 > It is recommended that you shut down the development web server before running
-> E2E tests or making a commit without `--no-verify` or `-n`.
+> E2E tests or making a commit while using the `--no-verify` or `-n` flag.
 
 ## Code style guidelines
 
@@ -270,16 +159,18 @@ The Git commit messages for this project follows the [Conventional Commits
 specification](https://www.conventionalcommits.org/en/v1.0.0/). These commit
 message guidelines are enforced by
 [commitlint](https://github.com/conventional-changelog/commitlint/tree/master)
-in the `commit-msg` Git hook. You can choose to use the
-[commitizen](https://github.com/commitizen/cz-cli) tool to easily write properly
-formatted commit messages. To do so, run the following instead of `git commit`
-when creating a commit:
+in the `commit-msg` Git hook. You can use the [commitizen](https://github.com/commitizen/cz-cli)
+tool to easily write properly formatted commit messages. To do so, run the
+following instead of `git commit` when creating a commit:
 
 ```bash
 yarn cz
 ```
 
 ### Common commit message scopes
+
+> [!NOTE]
+> This is not an exhaustive list.
 
 - `app`: The app in general. Usually for files in the `/src/app` directory.
 - `compose_txn`: The "Compose Transaction" page
@@ -290,9 +181,12 @@ yarn cz
 
 ### Common commit message type and scope combinations
 
+> [!NOTE]
+> This is not an exhaustive list.
+
 - `docs(readme)`: Changing the README
 - `docs(dev)`: Changing the Developers Documentation
-- `perf(aesthetics)`: Improving the look and feel of the user interface (UI) 
+- `perf(aesthetics)`: Improving the look and feel of the user interface (UI)
 - `perf(usability)`: Improving the user experience (UX) or usability of the UI
 - `perf(a11y)`: Improving the accessibility (a11y) of the UI
 - `test(e2e)`: Adding or updating end-to-end (E2E) tests
@@ -306,7 +200,7 @@ following commands to skip running these hooks when committing changes:
 git commit --no-verify
 ```
 
-Or, the shortcut:
+Or the shortcut:
 
 ```bash
 git commit -n
@@ -339,17 +233,16 @@ to check if the commit message follows
 [the guidelines](#git-commit-message-guidelines). If the commit message fails
 commitlint, the commit will fail.
 
-## Documentation
+## Writing Documentation
 
 External documentation (documentation not within the code) is written in
-[Git-Flavored Markdown](https://github.github.com/gfm/) and stored in the
-[`docs` directory](./).
+[Git-Flavored Markdown](https://github.github.com/gfm/). Most of this
+documentation is stored in the [`docs` directory](./).
 
 The annotation comments for functions, classes and variables in TypeScript files
 should be formatted using the [TSDoc](https://tsdoc.org) specification. In
-JavaScript files, the
-[JSDoc](https://google.github.io/styleguide/jsguide.html#jsdoc) specification
-should be used.
+JavaScript files, the [JSDoc](https://google.github.io/styleguide/jsguide.html#jsdoc)
+specification should be used.
 
 ## Releases
 
@@ -369,7 +262,8 @@ yarn release
 This command increments the version number according to the commit
 messages. Then it creates a
 [tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag)
-on the `main` branch, pushes the changes, and generates a URL for creating a
+on the `main` branch, merges the `main` branch onto the `stable` branch, pushes
+the changes, and generates a URL for creating a
 [Release](https://docs.github.com/en/repositories/releasing-projects-on-github/about-releases)
 on GitHub with the release notes generated based on commit messages. Creating a
 Release on GitHub requires signing into the GitHub account of the repository
@@ -385,7 +279,7 @@ along with their release notes, is used for that purpose instead.
 
 Releases happen on the `main` branch first. After a release on the `main`
 branch, those changes from the `main` branch should immediately be merged onto
-the `stable` branch. Therefore, the most recent commit on the `stable` branch
-should always be the latest release with a version
-[tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
+the `stable` branch. This is done automatically when using the `yarn release`
+command. The most recent commit on the `stable` branch should always be the
+latest release with a version [tag](https://www.atlassian.com/git/tutorials/inspecting-a-repository/git-tag).
 This means that only “released” code is deployed to [Production](https://txnduck.vercel.app).

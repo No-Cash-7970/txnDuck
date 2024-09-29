@@ -1,8 +1,10 @@
 import gulp from 'gulp';
 import { exec, task } from 'gulp-execa';
 import rename from 'gulp-rename';
-import { Transform } from 'stream';
+import fs from 'node:fs';
+import { Transform } from 'node:stream';
 import yaml from 'js-yaml';
+import archiver from 'archiver';
 
 /** The directory where compiled locales will go */
 const COMPILED_DEST = `src/app/i18n/locales/.dist`;
@@ -103,8 +105,8 @@ export const installDev = gulp.parallel(
   task('yarn playwright install')
 );
 
-/** Things that need to be done before building the project. The "prebuild". Usually consists
- * of compiling files that will be used in the building process.
+/** Things that need to be done before building the project. The "prebuild". Usually consists of
+ * compiling files that will be used in the building process.
  */
 export const prebuild = gulp.parallel(
   compileLocales,
@@ -121,14 +123,13 @@ export const precommitHook = gulp.series(
     { reject: false } // Continue onto next task even if there is an error
   ),
   // Lint first, a lint error will cause this task to end early. Errors caught by the linter often
-  // cause unit test and E2E test failures, so lint error should be fixed before running the
-  // tests.
+  // cause unit test and E2E test failures, so lint error should be fixed before running the tests.
   precommitLint,
   // Needed for the build that happens before the tests
   compileLocales,
   // Run all of the unit tests before E2E tests because if one of those fails, there's no need to
-  // run the E2E tests, which typically take much longer. Something that causes a unit test to
-  // fail is likely to cause at least one of the E2E tests to fail.
+  // run the E2E tests, which typically take much longer. Something that causes a unit test to fail
+  // is likely to cause at least one of the E2E tests to fail.
   precommitUnitTest,
   // E2E tests. Typically take a long time
   precommitE2eTest,
@@ -143,4 +144,46 @@ export const postRelease = gulp.series(
   task(`git merge ${GIT_BRANCH_MAIN}`),
   task('git push'),
   task(`git checkout ${GIT_BRANCH_MAIN}`),
+);
+
+/** Create a standalone build that includes the static assets. Usually used for making a GitHub
+ * release artifact.
+ */
+export const buildStandalone = gulp.series(
+  // Build using "standalone" mode
+  async function setEnv() { process.env.STANDALONE_BUILD = true; },
+  task('yarn build'),
+  // Add static assets because NextJS's static build does not include it
+  task('cp -r public .next/standalone'),
+  task('cp -r .next/static .next/standalone/.next'),
+  // The public/index.html is for static build only, so remove it for the standalone build
+  task('rm .next/standalone/public/index.html', { reject: false }),
+  // Make the "build" directory in case it does not exist
+  task('mkdir build', { reject: false }),
+  // Zip the files for easier distribution
+  async function zipStandalone() {
+    const outFilename = process.env.STANDALONE_FILENAME
+      || `${process.env.npm_package_name}-${process.env.npm_package_version}`;
+    const output = fs.createWriteStream(`./build/${outFilename}.zip`);
+    const archive = archiver('zip').glob('**', { cwd: '.next/standalone', dot: true });
+
+    // Pipe archive data to the file
+    archive.pipe(output)
+      // Good practice to catch this error explicitly
+      .on('error', err => { throw err; })
+      // Good practice to catch warnings (i.e. stat failures and other non-blocking errors)
+      .on('warning', err => console.warn(err));
+
+    // The 'close' event is fired only when a file descriptor is involved
+    output.on('close', () => console.log(`${archive.pointer()} total bytes written to archive.`))
+      // This event is fired when the data source is drained no matter what was the data source.
+      // It is not part of this library but rather from the NodeJS Stream API.
+      // @see: https://nodejs.org/api/stream.html#stream_event_end
+      .on('end', () => console.log('Data has been drained'));
+
+    // Finalize the archive (ie we are done appending files but streams have to finish yet)
+    // 'close', 'end' or 'finish' events may be fired right after calling this method so register to
+    // them beforehand
+    return await archive.finalize();
+  },
 );

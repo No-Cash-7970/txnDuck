@@ -15,7 +15,7 @@ fine. There are other easy ways to support the project and show your
 appreciation, which we would also be very happy about:
 
 - Star the project
-- Tweet about it
+- Post on social media about it
 - Refer this project in your project's readme
 - Mention the project at local meetups and tell your friends/colleagues
 
@@ -77,14 +77,13 @@ is important.
 
 - Make sure you are using the latest version. Fork the `main` branch of the
   repository and make sure that fork is up to date.
-- [Install](../docs/developers.md#installing-the-development-environment) and
-  [use](../docs/developers.md#running-the-development-web-server) the
+- [Install](../docs/installation.md#installing-the-development-environment) and
+  [use](../docs/installation.md#running-the-development-web-server) the
   development environment to test the translations.
 - Look in the [`locales` directory](../src/app/i18n/locales/) to see if the
   translation exists already.
 - Check the current status of the language translations in the table in the
-  [*Supported languages* section in the
-  README](../README.md#speech_balloon-supported-languages).
+  [*Supported languages* section in the README](../README.md#speech_balloon-supported-languages).
 
 ### How do I submit a new translation?
 
@@ -147,9 +146,8 @@ translation:
 
 ### How do I fix or edit an existing translation?
 
-Edit the files in the directory for the language in the [`locales`
-directory](../src/app/i18n/locales/). For example, edit the files `es` directory
-to edit the Spanish translation.
+Edit the files in the directory for the language in the [`locales` directory](../src/app/i18n/locales/).
+For example, edit the files `es` directory to edit the Spanish translation.
 
 ## Reporting bugs
 
@@ -163,7 +161,7 @@ steps in advance to help us fix any potential bug as fast as possible.
 - Make sure you are using the latest version.
 - Determine if your bug is really a bug and not an error on your side e.g. using
   incompatible environment components/versions. If you are looking for support,
-  you might want to check [this section](#asking-a-question).
+  you might want to check [the "Asking a Question" section](#asking-a-question).
 - To see if other users have experienced (and potentially already solved) the
   same issue you are having, check if there is not already a bug report existing
   for your bug or error in the [bug
@@ -181,7 +179,7 @@ steps in advance to help us fix any potential bug as fast as possible.
 
 ### How do I submit a good bug report?
 
-> [!WARNING]
+> [!CAUTION]
 > You must never report security related issues, vulnerabilities or
 > bugs including sensitive information to the issue tracker, or elsewhere in
 > public. Refer to the [security policy](SECURITY.md) for reporting sensitive
@@ -262,14 +260,13 @@ accepting your code changes.
 
 - Make sure that you are using the latest version. Fork the `main` branch of the
   repository and make sure that fork is up to date.
-- [Install](../docs/developers.md#installing-the-development-environment) and
-  [use](../docs/developers.md#running-the-development-web-server) the
+- [Install](../docs/installation.md#installing-the-development-environment) and
+  [use](../docs/installation.md#running-the-development-web-server) the
   development environment to test the translations.
 
 ### How do I submit a code change?
 
-To submit a code change, open a new
-[Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
+To submit a code change, open a new [Pull Request](https://github.com/No-Cash-7970/txnDuck/pulls).
 
 - Use a **clear and descriptive title** that describes the change(s).
 - Provide a **step-by-step description of the what the software does with the
@@ -283,5 +280,4 @@ To submit a code change, open a new
 <!-- omit in toc -->
 ## Attribution
 
-This guide is based on the **contributing-gen**.
-[Make your own](https://github.com/bttger/contributing-gen)!
+This guide is based on the **contributing-gen**. [Make your own](https://github.com/bttger/contributing-gen)!

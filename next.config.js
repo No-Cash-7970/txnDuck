@@ -49,6 +49,10 @@ if (process.env.STATIC_BUILD?.toLowerCase() === 'true') {
   nextConfig.output = 'export';
 }
 
+if (process.env.STANDALONE_BUILD?.toLowerCase() === 'true') {
+  nextConfig.output = 'standalone';
+}
+
 // Create configuration for next-pwa plugin
 const withPWA = require('next-pwa')({
   dest: 'public',
