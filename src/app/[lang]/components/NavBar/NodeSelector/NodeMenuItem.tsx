@@ -7,7 +7,7 @@ import * as NodeConfigLib from '@/app/lib/node-config';
 
 type Props = {
   /** The node configuration data to be applied and stored when the menu item is clicked */
-  config: NodeConfigLib.StoredNodeConfig
+  config: NodeConfigLib.NodeConfig
   /** Contents (icon & name) of the menu item */
   children: React.ReactNode
 };

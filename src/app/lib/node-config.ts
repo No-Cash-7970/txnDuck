@@ -8,17 +8,17 @@ import { splitAtom } from "jotai/utils";
 import { validationAtom } from "./utils";
 import { UNIT_NAME_MAX_LENGTH } from './txn-data/constants';
 
-/** Name for MainNet */
+/** Name for Algorand MainNet */
 export const MAINNET = 'mainnet';
-/** Name for TestNet */
+/** Name for Algorand TestNet */
 export const TESTNET = 'testnet';
-/** Name for BetaNet */
+/** Name for Algorand BetaNet */
 export const BETANET = 'betanet';
 /** Name for Voi TestNet */
 export const VOI_TESTNET = 'voi_testnet';
 /** Name for Sandbox */
 export const SANDBOX = 'sandbox';
-/** Name for Sandbox */
+/** Name for custom node */
 export const CUSTOM = 'custom';
 
 /** The default coin (native currency) name */
@@ -26,7 +26,7 @@ export const DEFAULT_COIN_NAME = 'ALGO';
 /** Name of the coin (native currency) for Voi, an Algorand code fork */
 export const VOI_COIN_NAME = 'VOI';
 
-/** Base node configuration */
+/** Node configuration */
 export interface NodeConfig {
   /** Name of the network (e.g. "mainnet", "testnet") */
   network: string;
@@ -39,9 +39,6 @@ export interface NodeConfig {
   nodePort?: string | number;
   /** HTTP headers for the Algod node server */
   nodeHeaders?: Record<string, string>;
-}
-
-export interface StoredNodeConfig extends NodeConfig {
   /** Name of the network's native currency */
   coinName?: string;
 }
@@ -49,7 +46,7 @@ export interface StoredNodeConfig extends NodeConfig {
 export const networkURLParamName = 'network';
 
 /** Default MainNet configuration */
-export const mainnetNodeConfig: StoredNodeConfig = {
+export const mainnetNodeConfig: NodeConfig = {
   network: MAINNET,
   nodeServer: 'https://mainnet-api.4160.nodely.dev',
   nodeToken: '',
@@ -57,7 +54,7 @@ export const mainnetNodeConfig: StoredNodeConfig = {
   nodeHeaders: undefined,
 };
 /** Default TestNet configuration */
-export const testnetNodeConfig: StoredNodeConfig = {
+export const testnetNodeConfig: NodeConfig = {
   network: TESTNET,
   nodeServer: 'https://testnet-api.4160.nodely.dev',
   nodeToken: '',
@@ -65,7 +62,7 @@ export const testnetNodeConfig: StoredNodeConfig = {
   nodeHeaders: undefined,
 };
 /** Default BetaNet configuration */
-export const betanetNodeConfig: StoredNodeConfig = {
+export const betanetNodeConfig: NodeConfig = {
   network: BETANET,
   nodeServer: 'https://betanet-api.4160.nodely.dev',
   nodeToken: '',
@@ -73,7 +70,7 @@ export const betanetNodeConfig: StoredNodeConfig = {
   nodeHeaders: undefined,
 };
 /** Default Voi TestNet configuration */
-export const voiTestnetNodeConfig: StoredNodeConfig = {
+export const voiTestnetNodeConfig: NodeConfig = {
   network: VOI_TESTNET,
   nodeServer: 'https://testnet-api.voi.nodly.io',
   nodeToken: '',
@@ -82,7 +79,7 @@ export const voiTestnetNodeConfig: StoredNodeConfig = {
   coinName: VOI_COIN_NAME,
 };
 /** Default Sandbox configuration */
-export const sandboxNodeConfig: StoredNodeConfig = {
+export const sandboxNodeConfig: NodeConfig = {
   network: SANDBOX,
   nodeServer: 'http://localhost',
   nodeToken: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
@@ -95,9 +92,9 @@ export const DEFAULT_NODE_CONFIG = mainnetNodeConfig;
 
 /** Node configuration that is stored locally (in localStorage) */
 export const nodeConfigAtom =
-  atomWithStorage<StoredNodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG);
+  atomWithStorage<NodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG);
 
-export type CustomNodeConfig = Omit<StoredNodeConfig, 'network'>;
+export type CustomNodeConfig = Omit<NodeConfig, 'network'>;
 /** Custom node configuration that is indefinitely stored locally */
 export const customNodeAtom =
   atomWithStorage<CustomNodeConfig|null>('customNode', null); // localStorage is used by default
