@@ -8,21 +8,22 @@ on:
     branches: [ main ]
     paths-ignore:
       - '**/*.md' # Do not run checks when only documentation files are changed
+  workflow_dispatch:
 jobs:
   e2e-test:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Install Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: yarn
@@ -32,7 +33,7 @@ jobs:
       run: yarn playwright install --with-deps
     - name: Run E2E tests
       run: yarn test:e2e
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       if: always()
       with:
         name: playwright-report
@@ -43,15 +44,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Install Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: yarn
@@ -64,15 +65,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Install Node
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: yarn
