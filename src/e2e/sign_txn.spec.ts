@@ -95,13 +95,13 @@ test.describe('Sign Transaction Page', () => {
         // NOTE: Assuming that the default network is MainNet
 
         // Select TestNet from node selection menu so node configuration is stored in local storage
-        const mainnetButton = await page.getByRole('button', { name: 'MainNet' });
+        const mainnetButton = page.getByRole('button', { name: 'MainNet' });
         await mainnetButton.click();
         await page.getByText('TestNet', { exact: true }).click(); // Menu item
 
         // Select non-default network using URL parameter
         await (new SignTxnPage(page)).goto('en',`${presetURLParam}&network=betanet`);
-        const betanetButton = await page.getByRole('button', { name: 'BetaNet' });
+        const betanetButton = page.getByRole('button', { name: 'BetaNet' });
         await expect(betanetButton).toBeVisible();
 
         // Select MainNet from node selection menu
