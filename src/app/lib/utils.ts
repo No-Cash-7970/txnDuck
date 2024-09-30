@@ -2,6 +2,7 @@
 
 import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdkv3";
 import { SetStateAction, WritableAtom } from "jotai";
+import { Themes } from "@/app/lib/app-settings";
 
 /** Regular expression for detecting a valid Base64 string.
  *
@@ -191,6 +192,30 @@ export const getMetadataBase = () => {
   if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
   // Otherwise, assume localhost as the metadata base URL
   return `http://localhost:${process.env.PORT || 3000}`;
+};
+
+/** Save the user's theme preference and apply it
+ * @param themeName The name of the theme to apply
+ * @param setThemeFn Function for updating the theme value. The given function can accept the theme
+ *                   name as a parameter
+ * @param notifyFn Function for notifying the user that the theme has been changed. If no function
+ *                 is given, the user will not be notified.
+ */
+export function applyTheme(
+  themeName: Themes | '',
+  setThemeFn: (theme: Themes | '') => void,
+  notifyFn?: () => void
+) {
+  // Update theme value
+  setThemeFn(themeName);
+
+  // Apply the theme
+  // NOTE: If there are significant changes to the following line, update the script in the
+  //`<head>` if necessary */
+  (document.querySelector('html') as HTMLHtmlElement).dataset.theme = themeName;
+
+  // Notify user (if the user should be notified)
+  if (notifyFn) notifyFn();
 };
 
 /** Validation error message */

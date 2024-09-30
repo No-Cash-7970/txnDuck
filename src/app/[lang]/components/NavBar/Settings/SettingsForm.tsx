@@ -1,21 +1,18 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
-import { RESET } from 'jotai/utils';
-import { useTranslation } from '@/app/i18n/client';
-import { Trans } from 'react-i18next';
-import { ToastNotification, WalletProvider } from '@/app/[lang]/components';
-import {
-  NumberField,
-  RadioButtonGroupField,
-  ToggleField
-} from '@/app/[lang]/components/form';
-import { useDebouncedCallback } from 'use-debounce';
-import * as Settings from '@/app/lib/app-settings';
-import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import ConnectWallet from './ConnectWallet';
-import { IconExclamationCircle } from '@tabler/icons-react';
+import { useEffect, useState } from "react";
+import { useAtom, useSetAtom } from "jotai";
+import { RESET } from "jotai/utils";
+import { useTranslation } from "@/app/i18n/client";
+import { Trans } from "react-i18next";
+import { ToastNotification, WalletProvider, ThemeChanger } from "@/app/[lang]/components";
+import { NumberField, ToggleField } from "@/app/[lang]/components/form";
+import { useDebouncedCallback } from "use-debounce";
+import * as Settings from "@/app/lib/app-settings";
+import { storedSignedTxnAtom, storedTxnDataAtom } from "@/app/lib/txn-data";
+import ConnectWallet from "./ConnectWallet";
+import { IconExclamationCircle } from "@tabler/icons-react";
+import { applyTheme } from "@/app/lib/utils";
 
 type Props = {
   /** Language */
@@ -41,7 +38,7 @@ export default function SettingsForm(props: Props) {
   const [toastMsg, setToastMsg] = useState('');
 
   /* Settings Data */
-  const [theme, setTheme] = useAtom(Settings.themeAtom);
+  const setTheme = useSetAtom(Settings.themeAtom);
   const [disallowFormErrors, setDisallowFormErrors] = useAtom(Settings.disallowFormErrorsAtom);
   const [defaultUseSugFee, setDefaultUseSugFee] = useAtom(Settings.defaultUseSugFee);
   const [assetInfoGet, setAssetInfoGet] = useAtom(Settings.assetInfoGet);
@@ -76,24 +73,10 @@ export default function SettingsForm(props: Props) {
     setToastOpen(true);
   };
 
-  /** Save the user's theme preference and apply it */
-  const applyTheme = (themeValue: Settings.Themes, notify = true) => {
-    // Update theme value in local storage
-    setTheme(themeValue === '' ? RESET : themeValue);
-
-    // Apply the theme
-    // NOTE: If there are significant changes to the following line, update the script in the
-    //`<head>` if necessary */
-    (document.querySelector('html') as HTMLHtmlElement).dataset.theme = themeValue;
-
-    // Notify user (if the user should be notified)
-    if (notify) notifySave();
-  };
-
   /** Reset all settings to their default values  */
   const resetSettings = () => {
     // Set to defaults
-    applyTheme(Settings.defaults.theme, false);
+    applyTheme('', () => setTheme(RESET));
     setDisallowFormErrors(RESET);
     setDefaultUseSugFee(RESET);
     setDefaultUseSugRounds(RESET);
@@ -132,19 +115,7 @@ export default function SettingsForm(props: Props) {
   return (<>
     <form noValidate={true} aria-label={t('settings.heading')} onSubmit={(e) => e.preventDefault()}>
       {/* Setting: Theme setting */}
-      <RadioButtonGroupField
-        name='theme'
-        label={t('settings.theme_switcher.label')}
-        containerClass=''
-        optionClass='btn-sm disabled:checked:opacity-20'
-        options={[
-          { value: Settings.Themes.light, text: t('settings.theme_switcher.light') },
-          { value: Settings.Themes.dark, text: t('settings.theme_switcher.dark') },
-          { value: Settings.Themes.auto, text: t('settings.theme_switcher.auto') },
-        ]}
-        value={theme}
-        onChange={(e) => applyTheme(e.target.value as Settings.Themes)}
-      />
+      <ThemeChanger lng={props.lng} notify={notifySave} />
 
       <h3>{t('settings.compose_txn_general_heading')}</h3>
 

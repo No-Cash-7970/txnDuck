@@ -4,6 +4,7 @@ export {default as Footer} from './Footer';
 export {default as JotaiProvider} from './JotaiProvider';
 export {default as NavBar} from './NavBar';
 export {default as PageTitleHeading} from './PageTitleHeading';
+export {default as ThemeChanger} from './ThemeChanger';
 export {default as ToastNotification} from './ToastNotification';
 export {default as ToastProvider} from './ToastProvider';
 export {default as ToastViewport} from './ToastViewport';
