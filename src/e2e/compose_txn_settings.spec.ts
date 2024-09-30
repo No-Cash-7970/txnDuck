@@ -14,12 +14,13 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
   },
 });
 
+test.slow();
+
 test.describe('Compose Transaction Page', () => {
   test.describe('Settings', () => {
 
     test('uses the default "Automatically set fee" value set in the settings',
     async ({ page }) => {
-      test.slow();
       // Change setting when on the home page
       await (new HomePage(page)).goto();
       const settingsBtn = page.getByRole('button', { name: 'Settings' });
@@ -60,7 +61,6 @@ test.describe('Compose Transaction Page', () => {
 
     test('uses the default "Automatically set valid rounds" value set in the settings',
     async ({ page }) => {
-      test.slow();
       // Change setting when on the home page
       await (new HomePage(page)).goto();
       const settingsBtn = page.getByRole('button', { name: 'Settings' });
@@ -101,7 +101,6 @@ test.describe('Compose Transaction Page', () => {
 
     test('uses the "manager address to the sender address by default" value set in the settings',
     async ({ page }) => {
-      test.slow();
       // Change setting when on the home page
       await (new HomePage(page)).goto();
       const settingsBtn = page.getByRole('button', { name: 'Settings' });
@@ -144,7 +143,6 @@ test.describe('Compose Transaction Page', () => {
 
     test('uses the "freeze address to the sender address by default" value set in the settings',
     async ({ page }) => {
-      test.slow();
       // Change setting when on the home page
       await (new HomePage(page)).goto();
       const settingsBtn = page.getByRole('button', { name: 'Settings' });
@@ -187,7 +185,6 @@ test.describe('Compose Transaction Page', () => {
 
     test('uses the "clawback address to the sender address by default" value set in the settings',
     async ({ page }) => {
-      test.slow();
       // Change setting when on the home page
       await (new HomePage(page)).goto();
       const settingsBtn = page.getByRole('button', { name: 'Settings' });
