@@ -441,7 +441,9 @@ of the platform (e.g. Vercel, AWS). Refer to the documentation for the platform
 for how to set the environment variables. However, if your platform does not
 provide a way to set environment variable, the `BASE_URL` can be set in a
 `.env.local` file. Create a `.env.local` file by copying the
-`.env.local.example` file and renaming it to `.env.local`.
+`.env.local.example` file and renaming it to `.env.local`. Refer to
+[Next.JS's documentation on environment variables](https://nextjs.org/docs/app/building-your-application/configuring/environment-variables#environment-variable-load-order)
+for details about how environment variables are loaded.
 
 An example of setting the `BASE_URL` in a `.env.local` file:
 
