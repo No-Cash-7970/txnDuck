@@ -7,7 +7,7 @@ import {
   type SupportedWallets,
 } from '@txnlab/use-wallet-react';
 import { useAtomValue } from 'jotai';
-import { nodeConfigAtom } from '@/app/lib/node-config';
+import { MAINNET, nodeConfigAtom } from '@/app/lib/node-config';
 
 /** Wrapper for initializing the use-wallet library. Also serves as a provider to convert the
  * use-wallet wallet provider to a client component so it can be used in server components with
@@ -58,7 +58,24 @@ export default function WalletProvider({ sitename, children }: {
     });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect, Kibisis, Magic, Exodus, KMD
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic, Exodus, KMD
+     */
+  }
+
+  // TODO: Disable for Voi MainNet too
+  // Add mnemonic as a supported wallet if it is enabled in the environment variables
+  // AND the network is not MainNet
+  if (process.env.NEXT_PUBLIC_FEAT_MNEMONIC_WALLET === 'true'
+      && nodeConfig.network !== MAINNET
+  ) {
+    // Insert mnemonic wallet at the end of the list of supported wallets
+    supportedWallets.push({
+      id: WalletId.MNEMONIC,
+      options: { persistToStorage: process.env.NEXT_PUBLIC_FEAT_MNEMONIC_WALLET_PERSIST === 'true'}
+    });
+    /*
+     * Wallets list is now:
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic?, Exodus, KMD, Mnemonic
      */
   }
 
@@ -69,7 +86,6 @@ export default function WalletProvider({ sitename, children }: {
       baseServer: nodeConfig.nodeServer,
       port: nodeConfig.nodePort,
       headers: nodeConfig.nodeHeaders,
-
     },
     options: {
       // Setting `debug` to `true` same as setting `logLevel` to `LogLevel.DEBUG`

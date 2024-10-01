@@ -72,6 +72,7 @@ wallet:
     kibisis: Kibisis
     walletconnect: WalletConnect
     magic: Magic
+    mnemonic: Mnemonic
   type:
     mobile: Mobile wallet
     mobile_web: Mobile & web wallet
@@ -80,6 +81,7 @@ wallet:
     cli_sandbox: CLI wallet for Sandbox
     protocol: Wallet connection protocol
     waas: Wallet-as-a-service
+    mnemonic: Dangerously enter the mnemonic
   magic_prompt:
     fail: Failed to authenticate using Magic.
     heading: Magic
