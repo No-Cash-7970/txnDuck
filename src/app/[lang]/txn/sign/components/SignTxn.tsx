@@ -249,7 +249,7 @@ export default function SignTxn({ lng }: Props) {
         </button>
         {storedSignedTxn &&
           <button
-            className='btn btn-link text-accent btn-sm mt-4 sm:ms-4 sm:mt-0 '
+            className='btn btn-link text-accent btn-sm mt-3 sm:ms-3 sm:mt-0 '
             onClick={async (e) => {
               e.preventDefault();
               TxnFileLinkRef.current.href = storedSignedTxn;
