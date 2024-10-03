@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { NavBarComponent as NavBar } from './shared/NavBarComponent';
-import { LanguageSupport } from './shared/LanguageSupport';
+import { LanguageSupport, NavBarComponent as NavBar } from './shared';
 import { NotFoundPage } from './pageModels/NotFoundPage';
 
 // Extend basic test by providing a "notFoundPage" fixture.

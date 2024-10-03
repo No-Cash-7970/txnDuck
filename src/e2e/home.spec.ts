@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { NavBarComponent as NavBar } from './shared/NavBarComponent';
-import { LanguageSupport } from './shared/LanguageSupport';
+import { LanguageSupport, NavBarComponent as NavBar } from './shared';
 import { HomePage } from './pageModels/HomePage';
 import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
 import { TxnPresetsPage } from './pageModels/TxnPresetsPage';

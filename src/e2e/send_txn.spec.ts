@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { NavBarComponent as NavBar } from './shared/NavBarComponent';
-import { LanguageSupport } from './shared/LanguageSupport';
+import { LanguageSupport, NavBarComponent as NavBar } from './shared';
 import { SendTxnPage } from './pageModels/SendTxnPage';
 
 // Extend basic test by providing a "sendTxnPage" fixture.
