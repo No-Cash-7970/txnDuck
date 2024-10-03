@@ -1,10 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// require('dotenv').config();
+// Use process.env.PORT by default and fallback to port 3000
+const PORT = process.env.PORT || 3000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -30,7 +27,7 @@ export default defineConfig({
    */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${PORT}`,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -77,8 +74,12 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'yarn prod',
-    url: 'http://localhost:3000',
+    url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // 2 minutes
+    env: {
+      NODE_ENV: 'test'
+    },
+    stdout: 'pipe',
   },
 });
