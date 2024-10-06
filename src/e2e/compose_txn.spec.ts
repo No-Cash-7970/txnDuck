@@ -2,6 +2,7 @@ import { test as base, expect } from '@playwright/test';
 import { LanguageSupport, NavBarComponent as NavBar } from './shared';
 import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
 import { TxnPresetsPage } from './pageModels/TxnPresetsPage';
+import { usdcAsset } from './shared/NodeTestResponses';
 
 // Extend basic test by providing a "composeTxnPage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -13,28 +14,6 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
     // Use the fixture value in the test.
     await use(composeTxnPage);
   },
-});
-
-// Asset data for USDC token. Used to mock requests for USDC asset data. This is the exact asset
-// data for USDC on MainNet as of August 2024. Using the exact data makes the mock as close to what
-// would happen in production as much as possible.
-const usdcAssetData = stringifyJSON({
-  index: 31566704,
-  params: {
-    creator: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
-    decimals: 6,
-    "default-frozen": false,
-    freeze: "3ERES6JFBIJ7ZPNVQJNH2LETCBQWUPGTO4ROA6VFUR25WFSYKGX3WBO5GE",
-    manager: "37XL3M57AXBUJARWMT5R7M35OERXMH3Q22JMMEFLBYNDXXADGFN625HAL4",
-    name: "USDC",
-    "name-b64": "VVNEQw==",
-    reserve: "2UEQTE5QDNXPI7M3TU44G6SYKLFWLPQO7EBZM7K7MHMQQMFI4QJPLHQFHM",
-    total: BigInt('18446744073709551615'),
-    "unit-name": "USDC",
-    "unit-name-b64": "VVNEQw==",
-    url: "https://www.centre.io/usdc",
-    "url-b64":"aHR0cHM6Ly93d3cuY2VudHJlLmlvL3VzZGM="
-  }
 });
 
 test.describe('Compose Transaction Page', () => {
@@ -91,7 +70,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
+        await route.fulfill({ body: usdcAsset, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
@@ -120,7 +99,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
+        await route.fulfill({ body: usdcAsset, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_transfer&${formUrlParams}`);
@@ -149,7 +128,7 @@ test.describe('Compose Transaction Page', () => {
 
       // Mock the Algorand node call for asset data before navigating
       await page.route('*/**/v2/assets/31566704', async route => {
-        await route.fulfill({ body: usdcAssetData, contentType: 'application/json' });
+        await route.fulfill({ body: usdcAsset, contentType: 'application/json' });
       });
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=asset_opt_in&${formUrlParams}`);
