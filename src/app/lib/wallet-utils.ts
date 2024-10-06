@@ -13,7 +13,7 @@ export const walletTypes: {[id: string]: string} = {
   [WalletId.EXODUS]: 'browser_extension',
   // [WalletId.DAFFI]: 'mobile',
   [WalletId.LUTE]: 'web',
-  [WalletId.KMD]: 'cli_sandbox',
+  [WalletId.KMD]: 'cli',
   [WalletId.KIBISIS]: 'browser_extension',
   [WalletId.WALLETCONNECT]: 'protocol',
   [WalletId.MAGIC]: 'waas',

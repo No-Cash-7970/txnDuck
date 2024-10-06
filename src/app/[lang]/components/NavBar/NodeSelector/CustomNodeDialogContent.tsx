@@ -13,7 +13,12 @@ import { RESET } from "jotai/utils";
 import { atomWithValidate } from "jotai-form";
 import * as NodeConfigLib from "@/app/lib/node-config";
 import { ToastNotification } from '@/app/[lang]/components';
-import { FieldErrorMessage, FieldGroup, TextField } from "@/app/[lang]/components/form";
+import {
+  FieldErrorMessage,
+  FieldGroup,
+  SelectField,
+  TextField
+} from "@/app/[lang]/components/form";
 import { ValidationMessage, isAlgodOK, removeNonNumericalChars } from "@/app/lib/utils";
 import { UNIT_NAME_MAX_LENGTH } from "@/app/lib/txn-data/constants";
 
@@ -83,19 +88,21 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
           return headerObj;
         }, {})
     };
-    const configToBeStored = {
+    const configToBeStored: NodeConfigLib.NodeConfig = {
+      network: config.network as string,
       nodeServer: config.url as string,
       nodePort: config.port,
       nodeToken: config.token as string,
       nodeHeaders: config.headers,
       coinName: config.coinName as string || undefined,
+      isCustom: true,
     };
     // Store custom config
     setStoredCustomNodeConfig(configToBeStored);
 
     // If the currently selected node is the custom node, update that too
-    if (nodeConfig.network === NodeConfigLib.CUSTOM) {
-      setNodeConfig({ network: NodeConfigLib.CUSTOM, ...configToBeStored });
+    if (nodeConfig.isCustom) {
+      setNodeConfig(configToBeStored);
     }
 
     setSubmittingForm(false);
@@ -106,9 +113,11 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
   /** Clears the form field with the given name
    * @param fieldName The name of the field to clear
    */
-  const clearFormField = (fieldName: 'url' | 'port' | 'token' | 'headers' | 'coinName') => {
+  const clearFormField = (
+    fieldName : 'network' | 'url' | 'port' | 'token' | 'headers' | 'coinName'
+  ) => {
     if (fieldName !== 'headers') {
-      form.handleOnChange(fieldName);
+      form.handleOnChange(fieldName)('');
       form.setFocused(fieldName, false);
       form.setTouched(fieldName, false);
     } else {
@@ -119,6 +128,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
   /** Clear the form and the stored custom configuration */
   const clearCustomNodeConfig = () => {
     // Clear the form
+    clearFormField('network');
     clearFormField('url');
     clearFormField('port');
     clearFormField('token');
@@ -130,7 +140,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
     setStoredCustomNodeConfig(RESET);
 
     // If the currently selected node is the custom node, clear that too
-    if (nodeConfig.network === NodeConfigLib.CUSTOM) setNodeConfig(RESET);
+    if (nodeConfig.isCustom) setNodeConfig(RESET);
 
     // Notify that custom configuration has been cleared
     setToastOpen(true);
@@ -138,20 +148,23 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
 
   useEffect(() => {
     // If the stored custom configuration has changed because the form was submitted, then the
-    // configuration doesn not need to be loaded from storage.
+    // configuration does not need to be loaded from storage.
     if (submittingForm) return;
 
     // Load custom configuration from storage into the form/atoms
-    jotaiStore.set(NodeConfigLib.urlAtom, storedCustomNodeConfig?.nodeServer ?? '');
-    jotaiStore.set(NodeConfigLib.portAtom, storedCustomNodeConfig?.nodePort);
-    jotaiStore.set(NodeConfigLib.tokenAtom, storedCustomNodeConfig?.nodeToken as string);
+    jotaiStore.set(NodeConfigLib.networkFieldAtom,
+      storedCustomNodeConfig?.network as NodeConfigLib.NetworkId
+    );
+    jotaiStore.set(NodeConfigLib.urlFieldAtom, storedCustomNodeConfig?.nodeServer ?? '');
+    jotaiStore.set(NodeConfigLib.portFieldAtom, storedCustomNodeConfig?.nodePort ?? '');
+    jotaiStore.set(NodeConfigLib.tokenFieldAtom, storedCustomNodeConfig?.nodeToken as string);
     jotaiStore.set(NodeConfigLib.headersListAtom,
       storedCustomNodeConfig?.nodeHeaders
         ? Object.keys(storedCustomNodeConfig?.nodeHeaders ?? {}).map(
           (headerName: string) => ({
             name: atomWithValidate(headerName, NodeConfigLib.headerNameValidateOptions),
             value: atomWithValidate(
-              storedCustomNodeConfig?.nodeHeaders?.[headerName] ?? '',
+              storedCustomNodeConfig.nodeHeaders?.[headerName] ?? '',
               NodeConfigLib.headerValueValidateOptions
             )
           })
@@ -174,6 +187,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
             components={{marker: <span className='text-error'>*</span>}}
           />
         </p>
+        <NetworkInput t={t} />
         <UrlInput t={t} />
         <PortInput t={t} />
         <TokenInput t={t} />
@@ -251,6 +265,43 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
       />
     </div>
   );
+}
+
+function NetworkInput({ t }: { t: TFunction }) {
+  const form = useAtomValue(NodeConfigLib.customNodeFormControlAtom);
+  const showFormErrors = useAtomValue(showFormErrorsAtom);
+  return (<>
+    <SelectField label={t('node_selector.view_config.network')}
+      name='network'
+      id='network-input'
+      required={true}
+      requiredText={t('form.required')}
+      containerId='network-field'
+      containerClass='max-w-xs'
+      inputClass={
+        ((showFormErrors || form.touched.network) && form.fieldErrors.network) ? 'select-error' : ''
+      }
+      placeholder={t('node_selector.custom_config.network_placeholder')}
+      options={
+        Object.values(NodeConfigLib.NetworkId).map(
+          id => ({value: id, text: t(`node_selector.${id}`)})
+        )
+      }
+      // Setting the defaultValue this way prevents "uncontrolled input" error messages when the
+      // form is reset
+      defaultValue={form.values.network === '' ? undefined : ''}
+      value={form.values.network}
+      onChange={(e) => form.handleOnChange('network')(e.target.value)}
+      onFocus={form.handleOnFocus('network')}
+      onBlur={form.handleOnBlur('network')}
+    />
+    {(showFormErrors || form.touched.network) && form.fieldErrors.network &&
+      <FieldErrorMessage t={t}
+        i18nkey={form.fieldErrors.network.message.key}
+        dict={form.fieldErrors.network.message.dict}
+      />
+    }
+  </>);
 }
 
 function UrlInput({ t }: { t: TFunction }) {
@@ -333,7 +384,7 @@ function TokenInput({ t }: { t: TFunction }) {
 }
 
 function Headers({ t }: { t: TFunction }) {
-  const [headers, dispatch] = useAtom(NodeConfigLib.headersAtom);
+  const [headers, dispatch] = useAtom(NodeConfigLib.headerFieldsAtom);
   return (<>
     {!headers.length &&
       <p className='italic mt-4 mb-0'>{t('node_selector.custom_config.no_headers')}</p>

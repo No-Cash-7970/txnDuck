@@ -8,20 +8,19 @@ import { splitAtom } from "jotai/utils";
 import { validationAtom } from "./utils";
 import { UNIT_NAME_MAX_LENGTH } from './txn-data/constants';
 
-/** Name for Algorand MainNet */
-export const MAINNET = 'mainnet';
-/** Name for Algorand TestNet */
-export const TESTNET = 'testnet';
-/** Name for Algorand BetaNet */
-export const BETANET = 'betanet';
-/** Name for Algorand FNet */
-export const FNET = 'fnet';
-/** Name for Voi MainNet */
-export const VOIMAIN = 'voimain';
-/** Name for Sandbox */
-export const SANDBOX = 'sandbox';
-/** Name for custom node */
-export const CUSTOM = 'custom';
+/** List of supported networks. Copied from use-wallet because using use-wallet's `NetworkId` enum
+ * causes problems with our modules here. This also allows us to create a subset of supported
+ * networks.
+ */
+export enum NetworkId {
+  MAINNET = "mainnet",
+  TESTNET = "testnet",
+  BETANET = "betanet",
+  FNET = "fnet",
+  LOCALNET = "localnet",
+  VOIMAIN = "voimain",
+  // ARAMIDMAIN = "aramidmain"
+}
 
 /** The default coin (native currency) name */
 export const DEFAULT_COIN_NAME = 'ALGO';
@@ -30,8 +29,8 @@ export const VOI_COIN_NAME = 'VOI';
 
 /** Node configuration */
 export interface NodeConfig {
-  /** Name of the network (e.g. "mainnet", "testnet") */
-  network: string;
+  /** ID/Name of the network (e.g. "mainnet", "testnet") */
+  network: NetworkId | string;
   /** The URL of for the Algod node server */
   nodeServer: string;
   /** Authentication token for using the Algod node server */
@@ -43,13 +42,15 @@ export interface NodeConfig {
   nodeHeaders?: Record<string, string>;
   /** Name of the network's native currency */
   coinName?: string;
+  /** If this configuration is a custom configuration specified by the user */
+  isCustom?: boolean;
 }
 
 export const networkURLParamName = 'network';
 
 /** Default MainNet configuration */
 export const mainnetNodeConfig: NodeConfig = {
-  network: MAINNET,
+  network: NetworkId.MAINNET,
   nodeServer: 'https://mainnet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
@@ -57,7 +58,7 @@ export const mainnetNodeConfig: NodeConfig = {
 };
 /** Default TestNet configuration */
 export const testnetNodeConfig: NodeConfig = {
-  network: TESTNET,
+  network: NetworkId.TESTNET,
   nodeServer: 'https://testnet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
@@ -65,7 +66,7 @@ export const testnetNodeConfig: NodeConfig = {
 };
 /** Default BetaNet configuration */
 export const betanetNodeConfig: NodeConfig = {
-  network: BETANET,
+  network: NetworkId.BETANET,
   nodeServer: 'https://betanet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
@@ -73,7 +74,7 @@ export const betanetNodeConfig: NodeConfig = {
 };
 /** Default FNet configuration */
 export const fnetNodeConfig: NodeConfig = {
-  network: FNET,
+  network: NetworkId.FNET,
   nodeServer: 'https://fnet-api.4160.nodely.dev',
   nodeToken: '',
   nodePort: '443',
@@ -81,16 +82,16 @@ export const fnetNodeConfig: NodeConfig = {
 };
 /** Default Voi MainNet configuration */
 export const voiMainnetNodeConfig: NodeConfig = {
-  network: VOIMAIN,
+  network: NetworkId.VOIMAIN,
   nodeServer: 'https://mainnet-api.voi.nodely.dev',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
   coinName: VOI_COIN_NAME,
 };
-/** Default Sandbox configuration */
-export const sandboxNodeConfig: NodeConfig = {
-  network: SANDBOX,
+/** Default LocalNet configuration */
+export const localnetNodeConfig: NodeConfig = {
+  network: NetworkId.LOCALNET,
   nodeServer: 'http://localhost',
   nodeToken: 'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',
   nodePort: '4001',
@@ -99,17 +100,17 @@ export const sandboxNodeConfig: NodeConfig = {
 
 /** Mapping of network names to their respective default configurations */
 const defaultConfigs: {[k: string]: NodeConfig} = {
-  [MAINNET]: mainnetNodeConfig,
-  [TESTNET]: testnetNodeConfig,
-  [BETANET]: betanetNodeConfig,
-  [FNET]: fnetNodeConfig,
-  [VOIMAIN]: voiMainnetNodeConfig,
-  [SANDBOX]: sandboxNodeConfig,
+  [NetworkId.MAINNET]: mainnetNodeConfig,
+  [NetworkId.TESTNET]: testnetNodeConfig,
+  [NetworkId.BETANET]: betanetNodeConfig,
+  [NetworkId.FNET]: fnetNodeConfig,
+  [NetworkId.VOIMAIN]: voiMainnetNodeConfig,
+  [NetworkId.LOCALNET]: localnetNodeConfig,
 };
 
 /** The default node configuration */
 export const DEFAULT_NODE_CONFIG =
-  defaultConfigs[process.env.NEXT_PUBLIC_DEFAULT_NETWORK ?? MAINNET] ?? mainnetNodeConfig;
+  defaultConfigs[process.env.NEXT_PUBLIC_DEFAULT_NETWORK ?? NetworkId.MAINNET] ?? mainnetNodeConfig;
 
 /** Node configuration that is stored locally (in localStorage) */
 export const nodeConfigAtom =
@@ -119,34 +120,42 @@ export const nodeConfigAtom =
  * Custom Node Configuration form
  */
 
-export type CustomNodeConfig = Omit<NodeConfig, 'network'>;
 /** Custom node configuration that is indefinitely stored locally */
 export const customNodeAtom =
-  atomWithStorage<CustomNodeConfig|null>('customNode', null); // localStorage is used by default
+  atomWithStorage<NodeConfig|null>('customNode', null); // localStorage is used by default
 
-/** Algod URL */
-export const urlAtom = atomWithValidate<string>('', {
+/** Node network field on custom configuration form */
+export const networkFieldAtom = atomWithValidate<NetworkId|undefined>(undefined, {
+  validate: v => {
+    YupString().required().validateSync(v);
+    return v;
+  }
+});
+/** Algod URL field on custom configuration form */
+export const urlFieldAtom = atomWithValidate<string>('', {
   validate: v => {
     YupString().required().validateSync(v === '' ? undefined : v);
     return v;
   }
 });
-/** Algod Port */
-export const portAtom = atomWithValidate<number|string|undefined>(undefined, {
+/** Algod Port field on custom configuration form */
+export const portFieldAtom = atomWithValidate<number|string>('', {
   validate: v => {
-    YupNumber().min(0).validateSync(v);
+    YupNumber().min(0).validateSync(v === '' ? undefined : v);
     return v;
   }
 });
-/** Algod Token */
-export const tokenAtom = atomWithValidate<string>('', {
+/** Algod Token field on custom configuration form */
+export const tokenFieldAtom = atomWithValidate<string>('', {
   validate: v => {
     YupString().validateSync(v === '' ? undefined : v);
     return v;
   }
 });
 
-/** Type for a group of atoms that represent an Algod header */
+/** Type for a group of atoms for the fields on the custom configuration form that represent an
+ * Algod header
+ */
 export type HeaderAtomGroup = {
   /** Name of the header (Example: `Content-Type`) */
   name: validationAtom<string>,
@@ -154,10 +163,10 @@ export type HeaderAtomGroup = {
   value: validationAtom<string>,
 };
 
-/** Algod Headers */
+/** Algod Headers fields on custom configuration form */
 export const headersListAtom = atomWithReset<HeaderAtomGroup[]>([]);
-/** Collection of atoms for headers */
-export const headersAtom = splitAtom(headersListAtom);
+/** Collection of atoms for header fields on custom configuration form */
+export const headerFieldsAtom = splitAtom(headersListAtom);
 
 /** Header name validation options */
 export const headerNameValidateOptions = {
@@ -174,7 +183,7 @@ export const headerValueValidateOptions = {
   }
 };
 
-/** Coin name (form field value) */
+/** Coin name field on custom configuration form */
 export const coinNameFieldAtom = atomWithValidate<string>('', {
   validate: v => {
     YupString().max(UNIT_NAME_MAX_LENGTH).validateSync(v === '' ? undefined : v);
@@ -184,8 +193,9 @@ export const coinNameFieldAtom = atomWithValidate<string>('', {
 
 /** Validation form group for custom-node form */
 export const customNodeFormControlAtom = atomWithFormControls({
-  url: urlAtom,
-  port: portAtom,
-  token: tokenAtom,
+  network: networkFieldAtom,
+  url: urlFieldAtom,
+  port: portFieldAtom,
+  token: tokenFieldAtom,
   coinName: coinNameFieldAtom,
 });

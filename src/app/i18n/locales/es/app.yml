@@ -83,7 +83,7 @@ wallet:
     mobile_web: Billetera móvil y web
     web: Billetera web
     browser_extension: Billetera de extensión del navegador
-    cli_sandbox: Billetera CLI para Sandbox
+    cli: Billetera en CLI
     protocol: Protocolo para conectarse a una billetera
     waas: Billetera como servicio
     mnemonic: Peligrosamente entrar la mnemotecnia
@@ -101,19 +101,19 @@ wallet:
       Al utilizar Magic, usted acepta que se recopilen determinados datos personales, tal como se
       indica en la <privacy>Política de privacidad</privacy>.
 node_selector:
-  choose_node: Eligir nodo
+  choose_node: Eligir el nodo
   testnet: TestNet
   mainnet: MainNet
   betanet: BetaNet
   fnet: FNet
   voimain: Voi MainNet
-  sandbox: Sandbox
-  custom: Personalizada
+  localnet: LocalNet
+  custom: "{{network}} (Personalizada)"
   node_network: Red de nodos
   view_config:
     btn: Ver configuración actual
     heading: Configuración actual del nodo
-    name_heading: Nombre
+    network: Red
     url_heading: URL
     port_heading: Puerto
     token_heading: Token
@@ -127,6 +127,7 @@ node_selector:
     edit_btn: Editar configuración personalizada
     heading: Configuración personalizada del nodo
     instructions: Los campos marcados con un asterisco (<marker>*</marker>) son obligatorios.
+    network_placeholder: Elegir la red
     no_headers: No cabeceras
     add_header_btn: Añadir una cabecera
     remove_header_btn: Eliminar una cabecera

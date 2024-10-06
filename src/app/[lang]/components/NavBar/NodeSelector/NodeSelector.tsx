@@ -10,7 +10,7 @@ import {
   IconEyeCog,
   IconFlask,
   IconPencilCog,
-  IconSandbox,
+  IconDeviceDesktop,
   IconServer2,
   IconServerCog,
   IconSquareRoundedLetterV,
@@ -89,13 +89,15 @@ export default function NodeSelector({ lng }: Props) {
               <IconSquareRoundedLetterV aria-hidden stroke={1.5} />
               <span>{t('node_selector.voimain')}</span>
             </NodeMenuItem>
-            <NodeMenuItem config={NodeConfigLib.sandboxNodeConfig}>
-              <IconSandbox aria-hidden stroke={1.5} />
-              <span>{t('node_selector.sandbox')}</span>
+            <NodeMenuItem config={NodeConfigLib.localnetNodeConfig}>
+              <IconDeviceDesktop aria-hidden stroke={1.5} />
+              <span>{t('node_selector.localnet')}</span>
             </NodeMenuItem>
-            {customNode && <NodeMenuItem config={{network: NodeConfigLib.CUSTOM, ...customNode}}>
+            {customNode && <NodeMenuItem config={customNode}>
               <IconServer2 aria-hidden stroke={1.5} />
-              <span>{t('node_selector.custom')}</span>
+              <span>
+                {t('node_selector.custom', { network: t(`node_selector.${customNode.network}`) })}
+              </span>
             </NodeMenuItem>}
             {/* View current configuration */}
             <Dialog.Root>

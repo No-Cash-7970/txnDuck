@@ -78,7 +78,7 @@ wallet:
     mobile_web: Mobile & web wallet
     web: Web wallet
     browser_extension: Browser extension wallet
-    cli_sandbox: CLI wallet for Sandbox
+    cli: CLI wallet
     protocol: Wallet connection protocol
     waas: Wallet-as-a-service
     mnemonic: Dangerously enter the mnemonic
@@ -102,13 +102,13 @@ node_selector:
   betanet: BetaNet
   fnet: FNet
   voimain: Voi MainNet
-  sandbox: Sandbox
-  custom: Custom
+  localnet: LocalNet
+  custom: "{{network}} (Custom)"
   node_network: Node network
   view_config:
     btn: View current configuration
     heading: Current Node Configuration
-    name_heading: Name
+    network: Network
     url_heading: URL
     port_heading: Port
     token_heading: Token
@@ -122,6 +122,7 @@ node_selector:
     edit_btn: Edit custom configuration
     heading: Custom Node Configuration
     instructions: Fields marked with an asterisk (<marker>*</marker>) are required.
+    network_placeholder: Choose network
     no_headers: No headers
     add_header_btn: Add a header
     remove_header_btn: Remove a header

@@ -72,7 +72,7 @@ The `network` URL query parameter can be set to one of the following networks:
 - BetaNet (`betanet`)
 - FNet (`fnet`)
 - Voi MainNet (`voimain`)
-- Sandbox (`sandbox`)
+- LocalNet (`localnet`)
 
 ## Compose Transaction page links
 

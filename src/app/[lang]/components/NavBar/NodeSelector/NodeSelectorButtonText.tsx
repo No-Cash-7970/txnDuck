@@ -7,7 +7,7 @@ import { useAtom } from 'jotai';
 import {
   IconBox,
   IconFlask,
-  IconSandbox,
+  IconDeviceDesktop,
   IconServer2,
   IconSquareRoundedLetterV,
   IconTestPipe,
@@ -25,23 +25,23 @@ export default function NodeSelectorButtonText({ t }: { t: TFunction }) {
     // If the network is specified in the URL parameter, set the current node configuration to the
     // node configuration for the network specified in that URL parameter
     switch (networkURLParam) {
-      case NodeConfigLib.MAINNET:
+      case NodeConfigLib.NetworkId.MAINNET:
         setNodeConfig(NodeConfigLib.mainnetNodeConfig);
         break;
-      case NodeConfigLib.TESTNET:
+      case NodeConfigLib.NetworkId.TESTNET:
         setNodeConfig(NodeConfigLib.testnetNodeConfig);
         break;
-      case NodeConfigLib.BETANET:
+      case NodeConfigLib.NetworkId.BETANET:
         setNodeConfig(NodeConfigLib.betanetNodeConfig);
         break;
-      case NodeConfigLib.FNET:
+      case NodeConfigLib.NetworkId.FNET:
         setNodeConfig(NodeConfigLib.fnetNodeConfig);
         break;
-      case NodeConfigLib.VOIMAIN:
+      case NodeConfigLib.NetworkId.VOIMAIN:
         setNodeConfig(NodeConfigLib.voiMainnetNodeConfig);
         break;
-      case NodeConfigLib.SANDBOX:
-        setNodeConfig(NodeConfigLib.sandboxNodeConfig);
+      case NodeConfigLib.NetworkId.LOCALNET:
+        setNodeConfig(NodeConfigLib.localnetNodeConfig);
         break;
       default:
         // There was no valid network specified, so use the stored node configuration (or the
@@ -52,33 +52,37 @@ export default function NodeSelectorButtonText({ t }: { t: TFunction }) {
   }, [networkURLParam]);
 
   return (<>
-    {nodeConfig?.network === NodeConfigLib.MAINNET && <>
-      <IconBox aria-hidden />
-      <span className='truncate'>{t('node_selector.mainnet')}</span>
+    {!nodeConfig?.isCustom && <>
+      {nodeConfig?.network === NodeConfigLib.NetworkId.MAINNET && <>
+        <IconBox aria-hidden />
+        <span className='truncate'>{t('node_selector.mainnet')}</span>
+      </>}
+      {nodeConfig?.network === NodeConfigLib.NetworkId.TESTNET && <>
+        <IconFlask aria-hidden />
+        <span className='truncate'>{t('node_selector.testnet')}</span>
+      </>}
+      {nodeConfig?.network === NodeConfigLib.NetworkId.BETANET && <>
+        <IconTestPipe aria-hidden />
+        <span className='truncate'>{t('node_selector.betanet')}</span>
+      </>}
+      {nodeConfig?.network === NodeConfigLib.NetworkId.FNET && <>
+        <IconTopologyRing aria-hidden />
+        <span className='truncate'>{t('node_selector.fnet')}</span>
+      </>}
+      {nodeConfig?.network === NodeConfigLib.NetworkId.VOIMAIN && <>
+        <IconSquareRoundedLetterV aria-hidden />
+        <span className='truncate'>{t('node_selector.voimain')}</span>
+      </>}
+      {nodeConfig?.network === NodeConfigLib.NetworkId.LOCALNET && <>
+        <IconDeviceDesktop aria-hidden />
+        <span className='truncate'>{t('node_selector.localnet')}</span>
+      </>}
     </>}
-    {nodeConfig?.network === NodeConfigLib.TESTNET && <>
-      <IconFlask aria-hidden />
-      <span className='truncate'>{t('node_selector.testnet')}</span>
-    </>}
-    {nodeConfig?.network === NodeConfigLib.BETANET && <>
-      <IconTestPipe aria-hidden />
-      <span className='truncate'>{t('node_selector.betanet')}</span>
-    </>}
-    {nodeConfig?.network === NodeConfigLib.FNET && <>
-      <IconTopologyRing aria-hidden />
-      <span className='truncate'>{t('node_selector.fnet')}</span>
-    </>}
-    {nodeConfig?.network === NodeConfigLib.VOIMAIN && <>
-      <IconSquareRoundedLetterV aria-hidden />
-      <span className='truncate'>{t('node_selector.voimain')}</span>
-    </>}
-    {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
-      <IconSandbox aria-hidden />
-      <span className='truncate'>{t('node_selector.sandbox')}</span>
-    </>}
-    {nodeConfig?.network === NodeConfigLib.CUSTOM && <>
+    {nodeConfig?.isCustom && <>
       <IconServer2 aria-hidden />
-      <span className='truncate'>{t('node_selector.custom')}</span>
+      <span className='truncate'>
+        {t('node_selector.custom', { network: t(`node_selector.${nodeConfig.network}`) })}
+      </span>
     </>}
   </>);
 }

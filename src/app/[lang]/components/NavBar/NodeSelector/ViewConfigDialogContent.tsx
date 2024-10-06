@@ -28,8 +28,13 @@ export default function ViewConfigDialogContent({ lng }: Props) {
       */}
       {/* eslint-disable-next-line max-len */}
       <div className='max-h-[calc(100vh-5em-4em-1.5em-1.5em-1.5em-3em-1.5em)] overflow-auto px-6 sm:px-8 prose-h3:mt-0'>
-        <h3>{t('node_selector.view_config.name_heading')}</h3>
-        <p>{t(`app:node_selector.${nodeConfig.network}`)}</p>
+        <h3>{t('node_selector.view_config.network')}</h3>
+        {nodeConfig.isCustom
+          ? <p>
+              {t('app:node_selector.custom', { network: t(`node_selector.${nodeConfig.network}`) })}
+            </p>
+          : <p>{t(`app:node_selector.${nodeConfig.network}`)}</p>
+        }
 
         <h3>{t('node_selector.view_config.url_heading')}</h3>
         <p>{nodeConfig.nodeServer}</p>
