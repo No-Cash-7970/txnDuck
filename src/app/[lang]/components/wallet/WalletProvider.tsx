@@ -7,7 +7,7 @@ import {
   type SupportedWallets,
 } from '@txnlab/use-wallet-react';
 import { useAtomValue } from 'jotai';
-import { MAINNET, nodeConfigAtom } from '@/app/lib/node-config';
+import { MAINNET, nodeConfigAtom, VOIMAIN } from '@/app/lib/node-config';
 
 /** Wrapper for initializing the use-wallet library. Also serves as a provider to convert the
  * use-wallet wallet provider to a client component so it can be used in server components with
@@ -62,11 +62,11 @@ export default function WalletProvider({ sitename, children }: {
      */
   }
 
-  // TODO: Disable for Voi MainNet too
   // Add mnemonic as a supported wallet if it is enabled in the environment variables
   // AND the network is not MainNet
   if (process.env.NEXT_PUBLIC_FEAT_MNEMONIC_WALLET === 'true'
       && nodeConfig.network !== MAINNET
+      && nodeConfig.network !== VOIMAIN
   ) {
     // Insert mnemonic wallet at the end of the list of supported wallets
     supportedWallets.push({

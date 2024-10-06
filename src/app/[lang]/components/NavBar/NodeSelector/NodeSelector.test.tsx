@@ -3,10 +3,11 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {
   betanetNodeConfig,
+  fnetNodeConfig,
   mainnetNodeConfig,
   testnetNodeConfig,
   sandboxNodeConfig,
-  voiTestnetNodeConfig,
+  voiMainnetNodeConfig as voiMainnetNodeConfig,
 } from '@/app/lib/node-config';
 import { type NodeConfig } from '@/app/lib/node-config';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
@@ -69,10 +70,16 @@ describe('Node Selector', () => {
     expect(await screen.findByText(/node_selector.betanet/)).toBeInTheDocument();
   });
 
-  it('displays "Voi TestNet" button if the node configuration is set for Voi TestNet', async () => {
-    localStorage.setItem('nodeConfig', JSON.stringify(voiTestnetNodeConfig));
+  it('displays "FNet" button if the node configuration is set for FNet', async () => {
+    localStorage.setItem('nodeConfig', JSON.stringify(fnetNodeConfig));
     render(<NodeSelector />);
-    expect(await screen.findByText(/node_selector.voi_testnet/)).toBeInTheDocument();
+    expect(await screen.findByText(/node_selector.fnet/)).toBeInTheDocument();
+  });
+
+  it('displays "Voi MainNet" button if the node configuration is set for Voi MainNet', async () => {
+    localStorage.setItem('nodeConfig', JSON.stringify(voiMainnetNodeConfig));
+    render(<NodeSelector />);
+    expect(await screen.findByText(/node_selector.voimain/)).toBeInTheDocument();
   });
 
   it('displays "Sandbox" button if the node configuration is set for Sandbox', async () => {
@@ -120,17 +127,30 @@ describe('Node Selector', () => {
     expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 
-  it('sets node configuration to Voi TestNet configuration when "Voi TestNet" is selected',
-  async () => {
-    // Set config to something that is not Voi TestNet
+  it('sets node configuration to FNet configuration when "FNet" is selected', async () => {
+    // Set config to something that is not FNet
     localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
     render(<NodeSelector />);
 
     await userEvent.click(screen.getByRole('button')); // Open menu
-    await userEvent.click(screen.getByText('node_selector.voi_testnet'));
+    await userEvent.click(screen.getByText('node_selector.fnet'));
     const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
 
-    expect(nodeConfig.network).toBe('voi_testnet');
+    expect(nodeConfig.network).toBe('fnet');
+    expect(routerPushMockFn).toHaveBeenCalledTimes(1);
+  });
+
+  it('sets node configuration to Voi MainNet configuration when "Voi MainNet" is selected',
+  async () => {
+    // Set config to something that is not Voi MainNet
+    localStorage.setItem('nodeConfig', JSON.stringify(mainnetNodeConfig));
+    render(<NodeSelector />);
+
+    await userEvent.click(screen.getByRole('button')); // Open menu
+    await userEvent.click(screen.getByText('node_selector.voimain'));
+    const nodeConfig = JSON.parse(localStorage.getItem('nodeConfig') || '') as NodeConfig;
+
+    expect(nodeConfig.network).toBe('voimain');
     expect(routerPushMockFn).toHaveBeenCalledTimes(1);
   });
 

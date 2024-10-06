@@ -14,8 +14,10 @@ export const MAINNET = 'mainnet';
 export const TESTNET = 'testnet';
 /** Name for Algorand BetaNet */
 export const BETANET = 'betanet';
-/** Name for Voi TestNet */
-export const VOI_TESTNET = 'voi_testnet';
+/** Name for Algorand FNet */
+export const FNET = 'fnet';
+/** Name for Voi MainNet */
+export const VOIMAIN = 'voimain';
 /** Name for Sandbox */
 export const SANDBOX = 'sandbox';
 /** Name for custom node */
@@ -69,10 +71,18 @@ export const betanetNodeConfig: NodeConfig = {
   nodePort: '443',
   nodeHeaders: undefined,
 };
-/** Default Voi TestNet configuration */
-export const voiTestnetNodeConfig: NodeConfig = {
-  network: VOI_TESTNET,
-  nodeServer: 'https://testnet-api.voi.nodly.io',
+/** Default FNet configuration */
+export const fnetNodeConfig: NodeConfig = {
+  network: FNET,
+  nodeServer: 'https://fnet-api.4160.nodely.dev',
+  nodeToken: '',
+  nodePort: '443',
+  nodeHeaders: undefined,
+};
+/** Default Voi MainNet configuration */
+export const voiMainnetNodeConfig: NodeConfig = {
+  network: VOIMAIN,
+  nodeServer: 'https://mainnet-api.voi.nodely.dev',
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
@@ -88,21 +98,26 @@ export const sandboxNodeConfig: NodeConfig = {
 };
 
 /** Mapping of network names to their respective default configurations */
-const defaultConfigMap: {[k: string]: NodeConfig} = {
+const defaultConfigs: {[k: string]: NodeConfig} = {
   [MAINNET]: mainnetNodeConfig,
   [TESTNET]: testnetNodeConfig,
   [BETANET]: betanetNodeConfig,
-  [VOI_TESTNET]: voiTestnetNodeConfig,
+  [FNET]: fnetNodeConfig,
+  [VOIMAIN]: voiMainnetNodeConfig,
   [SANDBOX]: sandboxNodeConfig,
 };
 
 /** The default node configuration */
 export const DEFAULT_NODE_CONFIG =
-  defaultConfigMap[process.env.NEXT_PUBLIC_DEFAULT_NETWORK ?? MAINNET] ?? mainnetNodeConfig;
+  defaultConfigs[process.env.NEXT_PUBLIC_DEFAULT_NETWORK ?? MAINNET] ?? mainnetNodeConfig;
 
 /** Node configuration that is stored locally (in localStorage) */
 export const nodeConfigAtom =
   atomWithStorage<NodeConfig>('nodeConfig', DEFAULT_NODE_CONFIG);
+
+/*
+ * Custom Node Configuration form
+ */
 
 export type CustomNodeConfig = Omit<NodeConfig, 'network'>;
 /** Custom node configuration that is indefinitely stored locally */

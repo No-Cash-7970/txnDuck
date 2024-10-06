@@ -5,11 +5,13 @@ import { useSearchParams } from 'next/navigation';
 import { TFunction } from 'i18next';
 import { useAtom } from 'jotai';
 import {
-  IconTestPipe,
   IconBox,
+  IconFlask,
   IconSandbox,
-  IconFlask, IconServer2,
-  IconSquareRoundedLetterV
+  IconServer2,
+  IconSquareRoundedLetterV,
+  IconTestPipe,
+  IconTopologyRing,
 } from '@tabler/icons-react';
 import * as NodeConfigLib from '@/app/lib/node-config';
 
@@ -32,8 +34,11 @@ export default function NodeSelectorButtonText({ t }: { t: TFunction }) {
       case NodeConfigLib.BETANET:
         setNodeConfig(NodeConfigLib.betanetNodeConfig);
         break;
-      case NodeConfigLib.VOI_TESTNET:
-        setNodeConfig(NodeConfigLib.voiTestnetNodeConfig);
+      case NodeConfigLib.FNET:
+        setNodeConfig(NodeConfigLib.fnetNodeConfig);
+        break;
+      case NodeConfigLib.VOIMAIN:
+        setNodeConfig(NodeConfigLib.voiMainnetNodeConfig);
         break;
       case NodeConfigLib.SANDBOX:
         setNodeConfig(NodeConfigLib.sandboxNodeConfig);
@@ -59,9 +64,13 @@ export default function NodeSelectorButtonText({ t }: { t: TFunction }) {
       <IconTestPipe aria-hidden />
       <span className='truncate'>{t('node_selector.betanet')}</span>
     </>}
-    {nodeConfig?.network === NodeConfigLib.VOI_TESTNET && <>
+    {nodeConfig?.network === NodeConfigLib.FNET && <>
+      <IconTopologyRing aria-hidden />
+      <span className='truncate'>{t('node_selector.fnet')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.VOIMAIN && <>
       <IconSquareRoundedLetterV aria-hidden />
-      <span className='truncate'>{t('node_selector.voi_testnet')}</span>
+      <span className='truncate'>{t('node_selector.voimain')}</span>
     </>}
     {nodeConfig?.network === NodeConfigLib.SANDBOX && <>
       <IconSandbox aria-hidden />

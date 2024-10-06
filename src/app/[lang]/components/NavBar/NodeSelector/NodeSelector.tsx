@@ -6,16 +6,17 @@ import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useAtomValue } from 'jotai';
 import {
-  IconTestPipe,
   IconBox,
-  IconSandbox,
-  IconFlask,
   IconEyeCog,
-  IconServerCog,
+  IconFlask,
   IconPencilCog,
-  IconX,
+  IconSandbox,
   IconServer2,
+  IconServerCog,
   IconSquareRoundedLetterV,
+  IconTestPipe,
+  IconTopologyRing,
+  IconX,
 } from '@tabler/icons-react';
 import { useTranslation } from '@/app/i18n/client';
 import * as NodeConfigLib from '@/app/lib/node-config';
@@ -80,9 +81,13 @@ export default function NodeSelector({ lng }: Props) {
               <IconTestPipe aria-hidden stroke={1.5} />
               <span>{t('node_selector.betanet')}</span>
             </NodeMenuItem>
-            <NodeMenuItem config={NodeConfigLib.voiTestnetNodeConfig}>
+            <NodeMenuItem config={NodeConfigLib.fnetNodeConfig}>
+              <IconTopologyRing aria-hidden stroke={1.5} />
+              <span>{t('node_selector.fnet')}</span>
+            </NodeMenuItem>
+            <NodeMenuItem config={NodeConfigLib.voiMainnetNodeConfig}>
               <IconSquareRoundedLetterV aria-hidden stroke={1.5} />
-              <span>{t('node_selector.voi_testnet')}</span>
+              <span>{t('node_selector.voimain')}</span>
             </NodeMenuItem>
             <NodeMenuItem config={NodeConfigLib.sandboxNodeConfig}>
               <IconSandbox aria-hidden stroke={1.5} />

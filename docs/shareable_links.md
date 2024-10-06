@@ -70,7 +70,8 @@ The `network` URL query parameter can be set to one of the following networks:
 - MainNet (`mainnet`)
 - TestNet (`testnet`)
 - BetaNet (`betanet`)
-- Voi TestNet (`voi_testnet`)
+- FNet (`fnet`)
+- Voi MainNet (`voimain`)
 - Sandbox (`sandbox`)
 
 ## Compose Transaction page links

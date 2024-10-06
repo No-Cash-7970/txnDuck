@@ -105,7 +105,7 @@ test.describe('Sign Transaction Page', () => {
 
         // Select MainNet from node selection menu
         await betanetButton.click();
-        await page.getByText('MainNet').click(); // Menu item
+        await page.getByText('MainNet', { exact: true }).click(); // Menu item
 
         // Check for correct URL by waiting for it
         await page.waitForURL(SignTxnPage.getFullUrl('en') + presetURLParam);
