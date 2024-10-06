@@ -612,6 +612,14 @@ export function extractTxnDataFromAtoms(
       specificTxnData.arcv = specificTxnData.aclose;
       specificTxnData.aamt = 0;
     }
+
+    if (preset && preset !== Preset.AssetOptOut) {
+      specificTxnData.aclose = false;
+    }
+
+    if (preset && preset !== Preset.AssetClawback) {
+      specificTxnData.asnd = undefined;
+    }
   }
 
   // Gather asset configuration transaction data
@@ -635,6 +643,9 @@ export function extractTxnDataFromAtoms(
 
     // If creating an asset
     if ((!specificTxnData.caid && preset === null) || preset === Preset.AssetCreate) {
+      // Ensure asset ID is unset
+      specificTxnData.caid = undefined;
+
       // Set the asset addresses to sender, if applicable
       if (assetConfigForm.values.apar_mUseSnd) specificTxnData.apar_m = baseTxnData.snd;
       if (assetConfigForm.values.apar_fUseSnd) specificTxnData.apar_f = baseTxnData.snd;
@@ -650,6 +661,7 @@ export function extractTxnDataFromAtoms(
       };
     } else { // Not creating an asset
       retrievedAssetInfo = jotaiStore.get(txnDataAtoms.retrievedAssetInfo).value;
+
       if (retrievedAssetInfo) {
         // Remove asset addresses from asset information
         retrievedAssetInfo = {
@@ -691,6 +703,12 @@ export function extractTxnDataFromAtoms(
         decimals: retrievedAssetInfo.decimals,
       };
     }
+
+    if (preset === Preset.AssetFreeze) {
+      specificTxnData.afrz = true;
+    } else if (preset === Preset.AssetUnfreeze) {
+      specificTxnData.afrz = false;
+    }
   }
 
   // Gather key registration transaction data
@@ -706,6 +724,12 @@ export function extractTxnDataFromAtoms(
       votekd: keyRegForm.values.votekd,
       nonpart: keyRegForm.values.nonpart,
     };
+
+    if (preset === Preset.RegOnline) {
+      specificTxnData.nonpart = false;
+    } else if (preset === Preset.RegOffline) {
+      specificTxnData = {};
+    }
   }
 
   // Gather application call transaction data
@@ -739,6 +763,29 @@ export function extractTxnDataFromAtoms(
         n: jotaiStore.get(apbxAtom.n).value ?? '',
       })),
     };
+
+    if (preset === Preset.AppRun
+      || preset === Preset.AppOptIn
+      || preset === Preset.AppClose
+      || preset === Preset.AppClear
+      || preset === Preset.AppDelete
+    ) {
+      specificTxnData.apap = undefined;
+      specificTxnData.apsu = undefined;
+      specificTxnData.apgs_nui = undefined;
+      specificTxnData.apgs_nbs = undefined;
+      specificTxnData.apls_nui = undefined;
+      specificTxnData.apls_nbs = undefined;
+      specificTxnData.apep = undefined;
+    } else if  (preset === Preset.AppUpdate){
+      specificTxnData.apgs_nui = undefined;
+      specificTxnData.apgs_nbs = undefined;
+      specificTxnData.apls_nui = undefined;
+      specificTxnData.apls_nbs = undefined;
+      specificTxnData.apep = undefined;
+    } else if (preset === Preset.AppDeploy) {
+      specificTxnData.apid = undefined;
+    }
   }
 
   return {
