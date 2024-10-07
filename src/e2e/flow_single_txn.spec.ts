@@ -17,7 +17,7 @@ const test = base.extend<{ homePage: HomePage }>({
 test.slow();
 
 // Run through the entire flow of creating and sending a single transaction.
-test.describe('Flow Start to Finish: Single Transaction', () => {
+test.describe('Flow from Start to Finish: Single Transaction', () => {
   test.skip('is successful', async ({ homePage, page }) => {
     await mockNodeResponses(page);
 
