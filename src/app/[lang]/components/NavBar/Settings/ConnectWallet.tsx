@@ -66,7 +66,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                           <span className='relative h-8 w-8'>
                             <Image src={provider.metadata.icon}
                               alt={t('wallet.provider_icon_alt', {
-                                provider: provider.metadata.name
+                                provider: t(`wallet.providers.${provider.id}`)
                               })}
                               fill
                               aria-hidden

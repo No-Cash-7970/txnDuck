@@ -57,7 +57,9 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
               }>
                 <span className={'not-prose relative h-16 w-16 sm:h-24 sm:w-24'}>
                   <Image src={provider.metadata.icon}
-                    alt={t('app:wallet.provider_icon_alt', {provider: provider.metadata.name})}
+                    alt={t('app:wallet.provider_icon_alt', {
+                      provider: t(`app:wallet.providers.${provider.id}`)
+                    })}
                     fill
                     aria-hidden
                   />
@@ -80,7 +82,9 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
                       provider.connect();
                     }}
                   >
-                    {t('app:wallet.use_provider_btn', {provider: provider.metadata.name})}
+                    {t('app:wallet.use_provider_btn', {
+                      provider: t(`app:wallet.providers.${provider.id}`)
+                    })}
                   </button>
                 </div>
               </div>
