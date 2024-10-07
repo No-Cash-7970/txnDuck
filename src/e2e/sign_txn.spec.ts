@@ -60,12 +60,14 @@ test.describe('Sign Transaction Page', () => {
         await page.waitForURL(SignTxnPage.getFullUrl('en') + urlParams);
       });
 
-      test('uses default network if the network IS NOT specified in a URL parameter',  async ({ page }) => {
+      test('uses default network if the network IS NOT specified in a URL parameter',
+      async ({ page }) => {
         // NOTE: Assuming that the default network is MainNet
         await expect(page.getByText('MainNet')).toHaveCount(2);
       });
 
-      test('uses network specified in URL parameter when there IS NO saved network', async ({ page }) => {
+      test('uses network specified in URL parameter when there IS NO saved network',
+      async ({ page }) => {
         // NOTE: Assuming that the default network is MainNet
 
         // Select non-default network using URL parameter
@@ -73,7 +75,8 @@ test.describe('Sign Transaction Page', () => {
         await expect(page.getByText('BetaNet')).toHaveCount(2);
       });
 
-      test('uses network specified in URL parameter when there IS saved network', async ({ page }) => {
+      test('uses network specified in URL parameter when there IS saved network',
+      async ({ page }) => {
         // NOTE: Assuming that the default network is MainNet
 
         // Select TestNet from node selection menu so node configuration is stored in local storage
