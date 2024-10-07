@@ -1,11 +1,11 @@
+import { type TFunction } from 'i18next';
+import { useAtomValue } from 'jotai';
 import {
   CheckboxField,
   FieldErrorMessage,
   FieldGroup,
   TextField
 } from '@/app/[lang]/components/form';
-import { type TFunction } from 'i18next';
-import { useAtomValue } from 'jotai';
 import {
   B64_LEASE_LENGTH,
   LEASE_LENGTH,

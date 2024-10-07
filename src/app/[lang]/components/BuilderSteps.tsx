@@ -1,6 +1,6 @@
 import { use } from 'react';
-import { useTranslation } from '@/app/i18n';
 import Link from 'next/link';
+import { useTranslation } from '@/app/i18n';
 
 type Props = {
   /** Language */

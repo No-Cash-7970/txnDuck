@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
+import { type TFunction } from 'i18next';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   FieldErrorMessage,
   FieldGroup,
   NumberField,
   ToggleField
 } from '@/app/[lang]/components/form';
-import { type TFunction } from 'i18next';
-import { useAtomValue, useSetAtom } from 'jotai';
 import {
   generalFormControlAtom,
   showFormErrorsAtom,

@@ -44,7 +44,7 @@ export default function SelectField({
               className={`select-bordered select ${inputClass}`}
               id={id || undefined}
               required={required}
-              defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
+              defaultValue={defaultValue || ((placeholder && !value) ? '' : undefined)}
               name={name || undefined}
               disabled={disabled}
               autoComplete={autoComplete}
@@ -74,7 +74,7 @@ export default function SelectField({
                 className={`select-bordered select join-item flex-auto ${inputClass}`}
                 id={id || undefined}
                 required={required}
-                defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
+                defaultValue={defaultValue || ((placeholder && !value) ? '' : undefined)}
                 name={name || undefined}
                 disabled={disabled}
                 autoComplete={autoComplete}
@@ -108,7 +108,7 @@ export default function SelectField({
             className={`select-bordered select ${inputClass}`}
             id={id || undefined}
             required={required}
-            defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
+            defaultValue={defaultValue || ((placeholder && !value) ? '' : undefined)}
             name={name || undefined}
             disabled={disabled}
             autoComplete={autoComplete}
@@ -138,7 +138,7 @@ export default function SelectField({
               className={`select-bordered select join-item flex-auto ${inputClass}`}
               id={id || undefined}
               required={required}
-              defaultValue={defaultValue || ((placeholder && !value)? '': undefined)}
+              defaultValue={defaultValue || ((placeholder && !value) ? '' : undefined)}
               name={name || undefined}
               disabled={disabled}
               autoComplete={autoComplete}

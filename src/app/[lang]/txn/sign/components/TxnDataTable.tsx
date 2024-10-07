@@ -1,11 +1,11 @@
 'use client';
 
+import { useMemo } from 'react';
+import { TransactionType } from 'algosdkv3';
+import { useAtomValue } from 'jotai';
+import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';
 import * as TxnData from '@/app/lib/txn-data';
-import { TransactionType, microalgosToAlgos } from 'algosdkv3';
-import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
-import { Trans } from 'react-i18next';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import {
   fee as feeAtom,

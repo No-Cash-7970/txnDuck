@@ -35,13 +35,10 @@ export default function AppArgs({ t }: { t: TFunction }) {
         </div>
       }
       <div className='alert alert-info text-start mt-2'>{t('fields.apaa.no_abi_support')}</div>
-
       {!appArgs.length && <p className='italic'>{t('fields.apaa.none')}</p>}
-
       {appArgs.map(
         (argAtom, i) => <AppArgInput t={t} argAtom={argAtom} index={i} key={`${argAtom}`} />
       )}
-
       <div className='pt-4'>
         <button type='button'
           className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'

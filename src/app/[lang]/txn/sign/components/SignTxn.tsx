@@ -10,6 +10,8 @@ import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import { RESET } from 'jotai/utils';
+import { CheckboxField } from '@/app/[lang]/components/form';
+import { WalletDialogContent } from '@/app/[lang]/components/wallet';
 import { useTranslation } from '@/app/i18n/client';
 import { defaultAutoSend as defaultAutoSendAtom } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
@@ -24,8 +26,6 @@ import {
   txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
-import { CheckboxField } from '@/app/[lang]/components/form';
-import { WalletDialogContent } from '@/app/[lang]/components/wallet';
 import NextStepButton from './NextStepButton';
 
 type Props = {

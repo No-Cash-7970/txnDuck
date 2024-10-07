@@ -19,7 +19,6 @@ import { removeNonNumericalChars } from '@/app/lib/utils';
 export default function AssetId({ t }: { t: TFunction }) {
   const form = useAtomValue(assetTransferFormControlAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
-
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const assetInfoGetSetting = useAtomValue(assetInfoGetSettingAtom);
   const [retrievedAssetInfo, setRetrievedAssetInfo] = useAtom(txnDataAtoms.retrievedAssetInfo);

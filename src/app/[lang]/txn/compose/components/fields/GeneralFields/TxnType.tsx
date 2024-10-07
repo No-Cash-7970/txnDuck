@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
-import { FieldErrorMessage, SelectField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { FieldErrorMessage, SelectField } from '@/app/[lang]/components/form';
 import {
   Preset,
   generalFormControlAtom,
@@ -15,7 +15,6 @@ export default function TxnType({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
   const preset = useSearchParams().get(Preset.ParamName);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
-
   return (<>
     <SelectField label={t('fields.type.label')}
       name='type'

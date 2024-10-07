@@ -32,14 +32,14 @@ const nextConfig = {
     return config;
   },
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
+    // !! WARN !!
+    // This allows production builds to successfully complete even if your project has ESLint errors.
+    // !! WARN !!
     ignoreDuringBuilds: process.env.IGNORE_ESLINT_BUILD_ERRORS?.toLowerCase() === 'true',
   },
   typescript: {
     // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if
-    // your project has type errors.
+    // Dangerously allow production builds to successfully complete even if your project has type errors.
     // !! WARN !!
     ignoreBuildErrors: process.env.IGNORE_TS_BUILD_ERRORS?.toLowerCase() === 'true',
   },

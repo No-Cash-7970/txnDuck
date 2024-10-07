@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { type TFunction } from 'i18next';
+import { useAtomValue, useSetAtom } from 'jotai';
 import {
   FieldErrorMessage,
   FieldGroup,
   TextField,
   ToggleField
 } from '@/app/[lang]/components/form';
-import { type TFunction } from 'i18next';
-import { useAtomValue, useSetAtom } from 'jotai';
 import {
   ADDRESS_LENGTH,
   Preset,
@@ -26,10 +26,9 @@ export default function ReserveAddr({ t }: { t: TFunction }) {
   return (
     <FieldGroup>
       {((!form.values.caid && preset === null) || preset === Preset.AssetCreate) && <>
-          <UseSenderAddr t={t} />
-          {!form.values.apar_rUseSnd && <ReserveAddrInput t={t} />}
-        </>
-      }
+        <UseSenderAddr t={t} />
+        {!form.values.apar_rUseSnd && <ReserveAddrInput t={t} />}
+      </>}
       {(form.values.caid || preset !== null) && preset !== Preset.AssetCreate &&
         <ReserveAddrInput t={t} />
       }

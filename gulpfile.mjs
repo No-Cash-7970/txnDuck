@@ -73,7 +73,7 @@ const precommitUnitTest = () => {
     .catch(() => stashPopFail('Unit testing failed')); // Clean up if fail
 };
 
-/**  Restore the Git repository to its original state before the stashing */
+/** Restore the Git repository to its original state before the stashing */
 const stashPop = task('git stash pop', { reject: false });
 
 /** Restore the Git repository to its original state before the stashing and return an error. For

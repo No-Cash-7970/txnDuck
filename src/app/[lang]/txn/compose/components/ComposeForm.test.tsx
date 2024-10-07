@@ -1,10 +1,10 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitForElementToBeRemoved } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as fs from 'node:fs';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { useWalletUnconnectedMock } from '@/app/lib/testing/useWalletMock';
 import { JotaiProvider } from '@/app/[lang]/components';
-import * as fs from 'node:fs';
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);

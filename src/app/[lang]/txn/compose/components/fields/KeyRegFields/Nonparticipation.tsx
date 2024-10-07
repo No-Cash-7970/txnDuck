@@ -1,14 +1,14 @@
 import { useSearchParams } from 'next/navigation';
-import { ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { IconAlertTriangle } from '@tabler/icons-react';
+import { ToggleField } from '@/app/[lang]/components/form';
 import {
   Preset,
   keyRegFormControlAtom,
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
-import { IconAlertTriangle } from '@tabler/icons-react';
 
 export default function Nonparticipation({ t }: { t: TFunction }) {
   const form = useAtomValue(keyRegFormControlAtom);

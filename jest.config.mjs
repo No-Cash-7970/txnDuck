@@ -10,6 +10,7 @@ const createJestConfig = nextJest({
 /** @type {import('jest').Config} */
 const config = {
   roots: ['src'],
+
   /*
    * Add more setup options before each test is run
    */

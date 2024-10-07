@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import { useAtom } from 'jotai';
 import {
   IconBox,

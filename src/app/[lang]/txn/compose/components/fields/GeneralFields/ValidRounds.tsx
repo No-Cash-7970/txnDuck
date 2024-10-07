@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
-import { FieldGroup, ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { FieldGroup, ToggleField } from '@/app/[lang]/components/form';
 import {
   generalFormControlAtom, storedTxnDataAtom, tipBtnClass, tipContentClass, txnDataAtoms,
 } from '@/app/lib/txn-data';
+import { defaultUseSugRounds as defaultUseSugRoundsAtom } from '@/app/lib/app-settings';
 import FirstValid from './FirstValid';
 import LastValid from './LastValid';
-import { defaultUseSugRounds as defaultUseSugRoundsAtom } from '@/app/lib/app-settings';
 
 export default function ValidRounds({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);

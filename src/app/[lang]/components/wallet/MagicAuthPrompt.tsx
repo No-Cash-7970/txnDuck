@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { type TFunction } from 'i18next';
 import { Trans } from "react-i18next";
 import { type Wallet } from '@txnlab/use-wallet-react';
@@ -8,7 +9,6 @@ import { atom, useAtom } from 'jotai';
 import { tipBtnClass, tipContentClass } from '@/app/lib/txn-data/constants';
 import { magicEmailAtom } from '@/app/lib/wallet-utils';
 import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
-import Link from 'next/link';
 
 /** Atom for the Magic wallet provider so the same provider instance can be used multiple
  * components

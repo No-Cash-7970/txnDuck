@@ -5,7 +5,6 @@ export class HomePage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '';
-
   /** The "start" button link that directs the user to use the app. */
   readonly startBtn: Locator;
   /** The "compose transaction" button that directs user to compose a transaction */

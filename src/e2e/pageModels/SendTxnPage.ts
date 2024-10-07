@@ -5,7 +5,6 @@ export class SendTxnPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '/txn/send';
-
   /** Main section of the page */
   readonly main: Locator;
 

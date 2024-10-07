@@ -5,7 +5,6 @@ export class ComposeTxnPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '/txn/compose';
-
   /** Main section of the page */
   readonly main: Locator;
 

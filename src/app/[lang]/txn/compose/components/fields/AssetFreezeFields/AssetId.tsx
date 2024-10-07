@@ -24,7 +24,6 @@ export default function AssetId({ t }: { t: TFunction }) {
   const preset = useSearchParams().get(Preset.ParamName);
   const setPresetAtom = useSetAtom(presetAtom);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
-
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const assetInfoGetSetting = useAtomValue(assetInfoGetSettingAtom);
   const [retrievedAssetInfo, setRetrievedAssetInfo] = useAtom(txnDataAtoms.retrievedAssetInfo);

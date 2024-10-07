@@ -6,9 +6,5 @@ import { Provider } from 'jotai';
  *  Next.js server-side rendering (SSR)
  */
 export default function JotaiProvider({ children }: { children: React.ReactNode }) {
-  return (
-    <Provider>
-      {children}
-    </Provider>
-  );
+  return <Provider>{children}</Provider>;
 };

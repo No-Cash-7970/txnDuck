@@ -5,7 +5,6 @@ export class SignTxnPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '/txn/sign';
-
   /** Main section of the page */
   readonly main: Locator;
 

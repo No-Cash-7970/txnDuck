@@ -1,8 +1,8 @@
 import { use } from 'react';
 import { type Metadata } from 'next';
 import dynamic from 'next/dynamic';
-import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/components';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import {
   ExtraSmallField,
   FullWidthField,

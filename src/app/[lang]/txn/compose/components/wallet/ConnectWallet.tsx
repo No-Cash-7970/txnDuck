@@ -5,12 +5,12 @@ import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
 import { useWallet } from '@txnlab/use-wallet-react';
-import { isWalletConnectedAtom } from '@/app/lib/wallet-utils';
 import {
   magicPromptCanceledAtom,
   magicProviderAtom,
   WalletDialogContent
 } from '@/app/[lang]/components/wallet';
+import { isWalletConnectedAtom } from '@/app/lib/wallet-utils';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t, setvalfn }:{
@@ -86,8 +86,6 @@ export default function ConnectWallet({ t, setvalfn }:{
             {t('app:wallet.disconnect')}
           </button>
         </div>
-
-
       </div>
     }
   </>);

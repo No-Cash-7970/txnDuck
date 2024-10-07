@@ -61,7 +61,7 @@ export function useTranslation<
      */
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      if (activeLng === i18n.resolvedLanguage){
+      if (activeLng === i18n.resolvedLanguage) {
         return;
       }
       setActiveLng(i18n.resolvedLanguage);
@@ -73,7 +73,7 @@ export function useTranslation<
      */
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      if (!lng || i18n.resolvedLanguage === lng){
+      if (!lng || i18n.resolvedLanguage === lng) {
         return;
       }
       i18n.changeLanguage(lng);

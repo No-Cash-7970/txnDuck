@@ -1,9 +1,9 @@
 import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import * as fs from "node:fs";
 import algosdk from 'algosdkv3';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
-import * as fs from "node:fs";
 
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);

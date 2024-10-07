@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { TFunction } from 'i18next';
+import { type TFunction } from 'i18next';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 

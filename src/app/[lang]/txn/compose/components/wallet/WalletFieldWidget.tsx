@@ -1,8 +1,8 @@
-import { WalletProvider } from "@/app/[lang]/components";
-import { isWalletConnectedAtom } from "@/app/lib/wallet-utils";
 import { type TFunction } from "i18next";
 import { useAtomValue } from "jotai";
 import { useEffect } from "react";
+import { WalletProvider } from "@/app/[lang]/components";
+import { isWalletConnectedAtom } from "@/app/lib/wallet-utils";
 import ConnectWallet from "./ConnectWallet";
 
 /** Component that handles the "connect wallet" button below certain form fields */

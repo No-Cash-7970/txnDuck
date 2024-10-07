@@ -28,6 +28,7 @@ interface InputProps {
    */
   inputRef?: Ref<HTMLInputElement>;
 }
+
 /** General properties for fields */
 interface FieldProps {
   /** Value for the main label. Usually a string of text. */

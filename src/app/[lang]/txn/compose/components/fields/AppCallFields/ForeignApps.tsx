@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
-import {
-  MAX_APP_TOTAL_DEPS,
-  showFormErrorsAtom,
-  apfaValidateOptions,
-} from '@/app/lib/txn-data';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
+import { MAX_APP_TOTAL_DEPS, showFormErrorsAtom, apfaValidateOptions } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import { ValidationMessage, removeNonNumericalChars, validationAtom } from '@/app/lib/utils';
 
@@ -20,11 +16,9 @@ export default function ForeignApps({ t }: { t: TFunction }) {
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (<>
     {!appForeignApps.length && <p className='italic'>{t('fields.apfa.none')}</p>}
-
     {appForeignApps.map(
       (appAtom, i) => <ForeignAppInput t={t} appAtom={appAtom} index={i} key={`${appAtom}`} />
     )}
-
     <div className='py-4'>
       <button type='button'
         className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'

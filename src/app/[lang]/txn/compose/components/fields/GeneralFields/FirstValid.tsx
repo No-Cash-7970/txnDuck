@@ -1,6 +1,6 @@
-import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import {
   generalFormControlAtom,
   fvLvFormControlAtom,
@@ -59,8 +59,7 @@ export default function FirstValid({ t }: { t: TFunction }) {
         dict={(fvLvGroup.error as any).message.dict}
       />
     }
-    {(showFormErrors || form.touched.fv) && !fvCondReqGroup.isValid
-      && fvCondReqGroup.error &&
+    {(showFormErrors || form.touched.fv) && !fvCondReqGroup.isValid && fvCondReqGroup.error &&
       <FieldErrorMessage t={t}
         i18nkey={(fvCondReqGroup.error as any).message.key}
         dict={(fvCondReqGroup.error as any).message.dict}

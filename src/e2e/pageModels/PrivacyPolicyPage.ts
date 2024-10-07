@@ -5,7 +5,6 @@ export class PrivacyPolicyPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '/privacy-policy';
-
   /** Main section of the page */
   readonly main: Locator;
 

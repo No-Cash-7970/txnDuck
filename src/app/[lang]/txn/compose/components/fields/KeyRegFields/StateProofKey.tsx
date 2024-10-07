@@ -1,7 +1,8 @@
+import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { FieldErrorMessage, TextAreaField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { FieldErrorMessage, TextAreaField } from '@/app/[lang]/components/form';
 import {
   Preset,
   keyRegFormControlAtom,
@@ -11,7 +12,6 @@ import {
   tipBtnClass,
   tipContentClass,
 } from '@/app/lib/txn-data';
-import { useEffect } from 'react';
 
 export default function StateProofKey({ t }: { t: TFunction }) {
   const form = useAtomValue(keyRegFormControlAtom);

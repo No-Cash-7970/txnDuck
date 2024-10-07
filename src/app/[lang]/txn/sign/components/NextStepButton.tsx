@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { useTranslation } from '@/app/i18n/client';
 import { IconArrowRight, IconArrowLeft } from '@tabler/icons-react';
 import { useAtomValue } from 'jotai';
+import { useTranslation } from '@/app/i18n/client';
 import { storedSignedTxnAtom } from '@/app/lib/txn-data';
 
 type Props = {

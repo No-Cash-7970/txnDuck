@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Trans } from 'react-i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import {
   ADDRESS_LENGTH,
   Preset,

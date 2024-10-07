@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
+import { FieldErrorMessage, NumberField } from '@/app/[lang]/components/form';
 import {
   MAX_DECIMAL_PLACES,
   Preset,

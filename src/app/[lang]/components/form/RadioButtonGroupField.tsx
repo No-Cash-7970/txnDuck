@@ -43,9 +43,9 @@ export default function SelectField({
                 required={required}
                 className={`join-item btn ${optionClass}`}
                 defaultChecked={
-                  (defaultValue === undefined)? undefined : (option.value === defaultValue)
+                  (defaultValue === undefined) ? undefined : (option.value === defaultValue)
                 }
-                checked={(value === undefined)? undefined : (option.value === value)}
+                checked={(value === undefined) ? undefined : (option.value === value)}
                 onChange={onChange}
                 onFocus={onFocus}
                 onBlur={onBlur}

@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
 import { IconExclamationCircle, IconMinus, IconPlus } from '@tabler/icons-react';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import {
   ADDRESS_LENGTH,
   MAX_APP_ACCTS,
@@ -28,11 +28,9 @@ export default function AppAccts({ t }: { t: TFunction }) {
       </div>
     }
     {!appAccts.length && <p className='italic'>{t('fields.apat.none')}</p>}
-
     {appAccts.map(
       (acctAtom, i) => <AppAcctInput t={t} acctAtom={acctAtom} index={i} key={`${acctAtom}`} />
     )}
-
     <div className='py-4'>
       <button type='button'
         className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'
@@ -41,8 +39,8 @@ export default function AppAccts({ t }: { t: TFunction }) {
           value: atomWithValidate('', apatValidateOptions)
         })}
         disabled={
-          (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length)
-            >= MAX_APP_TOTAL_DEPS
+          // eslint-disable-next-line max-len
+          (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length) >= MAX_APP_TOTAL_DEPS
           || appAccts.length >= MAX_APP_ACCTS
         }
       >

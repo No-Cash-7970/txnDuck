@@ -3,6 +3,7 @@
 import { base64ToBytes, OnApplicationComplete } from 'algosdkv3';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
+import { TestConfig } from 'yup';
 import {
   ValidationMessage,
   base64RegExp,
@@ -21,7 +22,6 @@ import {
   METADATA_HASH_LENGTH
 } from './constants';
 import { YupMixed, YupNumber, YupString, addressSchema, idSchema } from './validation-rules';
-import { TestConfig } from 'yup';
 
 /** Atom containing flag for triggering the form errors to be shown */
 export const showFormErrorsAtom = atom(false);

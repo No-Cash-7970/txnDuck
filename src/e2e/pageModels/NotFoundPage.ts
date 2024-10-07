@@ -5,7 +5,6 @@ export class NotFoundPage {
   readonly page: PageFixture;
   /** URL without the language prefix */
   static readonly url = '/doesnt-exist';
-
   /** Main section of the page */
   readonly main: Locator;
 

@@ -1,8 +1,8 @@
 import { use } from 'react';
-import { useTranslation } from '@/app/i18n';
 import { IconBrandGithubFilled, IconLockSquare } from '@tabler/icons-react';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
+import { useTranslation } from '@/app/i18n';
 
 type Props = {
   /** Language */

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { TFunction } from "i18next";
+import { type TFunction } from "i18next";
 import { Trans } from "react-i18next";
 import { useTranslation } from "@/app/i18n/client";
 import {
@@ -39,7 +39,6 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
   const [testingNode, setTestingNode] = useState(false);
   const [nodeOK, setNodeOK] = useState<boolean>();
   const [storedCustomNodeConfig, setStoredCustomNodeConfig] = useAtom(NodeConfigLib.customNodeAtom);
-
   const jotaiStore = useStore();
   const form = useAtomValue(NodeConfigLib.customNodeFormControlAtom);
   const setShowFormErrors = useSetAtom(showFormErrorsAtom);
@@ -481,8 +480,7 @@ function CoinNameInput({ t }: { t: TFunction }) {
       placeholder={NodeConfigLib.DEFAULT_COIN_NAME}
       containerId='coin_name-field'
       containerClass='mt-2 max-w-xs'
-      inputClass={
-        ((showFormErrors || form.touched.coinName) && form.fieldErrors.coinName)
+      inputClass={((showFormErrors || form.touched.coinName) && form.fieldErrors.coinName)
           ? 'input-error' : ''
       }
       maxLength={UNIT_NAME_MAX_LENGTH}

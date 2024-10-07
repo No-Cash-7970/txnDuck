@@ -8,6 +8,12 @@ import { microalgosToAlgos, OnApplicationComplete, TransactionType } from 'algos
 import { type useStore } from 'jotai';
 import { atomWithStorage, createJSONStorage } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
+import {
+  baseUnitsToDecimal,
+  decimalToBaseUnits,
+  removeNonNumericalChars,
+  removeNonNumericalDecimalChars
+} from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
 import { MAX_VALID_ROUNDS_PERIOD, MIN_TX_FEE, Preset } from './constants';
 import {
@@ -35,12 +41,6 @@ import {
   keyRegFormControlAtom,
   paymentFormControlAtom
 } from './field-validation';
-import {
-  baseUnitsToDecimal,
-  decimalToBaseUnits,
-  removeNonNumericalChars,
-  removeNonNumericalDecimalChars
-} from '@/app/lib/utils';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set they type of storage

@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
-import { ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { ToggleField } from '@/app/[lang]/components/form';
 import {
   Preset,
   assetFreezeFormControlAtom,

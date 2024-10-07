@@ -2,10 +2,10 @@ import '@/app/globals.css';
 import { use } from 'react';
 import type { Metadata } from 'next';
 import * as fs from "node:fs";
-import * as fonts from '@/app/lib/fonts';
 import { dir } from 'i18next';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { supportedLangs } from '@/app/i18n/settings';
+import * as fonts from '@/app/lib/fonts';
 import { getMetadataBase } from '@/app/lib/utils';
 import {
   Footer,
@@ -91,7 +91,6 @@ export default function HomeLayout(
 ) {
   const { t } = use(useTranslation(lang || '', ['app', 'common']));
   const langDir = dir(lang);
-
   return (
     <html
       lang={lang}

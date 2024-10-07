@@ -18,8 +18,7 @@ export default function LanguageMenuItem({ page='', link='' }: Props) {
   return (
     <DropdownMenu.Item asChild>
       <li className='mb-1 max-w-full'>
-        <a
-          className={link === page ? 'active': ''}
+        <a className={link === page ? 'active': ''}
           href={(`/${link}` + currentURLPath.replace(`/${page}`, ''))
             + (currentURLParams.size ? `?${currentURLParams.toString()}`: '')
           }

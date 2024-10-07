@@ -122,18 +122,18 @@ async function mockNodeResponses(page: Page) {
 async function checkSignTxnDataTable(page: Page) {
   await expect(page.getByRole('row', { name: 'Node network' }).getByRole('cell'))
       .toHaveText('TestNet');
-    await expect(page.getByRole('row', { name: 'Transaction type' }).getByRole('cell'))
-      .toHaveText('Payment');
-    await expect(page.getByRole('row', { name: 'Sender' }).getByRole('cell'))
-      .toHaveText('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
-    await expect(page.getByRole('row', { name: 'Receiver' }).getByRole('cell'))
-      .toHaveText('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
-    await expect(page.getByRole('row', { name: 'Amount' }).getByRole('cell')).toHaveText('0 Algos');
-    await expect(page.getByRole('row', { name: 'Close remainder to' }).getByRole('cell'))
-      .toHaveText('None');
-    await expect(page.getByRole('row', { name: 'Note' }).getByRole('cell')).toHaveText('None');
-    await expect(page.getByRole('row', { name: 'Fee(Automatic)' }).getByRole('cell'))
-      .toHaveText('0.001 Algos');
-    await expect(page.getByRole('row', { name: 'Lease' }).getByRole('cell')).toHaveText('None');
-    await expect(page.getByRole('row', { name: 'Rekey to' }).getByRole('cell')).toHaveText('None');
+  await expect(page.getByRole('row', { name: 'Transaction type' }).getByRole('cell'))
+    .toHaveText('Payment');
+  await expect(page.getByRole('row', { name: 'Sender' }).getByRole('cell'))
+    .toHaveText('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
+  await expect(page.getByRole('row', { name: 'Receiver' }).getByRole('cell'))
+    .toHaveText('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
+  await expect(page.getByRole('row', { name: 'Amount' }).getByRole('cell')).toHaveText('0 Algos');
+  await expect(page.getByRole('row', { name: 'Close remainder to' }).getByRole('cell'))
+    .toHaveText('None');
+  await expect(page.getByRole('row', { name: 'Note' }).getByRole('cell')).toHaveText('None');
+  await expect(page.getByRole('row', { name: 'Fee(Automatic)' }).getByRole('cell'))
+    .toHaveText('0.001 Algos');
+  await expect(page.getByRole('row', { name: 'Lease' }).getByRole('cell')).toHaveText('None');
+  await expect(page.getByRole('row', { name: 'Rekey to' }).getByRole('cell')).toHaveText('None');
 }

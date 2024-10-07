@@ -1,6 +1,6 @@
-import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import {
   aamtConditionalMaxAtom,
   assetTransferFormControlAtom,

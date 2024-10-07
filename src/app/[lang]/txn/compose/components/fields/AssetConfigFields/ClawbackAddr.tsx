@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { type TFunction } from 'i18next';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { IconAlertTriangleFilled } from '@tabler/icons-react';
 import {
   FieldErrorMessage,
   FieldGroup,
   TextField,
   ToggleField
 } from '@/app/[lang]/components/form';
-import { type TFunction } from 'i18next';
-import { useAtomValue, useSetAtom } from 'jotai';
-import { IconAlertTriangleFilled } from '@tabler/icons-react';
 import {
   ADDRESS_LENGTH,
   Preset,

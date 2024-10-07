@@ -1,7 +1,7 @@
 import { Suspense, use } from 'react';
 import { type Metadata } from 'next';
-import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import SendTxn from './components/SendTxn';
 
 export async function generateMetadata(

@@ -30,9 +30,12 @@ uninstallation instructions for each of the installation methods.
 
 ## Which installation method should I choose?
 
-- For the fastest and easiest installation of the stable Production version: [Portable package installation](#portable-package-installation)
-- For more flexibility and customization with either the Production or Preview version: [Source code installation](#source-code-installation)
-- For modifying and testing the code for development: [Development environment installation](#development-environment-installation)
+- For the fastest and easiest installation of the stable Production version:
+  [Portable package installation](#portable-package-installation)
+- For more flexibility and customization with either the Production or Preview version:
+  [Source code installation](#source-code-installation)
+- For modifying and testing the code for development:
+  [Development environment installation](#development-environment-installation)
 
 <!-- Portable package installation method:
 

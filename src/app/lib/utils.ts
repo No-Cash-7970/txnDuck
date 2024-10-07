@@ -118,7 +118,6 @@ export const baseUnitsToDecimal = (
 ): string => {
   // Pad with leading zeros, if number is too short
   const paddedNum = `${baseUnitsNum}`.padStart(decimalPlaces, '0');
-
   // Extract the left side of the decimal (integer part)
   const leftSide = paddedNum.slice(0, paddedNum.length - decimalPlaces);
   // Extract the right side of the decimal (fraction part)

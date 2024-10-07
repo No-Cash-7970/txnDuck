@@ -1,6 +1,6 @@
-import { ToggleField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { useAtomValue } from 'jotai';
+import { ToggleField } from '@/app/[lang]/components/form';
 import { assetConfigFormControlAtom, tipBtnClass, tipContentClass } from '@/app/lib/txn-data';
 
 export default function DefaultFrozen({ t }: { t: TFunction }) {

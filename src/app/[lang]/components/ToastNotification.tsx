@@ -1,7 +1,7 @@
-import { useTranslation } from '@/app/i18n/client';
 import { dir } from 'i18next';
 import * as Toast from '@radix-ui/react-toast';
 import { IconSettingsCheck, IconX } from '@tabler/icons-react';
+import { useTranslation } from '@/app/i18n/client';
 
 interface Props {
   /** Language */
@@ -20,7 +20,6 @@ interface Props {
 export default function ToastNotification({ lng, message, open, onOpenChange }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common']);
   const langDir = dir(lng);
-
   return (
     <Toast.Root
       type='foreground'

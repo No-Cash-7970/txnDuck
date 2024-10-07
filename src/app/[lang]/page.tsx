@@ -1,14 +1,13 @@
 import { use } from 'react';
+import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
 import { useTranslation } from '@/app/i18n';
-import Link from 'next/link';
 
 /** The home page */
 export default function HomePage({ params: { lang } }: {
   params: { lang: string }
 }) {
   const { t } = use(useTranslation(lang, ['home', 'app', 'common']));
-
   return (
     <main className='prose max-w-none min-h-screen pb-12'>
       {/* Hero section */}

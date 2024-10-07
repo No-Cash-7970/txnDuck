@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
 import { IconMinus, IconPlus } from '@tabler/icons-react';
-import {
-  MAX_APP_TOTAL_DEPS,
-  showFormErrorsAtom,
-  apasValidateOptions,
-} from '@/app/lib/txn-data';
+import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
+import { MAX_APP_TOTAL_DEPS, showFormErrorsAtom, apasValidateOptions } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import { ValidationMessage, removeNonNumericalChars, validationAtom } from '@/app/lib/utils';
 
@@ -20,13 +16,11 @@ export default function ForeignAssets({ t }: { t: TFunction }) {
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (<>
     {!appForeignAssets.length && <p className='italic'>{t('fields.apas.none')}</p>}
-
     {appForeignAssets.map(
       (assetAtom, i) => (
         <ForeignAssetInput t={t} assetAtom={assetAtom} index={i} key={`${assetAtom}`} />
       )
     )}
-
     <div className='py-4'>
       <button type='button'
         className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'
@@ -34,9 +28,8 @@ export default function ForeignAssets({ t }: { t: TFunction }) {
           type: 'insert',
           value: atomWithValidate(null, apasValidateOptions)
         })}
-        disabled={
-          (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length)
-            >= MAX_APP_TOTAL_DEPS
+        disabled={ // eslint-disable-next-line max-len
+          (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length) >= MAX_APP_TOTAL_DEPS
         }
       >
         <IconPlus aria-hidden />

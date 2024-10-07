@@ -1,9 +1,9 @@
 /** @file Useful utilities for managing transaction data */
 
 import { Algodv2 } from "algosdkv3";
-import { RetrievedAssetInfo } from "./types";
 import { NodeConfig } from "@/app/lib/node-config";
 import { DEFAULT_NODE_CONFIG } from "@/app/lib/node-config";
+import { RetrievedAssetInfo } from "./types";
 
 /** Get information about the asset with the given ID
  * @param assetId ID of the asset of which to get the information

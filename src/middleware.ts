@@ -6,7 +6,6 @@ import acceptLanguage from 'accept-language';
 import { fallbackLng, supportedLangs } from './app/i18n/settings';
 
 const SUPPORTED_LANGS = Object.keys(supportedLangs);
-
 acceptLanguage.languages(SUPPORTED_LANGS);
 
 export const config = {

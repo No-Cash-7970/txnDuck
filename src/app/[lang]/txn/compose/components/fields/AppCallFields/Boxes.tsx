@@ -1,14 +1,14 @@
 import { useState } from 'react';
+import { type TFunction } from 'i18next';
+import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
+import { atomWithValidate } from 'jotai-form';
+import { IconMinus, IconPlus } from '@tabler/icons-react';
 import {
   NumberField,
   TextField,
   FieldGroup,
   FieldErrorMessage
 } from '@/app/[lang]/components/form';
-import { type TFunction } from 'i18next';
-import { PrimitiveAtom, useAtom, useAtomValue } from 'jotai';
-import { atomWithValidate } from 'jotai-form';
-import { IconMinus, IconPlus } from '@tabler/icons-react';
 import {
   MAX_APP_TOTAL_DEPS,
   showFormErrorsAtom,
@@ -30,7 +30,6 @@ export default function Boxes({ t }: { t: TFunction }) {
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   return (<>
     {!boxes.length && <p className='italic'>{t('fields.apbx.none')}</p>}
-
     {boxes.map((boxAtom, i) =>
       <FieldGroup headingLevel={4}
         heading={t('fields.apbx.box_heading', { index: i + 1 })}
@@ -40,7 +39,6 @@ export default function Boxes({ t }: { t: TFunction }) {
         <BoxNameInput t={t} boxAtom={boxAtom} index={i} />
       </FieldGroup>
     )}
-
     <div className='py-4'>
       <button type='button'
         className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'

@@ -11,7 +11,6 @@ export async function generateMetadata(
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['privacy_policy', 'app']);
   const path = '/privacy-policy';
-
   return {
     title: t('page_title', {page: t('title'), site: t('site_name')}),
     alternates: {
@@ -45,16 +44,14 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
 
       <h2 id="wallet-security">{t('wallet_security.heading')}</h2>
       <p>
-        <Trans t={t} i18nKey='wallet_security.details'
-          components={{
-            wc: <a href='https://walletconnect.com/' target='_blank' />,
-            pcdocs: <a href='https://docs.perawallet.app/references/pera-connect'
-              target='_blank'
-            />,
-            pera: <a href='https://perawallet.app/' target='_blank' />,
-            defly:<a href='https://defly.app/' target='_blank' />
-          }}
-        />
+        <Trans t={t} i18nKey='wallet_security.details' components={{
+          wc: <a href='https://walletconnect.com/' target='_blank' />,
+          pcdocs: <a href='https://docs.perawallet.app/references/pera-connect'
+            target='_blank'
+          />,
+          pera: <a href='https://perawallet.app/' target='_blank' />,
+          defly:<a href='https://defly.app/' target='_blank' />
+        }} />
       </p>
 
       <h2 id="magic-auth">{t('magic_auth.heading')}</h2>
@@ -69,11 +66,9 @@ export default function PrivacyPolicyPage({ params: { lang } }: {
       </p>
       <Trans t={t} i18nKey='magic_auth.details_2' components={{ ul: <ul />, li: <li />, }} />
       <p>
-        <Trans t={t} i18nKey='magic_auth.details_3'
-          components={{
-            magic_privacy: <a href='https://magic.link/legal/privacy-policy' target='_blank' />,
-          }}
-        />
+        <Trans t={t} i18nKey='magic_auth.details_3' components={{
+          magic_privacy: <a href='https://magic.link/legal/privacy-policy' target='_blank' />,
+        }} />
       </p>
     </main>
   );

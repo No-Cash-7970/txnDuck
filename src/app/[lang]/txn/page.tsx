@@ -1,9 +1,9 @@
 import { Suspense, use } from 'react';
-import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import { IconArrowBigRightLinesFilled, IconArrowBigLeftLinesFilled } from '@tabler/icons-react';
 import { PageTitleHeading } from '@/app/[lang]/components';
+import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import TxnPresetsList from './TxnPresetsList';
 
 export async function generateMetadata(
@@ -29,7 +29,6 @@ export default function TxnPresetsPage({ params: { lang } }: {
   params: { lang: string }
 }) {
   const { t } = use(useTranslation(lang, 'txn_presets'));
-
   return (
     <main className='prose max-w-6xl min-h-screen mx-auto pt-8 px-4 pb-12'>
       <PageTitleHeading>{t('title')}</PageTitleHeading>
@@ -46,7 +45,6 @@ export default function TxnPresetsPage({ params: { lang } }: {
           {t('skip_btn')}
         </Link>
       </div>
-
       <Suspense><TxnPresetsList lng={lang} /></Suspense>
     </main>
   );

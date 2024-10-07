@@ -1,15 +1,15 @@
 import Image from 'next/image';
 import { IconX } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
+import { useEffect, useRef } from 'react';
+import { useAtom, useAtomValue } from 'jotai';
+import * as Dialog from '@radix-ui/react-dialog';
+import { useWallet, WalletId } from '@txnlab/use-wallet-react';
 import {
   MagicAuthPrompt,
   magicPromptCanceledAtom,
   magicProviderAtom,
 } from '@/app/[lang]/components/wallet';
-import { useEffect, useRef } from 'react';
-import { useAtom, useAtomValue } from 'jotai';
-import * as Dialog from '@radix-ui/react-dialog';
-import { useWallet, WalletId } from '@txnlab/use-wallet-react';
 import { walletTypes } from '@/app/lib/wallet-utils';
 
 /** The body of the content for the "Connect Wallet" dialog */

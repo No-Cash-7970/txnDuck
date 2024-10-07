@@ -2,9 +2,9 @@
 
 import { useAtom } from "jotai";
 import { RESET } from "jotai/utils";
-import { themeAtom, Themes } from "@/app/lib/app-settings";
 import { RadioButtonGroupField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
+import { themeAtom, Themes } from "@/app/lib/app-settings";
 import { applyTheme } from "@/app/lib/utils";
 
 type Props = {
@@ -25,23 +25,23 @@ export default function ThemeChanger(props: Props) {
   const [theme, setTheme] = useAtom(themeAtom);
   return (
     <RadioButtonGroupField
-        name='theme'
-        label={t('settings.theme_switcher.label')}
-        containerClass={props.containerClass}
-        labelClass={props.labelClass}
-        labelTextClass={props.labelTextClass}
-        optionClass='btn-sm disabled:checked:opacity-20 checked:btn-secondary'
-        options={[
-          { value: Themes.light, text: t('settings.theme_switcher.light') },
-          { value: Themes.dark, text: t('settings.theme_switcher.dark') },
-          { value: Themes.auto, text: t('settings.theme_switcher.auto') },
-        ]}
-        value={theme}
-        onChange={(e) => applyTheme(
-          e.target.value as Themes,
-          theme => setTheme(theme === '' ? RESET : theme),
-          props.notify
-        )}
-      />
+      name='theme'
+      label={t('settings.theme_switcher.label')}
+      containerClass={props.containerClass}
+      labelClass={props.labelClass}
+      labelTextClass={props.labelTextClass}
+      optionClass='btn-sm disabled:checked:opacity-20 checked:btn-secondary'
+      options={[
+        { value: Themes.light, text: t('settings.theme_switcher.light') },
+        { value: Themes.dark, text: t('settings.theme_switcher.dark') },
+        { value: Themes.auto, text: t('settings.theme_switcher.auto') },
+      ]}
+      value={theme}
+      onChange={(e) => applyTheme(
+        e.target.value as Themes,
+        theme => setTheme(theme === '' ? RESET : theme),
+        props.notify
+      )}
+    />
   );
 }
