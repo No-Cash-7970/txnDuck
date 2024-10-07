@@ -78,6 +78,7 @@ wallet:
     walletconnect: WalletConnect
     magic: Magic
     mnemonic: Mnemonic
+    biatec: Biatec (AWallet)
   type:
     mobile: Billetera móvil
     mobile_web: Billetera móvil y web

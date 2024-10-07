@@ -17,6 +17,7 @@ export const walletTypes: {[id: string]: string} = {
   [WalletId.KIBISIS]: 'browser_extension',
   [WalletId.WALLETCONNECT]: 'protocol',
   [WalletId.MAGIC]: 'waas',
+  [WalletId.BIATEC]: 'web',
   [WalletId.MNEMONIC]: 'mnemonic',
 };
 

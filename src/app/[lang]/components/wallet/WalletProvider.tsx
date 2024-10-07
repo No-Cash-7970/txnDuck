@@ -33,19 +33,23 @@ export default function WalletProvider({ sitename, children }: {
 
   // Add WalletConnect as a supported wallet if a WalletConnect project ID is set
   if (process.env.NEXT_PUBLIC_WC_PROJECT_ID) {
+    const wcOptions = {
+      projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
+      themeVariables: { '--wcm-z-index': '999999' }
+    };
+
     // Insert WalletConnect after Lute in the list of supported wallets
-    supportedWallets.splice(3, 0, {
-      id: WalletId.WALLETCONNECT,
-      options: {
-        projectId: process.env.NEXT_PUBLIC_WC_PROJECT_ID,
-        themeVariables: {
-          '--wcm-z-index': '999999',
-        }
-      }
-    });
+    supportedWallets.splice(3, 0, { id: WalletId.WALLETCONNECT, options: wcOptions });
     /*
      * Wallets list is now:
      * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, KMD
+     */
+
+    // Insert Biatec between Exodus and KMD in the list of supported wallets
+    supportedWallets.splice(6, 0, { id: WalletId.BIATEC, options: wcOptions });
+    /*
+     * Wallets list is now:
+     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, Biatec, KMD
      */
   }
 
@@ -58,7 +62,7 @@ export default function WalletProvider({ sitename, children }: {
     });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic, Exodus, KMD
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic, Exodus, Biatec?, KMD
      */
   }
 
@@ -75,7 +79,7 @@ export default function WalletProvider({ sitename, children }: {
     });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic?, Exodus, KMD, Mnemonic
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic?, Exodus, Biatec?, KMD, Mnemonic
      */
   }
 
