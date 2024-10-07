@@ -1,10 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { LanguageSupport, NavBarComponent as NavBar } from './shared';
-import { HomePage } from './pageModels/HomePage';
-import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
-import { TxnPresetsPage } from './pageModels/TxnPresetsPage';
-import { SignTxnPage } from './pageModels/SignTxnPage';
-import { SendTxnPage } from './pageModels/SendTxnPage';
+import { ComposeTxnPage, HomePage, SendTxnPage, SignTxnPage, TxnPresetsPage } from './pageModels';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom

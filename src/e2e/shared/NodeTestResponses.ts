@@ -1,5 +1,6 @@
 /** @file Test Algod node responses used to mock responses to requests */
 
+import { type Page } from "@playwright/test";
 import { base64ToBytes, stringifyJSON } from "algosdkv3";
 
 /* NOTE:
@@ -106,3 +107,42 @@ export const waitForBlock = stringifyJSON({
   "stopped-at-unsupported-round": false,
   "time-since-last-round": 567756
 });
+
+/** Mock responses to a series of Algorand node requests for a simple transaction. The mocked
+ * responses are we actual responses from an Algod node.
+ *
+ * Mocking the responses of an Algod node makes the tests more consistent, puts less strain on an
+ * actual Algod node, and removes the requirement of a real Algod node to be available before
+ * running the testing.
+ */
+export async function mockNodeResponses(page: Page) {
+  await page.route('*/**/v2/transactions/params', async route => {
+    await route.fulfill({ body: suggParams, contentType: 'application/json' });
+  });
+
+  await page.route('*/**/v2/transactions', async (route, request) => {
+    if (request.method() === 'OPTIONS') {
+      await route.fulfill();
+    } else {
+      await route.fulfill({ body: sendTxn, contentType: 'application/json' });
+    }
+  });
+
+  await page.route('*/**/v2/status', async route => {
+    await route.fulfill({ body: nodeStatus, contentType: 'application/json' });
+  });
+
+  let pendingTxnCount = 0;
+  await page.route('*/**/v2/transactions/pending/*', async route => {
+    if (pendingTxnCount === 0) { // First time
+      await route.fulfill({ body: pendingTxn1, contentType: 'application/msgpack' });
+      pendingTxnCount++;
+    } else { // Second time
+      await route.fulfill({ body: pendingTxn2, contentType: 'application/msgpack' });
+    }
+  });
+
+  await page.route('*/**/v2/status/wait-for-block-after/*', async route => {
+    await route.fulfill({ body: waitForBlock, contentType: 'application/json' });
+  });
+}

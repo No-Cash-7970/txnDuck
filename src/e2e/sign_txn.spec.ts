@@ -1,7 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { LanguageSupport, NavBarComponent as NavBar } from './shared';
-import { SignTxnPage } from './pageModels/SignTxnPage';
-import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
+import { ComposeTxnPage, SignTxnPage } from './pageModels';
 
 // Extend basic test by providing a "signTxnPage" fixture.
 // Code adapted from https://playwright.dev/docs/pom

@@ -1,6 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
-import { HomePage } from './pageModels/HomePage';
+import { ComposeTxnPage, HomePage } from './pageModels';
 
 // Extend basic test by providing a "composeTxnPage" fixture.
 // Code adapted from https://playwright.dev/docs/pom

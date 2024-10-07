@@ -1,7 +1,6 @@
 import { test as base, expect } from '@playwright/test';
 import { LanguageSupport, NavBarComponent as NavBar } from './shared';
-import { ComposeTxnPage } from './pageModels/ComposeTxnPage';
-import { TxnPresetsPage } from './pageModels/TxnPresetsPage';
+import { ComposeTxnPage, TxnPresetsPage } from './pageModels';
 import { usdcAsset } from './shared/NodeTestResponses';
 
 // Extend basic test by providing a "composeTxnPage" fixture.
