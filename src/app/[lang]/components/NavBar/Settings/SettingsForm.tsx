@@ -117,6 +117,11 @@ export default function SettingsForm(props: Props) {
       {/* Setting: Theme setting */}
       <ThemeChanger lng={props.lng} notify={notifySave} />
 
+      {/* Connect wallet */}
+      <div className='mt-8'>
+        <WalletProvider sitename={t('site_name')}><ConnectWallet t={t} /></WalletProvider>
+      </div>
+
       <h3>{t('settings.compose_txn_general_heading')}</h3>
 
       {/* Setting: Do not allow form errors setting */}
@@ -265,11 +270,6 @@ export default function SettingsForm(props: Props) {
           onChangeConfirmWait(e.target.value === '' ? RESET : parseInt(e.target.value));
         }}
       />
-
-      {/* Connect wallet */}
-      <div className='mt-8'>
-        <WalletProvider sitename={t('site_name')}><ConnectWallet t={t} /></WalletProvider>
-      </div>
 
       <h3>{t('settings.clear_reset_heading')}</h3>
 
