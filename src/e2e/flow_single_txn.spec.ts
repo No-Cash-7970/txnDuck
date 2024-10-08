@@ -16,8 +16,8 @@ const test = base.extend<{ homePage: HomePage }>({
 
 test.slow();
 
-// Run through the entire flow of creating and sending a single transaction.
-test.skip('Flow — Single transaction from start to finish', async ({ homePage, page }) => {
+// Run through the entire normal flow of creating and sending a single transaction.
+test.skip('Flow — Single transaction', async ({ homePage, page }) => {
   await mockNodeResponses(page);
 
   /*===== Home page =====*/
@@ -72,7 +72,7 @@ test.skip('Flow — Single transaction from start to finish', async ({ homePage,
   // Sign transaction and go to send page
   await page.getByRole('button', { name: 'Sign this transaction' }).click();
 
-  /*===== Sign Transaction page =====*/
+  /*===== Send Transaction page =====*/
 
   // See if transaction succeeded
   await expect(page.getByText('Transaction confirmed!')).toBeVisible();
