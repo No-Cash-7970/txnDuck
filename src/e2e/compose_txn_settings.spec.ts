@@ -1,9 +1,9 @@
 import { test as base, expect } from '@playwright/test';
 import { ComposeTxnPage, HomePage } from './pageModels';
 
-// Extend basic test by providing a "composeTxnPage" fixture.
+// Extend basic test by providing a "composeTxnPage" fixture and a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
-const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
+const test = base.extend<{ composeTxnPage: ComposeTxnPage, homePage: HomePage }>({
   composeTxnPage: async ({ page }, use) => {
     // Set up the fixture.
     const composeTxnPage = new ComposeTxnPage(page);
@@ -11,15 +11,22 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
     // Use the fixture value in the test.
     await use(composeTxnPage);
   },
+  homePage: async ({ page }, use) => {
+    // Set up the fixture.
+    const homePage = new HomePage(page);
+    await homePage.goto();
+    // Use the fixture value in the test.
+    await use(homePage);
+  },
 });
 
 test.slow();
 
 test.describe('Compose Transaction Settings', () => {
 
-  test('uses the default "Automatically set fee" value set in the settings', async ({ page }) => {
+  test('uses the default "Automatically set fee" value set in the settings',
+  async ({ homePage /* Adding this loads the home page */,  page }) => {
     // Change setting when on the home page
-    await (new HomePage(page)).goto();
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSugSetting = page.getByLabel('Set fee automatically by default');
@@ -57,9 +64,8 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the default "Automatically set valid rounds" value set in the settings',
-  async ({ page }) => {
+  async ({ homePage, page }) => {
     // Change setting when on the home page
-    await (new HomePage(page)).goto();
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSugSetting = page.getByLabel('Set valid rounds automatically by default');
@@ -97,9 +103,8 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "manager address to the sender address by default" value set in the settings',
-  async ({ page }) => {
+  async ({ homePage, page }) => {
     // Change setting when on the home page
-    await (new HomePage(page)).goto();
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
@@ -139,9 +144,8 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "freeze address to the sender address by default" value set in the settings',
-  async ({ page }) => {
+  async ({ homePage, page }) => {
     // Change setting when on the home page
-    await (new HomePage(page)).goto();
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
@@ -181,9 +185,8 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "clawback address to the sender address by default" value set in the settings',
-  async ({ page }) => {
+  async ({ homePage, page }) => {
     // Change setting when on the home page
-    await (new HomePage(page)).goto();
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
