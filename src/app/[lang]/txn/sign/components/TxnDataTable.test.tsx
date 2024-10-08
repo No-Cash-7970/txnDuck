@@ -24,7 +24,8 @@ describe('Transaction Data Table Component', () => {
     render(<TxnDataTable />);
 
     expect(screen.getByText('app:node_selector.node_network')).toBeInTheDocument();
-    expect(screen.getByText('app:node_selector.mainnet')).toBeInTheDocument();
+    // Assuming the default network is TestNet
+    expect(screen.getByText('app:node_selector.testnet')).toBeInTheDocument();
 
     expect(screen.getByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.type.options.pay')).toBeInTheDocument();
@@ -72,7 +73,8 @@ describe('Transaction Data Table Component', () => {
     render(<TxnDataTable />);
 
     expect(screen.getByText('app:node_selector.node_network')).toBeInTheDocument();
-    expect(screen.getByText('app:node_selector.mainnet')).toBeInTheDocument();
+    // Assuming the default network is TestNet
+    expect(screen.getByText('app:node_selector.testnet')).toBeInTheDocument();
 
     expect(screen.getByText('fields.type.label')).toBeInTheDocument();
     expect(screen.getByText('fields.type.options.pay')).toBeInTheDocument();

@@ -59,55 +59,54 @@ test.describe('Sign Transaction Page', () => {
         await page.waitForURL(SignTxnPage.getFullUrl('en') + urlParams);
       });
 
-      test('uses default network if the network IS NOT specified in a URL parameter',
-      async ({ page }) => {
-        // NOTE: Assuming that the default network is MainNet
-        await expect(page.getByText('MainNet')).toHaveCount(2);
+      test('uses default network if the network is NOT specified in a URL parameter',
+      async ({ signTxnPage, page }) => {
+        // NOTE: Assuming that the default network is TestNet
+        await expect(page.getByText('TestNet')).toHaveCount(2);
       });
 
-      test('uses network specified in URL parameter when there IS NO saved network',
-      async ({ page }) => {
-        // NOTE: Assuming that the default network is MainNet
-
-        // Select non-default network using URL parameter
-        await (new SignTxnPage(page)).goto('en',`${presetURLParam}&network=betanet`);
-        await expect(page.getByText('BetaNet')).toHaveCount(2);
+      test('uses network specified in URL parameter when there is NO saved network',
+      async ({ signTxnPage, page }) => {
+        // NOTE: Assuming that the default network is TestNet
+        // Select non-default network using URL parameters
+        await (new SignTxnPage(page)).goto('en', '?network=betanet');
+        await expect(page.getByRole('button', { name: 'BetaNet' })).toBeVisible();
       });
 
       test('uses network specified in URL parameter when there IS saved network',
-      async ({ page }) => {
-        // NOTE: Assuming that the default network is MainNet
+      async ({ signTxnPage, page }) => {
+        // NOTE: Assuming that the default network is TestNet
 
-        // Select TestNet from node selection menu so node configuration is stored in local storage
-        await page.getByRole('button', { name: 'MainNet' }).click();
-        await page.getByText('TestNet', { exact: true }).click();
+        // Select MainNet from node selection menu so node configuration is stored in local storage
+        await page.getByRole('button', { name: 'TestNet' }).click();
+        await page.getByText('MainNet', { exact: true }).click(); // Menu item
         // Make sure switching networks works
-        await expect(page.getByText('TestNet')).toHaveCount(2);
+        await expect(page.getByText('MainNet')).toHaveCount(2);
         // Select non-default network using URL parameter
         await (new SignTxnPage(page)).goto('en',`${presetURLParam}&network=betanet`);
         await expect(page.getByText('BetaNet')).toHaveCount(2);
       });
 
-      test('removes URL parameter if network is manually set', async ({ page }) => {
-        // NOTE: Assuming that the default network is MainNet
+      test('removes URL parameter if network is manually set', async ({ signTxnPage, page }) => {
+        // NOTE: Assuming that the default network is TestNet
 
-        // Select TestNet from node selection menu so node configuration is stored in local storage
-        const mainnetButton = page.getByRole('button', { name: 'MainNet' });
-        await mainnetButton.click();
-        await page.getByText('TestNet', { exact: true }).click(); // Menu item
+        // Select MainNet from node selection menu so node configuration is stored in local storage
+        const testnetButton = page.getByRole('button', { name: 'TestNet' });
+        await testnetButton.click();
+        await page.getByText('MainNet', { exact: true }).click(); // Menu item
 
         // Select non-default network using URL parameter
-        await (new SignTxnPage(page)).goto('en',`${presetURLParam}&network=betanet`);
+        await (new SignTxnPage(page)).goto('en', '?network=betanet');
         const betanetButton = page.getByRole('button', { name: 'BetaNet' });
         await expect(betanetButton).toBeVisible();
 
-        // Select MainNet from node selection menu
+        // Select TestNet from node selection menu
         await betanetButton.click();
-        await page.getByText('MainNet', { exact: true }).click(); // Menu item
+        await page.getByText('TestNet', { exact: true }).click(); // Menu item
 
         // Check for correct URL by waiting for it
-        await page.waitForURL(SignTxnPage.getFullUrl('en') + presetURLParam);
-        await expect(mainnetButton).toBeVisible();
+        await page.waitForURL(SignTxnPage.getFullUrl('en'));
+        await expect(testnetButton).toBeVisible();
       });
     });
 

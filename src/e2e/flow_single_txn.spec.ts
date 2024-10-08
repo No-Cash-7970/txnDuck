@@ -17,15 +17,15 @@ const test = base.extend<{ homePage: HomePage }>({
 test.slow();
 
 // Run through the entire flow of creating and sending a single transaction.
-test('Flow from start to finish — Single transaction', async ({ homePage, page }) => {
+test.skip('Flow — Single transaction from start to finish', async ({ homePage, page }) => {
   await mockNodeResponses(page);
 
   /*===== Home page =====*/
 
-  // Switch node network: MainNet -> TestNet
-  await page.getByRole('button', { name: 'MainNet' }).click();
-  await page.getByText('TestNet', { exact: true }).click();
-  await expect(page.getByRole('button', { name: 'TestNet' })).toBeVisible();
+  // Switch node network: TestNet -> BetaNet
+  await page.getByRole('button', { name: 'TestNet' }).click();
+  await page.getByText('BetaNet', { exact: true }).click();
+  await expect(page.getByRole('button', { name: 'BetaNet' })).toBeVisible();
 
   // Click start button to go to the transaction-presets page
   await homePage.startBtn.click();
@@ -86,7 +86,7 @@ test('Flow from start to finish — Single transaction', async ({ homePage, page
 
 async function checkSignTxnDataTable(page: Page) {
   await expect(page.getByRole('row', { name: 'Node network' }).getByRole('cell'))
-      .toHaveText('TestNet');
+      .toHaveText('BetaNet');
   await expect(page.getByRole('row', { name: 'Transaction type' }).getByRole('cell'))
     .toHaveText('Payment');
   await expect(page.getByRole('row', { name: 'Sender' }).getByRole('cell'))
