@@ -31,6 +31,7 @@ export default function ConnectWallet({ t, setvalfn }:{
   }, [magicProvider, magicEmailCanceled]);
 
   useEffect(() => {
+    // Tell other components wallet connection status has changed
     setIsWalletConnected(!!activeAccount);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAccount]);

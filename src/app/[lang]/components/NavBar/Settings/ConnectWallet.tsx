@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { type TFunction } from 'i18next';
-import { useAtom, useAtomValue } from 'jotai';
+import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
 import { WalletId, useWallet } from '@txnlab/use-wallet-react';
@@ -11,6 +11,7 @@ import {
   magicPromptCanceledAtom,
   magicProviderAtom
 } from '@/app/[lang]/components/wallet';
+import { isWalletConnectedAtom } from '@/app/lib/wallet-utils';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
@@ -18,6 +19,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
   const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);
+  const setIsWalletConnected = useSetAtom(isWalletConnectedAtom);
 
   useEffect(() => {
     // Focus on "connect wallet" button only when the prompt for entering the email address to get a
@@ -25,6 +27,12 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
     if (!magicProvider && magicEmailCanceled) connectWalletBtnRef.current?.focus();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [magicProvider, magicEmailCanceled]);
+
+  useEffect(() => {
+    // Tell other components wallet connection status has changed
+    setIsWalletConnected(!!activeAccount);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeAccount]);
 
   return (<>
     {!activeAccount && <>
