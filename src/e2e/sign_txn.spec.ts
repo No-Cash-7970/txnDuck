@@ -56,7 +56,7 @@ test.describe('Sign Transaction Page', () => {
         // Fill out form and submit so transaction summary is shown
         await (new ComposeTxnPage(page)).goto('en', urlParams);
         await page.getByRole('button', { name: 'Review & sign' }).click();
-        await page.waitForURL(SignTxnPage.getFullUrl('en') + urlParams);
+        await page.waitForURL(SignTxnPage.getFullUrl('en') + presetURLParam);
       });
 
       test('uses default network if the network is NOT specified in a URL parameter',

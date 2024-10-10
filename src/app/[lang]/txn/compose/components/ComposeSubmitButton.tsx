@@ -55,8 +55,8 @@ export default function ComposeSubmitButton({ lng }: Props) {
     setSubmittingForm(true);
     // "Submit" transaction data by storing it into local/session storage
     jotaiStore.set(storedTxnDataAtom, extractTxnDataFromAtoms(preset, jotaiStore));
-    // Go to sign-transaction page
-    router.push(`/${lng}/txn/sign` + (currentURLParams.size ? `?${currentURLParams}` : ''));
+    // Go to sign-transaction page (only preserve preset URL parameter)
+    router.push(`/${lng}/txn/sign` + (preset ? `?${Preset.ParamName}=${preset}` : ''));
   };
 
   return (<>
