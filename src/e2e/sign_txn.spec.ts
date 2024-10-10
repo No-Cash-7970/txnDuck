@@ -33,6 +33,29 @@ test.describe('Sign Transaction Page', () => {
     await expect(page.getByRole('contentinfo')).toBeVisible();
   });
 
+  test('shows manual transaction fee and valid rounds', async ({ signTxnPage, page }) => {
+    // Compose a transaction and manually set fee and valid rounds
+    (new ComposeTxnPage(page)).goto('en',
+      '?preset=transfer'
+      + '&snd=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY'
+      + '&rcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY'
+      + '&amt=0'
+      + '&fv=41922740&lv=41922840&fee=.004'
+    );
+    // Submit form to go to sign-transaction page
+    await page.getByRole('button', { name: 'Review & sign' }).click();
+
+    // Check the fee and valid rounds
+    await expect(page.getByRole('row', { name: 'Fee(Manual)' }).getByRole('cell'))
+      .toHaveText('0.004 Algos');
+    await expect(
+      page.getByRole('row', { name: 'Transaction’s first valid round(Manual)' }).getByRole('cell')
+    ).toHaveText('41,922,740');
+    await expect(
+      page.getByRole('row', { name: 'Transaction’s last valid round(Manual)' }).getByRole('cell')
+    ).toHaveText('41,922,840');
+  });
+
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Sign/, title: /Sign/ },

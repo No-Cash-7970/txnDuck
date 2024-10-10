@@ -46,7 +46,7 @@ test.skip('Flow — Single transaction', async ({ homePage, page }) => {
     .fill('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
   await page.getByLabel('Amount*').click();
   await page.getByLabel('Amount*').fill('0');
-  // Submit form to got to sign-transaction page
+  // Submit form to go to sign-transaction page
   await page.getByRole('button', { name: 'Review & sign' }).click();
 
   /*===== Sign Transaction page =====*/
@@ -99,6 +99,12 @@ async function checkSignTxnDataTable(page: Page) {
   await expect(page.getByRole('row', { name: 'Note' }).getByRole('cell')).toHaveText('None');
   await expect(page.getByRole('row', { name: 'Fee(Automatic)' }).getByRole('cell'))
     .toHaveText('0.001 Algos');
+  await expect(
+    page.getByRole('row', { name: 'Transaction’s first valid round(Automatic)' }).getByRole('cell')
+  ).toHaveText('44,440,857');
+  await expect(
+    page.getByRole('row', { name: 'Transaction’s last valid round(Automatic)' }).getByRole('cell')
+  ).toHaveText('44,441,857');
   await expect(page.getByRole('row', { name: 'Lease' }).getByRole('cell')).toHaveText('None');
   await expect(page.getByRole('row', { name: 'Rekey to' }).getByRole('cell')).toHaveText('None');
 }
