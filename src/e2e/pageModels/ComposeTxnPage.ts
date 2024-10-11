@@ -17,7 +17,7 @@ export class ComposeTxnPage {
   }
 
   /** Get the URL with language prefix.
-   * @param lang The language prefix. Must be an ISO??? code
+   * @param lang The language prefix. Must be an ISO 639-1 code
    * @returns The URL with the language prefix
    */
   static getFullUrl(lang = 'en') {

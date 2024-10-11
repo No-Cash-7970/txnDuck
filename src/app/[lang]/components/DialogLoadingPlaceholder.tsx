@@ -1,3 +1,4 @@
+/** Placeholder that indicates the dialog content is loading */
 export default function DialogLoadingPlaceholder() {
   return (
     <p className='text-center'>
