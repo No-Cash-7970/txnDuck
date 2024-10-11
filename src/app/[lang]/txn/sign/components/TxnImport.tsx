@@ -105,7 +105,7 @@ export default function TxnImport({ lng }: Props) {
         <Link
           className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
           replace={true}
-          href={`/${lng}/txn/sign?${importParamName}`}
+          href={`/${lng}/txn/sign`}
         >
           {t('import_txn.cancel')}
         </Link>
