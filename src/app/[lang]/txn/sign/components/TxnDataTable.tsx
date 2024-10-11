@@ -1,6 +1,8 @@
 'use client';
 
 import { useMemo } from 'react';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { TransactionType } from 'algosdkv3';
 import { useAtomValue } from 'jotai';
 import { Trans } from 'react-i18next';
@@ -13,7 +15,8 @@ import {
   lv as lvAtom,
   minFee as minFeeAtom
 } from '@/app/lib/txn-data/atoms';
-import { baseUnitsToDecimal } from '@/app/lib/utils';
+import { baseUnitsToDecimal, importParamName } from '@/app/lib/utils';
+import PageLoadingPlaceholder from '@/app/[lang]/components/PageLoadingPlaceholder';
 
 type Props = {
   /** Language */
@@ -38,6 +41,8 @@ export default function TxnDataTable({ lng }: Props) {
   const minFee = useAtomValue(minFeeAtom);
   const fv = useAtomValue(fvAtom);
   const lv = useAtomValue(lvAtom);
+  const currentURLParams = useSearchParams();
+  const isImporting = currentURLParams.get(importParamName) !== null;
 
   /** Get the part of the i18n translation key for the given transaction type
    * @returns Part of the i18n translation key for the transaction type
@@ -84,8 +89,7 @@ export default function TxnDataTable({ lng }: Props) {
     return `${type}`;
   }, [storedTxnData]);
 
-  return (<>
-    {!!storedTxnData &&
+  return (<>{!isImporting && !!storedTxnData &&
     <table className='table mb-4'>
       <tbody>
         {/* Node network */}
@@ -725,5 +729,15 @@ export default function TxnDataTable({ lng }: Props) {
       </tbody>
     </table>
     }
+    {!isImporting && !storedTxnData && <div className='text-center'>
+      <PageLoadingPlaceholder />
+      <p className='my-0'>{t('loading.wait_msg')}</p>
+      <Link className="link text-accent"
+        replace={true}
+        href={`/${lng}/txn/sign?${importParamName}`}
+      >
+        {t('loading.import_link')}
+      </Link>
+    </div>}
   </>);
 }

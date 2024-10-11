@@ -6,7 +6,7 @@ import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
 import algosdk from 'algosdkv3';
 import * as Icons from '@tabler/icons-react';
-import { useAtom, useAtomValue, useSetAtom } from 'jotai';
+import { useAtom, useAtomValue } from 'jotai';
 import { RESET } from 'jotai/utils';
 import { useDebouncedCallback } from 'use-debounce';
 import { FileField } from '@/app/[lang]/components/form';
@@ -18,7 +18,7 @@ import {
 } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
-import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
+import { bytesToDataUrl, dataUrlToBytes, importParamName } from '@/app/lib/utils';
 
 type Props = {
   /** Language */
@@ -48,17 +48,19 @@ type SuccessMessage = {
 /** Section for sending a transaction and showing status of the transaction */
 export default function SendTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['send_txn']);
-  const currentURLParams = useSearchParams();
   const alwaysClearAfterSend = useAtomValue(alwaysClearAfterSendAtom);
   const defaultHideSendInfo = useAtomValue(defaultHideSendInfoAtom);
   const confirmWaitRounds = useAtomValue(confirmWaitRoundsAtom);
+
+  const currentURLParams = useSearchParams();
+  const isImporting = currentURLParams.get(importParamName) !== null;
 
   const [waiting, setWaiting] = useState(false);
   const [pendingTxId, setPendingTxId] = useState('');
   const [failMsg, setFailMsg] = useState<FailMessage>();
   const [successMsg, setSuccessMsg] = useState<SuccessMessage>();
 
-  const setStoredTxnData = useSetAtom(storedTxnDataAtom);
+  const [storedTxnData, setStoredTxnData] = useAtom(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
 
   const nodeConfig = useAtomValue(nodeConfigAtom);
@@ -198,7 +200,20 @@ export default function SendTxn({ lng }: Props) {
   }, [alwaysClearAfterSend, successMsg, waiting]);
 
   return (<>
-    {!storedSignedTxn && !successMsg && !failMsg && <>
+    {(isImporting || (!storedSignedTxn && !successMsg && !failMsg)) && <>
+      {!!storedTxnData &&
+        <div className='alert alert-warning mb-2 sm:mt-12 sm:-mb-8'>
+          <Icons.IconAlertTriangle aria-hidden className=' my-auto me-2' />
+          <div>{t('import_txn.overwrite_warning')}</div>
+          <Link // eslint-disable-next-line max-len
+            className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
+            replace={true}
+            href={`/${lng}/txn/sign?${importParamName}`}
+          >
+            {t('import_txn.cancel')}
+          </Link>
+        </div>
+      }
       <FileField label={t('import_txn.label')}
         id='txn-import'
         containerId='txn-import-field'
@@ -207,14 +222,12 @@ export default function SendTxn({ lng }: Props) {
         labelClass=''
         labelTextClass='sm:text-lg'
         onChange={(e) => {
-          if (!!e.target.files?.length) {
-            processTxnFile(e.target.files[0]);
-          }
+          if (!!e.target.files?.length) processTxnFile(e.target.files[0]);
         }}
       />
     </>}
 
-    <div className='mt-12'>
+    {!isImporting && <div className='mt-12'>
       {// Waiting...
       waiting &&
         <div className='not-prose pt-8'>
@@ -364,6 +377,6 @@ export default function SendTxn({ lng }: Props) {
           </a>
         </div>
       </>}
-    </div>
+    </div>}
   </>);
 }

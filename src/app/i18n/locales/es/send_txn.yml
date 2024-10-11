@@ -36,3 +36,7 @@ sign_txn_btn: Firmar la transacción de nuevo
 make_new_txn_btn: Hacer otra transacción
 import_txn:
   label: Importar archivo de transacción firmado
+  overwrite_warning: >-
+    Usted tiene una transacción incompleta guardada. Si importa una transacción desde un archivo, la
+    transacción guardada se sobrescribirá.
+  cancel: Cancelar importación

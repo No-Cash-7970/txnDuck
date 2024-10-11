@@ -1,6 +1,6 @@
 import { Suspense, use } from 'react';
 import { type Metadata } from 'next';
-import { BuilderSteps, PageTitleHeading } from '@/app/[lang]/components';
+import { BuilderSteps, PageLoadingPlaceholder, PageTitleHeading } from '@/app/[lang]/components';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import SendTxn from './components/SendTxn';
 
@@ -32,9 +32,7 @@ export default function SendTxnPage({ params: { lang } }: {
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>
       <BuilderSteps lng={lang} current='send' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
-      <Suspense fallback={
-        <p className='text-center text-2xl'>{t('loading')}</p>
-      }>
+      <Suspense fallback={<PageLoadingPlaceholder />}>
         <SendTxn lng={lang} />
       </Suspense>
     </main>

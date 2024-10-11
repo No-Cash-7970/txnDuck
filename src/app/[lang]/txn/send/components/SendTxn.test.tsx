@@ -7,21 +7,20 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 // Mock navigation hooks
+const paramsMock = {get: jest.fn(), toString: jest.fn()};
 jest.mock('next/navigation', () => ({
-  useSearchParams: () => ({toString: () => 'preset=foo'}),
+  useSearchParams: () => paramsMock,
 }));
 // Mock use-debounce
 jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
-
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   ...jest.requireActual('../../../../lib/utils.ts'),
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
-
+// Mock algosdk
 let sendErrorMsg = '', confirmErrorMsg = '';
 const sendRawTxnSpy = jest.fn(), waitConfirmSpy = jest.fn();
-// Mock algosdk
 jest.mock('algosdkv3', () => ({
   ...jest.requireActual('algosdkv3'),
   encodeJSON: jest.fn(),
@@ -51,10 +50,32 @@ describe('Send Transaction Component', () => {
   beforeEach(() => {
     sendErrorMsg = '';
     confirmErrorMsg = '';
+    sessionStorage.clear();
+    paramsMock.get.mockClear();
+    paramsMock.toString.mockClear();
+  });
+
+  // eslint-disable-next-line max-len
+  it('shows warning message about imported transaction overwriting saved transaction when there is a saved transaction',
+  async () => {
+    paramsMock.get.mockReturnValue(''); // Mock "import" URL parameter
+    sessionStorage.setItem('txnData', JSON.stringify({ fake: 'txn data'}));
+    render(<SendTxn />);
+    expect(await screen.findByLabelText(/import_txn.label/)).toBeInTheDocument();
+    expect(screen.getByText('import_txn.overwrite_warning')).toBeInTheDocument();
+  });
+
+  // eslint-disable-next-line max-len
+  it('does not show any warning message when there is no saved transaction data while importing',
+  async () => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
+    render(<SendTxn />);
+    expect(await screen.findByLabelText(/import_txn.label/)).toBeInTheDocument();
+    expect(screen.queryByText('import_txn.overwrite_warning')).not.toBeInTheDocument();
   });
 
   it('attempts to send signed transaction from uploaded file', async () => {
-    sessionStorage.clear();
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     const data = fs.readFileSync('src/app/lib/testing/test_signed.txn.msgpack');
     const file = new File([data], 'signed.txn.msgpack', { type: 'application/octet-stream' });
     render(<SendTxn />);
@@ -65,6 +86,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('shows success message if transaction is successful', async () => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
 
@@ -73,6 +95,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('removes temporary transaction data from storage if transaction is successful', async () => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('txnData', JSON.stringify({ fake: 'txn data'}));
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     render(<SendTxn />);
@@ -82,6 +105,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('shows fail message if transaction fails', async () => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     sendErrorMsg = 'foo';
     render(<SendTxn />);
@@ -93,6 +117,7 @@ describe('Send Transaction Component', () => {
   });
 
   it('has "retry" button when transaction fails', async() => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     sendErrorMsg = 'foo';
     render(<SendTxn />);
@@ -104,6 +129,7 @@ describe('Send Transaction Component', () => {
 
   it('shows warning message if transaction is not confirmed in specified number of rounds',
   async () => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);
@@ -114,6 +140,7 @@ describe('Send Transaction Component', () => {
 
   it('has "retry" button when transaction is not confirmed in specified number of rounds',
   async() => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);
@@ -126,6 +153,7 @@ describe('Send Transaction Component', () => {
 
   it('has "wait longer" button when transaction is not confirmed in specified number of rounds',
   async() => {
+    paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present
     sessionStorage.setItem('signedTxn', '"data:application/octet-stream;base64,"');
     confirmErrorMsg = 'not confirmed';
     render(<SendTxn />);

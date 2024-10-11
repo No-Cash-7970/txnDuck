@@ -7,7 +7,9 @@ jest.mock('react-i18next', () => i18nextClientMock);
 
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
-  useSearchParams: () => ({get: () => 'foo'})
+  useSearchParams: () => ({
+    get: (paramName: string) => (paramName === 'preset' ? 'foo' : null)
+  })
 }));
 
 import PageTitleHeading from './PageTitleHeading';
@@ -25,6 +27,11 @@ describe('PageTitleHeading Component', () => {
   });
 
   it('does not have badge with preset name if `showTxnPreset` is false', () => {
+    render(<PageTitleHeading showTxnPreset={false}></PageTitleHeading>);
+    expect(screen.queryByText(/foo\.heading/)).not.toBeInTheDocument();
+  });
+
+  it('does not have badge if the "import" parameter is present in the URL', () => {
     render(<PageTitleHeading showTxnPreset={false}></PageTitleHeading>);
     expect(screen.queryByText(/foo\.heading/)).not.toBeInTheDocument();
   });

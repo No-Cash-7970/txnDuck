@@ -1,10 +1,14 @@
 import { Suspense, use } from 'react';
 import { type Metadata } from 'next';
-import { BuilderSteps, PageTitleHeading, WalletProvider } from '@/app/[lang]/components';
+import {
+  BuilderSteps,
+  PageLoadingPlaceholder,
+  PageTitleHeading,
+  WalletProvider
+} from '@/app/[lang]/components';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import TxnDataTable from './components/TxnDataTable';
 import SignTxn from './components/SignTxn';
-import SignTxnLoading from './components/SignTxnLoading';
 import TxnImport from './components/TxnImport';
 
 export async function generateMetadata(
@@ -35,8 +39,8 @@ export default function SignTxnPage({ params: { lang } }: {
       <BuilderSteps lng={lang} current='sign' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
       <Suspense><TxnImport lng={lang} /></Suspense>
-      <TxnDataTable lng={lang} />
-      <Suspense fallback={<SignTxnLoading />}>
+      <Suspense fallback={<PageLoadingPlaceholder />}><TxnDataTable lng={lang} /></Suspense>
+      <Suspense>
         <WalletProvider sitename={t('site_name')}><SignTxn lng={lang} /></WalletProvider>
       </Suspense>
     </main>

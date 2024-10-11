@@ -25,7 +25,7 @@ import {
   tipContentClass,
   txnDataAtoms,
 } from '@/app/lib/txn-data';
-import { bytesToDataUrl, dataUrlToBytes } from '@/app/lib/utils';
+import { bytesToDataUrl, dataUrlToBytes, importParamName } from '@/app/lib/utils';
 import NextStepButton from './NextStepButton';
 
 type Props = {
@@ -37,7 +37,6 @@ type Props = {
 export default function SignTxn({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['app', 'common', 'sign_txn']);
   const router = useRouter();
-  const currentURLParams = useSearchParams();
   const TxnFileLinkRef = useRef<any>(null);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const setFee = useSetAtom(txnDataAtoms.fee);
@@ -51,6 +50,9 @@ export default function SignTxn({ lng }: Props) {
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
   const { activeAccount, activeWallet, signTransactions } = useWallet();
+
+  const currentURLParams = useSearchParams();
+  const isImporting = currentURLParams.get(importParamName) !== null;
 
   /** Get the suggested parameters for the network. Includes genesis ID, genesis hash, minimum fee,
    * first valid round, and last valid round.
@@ -233,7 +235,7 @@ export default function SignTxn({ lng }: Props) {
   }, [storedTxnData, storedSignedTxn, nodeConfig]);
 
   return (<>
-    {!!storedTxnData && <>
+    {!isImporting && !!storedTxnData && <>
       <div className='mt-0 mb-0 text-center'>
         <button
           className='btn btn-link btn-sm text-base-content'

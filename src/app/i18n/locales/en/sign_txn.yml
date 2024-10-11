@@ -42,3 +42,10 @@ import_txn:
   fail_heading: Import failed
   fail_msg: The transaction is for a network different than the currently selected network.
   opt_more_info: More information about this option
+  overwrite_warning: >-
+    You have a saved incomplete transaction. If you import a transaction from a file, the saved
+    transaction will get overwritten.
+  cancel: Cancel import
+loading:
+  wait_msg: Tired of waiting?
+  import_link: Import a transaction file instead.

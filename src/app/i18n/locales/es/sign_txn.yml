@@ -43,3 +43,10 @@ import_txn:
   fail_heading: Error de importación
   fail_msg: La transacción es para una red distinta de la seleccionada actualmente.
   opt_more_info: Más información sobre esta opción
+  overwrite_warning: >-
+    Usted tiene una transacción incompleta guardada. Si importa una transacción desde un archivo, la
+    transacción guardada se sobrescribirá.
+  cancel: Cancelar importación
+loading:
+  wait_msg: ¿Está harto de esperar?
+  import_link: Importe un archivo de transacciones.

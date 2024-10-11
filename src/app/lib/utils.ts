@@ -10,6 +10,9 @@ import { Themes } from "@/app/lib/app-settings";
  */
 export const base64RegExp = /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
 
+/** Name of the query parameter used to indicate importing a transaction */
+export const importParamName = 'import';
+
 /** Converts bytes as a Uint8Array buffer to data URL.
  *
  * Adapted from:

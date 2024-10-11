@@ -24,9 +24,19 @@ jest.mock('../../../lib/utils.ts', () => ({
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 
+// Mock navigation hooks because they are used by a child components
+const paramsMock = {get: jest.fn()};
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({}),
+  useSearchParams: () => paramsMock,
+}));
+
 import SendTxnPage from './page';
 
 describe('Send Transaction Page', () => {
+  afterEach(() => {
+    paramsMock.get.mockClear();
+  });
 
   it('has builder steps', () => {
     render(<SendTxnPage params={{lang: ''}} />);
@@ -41,6 +51,7 @@ describe('Send Transaction Page', () => {
   // eslint-disable-next-line max-len
   it('immediately attempts to send stored signed transaction if there is a stored signed transaction',
   async () => {
+    paramsMock.get.mockReturnValue(null);
     sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
     render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
     expect(await screen.findByText('txn_confirm_wait')).toBeInTheDocument();
@@ -48,9 +59,18 @@ describe('Send Transaction Page', () => {
 
   it('has file field for importing transaction if there is NO stored signed transaction',
   async () => {
+    paramsMock.get.mockReturnValue(null);
     sessionStorage.clear();
     render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
+    expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
+  });
 
+  // eslint-disable-next-line max-len
+  it('has file field for importing transaction if "import" parameter is present in the URL and there is a stored signed transaction',
+  async () => {
+    paramsMock.get.mockReturnValue('');
+    sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
+    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
     expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
   });
 

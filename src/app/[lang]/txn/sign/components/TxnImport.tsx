@@ -1,7 +1,9 @@
 'use client';
 
 import { useState } from "react";
-import { IconMoodWrrr } from "@tabler/icons-react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { IconAlertTriangle, IconMoodWrrr } from "@tabler/icons-react";
 import algosdk from "algosdkv3";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
@@ -13,7 +15,7 @@ import {
   tipBtnClass,
   tipContentClass
 } from "@/app/lib/txn-data";
-import { bytesToDataUrl, fileToBytes } from "@/app/lib/utils";
+import { bytesToDataUrl, fileToBytes, importParamName } from "@/app/lib/utils";
 import { nodeConfigAtom } from '@/app/lib/node-config';
 
 type Props = {
@@ -34,6 +36,9 @@ export default function TxnImport({ lng }: Props) {
   const [b64NoteOption, setB64NoteOption] = useState(false);
   const [b64LxOption, setB64LxOption] = useState(false);
   const [b64Apar_amOption, setB64Apar_amOption] = useState(false);
+
+  const currentURLParams = useSearchParams();
+  const isImporting = currentURLParams.get(importParamName) !== null;
 
   /** Processes the given file as a signed or unsigned transaction file
    * @param file File to process
@@ -79,7 +84,7 @@ export default function TxnImport({ lng }: Props) {
     }
 
     setStoredTxnData({
-      txn: await createDataFromTxn(txn, {
+      txn: createDataFromTxn(txn, {
         b64Note: b64NoteOption,
         b64Lx: b64LxOption,
         b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
@@ -93,7 +98,18 @@ export default function TxnImport({ lng }: Props) {
   };
 
   return (<>
-    {!storedTxnData && <>
+    {isImporting && <>
+      {!!storedTxnData && <div className='alert alert-warning mb-2 sm:mt-12 sm:-mb-8'>
+        <IconAlertTriangle aria-hidden className=' my-auto me-2' />
+        <div>{t('import_txn.overwrite_warning')}</div>
+        <Link
+          className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
+          replace={true}
+          href={`/${lng}/txn/sign?${importParamName}`}
+        >
+          {t('import_txn.cancel')}
+        </Link>
+      </div>}
       {diffNetwork && <div className="alert alert-error sm:-mb-6">
         <IconMoodWrrr stroke={1.5} aria-hidden className='h-14 w-14' />
         <div className="prose-headings:text-current">

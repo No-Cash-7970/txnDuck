@@ -3,6 +3,7 @@ export {default as DialogLoadingPlaceholder} from './DialogLoadingPlaceholder';
 export {default as Footer} from './Footer';
 export {default as JotaiProvider} from './JotaiProvider';
 export {default as NavBar} from './NavBar';
+export {default as PageLoadingPlaceholder} from './PageLoadingPlaceholder';
 export {default as PageTitleHeading} from './PageTitleHeading';
 export {default as ThemeChanger} from './ThemeChanger';
 export {default as ToastNotification} from './ToastNotification';

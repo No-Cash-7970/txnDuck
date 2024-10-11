@@ -30,6 +30,13 @@ jest.mock('algosdkv3', () => ({
   },
 }));
 
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({
+    get: () => ''
+  }),
+}));
+
 import TxnImport from './TxnImport';
 
 describe('Transaction Import Component', () => {
@@ -271,6 +278,20 @@ describe('Transaction Import Component', () => {
     // Check session storage
     expect(sessionStorage.getItem('txnData')).toBeNull();
     expect(sessionStorage.getItem('signedTxn')).toBeNull();
+  });
+
+  // eslint-disable-next-line max-len
+  it('shows warning if there is saved transaction data that will be overwritten if transaction is imported',
+  async () => {
+    sessionStorage.setItem('txnData',
+      '{"txn":{"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",'
+      + '"fee":0.001,"fv":1,"lv":2,'
+      + '"rcv":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M","amt":0},'
+      + '"useSugFee":false,"useSugRounds":false,"apar_mUseSnd":false,"apar_fUseSnd":false,'
+      + '"apar_cUseSnd":false,"apar_rUseSnd":false}'
+    );
+    render(<TxnImport />);
+    expect(await screen.findByText(/import_txn.overwrite_warning/)).toBeInTheDocument();
   });
 
 });

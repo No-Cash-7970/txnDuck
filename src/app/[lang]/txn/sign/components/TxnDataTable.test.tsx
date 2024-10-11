@@ -5,6 +5,13 @@ import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 // Mock i18next before modules that use it are imported
 jest.mock('react-i18next', () => i18nextClientMock);
 
+// Mock navigation hooks
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => ({
+    get: () => null
+  }),
+}));
+
 import TxnDataTable from './TxnDataTable';
 
 describe('Transaction Data Table Component', () => {
@@ -553,7 +560,7 @@ describe('Transaction Data Table Component', () => {
 
   describe('Application Call Transaction', () => {
 
-    it('displays application call transaction data for application creation', () => {
+    it('displays application call transaction data for application creation', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -574,7 +581,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_create')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_create')).toBeInTheDocument();
       expect(screen.queryByText('fields.apid.label')).not.toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -594,7 +601,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application update', () => {
+    it('displays application call transaction data for application update', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -611,7 +618,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_update')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_update')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -631,7 +638,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application deletion', () => {
+    it('displays application call transaction data for application deletion', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -646,7 +653,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_delete')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_delete')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -666,7 +673,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application opt-in', () => {
+    it('displays application call transaction data for application opt-in', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -681,7 +688,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_opt_in')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_opt_in')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -701,7 +708,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application close-out', () => {
+    it('displays application call transaction data for application close-out', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -716,7 +723,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_close_out')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_close_out')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -736,7 +743,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application clear-state', () => {
+    it('displays application call transaction data for application clear-state', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -751,7 +758,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_clear')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_clear')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();
@@ -771,7 +778,7 @@ describe('Transaction Data Table Component', () => {
       expect(screen.getByText('fields.apbx.heading')).toBeInTheDocument();
     });
 
-    it('displays application call transaction data for application no-op call', () => {
+    it('displays application call transaction data for application no-op call', async () => {
       sessionStorage.setItem('txnData', JSON.stringify({
         txn: {
           type: 'appl',
@@ -786,7 +793,7 @@ describe('Transaction Data Table Component', () => {
       }));
       render(<TxnDataTable />);
 
-      expect(screen.getByText('fields.type.options.appl_no_op')).toBeInTheDocument();
+      expect(await screen.findByText('fields.type.options.appl_no_op')).toBeInTheDocument();
       expect(screen.getByText('fields.apid.label')).toBeInTheDocument();
 
       expect(screen.getByText('fields.apan.label')).toBeInTheDocument();

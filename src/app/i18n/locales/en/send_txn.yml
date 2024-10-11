@@ -34,3 +34,7 @@ sign_txn_btn: Sign transaction again
 make_new_txn_btn: Make another transaction
 import_txn:
   label: Import signed transaction file
+  overwrite_warning: >-
+    You have a saved incomplete transaction. If you import a transaction from a file, the saved
+    transaction will get overwritten.
+  cancel: Cancel import

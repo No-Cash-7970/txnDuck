@@ -32,12 +32,12 @@ test.describe('Home Page', () => {
 
   test('has "sign transaction" button link', async ({ homePage, page }) => {
     await homePage.signTxnBtn.click();
-    await expect(page).toHaveURL(SignTxnPage.getFullUrl());
+    await expect(page).toHaveURL(SignTxnPage.getFullUrl() + '?import');
   });
 
   test('has "send transaction" button link', async ({ homePage, page }) => {
     await homePage.sendTxnBtn.click();
-    await expect(page).toHaveURL(SendTxnPage.getFullUrl());
+    await expect(page).toHaveURL(SendTxnPage.getFullUrl() + '?import');
   });
 
   test.describe('Language Support', () => {

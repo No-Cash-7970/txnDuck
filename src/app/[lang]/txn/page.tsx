@@ -2,7 +2,7 @@ import { Suspense, use } from 'react';
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import { IconArrowBigRightLinesFilled, IconArrowBigLeftLinesFilled } from '@tabler/icons-react';
-import { PageTitleHeading } from '@/app/[lang]/components';
+import { PageLoadingPlaceholder, PageTitleHeading } from '@/app/[lang]/components';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import TxnPresetsList from './TxnPresetsList';
 
@@ -45,7 +45,7 @@ export default function TxnPresetsPage({ params: { lang } }: {
           {t('skip_btn')}
         </Link>
       </div>
-      <Suspense><TxnPresetsList lng={lang} /></Suspense>
+      <Suspense fallback={<PageLoadingPlaceholder />}><TxnPresetsList lng={lang} /></Suspense>
     </main>
   );
 }

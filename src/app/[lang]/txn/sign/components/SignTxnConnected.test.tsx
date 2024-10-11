@@ -12,7 +12,10 @@ jest.mock('@txnlab/use-wallet-react', () => useWalletConnectedMock);
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
   useRouter: () => ({}),
-  useSearchParams: () => ({toString: () => 'preset=foo'}),
+  useSearchParams: () => ({
+    get: () => null,
+    toString: () => 'preset=foo',
+  }),
 }));
 
 // Mock the utils library because of the use of `fetch()`
