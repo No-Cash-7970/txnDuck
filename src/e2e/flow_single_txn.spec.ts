@@ -65,7 +65,7 @@ test.skip('Flow — Single transaction', async ({ homePage, page }) => {
   await page.getByRole('button', { name: 'Use mnemonic' }).click();
 
   // Reload page to check if data and sign button are still there
-  page.reload();
+  await page.reload();
   await checkSignTxnDataTable(page);
   await expect(page.getByRole('button', { name: 'Sign this transaction' })).toBeVisible();
 

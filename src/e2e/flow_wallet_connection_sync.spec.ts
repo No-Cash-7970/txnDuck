@@ -161,8 +161,8 @@ test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ pa
 
   /* 0. Initial checks */
 
-  // Check wallet is disconnected & connect button on the page and in (hidden) settings dialog
-  await expect(connectWalletBtn).toHaveCount(2);
+  // Check wallet is disconnected & connect button on the page
+  await expect(connectWalletBtn).toHaveCount(1);
 
   // Check wallet is disconnected in settings
   await settingsBtn.click(); // Open settings dialog
@@ -173,7 +173,7 @@ test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ pa
   /* 1. Refresh page */
 
   // Refresh page to reset the settings dialog and the state of other things.
-  page.reload();
+  await page.reload();
 
   // Check wallet is disconnected & connect button on the page
   await expect(connectWalletBtn).toBeVisible();
@@ -197,7 +197,7 @@ test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ pa
   /* 3. Refresh page */
 
   // Refresh page to reset the settings dialog and the state of other things.
-  page.reload();
+  await page.reload();
   // Check wallet is disconnected & connect button on the page
   await expect(connectWalletBtn).toHaveCount(1);
 
@@ -231,7 +231,7 @@ test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ pa
   /* 1. Refresh page */
 
   // Refresh page to reset the settings dialog and the state of other things.
-  page.reload();
+  await page.reload();
 
   /* 2. Submit form again */
 
@@ -271,7 +271,7 @@ test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ pa
   /* 2. Refresh page */
 
   // Refresh page to reset the settings dialog and the state of other things.
-  page.reload();
+  await page.reload();
 
   // Check wallet is disconnected & connect button is there
   await expect(connectWalletBtn).toBeVisible();
