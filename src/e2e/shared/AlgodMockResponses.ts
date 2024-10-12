@@ -1,7 +1,7 @@
 /** @file Test Algod node responses used to mock responses to requests */
 
 import { type Page } from "@playwright/test";
-import { base64ToBytes, stringifyJSON } from "algosdkv3";
+import { stringifyJSON } from "algosdkv3";
 
 /* NOTE:
  * All test responses should be the exact data of actual responses from a node. Using the exact data
@@ -29,7 +29,7 @@ export const usdcAsset = stringifyJSON({
 });
 
 // GET /v2/transactions/params on testnet
-export const suggParams = stringifyJSON({
+export const suggParams = JSON.stringify({
   // eslint-disable-next-line max-len
   "consensus-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
   "fee": 0,
@@ -40,12 +40,12 @@ export const suggParams = stringifyJSON({
 });
 
 // POST /v2/transactions on testnet
-export const sendTxn = stringifyJSON({
+export const sendTxn = JSON.stringify({
   "txId": "NC63ESPZOQI6P6DSVZWG5K2FJFFKI3VAZITE5KRW5SV5GXQDIXMA"
 });
 
 // GET /v2/status on testnet
-export const nodeStatus = stringifyJSON({
+export const nodeStatus = JSON.stringify({
   "catchpoint": "",
   "catchpoint-acquired-blocks": 0,
   "catchpoint-processed-accounts": 0,
@@ -71,21 +71,23 @@ export const nodeStatus = stringifyJSON({
 // GET /v2/transactions/pending/NC63ESPZOQI6P6DSVZWG5K2FJFFKI3VAZITE5KRW5SV5GXQDIXMA?format=msgpack
 // content-type: application/msgpack
 // on testnet
-export const pendingTxn1 = Buffer.from(base64ToBytes(
+export const pendingTxn1 = Buffer.from(
   // eslint-disable-next-line max-len
-  'gqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5'
-));
+  'gqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5',
+  'base64'
+);
 
 // GET /v2/transactions/pending/NC63ESPZOQI6P6DSVZWG5K2FJFFKI3VAZITE5KRW5SV5GXQDIXMA?format=msgpack
 // content-type: application/msgpack
 // on testnet
-export const pendingTxn2 = Buffer.from(base64ToBytes(
+export const pendingTxn2 = Buffer.from(
   // eslint-disable-next-line max-len
-  'g69jb25maXJtZWQtcm91bmTOAqYdHqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5'
-));
+  'g69jb25maXJtZWQtcm91bmTOAqYdHqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5',
+  'base64'
+);
 
 // GET /v2/status/wait-for-block-after/44440861
-export const waitForBlock = stringifyJSON({
+export const waitForBlock = JSON.stringify({
   "catchpoint": "",
   "catchpoint-acquired-blocks": 0,
   "catchpoint-processed-accounts": 0,
@@ -108,14 +110,17 @@ export const waitForBlock = stringifyJSON({
   "time-since-last-round": 567756
 });
 
-/** Mock responses to a series of Algorand node requests for a simple transaction. The mocked
- * responses are we actual responses from an Algod node.
+/** Mock the responses to a series of Algod requests for sending a simple transaction. The mocked
+ * responses are actual responses from an Algod node when sending a real transaction on TestNet.
  *
  * Mocking the responses of an Algod node makes the tests more consistent, puts less strain on an
- * actual Algod node, and removes the requirement of a real Algod node to be available before
- * running the testing.
+ * actual Algod node, and removes the requirement of a real Algod node being available before
+ * running the tests.
+ *
+ * NOTE: For the mocked responses to work, this function must be run after the page is loaded (e.g.
+ * after `page.goto("/")`).
  */
-export async function mockNodeResponses(page: Page) {
+export async function mockTxnAlgodResponses(page: Page) {
   await page.route('*/**/v2/transactions/params', async route => {
     await route.fulfill({ body: suggParams, contentType: 'application/json' });
   });

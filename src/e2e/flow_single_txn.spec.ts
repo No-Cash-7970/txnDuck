@@ -1,6 +1,6 @@
 import { test as base, expect, type Page } from '@playwright/test';
 import { HomePage } from './pageModels';
-import { mockNodeResponses } from './shared/NodeTestResponses';
+import { mockTxnAlgodResponses } from './shared/AlgodMockResponses';
 
 // Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
@@ -18,7 +18,7 @@ test.slow();
 
 // Run through the entire normal flow of creating and sending a single transaction.
 test('Flow — Single transaction', async ({ homePage, page }) => {
-  await mockNodeResponses(page);
+  await mockTxnAlgodResponses(page);
 
   /*===== Home page =====*/
 

@@ -2,4 +2,4 @@
 
 export * from './LanguageSupport';
 export * from './NavBarComponent';
-export * as NodeTestResp from './NodeTestResponses';
+export * as NodeTestResp from './AlgodMockResponses';

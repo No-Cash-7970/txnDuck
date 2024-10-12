@@ -1,7 +1,7 @@
 import { test as base, expect } from '@playwright/test';
 import { LanguageSupport, NavBarComponent as NavBar } from './shared';
 import { ComposeTxnPage, TxnPresetsPage } from './pageModels';
-import { usdcAsset } from './shared/NodeTestResponses';
+import { usdcAsset } from './shared/AlgodMockResponses';
 
 // Extend basic test by providing a "composeTxnPage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
