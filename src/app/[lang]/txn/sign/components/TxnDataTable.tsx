@@ -34,7 +34,7 @@ const appTypes = [
 
 /** Table that displays the stored transaction data */
 export default function TxnDataTable({ lng }: Props) {
-  const { t } = useTranslation(lng || '', ['compose_txn', 'common', 'app']);
+  const { t } = useTranslation(lng || '', ['compose_txn', 'sign_txn', 'common', 'app']);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const fee = useAtomValue(feeAtom);
@@ -731,12 +731,12 @@ export default function TxnDataTable({ lng }: Props) {
     }
     {!isImporting && !storedTxnData && <div className='text-center'>
       <PageLoadingPlaceholder />
-      <p className='my-0'>{t('loading.wait_msg')}</p>
+      <p className='my-0'>{t('sign_txn:loading.wait_msg')}</p>
       <Link className="link text-accent"
         replace={true}
         href={`/${lng}/txn/sign?${importParamName}`}
       >
-        {t('loading.import_link')}
+        {t('sign_txn:loading.import_link')}
       </Link>
     </div>}
   </>);
