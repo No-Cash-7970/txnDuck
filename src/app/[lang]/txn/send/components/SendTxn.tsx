@@ -208,7 +208,7 @@ export default function SendTxn({ lng }: Props) {
           <Link // eslint-disable-next-line max-len
             className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
             replace={true}
-            href={`/${lng}/txn/sign?${importParamName}`}
+            href={`/${lng}/txn/sign`}
           >
             {t('import_txn.cancel')}
           </Link>
