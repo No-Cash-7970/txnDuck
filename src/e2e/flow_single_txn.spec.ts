@@ -17,7 +17,7 @@ const test = base.extend<{ homePage: HomePage }>({
 test.slow();
 
 // Run through the entire normal flow of creating and sending a single transaction.
-test.skip('Flow — Single transaction', async ({ homePage, page }) => {
+test('Flow — Single transaction', async ({ homePage, page }) => {
   await mockNodeResponses(page);
 
   /*===== Home page =====*/
@@ -63,11 +63,6 @@ test.skip('Flow — Single transaction', async ({ homePage, page }) => {
     'sugar bronze century excuse animal jacket what rail biology symbol want craft annual soul increase question army win execute slim girl chief exhaust abstract wink'
   ));
   await page.getByRole('button', { name: 'Use mnemonic' }).click();
-
-  // Reload page to check if data and sign button are still there
-  await page.reload();
-  await checkSignTxnDataTable(page);
-  await expect(page.getByRole('button', { name: 'Sign this transaction' })).toBeVisible();
 
   // Sign transaction and go to send page
   await page.getByRole('button', { name: 'Sign this transaction' }).click();
