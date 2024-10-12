@@ -4,7 +4,7 @@ import { ComposeTxnPage, HomePage } from './pageModels';
 test.slow();
 
 // Test whether the wallet connection status syncs across pages
-test.skip('Flow — Connecting & disconnecting wallet across pages', async ({ page }) => {
+test('Flow — Connecting & disconnecting wallet across pages', async ({ page }) => {
   const settingsBtn = page.getByRole('button', { name: 'Settings' });
 
   // When a prompt dialog appears, enter the mnemonic when the prompt appears
