@@ -60,7 +60,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('app_delete.description')).toBeInTheDocument();
   });
 
-  it('only shows participation key items when "participaiton key" category is selected',
+  it('only shows participation key items when "participation key" category is selected',
   async () => {
     render(<TxnPresetsList />);
 

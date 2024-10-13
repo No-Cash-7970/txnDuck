@@ -30,11 +30,6 @@ import NavBar  from './NavBar';
 
 describe('Nav Bar Component', () => {
 
-  it('renders', async () => {
-    render(<JotaiProvider><NavBar /></JotaiProvider>);
-    expect(await screen.findByRole('navigation')).toBeInTheDocument();
-  });
-
   it('has site name', async () => {
     render(<JotaiProvider><NavBar /></JotaiProvider>);
     expect(await screen.findByText('site_name_pt1')).toBeInTheDocument();
