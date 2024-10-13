@@ -133,7 +133,7 @@ export const noteConditionalMaxAtom = validateAtoms({
       .test(createMaxBytesTest(NOTE_MAX_LENGTH))
       .validateSync(values.note === '' ? undefined : values.note);
   } else {
-    YupString().length(NOTE_MAX_LENGTH).validateSync(values.note === '' ? undefined : values.note);
+    YupString().max(NOTE_MAX_LENGTH).validateSync(values.note === '' ? undefined : values.note);
   }
 });
 export const noteConditionalBase64Atom = validateAtoms({

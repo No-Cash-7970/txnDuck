@@ -38,14 +38,12 @@ test('Flow — Single transaction', async ({ homePage, page }) => {
   /*===== Compose Transaction page =====*/
 
   // Fill out form
-  await page.getByLabel('Sender*').click();
   await page.getByLabel('Sender*')
     .fill('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
-  await page.getByLabel('Receiver*').click();
   await page.getByLabel('Receiver*')
     .fill('3F3FPW6ZQQYD6JDC7FKKQHNGVVUIBIZOUI5WPSJEHBRABZDRN6LOTBMFEY');
-  await page.getByLabel('Amount*').click();
   await page.getByLabel('Amount*').fill('0');
+  await page.getByLabel('Note').fill('txnDuck test');
   // Submit form to go to sign-transaction page
   await page.getByRole('button', { name: 'Review & sign' }).click();
 
@@ -91,7 +89,8 @@ async function checkSignTxnDataTable(page: Page) {
   await expect(page.getByRole('row', { name: 'Amount' }).getByRole('cell')).toHaveText('0 Algos');
   await expect(page.getByRole('row', { name: 'Close remainder to' }).getByRole('cell'))
     .toHaveText('None');
-  await expect(page.getByRole('row', { name: 'Note' }).getByRole('cell')).toHaveText('None');
+  await expect(page.getByRole('row', { name: 'Note' }).getByRole('cell'))
+    .toHaveText('txnDuck test');
   await expect(page.getByRole('row', { name: 'Fee(Automatic)' }).getByRole('cell'))
     .toHaveText('0.001 Algos');
   await expect(
