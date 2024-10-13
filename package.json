@@ -3,9 +3,9 @@
   "version": "0.11.0",
   "private": true,
   "scripts": {
-    "compile-locales": "gulp compileLocales --no-color",
-    "dev": "gulp prebuild --no-color && next dev",
-    "build": "gulp prebuild --no-color && next build",
+    "compile-locales": "gulp compileLocales",
+    "dev": "gulp prebuild && next dev",
+    "build": "gulp prebuild && next build",
     "build:standalone": "gulp buildStandalone",
     "start": "next start",
     "lint": "next lint --ext .js --ext .mjs --ext .cjs --ext .jsx --ext .ts --ext .mts --ext .cts --ext .tsx --ext .yml --ext .yaml",
@@ -15,7 +15,7 @@
     "test:watch": "jest --watch",
     "test:ci": "jest --ci",
     "test:e2e": "yarn compile-locales && playwright test",
-    "install:dev": "yarn install && gulp installDev --no-color"
+    "install:dev": "yarn install && gulp installDev"
   },
   "dependencies": {
     "@agoralabs-sh/avm-web-provider": "^1.7.0",
