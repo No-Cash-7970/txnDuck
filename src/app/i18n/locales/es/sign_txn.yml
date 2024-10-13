@@ -21,19 +21,21 @@ auto_send:
 import_txn:
   label: Importar archivo de transacción firmado o sin firmar
   options_heading: Opciones de importación
-  b64_note: La nota son datos codificados en Base64
+  b64_note: La nota son datos en bytes
   b64_note_tip: >-
-    Si se marca, la nota de la transacción importada se interpretará como datos codificados en
-    Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
-  b64_lx: El arrendamiento son datos codificados en Base64
+    Si está marcada, la nota de la transacción importada se interpretará como datos en bytes y se
+    mostrará en formato Base64. Si no está seguro de lo que esto significa, deje la casilla sin
+    marcar.
+  b64_lx: El arrendamiento son datos en bytes
   b64_lx_tip: >-
-    Si se marca, el arrendamiento de la transacción importada se interpretará como datos codificados
-    en Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
-  b64_apar_am: El hash de metadatos son datos codificados en Base64
+    Si se marca, el arrendamiento de la transacción importada se interpretará como datos en bytes
+    y se mostrará en formato Base64. Si no está seguro de lo que esto significa, deje la casilla sin
+    marcar.
+  b64_apar_am: El hash de metadatos son datos en bytes
   b64_apar_am_tip: >-
     Si la transacción importada es una transacción para crear un activo, su hash de metadatos se
-    interpretará como datos codificados en Base64. Si no está seguro de lo que esto significa, deje
-    la casilla sin marcar.
+    interpretará como datos en bytes y se mostrará en formato Base64. Si no está seguro de lo que
+    esto significa, deje la casilla sin marcar.
   no_diff_network: No importar una transacción para una red distinta
   no_diff_network_tip: >-
     Si está marcada, se rechazará inmediatamente la importación de una transacción para una red
