@@ -10,7 +10,7 @@
     "start": "next start",
     "lint": "next lint --ext .js --ext .mjs --ext .cjs --ext .jsx --ext .ts --ext .mts --ext .cts --ext .tsx --ext .yml --ext .yaml",
     "prod": "yarn build && next start",
-    "release": "release-it --ci && gulp postRelease --no-color",
+    "release": "release-it --ci",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci",
@@ -112,6 +112,9 @@
     "github": {
       "release": true,
       "releaseName": "v${version}"
+    },
+    "hooks": {
+      "after:git:release": "gulp postRelease"
     },
     "plugins": {
       "@release-it/conventional-changelog": {
