@@ -99,6 +99,7 @@ describe('Sign Transaction Component (Unconnected wallet)', () => {
   });
 
   it('tries to connect to available wallet provider when it is selected', async () => {
+    fooConnectFn.mockReturnValueOnce(new Promise(() => {}));
     render(<JotaiProvider><SignTxn /></JotaiProvider>);
 
     await userEvent.click(screen.getByText('wallet.connect'));

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { IconX } from '@tabler/icons-react';
 import { type TFunction } from 'i18next';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAtom, useAtomValue } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
 import { useWallet, WalletId } from '@txnlab/use-wallet-react';
@@ -18,6 +18,9 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
   const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);
+  // Indicates whether there is a wallet attempting to connect and which wallet that is. If empty,
+  // then no wallet is attempting to connect.
+  const [connectingWallet, setConnectingWallet ]= useState('');
 
   useEffect(() => {
     // Focus on "connect wallet" button only when the prompt for entering the email address to get a
@@ -79,12 +82,16 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
                         setMagicProvider(provider);
                         return;
                       }
-                      provider.connect();
+                      setConnectingWallet(provider.id);
+                      provider.connect().finally(() => setConnectingWallet(''));
                     }}
                   >
-                    {t('app:wallet.use_provider_btn', {
-                      provider: t(`app:wallet.providers.${provider.id}`)
-                    })}
+                    {connectingWallet === provider.id
+                      ? <span className='loading loading-spinner' />
+                      : t('app:wallet.use_provider_btn', {
+                        provider: t(`app:wallet.providers.${provider.id}`)
+                      })
+                    }
                   </button>
                 </div>
               </div>

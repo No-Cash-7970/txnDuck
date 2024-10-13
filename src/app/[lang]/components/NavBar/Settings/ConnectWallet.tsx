@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
@@ -20,6 +20,8 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);
   const setIsWalletConnected = useSetAtom(isWalletConnectedAtom);
+  /** Indicates whether there is a wallet attempting to connect */
+  const [walletIsConnecting, setWalletIsConnecting ]= useState(false);
 
   useEffect(() => {
     // Focus on "connect wallet" button only when the prompt for entering the email address to get a
@@ -44,8 +46,13 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
         <DropdownMenu.Root>
           <DropdownMenu.Trigger asChild ref={connectWalletBtnRef}>
             <button type='button' className='btn btn-block btn-secondary'>
-              <IconWallet aria-hidden />
-              {t('wallet.connect')}
+              {walletIsConnecting
+                ? <span className='loading loading-spinner' />
+                : <>
+                  <IconWallet aria-hidden />
+                  {t('wallet.connect')}
+                </>
+              }
             </button>
           </DropdownMenu.Trigger>
           <DropdownMenu.Portal>
@@ -68,7 +75,8 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                           setMagicProvider(provider);
                           return;
                         }
-                        provider.connect();
+                        setWalletIsConnecting(true);
+                        provider.connect().finally(() => setWalletIsConnecting(false));
                       }}>
                         <span className='auto-cols-max'>
                           <span className='relative h-8 w-8'>
