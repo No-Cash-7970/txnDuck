@@ -1353,7 +1353,7 @@ describe('Transaction Data Processor', () => {
 
   describe('createDataFromTxn()', () => {
 
-    it('returns payment transaction data when given a payment transaction', async () => {
+    it('returns payment transaction data when given a payment transaction', () => {
       const txn = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
         sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         receiver: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
@@ -1370,7 +1370,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+      expect(processor.createDataFromTxn(txn)).toStrictEqual({
         type: 'pay',
         snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         note: 'Hello world',
@@ -1383,8 +1383,7 @@ describe('Transaction Data Processor', () => {
       });
     });
 
-    it('returns asset transfer transaction data when given a asset transfer transaction',
-    async () => {
+    it('returns asset transfer transaction data when given a asset transfer transaction', () => {
       const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
         sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         receiver: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
@@ -1403,7 +1402,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn, {b64Note: true})).toStrictEqual({
+      expect(processor.createDataFromTxn(txn, {b64Note: true})).toStrictEqual({
         type: 'axfer',
         snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         fee: 0.001,
@@ -1419,7 +1418,7 @@ describe('Transaction Data Processor', () => {
     });
 
     it('returns asset configuration transaction data when given a asset configuration transaction',
-    async () => {
+    () => {
       const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
         sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         unitName: 'FAKE',
@@ -1443,7 +1442,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+      expect(processor.createDataFromTxn(txn)).toStrictEqual({
         type: 'acfg',
         snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         fee: 0.001,
@@ -1463,7 +1462,7 @@ describe('Transaction Data Processor', () => {
       });
     });
 
-    it('returns asset freeze transaction data when given a asset freeze transaction', async () => {
+    it('returns asset freeze transaction data when given a asset freeze transaction', () => {
       const txn = algosdk.makeAssetFreezeTxnWithSuggestedParamsFromObject({
         sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         assetIndex: 88888888,
@@ -1479,7 +1478,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+      expect(processor.createDataFromTxn(txn)).toStrictEqual({
         type: 'afrz',
         snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
         fee: 0.001,
@@ -1492,7 +1491,7 @@ describe('Transaction Data Processor', () => {
     });
 
     it('returns key registration transaction data when given a key registration transaction',
-    async () => {
+    () => {
       const txn = algosdk.makeKeyRegistrationTxnWithSuggestedParamsFromObject({
         sender: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         voteKey: algosdk.base64ToBytes('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo='),
@@ -1512,7 +1511,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+      expect(processor.createDataFromTxn(txn)).toStrictEqual({
         type: 'keyreg',
         snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         fee: 0.001,
@@ -1530,7 +1529,7 @@ describe('Transaction Data Processor', () => {
     });
 
     it('returns application call transaction data when given a application call transaction',
-    async () => {
+    () => {
       const encodedAppArgs = getAppArgsForTransaction({
         accounts: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
         appArgs: ['foo', '42', ''],
@@ -1561,7 +1560,7 @@ describe('Transaction Data Processor', () => {
           minFee: 1000,
         }
       });
-      expect(await processor.createDataFromTxn(txn)).toStrictEqual({
+      expect(processor.createDataFromTxn(txn)).toStrictEqual({
         type: 'appl',
         snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         fee: 0.001,
