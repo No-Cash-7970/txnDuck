@@ -469,10 +469,10 @@ fields:
   more_info: Más información sobre este campo.
   more_info_section: Más información sobre esta sección.
   base64:
-    label: Datos codificados en Base64
+    label: Bytes codificados en Base64
     with_label: "{{label}} (Base64)"
     tip: >-
-      Si está marcada, los datos introducidos en el campo anterior se interpretarán como datos
+      Si está marcada, los datos introducidos en el campo anterior se interpretarán como bytes
       codificados en Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
     error: Debe ser un Base64 válido.
     error_optional: >- # Error message for when entering Base64 data is optional

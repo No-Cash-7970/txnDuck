@@ -457,10 +457,10 @@ fields:
   more_info: More information about this field.
   more_info_section: More information about this section.
   base64:
-    label: Base64 encoded data
+    label: Base64 encoded bytes
     with_label: "{{label}} (Base64)"
     tip: >-
-      If checked, the data entered into the above field will be interpreted as Base64 encoded data.
+      If checked, the data entered into the above field will be interpreted as Base64 encoded bytes.
       If you are unsure what this means, leave unchecked.
     error: >-
       This must be valid Base64.
