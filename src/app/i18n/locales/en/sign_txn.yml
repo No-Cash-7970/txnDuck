@@ -34,6 +34,11 @@ import_txn:
     If the imported transaction is a transaction for creating an asset, its metadata hash will be
     interpreted as byte data and displayed in Base64 format. If you are unsure what this means,
     leave unchecked.
+  b64_apaa: Every application argument is byte data
+  b64_apaa_tip: >-
+    If the imported transaction is a transaction for an application, each application argument will
+    be interpreted as byte data and displayed in Base64 format. If you are unsure what this means,
+    leave unchecked.
   no_diff_network: Do not import a transaction for a different network
   no_diff_network_tip: >-
     If checked, importing a transaction for a network different than the currently selected network

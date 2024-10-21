@@ -37,6 +37,7 @@ import {
   assetConfigFormControlAtom,
   assetFreezeFormControlAtom,
   assetTransferFormControlAtom,
+  createb64ApaaCondValidateAtom,
   generalFormControlAtom,
   keyRegFormControlAtom,
   paymentFormControlAtom
@@ -473,11 +474,16 @@ export function loadStoredTxnData(
       jotaiStore.set(txnDataAtoms.apep, (storedTxnData?.txn as AppCallTxnData)?.apep);
     }
 
+    jotaiStore.set(txnDataAtoms.b64Apaa, storedTxnData?.b64Apaa ?? false);
     jotaiStore.set(txnDataAtoms.apaaListAtom,
       (storedTxnData?.txn as AppCallTxnData)?.apaa
-        ? ((storedTxnData?.txn as AppCallTxnData)?.apaa).map(
-          arg => atomWithValidate(arg, apaaValidateOptions)
-        )
+        ? ((storedTxnData?.txn as AppCallTxnData)?.apaa).map(arg => {
+          // Create atom for this argument
+          const newAtom = atomWithValidate(arg as string, apaaValidateOptions);
+          // Create conditional validation atom for this argument too
+          txnDataAtoms.b64ApaaCondList.push(createb64ApaaCondValidateAtom(newAtom));
+          return newAtom;
+        })
         : []
     );
     jotaiStore.set(txnDataAtoms.apatListAtom,
@@ -542,12 +548,17 @@ export function extractTxnDataFromAtoms(
   // the transaction
   let retrievedAssetInfo: RetrievedAssetInfo | undefined = undefined;
 
+  /** Extra options concerning asset configuration transactions */
   let acfgOptions: {
     apar_mUseSnd?: boolean,
     apar_fUseSnd?: boolean,
     apar_cUseSnd?: boolean,
     apar_rUseSnd?: boolean,
     b64Apar_am?: boolean,
+  } = {};
+  /** Extra options concerning application call transactions */
+  let applOptions: {
+    b64Apaa?: boolean,
   } = {};
 
   // Gather payment transaction data
@@ -764,6 +775,10 @@ export function extractTxnDataFromAtoms(
       })),
     };
 
+    applOptions = {
+      b64Apaa: !!applForm.values.b64Apaa,
+    };
+
     if (preset === Preset.AppRun
       || preset === Preset.AppOptIn
       || preset === Preset.AppClose
@@ -796,5 +811,6 @@ export function extractTxnDataFromAtoms(
     b64Lx: jotaiStore.get(txnDataAtoms.b64Lx).value,
     retrievedAssetInfo: retrievedAssetInfo,
     ...acfgOptions,
+    ...applOptions,
   };
 }

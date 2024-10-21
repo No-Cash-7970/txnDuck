@@ -10,12 +10,14 @@ import * as TxnData from '@/app/lib/txn-data';
  * @returns "Transaction data" object that contains the information in the `Transaction` object
  */
 export function createDataFromTxn(txn: algosdk.Transaction, options: {
-  /** Parse the note as byte data to be encoded to Base64? */
+  /** Parse the note as byte data to be encoded into Base64? */
   b64Note?: boolean,
-  /** Parse the lease as byte data to be encoded to Base64? */
+  /** Parse the lease as byte data to be encoded into Base64? */
   b64Lx?: boolean,
-  /** Parse the metadata hash as byte data to be encoded to Base64? */
+  /** Parse the metadata hash as byte data to be encoded into Base64? */
   b64Apar_am?: boolean,
+  /** Parse all arguments as byte data to be encoded into Base64? */
+  b64Apaa?: boolean,
   /** The network's minimum transaction fee */
   minFee?: number,
 } = {}): TxnData.TxnData {
@@ -144,7 +146,9 @@ export function createDataFromTxn(txn: algosdk.Transaction, options: {
 
     if (txn.applicationCall?.appArgs) {
       (output as TxnData.AppCallTxnData).apaa =
-        txn.applicationCall.appArgs.map(appArg => textDecoder.decode(appArg)); // Base64?
+        txn.applicationCall.appArgs.map(
+          appArg => options.b64Apaa ? algosdk.bytesToBase64(appArg) : textDecoder.decode(appArg)
+        );
     }
 
     if (txn.applicationCall?.approvalProgram.length) {

@@ -382,6 +382,11 @@ fields:
       Número de páginas adicionales asignadas a la aprobación de la solicitud y a los programas de
       estado claro. Una vez establecido, no se puede modificar.
     section_heading: Páginas adicionales
+  b64_apaa: # Interpret arguments as Base64
+    label: Interpretar todos los argumentos como bytes codificados en Base64
+    tip: >-
+      Si está marcada, los datos de cada campo de argumento se interpretarán como bytes codificados
+      en Base64. Si no está seguro de lo que esto significa, deje la casilla sin marcar.
   apaa: # Arguments
     label: "Argumento nº {{index}}"
     tip: >-

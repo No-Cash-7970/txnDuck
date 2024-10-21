@@ -37,6 +37,7 @@ export default function TxnImport({ lng }: Props) {
   const [b64NoteOption, setB64NoteOption] = useState(false);
   const [b64LxOption, setB64LxOption] = useState(false);
   const [b64Apar_amOption, setB64Apar_amOption] = useState(false);
+  const [b64ApaaOption, setB64ApaaOption] = useState(false);
 
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
@@ -89,12 +90,14 @@ export default function TxnImport({ lng }: Props) {
         b64Note: b64NoteOption,
         b64Lx: b64LxOption,
         b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
+        b64Apaa: !!txn.applicationCall?.appArgs ? b64ApaaOption : undefined,
       }),
       useSugFee: false,
       useSugRounds: false,
       b64Note: b64NoteOption,
       b64Lx: b64LxOption,
       b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
+      b64Apaa: !!txn.applicationCall?.appArgs ? b64ApaaOption : undefined,
     });
 
     // Show transaction data after processing file
@@ -188,6 +191,20 @@ export default function TxnImport({ lng }: Props) {
           onChange={(e) => setB64Apar_amOption(e.target.checked)}
           tip={{
             content: t('import_txn.b64_apar_am_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
+        />
+        <CheckboxField label={t('import_txn.b64_apaa')}
+          inputInsideLabel={true}
+          containerClass='ms-2 mb-2'
+          inputClass='checkbox-secondary me-4'
+          labelClass='justify-start w-fit max-w-full'
+          value={b64ApaaOption}
+          onChange={(e) => setB64ApaaOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.b64_apaa_tip'),
             btnClass: tipBtnClass,
             btnTitle: t('import_txn.opt_more_info'),
             contentClass: tipContentClass

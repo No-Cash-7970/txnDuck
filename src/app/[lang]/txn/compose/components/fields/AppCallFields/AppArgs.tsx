@@ -1,5 +1,10 @@
 import { useState } from 'react';
-import { TextField, FieldGroup, FieldErrorMessage } from '@/app/[lang]/components/form';
+import {
+  TextField,
+  FieldGroup,
+  FieldErrorMessage,
+  CheckboxField
+} from '@/app/[lang]/components/form';
 import { type TFunction } from 'i18next';
 import { Atom, useAtom, useAtomValue } from 'jotai';
 import { atomWithValidate } from 'jotai-form';
@@ -7,6 +12,8 @@ import { IconExclamationCircle, IconMinus, IconPlus } from '@tabler/icons-react'
 import {
   MAX_APP_ARGS,
   apaaValidateOptions,
+  applFormControlAtom,
+  createb64ApaaCondValidateAtom,
   showFormErrorsAtom,
   tipBtnClass,
   tipContentClass
@@ -16,7 +23,7 @@ import { ValidationMessage, validationAtom } from '@/app/lib/utils';
 
 /** List of application arguments */
 export default function AppArgs({ t }: { t: TFunction }) {
-  const [appArgs, dispatch] = useAtom(txnDataAtoms.apaa);
+  const [appArgs, apaaDispatch] = useAtom(txnDataAtoms.apaa);
   return (
     <FieldGroup
       headingLevel={2}
@@ -35,6 +42,9 @@ export default function AppArgs({ t }: { t: TFunction }) {
         </div>
       }
       <div className='alert alert-info text-start mt-2'>{t('fields.apaa.no_abi_support')}</div>
+
+      <Base64ApaaInput t={t} />
+
       {!appArgs.length && <p className='italic'>{t('fields.apaa.none')}</p>}
       {appArgs.map(
         (argAtom, i) => <AppArgInput t={t} argAtom={argAtom} index={i} key={`${argAtom}`} />
@@ -42,10 +52,13 @@ export default function AppArgs({ t }: { t: TFunction }) {
       <div className='pt-4'>
         <button type='button'
           className='btn btn-sm btn-secondary w-full sm:w-auto sm:me-2 my-1'
-          onClick={() => dispatch({
-            type: 'insert',
-            value: atomWithValidate('', apaaValidateOptions)
-          })}
+          onClick={() => {
+            const newAtom = atomWithValidate('', apaaValidateOptions);
+            // Add atom for new atom
+            apaaDispatch({ type: 'insert', value: newAtom });
+            // Add conditional validation for new atom
+            txnDataAtoms.b64ApaaCondList.push(createb64ApaaCondValidateAtom(newAtom));
+          }}
           disabled={appArgs.length >= MAX_APP_ARGS}
         >
           <IconPlus aria-hidden />
@@ -53,7 +66,12 @@ export default function AppArgs({ t }: { t: TFunction }) {
         </button>
         <button type='button'
           className='btn btn-sm btn-error w-full sm:w-auto sm:ms-2 my-1'
-          onClick={() => dispatch({ type: 'remove', atom: appArgs[appArgs.length - 1] })}
+          onClick={() => {
+            // Remove last atom
+            apaaDispatch({ type: 'remove', atom: appArgs[appArgs.length - 1] });
+            // Remove conditional validation for last atom
+            txnDataAtoms.b64ApaaCondList.pop();
+          }}
           disabled={!appArgs.length}
         >
           <IconMinus aria-hidden />
@@ -63,12 +81,14 @@ export default function AppArgs({ t }: { t: TFunction }) {
     </FieldGroup>
   );
 }
+
 function AppArgInput({ t, argAtom, index }:
   { t: TFunction, argAtom: Atom<validationAtom<string>>, index: number }
 ) {
   const [arg, setArg] = useAtom(useAtomValue(argAtom));
   const [touched, setTouched] = useState(false);
   const showFormErrors = useAtomValue(showFormErrorsAtom);
+  const condB64 = useAtomValue(txnDataAtoms.b64ApaaCondList[index]);
   return (<>
     <TextField label={t('fields.apaa.label', { index: index + 1 })}
       name={`apaa-${index}`}
@@ -77,7 +97,10 @@ function AppArgInput({ t, argAtom, index }:
       placeholder={t('fields.apaa.placeholder', { index: index + 1 })}
       containerId={`apaa-${index}-field`}
       containerClass='mt-4 max-w-md'
-      inputClass={((showFormErrors || touched) && !arg.isValid) ? 'input-error': ''}
+      inputClass={
+        ((showFormErrors || touched) && (!arg.isValid || (!condB64.isValid && condB64.error)))
+        ? 'input-error' : ''
+      }
       value={arg.value}
       onChange={(e) => setArg(e.target.value)}
       onBlur={() => setTouched(true)}
@@ -88,5 +111,31 @@ function AppArgInput({ t, argAtom, index }:
         dict={((arg.error as any).message as ValidationMessage).dict}
       />
     }
+    {(showFormErrors || touched) && !condB64.isValid && condB64.error &&
+      <FieldErrorMessage t={t} i18nkey={(condB64.error as any).message.key} />
+    }
   </>);
+}
+
+export function Base64ApaaInput({ t }: { t: TFunction }) {
+  const form = useAtomValue(applFormControlAtom);
+  return (
+    <CheckboxField label={t('fields.b64_apaa.label')}
+      name='b64_apaa'
+      id='b64Apaa-input'
+      tip={{
+        content: t('fields.b64_apaa.tip'),
+        btnClass: tipBtnClass,
+        btnTitle: t('fields.more_info'),
+        contentClass: tipContentClass
+      }}
+      inputInsideLabel={true}
+      containerId='b64Apaa-field'
+      containerClass='mt-6'
+      inputClass='checkbox-primary checkbox-sm me-2 -mt-1'
+      labelClass='justify-start w-fit max-w-full'
+      value={!!form.values.b64Apaa}
+      onChange={(e) => form.handleOnChange('b64Apaa')(e.target.checked)}
+    />
+  );
 }

@@ -485,7 +485,12 @@ export default function TxnDataTable({ lng }: Props) {
           </tr>}
           {/* Application arguments */}
           <tr>
-            <th role='rowheader' className='align-top'>{t('fields.apaa.heading')}</th>
+            <th role='rowheader' className='align-top'>
+              {storedTxnData?.b64Apaa
+                ? t('fields.base64.with_label', { label: t('fields.apaa.heading') })
+                : t('fields.apaa.heading')
+              }
+            </th>
             <td>
               {!((storedTxnData?.txn as TxnData.AppCallTxnData).apaa.length)
                 ? <i className='opacity-50'>{t('none')}</i>

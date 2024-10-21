@@ -16,6 +16,7 @@ import { useTranslation } from '@/app/i18n/client';
 import { defaultAutoSend as defaultAutoSendAtom } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
 import {
+  AppCallTxnData,
   AssetConfigTxnData,
   StoredTxnData,
   createTxnFromData,
@@ -79,16 +80,16 @@ export default function SignTxn({ lng }: Props) {
     const newTxnData: StoredTxnData = {...txnData};
 
     // Convert Base64 note to byte array
-    if (txnData.b64Note && txnData.txn.note) {
+    if (newTxnData.b64Note && newTxnData.txn.note) {
       newTxnData.txn.note =  await dataUrlToBytes(
-        `data:application/octet-stream;base64,${txnData.txn.note}`
+        `data:application/octet-stream;base64,${newTxnData.txn.note}`
       );
     }
 
     // Convert Base64 lease to byte array
-    if (txnData.b64Lx && txnData.txn.lx) {
+    if (newTxnData.b64Lx && newTxnData.txn.lx) {
       newTxnData.txn.lx = await dataUrlToBytes(
-        `data:application/octet-stream;base64,${txnData.txn.lx}`
+        `data:application/octet-stream;base64,${newTxnData.txn.lx}`
       );
     }
 
@@ -96,6 +97,15 @@ export default function SignTxn({ lng }: Props) {
     if (txnData.b64Apar_am && (newTxnData.txn as AssetConfigTxnData).apar_am) {
       (newTxnData.txn as AssetConfigTxnData).apar_am = await dataUrlToBytes(
         `data:application/octet-stream;base64,${(newTxnData.txn as AssetConfigTxnData).apar_am}`
+      );
+    }
+
+    // Convert Base64 arguments to byte arrays
+    if (newTxnData.b64Apaa) {
+      (newTxnData.txn as AppCallTxnData).apaa = await Promise.all(
+        (newTxnData.txn as AppCallTxnData).apaa.map(
+          async (appArg) => await dataUrlToBytes(`data:application/octet-stream;base64,${appArg}`)
+        )
       );
     }
 

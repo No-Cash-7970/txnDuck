@@ -1,7 +1,7 @@
 /** @file Jotai atoms for transaction data */
 
 import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from 'algosdkv3';
-import { atom } from 'jotai';
+import { Atom, atom } from 'jotai';
 import { splitAtom } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';
 import { base64RegExp, validationAtom, ValidationMessage } from '@/app/lib/utils';
@@ -327,6 +327,10 @@ export const apan = atomWithValidate<OnApplicationComplete>(0, {
 export const apaaListAtom = atom<validationAtom<string>[]>([]);
 /** Application - Collection of atoms for application arguments */
 export const apaa = splitAtom(apaaListAtom);
+/** Interpret application argument values as Base64 data */
+export const b64Apaa = atomWithValidate<boolean>(false, { validate: v => v });
+/** Validation states for Base64 application arguments */
+export const b64ApaaCondList: Atom<any>[] = [];
 
 /*
  * Application properties

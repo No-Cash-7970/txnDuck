@@ -370,6 +370,11 @@ fields:
       Number of additional pages allocated to the application’s approval and clear state programs.
       Once set, it cannot be changed.
     section_heading: Extra pages
+  b64_apaa: # Interpret arguments as Base64
+    label: Interpret all arguments as Base64 encoded bytes
+    tip: >-
+      If checked, the data in every argument field below will be interpreted as Base64 encoded
+      bytes. If you are unsure what this means, leave unchecked.
   apaa: # Arguments
     label: "Argument #{{index}}"
     tip: >-

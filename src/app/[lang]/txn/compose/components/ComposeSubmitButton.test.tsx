@@ -45,6 +45,7 @@ import ComposeForm from './ComposeForm';
 describe('Compose Form Component - Submit Button', () => {
   afterEach(() => {
     sessionStorage.clear();
+    routerPushMock.mockClear();
   });
 
   it('goes to sign-transaction page if valid transaction data is submitted', async () => {
@@ -605,6 +606,7 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
+      b64Apaa: false,
     });
   }, 10000);
 

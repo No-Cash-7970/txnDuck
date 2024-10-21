@@ -9,6 +9,7 @@ import {
   base64RegExp,
   baseUnitsToDecimal,
   decimalToBaseUnits,
+  validationAtom,
 } from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
 import { RetrievedAssetInfo } from './types';
@@ -34,6 +35,21 @@ export const presetAtom = atomWithValidate<string|null>(null, {validate: v => v}
 
 /** Application argument validation options */
 export const apaaValidateOptions = { validate: (v: string) => v };
+/** Creates a conditional validation atom for the Base64 application argument
+ * @param atom The atom for the the application argument. This is used to create the conditional
+ *             validation atom.
+ */
+export const createb64ApaaCondValidateAtom = (atom: validationAtom<string>) => validateAtoms({
+  apaa: atom,
+  b64Apaa: txnDataAtoms.b64Apaa,
+}, (values) => {
+  if (values.b64Apaa) {
+    YupString().matches(base64RegExp, {
+      excludeEmptyString: true,
+      message: (): ValidationMessage => ({key: 'fields.base64.error_optional'})
+    }).validateSync(values.apaa);
+  }
+});
 /** Application address reference validation options */
 export const apatValidateOptions = {
   validate: (v: string) => {
@@ -339,6 +355,7 @@ export const applFormControlAtom = atomWithFormControls({
   apls_nui: txnDataAtoms.apls_nui,
   apls_nbs: txnDataAtoms.apls_nbs,
   apep: txnDataAtoms.apep,
+  b64Apaa: txnDataAtoms.b64Apaa,
 });
 export const apidConditionalRequireAtom = validateAtoms({
   preset: presetAtom,

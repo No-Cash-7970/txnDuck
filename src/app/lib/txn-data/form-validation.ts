@@ -2,7 +2,14 @@
 
 import { type useStore } from "jotai";
 import { TransactionType } from "algosdkv3";
-import { apaaListAtom, apasListAtom, apatListAtom, apbxListAtom, apfaListAtom } from "./atoms";
+import {
+  apaaListAtom,
+  apasListAtom,
+  apatListAtom,
+  apbxListAtom,
+  apfaListAtom,
+  b64ApaaCondList
+} from "./atoms";
 import { Preset, MAX_APP_ACCTS, MAX_APP_ARGS, MAX_APP_TOTAL_DEPS } from "./constants";
 import * as FieldValidation from "./field-validation";
 
@@ -206,8 +213,11 @@ export function isFormValid(
 
     apaaList.forEach((apaaAtom, i) => {
       const apaa = jotaiStore.get(apaaAtom);
+      const b64ApaaCond = jotaiStore.get(b64ApaaCondList[i]);
       // If this "application argument" field did not meet the condtional validation
-      if (!apaa.isValid) invalidApplFields.add(`apaa-${i}`);
+      if (!apaa.isValid || (!b64ApaaCond.isValidating && !b64ApaaCond.isValid)){
+        invalidApplFields.add(`apaa-${i}`);
+      }
     });
 
     // If "approval program" field did not meet the condtional validation

@@ -36,6 +36,11 @@ import_txn:
     Si la transacción importada es una transacción para crear un activo, su hash de metadatos se
     interpretará como datos en bytes y se mostrará en formato Base64. Si no está seguro de lo que
     esto significa, deje la casilla sin marcar.
+  b64_apaa: Cada argumento de aplicación son datos en bytes
+  b64_apaa_tip: >-
+    Si la transacción importada es una transacción para una aplicación, cada argumento de aplicación
+    se interpretará como datos en bytes y se mostrará en formato Base64. Si no está seguro de lo que
+    esto significa, deje la casilla sin marcar.
   no_diff_network: No importar una transacción para una red distinta
   no_diff_network_tip: >-
     Si está marcada, se rechazará inmediatamente la importación de una transacción para una red

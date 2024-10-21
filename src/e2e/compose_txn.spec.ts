@@ -278,7 +278,7 @@ test.describe('Compose Transaction Page', () => {
         .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
       await expect(page.getByLabel(/Application ID/)).toHaveValue('1284326447');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes', { exact: true})).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();

@@ -140,7 +140,7 @@ export interface AppCallTxnData extends BaseTxnData {
   /** OnComplete (Action type) */
   apan: OnApplicationComplete;
   /** Application arguments */
-  apaa: string[];
+  apaa: string[] | Uint8Array[];
 
   /** Approval program */
   apap: string;
@@ -197,6 +197,8 @@ export interface StoredTxnData {
   apar_rUseSnd?: boolean;
   /** Is the metadata hash Base84 encoded data? */
   b64Apar_am?: boolean;
+  /** Are all application arguments Base64 encoded data? */
+  b64Apaa?: boolean;
   /** Information about the asset that was retrieved when the asset ID was given */
   retrievedAssetInfo?: RetrievedAssetInfo;
 }
