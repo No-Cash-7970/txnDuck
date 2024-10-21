@@ -31,7 +31,9 @@ jest.mock('algosdkv3', () => ({
 }));
 
 // Mock navigation hooks
+const routerPushMock = jest.fn();
 jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: routerPushMock }),
   useSearchParams: () => ({
     get: () => ''
   }),
@@ -42,6 +44,7 @@ import TxnImport from './TxnImport';
 describe('Transaction Import Component', () => {
   afterEach(() => {
     sessionStorage.clear();
+    routerPushMock.mockClear();
   });
 
   it('processes an unsigned transaction file', async () => {
@@ -72,6 +75,7 @@ describe('Transaction Import Component', () => {
         b64Lx: false,
       });
     });
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   it('processes an unsigned transaction file with Base64 encoded fields', async () => {
@@ -107,6 +111,7 @@ describe('Transaction Import Component', () => {
         b64Lx: true,
       });
     });
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   it('processes an unsigned transaction file for a different network if allowed', async () => {
@@ -138,6 +143,7 @@ describe('Transaction Import Component', () => {
         b64Lx: false,
       });
     });
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   // eslint-disable-next-line max-len
@@ -153,8 +159,8 @@ describe('Transaction Import Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/import_txn.fail_heading/)).toBeInTheDocument();
     });
-    // Check session storage
-    expect(sessionStorage.getItem('txnData')).toBeNull();
+    expect(sessionStorage.getItem('txnData')).toBeNull(); // Check session storage
+    expect(routerPushMock).not.toHaveBeenCalled();
   });
 
   it('processes a signed transaction file', async () => {
@@ -188,6 +194,7 @@ describe('Transaction Import Component', () => {
     expect(JSON.parse(sessionStorage.getItem('signedTxn') || '""')).toBe(
       'data:application/octet-stream;base64,' + data.toString('base64')
     );
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   it('processes a signed transaction file with Base64 encoded fields', async () => {
@@ -226,6 +233,7 @@ describe('Transaction Import Component', () => {
     expect(JSON.parse(sessionStorage.getItem('signedTxn') || '""')).toBe(
       'data:application/octet-stream;base64,' + data.toString('base64')
     );
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   it('processes a signed transaction file for a different network if allowed', async () => {
@@ -260,6 +268,7 @@ describe('Transaction Import Component', () => {
     expect(JSON.parse(sessionStorage.getItem('signedTxn') || '""')).toBe(
       'data:application/octet-stream;base64,' + data.toString('base64')
     );
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   // eslint-disable-next-line max-len
@@ -278,6 +287,8 @@ describe('Transaction Import Component', () => {
     // Check session storage
     expect(sessionStorage.getItem('txnData')).toBeNull();
     expect(sessionStorage.getItem('signedTxn')).toBeNull();
+
+    expect(routerPushMock).not.toHaveBeenCalled();
   });
 
   // eslint-disable-next-line max-len

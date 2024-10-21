@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { IconAlertTriangle, IconMoodWrrr } from "@tabler/icons-react";
 import algosdk from "algosdkv3";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -28,6 +28,7 @@ type Props = {
  */
 export default function TxnImport({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['sign_txn']);
+  const router = useRouter();
   const [storedTxnData, setStoredTxnData] = useAtom(storedTxnDataAtom);
   const setStoredSignedTxn = useSetAtom(storedSignedTxnAtom);
   const nodeConfig = useAtomValue(nodeConfigAtom);
@@ -95,6 +96,9 @@ export default function TxnImport({ lng }: Props) {
       b64Lx: b64LxOption,
       b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
     });
+
+    // Show transaction data after processing file
+    router.push(`/${lng}/txn/sign`);
   };
 
   return (<>
