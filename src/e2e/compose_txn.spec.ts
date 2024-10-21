@@ -53,7 +53,7 @@ test.describe('Compose Transaction Page', () => {
         .toHaveValue('OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY');
       await expect(page.getByLabel(/Amount/)).toHaveValue('1');
       await expect(page.getByLabel('Note')).toHaveValue('A small tip for No-Cash-7970 :)');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).toHaveCount(1);
@@ -83,7 +83,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByText('USDC')).toHaveCount(2); // Should display correct data for asset
       await expect(page.getByLabel(/Asset amount/)).toHaveValue('1');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).toHaveCount(1);
@@ -111,7 +111,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByText('USDC')).toHaveCount(2); // Should display correct data for asset
       await expect(page.getByLabel(/Asset amount/)).toHaveValue('6.2831');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).not.toBeChecked();
       await expect(page.getByLabel(/Fee/)).toHaveValue('0.001');
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
@@ -139,7 +139,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Asset ID/)).toHaveValue('31566704');
       await expect(page.getByText('USDC')).toHaveCount(1); // Should display correct data for asset
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
@@ -160,7 +160,7 @@ test.describe('Compose Transaction Page', () => {
         .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
       await expect(page.getByLabel(/Close remainder to/)).toHaveValue('');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
@@ -190,7 +190,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Last voting round/)).toHaveValue('19532750');
       await expect(page.getByLabel(/Voting key dilution/)).toHaveValue('1732');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
@@ -210,7 +210,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Sender/))
         .toHaveValue('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
@@ -231,7 +231,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Receiver/)).toHaveValue('');
       await expect(page.getByLabel(/Amount/)).toHaveValue('');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
@@ -254,7 +254,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Receiver/)).toHaveValue('');
       await expect(page.getByLabel(/Amount/)).toHaveValue('');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).not.toBeChecked();
       await expect(page.getByLabel(/first valid round/)).toHaveValue('41922740');
@@ -278,7 +278,7 @@ test.describe('Compose Transaction Page', () => {
         .toHaveValue('7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M');
       await expect(page.getByLabel(/Application ID/)).toHaveValue('1284326447');
       await expect(page.getByLabel('Note')).toHaveValue('');
-      await expect(page.getByLabel('Base64 encoded data')).not.toBeChecked();
+      await expect(page.getByLabel('Base64 encoded bytes')).not.toBeChecked();
       await expect(page.getByLabel('Automatically set the fee')).toBeChecked();
       await expect(page.getByLabel('Automatically set valid rounds')).toBeChecked();
       await expect(page.getByText(/Connect wallet/)).not.toBeVisible();
