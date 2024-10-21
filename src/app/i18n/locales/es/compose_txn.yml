@@ -19,7 +19,7 @@ fields:
       afrz: Congelación del activo
       appl: Aplicación
       appl_create: Aplicación (crear)
-      appl_no_op: Aplicación call (NoOp)
+      appl_no_op: Llamada a una aplicación (NoOp)
       appl_opt_in: Aplicación (optar)
       appl_close_out: Aplicación (cerrar)
       appl_clear: Aplicación (borrar estado)
