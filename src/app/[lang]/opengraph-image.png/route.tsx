@@ -16,7 +16,8 @@ export function generateStaticParams(): { lang: string }[] {
  * file does not work at the moment. This workaround (with modification) was borrowed from:
  * https://github.com/vercel/next.js/issues/51147#issuecomment-1842197049
  */
-export async function GET(req: Request, {params}: {params: {lang?: string}}) {
+export async function GET(req: Request, props: {params: Promise<{lang?: string}>}) {
+  const params = await props.params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang || '', 'app');
   return new ImageResponse((

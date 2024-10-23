@@ -7,8 +7,9 @@ import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 import TxnPresetsList from './TxnPresetsList';
 
 export async function generateMetadata(
-  { params }: { params: { lang: string } },
+  props: { params: Promise<{ lang: string }> }
 ): Promise<Metadata> {
+  const params = await props.params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['txn_presets', 'app']);
   const path = '/txn';
@@ -25,9 +26,8 @@ export async function generateMetadata(
 export function generateStaticParams() { return ['txn']; }
 
 /** Choose Transaction Presets page */
-export default function TxnPresetsPage({ params: { lang } }: {
-  params: { lang: string }
-}) {
+export default function TxnPresetsPage(props: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(props.params);
   const { t } = use(useTranslation(lang, 'txn_presets'));
   return (
     <main className='prose max-w-6xl min-h-screen mx-auto pt-8 px-4 pb-12'>

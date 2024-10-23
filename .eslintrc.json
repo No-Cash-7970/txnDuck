@@ -18,6 +18,14 @@
       }
     },
     {
+      "files": [
+        "**/?(*.)+(spec).[jt]s"
+      ],
+      "rules": {
+        "react-hooks/rules-of-hooks": "off"
+      }
+    },
+    {
       "files": ["**/*.yaml", "**/*.yml"],
       "parser": "yaml-eslint-parser",
       "extends": ["plugin:yml/standard"]

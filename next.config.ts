@@ -1,5 +1,6 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+import type { NextConfig } from 'next';
+
+const nextConfig: NextConfig = {
   poweredByHeader: false,
   webpack: (config, { isServer }) => {
     // Add use-wallet dependency modules that cause "not found" errors. Also see
@@ -34,13 +35,15 @@ const nextConfig = {
   },
   eslint: {
     // !! WARN !!
-    // This allows production builds to successfully complete even if your project has ESLint errors.
+    // This allows production builds to successfully complete even if your project has ESLint
+    // errors.
     // !! WARN !!
     ignoreDuringBuilds: process.env.IGNORE_ESLINT_BUILD_ERRORS?.toLowerCase() === 'true',
   },
   typescript: {
     // !! WARN !!
-    // Dangerously allow production builds to successfully complete even if your project has type errors.
+    // Dangerously allow production builds to successfully complete even if your project has type
+    // errors.
     // !! WARN !!
     ignoreBuildErrors: process.env.IGNORE_TS_BUILD_ERRORS?.toLowerCase() === 'true',
   },

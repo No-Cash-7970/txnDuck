@@ -6,8 +6,9 @@ import { PageTitleHeading } from '@/app/[lang]/components';
 import { IconInfoCircle } from '@tabler/icons-react';
 
 export async function generateMetadata(
-  { params }: { params: { lang: string } },
+  props: { params: Promise<{ lang: string }> }
 ): Promise<Metadata> {
+  const params = await props.params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['privacy_policy', 'app']);
   const path = '/privacy-policy';
@@ -24,9 +25,8 @@ export async function generateMetadata(
 export function generateStaticParams() { return ['privacy-policy']; }
 
 /** Privacy policy page */
-export default function PrivacyPolicyPage({ params: { lang } }: {
-  params: { lang: string }
-}) {
+export default function PrivacyPolicyPage(props: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(props.params);
   const { t } = use(useTranslation(lang, ['privacy_policy', 'common']));
   return (
     <main className='prose min-h-screen mx-auto pt-4 px-4 pb-12'>

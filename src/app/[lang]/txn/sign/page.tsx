@@ -12,8 +12,9 @@ import SignTxn from './components/SignTxn';
 import TxnImport from './components/TxnImport';
 
 export async function generateMetadata(
-  { params }: { params: { lang: string } },
+  props: { params: Promise<{ lang: string }> }
 ): Promise<Metadata> {
+  const params = await props.params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, ['sign_txn', 'app']);
   const path = '/txn/sign';
@@ -30,9 +31,8 @@ export async function generateMetadata(
 export function generateStaticParams() { return ['sign']; }
 
 /**  Sign Transaction page */
-export default function SignTxnPage({ params: { lang } }: {
-  params: { lang: string }
-}) {
+export default function SignTxnPage(props: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(props.params);
   const { t } = use(useTranslation(lang, ['sign_txn', 'app']));
   return (
     <main className='prose max-w-4xl min-h-screen mx-auto pt-4 px-4 pb-12'>

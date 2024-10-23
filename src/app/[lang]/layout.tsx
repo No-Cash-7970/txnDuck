@@ -17,8 +17,9 @@ import {
 
 /** Generate the base metadata for the site. Parts may be overwritten by child pages. */
 export async function generateMetadata(
-  { params }: { params: { lang: string } }
+  props: { params: Promise<{ lang: string }> }
 ): Promise<Metadata> {
+  const params = await props.params;
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { t } = await useTranslation(params.lang, 'app');
   return {
@@ -81,14 +82,14 @@ export async function generateStaticParams(): Promise<{ lang: string }[]> {
 }
 
 export default function HomeLayout(
-  {
-    children,
-    params: { lang }
-  }: {
+  props: {
     children: React.ReactNode,
-    params: { lang?: string }
+    params: Promise<{ lang?: string }>
   }
 ) {
+  const params = use(props.params);
+  const { lang } = params;
+  const { children } = props;
   const { t } = use(useTranslation(lang || '', ['app', 'common']));
   const langDir = dir(lang);
   return (

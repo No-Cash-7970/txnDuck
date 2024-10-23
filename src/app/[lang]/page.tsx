@@ -4,9 +4,8 @@ import { Trans } from 'react-i18next/TransWithoutContext';
 import { useTranslation } from '@/app/i18n';
 
 /** The home page */
-export default function HomePage({ params: { lang } }: {
-  params: { lang: string }
-}) {
+export default function HomePage(props: { params: Promise<{ lang: string }> }) {
+  const { lang } = use(props.params);
   const { t } = use(useTranslation(lang, ['home', 'app', 'common']));
   return (
     <main className='prose max-w-none min-h-screen pb-12'>
