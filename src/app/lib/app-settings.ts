@@ -15,6 +15,9 @@ export enum Themes  {
   dark = 'duck_dark',
 };
 
+/** List of favorite transaction presets */
+export const txnPresetFavsAtom = atomWithStorage<string[]>('txnPresetFavs', [], storage);
+
 /** The default values for all settings */
 export const defaults = {
   /** Theme (default: `""` - automatic) */

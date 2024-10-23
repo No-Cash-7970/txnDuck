@@ -6,6 +6,7 @@ import { Trans } from "react-i18next";
 import { useAtomValue } from "jotai";
 import { SelectField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
+import { txnPresetFavsAtom } from "@/app/lib/app-settings";
 import { nodeConfigAtom } from "@/app/lib/node-config";
 import { Preset } from "@/app/lib/txn-data";
 import TxnPreset from "./TxnPreset";
@@ -22,6 +23,7 @@ export default function TxnPresetsList({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const currentURLParams = useSearchParams();
   const [urlParams, setUrlParams] = useState(currentURLParams.toString());
+  const txnPresetFavs = useAtomValue(txnPresetFavsAtom);
 
   useEffect(() => {
     // Remove URL parameter for preset if it is specified
@@ -40,6 +42,7 @@ export default function TxnPresetsList({ lng }: Props) {
       labelTextClass='text-lg'
       options={[
         { value: 'all', text: t('all_heading') },
+        { value: 'favorites', text: t('favorites.heading') },
         { value: 'general', text: t('general_heading') },
         { value: 'asset', text: t('asset_heading') },
         { value: 'app', text: t('app_heading') },
@@ -48,6 +51,52 @@ export default function TxnPresetsList({ lng }: Props) {
       value={category}
       onChange={(e) => setCategory(e.target.value)}
     />
+
+    {(category === 'favorites' || category === 'all') && <>
+      <h2 className='ps-2' id='favorites'>{t('favorites.heading')}</h2>
+      <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
+        {txnPresetFavs.length === 0 && <p className='m-0 ps-4 italic'>{t('favorites.none')}</p>}
+        {txnPresetFavs.map(fav => {
+          // The "Transfer [coin name]" preset is special
+          if (fav === Preset.Transfer) {
+            return (
+              <TxnPreset key={fav} heading={nodeConfig.coinName
+                  ? t(`${Preset.Transfer}.heading`, {coinName: nodeConfig.coinName})
+                  : t(`${Preset.TransferAlgos}.heading`)
+                }
+                actionText={nodeConfig.coinName
+                  ? t(`${Preset.Transfer}.action`, {coinName: nodeConfig.coinName})
+                  : t(`${Preset.TransferAlgos}.action`)
+                }
+                // eslint-disable-next-line max-len
+                actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${fav}`}
+                color='accent'
+                presetName={fav}
+                t={t}
+              >
+                {nodeConfig.coinName
+                  ? t(`${Preset.Transfer}.description`, {coinName: nodeConfig.coinName})
+                  : t(`${Preset.TransferAlgos}.description`)
+                }
+              </TxnPreset>
+            );
+          }
+
+          return (
+            <TxnPreset key={fav} heading={t(`${fav}.heading`)}
+              actionText={t(`${fav}.action`)}
+              // eslint-disable-next-line max-len
+              actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${fav}`}
+              color='accent'
+              presetName={fav}
+              t={t}
+            >
+              {t(`${fav}.description`)}
+            </TxnPreset>
+          );
+        })}
+      </section>
+    </>}
 
     {(category === 'general' || category === 'all') && <>
       <h2 className='ps-2' id='general'>{t('general_heading')}</h2>
@@ -63,6 +112,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.Transfer}`}
           color='primary'
+          presetName={Preset.Transfer}
+          t={t}
         >
           {nodeConfig.coinName
             ? t(`${Preset.Transfer}.description`, {coinName: nodeConfig.coinName})
@@ -74,6 +125,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RekeyAccount}`}
           color='primary'
+          presetName={Preset.RekeyAccount}
+          t={t}
         >
           {t(`${Preset.RekeyAccount}.description`)}
         </TxnPreset>
@@ -82,6 +135,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.CloseAccount}`}
           color='primary'
+          presetName={Preset.CloseAccount}
+          t={t}
         >
           {t(`${Preset.CloseAccount}.description`)}
         </TxnPreset>
@@ -95,6 +150,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetTransfer}`}
           color='secondary'
+          presetName={Preset.AssetTransfer}
+          t={t}
         >
           {t(`${Preset.AssetTransfer}.description`)}
         </TxnPreset>
@@ -103,6 +160,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetOptIn}`}
           color='secondary'
+          presetName={Preset.AssetOptIn}
+          t={t}
         >
           {t(`${Preset.AssetOptIn}.description`)}
         </TxnPreset>
@@ -111,6 +170,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetOptOut}`}
           color='secondary'
+          presetName={Preset.AssetOptOut}
+          t={t}
         >
           {t(`${Preset.AssetOptOut}.description`)}
         </TxnPreset>
@@ -119,6 +180,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetCreate}`}
           color='secondary'
+          presetName={Preset.AssetCreate}
+          t={t}
         >
           {t(`${Preset.AssetCreate}.description`)}
         </TxnPreset>
@@ -127,6 +190,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetReconfig}`}
           color='secondary'
+          presetName={Preset.AssetReconfig}
+          t={t}
         >
           {t(`${Preset.AssetReconfig}.description`)}
         </TxnPreset>
@@ -135,6 +200,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetClawback}`}
           color='secondary'
+          presetName={Preset.AssetClawback}
+          t={t}
         >
           {t(`${Preset.AssetClawback}.description`)}
         </TxnPreset>
@@ -143,6 +210,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetFreeze}`}
           color='secondary'
+          presetName={Preset.AssetFreeze}
+          t={t}
         >
           {t(`${Preset.AssetFreeze}.description`)}
         </TxnPreset>
@@ -151,6 +220,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetUnfreeze}`}
           color='secondary'
+          presetName={Preset.AssetUnfreeze}
+          t={t}
         >
           {t(`${Preset.AssetUnfreeze}.description`)}
         </TxnPreset>
@@ -159,6 +230,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetDestroy}`}
           color='secondary'
+          presetName={Preset.AssetDestroy}
+          t={t}
         >
           {t(`${Preset.AssetDestroy}.description`)}
         </TxnPreset>
@@ -172,6 +245,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppRun}`}
           color='primary'
+          presetName={Preset.AppRun}
+          t={t}
         >
           <Trans t={t} i18nKey={`${Preset.AppRun}.description`}
             components={{code: <code />}}
@@ -182,6 +257,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppOptIn}`}
           color='primary'
+          presetName={Preset.AppOptIn}
+          t={t}
         >
           {t(`${Preset.AppOptIn}.description`)}
         </TxnPreset>
@@ -190,6 +267,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppDeploy}`}
           color='primary'
+          presetName={Preset.AppDeploy}
+          t={t}
         >
           {t(`${Preset.AppDeploy}.description`)}
         </TxnPreset>
@@ -198,6 +277,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppUpdate}`}
           color='primary'
+          presetName={Preset.AppUpdate}
+          t={t}
         >
           <Trans t={t} i18nKey={`${Preset.AppUpdate}.description`}
             components={{code: <code />}}
@@ -208,6 +289,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppClose}`}
           color='primary'
+          presetName={Preset.AppClose}
+          t={t}
         >
           {t(`${Preset.AppClose}.description`)}
         </TxnPreset>
@@ -216,6 +299,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppClear}`}
           color='primary'
+          presetName={Preset.AppClear}
+          t={t}
         >
           {t(`${Preset.AppClear}.description`)}
         </TxnPreset>
@@ -224,6 +309,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppDelete}`}
           color='primary'
+          presetName={Preset.AppDelete}
+          t={t}
         >
           <Trans t={t} i18nKey={`${Preset.AppDelete}.description`}
             components={{code: <code />}}
@@ -239,6 +326,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegOnline}`}
           color='secondary'
+          presetName={Preset.RegOnline}
+          t={t}
         >
           {t(`${Preset.RegOnline}.description`)}
         </TxnPreset>
@@ -247,6 +336,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegOffline}`}
           color='secondary'
+          presetName={Preset.RegOffline}
+          t={t}
         >
           {t(`${Preset.RegOffline}.description`)}
         </TxnPreset>
@@ -255,6 +346,8 @@ export default function TxnPresetsList({ lng }: Props) {
           // eslint-disable-next-line max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegNonpart}`}
           color='secondary'
+          presetName={Preset.RegNonpart}
+          t={t}
         >
           <Trans t={t} i18nKey={`${Preset.RegNonpart}.description`}
             components={{em: <strong />}}

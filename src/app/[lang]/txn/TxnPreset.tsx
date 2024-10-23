@@ -1,4 +1,8 @@
 import Link from "next/link";
+import { useAtom } from "jotai";
+import { TFunction } from "i18next";
+import { IconStar, IconStarFilled } from "@tabler/icons-react";
+import { txnPresetFavsAtom } from "@/app/lib/app-settings";
 
 type Props = {
   /** Text and other elements to be used as the description */
@@ -13,6 +17,12 @@ type Props = {
   actionDisabled?: boolean,
   /** Color name used for decoration */
   color?: 'primary'|'secondary'|'accent'|'neutral',
+  /** Unique identifier for the preset. Used when adding and removing preset from list of
+   *  favorites
+   */
+  presetName: string,
+  /** I18next "t" function */
+  t: TFunction,
 };
 
 /** Small section containing a heading, description, and a link for a transaction preset */
@@ -23,9 +33,12 @@ export default function TxnPreset({
   actionURL,
   actionDisabled = false,
   color = 'primary',
+  presetName,
+  t,
 }: Props) {
+  const [txnPresetFavs, setTxnPresetFavs] = useAtom(txnPresetFavsAtom);
   return (
-    <div className={'card card-compact shadow-md border border-opacity-50'
+    <div className={'card shadow-md border border-opacity-50'
       + (color === 'primary' ? ' border-primary' : '')
       + (color === 'secondary' ? ' border-secondary' : '')
       + (color === 'accent' ? ' border-accent' : '')
@@ -56,6 +69,33 @@ export default function TxnPreset({
           </Link>
         </div>
       </div>
+      {txnPresetFavs.indexOf(presetName) === -1 // If preset is not in favorites
+        ? (
+          <button type="button" className="btn btn-sm btn-ghost absolute top-1 end-1 px-1"
+            title={t('favorites.add', {presetName: heading})}
+            onClick={() => setTxnPresetFavs([...txnPresetFavs, presetName])}
+          >
+            <IconStar size={22} className="opacity-50" />
+          </button>
+        )
+        : (
+          <button type="button" className="btn btn-sm btn-ghost absolute top-1 end-1 px-1"
+            title={t('favorites.remove', {presetName: heading})}
+            onClick={() => {
+              const newFavs = [...txnPresetFavs];
+              newFavs.splice(newFavs.indexOf(presetName), 1); // Remove preset from favorites
+              setTxnPresetFavs(newFavs);
+            }}
+          >
+          <IconStarFilled size={22} className={
+            (color === 'primary' ? 'text-primary' : '')
+            + (color === 'secondary' ? 'text-secondary' : '')
+            + (color === 'accent' ? 'text-accent' : '')
+            + (color === 'neutral' ? 'text-neutral' : '')
+          } />
+          </button>
+        )
+      }
     </div>
   );
 }

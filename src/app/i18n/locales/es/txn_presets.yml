@@ -5,6 +5,12 @@ skip_btn: O sáltese esto y componga una transacción sin utilizar una preselecc
 category_label: Categorías
 all_heading: Todas
 invalid_preset: Preselección inválido
+# Favorites
+favorites:
+  heading: Favoritos
+  none: No hay favoritos.
+  add: Añadir la preselección «{{presetName}}» a favoritos
+  remove: Eliminar la preselección «{{presetName}}» de favoritos
 # General category
 general_heading: General
 transfer: # For transferring a native currency that is not Algo

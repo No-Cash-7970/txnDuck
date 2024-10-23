@@ -4,6 +4,12 @@ skip_btn: Or skip this and compose a transaction without using a preset
 category_label: Category
 all_heading: All
 invalid_preset: Invalid preset
+# Favorites
+favorites:
+  heading: Favorites
+  none: There are no favorites.
+  add: Add “{{presetName}}” preset to favorites
+  remove: Remove “{{presetName}}” preset from favorites
 # General category
 general_heading: General
 transfer: # For transferring a native currency that is not Algo
