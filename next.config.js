@@ -26,6 +26,7 @@ const nextConfig = {
         '@walletconnect/sign-client': false,
         'lute-connect': false,
         'magic-sdk': false,
+        '@algorandfoundation/liquid-auth-use-wallet-client': false,
       };
     }
 
