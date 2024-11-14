@@ -87,6 +87,35 @@ const stashPopFail = async (errorMsg = '') => {
   throw new Error(errorMsg);
 };
 
+/** Zip the files for easier distribution
+ * @returns A promise that resolves when zip has been created
+ */
+const zipStandalone = async () => {
+  const outFilename = process.env.STANDALONE_FILENAME
+    || `${process.env.npm_package_name}-${process.env.npm_package_version}`;
+  const output = fs.createWriteStream(`./build/${outFilename}.zip`);
+  const archive = archiver('zip').glob('**', { cwd: '.next/standalone', dot: true });
+
+  // Pipe archive data to the file
+  archive.pipe(output)
+    // Good practice to catch this error explicitly
+    .on('error', err => { throw err; })
+    // Good practice to catch warnings (i.e. stat failures and other non-blocking errors)
+    .on('warning', err => console.warn(err));
+
+  // The 'close' event is fired only when a file descriptor is involved
+  output.on('close', () => console.log(`${archive.pointer()} total bytes written to archive.`))
+    // This event is fired when the data source is drained no matter what was the data source.
+    // It is not part of this library but rather from the NodeJS Stream API.
+    // @see: https://nodejs.org/api/stream.html#stream_event_end
+    .on('end', () => console.log('Data has been drained'));
+
+  // Finalize the archive (ie we are done appending files but streams have to finish yet)
+  // 'close', 'end' or 'finish' events may be fired right after calling this method so register to
+  // them beforehand
+  return await archive.finalize();
+};
+
 /*
  *******************************************************************************
  * Tasks                                                                       *
@@ -101,7 +130,7 @@ export const compileLocales = gulp.series(cleanLocales, convertLocales);
 
 /** Install and set up developer tools */
 export const installDev = gulp.parallel(
-  task('lefthook install'),
+  task('yarn lefthook install'),
   task('yarn playwright install')
 );
 
@@ -146,9 +175,7 @@ export const postRelease = gulp.series(
   task(`git checkout ${GIT_BRANCH_MAIN}`),
 );
 
-/** Create a standalone build that includes the static assets. Usually used for making a GitHub
- * release artifact.
- */
+/** Create a standalone build that includes the static assets. */
 export const buildStandalone = gulp.series(
   // Build using "standalone" mode
   async function setEnv() { process.env.STANDALONE_BUILD = true; },
@@ -158,32 +185,13 @@ export const buildStandalone = gulp.series(
   task('cp -r .next/static .next/standalone/.next'),
   // The public/index.html is for static build only, so remove it for the standalone build
   task('rm .next/standalone/public/index.html', { reject: false }),
+);
+
+/** Build standalone and zip it. Usually used for making a GitHub
+ * release artifact. */
+export const buildZipStandalone = gulp.series(
+  buildStandalone,
   // Make the "build" directory in case it does not exist
   task('mkdir build', { reject: false }),
-  // Zip the files for easier distribution
-  async function zipStandalone() {
-    const outFilename = process.env.STANDALONE_FILENAME
-      || `${process.env.npm_package_name}-${process.env.npm_package_version}`;
-    const output = fs.createWriteStream(`./build/${outFilename}.zip`);
-    const archive = archiver('zip').glob('**', { cwd: '.next/standalone', dot: true });
-
-    // Pipe archive data to the file
-    archive.pipe(output)
-      // Good practice to catch this error explicitly
-      .on('error', err => { throw err; })
-      // Good practice to catch warnings (i.e. stat failures and other non-blocking errors)
-      .on('warning', err => console.warn(err));
-
-    // The 'close' event is fired only when a file descriptor is involved
-    output.on('close', () => console.log(`${archive.pointer()} total bytes written to archive.`))
-      // This event is fired when the data source is drained no matter what was the data source.
-      // It is not part of this library but rather from the NodeJS Stream API.
-      // @see: https://nodejs.org/api/stream.html#stream_event_end
-      .on('end', () => console.log('Data has been drained'));
-
-    // Finalize the archive (ie we are done appending files but streams have to finish yet)
-    // 'close', 'end' or 'finish' events may be fired right after calling this method so register to
-    // them beforehand
-    return await archive.finalize();
-  },
+  zipStandalone,
 );

@@ -1,0 +1,11 @@
+name: txnduck
+services:
+  dev:
+    container_name: txnduck-dev
+    build:
+      context: .
+      target: dev-setup
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"

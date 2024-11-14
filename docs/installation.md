@@ -14,6 +14,11 @@ uninstallation instructions for each of the installation methods.
   - [Installing and running the portable package](#installing-and-running-the-portable-package)
   - [Uninstalling and removing the portable package](#uninstalling-and-removing-the-portable-package)
   - [Upgrading to the latest portable package](#upgrading-to-the-latest-portable-package)
+- [Production Docker image](#production-docker-image)
+  - [Requirements for the production Docker image](#requirements-for-the-production-docker-image)
+  - [Installing and running the production Docker image](#installing-and-running-the-production-docker-image)
+  - [Uninstalling and removing the production Docker image](#uninstalling-and-removing-the-production-docker-image)
+  - [Upgrading to the latest production Docker image](#upgrading-to-the-latest-production-docker-image)
 - [Source code installation](#source-code-installation)
   - [Requirements for source code installation](#requirements-for-source-code-installation)
   - [Installing and running the source code](#installing-and-running-the-source-code)
@@ -22,20 +27,27 @@ uninstallation instructions for each of the installation methods.
 - [Development environment installation](#development-environment-installation)
   - [Requirements for the development environment](#requirements-for-the-development-environment)
   - [Installing the development environment](#installing-the-development-environment)
-  - [Upgrading the development environment](#upgrading-the-development-environment)
   - [Uninstalling the development environment](#uninstalling-the-development-environment)
-  - [Running the development web server](#running-the-development-web-server)
-  - [Building for production](#building-for-production)
+  - [Upgrading the development environment](#upgrading-the-development-environment)
+- [Development environment with Docker](#development-environment-with-docker)
+  - [Requirements for the development environment with Docker](#requirements-for-the-development-environment-with-docker)
+  - [Installing and running the development environment with Docker](#installing-and-running-the-development-environment-with-docker)
+  - [Uninstalling and removing the development environment with Docker](#uninstalling-and-removing-the-development-environment-with-docker)
+  - [Upgrading to the latest development environment with Docker](#upgrading-to-the-latest-development-environment-with-docker)
 - [Deploying to platform other than localhost](#deploying-to-platform-other-than-localhost)
 
 ## Which installation method should I choose?
 
-- For the fastest and easiest installation of the stable Production version:
+- For the fastest and easiest installation of the stable Production version using Node:
   [Portable package installation](#portable-package-installation)
+- For the fastest and easiest installation of the stable Production version using Docker:
+  [Production Docker image](#production-docker-image)
 - For more flexibility and customization with either the Production or Preview version:
   [Source code installation](#source-code-installation)
 - For modifying and testing the code for development:
   [Development environment installation](#development-environment-installation)
+- For quickly and easily setting up the development environment using Docker:
+  [Development environment using Docker](#development-environment-with-docker)
 
 <!-- Portable package installation method:
 
@@ -142,6 +154,84 @@ the latest version to get the latest features and bug fixes:
    Step #6 in the [installation instructions](#installing-and-running-the-portable-package).
 2. Follow the [installation instructions](#installing-and-running-the-portable-package)
    again.
+
+## Production Docker image
+
+Use Docker to run an instance of the production version of txnDuck without
+installing extra dependencies on your machine.
+
+> [!IMPORTANT]
+> This installation method is not for development.
+
+### Requirements for the production Docker image
+
+- Access to the command-line interface (CLI), such as Terminal, PowerShell or
+  Command Prompt
+- [Docker](https://www.docker.com/) installed.
+
+### Installing and running the production Docker image
+
+1. Pull the image.
+
+   ```bash
+   docker pull No-Cash-7970/txnDuck
+   ```
+
+2. Create and run a container.
+
+   ```bash
+   docker run -d -p 3000:3000 No-Cash-7970/txnDuck
+   ```
+
+    If you need to use a port other than 3000, use the following instead:
+
+    ```bash
+    docker run -d -p [PORT]:3000 No-Cash-7970/txnDuck
+    ```
+
+    Replace `[PORT]` with the port number you would like to use. For example,
+    use port 3001 instead of 3000:
+
+    ```bash
+    docker run -d -p 3001:3000 No-Cash-7970/txnDuck
+    ```
+
+3. OPTIONAL: Stop the container.
+
+   ```bash
+   docker stop container_name
+   ```
+
+4. OPTIONAL: Run the container after stopping it.
+
+   ```bash
+   docker run -d container_name
+   ```
+
+### Uninstalling and removing the production Docker image
+
+1. Stop the container if it is running.
+
+   ```bash
+   docker stop No-Cash-7970/txnDuck
+   ```
+
+2. Delete the container.
+
+   ```bash
+   docker rm No-Cash-7970/txnDuck
+   ```
+
+3. Delete the image.
+
+   ```bash
+   docker rmi No-Cash-7970/txnDuck
+   ```
+
+### Upgrading to the latest production Docker image
+
+1. [Uninstall the image](#uninstalling-and-removing-the-production-docker-image)
+2. [Install the newer version of the image](#installing-and-running-the-production-docker-image)
 
 ## Source code installation
 
@@ -331,11 +421,25 @@ the source code.
     git clone https://github.com/No-Cash-7970/txnDuck.git
     ```
 
-2. Install the dependencies.
+2. Enter the project folder
+
+    ```bash
+    cd txnDuck
+    ```
+
+3. Install the dependencies.
 
     ```bash
     yarn install && yarn install:dev
     ```
+
+### Uninstalling the development environment
+
+1. Delete the project directory that was created when cloning the repository
+   (step #1 of the [installation instructions](#installing-the-development-environment)).
+2. OPTIONAL: Uninstall the software listed in the
+   [requirements for the development environment](#requirements-for-the-development-environment)
+   if you do not need them for something else.
 
 ### Upgrading the development environment
 
@@ -351,85 +455,125 @@ the source code.
     yarn install:dev
     ```
 
-### Uninstalling the development environment
+## Development environment with Docker
 
-1. Delete the project directory that was created when cloning the repository.
-   (Step #1 of the
-   [installation instructions](#installing-the-development-environment))
-2. OPTIONAL: Uninstall the software listed in the
-   [requirements for the development environment](#requirements-for-the-development-environment)
-   if you do not need them for something else.
+Use Docker to run a private instance of txnDuck with the tools for modifying and
+testing the source code without installing extra dependencies on your machine.
 
-### Running the development web server
+> [!NOTE]
+> Running the development environment inside of a Docker container is
+> significantly slower than running the development environment without Docker.
+> To install the development environment without Docker, follow the instructions
+> for installing the [regular development environment](#development-environment-installation).
 
-The development server runs the local copy of the repository. This local
-development server uses [Next.js's Fast Reload](https://nextjs.org/docs/architecture/fast-refresh)
-to automatically refresh the page in the browser as you save changes. To run and
-use the development server:
+<!-- This tip is separate from the note above -->
+> [!TIP]
+> Useful information about the development environment can be found in the
+> [Developers Documentation](developers.md).
 
-1. Start the development server.
+### Requirements for the development environment with Docker
+
+- Access to the command-line interface (CLI), such as Terminal, PowerShell or
+  Command Prompt
+- [Docker](https://www.docker.com/) version 23.0 or higher installed.
+
+### Installing and running the development environment with Docker
+
+The development environment with Docker makes use of a
+[bind mount](https://docs.docker.com/engine/storage/bind-mounts/). The changes
+to source code outside a Docker container are applied within the container, and
+changes to source code within the container are applied outside of the
+container.
+
+1. Clone the repository.
 
     ```bash
-    yarn dev
+    git clone https://github.com/No-Cash-7970/txnDuck.git
     ```
 
-2. Open a web browser and go to <http://localhost:3000>.
-3. Edit a file in the `src/app` directory and see the result!
-4. Stop the web server by pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> (or
-   <kbd>Cmd</kbd>+<kbd>C</kbd> on Mac). Start the web server again by following
-   Step #1.
+2. Enter the project directory.
 
-### Building for production
+    ```bash
+    cd txnDuck
+    ```
 
-To build for production run:
+3. Create and run a container for the development environment. The docker image
+   will be built if one does not exist.
 
-```bash
-yarn build
-```
+    ```bash
+    docker compose run --rm -it -p 3000:3000 dev bash
+    ```
 
-To run the build locally in a local web server, which would be served at
-<http://localhost:3000>:
+    This command runs the newly created docker container and starts the bash
+    shell within the container where you can run commands like `yarn dev` or
+    `git status`.
 
-```bash
-yarn start
-```
+    If you need to use a port other than 3000 on your machine, use the following
+    instead:
 
-Or, build and run with one command:
+    ```bash
+    docker compose run --rm -it -p [PORT]:3000 dev bash
+    ```
 
-```bash
-yarn prod
-```
+    Replace `[PORT]` with the port number you would like to use. For example,
+    use port 3001 instead of 3000:
 
-<details>
-<summary>
-   :dart: ADVANCED TIP: Use "-H" and "-p" options to change the URL the web
-   server serves at.
-   Click for more details.
-</summary>
+    ```bash
+    docker compose run --rm -it -p 3001:3000 dev bash
+    ```
 
-If the web server needs to serve at a URL other than `http://localhost:3000`,
-use the `-H` and the `-p` options for `yarn start`, `yarn dev` or `yarn prod` to
-specify the hostname and the port of the web server.
+4. OPTIONAL: Exit the container's shell by running the `exit` command within the
+   shell. If you used one of the commands in step #3, the container will
+   automatically be stopped and deleted when you exit the shell. The source code
+   on your machine remains intact when the container is deleted. Run a new
+   container by running one of the commands in step #3 again.
 
-For example, to have the server serve at `http://192.168.1.42:80`, use both the
-`-H` and the `-p` options:
+5. OPTIONAL: If you install, upgrade or uninstall Node dependencies for txnDuck,
+   you will need to rebuild the image before you run a new container to apply
+   the changes to the new container.
 
-```bash
-yarn start -H 192.168.1.42 -p 80
-yarn dev -H 192.168.1.42 -p 80
-yarn prod -H 192.168.1.42 -p 80
-```
+    First, delete the old image.
 
-If only the port on `localhost` needs to be changed, then only use the `-p`
-option:
+    ```bash
+    docker rmi txnduck-dev
+    ```
 
-```bash
-yarn start -p 8080
-yarn dev -p 8080
-yarn prod -p 8080
-```
+    Then, build a new image and start a new container.
 
-</details>
+    ```bash
+    docker compose run --build --rm -it -p 3000:3000 dev bash
+    ```
+
+### Uninstalling and removing the development environment with Docker
+
+1. If the you are in the Docker container shell, exit the shell and stop the container by running the
+   `exit` command within the shell. If you used one of the commands in step #3
+   of the [installation instructions](#installing-and-running-the-development-environment-with-docker),
+   the container will automatically be deleted when you exit the shell and the
+   source code will remain intact.
+
+2. Delete the image.
+
+    ```bash
+    docker rmi txnduck-dev
+    ```
+
+3. Delete the project directory that was created when cloning the repository
+   (step #1 of the
+   [installation instructions](#installing-and-running-the-development-environment-with-docker)).
+
+### Upgrading to the latest development environment with Docker
+
+1. Pull the changes.
+
+    ```bash
+    git pull
+    ```
+
+2. Uninstall the image by following steps #1 and #2 of the
+   [uninstallation instructions](#uninstalling-and-removing-the-development-environment-with-docker).
+3. Reinstall the development environment by following steps #2 and #3 of the
+   [installation instructions](#installing-and-running-the-development-environment-with-docker).
 
 ## Deploying to platform other than localhost
 

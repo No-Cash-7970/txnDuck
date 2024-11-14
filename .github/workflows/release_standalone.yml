@@ -1,4 +1,4 @@
-name: Release Standalone
+name: Release - Standalone
 on:
   release:
     types: [released]
@@ -27,8 +27,8 @@ jobs:
         cache: yarn
     - name: Install dependencies
       run: yarn
-    - name: Build standalone
-      run: yarn build:standalone
+    - name: Build standalone zip file
+      run: yarn build:standalone:zip
       env:
         NEXT_PUBLIC_WC_PROJECT_ID: ${{vars.NEXT_PUBLIC_WC_PROJECT_ID}}
         NEXT_PUBLIC_MAGIC_API_KEY: ${{vars.NEXT_PUBLIC_MAGIC_API_KEY}}

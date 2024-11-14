@@ -72,7 +72,7 @@ export default defineConfig({
     command: 'yarn prod',
     url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
-    timeout: 120 * 1000, // 2 minutes
+    timeout: 5 * 60 * 1000, // 5 minutes
     env: {
       NODE_ENV: 'test'
     },
