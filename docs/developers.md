@@ -3,29 +3,6 @@
 
 Useful information for developers.
 
-<!-- omit in toc -->
-## Table of Contents
-
-- [Setting up the development environment](#setting-up-the-development-environment)
-- [Technology Stack](#technology-stack)
-- [Project structure](#project-structure)
-- [Running the development web server](#running-the-development-web-server)
-- [Building for production](#building-for-production)
-- [Testing](#testing)
-  - [Unit testing](#unit-testing)
-  - [End-to-end (E2E) testing](#end-to-end-e2e-testing)
-- [Code style guidelines](#code-style-guidelines)
-- [Git commit message guidelines](#git-commit-message-guidelines)
-  - [Common commit message scopes](#common-commit-message-scopes)
-  - [Common commit message type and scope combinations](#common-commit-message-type-and-scope-combinations)
-- [Git hooks](#git-hooks)
-  - [`pre-commit` hook](#pre-commit-hook)
-  - [`commit-msg` hook](#commit-msg-hook)
-- [Writing documentation](#writing-documentation)
-- [Releases](#releases)
-  - [Changelog](#changelog)
-  - [Releases on the `stable` branch](#releases-on-the-stable-branch)
-
 ## Setting up the development environment
 
 Instructions for installing, updating and uninstalling the

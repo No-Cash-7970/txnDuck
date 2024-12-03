@@ -5,37 +5,6 @@ This guide contains instructions for the multiple methods of installing and
 running a self-hosted instance of txnDuck. There are also upgrade and
 uninstallation instructions for each of the installation methods.
 
-<!-- omit in toc -->
-## Table of Contents
-
-- [Which installation method should I choose?](#which-installation-method-should-i-choose)
-- [Portable package installation](#portable-package-installation)
-  - [Requirements for the portable package installation](#requirements-for-the-portable-package-installation)
-  - [Installing and running the portable package](#installing-and-running-the-portable-package)
-  - [Uninstalling and removing the portable package](#uninstalling-and-removing-the-portable-package)
-  - [Upgrading to the latest portable package](#upgrading-to-the-latest-portable-package)
-- [Production Docker image](#production-docker-image)
-  - [Requirements for the production Docker image](#requirements-for-the-production-docker-image)
-  - [Installing and running the production Docker image](#installing-and-running-the-production-docker-image)
-  - [Uninstalling and removing the production Docker image](#uninstalling-and-removing-the-production-docker-image)
-  - [Upgrading to the latest production Docker image](#upgrading-to-the-latest-production-docker-image)
-- [Source code installation](#source-code-installation)
-  - [Requirements for source code installation](#requirements-for-source-code-installation)
-  - [Installing and running the source code](#installing-and-running-the-source-code)
-  - [Uninstalling and removing the source code installation](#uninstalling-and-removing-the-source-code-installation)
-  - [Upgrading to the latest source code](#upgrading-to-the-latest-source-code)
-- [Development environment installation](#development-environment-installation)
-  - [Requirements for the development environment](#requirements-for-the-development-environment)
-  - [Installing the development environment](#installing-the-development-environment)
-  - [Uninstalling the development environment](#uninstalling-the-development-environment)
-  - [Upgrading the development environment](#upgrading-the-development-environment)
-- [Development environment with Docker](#development-environment-with-docker)
-  - [Requirements for the development environment with Docker](#requirements-for-the-development-environment-with-docker)
-  - [Installing and running the development environment with Docker](#installing-and-running-the-development-environment-with-docker)
-  - [Uninstalling and removing the development environment with Docker](#uninstalling-and-removing-the-development-environment-with-docker)
-  - [Upgrading to the latest development environment with Docker](#upgrading-to-the-latest-development-environment-with-docker)
-- [Deploying to platform other than localhost](#deploying-to-platform-other-than-localhost)
-
 ## Which installation method should I choose?
 
 - For the fastest and easiest installation of the stable Production version using Node:

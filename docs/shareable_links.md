@@ -1,50 +1,9 @@
 <!-- omit in toc -->
 # Making Shareable Links
 
-<!-- omit in toc -->
-## Table of contents
-
-- [Specifying language](#specifying-language)
-- [Setting node network](#setting-node-network)
-- [Compose Transaction page links](#compose-transaction-page-links)
-  - [All presets](#all-presets)
-  - ["Transfer Algos" preset](#transfer-algos-preset)
-  - ["Rekey account" preset](#rekey-account-preset)
-  - ["Close account" preset](#close-account-preset)
-  - ["Transfer asset" preset](#transfer-asset-preset)
-  - ["Opt into asset" preset](#opt-into-asset-preset)
-  - ["Opt out of asset" preset](#opt-out-of-asset-preset)
-  - ["Revoke (Claw back) asset" preset](#revoke-claw-back-asset-preset)
-  - ["Create asset" preset](#create-asset-preset)
-  - ["Reconfigure asset" preset](#reconfigure-asset-preset)
-  - ["Destroy asset" preset](#destroy-asset-preset)
-  - ["Freeze asset" preset](#freeze-asset-preset)
-  - ["Unfreeze asset" preset](#unfreeze-asset-preset)
-  - ["Run application" preset](#run-application-preset)
-  - ["Opt into application" preset](#opt-into-application-preset)
-  - ["Deploy application" preset](#deploy-application-preset)
-  - ["Update application" preset](#update-application-preset)
-  - ["Close out application" preset](#close-out-application-preset)
-  - ["Clear application" preset](#clear-application-preset)
-  - ["Delete application" preset](#delete-application-preset)
-  - ["Register account online" preset](#register-account-online-preset)
-  - ["Register account offline" preset](#register-account-offline-preset)
-  - ["Register account nonparticipating" preset](#register-account-nonparticipating-preset)
-- [Helpful tips](#helpful-tips)
-- [Example links](#example-links)
-  - [Example 1: Tip the developer 1 Algo :wink:](#example-1-tip-the-developer-1-algo-wink)
-  - [Example 2: Tip the developer 1 USDC :wink:](#example-2-tip-the-developer-1-usdc-wink)
-  - [Example 3: Set up a transfer of 1 USDC](#example-3-set-up-a-transfer-of-1-usdc)
-  - [Example 4: Set up a transaction for an account to opt into USDC](#example-4-set-up-a-transaction-for-an-account-to-opt-into-usdc)
-  - [Example 5: Set up a transaction for closing an account](#example-5-set-up-a-transaction-for-closing-an-account)
-  - [Example 6: Register account as "online"](#example-6-register-account-as-online)
-  - [Example 7: Register account as "offline"](#example-7-register-account-as-offline)
-  - [Example 8: Setting up a transfer with only the first valid round set](#example-8-setting-up-a-transfer-with-only-the-first-valid-round-set)
-  - [Example 9: Setting up a transfer with the first and last valid rounds set](#example-9-setting-up-a-transfer-with-the-first-and-last-valid-rounds-set)
-  - [Example 10: Gracefully opt out of an application (smart contract)](#example-10-gracefully-opt-out-of-an-application-smart-contract)
-  - [Example 11: Sign transaction in English](#example-11-sign-transaction-in-english)
-  - [Example 12: Choose a transaction preset in Spanish](#example-12-choose-a-transaction-preset-in-spanish)
-  - [Example 13: Send transaction in user's preferred language](#example-13-send-transaction-in-users-preferred-language)
+TxnDuck allows for things such as language, node network and transaction type to
+be preconfigured in a link. To see what these links can look like, jump to the
+[Example links](#example-links) section.
 
 ## Specifying language
 
