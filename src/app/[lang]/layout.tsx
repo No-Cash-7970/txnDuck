@@ -116,8 +116,10 @@ export default function HomeLayout(
           __html: `document.querySelector('html').dataset.theme = JSON.parse(localStorage.getItem('theme')) || ''`,
         }} />
 
-        {/*  Set app name, the name that appears when connecting a wallet to this app */}
+        {/*  Set app name & icon, they appear when connecting a wallet to this app */}
         <meta name='name' content={t('site_name')} />
+        {/* Note: Pera wallet grabs the first <link> with a rel that contains "icon" in it  */}
+        <link rel="wallet-icon" href="/favicon.ico" />
 
         {/* Add some icon and brand color information. Generated (with modification) using:
           * https://realfavicongenerator.net/
