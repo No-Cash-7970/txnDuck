@@ -4,7 +4,7 @@ import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
-import { WalletId, useWallet } from '@txnlab/use-wallet-react';
+import { type NetworkId, WalletId, useWallet } from '@txnlab/use-wallet-react';
 import { walletTypes } from '@/app/lib/wallet-utils';
 import {
   MagicAuthPrompt,
@@ -12,10 +12,12 @@ import {
   magicProviderAtom
 } from '@/app/[lang]/components/wallet';
 import { isWalletConnectedAtom } from '@/app/lib/wallet-utils';
+import { nodeConfigAtom } from '@/app/lib/node-config';
 
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
-  const { wallets, activeAccount, activeWallet } = useWallet();
+  const nodeConfig = useAtomValue(nodeConfigAtom);
+  const { wallets, activeAccount, activeWallet, activeNetwork, setActiveNetwork } = useWallet();
   const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);
@@ -35,6 +37,13 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
     setIsWalletConnected(!!activeAccount);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeAccount]);
+
+  useEffect(() => {
+    // Ensure use-wallet uses the correct network ID, which can change when the user switches to a
+    // different node
+    setActiveNetwork(nodeConfig.network as NetworkId);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeNetwork, nodeConfig]);
 
   return (<>
     {!activeAccount && <>

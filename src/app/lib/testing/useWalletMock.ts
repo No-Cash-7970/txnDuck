@@ -23,6 +23,7 @@ export const useWalletUnconnectedMock = {
     MAGIC: 'magic',
   },
   useWallet: () => ({
+    setActiveNetwork: jest.fn(),
     activeWallet: null,
     wallets: [
       {
@@ -57,6 +58,7 @@ export const useWalletConnectedMock = {
     MAGIC: 'magic',
   },
   useWallet: () => ({
+    setActiveNetwork: jest.fn(),
     activeAccount: {
       address: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
     },
