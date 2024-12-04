@@ -112,7 +112,10 @@ app_delete:
 part_key_heading: Clave de participación
 reg_online:
   heading: Registrar una cuenta en línea
-  description: Registre una cuenta como «en línea» para empezar a participar en el consenso.
+  description: >-
+    Registre una cuenta como «en línea» para empezar a participar en el consenso. Si una cuenta ya
+    está en línea, renueve las claves de participación registrando de nuevo la cuenta con un nuevo
+    juego de claves.
   action: Registrar en línea
 reg_offline:
   heading: Registrar una cuenta fuera de línea
