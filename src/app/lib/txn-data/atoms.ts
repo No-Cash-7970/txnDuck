@@ -11,8 +11,11 @@ import {
   MAX_ASSET_TOTAL,
   MAX_DECIMAL_PLACES,
   MIN_TX_FEE,
+  SELECTION_KEY_LENGTH,
+  STATE_PROOF_KEY_LENGTH,
   UNIT_NAME_MAX_LENGTH,
-  URL_MAX_LENGTH
+  URL_MAX_LENGTH,
+  VOTE_KEY_LENGTH
 } from './constants';
 import type {
   BoxRefAtomGroup,
@@ -431,13 +434,46 @@ export const apbx = splitAtom(apbxListAtom);
  */
 
 /** Key Registration - Voting key */
-export const votekey = atomWithValidate<string>('', { validate: v => v });
+export const votekey = atomWithValidate<string>('', { validate: v => {
+  let validationSchema = YupString();
+
+  // Check the length only when the field value is nonempty
+  if (v) validationSchema = validationSchema.length(VOTE_KEY_LENGTH);
+
+  validationSchema.matches(base64RegExp, {
+    excludeEmptyString: true,
+    message: (): ValidationMessage => ({key: 'fields.base64.error'})
+  }).validateSync(v);
+  return v;
+}});
 
 /** Key Registration - Selection key */
-export const selkey = atomWithValidate<string>('', { validate: v => v });
+export const selkey = atomWithValidate<string>('', { validate: v => {
+  let validationSchema = YupString();
+
+  // Check the length only when the field value is nonempty
+  if (v) validationSchema = validationSchema.length(SELECTION_KEY_LENGTH);
+
+  validationSchema.matches(base64RegExp, {
+    excludeEmptyString: true,
+    message: (): ValidationMessage => ({key: 'fields.base64.error'})
+  }).validateSync(v);
+  return v;
+}});
 
 /** Key Registration - State proof key */
-export const sprfkey = atomWithValidate<string>('', { validate: v => v });
+export const sprfkey = atomWithValidate<string>('', { validate: v => {
+  let validationSchema = YupString();
+
+  // Check the length only when the field value is nonempty
+  if (v) validationSchema = validationSchema.length(STATE_PROOF_KEY_LENGTH);
+
+  validationSchema.matches(base64RegExp, {
+    excludeEmptyString: true,
+    message: (): ValidationMessage => ({key: 'fields.base64.error'})
+  }).validateSync(v);
+  return v;
+}});
 
 /** Key Registration - First voting round */
 export const votefst = atomWithValidate<number|undefined>(undefined, {

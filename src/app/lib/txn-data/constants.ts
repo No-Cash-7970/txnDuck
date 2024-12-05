@@ -2,9 +2,9 @@
 
 /** Number of characters in a valid account address */
 export const ADDRESS_LENGTH = 58;
-/** Maximum length of a lease in bytes (or characters if only using ASCII characters) */
+/** Length of a lease in bytes (or characters if only using ASCII characters) */
 export const LEASE_LENGTH = 32;
-/** Maximum length of a lease when encoded in base64
+/** Length of a lease when encoded in base64
  *
  * Equation to find length of base64 string for a given number of bytes:
  * `b64_length = (num_bytes + 2) / 3 * 4`
@@ -39,9 +39,9 @@ export const UNIT_NAME_MAX_LENGTH = 8;
 export const ASSET_NAME_MAX_LENGTH = 32;
 /** Maximum length of an asset's URL in bytes (or characters if only using ASCII characters) */
 export const URL_MAX_LENGTH = 96;
-/** Allowed length of an asset's metadata hash. No more and no less (fewer), unless empty. */
+/** Length of an asset's metadata hash. No more and no less (fewer), unless empty. */
 export const METADATA_HASH_LENGTH = 32;
-/** Maximum length of a metadata hash when encoded in base64
+/** Length of a metadata hash when encoded in base64
  *
  * Equation to find length of base64 string for a given number of bytes:
  * `b64_length = (num_bytes + 2) / 3 * 4`
@@ -52,6 +52,28 @@ export const B64_METADATA_HASH_LENGTH = 44; // (32 + 2) / 3 * 4
 export const MAX_DECIMAL_PLACES = 19;
 /** Maximum number for total */
 export const MAX_ASSET_TOTAL = BigInt(2**64) - BigInt(1);
+
+/** Length of a voter key, which is encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const VOTE_KEY_LENGTH = 44; // (32 + 2) / 3 * 4
+/** Length of a selection key, which is encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const SELECTION_KEY_LENGTH = 44; // (32 + 2) / 3 * 4
+/** Length of a state proof key, which is encoded in base64
+ *
+ * Equation to find length of base64 string for a given number of bytes:
+ * `b64_length = (num_bytes + 2) / 3 * 4`
+ * (From: https://stackoverflow.com/a/60067262)
+ */
+export const STATE_PROOF_KEY_LENGTH = 88; // (64 + 2) / 3 * 4
 
 // Sources:
 // https://developer.algorand.org/docs/get-details/parameter_tables/
