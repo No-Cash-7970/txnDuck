@@ -110,7 +110,9 @@ export default function HomeLayout(
            * Apply the theme before everything is loaded to avoid the annoying flicker caused by
            * the user using a theme that is not the default. Doing this causes a hydration warning
            * that can be safely suppressed.
-           * NOTE: If you change something here, also update the theme-switcher if necessary.
+           *
+           * NOTE: If you change something here, also update the theme-switcher and the not-found
+           * page if necessary.
            */
           // eslint-disable-next-line max-len
           __html: `document.querySelector('html').dataset.theme = JSON.parse(localStorage.getItem('theme')) || ''`,
