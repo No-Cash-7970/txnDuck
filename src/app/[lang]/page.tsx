@@ -1,6 +1,12 @@
 import { use } from 'react';
 import Link from 'next/link';
 import { Trans } from 'react-i18next/TransWithoutContext';
+import {
+  IconBarrierBlockFilled,
+  IconBomb,
+  IconTriangleSquareCircle,
+  IconWand
+} from '@tabler/icons-react';
 import { useTranslation } from '@/app/i18n';
 
 /** The home page */
@@ -22,10 +28,12 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
           <p className='text-3xl sm:text-4xl font-bold my-0'>{t('home:hero.main_paragraph')}</p>
           <Link data-testid='startBtn' href={`${lang}/txn`}
             className={
-              'btn btn-lg btn-block h-auto mt-8 sm:mt-10 md:mt-14 leading-6 shadow-2xl border-none'
-              + ' btn-primary hover:btn-secondary'
+              'btn btn-lg btn-block h-auto py-2 mt-8 sm:mt-10 md:mt-14 leading-6 shadow-2xl'
+              + ' btn-primary border-2 border-opacity-20 border-primary-content'
+              + ' hover:bg-primary-content hover:text-primary hover:border-primary'
             }
           >
+            <IconWand aria-hidden />
             {t('home:hero.start_button')}
           </Link>
         </div>
@@ -90,9 +98,12 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
         {/* Uses */}
         <h2 id='uses'>{t('home:uses.heading')}</h2>
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
-          <div className='card border-2 border-success bg-opacity-80'>
+          <div className='card border border-success bg-opacity-80'>
             <div className='card-body items-center px-4 py-6'>
-              <h3 className='card-title self-start mt-0'>{t('home:uses.simple_things.heading')}</h3>
+              <h3 className='card-title self-start mt-0'>
+                <IconTriangleSquareCircle />
+                {t('home:uses.simple_things.heading')}
+              </h3>
               <ul className='self-start marker:text-success'>
                 <li>
                   <Link href={`${lang}/txn/compose?preset=transfer`} className='link'>
@@ -117,9 +128,10 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
               </ul>
             </div>
           </div>
-          <div className='card border-2 border-warning bg-opacity-80'>
+          <div className='card border border-warning bg-opacity-80'>
             <div className='card-body items-center px-4 py-6'>
               <h3 className='card-title self-start mt-0'>
+                <IconBarrierBlockFilled aria-hidden />
                 {t('home:uses.complex_things.heading')}
               </h3>
               <ul className='self-start marker:text-warning'>
@@ -142,9 +154,10 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
               </ul>
             </div>
           </div>
-          <div className='card border-2 border-error bg-opacity-80'>
+          <div className='card border border-error bg-opacity-80'>
             <div className='card-body items-center px-4 py-6'>
               <h3 className='card-title self-start mt-0'>
+                <IconBomb aria-hidden />
                 {t('home:uses.dangerous_things.heading')}
               </h3>
               <ul className='self-start marker:text-error'>
