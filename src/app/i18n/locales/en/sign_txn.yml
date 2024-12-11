@@ -9,8 +9,8 @@ unsigned_file_name: unsigned
 signed_file_name: signed
 txn_signed: Transaction signed
 sign_error: >-
-  The transaction could not be signed because the transaction is malformed. This is usually caused
-  by invalid transaction information. Go back to the previous step and check for errors in the
+  The transaction cannot be signed because the transaction is malformed. This is usually caused by
+  invalid transaction information. Go back to the previous step and check for errors in the
   transaction information.
 auto_send:
   label: Automatically send transaction after signing

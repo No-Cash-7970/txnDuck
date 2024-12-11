@@ -129,15 +129,23 @@ export default function SignTxn({ lng }: Props) {
       unsignedTxnData.lv = Number(suggestedParams.lastValid);
     }
 
-    return algosdk.encodeUnsignedTransaction(
-      createTxnFromData(
-        (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
-        suggestedParams.genesisID,
-        algosdk.bytesToBase64(suggestedParams.genesisHash),
-        !storedTxnData.useSugFee, // Enable/disable flat fee
-        Number(suggestedParams.minFee),
-      )
-    );
+    // Encode the unsigned transaction data
+    try {
+      return algosdk.encodeUnsignedTransaction(
+        createTxnFromData(
+          (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
+          suggestedParams.genesisID,
+          algosdk.bytesToBase64(suggestedParams.genesisHash),
+          !storedTxnData.useSugFee, // Enable/disable flat fee
+          Number(suggestedParams.minFee),
+        )
+      );
+    } catch (e) {
+      // Display error message that something went wrong
+      setHasSignTxnError(true);
+      console.error(e);
+      return;
+    }
   };
 
   /** Create transaction object from stored transaction data and sign the transaction */
@@ -146,9 +154,10 @@ export default function SignTxn({ lng }: Props) {
 
     try {
       // Create Transaction object and encoded it
-      unsignedTxn = await encodeUnsignedTxn();
+      unsignedTxn = await encodeUnsignedTxn() ?? new Uint8Array;
     } catch (e) {
       setHasSignTxnError(true);
+      console.error(e);
       return;
     }
 
@@ -197,12 +206,20 @@ export default function SignTxn({ lng }: Props) {
       // flat fee)
       if (storedTxnData.useSugFee) {
         unsignedTxnData.fee = microalgosToAlgos(Number(feePerByte));
-        unsignedTxn = createTxnFromData(
-          (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
-          genesisID,
-          algosdk.bytesToBase64(genesisHash),
-          false
-        );
+
+        try {
+          unsignedTxn = createTxnFromData(
+            (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
+            genesisID,
+            algosdk.bytesToBase64(genesisHash),
+            false
+          );
+        } catch (e) { // The transaction is malformed
+          setHasSignTxnError(true);
+          console.error(e);
+          return;
+        }
+
         setFee(microalgosToAlgos(Number(unsignedTxn.fee)));
       }
 
@@ -216,6 +233,7 @@ export default function SignTxn({ lng }: Props) {
         try {
           signedTxn = algosdk.decodeSignedTransaction(signedTxnBytes).txn;
         } catch (e) { // The stored signed transaction is invalid for some reason
+          console.error(e);
           setStoredSignedTxn(RESET); // The transaction will need to be signed again
           return;
         }
@@ -223,11 +241,17 @@ export default function SignTxn({ lng }: Props) {
         // Create unsigned transaction if one was not already created when calculating the
         // suggested fee
         if (unsignedTxn === null) {
-          unsignedTxn = createTxnFromData(
-            (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
-            genesisID,
-            algosdk.bytesToBase64(genesisHash),
-          );
+          try {
+            unsignedTxn = createTxnFromData(
+              (await decodeBase64TxnDataProps({...storedTxnData, txn: unsignedTxnData})).txn,
+              genesisID,
+              algosdk.bytesToBase64(genesisHash),
+            );
+          } catch (e) { // The transaction is malformed
+            setHasSignTxnError(true);
+            console.error(e);
+            return;
+          }
         }
 
         // The transaction has been changed and will need to be signed again
@@ -251,7 +275,9 @@ export default function SignTxn({ lng }: Props) {
           className='btn btn-link btn-sm text-base-content'
           onClick={async (e) => {
             e.preventDefault();
-            TxnFileLinkRef.current.href = await bytesToDataUrl(await encodeUnsignedTxn());
+            TxnFileLinkRef.current.href = await bytesToDataUrl(
+              await encodeUnsignedTxn() ?? new Uint8Array
+            );
             TxnFileLinkRef.current.download = t('sign_txn:unsigned_file_name') + '.txn.msgpack';
             TxnFileLinkRef.current.click();
           }}

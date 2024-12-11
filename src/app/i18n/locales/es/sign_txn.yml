@@ -9,9 +9,9 @@ unsigned_file_name: sin_firma
 signed_file_name: firmada
 txn_signed: Transacción firmada
 sign_error: >-
-  No se ha podido firmar la transacción porque está mal formada. Esto suele deberse a que la
-  información de la transacción no es válida. Vuelva al paso anterior y compruebe si hay errores en
-  la información de la transacción.
+  La transacción no se puede firmar porque está mal formada. Esto suele deberse a que la información
+  de la transacción no es válida. Vuelva al paso anterior y compruebe si hay errores en la
+  información de la transacción.
 auto_send:
   label: Enviar automáticamente la transacción después de firmar
   tip: >-
