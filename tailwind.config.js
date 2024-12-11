@@ -12,7 +12,7 @@ module.exports = {
       {
         // Color names from: https://colorkit.co/color-picker/
         duck: {
-          'primary': '#0ebd9d', // Teal Me No Lies
+          'primary': '#076554', // Philodendron
           'secondary': '#804561', // Notcturn Red
           'accent': '#1346df', // Frosted Blueberries
           'neutral': '#281a1a', // Dark Orchestra
