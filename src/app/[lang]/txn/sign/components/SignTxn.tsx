@@ -52,6 +52,7 @@ export default function SignTxn({ lng }: Props) {
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
   const { activeAccount, activeWallet, signTransactions } = useWallet();
 
+  const [isLoading, setIsLoading] = useState(true);
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
 
@@ -150,7 +151,7 @@ export default function SignTxn({ lng }: Props) {
 
   /** Create transaction object from stored transaction data and sign the transaction */
   const signTransaction = async () => {
-    let unsignedTxn = new Uint8Array;
+    let unsignedTxn: Uint8Array;
 
     try {
       // Create Transaction object and encoded it
@@ -173,6 +174,9 @@ export default function SignTxn({ lng }: Props) {
       router.push(`/${lng}/txn/send` + (currentURLParams.size ? `?${currentURLParams}` : ''));
     }
   };
+
+  // Wrap local storage atom in state variable to avoid hydration error
+  useEffect(() => setIsLoading(!storedTxnData), [storedTxnData]);
 
   useEffect(() => {
     if (!storedTxnData) return;
@@ -269,7 +273,7 @@ export default function SignTxn({ lng }: Props) {
   }, [storedTxnData, storedSignedTxn, nodeConfig]);
 
   return (<>
-    {!isImporting && !!storedTxnData && <>
+    {!isImporting && !isLoading && <>
       <div className='mt-0 mb-0 text-center'>
         <button
           className='btn btn-link btn-sm text-base-content'
