@@ -45,6 +45,14 @@ import_txn:
     will be immediately rejected. If unchecked, all of the transaction data will be imported except
     for the network data (genesis ID and genesis hash) and the data for the currently selected
     network will be used instead.
+  use_sug_rounds: Use currently suggested valid rounds instead
+  use_sug_rounds_tip: >-
+    If checked, the first and last valid rounds of the imported transaction will be replaced with
+    the network’s currently suggested first and last valid rounds.
+  use_sug_fee: Use currently suggested fee instead
+  use_sug_fee_tip: >-
+    If checked, the fee of the imported transaction will be replaced with the network’s currently
+    suggested fee.
   fail_heading: Import failed
   fail_msg: The transaction is for a network different than the currently selected network.
   opt_more_info: More information about this option

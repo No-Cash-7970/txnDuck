@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { IconAlertTriangle, IconMoodWrrr } from "@tabler/icons-react";
 import algosdk from "algosdkv3";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { RESET } from "jotai/utils";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";
 import { useTranslation } from "@/app/i18n/client";
 import {
@@ -34,6 +35,8 @@ export default function TxnImport({ lng }: Props) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const [diffNetwork, setDiffNetwork] = useState(false);
   const [noDiffNetworkOption, setNoDiffNetworkOption] = useState(true);
+  const [useSugFeeOption, setUseSugFeeOption] = useState(false);
+  const [useSugRoundsOption, setUseSugRoundsOption] = useState(false);
   const [b64NoteOption, setB64NoteOption] = useState(false);
   const [b64LxOption, setB64LxOption] = useState(false);
   const [b64Apar_amOption, setB64Apar_amOption] = useState(false);
@@ -81,8 +84,14 @@ export default function TxnImport({ lng }: Props) {
     // Reset this just in case the "different network" flag was triggered before
     setDiffNetwork(false);
 
-    if (isSignedTxn) {
+    // Overwrite stored signed transaction with imported signed transaction if the suggested fee or
+    // suggested rounds are not going to be used
+    if (isSignedTxn && !(useSugFeeOption || useSugRoundsOption)) {
       setStoredSignedTxn(await bytesToDataUrl(txnByteData));
+    } else {
+      // Remove the stored signed transaction when importing an unsigned transaction or when
+      // importing a signed transaction that will be overwritten with suggested fee or valid rounds
+      setStoredSignedTxn(RESET);
     }
 
     setStoredTxnData({
@@ -92,8 +101,8 @@ export default function TxnImport({ lng }: Props) {
         b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
         b64Apaa: !!txn.applicationCall?.appArgs ? b64ApaaOption : undefined,
       }),
-      useSugFee: false,
-      useSugRounds: false,
+      useSugFee: useSugFeeOption,
+      useSugRounds: useSugRoundsOption,
       b64Note: b64NoteOption,
       b64Lx: b64LxOption,
       b64Apar_am: !!txn.assetConfig?.assetMetadataHash ? b64Apar_amOption : undefined,
@@ -149,6 +158,34 @@ export default function TxnImport({ lng }: Props) {
           onChange={(e) => setNoDiffNetworkOption(e.target.checked)}
           tip={{
             content: t('import_txn.no_diff_network_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
+        />
+        <CheckboxField label={t('import_txn.use_sug_rounds')}
+          inputInsideLabel={true}
+          containerClass='ms-2 mb-2'
+          inputClass='checkbox-secondary me-4'
+          labelClass='justify-start w-fit max-w-full'
+          value={useSugRoundsOption}
+          onChange={(e) => setUseSugRoundsOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.use_sug_rounds_tip'),
+            btnClass: tipBtnClass,
+            btnTitle: t('import_txn.opt_more_info'),
+            contentClass: tipContentClass
+          }}
+        />
+        <CheckboxField label={t('import_txn.use_sug_fee')}
+          inputInsideLabel={true}
+          containerClass='ms-2 mb-2'
+          inputClass='checkbox-secondary me-4'
+          labelClass='justify-start w-fit max-w-full'
+          value={useSugFeeOption}
+          onChange={(e) => setUseSugFeeOption(e.target.checked)}
+          tip={{
+            content: t('import_txn.use_sug_fee_tip'),
             btnClass: tipBtnClass,
             btnTitle: t('import_txn.opt_more_info'),
             contentClass: tipContentClass

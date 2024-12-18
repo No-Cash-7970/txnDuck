@@ -47,6 +47,14 @@ import_txn:
     distinta de la red seleccionada actualmente. Si no está marcada, se importarán todos los datos
     de la transacción excepto los datos de la red (ID de génesis y hash de génesis) y en su lugar se
     utilizarán los datos de la red seleccionada actualmente.
+  use_sug_rounds: Utilice en cambio las rondas válidas actualmente sugeridas
+  use_sug_rounds_tip: >-
+    Si está marcada, la primera y la última rondas válidas de la transacción importada se cambiarán
+    por la primera y la última rondas válidas sugeridas actualmente por la red.
+  use_sug_fee: Utilice en cambio la tarifa actualmente sugerida
+  use_sug_fee_tip: >-
+    Si se marca, la tarifa de la transacción importada se cambiará por la tarifa sugerida
+    actualmente por la red.
   fail_heading: Error de importación
   fail_msg: La transacción es para una red distinta de la seleccionada actualmente.
   opt_more_info: Más información sobre esta opción

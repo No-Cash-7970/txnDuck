@@ -56,7 +56,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -75,6 +74,7 @@ describe('Transaction Import Component', () => {
         b64Lx: false,
       });
     });
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
     expect(routerPushMock).toHaveBeenCalled();
   });
 
@@ -92,7 +92,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -111,6 +110,7 @@ describe('Transaction Import Component', () => {
         b64Lx: true,
       });
     });
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
     expect(routerPushMock).toHaveBeenCalled();
   });
 
@@ -124,7 +124,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -143,6 +142,7 @@ describe('Transaction Import Component', () => {
         b64Lx: false,
       });
     });
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
     expect(routerPushMock).toHaveBeenCalled();
   });
 
@@ -159,7 +159,8 @@ describe('Transaction Import Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/import_txn.fail_heading/)).toBeInTheDocument();
     });
-    expect(sessionStorage.getItem('txnData')).toBeNull(); // Check session storage
+    expect(sessionStorage.getItem('txnData')).toBeNull();
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
     expect(routerPushMock).not.toHaveBeenCalled();
   });
 
@@ -172,7 +173,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -211,7 +211,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -246,7 +245,6 @@ describe('Transaction Import Component', () => {
     await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
 
     await waitFor(() => {
-      // Check session storage
       expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
         txn: {
           type: 'pay',
@@ -284,11 +282,79 @@ describe('Transaction Import Component', () => {
     await waitFor(() => {
       expect(screen.getByText(/import_txn.fail_heading/)).toBeInTheDocument();
     });
-    // Check session storage
     expect(sessionStorage.getItem('txnData')).toBeNull();
     expect(sessionStorage.getItem('signedTxn')).toBeNull();
 
     expect(routerPushMock).not.toHaveBeenCalled();
+  });
+
+  it('replaces the fee with the suggested fee if "use suggested fee" option is checked',
+  async () => {
+    const data = fs.readFileSync('src/app/lib/testing/test_unsigned.txn.msgpack');
+    const file = new File([data], 'unsigned.txn.msgpack', { type: 'application/octet-stream' });
+    mockGenesisHash = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=';
+    render(<TxnImport />);
+
+    await userEvent.click(screen.getByLabelText(/use_sug_fee/)); // Check "use suggested fee"
+    await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
+
+    await waitFor(() => {
+      expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+        txn: {
+          type: 'pay',
+          snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+          rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          amt: 5,
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          note: 'Hello world!',
+          lx: 'abcdefghijklmnopqrstuvwxyz012345',
+        },
+        useSugFee: true,
+        useSugRounds: false,
+        b64Note: false,
+        b64Lx: false,
+      });
+    });
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
+    expect(routerPushMock).toHaveBeenCalled();
+  });
+
+  // eslint-disable-next-line max-len
+  it('replaces the valid rounds with the suggested fee if "use suggested valid rounds" option is checked',
+  async () => {
+    const data = fs.readFileSync('src/app/lib/testing/test_unsigned.txn.msgpack');
+    const file = new File([data], 'unsigned.txn.msgpack', { type: 'application/octet-stream' });
+    mockGenesisHash = 'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=';
+    render(<TxnImport />);
+
+    // Check "use suggested valid rounds"
+    await userEvent.click(screen.getByLabelText(/use_sug_rounds/));
+    // Upload transaction file
+    await userEvent.upload(screen.getByLabelText(/import_txn.label/), file);
+
+    await waitFor(() => {
+      expect(JSON.parse(sessionStorage.getItem('txnData') || '{}')).toStrictEqual({
+        txn: {
+          type: 'pay',
+          snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+          rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+          amt: 5,
+          fee: 0.001,
+          fv: 6000000,
+          lv: 6001000,
+          note: 'Hello world!',
+          lx: 'abcdefghijklmnopqrstuvwxyz012345',
+        },
+        useSugFee: false,
+        useSugRounds: true,
+        b64Note: false,
+        b64Lx: false,
+      });
+    });
+    expect(sessionStorage.getItem('signedTxn')).toBeNull();
+    expect(routerPushMock).toHaveBeenCalled();
   });
 
   // eslint-disable-next-line max-len
