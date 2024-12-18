@@ -143,26 +143,26 @@ installing extra dependencies on your machine.
 1. Pull the image.
 
    ```bash
-   docker pull No-Cash-7970/txnDuck
+   docker pull ghcr.io/no-cash-7970/txnduck
    ```
 
 2. Create and run a container.
 
    ```bash
-   docker run -d -p 3000:3000 No-Cash-7970/txnDuck
+   docker run -d -p 3000:3000 ghcr.io/no-cash-7970/txnduck
    ```
 
     If you need to use a port other than 3000, use the following instead:
 
     ```bash
-    docker run -d -p [PORT]:3000 No-Cash-7970/txnDuck
+    docker run -d -p [PORT]:3000 ghcr.io/no-cash-7970/txnduck
     ```
 
     Replace `[PORT]` with the port number you would like to use. For example,
     use port 3001 instead of 3000:
 
     ```bash
-    docker run -d -p 3001:3000 No-Cash-7970/txnDuck
+    docker run -d -p 3001:3000 ghcr.io/no-cash-7970/txnduck
     ```
 
 3. OPTIONAL: Stop the container.
@@ -182,19 +182,19 @@ installing extra dependencies on your machine.
 1. Stop the container if it is running.
 
    ```bash
-   docker stop No-Cash-7970/txnDuck
+   docker stop ghcr.io/no-cash-7970/txnduck
    ```
 
 2. Delete the container.
 
    ```bash
-   docker rm No-Cash-7970/txnDuck
+   docker rm ghcr.io/no-cash-7970/txnduck
    ```
 
 3. Delete the image.
 
    ```bash
-   docker rmi No-Cash-7970/txnDuck
+   docker rmi ghcr.io/no-cash-7970/txnduck
    ```
 
 ### Upgrading to the latest production Docker image
