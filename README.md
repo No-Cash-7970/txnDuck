@@ -20,10 +20,10 @@ following websites:
 Preview: <https://txnduck-preview.vercel.app>
 
 The Production website hosts the latest stable release (the `stable` branch)
-where are all of the features are considered complete and stable. On the other
-hand, the Preview website usually hosts the unstable version (the `main` branch)
-with the latest developments, so it may have incomplete and/or unstable features
-that have yet to be released. There are times when both websites are the same.
+where all of the features are considered complete and stable. On the other hand,
+the Preview website usually hosts the unstable version (the `main` branch) with
+the latest developments, so it may have incomplete and/or unstable features that
+have yet to be released. There are times when both websites are the same.
 
 ## :sparkles: Features
 

@@ -262,7 +262,7 @@ accepting your code changes.
   repository and make sure that fork is up to date.
 - [Install](../docs/installation.md#installing-the-development-environment) and
   [use](../docs/installation.md#running-the-development-web-server) the
-  development environment to test the translations.
+  development environment to test the code change.
 
 ### How do I submit a code change?
 
