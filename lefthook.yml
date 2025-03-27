@@ -3,6 +3,7 @@ pre-commit:
   commands:
     precommit-gulp:
       run: yarn gulp precommitHook
+      glob: "**/!(*.md)"
 commit-msg:
   follow: true
   commands:
