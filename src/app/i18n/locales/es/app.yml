@@ -16,7 +16,7 @@ builder_steps:
 footer:
   privacy_policy_link: Política de privacidad
   github_link: Código fuente en GitHub (en inglés)
-  algo_docs_link: Documentación de Algorand (en inglés)
+  algo_link: Algorand (en inglés)
   license_notice: >-
     Al utilizar, descargar o instalar este software, usted acepta los términos descritos en la
     <a>licencia (en inglés)</a> del software.

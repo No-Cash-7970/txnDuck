@@ -31,7 +31,7 @@ export default function Footer({ lng }: Props) {
             <IconBrandGithubFilled size={20} aria-hidden />
             <span>{t('footer.github_link')}</span>
           </a>
-          <a href='https://developer.algorand.org/docs/'
+          <a href='https://algorand.co/'
             target='_blank'
             className='link link-hover flex gap-1'
           >
@@ -40,7 +40,7 @@ export default function Footer({ lng }: Props) {
               {/* eslint-disable-next-line max-len */}
               <path d="M32 32H27.0095L23.7387 19.9201L16.725 32H11.1275L21.9515 13.2913L20.1981 6.76341L5.59747 32H0L18.5121 0H23.4352L25.5595 7.97476H30.6175L27.1781 13.9642L32 32Z"></path>
             </svg>
-            <span>{t('footer.algo_docs_link')}</span>
+            <span>{t('footer.algo_link')}</span>
           </a>
         </div>
         {/* License notice */}

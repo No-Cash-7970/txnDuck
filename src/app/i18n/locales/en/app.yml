@@ -16,7 +16,7 @@ builder_steps:
 footer:
   privacy_policy_link: Privacy policy
   github_link: Source on GitHub
-  algo_docs_link: Algorand documentation
+  algo_link: Algorand
   license_notice: >-
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <a>license</a>.
