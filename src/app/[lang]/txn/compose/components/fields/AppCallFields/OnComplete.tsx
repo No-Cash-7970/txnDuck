@@ -41,7 +41,7 @@ export default function OnComplete({ t }: { t: TFunction }) {
         { value: OnApplicationComplete.CloseOutOC, text: t('fields.apan.options.close_out') },
         { value: OnApplicationComplete.DeleteApplicationOC, text: t('fields.apan.options.delete') },
       ]}
-      value={form.values.apan}
+      value={form.values.apan as string}
       onChange={(e) => form.handleOnChange('apan')(e.target.value)}
       onFocus={form.handleOnFocus('apan')}
       onBlur={form.handleOnBlur('apan')}

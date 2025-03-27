@@ -49,7 +49,7 @@ export default function ApprovalProg({ t }: { t: TFunction }) {
         )
         ? 'textarea-error' : ''
       }
-      value={form.values.apap}
+      value={form.values.apap as string}
       onChange={(e) => form.handleOnChange('apap')(e.target.value)}
       onFocus={form.handleOnFocus('apap')}
       onBlur={form.handleOnBlur('apap')}

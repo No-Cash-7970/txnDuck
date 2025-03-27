@@ -48,7 +48,7 @@ export default function ExtraPages({ t }: { t: TFunction }) {
       min={0}
       max={MAX_APP_EXTRA_PAGES}
       step={1}
-      value={form.values.apep ?? ''}
+      value={form.values.apep as number ?? ''}
       onChange={(e) =>
         form.handleOnChange('apep')(
           e.target.value === '' ? undefined : parseInt(e.target.value)

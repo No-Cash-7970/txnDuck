@@ -47,7 +47,7 @@ export default function AppId({ t }: { t: TFunction }) {
         )
         ? 'input-error' : ''
       }
-      value={form.values.apid ?? ''}
+      value={form.values.apid as string ?? ''}
       onChange={(e) => {
         const value = removeNonNumericalChars(e.target.value);
         form.handleOnChange('apid')(value === '' ? undefined : parseInt(value));

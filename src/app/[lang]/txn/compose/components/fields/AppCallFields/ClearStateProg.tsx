@@ -49,7 +49,7 @@ export default function ClearStateProg({ t }: { t: TFunction }) {
         )
         ? 'textarea-error' : ''
       }
-      value={form.values.apsu}
+      value={form.values.apsu as string}
       onChange={(e) => form.handleOnChange('apsu')(e.target.value)}
       onFocus={form.handleOnFocus('apsu')}
       onBlur={form.handleOnBlur('apsu')}

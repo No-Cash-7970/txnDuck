@@ -26,7 +26,8 @@ import TxnPresetsPage from './page';
 describe('Transaction Presets Page', () => {
 
   it('has page title heading', () => {
-    render(<TxnPresetsPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<TxnPresetsPage params={pageParam} />);
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 

@@ -29,17 +29,20 @@ import ComposeTxnPage from './page';
 describe('Compose Transaction Page', () => {
 
   it('has builder steps', async () => {
-    render(<ComposeTxnPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<ComposeTxnPage params={pageParam} />);
     expect(await screen.findByText(/builder_steps\.compose/)).toBeInTheDocument();
   });
 
   it('has page title heading', async () => {
-    render(<ComposeTxnPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<ComposeTxnPage params={pageParam} />);
     expect(await screen.findByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
   it('has form', async () => {
-    render(<ComposeTxnPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<ComposeTxnPage params={pageParam} />);
     expect(await screen.findByRole('form')).toBeInTheDocument();
   });
 

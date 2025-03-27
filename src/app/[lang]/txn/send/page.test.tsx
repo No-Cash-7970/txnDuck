@@ -39,12 +39,14 @@ describe('Send Transaction Page', () => {
   });
 
   it('has builder steps', () => {
-    render(<SendTxnPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<SendTxnPage params={pageParam} />);
     expect(screen.getByText(/builder_steps\.send/)).toBeInTheDocument();
   });
 
   it('has page title heading', () => {
-    render(<SendTxnPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<SendTxnPage params={pageParam} />);
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
@@ -53,7 +55,8 @@ describe('Send Transaction Page', () => {
   async () => {
     paramsMock.get.mockReturnValue(null);
     sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
-    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<JotaiProvider><SendTxnPage params={pageParam} /></JotaiProvider>);
     expect(await screen.findByText('txn_confirm_wait')).toBeInTheDocument();
   });
 
@@ -61,7 +64,8 @@ describe('Send Transaction Page', () => {
   async () => {
     paramsMock.get.mockReturnValue(null);
     sessionStorage.clear();
-    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<JotaiProvider><SendTxnPage params={pageParam} /></JotaiProvider>);
     expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
   });
 
@@ -70,7 +74,8 @@ describe('Send Transaction Page', () => {
   async () => {
     paramsMock.get.mockReturnValue('');
     sessionStorage.setItem('signedTxn', JSON.stringify('data:application/octet-stream;base64,'));
-    render(<JotaiProvider><SendTxnPage params={{lang: ''}} /></JotaiProvider>);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<JotaiProvider><SendTxnPage params={pageParam} /></JotaiProvider>);
     expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
   });
 

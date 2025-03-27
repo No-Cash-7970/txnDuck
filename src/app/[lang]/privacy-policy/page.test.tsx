@@ -19,7 +19,8 @@ import PrivacyPolicyPage from './page';
 describe('Privacy Policy Page', () => {
 
   it('has page title heading', () => {
-    render(<PrivacyPolicyPage params={{lang: ''}} />);
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<PrivacyPolicyPage params={pageParam} />);
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 

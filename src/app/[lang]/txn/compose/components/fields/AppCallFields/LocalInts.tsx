@@ -54,7 +54,7 @@ export default function LocalInts({ t }: { t: TFunction }) {
       min={0}
       max={MAX_APP_LOCALS - (form.values.apls_nbs as number ?? 0)}
       step={1}
-      value={form.values.apls_nui ?? ''}
+      value={form.values.apls_nui as number ?? ''}
       onChange={(e) =>
         form.handleOnChange('apls_nui')(
           e.target.value === '' ? undefined : parseInt(e.target.value)
