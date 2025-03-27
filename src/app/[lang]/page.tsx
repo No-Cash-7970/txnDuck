@@ -29,7 +29,7 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
           <Link data-testid='startBtn' href={`${lang}/txn`}
             className={
               'btn btn-lg btn-block h-auto py-2 mt-8 sm:mt-10 md:mt-14 leading-6 shadow-2xl'
-              + ' btn-primary border-2 border-opacity-20 border-primary-content'
+              + ' btn-primary border-2 border-opacity-50 border-primary-content'
               + ' hover:bg-primary-content hover:text-primary hover:border-primary'
             }
           >
