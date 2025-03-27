@@ -2,7 +2,7 @@ import '@testing-library/jest-dom';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as fs from "node:fs";
-import algosdk from 'algosdkv3';
+import algosdk from 'algosdk';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 
 // Mock i18next before modules that use it are imported
@@ -10,8 +10,8 @@ jest.mock('react-i18next', () => i18nextClientMock);
 
 // Mock algosdk
 let mockGenesisHash = '';
-jest.mock('algosdkv3', () => ({
-  ...jest.requireActual('algosdkv3'),
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }

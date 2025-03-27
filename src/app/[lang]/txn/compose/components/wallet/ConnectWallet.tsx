@@ -4,7 +4,7 @@ import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';
-import { type NetworkId, useWallet } from '@txnlab/use-wallet-react';
+import { type NetworkId, useNetwork, useWallet } from '@txnlab/use-wallet-react';
 import {
   magicPromptCanceledAtom,
   magicProviderAtom,
@@ -19,7 +19,8 @@ export default function ConnectWallet({ t, setvalfn }:{
   setvalfn: (v: any) => void,
 }) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const { activeAccount, activeWallet, activeNetwork, setActiveNetwork } = useWallet();
+  const { activeAccount, activeWallet } = useWallet();
+  const { activeNetwork, setActiveNetwork } = useNetwork();
   const magicProvider = useAtomValue(magicProviderAtom);
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);

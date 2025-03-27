@@ -1,6 +1,6 @@
 /** @file Functions that process transaction data and transform it into a `Transaction` object */
 
-import algosdk from 'algosdkv3';
+import algosdk from 'algosdk';
 import { encodeTransactionNote, getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 import * as TxnData from '@/app/lib/txn-data';
 

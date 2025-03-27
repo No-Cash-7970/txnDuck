@@ -2,7 +2,7 @@ import { Fragment, useState } from "react";
 import { IconAlertTriangleFilled, IconMoodSmileFilled } from "@tabler/icons-react";
 import { useAtomValue } from "jotai";
 import { useTranslation } from "@/app/i18n/client";
-import { DEFAULT_COIN_NAME, nodeConfigAtom } from "@/app/lib/node-config";
+import { DEFAULT_COIN_NAME, NetworkId, nodeConfigAtom } from "@/app/lib/node-config";
 import { isAlgodOK } from "@/app/lib/utils";
 
 type Props = {
@@ -28,14 +28,6 @@ export default function ViewConfigDialogContent({ lng }: Props) {
       */}
       {/* eslint-disable-next-line max-len */}
       <div className='max-h-[calc(100vh-5em-4em-1.5em-1.5em-1.5em-3em-1.5em)] overflow-auto px-6 sm:px-8 prose-h3:mt-0'>
-        <h3>{t('node_selector.view_config.network')}</h3>
-        {nodeConfig.isCustom
-          ? <p>
-              {t('app:node_selector.custom', { network: t(`node_selector.${nodeConfig.network}`) })}
-            </p>
-          : <p>{t(`app:node_selector.${nodeConfig.network}`)}</p>
-        }
-
         <h3>{t('node_selector.view_config.url_heading')}</h3>
         <p>{nodeConfig.nodeServer}</p>
 

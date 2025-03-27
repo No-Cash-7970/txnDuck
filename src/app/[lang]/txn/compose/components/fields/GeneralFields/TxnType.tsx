@@ -9,7 +9,7 @@ import {
   tipContentClass,
   tipBtnClass,
 } from '@/app/lib/txn-data';
-import { TransactionType } from 'algosdkv3';
+import { TransactionType } from 'algosdk';
 
 export default function TxnType({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);

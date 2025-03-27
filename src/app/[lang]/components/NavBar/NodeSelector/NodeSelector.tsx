@@ -95,9 +95,7 @@ export default function NodeSelector({ lng }: Props) {
             </NodeMenuItem>
             {customNode && <NodeMenuItem config={customNode}>
               <IconServer2 aria-hidden stroke={1.5} />
-              <span>
-                {t('node_selector.custom', { network: t(`node_selector.${customNode.network}`) })}
-              </span>
+              <span>{t('node_selector.custom')}</span>
             </NodeMenuItem>}
             {/* View current configuration */}
             <Dialog.Root>

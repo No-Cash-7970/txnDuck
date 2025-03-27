@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import algosdk from 'algosdkv3';
+import algosdk from 'algosdk';
 import i18nextClientMock from '@/app/lib/testing/i18nextClientMock';
 import { fooDisconnectFn, useWalletConnectedMock } from '@/app/lib/testing/useWalletMock';
 
@@ -38,8 +38,8 @@ jest.mock('../../../../lib/utils.ts', () => ({
 }));
 
 // Mock algosdk
-jest.mock('algosdkv3', () => ({
-  ...jest.requireActual('algosdkv3'),
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }

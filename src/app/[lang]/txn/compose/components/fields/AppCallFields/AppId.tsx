@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
-import { OnApplicationComplete } from 'algosdkv3';
+import { OnApplicationComplete } from 'algosdk';
 import { FieldErrorMessage, TextField } from '@/app/[lang]/components/form';
 import {
   Preset,

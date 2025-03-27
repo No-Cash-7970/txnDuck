@@ -3,7 +3,7 @@ import { useSearchParams } from 'next/navigation';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import * as Dialog from '@radix-ui/react-dialog';
-import { bytesToBase64 } from 'algosdkv3';
+import { bytesToBase64 } from 'algosdk';
 import { IconFile, IconX } from '@tabler/icons-react';
 import { FieldErrorMessage, FileField, TextAreaField } from '@/app/[lang]/components/form';
 import {

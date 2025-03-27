@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
-import algosdk, { Algodv2, microalgosToAlgos } from 'algosdkv3';
+import algosdk, { Algodv2, microalgosToAlgos } from 'algosdk';
 import { useWallet } from '@txnlab/use-wallet-react';
 import * as Dialog from '@radix-ui/react-dialog';
 import * as Icons from '@tabler/icons-react';

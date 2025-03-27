@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IconAlertTriangle, IconMoodWrrr } from "@tabler/icons-react";
-import algosdk from "algosdkv3";
+import algosdk from "algosdk";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/form";

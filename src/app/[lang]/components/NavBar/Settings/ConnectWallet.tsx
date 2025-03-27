@@ -4,7 +4,7 @@ import { type TFunction } from 'i18next';
 import { useAtom, useAtomValue, useSetAtom } from 'jotai';
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu';
 import { IconWallet, IconWalletOff } from '@tabler/icons-react';
-import { type NetworkId, WalletId, useWallet } from '@txnlab/use-wallet-react';
+import { type NetworkId, WalletId, useNetwork, useWallet } from '@txnlab/use-wallet-react';
 import { walletTypes } from '@/app/lib/wallet-utils';
 import {
   MagicAuthPrompt,
@@ -17,7 +17,8 @@ import { nodeConfigAtom } from '@/app/lib/node-config';
 /** Button and menu for connecting wallet */
 export default function ConnectWallet({ t }: { t: TFunction }) {
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const { wallets, activeAccount, activeWallet, activeNetwork, setActiveNetwork } = useWallet();
+  const { wallets, activeAccount, activeWallet } = useWallet();
+  const { activeNetwork, setActiveNetwork } = useNetwork();
   const [magicProvider, setMagicProvider] = useAtom(magicProviderAtom);
   const connectWalletBtnRef = useRef<HTMLButtonElement>(null);
   const magicEmailCanceled = useAtomValue(magicPromptCanceledAtom);

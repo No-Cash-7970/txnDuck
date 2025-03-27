@@ -1,6 +1,6 @@
 /** @file Jotai atoms for transaction data */
 
-import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from 'algosdkv3';
+import { microalgosToAlgos, OnApplicationComplete, type TransactionType } from 'algosdk';
 import { Atom, atom } from 'jotai';
 import { splitAtom } from 'jotai/utils';
 import { atomWithValidate } from 'jotai-form';

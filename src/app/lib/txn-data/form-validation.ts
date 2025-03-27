@@ -1,7 +1,7 @@
 /** @file Collection of functions for validating the whole form */
 
 import { type useStore } from "jotai";
-import { TransactionType } from "algosdkv3";
+import { TransactionType } from "algosdk";
 import {
   apaaListAtom,
   apasListAtom,

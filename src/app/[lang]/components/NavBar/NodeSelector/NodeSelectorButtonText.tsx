@@ -52,37 +52,33 @@ export default function NodeSelectorButtonText({ t }: { t: TFunction }) {
   }, [networkURLParam]);
 
   return (<>
-    {!nodeConfig?.isCustom && <>
-      {nodeConfig?.network === NodeConfigLib.NetworkId.MAINNET && <>
-        <IconBox aria-hidden />
-        <span className='truncate'>{t('node_selector.mainnet')}</span>
-      </>}
-      {nodeConfig?.network === NodeConfigLib.NetworkId.TESTNET && <>
-        <IconFlask aria-hidden />
-        <span className='truncate'>{t('node_selector.testnet')}</span>
-      </>}
-      {nodeConfig?.network === NodeConfigLib.NetworkId.BETANET && <>
-        <IconTestPipe aria-hidden />
-        <span className='truncate'>{t('node_selector.betanet')}</span>
-      </>}
-      {nodeConfig?.network === NodeConfigLib.NetworkId.FNET && <>
-        <IconTopologyRing aria-hidden />
-        <span className='truncate'>{t('node_selector.fnet')}</span>
-      </>}
-      {nodeConfig?.network === NodeConfigLib.NetworkId.VOIMAIN && <>
-        <IconSquareRoundedLetterV aria-hidden />
-        <span className='truncate'>{t('node_selector.voimain')}</span>
-      </>}
-      {nodeConfig?.network === NodeConfigLib.NetworkId.LOCALNET && <>
-        <IconDeviceDesktop aria-hidden />
-        <span className='truncate'>{t('node_selector.localnet')}</span>
-      </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.MAINNET && <>
+      <IconBox aria-hidden />
+      <span className='truncate'>{t('node_selector.mainnet')}</span>
     </>}
-    {nodeConfig?.isCustom && <>
+    {nodeConfig?.network === NodeConfigLib.NetworkId.TESTNET && <>
+      <IconFlask aria-hidden />
+      <span className='truncate'>{t('node_selector.testnet')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.BETANET && <>
+      <IconTestPipe aria-hidden />
+      <span className='truncate'>{t('node_selector.betanet')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.FNET && <>
+      <IconTopologyRing aria-hidden />
+      <span className='truncate'>{t('node_selector.fnet')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.VOIMAIN && <>
+      <IconSquareRoundedLetterV aria-hidden />
+      <span className='truncate'>{t('node_selector.voimain')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.LOCALNET && <>
+      <IconDeviceDesktop aria-hidden />
+      <span className='truncate'>{t('node_selector.localnet')}</span>
+    </>}
+    {nodeConfig?.network === NodeConfigLib.NetworkId.CUSTOM && <>
       <IconServer2 aria-hidden />
-      <span className='truncate'>
-        {t('node_selector.custom', { network: t(`node_selector.${nodeConfig.network}`) })}
-      </span>
+      <span className='truncate'>{t('node_selector.custom')}</span>
     </>}
   </>);
 }

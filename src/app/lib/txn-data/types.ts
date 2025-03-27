@@ -1,6 +1,6 @@
 /** @file Collection of types used to represent transaction data */
 
-import { OnApplicationComplete, TransactionType } from "algosdkv3";
+import { OnApplicationComplete, TransactionType } from "algosdk";
 import { validationAtom } from "@/app/lib/utils";
 
 /** Box reference */

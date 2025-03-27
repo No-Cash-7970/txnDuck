@@ -1,6 +1,6 @@
 /** @file Collection of general-purpose utility function and constants */
 
-import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdkv3";
+import { AlgodTokenHeader, Algodv2, BaseHTTPClient, CustomTokenHeader } from "algosdk";
 import { SetStateAction, WritableAtom } from "jotai";
 import { Themes } from "@/app/lib/app-settings";
 

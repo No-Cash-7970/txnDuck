@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
-import algosdk from 'algosdkv3';
+import algosdk from 'algosdk';
 import * as Icons from '@tabler/icons-react';
 import { useAtom, useAtomValue } from 'jotai';
 import { RESET } from 'jotai/utils';

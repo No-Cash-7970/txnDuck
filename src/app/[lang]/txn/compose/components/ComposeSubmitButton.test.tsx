@@ -24,8 +24,8 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock algosdk
-jest.mock('algosdkv3', () => ({
-  ...jest.requireActual('algosdkv3'),
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }

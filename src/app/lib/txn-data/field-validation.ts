@@ -1,6 +1,6 @@
 /** @file Collection of variables, atoms, etc. for validating individual fields */
 
-import { base64ToBytes, OnApplicationComplete } from 'algosdkv3';
+import { base64ToBytes, OnApplicationComplete } from 'algosdk';
 import { atom } from 'jotai';
 import { atomWithFormControls, atomWithValidate, validateAtoms } from 'jotai-form';
 import { TestConfig } from 'yup';

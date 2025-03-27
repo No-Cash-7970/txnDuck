@@ -26,8 +26,8 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock algosdk
-jest.mock('algosdkv3', () => ({
-  ...jest.requireActual('algosdkv3'),
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
   Algodv2: class {
     token: string;
     constructor(token: string) { this.token = token; }
@@ -184,7 +184,6 @@ describe('Node Selector', () => {
       await userEvent.click(screen.getByText('node_selector.view_config.btn'));
 
       expect(screen.getByText('node_selector.view_config.heading')).toBeInTheDocument();
-      expect(screen.getByText('node_selector.view_config.network')).toBeInTheDocument();
       expect(screen.getByText('node_selector.view_config.url_heading')).toBeInTheDocument();
       expect(screen.getByText('https://foobar.example.com')).toBeInTheDocument();
       expect(screen.getByText('node_selector.view_config.port_heading')).toBeInTheDocument();
@@ -262,10 +261,6 @@ describe('Node Selector', () => {
       // Click "Custom config" button
       await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
       // Fill out form fields
-      await userEvent.selectOptions(
-        screen.getByLabelText(/node_selector.view_config.network/),
-        'mainnet'
-      );
       await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
       await userEvent.paste('https://foobar.example2.net');
       await userEvent.click(screen.getByLabelText(/node_selector.view_config.port/));
@@ -294,13 +289,12 @@ describe('Node Selector', () => {
       expect(screen.getByText('node_selector.custom_config.edit_btn')).toBeInTheDocument();
       // Check local storage
       expect(JSON.parse(localStorage.getItem('customNode') || '{}')).toStrictEqual({
-        network: 'mainnet',
+        network: 'custom',
         nodeServer: 'https://foobar.example2.net',
         nodeToken: 'my_super_special_awesome_token',
         nodePort: 123,
         nodeHeaders: {'X-My-Header': 'hello'},
         coinName: 'COIN',
-        isCustom: true,
       });
     });
 
@@ -317,8 +311,6 @@ describe('Node Selector', () => {
       // Submit
       await userEvent.click(screen.getByText('node_selector.custom_config.submit_btn'));
 
-      expect(await screen.findByLabelText(/node_selector.view_config.network/))
-        .toHaveClass('select-error');
       expect(await screen.findByLabelText(/node_selector.view_config.url/))
         .toHaveClass('input-error');
       expect(screen.getByLabelText(/node_selector.view_config.port/))
@@ -331,20 +323,19 @@ describe('Node Selector', () => {
         .toHaveClass('input-error');
       expect(screen.getByLabelText(/node_selector.custom_config.header_value_label/))
         .not.toHaveClass('input-error');
-      expect(screen.getAllByText('form.error.required')).toHaveLength(3);
+      expect(screen.getAllByText('form.error.required')).toHaveLength(2);
       expect(screen.getByLabelText(/node_selector.view_config.coin_name/))
         .not.toHaveClass('input-error');
     });
 
     it('loads custom node configuration from storage', async () => {
       localStorage.setItem('customNode', JSON.stringify({
-        network: 'mainnet',
+        network: 'custom',
         nodeServer: 'https://foobar5.example.com',
         nodeToken: 'HelloWorld',
         nodePort: 4000,
         nodeHeaders: {bar: 'baz qux'},
         coinName: 'COIN',
-        isCustom: true,
       }));
       render(<JotaiProvider><NodeSelector /></JotaiProvider>);
 
@@ -353,7 +344,6 @@ describe('Node Selector', () => {
       // Click "Custom config" button
       await userEvent.click(screen.getByText('node_selector.custom_config.edit_btn'));
 
-      expect(screen.getByLabelText(/node_selector.view_config.network/)).toHaveValue('mainnet');
       expect(screen.getByLabelText(/node_selector.view_config.url/))
         .toHaveValue('https://foobar5.example.com');
       expect(screen.getByLabelText(/node_selector.view_config.port/)).toHaveValue('4000');
@@ -367,13 +357,12 @@ describe('Node Selector', () => {
 
     it('removes custom configuration if "clear" button is clicked', async () => {
       localStorage.setItem('customNode', JSON.stringify({
-        network: 'mainnet',
+        network: 'custom',
         nodeServer: 'https://foobar5.example.com',
         nodeToken: 'HelloWorld',
         nodePort: 4000,
         nodeHeaders: {bar: 'baz qux'},
         coinName: 'COIN',
-        isCustom: true,
       }));
       render(
         <ToastProvider>
@@ -392,7 +381,6 @@ describe('Node Selector', () => {
       // Check for toast notification
       expect(screen.getByText('node_selector.custom_config.cleared_msg')).toBeInTheDocument();
       // Check all form fields are empty
-      expect(screen.getByLabelText(/node_selector.view_config.network/)).toHaveValue('');
       expect(screen.getByLabelText(/node_selector.view_config.url/)).toHaveValue('');
       expect(screen.getByLabelText(/node_selector.view_config.port/)).toHaveValue('');
       expect(screen.getByLabelText(/node_selector.view_config.token/)).toHaveValue('');
@@ -421,10 +409,6 @@ describe('Node Selector', () => {
       // Click "Custom config" button
       await userEvent.click(screen.getByText('node_selector.custom_config.set_btn'));
       // Fill out enough form fields
-      await userEvent.selectOptions(
-        screen.getByLabelText(/node_selector.view_config.network/),
-        'testnet'
-      );
       await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
       await userEvent.paste('https://foobar.example2.net');
       // Click "Test" button
@@ -443,7 +427,6 @@ describe('Node Selector', () => {
       // Click "Custom config" button
       await userEvent.click(screen.getByText(/node_selector.custom_config.set_btn/));
       // Fill out enough form fields
-      await userEvent.click(await screen.findByLabelText(/node_selector.view_config.network/));
       await userEvent.paste('testnet');
       await userEvent.click(screen.getByLabelText(/node_selector.view_config.url/));
       await userEvent.paste('https://foobar.example2.net');

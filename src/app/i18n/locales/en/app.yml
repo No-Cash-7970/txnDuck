@@ -104,7 +104,7 @@ node_selector:
   fnet: FNet
   voimain: Voi MainNet
   localnet: LocalNet
-  custom: "{{network}} (Custom)"
+  custom: Custom
   node_network: Node network
   view_config:
     btn: View current configuration

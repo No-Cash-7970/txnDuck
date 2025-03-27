@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useSearchParams } from 'next/navigation';
 import { Trans } from 'react-i18next';
 import * as Icons from '@tabler/icons-react';
-import { TransactionType } from 'algosdkv3';
+import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import { Preset } from '@/app/lib/txn-data';

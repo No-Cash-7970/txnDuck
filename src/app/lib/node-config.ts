@@ -1,5 +1,5 @@
 /** @file Collection of variables and constants for managing node configuration */
-import algosdk from "algosdkv3";
+import algosdk from "algosdk";
 import { atomWithReset, atomWithStorage } from 'jotai/utils';
 import { atomWithFormControls, atomWithValidate } from "jotai-form";
 import { number as YupNumber, string as YupString } from 'yup';
@@ -13,13 +13,14 @@ import { UNIT_NAME_MAX_LENGTH } from './txn-data/constants';
  * networks.
  */
 export enum NetworkId {
-  MAINNET = "mainnet",
-  TESTNET = "testnet",
-  BETANET = "betanet",
-  FNET = "fnet",
-  LOCALNET = "localnet",
-  VOIMAIN = "voimain",
-  // ARAMIDMAIN = "aramidmain"
+  MAINNET = 'mainnet',
+  TESTNET = 'testnet',
+  BETANET = 'betanet',
+  FNET = 'fnet',
+  LOCALNET = 'localnet',
+  VOIMAIN = 'voimain',
+  // ARAMIDMAIN = 'aramidmain',
+  CUSTOM = 'custom',
 }
 
 /** The default coin (native currency) name */
@@ -42,8 +43,12 @@ export interface NodeConfig {
   nodeHeaders?: Record<string, string>;
   /** Name of the network's native currency */
   coinName?: string;
-  /** If this configuration is a custom configuration specified by the user */
-  isCustom?: boolean;
+  /** If this configuration for a test network. Used by the Mnemonic Wallet provider (which only
+   * works on test networks for security)
+   */
+  isTestnet?: boolean;
+  /** CAIP-2 chain ID for WalletConnect */
+  caipChainId?: string;
 }
 
 export const networkURLParamName = 'network';
@@ -63,6 +68,7 @@ export const testnetNodeConfig: NodeConfig = {
   nodeToken: '',
   nodePort: '443',
   nodeHeaders: undefined,
+  isTestnet: true,
 };
 /** Default BetaNet configuration */
 export const betanetNodeConfig: NodeConfig = {
@@ -99,7 +105,7 @@ export const localnetNodeConfig: NodeConfig = {
 };
 
 /** Mapping of network names to their respective default configurations */
-const defaultConfigs: {[k: string]: NodeConfig} = {
+export const defaultConfigs: {[k: string]: NodeConfig} = {
   [NetworkId.MAINNET]: mainnetNodeConfig,
   [NetworkId.TESTNET]: testnetNodeConfig,
   [NetworkId.BETANET]: betanetNodeConfig,
@@ -124,13 +130,6 @@ export const nodeConfigAtom =
 export const customNodeAtom =
   atomWithStorage<NodeConfig|null>('customNode', null); // localStorage is used by default
 
-/** Node network field on custom configuration form */
-export const networkFieldAtom = atomWithValidate<NetworkId|undefined>(undefined, {
-  validate: v => {
-    YupString().required().validateSync(v);
-    return v;
-  }
-});
 /** Algod URL field on custom configuration form */
 export const urlFieldAtom = atomWithValidate<string>('', {
   validate: v => {
@@ -193,7 +192,6 @@ export const coinNameFieldAtom = atomWithValidate<string>('', {
 
 /** Validation form group for custom-node form */
 export const customNodeFormControlAtom = atomWithFormControls({
-  network: networkFieldAtom,
   url: urlFieldAtom,
   port: portFieldAtom,
   token: tokenFieldAtom,

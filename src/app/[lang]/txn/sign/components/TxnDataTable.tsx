@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { TransactionType } from 'algosdkv3';
+import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 import { Trans } from 'react-i18next';
 import { useTranslation } from '@/app/i18n/client';

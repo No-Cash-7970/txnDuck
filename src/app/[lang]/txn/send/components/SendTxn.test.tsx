@@ -21,8 +21,8 @@ jest.mock('../../../../lib/utils.ts', () => ({
 // Mock algosdk
 let sendErrorMsg = '', confirmErrorMsg = '';
 const sendRawTxnSpy = jest.fn(), waitConfirmSpy = jest.fn();
-jest.mock('algosdkv3', () => ({
-  ...jest.requireActual('algosdkv3'),
+jest.mock('algosdk', () => ({
+  ...jest.requireActual('algosdk'),
   encodeJSON: jest.fn(),
   Algodv2: class {
     token: string;

@@ -1,5 +1,5 @@
 import '@testing-library/jest-dom';
-import algosdk from 'algosdkv3';
+import algosdk from 'algosdk';
 import { getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 import * as processor from './processor';
 

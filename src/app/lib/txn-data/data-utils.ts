@@ -1,6 +1,6 @@
 /** @file Useful utilities for managing transaction data */
 
-import { Algodv2 } from "algosdkv3";
+import { Algodv2 } from "algosdk";
 import { NodeConfig } from "@/app/lib/node-config";
 import { DEFAULT_NODE_CONFIG } from "@/app/lib/node-config";
 import { RetrievedAssetInfo } from "./types";

@@ -1,7 +1,7 @@
 /** @file Test Algod node responses used to mock responses to requests */
 
 import { type Page } from "@playwright/test";
-import { stringifyJSON } from "algosdkv3";
+import { stringifyJSON } from "algosdk";
 
 /* NOTE:
  * All test responses should be the exact data of actual responses from a node. Using the exact data
