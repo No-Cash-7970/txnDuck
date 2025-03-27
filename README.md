@@ -9,7 +9,7 @@
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck.svg?type=small)](https://app.fossa.com/projects/git%2Bgithub.com%2FNo-Cash-7970%2FtxnDuck?ref=badge_small)
 
 A free and open source web-based graphical user interface (GUI) for easily
-creating and sending Algorand transactions.
+creating and sending transactions on [Algorand](https://algorand.co/).
 
 ## :globe_with_meridians: Websites
 
