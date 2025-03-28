@@ -43,8 +43,10 @@ export default function Footer({ lng }: Props) {
             <span>{t('footer.algo_link')}</span>
           </a>
         </div>
+        {/* Not affiliated with Algo notice */}
+        <p className='text-sm mt-6'>{t('footer.affiliation_notice')}</p>
         {/* License notice */}
-        <p className='text-sm mt-4'>
+        <p className='text-sm'>
           <Trans t={t} i18nKey='footer.license_notice' components={
             {a: <a href='https://github.com/No-Cash-7970/txnDuck/blob/main/LICENSE.md'
               target='_blank'

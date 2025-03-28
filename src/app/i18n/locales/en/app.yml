@@ -17,6 +17,8 @@ footer:
   privacy_policy_link: Privacy policy
   github_link: Source on GitHub
   algo_link: Algorand
+  affiliation_notice: >-
+    This website is not affiliated with Algorand Foundation or Algorand Technologies.
   license_notice: >-
     By using, downloading or installing this software, you agree to the terms outlined in the
     software’s <a>license</a>.
