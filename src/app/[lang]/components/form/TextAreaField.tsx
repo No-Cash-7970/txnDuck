@@ -32,7 +32,10 @@ export default function TextAreaField({
 }: TextAreaFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
-      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+      <label
+        className={`label ${!inputInsideLabel ? 'mb-2' : ''} text-base-content ${labelClass}`}
+        htmlFor={id || undefined}
+      >
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
@@ -61,7 +64,7 @@ export default function TextAreaField({
           }
           {// With a side label
             (beforeSideLabel || afterSideLabel) &&
-            <span className='join'>
+            <span className='join w-full'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {beforeSideLabel}
@@ -97,7 +100,7 @@ export default function TextAreaField({
         {// Without side label
           (!beforeSideLabel && !afterSideLabel) &&
           <textarea
-            className={`textarea-bordered textarea ${inputClass}`}
+            className={`textarea-bordered textarea w-full ${inputClass}`}
             id={id || undefined}
             required={required}
             placeholder={placeholder || undefined}
@@ -116,7 +119,7 @@ export default function TextAreaField({
         }
         {// With a side label
           (beforeSideLabel || afterSideLabel) &&
-          <span className='join'>
+          <span className='join w-full'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {beforeSideLabel}
@@ -149,7 +152,7 @@ export default function TextAreaField({
       </>}
 
       {helpMsg &&
-        <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
+        <div className='label help-msg'><span className='text-sm'>{helpMsg}</span></div>
       }
     </div>
   );

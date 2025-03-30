@@ -41,7 +41,7 @@ export default function LocalInts({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apls_nui-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={(
           ((showFormErrors || form.touched.apls_nui) &&
             (form.fieldErrors.apls_nui

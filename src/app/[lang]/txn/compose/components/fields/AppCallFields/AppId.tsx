@@ -41,7 +41,7 @@ export default function AppId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apid-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.apid) &&
           (form.fieldErrors.apid || (!apidCondReqGroup.isValid && apidCondReqGroup.error))
         )

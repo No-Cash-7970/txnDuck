@@ -27,7 +27,10 @@ export default function FileField({
 }: FileFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
-      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+      <label
+        className={`label ${!inputInsideLabel ? 'mb-2' : ''} text-base-content ${labelClass}`}
+        htmlFor={id || undefined}
+      >
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
@@ -35,7 +38,7 @@ export default function FileField({
         </span>
         {inputInsideLabel &&
           <input
-            className={`file-input-bordered file-input ${inputClass}`}
+            className={`file-input ${inputClass}`}
             type='file'
             id={id || undefined}
             required={required}
@@ -53,7 +56,7 @@ export default function FileField({
       </label>
       {!inputInsideLabel &&
         <input
-          className={`file-input-bordered file-input ${inputClass}`}
+          className={`file-input w-full ${inputClass}`}
           type='file'
           id={id || undefined}
           required={required}
@@ -70,7 +73,7 @@ export default function FileField({
       }
 
       {helpMsg &&
-        <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
+        <div className='label help-msg'><span className='text-sm'>{helpMsg}</span></div>
       }
     </div>
   );

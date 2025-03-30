@@ -47,7 +47,7 @@ export default function Sender({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.snd.placeholder')}
       containerId='snd-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.snd) && form.fieldErrors.snd) ? 'input-error' : ''
       }

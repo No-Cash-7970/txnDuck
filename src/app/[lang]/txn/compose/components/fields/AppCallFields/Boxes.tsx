@@ -29,7 +29,7 @@ export default function Boxes({ t }: { t: TFunction }) {
   const appForeignApps = useAtomValue(txnDataAtoms.apfa);
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   return (<>
-    {!boxes.length && <p className='italic'>{t('fields.apbx.none')}</p>}
+    {!boxes.length && <p className='italic mt-4 mb-2'>{t('fields.apbx.none')}</p>}
     {boxes.map((boxAtom, i) =>
       <FieldGroup headingLevel={4}
         heading={t('fields.apbx.box_heading', { index: i + 1 })}
@@ -90,7 +90,7 @@ function BoxIndexInput({ t, boxAtom, index }:
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId={`apbx_i-${index}-field`}
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || touched) &&
         (!boxIndex.isValid
           || (boxIndex.value && (boxIndex.value > appForeignApps.length))
@@ -139,7 +139,7 @@ function BoxNameInput({ t, boxAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apbx_n.placeholder', { index: index + 1 })}
       containerId={`apbx_n-${index}-field`}
-      containerClass='mt-4 max-w-sm'
+      containerClass='mt-6 max-w-sm'
       inputClass={((showFormErrors || touched) && !boxName.isValid) ? 'input-error': ''}
       maxLength={MAX_APP_KEY_LENGTH}
       value={boxName.value}

@@ -15,7 +15,7 @@ export default function ForeignAssets({ t }: { t: TFunction }) {
   const appForeignApps = useAtomValue(txnDataAtoms.apfa);
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (<>
-    {!appForeignAssets.length && <p className='italic'>{t('fields.apas.none')}</p>}
+    {!appForeignAssets.length && <p className='italic mt-4 mb-2'>{t('fields.apas.none')}</p>}
     {appForeignAssets.map(
       (assetAtom, i) => (
         <ForeignAssetInput t={t} assetAtom={assetAtom} index={i} key={`${assetAtom}`} />
@@ -63,7 +63,7 @@ function ForeignAssetInput({ t, assetAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apas.placeholder', { index: index + 1 })}
       containerId={`apas-${index}-field`}
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || touched) && !asset.isValid) ? 'input-error': ''}
       value={asset.value ?? ''}
       onChange={(e) => {

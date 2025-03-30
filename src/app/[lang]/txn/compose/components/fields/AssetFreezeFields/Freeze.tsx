@@ -25,7 +25,7 @@ export default function Freeze({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='afrz-field'
-      containerClass='mt-6 max-w-xs'
+      containerClass='mt-8 max-w-xs'
       inputClass='toggle-primary'
       labelClass='gap-3'
       disabled={preset === Preset.AssetFreeze || preset === Preset.AssetUnfreeze}

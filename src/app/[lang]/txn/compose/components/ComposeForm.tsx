@@ -290,7 +290,7 @@ export default function ComposeForm({ lng }: Props) {
       {(!preset || preset === Preset.AppRun) && <Lease t={t} />}
       {!preset && <Rekey t={t} />}
 
-      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
+      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-14'>
         <div>
           <ComposeSubmitButton lng={lng} />
         </div>
@@ -309,12 +309,9 @@ export default function ComposeForm({ lng }: Props) {
             <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('txn_presets_btn')}
           </Link>
-          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
-            <Icons.IconAlertTriangleFilled
-              aria-hidden
-              className='text-warning align-middle my-auto me-2'
-            />
-            <small>{t('txn_presets_btn_warning')}</small>
+          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-5'>
+            <Icons.IconAlertTriangleFilled aria-hidden className='align-middle my-auto me-2' />
+            <span>{t('txn_presets_btn_warning')}</span>
           </div>
         </div>
       </div>

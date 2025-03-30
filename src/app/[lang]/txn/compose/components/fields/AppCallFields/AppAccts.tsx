@@ -27,7 +27,7 @@ export default function AppAccts({ t }: { t: TFunction }) {
         {t('fields.apat.max_error', {count: MAX_APP_ACCTS})}
       </div>
     }
-    {!appAccts.length && <p className='italic'>{t('fields.apat.none')}</p>}
+    {!appAccts.length && <p className='italic mt-4 mb-2'>{t('fields.apat.none')}</p>}
     {appAccts.map(
       (acctAtom, i) => <AppAcctInput t={t} acctAtom={acctAtom} index={i} key={`${acctAtom}`} />
     )}
@@ -74,7 +74,7 @@ function AppAcctInput({ t, acctAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apat.placeholder', { index: index + 1 })}
       containerId={`apat-${index}-field`}
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={((showFormErrors || touched) && !acct.isValid) ? 'input-error': ''}
       maxLength={ADDRESS_LENGTH}
       value={acct.value}

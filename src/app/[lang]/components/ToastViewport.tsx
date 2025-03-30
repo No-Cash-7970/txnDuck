@@ -14,11 +14,11 @@ export default function ToastViewport({
 }) {
   if (toastPosition === 'left') { // Usually for when the language is (right-to-left) RTL
     return (
-      <Viewport label={label} className='toast toast-top z-[2000] whitespace-normal toast-start' />
+      <Viewport label={label} className='toast toast-top z-2000 whitespace-normal toast-start' />
     );
   } else { // Default
     return (
-      <Viewport label={label} className='toast toast-top z-[2000] whitespace-normal toast-end' />
+      <Viewport label={label} className='toast toast-top z-2000 whitespace-normal toast-end' />
     );
   }
 };

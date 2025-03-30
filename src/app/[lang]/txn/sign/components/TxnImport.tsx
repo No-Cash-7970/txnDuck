@@ -118,11 +118,7 @@ export default function TxnImport({ lng }: Props) {
       {!!storedTxnData && <div className='alert alert-warning mb-2 sm:mt-12 sm:-mb-8'>
         <IconAlertTriangle aria-hidden className=' my-auto me-2' />
         <div>{t('import_txn.overwrite_warning')}</div>
-        <Link
-          className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
-          replace={true}
-          href={`/${lng}/txn/sign`}
-        >
+        <Link className="btn btn-outline" replace={true} href={`/${lng}/txn/sign`}>
           {t('import_txn.cancel')}
         </Link>
       </div>}

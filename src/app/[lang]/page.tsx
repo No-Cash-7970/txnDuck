@@ -19,17 +19,18 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
       <section
         // Fallback background color is included in case gradient, which is set as an image, does
         // not load
-        className={'bg-accent text-accent-content bg-gradient-to-r from-accent'
-          + ' to-[color-mix(in_oklab,oklch(var(--a)),oklch(var(--bc)))] '
+        className={'bg-accent text-accent-content bg-linear-to-br from-black/0 to-accent-content/35'
           + ' py-10 sm:py-12 md:py-20 px-8 font-display'
         }
       >
         <div className='max-w-5xl mx-auto text-center'>
-          <p className='text-3xl sm:text-4xl font-bold my-0'>{t('home:hero.main_paragraph')}</p>
+          <p className='text-3xl sm:text-4xl font-bold mt-0 mb-0'>
+            {t('home:hero.main_paragraph')}
+          </p>
           <Link data-testid='startBtn' href={`${lang}/txn`}
             className={
-              'btn btn-lg btn-block h-auto py-2 mt-8 sm:mt-10 md:mt-14 leading-6 shadow-2xl'
-              + ' btn-primary border-2 border-opacity-50 border-primary-content'
+              'btn btn-lg btn-block mt-8 sm:mt-10 md:mt-14 leading-6 shadow-2xl'
+              + ' btn-primary border-2 border-primary-content/50'
               + ' hover:bg-primary-content hover:text-primary hover:border-primary'
             }
           >
@@ -49,13 +50,13 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
         <h2 id='how-it-works'>{t('home:how_it_works.heading')}</h2>
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.compose.heading')}
               </h3>
               <p className='self-start md:mb-4'>{t('home:how_it_works.compose.paragraph')}</p>
               <Link data-testid='composeTxnBtn'
-                className='btn btn-accent btn-sm h-auto p-2'
+                className='btn btn-accent font-semibold'
                 href={`${lang}/txn/compose`}
                 prefetch={false}
               >
@@ -64,13 +65,13 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
             </div>
           </div>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.sign.heading')}
               </h3>
               <p className='self-start md:mb-4'>{t('home:how_it_works.sign.paragraph')}</p>
               <Link data-testid='signTxnBtn'
-                className='btn btn-accent btn-sm h-auto p-2'
+                className='btn btn-accent font-semibold'
                 href={`${lang}/txn/sign?import`}
                 prefetch={false}
               >
@@ -79,13 +80,13 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
             </div>
           </div>
           <div className='card bg-base-200 prose-headings:text-accent'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 {t('home:how_it_works.send.heading')}
               </h3>
               <p className='self-start md:mb-4'>{t('home:how_it_works.send.paragraph')}</p>
               <Link data-testid='sendTxnBtn'
-                className='btn btn-accent btn-sm h-auto p-2'
+                className='btn btn-accent font-semibold'
                 href={`${lang}/txn/send?import`}
                 prefetch={false}
               >
@@ -99,7 +100,7 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
         <h2 id='uses'>{t('home:uses.heading')}</h2>
         <div className='grid md:grid-cols-3 gap-2 lg:gap-4'>
           <div className='card border border-success bg-opacity-80'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 <IconTriangleSquareCircle />
                 {t('home:uses.simple_things.heading')}
@@ -129,7 +130,7 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
             </div>
           </div>
           <div className='card border border-warning bg-opacity-80'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 <IconBarrierBlockFilled aria-hidden />
                 {t('home:uses.complex_things.heading')}
@@ -155,7 +156,7 @@ export default function HomePage(props: { params: Promise<{ lang: string }> }) {
             </div>
           </div>
           <div className='card border border-error bg-opacity-80'>
-            <div className='card-body items-center px-4 py-6'>
+            <div className='card-body items-center p-6'>
               <h3 className='card-title self-start mt-0'>
                 <IconBomb aria-hidden />
                 {t('home:uses.dangerous_things.heading')}

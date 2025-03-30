@@ -29,7 +29,7 @@ export default function ToastNotification({ lng, message, open, onOpenChange }: 
           : 'data-[state=open]:animate-toastSlideInFromRight'
         )
         + ' data-[state=closed]:animate-toastHide'
-        + ' data-[swipe=move]:translate-x-[var(--radix-toast-swipe-move-x)]'
+        + ' data-[swipe=move]:translate-x-(--radix-toast-swipe-move-x)'
         + ' data-[swipe=cancel]:translate-x-0'
         + ' data-[swipe=cancel]:transition-[transform_200ms_ease-out]'
         + ' ' + (langDir === 'rtl'

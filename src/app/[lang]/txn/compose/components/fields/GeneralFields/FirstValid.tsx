@@ -29,7 +29,7 @@ export default function FirstValid({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='fv-field'
-      containerClass='mt-2 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={(
           (showFormErrors || form.touched.fv) &&
           (form.fieldErrors.fv

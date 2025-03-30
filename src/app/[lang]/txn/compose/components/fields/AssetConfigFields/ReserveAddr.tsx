@@ -61,7 +61,7 @@ function UseSenderAddr({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='apar_rUseSnd-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-6 max-w-lg'
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.apar_rUseSnd}
@@ -102,7 +102,7 @@ export function ReserveAddrInput({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_r.placeholder')}
       containerId='apar_r-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.apar_r) && form.fieldErrors.apar_r) ? 'input-error' : ''
       }

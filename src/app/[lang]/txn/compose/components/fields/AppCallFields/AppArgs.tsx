@@ -45,7 +45,7 @@ export default function AppArgs({ t }: { t: TFunction }) {
 
       <Base64ApaaInput t={t} />
 
-      {!appArgs.length && <p className='italic'>{t('fields.apaa.none')}</p>}
+      {!appArgs.length && <p className='italic mt-8 mb-2'>{t('fields.apaa.none')}</p>}
       {appArgs.map(
         (argAtom, i) => <AppArgInput t={t} argAtom={argAtom} index={i} key={`${argAtom}`} />
       )}
@@ -96,7 +96,7 @@ function AppArgInput({ t, argAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apaa.placeholder', { index: index + 1 })}
       containerId={`apaa-${index}-field`}
-      containerClass='mt-4 max-w-md'
+      containerClass='mt-6 max-w-md'
       inputClass={
         ((showFormErrors || touched) && (!arg.isValid || (!condB64.isValid && condB64.error)))
         ? 'input-error' : ''
@@ -132,8 +132,8 @@ export function Base64ApaaInput({ t }: { t: TFunction }) {
       inputInsideLabel={true}
       containerId='b64Apaa-field'
       containerClass='mt-6'
-      inputClass='checkbox-primary checkbox-sm me-2 -mt-1'
-      labelClass='justify-start w-fit max-w-full'
+      inputClass='checkbox-primary checkbox me-2'
+      labelClass='justify-start w-fit max-w-full align-middle'
       value={!!form.values.b64Apaa}
       onChange={(e) => form.handleOnChange('b64Apaa')(e.target.checked)}
     />

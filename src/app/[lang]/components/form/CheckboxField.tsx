@@ -41,7 +41,7 @@ export default function CheckboxField({
           onBlur={onBlur}
         />
       }
-      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+      <label className={`label text-base-content ${labelClass}`} htmlFor={id || undefined}>
         {(inputInsideLabel && inputPosition === 'start') &&
           <input
             className={`checkbox ${inputClass}`}
@@ -94,7 +94,7 @@ export default function CheckboxField({
         />
       }
       {helpMsg &&
-        <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
+        <div className='label help-msg'><span className='text-sm'>{helpMsg}</span></div>
       }
     </div>
   );

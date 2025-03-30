@@ -41,7 +41,7 @@ export default function LocalByteSlices({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apls_nbs-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={(
           ((showFormErrors || form.touched.apls_nbs) &&
             (form.fieldErrors.apls_nbs

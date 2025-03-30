@@ -41,7 +41,7 @@ export default function CloseTo({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.aclose.placeholder')}
       containerId='aclose-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={((showFormErrors || form.touched.aclose) &&
           (form.fieldErrors.aclose || (!acloseCondReqGroup.isValid && acloseCondReqGroup.error))
         )

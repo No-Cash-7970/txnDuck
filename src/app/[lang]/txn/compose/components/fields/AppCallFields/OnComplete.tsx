@@ -28,7 +28,7 @@ export default function OnComplete({ t }: { t: TFunction }) {
       required={true}
       requiredText={t('form.required')}
       containerId='apan-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.apan) && form.fieldErrors.apan)
         ? 'select-error' : ''
       }

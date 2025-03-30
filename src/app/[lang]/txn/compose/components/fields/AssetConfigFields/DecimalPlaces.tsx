@@ -40,7 +40,7 @@ export default function DecimalPlaces({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apar_dc-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.apar_dc) &&
           (form.fieldErrors.apar_dc || (!aparDcCondReqGroup.isValid && aparDcCondReqGroup.error))
         )

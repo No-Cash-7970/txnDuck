@@ -20,7 +20,7 @@ export default function NextStepButton({ lng }: Props) {
   return (
     <Link
       href={{pathname: `/${lng}/txn/send`, query: currentURLParams.toString()}}
-      className={'btn btn-primary w-full' + (storedSignedTxn ? '' : ' btn-disabled')}
+      className={'btn btn-primary w-full font-semibold' + (storedSignedTxn ? '' : ' btn-disabled')}
       tabIndex={storedSignedTxn? undefined : -1}
     >
       {t('send_txn_btn')}

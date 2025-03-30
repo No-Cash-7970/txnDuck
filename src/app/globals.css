@@ -1,6 +1,202 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@plugin "@tailwindcss/typography";
+@plugin "daisyui";
+
+@plugin "daisyui/theme" {
+  name: "duck_dark";
+  default: false;
+  prefersdark: true;
+  color-scheme: "dark";
+
+  /* Color names from: https://colorkit.co/color-picker/ */
+
+  /* Night Rider */
+  --color-base-100: #332d2d;
+  --color-base-200: #2b2525;
+  --color-base-300: #1e1919;
+  --color-base-content: #fef6f6;
+
+  /* Teal Me No Lies */
+  --color-primary: #0ebd9d;
+  --color-primary-content: #00160e;
+
+  /* Candy Floss */
+  --color-secondary: #eaa3e7;
+  --color-secondary-content: #1d001d;
+
+  /* Sail to the Sea */
+  --color-accent: #98bbff;
+  --color-accent-content: #001047;
+
+  /* Chocolate Pretzel */
+  --color-neutral: #635050;
+  --color-neutral-content: #fffcfc;
+
+  /* Glitter Lake */
+  --color-info: #4caffa;
+  --color-info-content: #000b26;
+
+  /* Pistachio */
+  --color-success: #9abd78;
+  --color-success-content: #031000;
+
+  /* Oh Em Ghee */
+  --color-warning: #e3bf1e;
+  --color-warning-content: #3b2c00;
+
+  /* Melondrama */
+  --color-error: #e67b68;
+  --color-error-content: #1c0000;
+
+  --radius-selector: 2rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.8rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.3rem;
+
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@plugin "daisyui/theme" {
+  name: "duck";
+  default: true;
+  prefersdark: false;
+  color-scheme: "light";
+
+  /* Color names from: https://colorkit.co/color-picker/ */
+
+  /* Night Rider - lightened to near white */
+  --color-base-100: #fef6f6;
+  --color-base-200: #f1e9e9;
+  --color-base-300: #e0d8d8;
+  --color-base-content: #1a1415;
+
+  /* Philodendron */
+  --color-primary: #076554;
+  --color-primary-content: #ffffff;
+
+  /* Notcturn Red */
+  --color-secondary: #804561;
+  --color-secondary-content: #fffcff;
+
+  /* Frosted Blueberries */
+  --color-accent: #1346df;
+  --color-accent-content: #faffff;
+
+  /* Monkey Island */
+  --color-neutral: #523737;
+  --color-neutral-content: #fff1f0;
+
+  /* Blue Velvet */
+  --color-info: #0b5f82;
+  --color-info-content: #faffff;
+
+  /* Forest Empress */
+  --color-success: #37630c;
+  --color-success-content: #fdffec;
+
+  /* Oh Em Ghee */
+  --color-warning: #e3bf1e;
+  --color-warning-content: #3b2c00;
+
+  /* Crimson Velvet Sunset */
+  --color-error: #ad1f00;
+  --color-error-content: #fffefe;
+
+  --radius-selector: 2rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.8rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.3rem;
+
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@custom-variant dark (&:where([data-theme=duck_dark], [data-theme=duck_dark] *));
+
+@theme {
+  --font-sans: var(--font-noto-sans), sans-serif;
+  --font-display:
+    var(--font-noto-sans-display), var(--font-noto-sans), sans-serif;
+  --font-mono: var(--font-noto-sans-mono), monospace;
+  /* --font-emoji: var(--font-noto-color-emoji); */
+  /* --font-sans-jp: 'Noto Sans', 'Noto Sans JP', sans-serif; */
+  /* --font-display-jp:
+    'Noto Sans Display', 'Noto Sans', 'Noto Sans JP', sans-serif; */
+
+  --animate-toast-hide: toastHide 100ms ease-in;
+  --animate-toast-slide-in-from-right: toastSlideInFromRight 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-toast-slide-in-from-left: toastSlideInFromLeft 150ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+  --animate-toast-swipe-out-to-right: toastSwipeOutToRight 100ms ease-out;
+  --animate-toast-swipe-out-to-left: toastSwipeOutToLeft 100ms ease-out;
+
+  @keyframes toastHide {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+  @keyframes toastSlideInFromRight {
+    from {
+      transform: translateX(calc(100% + var(--viewport-padding)));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes toastSlideInFromLeft {
+    from {
+      transform: translateX(calc(0em - 100% - var(--viewport-padding)));
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+  @keyframes toastSwipeOutToRight {
+    from {
+      transform: translateX(var(--radix-toast-swipe-end-x));
+    }
+    to {
+      transform: translateX(calc(100% + var(--viewport-padding)));
+    }
+  }
+  @keyframes toastSwipeOutToLeft {
+    from {
+      transform: translateX(var(--radix-toast-swipe-end-x));
+    }
+    to {
+      transform: translateX(calc(0em - 100% - var(--viewport-padding)));
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 @layer base {
   :root {
@@ -15,8 +211,17 @@
     @apply font-display;
   }
 
-  input::placeholder, textarea::placeholder {
+  /* input::placeholder, textarea::placeholder {
     color: theme(colors.base-content / 40%)
+  } */
+
+  .label-text {
+    color: var(--color-base-content);
+    white-space: normal;
+  }
+
+  .btn {
+    line-height: normal;
   }
 
   /* [lang="jp"] {

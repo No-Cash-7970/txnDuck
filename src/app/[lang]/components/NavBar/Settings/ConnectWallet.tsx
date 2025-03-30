@@ -68,7 +68,7 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
           <DropdownMenu.Portal>
             <DropdownMenu.Content asChild>
               <ul className={
-                'z-[1000] card menu shadow-md border border-base-300 bg-base-200 overflow-auto'
+                'z-1000 card menu shadow-md border border-base-300 bg-base-200 overflow-auto'
                 + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
                 + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
                 + ' max-w-[var(--radix-dropdown-menu-trigger-width)]'

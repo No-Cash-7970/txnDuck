@@ -26,7 +26,7 @@ export default function UnitName({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_un.placeholder')}
       containerId='apar_un-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={
         ((showFormErrors || form.touched.apar_un) && form.fieldErrors.apar_un) ? 'input-error' : ''
       }

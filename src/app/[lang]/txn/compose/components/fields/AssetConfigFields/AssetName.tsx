@@ -26,7 +26,7 @@ export default function AssetName({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_an.placeholder')}
       containerId='apar_an-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={
         ((showFormErrors || form.touched.apar_an) && form.fieldErrors.apar_an) ? 'input-error' : ''
       }

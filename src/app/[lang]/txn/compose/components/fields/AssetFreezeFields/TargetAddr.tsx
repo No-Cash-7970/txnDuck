@@ -37,7 +37,7 @@ export default function TargetAddr({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.fadd.placeholder')}
       containerId='fadd-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.fadd) && form.fieldErrors.fadd ) ? 'input-error' : ''
       }

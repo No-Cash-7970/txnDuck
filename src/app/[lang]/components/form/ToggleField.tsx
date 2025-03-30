@@ -43,7 +43,10 @@ export default function ToggleField({
           ref={inputRef}
         />
       }
-      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+      <label
+        className={`label flex justify-between text-base-content ${labelClass}`}
+        htmlFor={id || undefined}
+      >
         {(inputInsideLabel && inputPosition === 'start') &&
           <input
             className={`toggle ${inputClass}`}
@@ -100,7 +103,7 @@ export default function ToggleField({
       }
 
       {helpMsg &&
-        <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
+        <div className='label help-msg'><span className='text-sm'>{helpMsg}</span></div>
       }
     </div>
   );

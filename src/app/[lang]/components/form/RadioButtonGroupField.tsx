@@ -57,7 +57,7 @@ export default function SelectField({
       </div>
       {helpMsg &&
         <p className='label help-msg mt-1 mb-0'>
-          <span className='label-text-alt'>{helpMsg}</span>
+          <span className='text-sm'>{helpMsg}</span>
         </p>
       }
     </fieldset>

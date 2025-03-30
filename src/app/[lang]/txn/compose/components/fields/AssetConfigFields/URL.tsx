@@ -27,7 +27,7 @@ export default function URL({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_au.placeholder')}
       containerId='apar_au-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.apar_au) && form.fieldErrors.apar_au) ? 'input-error' : ''
       }

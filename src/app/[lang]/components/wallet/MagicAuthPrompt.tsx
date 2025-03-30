@@ -64,7 +64,7 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
         content: t('app:wallet.magic_prompt.email_tip'),
         btnClass: tipBtnClass,
         btnTitle: t('app:wallet.magic_prompt.email_more_info'),
-        contentClass: tipContentClass + ' z-[2000]'
+        contentClass: tipContentClass + ' z-2000'
       }}
       value={magicEmail.value}
       onChange={(e) => {
@@ -77,7 +77,7 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
       <FieldErrorMessage t={t} i18nkey={(magicEmail.error as any).message.key} />
     }
     {magicAuthFailed && <FieldErrorMessage t={t} i18nkey='app:wallet.magic_prompt.fail' />}
-    <div className='mt-2 grid grid-cols-1 sm:grid-cols-5 gap-3'>
+    <div className='mt-4 grid grid-cols-1 sm:grid-cols-5 gap-3'>
       <button className='btn sm:btn-sm btn-secondary sm:col-span-3'
         disabled={!magicEmail.isValid}
         onClick={async (e) => {

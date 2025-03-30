@@ -63,7 +63,7 @@ function UseSenderAddr({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='apar_cUseSnd-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-6 max-w-lg'
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.apar_cUseSnd}
@@ -104,7 +104,7 @@ export function ClawbackAddrInput({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_c.placeholder')}
       containerId='apar_c-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.apar_c) && form.fieldErrors.apar_c) ? 'input-error' : ''
       }
@@ -116,7 +116,7 @@ export function ClawbackAddrInput({ t }: { t: TFunction }) {
       helpMsg={form.values.apar_c === ''
         ? <>
           <IconAlertTriangleFilled aria-hidden size={18}
-            className='text-warning align-middle inline me-2'
+            className='align-middle inline ms-2 me-2'
           />
           {t('fields.apar_c.empty_warning')}
         </>

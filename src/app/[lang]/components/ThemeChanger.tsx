@@ -30,7 +30,7 @@ export default function ThemeChanger(props: Props) {
       containerClass={props.containerClass}
       labelClass={props.labelClass}
       labelTextClass={props.labelTextClass}
-      optionClass='btn-sm disabled:checked:opacity-20 checked:btn-secondary'
+      optionClass='btn-sm disabled:checked:opacity-20 theme-controller'
       options={[
         { value: Themes.light, text: t('settings.theme_switcher.light') },
         { value: Themes.dark, text: t('settings.theme_switcher.dark') },

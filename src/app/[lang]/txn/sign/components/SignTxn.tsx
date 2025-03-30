@@ -276,7 +276,7 @@ export default function SignTxn({ lng }: Props) {
     {!isImporting && !isLoading && <>
       <div className='mt-0 mb-0 text-center'>
         <button
-          className='btn btn-link btn-sm text-base-content'
+          className='btn btn-sm btn-dash'
           onClick={async (e) => {
             e.preventDefault();
             TxnFileLinkRef.current.href = await bytesToDataUrl(
@@ -291,7 +291,7 @@ export default function SignTxn({ lng }: Props) {
         </button>
         {storedSignedTxn &&
           <button
-            className='btn btn-link text-accent btn-sm mt-3 sm:ms-3 sm:mt-0 '
+            className='btn btn-sm btn-dash btn-accent mt-3 sm:ms-3 sm:mt-0 '
             onClick={async (e) => {
               e.preventDefault();
               TxnFileLinkRef.current.href = storedSignedTxn;
@@ -315,7 +315,7 @@ export default function SignTxn({ lng }: Props) {
         (!activeAccount && !storedSignedTxn) &&
         <Dialog.Root modal={false}>
           <Dialog.Trigger asChild>
-            <button className='btn btn-secondary btn-block min-h-[5em] h-auto mt-8'>
+            <button className='btn btn-lg btn-secondary btn-block min-h-[4em] h-auto mt-8'>
               <Icons.IconWallet aria-hidden />
               {t('wallet.connect')}
             </button>
@@ -323,7 +323,7 @@ export default function SignTxn({ lng }: Props) {
           <Dialog.Portal>
             <Dialog.Overlay />
             <Dialog.Content
-              className='modal data-[state=open]:modal-open'
+              className='modal modal-open'
               aria-describedby={undefined}
               onPointerDownOutside={(e) => e.preventDefault()}
               onInteractOutside={(e) => e.preventDefault()}
@@ -356,12 +356,12 @@ export default function SignTxn({ lng }: Props) {
             containerId='autoSend-field'
             containerClass='ms-2 mb-3'
             inputClass='checkbox-primary me-2'
-            labelClass='justify-start w-fit max-w-full'
+            labelClass='justify-start w-fit max-w-full leading-6'
             value={autoSend ?? defaultAutoSend}
             onChange={(e) => setAutoSend(e.target.checked)}
           />
           <button
-            className='btn btn-primary btn-block min-h-[5em] h-auto'
+            className='btn btn-lg btn-primary btn-block min-h-[4rem] h-auto'
             onClick={() => signTransaction()}
           >
             <Icons.IconBallpenFilled aria-hidden />
@@ -382,10 +382,10 @@ export default function SignTxn({ lng }: Props) {
                 {t('wallet.is_connected', {address: activeAccount.address})}
               </span>
             </div>
-            <button className='btn btn-sm btn-link text-secondary'
+            <button className='btn btn-xs btn-outline text-secondary mt-2'
               onClick={() => activeWallet?.disconnect()}
             >
-              <Icons.IconWalletOff aria-hidden />
+              <Icons.IconWalletOff aria-hidden size={20} />
               {t('wallet.disconnect')}
             </button>
           </div>
@@ -400,7 +400,7 @@ export default function SignTxn({ lng }: Props) {
       }
 
       {/* Buttons */}
-      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
+      <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-14'>
         {/* Next step */}
         <div><NextStepButton lng={lng} /></div>
         {/* Previous step */}
@@ -416,7 +416,7 @@ export default function SignTxn({ lng }: Props) {
           {storedSignedTxn &&
             <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
               <Icons.IconAlertTriangleFilled aria-hidden
-                className='text-warning align-middle my-auto me-2'
+                className='align-middle my-auto me-2'
               />
               <small>{t('sign_txn:compose_txn_btn_warning')}</small>
             </div>

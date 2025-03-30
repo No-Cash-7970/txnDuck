@@ -52,7 +52,7 @@ export default function NodeSelector({ lng }: Props) {
       <DropdownMenu.Trigger asChild>
         <button title={t('node_selector.choose_node')}
           className={ 'btn btn-accent'
-            + ' w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 leading-tight'
+            + ' w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 leading-tight flex-wrap'
             + ' sm:max-w-sm sm:px-4 sm:text-sm sm:gap-2' }
         >
           <NodeSelectorButtonText t={t} />
@@ -61,7 +61,7 @@ export default function NodeSelector({ lng }: Props) {
       <DropdownMenu.Portal>
         <DropdownMenu.Content asChild>
           <ul className={
-            'z-[1000] card menu shadow-md border border-base-300 bg-base-200 max-w-72 overflow-auto'
+            'z-1000 card menu shadow-md border border-base-300 bg-base-200 max-w-72 overflow-auto'
             + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
             + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
             + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
@@ -104,7 +104,7 @@ export default function NodeSelector({ lng }: Props) {
                   (e) => e.preventDefault() // Disable action so dialog can work
                 }>
                   <li className='mb-1'>
-                    <span className='bg-neutral text-neutral-content hover:text-base-content'>
+                    <span className='border border-secondary hover:text-base-content'>
                       <IconEyeCog stroke={1.5} aria-hidden />
                       {t('node_selector.view_config.btn')}
                     </span>
@@ -114,7 +114,7 @@ export default function NodeSelector({ lng }: Props) {
               <Dialog.Portal>
                 <Dialog.Overlay />
                 <Dialog.Content
-                  className='modal data-[state=open]:modal-open z-[1000]'
+                  className='modal modal-open z-1000'
                   aria-describedby={undefined}
                 >
                   <div className='modal-box prose px-0 max-w-xl'>
@@ -141,7 +141,7 @@ export default function NodeSelector({ lng }: Props) {
                   (e) => e.preventDefault() // Disable action so dialog can work
                 }>
                   <li className='mb-1'>
-                    <span className='bg-secondary text-secondary-content hover:text-base-content'>
+                    <span className='bg-secondary text-secondary-content'>
                       {!customNode && <>
                         <IconServerCog stroke={1.5} aria-hidden />
                         {t('node_selector.custom_config.set_btn')}
@@ -157,7 +157,7 @@ export default function NodeSelector({ lng }: Props) {
               <Dialog.Portal>
                 <Dialog.Overlay />
                 <Dialog.Content
-                  className='modal data-[state=open]:modal-open z-[1000]'
+                  className='modal modal-open z-1000'
                   aria-describedby={undefined}
                 >
                   <div className='modal-box prose px-0 max-w-xl'>

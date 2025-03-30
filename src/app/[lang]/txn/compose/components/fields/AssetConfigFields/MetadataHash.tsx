@@ -44,7 +44,7 @@ export function MetadataHashInput({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={false}
       containerId='apar_am-field'
-      containerClass='mt-4 max-w-sm'
+      containerClass='mt-6 max-w-sm'
       inputClass={((showFormErrors || form.touched.apar_am) &&
         (form.fieldErrors.lx
           || (!aparAmCondLengthGroup.isValid && aparAmCondLengthGroup.error)
@@ -92,9 +92,9 @@ export function Base64Input({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='b64Apar_am-field'
-      containerClass='mt-1 ms-1'
+      containerClass='mt-1 ms-3'
       inputClass='checkbox-primary checkbox-sm me-2 -mt-1'
-      labelClass='justify-start w-fit max-w-full'
+      labelClass='justify-start w-fit max-w-full text-sm align-middle'
       value={!!form.values.b64Apar_am}
       onChange={(e) => form.handleOnChange('b64Apar_am')(e.target.checked)}
     />

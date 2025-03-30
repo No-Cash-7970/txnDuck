@@ -187,7 +187,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
         <CoinNameInput t={t} />
 
         {/* Test button */}
-        <div className='mt-8'>
+        <div className='mt-10'>
           <div className='mb-2 text-center'>
             {nodeOK && <>
               <IconMoodSmileFilled aria-hidden size={20}
@@ -197,7 +197,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
             </>}
             {nodeOK === false && <>
               <IconAlertTriangleFilled aria-hidden size={20}
-                className='me-2 text-warning inline align-middle'
+                className='me-2 inline align-middle'
               />
               <span className='align-middle'>{t('node_selector.view_config.test_fail')}</span>
             </>}

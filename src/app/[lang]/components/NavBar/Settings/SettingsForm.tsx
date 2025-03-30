@@ -130,7 +130,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.disallow_form_errors')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={disallowFormErrors}
         onChange={(e) => {setDisallowFormErrors(e.target.checked); notifySave();}}
       />
@@ -141,7 +141,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_use_sug_fee')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultUseSugFee}
         onChange={(e) => {setDefaultUseSugFee(e.target.checked); notifySave();}}
       />
@@ -152,7 +152,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_use_sug_rounds')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultUseSugRounds}
         onChange={(e) => {setDefaultUseSugRounds(e.target.checked); notifySave();}}
       />
@@ -163,7 +163,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.get_asset_info')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={assetInfoGet}
         onChange={(e) => {setAssetInfoGet(e.target.checked); notifySave();}}
       />
@@ -176,7 +176,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_apar_m_use_snd')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultApar_mUseSnd}
         onChange={(e) => {setDefaultApar_mUseSnd(e.target.checked); notifySave();}}
       />
@@ -187,7 +187,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_apar_f_use_snd')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultApar_fUseSnd}
         onChange={(e) => {setDefaultApar_fUseSnd(e.target.checked); notifySave();}}
       />
@@ -198,7 +198,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_apar_c_use_snd')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultApar_cUseSnd}
         onChange={(e) => {setDefaultApar_cUseSnd(e.target.checked); notifySave();}}
       />
@@ -209,7 +209,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_apar_r_use_snd')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultApar_rUseSnd}
         onChange={(e) => {setDefaultApar_rUseSnd(e.target.checked); notifySave();}}
       />
@@ -222,7 +222,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_auto_send')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultAutoSend}
         onChange={(e) => {setDefaultAutoSend(e.target.checked); notifySave();}}
       />
@@ -235,7 +235,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.always_clear_after_send')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={alwaysClearAfterSend}
         onChange={(e) => {setAlwaysClearAfterSend(e.target.checked); notifySave();}}
       />
@@ -246,7 +246,7 @@ export default function SettingsForm(props: Props) {
         label={t('settings.default_hide_send_info')}
         labelClass='gap-3'
         inputClass='toggle-primary toggle-sm sm:toggle-md'
-        containerClass='mt-1'
+        containerClass='mt-3'
         value={defaultHideSendInfo}
         onChange={(e) => {setDefaultHideSendInfo(e.target.checked); notifySave();}}
       />
@@ -261,7 +261,7 @@ export default function SettingsForm(props: Props) {
         }
         labelClass='gap-3'
         inputInsideLabel={true}
-        containerClass='mt-1'
+        containerClass='mt-3'
         inputClass='w-24'
         min={1}
         value={tempConfirmWaitRounds}
@@ -276,7 +276,7 @@ export default function SettingsForm(props: Props) {
       {/* Clear data buttons */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
         <button type='button'
-          className='btn btn-sm btn-neutral h-auto pt-1 pb-1'
+          className='btn btn-sm btn-neutral h-auto min-h-[2rem] pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             setStoredTxnData(RESET);
@@ -287,7 +287,7 @@ export default function SettingsForm(props: Props) {
           {t('settings.clear_txn_data_btn')}
         </button>
         <button type='button'
-          className='btn btn-sm btn-outline btn-neutral h-auto pt-1 pb-1'
+          className='btn btn-sm btn-outline h-auto min-h-[2rem] pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             resetSettings();
@@ -299,7 +299,7 @@ export default function SettingsForm(props: Props) {
       {/* Reset button */}
       <div className='mt-9'>
         <button type='button'
-          className='btn btn-sm btn-block btn-error h-auto mx-auto'
+          className='btn btn-sm btn-block btn-error h-auto min-h-[2rem] mx-auto'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();

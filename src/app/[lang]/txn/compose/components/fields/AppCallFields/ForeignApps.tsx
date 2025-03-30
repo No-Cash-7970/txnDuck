@@ -15,7 +15,7 @@ export default function ForeignApps({ t }: { t: TFunction }) {
   const appForeignAssets = useAtomValue(txnDataAtoms.apas);
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (<>
-    {!appForeignApps.length && <p className='italic'>{t('fields.apfa.none')}</p>}
+    {!appForeignApps.length && <p className='italic mt-4 mb-2'>{t('fields.apfa.none')}</p>}
     {appForeignApps.map(
       (appAtom, i) => <ForeignAppInput t={t} appAtom={appAtom} index={i} key={`${appAtom}`} />
     )}
@@ -63,7 +63,7 @@ function ForeignAppInput({ t, appAtom, index }:
       inputInsideLabel={false}
       placeholder={t('fields.apfa.placeholder', { index: index + 1 })}
       containerId={`apfa-${index}-field`}
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || touched) && !app.isValid) ? 'input-error': ''}
       value={app.value ?? ''}
       onChange={(e) => {

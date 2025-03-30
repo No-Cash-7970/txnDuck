@@ -205,11 +205,7 @@ export default function SendTxn({ lng }: Props) {
         <div className='alert alert-warning mb-2 sm:mt-12 sm:-mb-8'>
           <Icons.IconAlertTriangle aria-hidden className=' my-auto me-2' />
           <div>{t('import_txn.overwrite_warning')}</div>
-          <Link // eslint-disable-next-line max-len
-            className="btn btn-outline text-warning-content hover:btn-warning hover:text-base-content"
-            replace={true}
-            href={`/${lng}/txn/sign`}
-          >
+          <Link className="btn btn-outline" replace={true} href={`/${lng}/txn/sign`}>
             {t('import_txn.cancel')}
           </Link>
         </div>
@@ -310,14 +306,17 @@ export default function SendTxn({ lng }: Props) {
           </div>
         </details>
         <div className='grid gap-4 md:gap-4 grid-cols-1 md:grid-cols-5 grid-rows-1 mt-8'>
-          <Link className='btn btn-primary h-auto col-span-2'
+          <Link
+            className='btn btn-primary font-semibold leading-tight min-h-[2rem] h-auto col-span-2'
             href={{ pathname: `/${lng}/txn/compose`, query: currentURLParams.toString()}}
           >
             <Icons.IconArrowBackUpDouble aria-hidden />
             {t('compose_txn_btn')}
           </Link>
           <Link
-            className='btn btn-secondary h-auto md:col-span-1 col-span-2'
+            className={'btn btn-secondary font-semibold leading-tight min-h-[2rem] h-auto'
+              + ' md:col-span-1 col-span-2'
+            }
             href={{pathname: `/${lng}/txn/sign`, query: currentURLParams.toString()}}
           >
             <Icons.IconArrowBackUp aria-hidden />
@@ -330,7 +329,9 @@ export default function SendTxn({ lng }: Props) {
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <a className='btn btn-outline h-auto col-span-1 flex-1' href={`/${lng}`}>
+          <a className='btn btn-outline font-semibold leading-tight h-auto col-span-1 flex-1'
+            href={`/${lng}`}
+          >
             <Icons.IconBan aria-hidden />
             {t('quit_btn')}
           </a>
@@ -355,7 +356,7 @@ export default function SendTxn({ lng }: Props) {
         </div>
         <div className='grid gap-4 md:gap-4 grid-cols-1 md:grid-cols-4 grid-rows-1 mt-8'>
           <button
-            className='btn btn-primary h-auto col-span-2'
+            className='btn btn-primary leading-tight min-h-[2rem] h-auto col-span-2'
             onClick={() => {
               setFailMsg(undefined);
               waitForConfirmation(pendingTxId);
@@ -365,13 +366,15 @@ export default function SendTxn({ lng }: Props) {
             {t('wait_longer_btn')}
           </button>
           <button
-            className='btn h-auto col-span-1'
+            className='btn leading-tight min-h-[2rem] h-auto col-span-1'
             onClick={attemptSendTxn}
           >
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <a className='btn btn-outline h-auto col-span-1' href={`/${lng}`}>
+          <a className='btn btn-outline font-semibold leading-tight min-h-[2rem] h-auto col-span-1'
+            href={`/${lng}`}
+          >
             <Icons.IconBan aria-hidden />
             {t('quit_btn')}
           </a>

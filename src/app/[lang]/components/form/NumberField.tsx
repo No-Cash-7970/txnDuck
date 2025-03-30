@@ -32,7 +32,10 @@ export default function NumberField({
 }: NumberFieldProps) {
   return (
     <div className={`form-control ${containerClass}`} id={containerId}>
-      <label className={`label ${labelClass}`} htmlFor={id || undefined}>
+      <label
+        className={`label ${!inputInsideLabel ? 'mb-2' : ''} text-base-content ${labelClass}`}
+        htmlFor={id || undefined}
+      >
         <span className={`label-text ${labelTextClass}`}>
           {label}
           {required && <span className='text-error px-1' title={requiredText || undefined}>*</span>}
@@ -43,7 +46,7 @@ export default function NumberField({
           {// Without side label
             (!beforeSideLabel && !afterSideLabel) &&
             <input
-              className={`input-bordered input ${inputClass}`}
+              className={`input ${inputClass}`}
               type='number'
               id={id || undefined}
               required={required}
@@ -63,14 +66,14 @@ export default function NumberField({
           }
           {// With a side label
             (beforeSideLabel || afterSideLabel) && <>
-            <span className='join'>
+            <span className='join w-full'>
               {beforeSideLabel &&
                 <span className='join-item bg-base-200 flex items-center px-4'>
                   {beforeSideLabel}
                 </span>
               }
               <input
-                className={`input-bordered input join-item flex-auto ${inputClass}`}
+                className={`input join-item flex-auto ${inputClass}`}
                 type='number'
                 id={id || undefined}
                 required={required}
@@ -102,7 +105,7 @@ export default function NumberField({
         {// Without side label
           (!beforeSideLabel && !afterSideLabel) &&
           <input
-            className={`input-bordered input ${inputClass}`}
+            className={`input w-full ${inputClass}`}
             type='number'
             id={id || undefined}
             required={required}
@@ -122,14 +125,14 @@ export default function NumberField({
         }
         {// With a side label
           (beforeSideLabel || afterSideLabel) &&
-          <span className='join'>
+          <span className='join w-full'>
             {beforeSideLabel &&
               <span className='join-item bg-base-200 flex items-center px-4'>
                 {beforeSideLabel}
               </span>
             }
             <input
-              className={`input-bordered input join-item flex-auto ${inputClass}`}
+              className={`input join-item flex-auto ${inputClass}`}
               type='number'
               id={id || undefined}
               required={required}
@@ -157,7 +160,7 @@ export default function NumberField({
       </>}
 
       {helpMsg &&
-        <div className='label help-msg'><span className='label-text-alt'>{helpMsg}</span></div>
+        <div className='label help-msg'><span className='text-sm'>{helpMsg}</span></div>
       }
     </div>
   );

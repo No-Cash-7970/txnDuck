@@ -37,7 +37,7 @@ export default function TxnPresetsList({ lng }: Props) {
     <SelectField label={t('category_label')}
       name='category'
       id='category-selection'
-      containerClass='flex justify-center max-w-xs mx-auto mt-8 -mb-4'
+      containerClass='max-w-xs mx-auto mt-8 -mb-4'
       labelClass='grid-cols-1 sm:grid-cols-2'
       labelTextClass='text-lg'
       options={[

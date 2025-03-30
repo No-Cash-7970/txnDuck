@@ -95,7 +95,7 @@ export default function ViewConfigDialogContent({ lng }: Props) {
             {t('node_selector.view_config.test_pass')}
           </>}
           {nodeOK === false && <>
-            <IconAlertTriangleFilled aria-hidden size={20} className='me-2 text-warning' />
+            <IconAlertTriangleFilled aria-hidden size={20} className='me-2' />
             {t('node_selector.view_config.test_fail')}
           </>}
         </div>

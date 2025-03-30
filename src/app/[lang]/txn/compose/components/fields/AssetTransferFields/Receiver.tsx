@@ -30,7 +30,7 @@ export default function Receiver({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.arcv.placeholder')}
       containerId='arcv-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.arcv) && form.fieldErrors.arcv) ? 'input-error' : ''
       }

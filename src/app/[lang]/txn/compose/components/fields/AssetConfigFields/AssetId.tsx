@@ -79,7 +79,7 @@ export default function AssetId({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='aclose-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.caid) &&
           (form.fieldErrors.caid || (!caidCondReqGroup.isValid && caidCondReqGroup.error))
         )

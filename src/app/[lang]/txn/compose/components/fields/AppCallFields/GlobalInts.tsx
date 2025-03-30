@@ -41,7 +41,7 @@ export default function GlobalInts({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apgs_nui-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={(
           ((showFormErrors || form.touched.apgs_nui) &&
             (form.fieldErrors.apgs_nui

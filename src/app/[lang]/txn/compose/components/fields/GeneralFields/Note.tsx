@@ -46,7 +46,7 @@ export function NoteInput({ t }: { t: TFunction }) {
         t(form.values.b64Note ? 'fields.note.placeholder_b64' : 'fields.note.placeholder')
       }
       containerId='note-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-6 max-w-lg'
       inputClass={((showFormErrors || form.touched.note) &&
         (form.fieldErrors.note
           || (!noteCondMaxGroup.isValid && noteCondMaxGroup.error)
@@ -92,9 +92,9 @@ export function Base64Input({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='b64Note-field'
-      containerClass='mt-1 ms-1'
+      containerClass='mt-1 ms-3'
       inputClass='checkbox-primary checkbox-sm me-2 -mt-1'
-      labelClass='justify-start w-fit max-w-full'
+      labelClass='justify-start w-fit max-w-full text-sm align-middle'
       value={!!form.values.b64Note}
       onChange={(e) => form.handleOnChange('b64Note')(e.target.checked)}
     />

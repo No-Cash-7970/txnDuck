@@ -39,7 +39,7 @@ export default function ClawbackTarget({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.asnd.placeholder')}
       containerId='asnd-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={((showFormErrors || form.touched.asnd) &&
           (form.fieldErrors.asnd || (!asndCondReqGroup.isValid && asndCondReqGroup.error))
         )

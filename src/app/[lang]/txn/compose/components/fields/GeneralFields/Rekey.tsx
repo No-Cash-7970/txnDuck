@@ -41,7 +41,7 @@ export default function Rekey({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.rekey.placeholder')}
       containerId='rekey-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={((showFormErrors || form.touched.rekey) &&
           (form.fieldErrors.rekey || (!rekeyCondReqGroup.isValid && rekeyCondReqGroup.error))
         )

@@ -43,7 +43,7 @@ export function LeaseInput({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={false}
       containerId='lx-field'
-      containerClass='mt-4 max-w-sm'
+      containerClass='mt-6 max-w-sm'
       inputClass={((showFormErrors || form.touched.lx) &&
         (form.fieldErrors.lx
           || (!lxCondLengthGroup.isValid && lxCondLengthGroup.error)
@@ -89,9 +89,9 @@ export function Base64Input({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='b64Lx-field'
-      containerClass='mt-1 ms-1'
+      containerClass='mt-1 ms-3'
       inputClass='checkbox-primary checkbox-sm me-2 -mt-1'
-      labelClass='justify-start w-fit max-w-full'
+      labelClass='justify-start w-fit max-w-full text-sm align-middle'
       value={!!form.values.b64Lx}
       onChange={(e) => form.handleOnChange('b64Lx')(e.target.checked)}
     />

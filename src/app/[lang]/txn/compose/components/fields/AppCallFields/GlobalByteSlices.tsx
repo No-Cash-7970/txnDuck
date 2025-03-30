@@ -41,7 +41,7 @@ export default function GlobalByteSlices({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apgs_nbs-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={(
           ((showFormErrors || form.touched.apgs_nbs) &&
             (form.fieldErrors.apgs_nbs

@@ -63,7 +63,7 @@ function UseSenderAddr({ t }: { t: TFunction }) {
       }}
       inputInsideLabel={true}
       containerId='apar_fUseSnd-field'
-      containerClass='mt-4 max-w-lg'
+      containerClass='mt-6 max-w-lg'
       inputClass='toggle-primary'
       labelClass='gap-3'
       value={!!form.values.apar_fUseSnd}
@@ -104,7 +104,7 @@ export function FreezeAddrInput({ t }: { t: TFunction }) {
       inputInsideLabel={false}
       placeholder={t('fields.apar_f.placeholder')}
       containerId='apar_f-field'
-      containerClass='mt-4'
+      containerClass='mt-6'
       inputClass={
         ((showFormErrors || form.touched.apar_f) && form.fieldErrors.apar_f) ? 'input-error' : ''
       }
@@ -116,7 +116,7 @@ export function FreezeAddrInput({ t }: { t: TFunction }) {
       helpMsg={form.values.apar_f === ''
         ? <>
           <IconAlertTriangleFilled aria-hidden size={18}
-            className='text-warning align-middle inline me-2'
+            className='align-middle inline ms-2 me-2'
           />
           {t('fields.apar_f.empty_warning')}
         </>

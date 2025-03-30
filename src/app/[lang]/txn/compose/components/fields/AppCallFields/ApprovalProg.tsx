@@ -66,7 +66,7 @@ export default function ApprovalProg({ t }: { t: TFunction }) {
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content className='modal data-[state=open]:modal-open' aria-describedby={undefined}>
+        <Dialog.Content className='modal modal-open' aria-describedby={undefined}>
           <div className='modal-box prose px-0 max-w-xl'>
             <Dialog.Title className='px-6 sm:px-8'>{t('fields.apap.import_heading')}</Dialog.Title>
             <FileField

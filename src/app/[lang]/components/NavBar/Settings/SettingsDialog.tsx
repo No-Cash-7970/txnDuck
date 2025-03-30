@@ -32,7 +32,7 @@ export default function SettingsDialog({ lng, open = false }: Props) {
       <Dialog.Portal>
         <Dialog.Overlay />
         <Dialog.Content
-          className='modal data-[state=open]:modal-open'
+          className='modal modal-open'
           aria-describedby={undefined}
           onPointerDownOutside={(e) => e.preventDefault()}
           onInteractOutside={(e) => e.preventDefault()}

@@ -29,7 +29,7 @@ export default function Amount({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='aamt-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.aamt) &&
           (form.fieldErrors.aamt || (!aamtCondMax.isValid && aamtCondMax.error))
         )

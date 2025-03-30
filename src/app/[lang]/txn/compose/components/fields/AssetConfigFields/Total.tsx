@@ -39,7 +39,7 @@ export default function Total({ t }: { t: TFunction }) {
       requiredText={t('form.required')}
       inputInsideLabel={false}
       containerId='apar_t-field'
-      containerClass='mt-4 max-w-xs'
+      containerClass='mt-6 max-w-xs'
       helpMsg={form.values.apar_t
         ? <span className='ps-3'>
           {t('asset_amount', {
