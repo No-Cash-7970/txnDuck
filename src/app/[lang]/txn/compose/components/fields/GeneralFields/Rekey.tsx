@@ -73,7 +73,7 @@ export default function Rekey({ t }: { t: TFunction }) {
           <Trans t={t} i18nKey='fields.rekey.warning'
             components={{
               em: <strong />,
-              a: <a href='https://developer.algorand.org/docs/get-details/accounts/rekey'
+              a: <a href='https://dev.algorand.co/concepts/accounts/rekeying/'
                 className='link'
                 target='_blank'
               />
