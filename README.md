@@ -65,7 +65,7 @@ updating or uninstalling a self-hosted instance of txnDuck.
 Modifying the code requires installing the development tools and setting up the
 development environment.
 
-:book: To get started, follow the [development installation instructions](docs/installation.md#installing-the-development-environment).
+:book: To get started, follow the [development installation instructions](docs/installation.md#development-environment-installation).
 
 :book: Refer to the [Developers Documentation](docs/developers.md) for useful
 information for developers.
