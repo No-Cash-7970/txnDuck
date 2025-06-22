@@ -39,7 +39,7 @@ export default function Nonparticipation({ t }: { t: TFunction }) {
       }}
     />
     {!!form.values.nonpart
-      ? <div className='alert alert-warning'>
+      ? <div className='alert alert-warning mt-2'>
         <IconAlertTriangle aria-hidden />
         <span>{t('fields.nonpart.warning')}</span>
       </div>
