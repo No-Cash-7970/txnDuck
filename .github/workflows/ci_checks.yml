@@ -102,7 +102,7 @@ jobs:
     - name: Install dependencies
       run: yarn
     - name: Run Commitlint (on push)
-      run: commitlint --verbose --from ${{github.event.before}} --to ${{github.event.after}}
+      run: yarn commitlint --verbose --from ${{github.event.before}} --to ${{github.event.after}}
   commitlint_pr:
     if: github.event_name == 'pull_request'
     timeout-minutes: 5
@@ -124,5 +124,5 @@ jobs:
     - name: Install dependencies
       run: yarn
     - name: Run Commitlint (on pull request)
-      run: commitlint --verbose --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
+      run: yarn commitlint --verbose --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
 
