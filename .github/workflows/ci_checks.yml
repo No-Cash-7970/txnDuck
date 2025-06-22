@@ -19,13 +19,13 @@ jobs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
         cache: yarn
     - name: Install dependencies
       run: yarn
@@ -48,13 +48,13 @@ jobs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
         cache: yarn
     - name: Install dependencies
       run: yarn
@@ -69,13 +69,13 @@ jobs:
     - name: Install Node
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
     - name: Enable Corepack for Yarn
       run: corepack enable
     - name: Set up Node cache # Set up Node cache by installing again
       uses: actions/setup-node@v4
       with:
-        node-version: 20
+        node-version: 22
         cache: yarn
     - name: Install dependencies
       run: yarn
