@@ -2,6 +2,10 @@ title: Política de privacidad
 personal_info:
   heading: Recogida de datos personales
   details: >-
+    TxnPato no recopila ni almacena ninguna información personal (nombre, dirección de correo
+    electrónico, etc.) ni datos de diagnóstico. No registra ninguna información de uso. No utiliza
+    plataformas analíticas ni publicitarias de terceros.
+  details_magic: >- # Same as `details`, but with information about Magic exception
     A excepción de <magic_section>la información personal recopilada al utilizar
     Magic</magic_section>, txnPato no recopila ni almacena ninguna información personal (nombre,
     dirección de correo electrónico, etc.) ni datos de diagnóstico. No registra ninguna información

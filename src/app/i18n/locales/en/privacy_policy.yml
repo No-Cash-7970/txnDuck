@@ -2,6 +2,10 @@ title: Privacy Policy
 personal_info:
   heading: Collection of personal information
   details: >-
+    TxnDuck does not collect or store any personal information (name, email address, etc.) or any
+    diagnostic data. It does not log any usage information. It does not use any third-party
+    analytics or advertising platforms.
+  details_magic: >- # Same as `details`, but with information about Magic exception
     Except for the <magic_section>personal information collected when using
     Magic</magic_section>, txnDuck does not collect or store any personal information (name, email
     address, etc.) or any diagnostic data. It does not log any usage information. It does not use

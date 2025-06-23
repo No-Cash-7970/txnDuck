@@ -34,9 +34,12 @@ export default function PrivacyPolicyPage(props: { params: Promise<{ lang: strin
 
       <h2 id="personal-info">{t('personal_info.heading')}</h2>
       <p>
-        <Trans t={t} i18nKey='personal_info.details'
-          components={{ magic_section: <a href='#magic-auth' /> }}
-        />
+        {!process.env.NEXT_PUBLIC_MAGIC_API_KEY ?
+          t('personal_info.details')
+          : <Trans t={t} i18nKey='personal_info.details_magic'
+            components={{ magic_section: <a className='font-bold' href='#magic-auth' /> }}
+          />
+        }
       </p>
 
       <h2 id="app-state-data">{t('app_state_data.heading')}</h2>
@@ -54,22 +57,24 @@ export default function PrivacyPolicyPage(props: { params: Promise<{ lang: strin
         }} />
       </p>
 
-      <h2 id="magic-auth">{t('magic_auth.heading')}</h2>
-      <div className='alert text-start'>
-        <IconInfoCircle className='stroke-info' aria-hidden />
-        {t('magic_auth.notice')}
-      </div>
-      <p>
-        <Trans t={t} i18nKey='magic_auth.details_1'
-          components={{ magic: <a href='https://magic.link/' target='_blank' /> }}
-        />
-      </p>
-      <Trans t={t} i18nKey='magic_auth.details_2' components={{ ul: <ul />, li: <li />, }} />
-      <p>
-        <Trans t={t} i18nKey='magic_auth.details_3' components={{
-          magic_privacy: <a href='https://magic.link/legal/privacy-policy' target='_blank' />,
-        }} />
-      </p>
+      {process.env.NEXT_PUBLIC_MAGIC_API_KEY && <>
+        <h2 id="magic-auth">{t('magic_auth.heading')}</h2>
+        <div className='alert text-start'>
+          <IconInfoCircle className='stroke-info' aria-hidden />
+          {t('magic_auth.notice')}
+        </div>
+        <p>
+          <Trans t={t} i18nKey='magic_auth.details_1'
+            components={{ magic: <a href='https://magic.link/' target='_blank' /> }}
+          />
+        </p>
+        <Trans t={t} i18nKey='magic_auth.details_2' components={{ ul: <ul />, li: <li />, }} />
+        <p>
+          <Trans t={t} i18nKey='magic_auth.details_3' components={{
+            magic_privacy: <a href='https://magic.link/legal/privacy-policy' target='_blank' />,
+          }} />
+        </p>
+      </>}
     </main>
   );
 }
