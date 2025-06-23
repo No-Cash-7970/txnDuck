@@ -393,7 +393,7 @@ export default function SignTxn({ lng }: Props) {
       }
       {// Transaction is signed!
         (storedSignedTxn && !hasSignTxnError) &&
-        <div className='alert alert-success mt-8'>
+        <div className='alert alert-success mt-8 text-[1rem]'>
           <Icons.IconCircleCheck aria-hidden size={32} />
           {t('sign_txn:txn_signed')}
         </div>
@@ -414,11 +414,13 @@ export default function SignTxn({ lng }: Props) {
             {t('sign_txn:compose_txn_btn')}
           </Link>
           {storedSignedTxn &&
-            <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2'>
+            <div className={
+              'alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-snug text-base-content/70'
+            }>
               <Icons.IconAlertTriangleFilled aria-hidden
                 className='align-middle my-auto me-2'
               />
-              <small>{t('sign_txn:compose_txn_btn_warning')}</small>
+              <span>{t('sign_txn:compose_txn_btn_warning')}</span>
             </div>
           }
         </div>

@@ -265,11 +265,11 @@ export default function SendTxn({ lng }: Props) {
           </div>
         </details>
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
-          <a className='btn btn-primary btn-block h-auto' href={`/${lng}`}>
+          <a className='btn btn-primary btn-block font-semibold' href={`/${lng}`}>
             <Icons.IconHome aria-hidden />
             {t('done_btn')}
           </a>
-          <a className='btn btn-secondary btn-block h-auto' href={`/${lng}/txn`}>
+          <a className='btn btn-secondary btn-block font-semibold' href={`/${lng}/txn`}>
             <Icons.IconPlus aria-hidden />
             {t('make_new_txn_btn')}
           </a>
@@ -306,32 +306,23 @@ export default function SendTxn({ lng }: Props) {
           </div>
         </details>
         <div className='grid gap-4 md:gap-4 grid-cols-1 md:grid-cols-5 grid-rows-1 mt-8'>
-          <Link
-            className='btn btn-primary font-semibold leading-tight min-h-[2rem] h-auto col-span-2'
+          <Link className='btn btn-primary font-semibold col-span-2'
             href={{ pathname: `/${lng}/txn/compose`, query: currentURLParams.toString()}}
           >
             <Icons.IconArrowBackUpDouble aria-hidden />
             {t('compose_txn_btn')}
           </Link>
-          <Link
-            className={'btn btn-secondary font-semibold leading-tight min-h-[2rem] h-auto'
-              + ' md:col-span-1 col-span-2'
-            }
+          <Link className={'btn btn-secondary font-semibold md:col-span-1 col-span-2'}
             href={{pathname: `/${lng}/txn/sign`, query: currentURLParams.toString()}}
           >
             <Icons.IconArrowBackUp aria-hidden />
             {t('sign_txn_btn')}
           </Link>
-          <button
-            className='btn h-auto col-span-1'
-            onClick={attemptSendTxn}
-          >
+          <button className='btn col-span-1' onClick={attemptSendTxn}>
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <a className='btn btn-outline font-semibold leading-tight h-auto col-span-1 flex-1'
-            href={`/${lng}`}
-          >
+          <a className='btn btn-outline font-semibold col-span-1 flex-1' href={`/${lng}`}>
             <Icons.IconBan aria-hidden />
             {t('quit_btn')}
           </a>

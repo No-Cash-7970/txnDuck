@@ -309,7 +309,9 @@ export default function ComposeForm({ lng }: Props) {
             <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('txn_presets_btn')}
           </Link>
-          <div className='alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-5'>
+          <div className={
+            'alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-snug text-base-content/70'
+          }>
             <Icons.IconAlertTriangleFilled aria-hidden className='align-middle my-auto me-2' />
             <span>{t('txn_presets_btn_warning')}</span>
           </div>

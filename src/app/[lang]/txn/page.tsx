@@ -36,8 +36,8 @@ export default function TxnPresetsPage(props: { params: Promise<{ lang: string }
       <div className='flex justify-center'>
         <Link
           href={`/${lang}/txn/compose`}
-          className={'btn btn-block btn-accent'
-            + ' text-lg h-auto py-1 max-w-3xl leading-tight flex-wrap'
+          className={'btn btn-block btn-accent font-normal'
+            + ' text-lg py-1 max-w-3xl flex-wrap'
           }
         >
           <IconArrowBigRightLinesFilled aria-hidden className='rtl:hidden' />

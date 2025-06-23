@@ -43,7 +43,9 @@ export default function ToastNotification({ lng, message, open, onOpenChange }: 
       <Toast.Description>{message}</Toast.Description>
       <Toast.Close asChild>
         <button
-          className='btn btn-outline btn-square btn-sm text-success-content sm:btn-ghost'
+          className={
+            'btn btn-outline btn-square btn-sm text-success-content sm:btn-ghost sm:btn-success'
+          }
           aria-label={t('close')}
         >
           <IconX aria-hidden size={20} />

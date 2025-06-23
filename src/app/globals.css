@@ -130,6 +130,10 @@
   /* --font-display-jp:
     'Noto Sans Display', 'Noto Sans', 'Noto Sans JP', sans-serif; */
 
+  /* This should be set to whatever the padding of container for Daisy UI Toast component.
+   * The padding of the container for the Daisy UI Toast component is 1rem by default.
+   */
+  --viewport-padding: 1rem;
   --animate-toast-hide: toastHide 100ms ease-in;
   --animate-toast-slide-in-from-right: toastSlideInFromRight 150ms
     cubic-bezier(0.16, 1, 0.3, 1);
@@ -180,48 +184,9 @@
   }
 }
 
-/*
-  The default border color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
 @layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentColor);
-  }
-}
-
-@layer base {
-  :root {
-    /*
-     * This should be set to whatever the padding of container for Daisy UI Toast component.
-     * The padding of the container for the Daisy UI Toast component is 1rem by default.
-     */
-    --viewport-padding: 1rem;
-  }
-
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
-  }
-
-  /* input::placeholder, textarea::placeholder {
-    color: theme(colors.base-content / 40%)
-  } */
-
-  .label-text {
-    color: var(--color-base-content);
-    white-space: normal;
-  }
-
-  .btn {
-    line-height: normal;
   }
 
   /* [lang="jp"] {
@@ -236,4 +201,20 @@
   [lang="jp"] h6 {
     @apply font-display-jp;
   } */
+}
+
+.label {
+  color: rgb(from var(--color-base-content) r g b / 70%); /* Base content color with opacity */
+  white-space: normal;
+}
+
+.label-text {
+  color: var(--color-base-content);
+  white-space: normal;
+}
+
+.btn {
+  height: auto;
+  line-height: var(--leading-snug);
+  min-height: var(--size);
 }
