@@ -54,7 +54,7 @@ export default function GlobalByteSlices({ t }: { t: TFunction }) {
       min={0}
       max={MAX_APP_GLOBALS - (form.values.apgs_nui as number ?? 0)}
       step={1}
-      value={form.values.apgs_nbs ?? ''}
+      value={(form.values.apgs_nbs ?? '') as (string | number)}
       onChange={(e) =>
         form.handleOnChange('apgs_nbs')(
           e.target.value === '' ? undefined : parseInt(e.target.value)
