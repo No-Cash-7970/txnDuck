@@ -11,6 +11,9 @@
 # Set up the dev environment
 FROM node:20 AS dev-setup
 WORKDIR /app
+# Avoid Git's "suspicious user" error when trying to install tools when building and running the
+# image as non-root
+RUN git config --global --add safe.directory /app
 RUN corepack enable && yarn set version stable
 COPY . .
 RUN yarn install
