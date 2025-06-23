@@ -26,7 +26,8 @@ export default function TxnPresetsList({ lng }: Props) {
   const txnPresetFavs = useAtomValue(txnPresetFavsAtom);
 
   useEffect(() => {
-    // Remove URL parameter for preset if it is specified
+    // Remove URL parameter for preset if it is specified to prevent it from appearing twice when a
+    // link is clicked on
     const newURLParams = new URLSearchParams(urlParams);
     newURLParams.delete(Preset.ParamName);
     setUrlParams(newURLParams.toString());
