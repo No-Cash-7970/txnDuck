@@ -40,6 +40,7 @@ export default function AppId({ t }: { t: TFunction }) {
       }
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      placeholder='00000'
       containerId='apid-field'
       containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.apid) &&

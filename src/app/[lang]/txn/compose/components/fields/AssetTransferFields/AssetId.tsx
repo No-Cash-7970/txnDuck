@@ -69,6 +69,7 @@ export default function AssetId({ t }: { t: TFunction }) {
       required={true}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      placeholder='00000'
       containerId='xaid-field'
       containerClass='mt-6 max-w-xs'
       inputClass={

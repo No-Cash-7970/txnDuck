@@ -78,6 +78,7 @@ export default function AssetId({ t }: { t: TFunction }) {
       required={preset === Preset.AssetReconfig || preset === Preset.AssetDestroy}
       requiredText={t('form.required')}
       inputInsideLabel={false}
+      placeholder='00000'
       containerId='aclose-field'
       containerClass='mt-6 max-w-xs'
       inputClass={((showFormErrors || form.touched.caid) &&
