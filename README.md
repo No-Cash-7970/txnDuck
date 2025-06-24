@@ -1,6 +1,6 @@
 # txnDuck 🦆 Transaction Builder UI
 
-[![Algorand badge](https://img.shields.io/badge/Algorand-006883?style=for-the-badge&logo=Algorand)](https://developer.algorand.org/)&nbsp;
+[![Algorand badge](https://img.shields.io/badge/Algorand-17CAC6?style=for-the-badge&logo=Algorand)](https://algorand.co/)&nbsp;
 [![Next.js badge](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)&nbsp;
 [![Tailwindcss badge](https://img.shields.io/badge/Tailwindcss-0ea5e9?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)&nbsp;
 [![License MIT badge](https://img.shields.io/github/license/No-Cash-7970/txnDuck?style=for-the-badge&color=8e5548)](LICENSE.md)&nbsp;
