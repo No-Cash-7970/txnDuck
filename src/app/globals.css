@@ -204,12 +204,8 @@
 }
 
 .label {
-  color: rgb(from var(--color-base-content) r g b / 70%); /* Base content color with opacity */
-  white-space: normal;
-}
-
-.label-text {
-  color: var(--color-base-content);
+  /* Same color as prose body text */
+  color: rgb(from var(--color-base-content) r g b / 80%);
   white-space: normal;
 }
 
