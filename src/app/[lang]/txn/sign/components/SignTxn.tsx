@@ -408,7 +408,7 @@ export default function SignTxn({ lng }: Props) {
           <Link href={{
             pathname: `/${lng}/txn/compose`,
             query: currentURLParams.toString(),
-          }} className={'btn w-full' + (hasSignTxnError ? ' btn-primary' : '')}>
+          }} className={'btn w-full' + (hasSignTxnError ? ' btn-primary font-semibold' : '')}>
             <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
             <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
             {t('sign_txn:compose_txn_btn')}
