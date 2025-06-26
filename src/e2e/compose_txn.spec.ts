@@ -175,7 +175,7 @@ test.describe('Compose Transaction Page', () => {
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=reg_online&${formUrlParams}`);
       // Check if using correct preset
-      await expect(page.getByText('Register account online')).toBeVisible();
+      await expect(page.getByText('Register account as online')).toBeVisible();
       // Check fields
       await expect(page.getByLabel(/Sender/))
         .toHaveValue('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');
@@ -205,7 +205,7 @@ test.describe('Compose Transaction Page', () => {
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=reg_offline&${formUrlParams}`);
       // Check if using correct preset
-      await expect(page.getByText('Register account offline')).toBeVisible();
+      await expect(page.getByText('Register account as offline')).toBeVisible();
       // Check fields
       await expect(page.getByLabel(/Sender/))
         .toHaveValue('MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4');

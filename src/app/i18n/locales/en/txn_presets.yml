@@ -107,17 +107,17 @@ app_delete:
 # Participation key category
 part_key_heading: Participation key
 reg_online:
-  heading: Register account online
+  heading: Register account as online
   description: >-
     Register an account as “online” to start participating in consensus. If an account is already
     online, renew the participation keys by registering the account again with a new set of keys.
   action: Register as online
 reg_offline:
-  heading: Register account offline
+  heading: Register account as offline
   description: Register an account as “offline” to stop participating in consensus.
   action: Register as offline
 reg_nonpart:
-  heading: Register account nonparticipating
+  heading: Register account as nonparticipating
   description: >-
     <em>Permanently</em> mark an account as not participating. <em>The account will not be able go
     online or offline and receive rewards.</em>
