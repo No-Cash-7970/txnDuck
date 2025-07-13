@@ -10,7 +10,9 @@ import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (
 export const walletTypes: {[id: string]: string} = {
   [WalletId.PERA]: 'mobile_web',
   [WalletId.DEFLY]: 'mobile',
+  [WalletId.DEFLY_WEB]: 'browser_extension',
   [WalletId.EXODUS]: 'browser_extension',
+  [WalletId.W3_WALLET]: 'mobile',
   // [WalletId.DAFFI]: 'mobile',
   [WalletId.LUTE]: 'web',
   [WalletId.KMD]: 'cli',

@@ -67,6 +67,7 @@ wallet:
   providers:
     pera: Pera
     defly: Defly
+    defly-web: Defly Web (Beta)
     exodus: Exodus
     # daffi: Daffi
     lute: Lute
@@ -76,6 +77,7 @@ wallet:
     magic: Magic
     mnemonic: Mnemonic
     biatec: Biatec (AWallet)
+    w3-wallet: W3 Wallet
   type:
     mobile: Mobile wallet
     mobile_web: Mobile & web wallet

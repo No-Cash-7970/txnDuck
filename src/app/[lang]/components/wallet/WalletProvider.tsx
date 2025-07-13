@@ -118,6 +118,8 @@ export default function WalletProvider({ sitename, children }: {
     },
     { id: WalletId.KIBISIS },
     WalletId.EXODUS,
+    WalletId.W3_WALLET,
+    WalletId.DEFLY_WEB,
     { id: WalletId.KMD },
   ];
 
@@ -132,27 +134,27 @@ export default function WalletProvider({ sitename, children }: {
     supportedWallets.splice(3, 0, { id: WalletId.WALLETCONNECT, options: wcOptions });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, KMD
+     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, W3, Defly-Web, KMD
      */
 
     // Insert Biatec between Exodus and KMD in the list of supported wallets
-    supportedWallets.splice(6, 0, { id: WalletId.BIATEC, options: wcOptions });
+    supportedWallets.splice(8, 0, { id: WalletId.BIATEC, options: wcOptions });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, Biatec, KMD
+     * Pera, Defly, Lute, WalletConnect, Kibisis, Exodus, W3, Defly-Web, Biatec, KMD
      */
   }
 
   // Add Magic as a supported wallet if a Magic API key is set
   if (process.env.NEXT_PUBLIC_MAGIC_API_KEY) {
     // Insert Magic after Kibisis in the list of supported wallets
-    supportedWallets.splice(4, 0, {
+    supportedWallets.splice((process.env.NEXT_PUBLIC_WC_PROJECT_ID ? 4 : 3), 0, {
       id: WalletId.MAGIC,
       options: { apiKey: process.env.NEXT_PUBLIC_MAGIC_API_KEY }
     });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic, Exodus, Biatec?, KMD
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic, Exodus, W3, Defly-Web, Biatec?, KMD
      */
   }
 
@@ -170,7 +172,8 @@ export default function WalletProvider({ sitename, children }: {
     });
     /*
      * Wallets list is now:
-     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic?, Exodus, Biatec?, KMD, Mnemonic
+     * Pera, Defly, Lute, WalletConnect?, Kibisis, Magic?, Exodus, W3, Defly-Web, Biatec?, KMD,
+     * Mnemonic
      */
   }
 
