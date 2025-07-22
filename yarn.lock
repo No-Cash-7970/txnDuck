@@ -28,17 +28,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@algorandfoundation/algokit-utils@npm:^9.1.1":
-  version: 9.1.1
-  resolution: "@algorandfoundation/algokit-utils@npm:9.1.1"
-  dependencies:
-    buffer: "npm:^6.0.3"
-  peerDependencies:
-    algosdk: ^3.0.0
-  checksum: 10c0/785554756cd1df0bcad9d5ef285cc7900ae21238361b05f41b8acea3600fa70068a0a8ef512ad2048bfd6b30302e77fa4cbf4fd23cb30b56ed10398c09825e06
-  languageName: node
-  linkType: hard
-
 "@alloc/quick-lru@npm:^5.2.0":
   version: 5.2.0
   resolution: "@alloc/quick-lru@npm:5.2.0"
@@ -15729,7 +15718,6 @@ __metadata:
   resolution: "txnduck@workspace:."
   dependencies:
     "@agoralabs-sh/avm-web-provider": "npm:^1.7.0"
-    "@algorandfoundation/algokit-utils": "npm:^9.1.1"
     "@blockshake/defly-connect": "npm:^1.2.1"
     "@commitlint/cli": "npm:^19.8.1"
     "@commitlint/config-conventional": "npm:^19.8.1"
