@@ -143,3 +143,4 @@ page_not_found:
   quack: Quack.
   details: The page you are looking for does not exist. Check if the URL is correct.
   duck_img_alt: Duck
+page_under_construction: This page is under construction. Some components may not work.

@@ -148,3 +148,5 @@ page_not_found:
   quack: Cua.
   details: La página que usted busca no existe. Compruebe si la URL es correcta.
   duck_img_alt: Pato
+page_under_construction: >-
+  Esta página está en construcción. Es posible que algunos componentes no funcionen.
