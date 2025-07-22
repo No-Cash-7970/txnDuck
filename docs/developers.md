@@ -231,10 +231,10 @@ yarn cz
 - `send_txn`: The "Send Transaction" page
 - `txn_presets`: The "Transaction Presets" page
 - `i18n`: Internationalization (I18N), language translations
-- `compose_txn_grp`: The "Compose Transaction Group" page
-- `sign_txn_grp`: The "Sign Transaction Group" page
-- `send_txn_grp`: The "Send Transaction Group" page
-- `txn_grp_presets`: The "Transaction Group Presets" page
+- `compose_grp`: The "Compose Transaction Group" page
+- `sign_grp`: The "Sign Transactions in Group" page
+- `send_grp`: The "Send Transaction Group" page
+- `grp_presets`: The "Transaction Group Presets" page
 
 ### Common commit message type and scope combinations
 
