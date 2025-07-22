@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom';
 import algosdk from 'algosdk';
-import { getAppArgsForTransaction } from '@algorandfoundation/algokit-utils';
 import * as processor from './processor';
 
 describe('Transaction Data Processor', () => {
@@ -1530,17 +1529,17 @@ describe('Transaction Data Processor', () => {
 
     it('returns application call transaction data when given a application call transaction',
     () => {
-      const encodedAppArgs = getAppArgsForTransaction({
-        accounts: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
-        appArgs: ['foo', '42', ''],
-        apps: [11111111, 22222222],
-        assets: [33333333, 44444444, 55555555],
-        boxes: [{appId: 2, name: 'Box 1' }, {appId: 1, name: 'Boxy box' }],
-      });
       const textEncoder = new TextEncoder;
       const txn = algosdk.makeApplicationCallTxnFromObject({
-        ...encodedAppArgs,
+        accounts: ['GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A'],
+        appArgs: ['foo', '42', ''].map(arg => textEncoder.encode(arg)),
         sender: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
+        foreignApps: [11111111, 22222222],
+        foreignAssets: [33333333, 44444444, 55555555],
+        boxes: [
+          {appIndex: 2, name: textEncoder.encode('Box 1') },
+          {appIndex: 1, name: textEncoder.encode('Boxy box') }
+        ],
         onComplete: 0,
         appIndex: 0,
         approvalProgram: textEncoder.encode('BYEB'),
