@@ -120,7 +120,14 @@ export default function WalletProvider({ sitename, children }: {
     WalletId.EXODUS,
     WalletId.W3_WALLET,
     WalletId.DEFLY_WEB,
-    { id: WalletId.KMD },
+    { id: WalletId.KMD,
+      options: {
+        token: process.env.NEXT_PUBLIC_KMD_TOKEN || undefined,
+        baseServer: process.env.NEXT_PUBLIC_KMD_BASE_SERVER || undefined,
+        port: process.env.NEXT_PUBLIC_KMD_PORT || undefined,
+        wallet: process.env.NEXT_PUBLIC_KMD_WALLET || undefined,
+      }
+    },
   ];
 
   // Add WalletConnect as a supported wallet if a WalletConnect project ID is set
