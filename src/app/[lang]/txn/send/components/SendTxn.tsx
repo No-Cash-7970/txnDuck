@@ -255,13 +255,12 @@ export default function SendTxn({ lng }: Props) {
         </div>
         <details className='collapse-plus collapse border mt-6' open={!defaultHideSendInfo}>
           <summary className='collapse-title text-lg w-full'>{t('success.details')}</summary>
-          <div className='collapse-content not-prose'>
-            <code className={'card font-mono bg-neutral text-neutral-content'
-              +' whitespace-pre overflow-x-scroll'
-              +' mt-1 p-4'
-            }>
-{algosdk.encodeJSON(successMsg.response, { space: 2 })}
-            </code>
+          <div className='collapse-content'>
+            <div className="mockup-code bg-neutral text-neutral-content before:hidden px-4">
+              <pre className='mt-0 mb-0 p-0 before:hidden'>
+                <code>{algosdk.encodeJSON(successMsg.response, { space: 2 })}</code>
+              </pre>
+            </div>
           </div>
         </details>
         <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 grid-rows-1 mx-auto mt-12'>
