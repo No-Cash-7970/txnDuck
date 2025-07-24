@@ -42,13 +42,13 @@ settings:
   default_use_sug_rounds: Establecer rondas válidas automáticamente por defecto
   get_asset_info: Obtener información sobre activos cuando se introduce la identificación del activo
   default_apar_m_use_snd: >-
-    Establecer la dirección del administrador en la dirección del remitente por defecto
+    Usar la dirección del remitente como dirección del administrador por defecto
   default_apar_f_use_snd: >-
-    Establecer la dirección para congelar en la dirección del remitente por defecto
+    Usar la dirección del remitente como dirección para congelar por defecto
   default_apar_c_use_snd: >-
-    Establecer la dirección para revocar en la dirección del remitente por defecto
+    Usar la dirección del remitente como dirección para revocar por defecto
   default_apar_r_use_snd: >-
-    Establecer la dirección de reserva en la dirección del remitente por defecto
+    Usar la dirección del remitente como dirección de reserva por defecto
   default_auto_send: Enviar automáticamente la transacción después de firmar por defecto
   always_clear_after_send: Borrar siempre los datos de transacción guardados tras el envío
   default_hide_send_info: Ocultar los detalles de la sección «Más información» por defecto

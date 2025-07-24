@@ -190,7 +190,7 @@ fields:
     tip: A URL where more information about the asset can be retrieved.
     placeholder: "ipfs://"
   apar_m_use_snd: # Use sender as manager?
-    label: Set the manager address to the sender address
+    label: Use sender address as the manager address
     tip: >-
       Use this transaction’s sender address as the manager address. The manager address is the
       address of the account that can change the configuration of this asset and destroy it.
@@ -202,7 +202,7 @@ fields:
     placeholder: Manager address
     empty_warning: If this is empty, reconfiguring the asset will not be permitted.
   apar_f_use_snd: # Use sender as freeze?
-    label: Set the freeze address to the sender address
+    label: Use sender address as the freeze address
     tip: >-
       Use this transaction’s sender address as the freeze address. The freeze address is the address
       of the account that can freeze holdings of this asset.
@@ -214,7 +214,7 @@ fields:
     placeholder: Freeze address
     empty_warning: If this is empty, freezing the asset will not be permitted.
   apar_c_use_snd: # Use sender as clawback?
-    label: Set the clawback address to the sender address
+    label: Use sender address as the clawback address
     tip: >-
       Use this transaction’s sender address as the clawback address. The clawback address is the
       address of the account that can claw back holdings of this asset.
@@ -226,7 +226,7 @@ fields:
     placeholder: Clawback address
     empty_warning: If this is empty, clawing back the asset will not be permitted.
   apar_r_use_snd: # Use sender as reserve?
-    label: Set the reserve address to the sender address
+    label: Use sender address as the reserve address
     tip: >-
       Use this transaction’s sender address as the reserve address. The reserve address is the
       address of the account that holds the reserve (non-minted) units of the asset. This address

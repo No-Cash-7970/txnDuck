@@ -193,7 +193,7 @@ fields:
     tip: Una URL donde se puede obtener más información sobre el activo.
     placeholder: "ipfs://"
   apar_m_use_snd: # Use sender as manager?
-    label: Establecer la dirección del administrador en la dirección del remitente
+    label: Usar la dirección del remitente como dirección del administrador
     tip: >-
       Utilice la dirección del remitente de esta transacción como dirección del administrador. La
       dirección del gestor es la dirección de la cuenta que puede cambiar la configuración de este
@@ -206,7 +206,7 @@ fields:
     placeholder: Dirección del administrador
     empty_warning: Si está vacía, no se permitirá reconfigurar el activo.
   apar_f_use_snd: # Use sender as freeze?
-    label: Establecer la dirección para congelar en la dirección del remitente
+    label: Usar la dirección del remitente como dirección para congelar
     tip: >-
       Utilice la dirección del remitente de esta transacción como dirección de congelación. La
       dirección para congelar es la dirección de la cuenta que puede congelar las tenencias de este
@@ -219,7 +219,7 @@ fields:
     placeholder: Dirección para congelar
     empty_warning: Si está vacía, no se permitirá congelar el activo.
   apar_c_use_snd: # Use sender as clawback?
-    label: Establecer la dirección para recuperar en la dirección del remitente
+    label: Usar la dirección del remitente como dirección para revocar por defecto
     tip: >-
       Utilice la dirección del remitente de esta transacción como dirección para recuperar. La
       dirección para recuperar es la dirección de la cuenta que puede recuperar las tenencias de
@@ -232,7 +232,7 @@ fields:
     placeholder: Dirección para recuperar
     empty_warning: Si está vacía, no se permitirá recuperar el activo.
   apar_r_use_snd: # Use sender as reserve?
-    label: Establecer la dirección de reserva en la dirección del remitente
+    label: Usar la dirección del remitente como dirección de reserva por defecto
     tip: >-
       Utilice la dirección del remitente de esta transacción como dirección de reserva. La dirección
       de reserva es la dirección de la cuenta que mantiene las unidades de reserva (no acuñadas) del

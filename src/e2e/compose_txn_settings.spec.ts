@@ -108,7 +108,7 @@ test.describe('Compose Transaction Settings', () => {
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
-      'Set the manager address to the sender address by default'
+      'Use sender address as the manager address by default'
     );
     await useSenderSetting.click(); // Switch to "off"
 
@@ -116,7 +116,7 @@ test.describe('Compose Transaction Settings', () => {
     await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
 
     // Check if the field on the "Compose Transaction" page has the correct default value
-    const useSenderField = page.getByLabel('Set the manager address to the sender address');
+    const useSenderField = page.getByLabel('Use sender address as the manager address');
     await expect(useSenderField).not.toBeChecked();
     await settingsBtn.click(); // Open settings dialog
     await expect(useSenderSetting).not.toBeChecked();
@@ -149,7 +149,7 @@ test.describe('Compose Transaction Settings', () => {
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
-      'Set the freeze address to the sender address by default'
+      'Use sender address as the freeze address by default'
     );
     await useSenderSetting.click(); // Switch to "off"
 
@@ -157,7 +157,7 @@ test.describe('Compose Transaction Settings', () => {
     await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
 
     // Check if the field on the "Compose Transaction" page has the correct default value
-    const useSenderField = page.getByLabel('Set the freeze address to the sender address');
+    const useSenderField = page.getByLabel('Use sender address as the freeze address');
     await expect(useSenderField).not.toBeChecked();
     await settingsBtn.click(); // Open settings dialog
     await expect(useSenderSetting).not.toBeChecked();
@@ -190,7 +190,7 @@ test.describe('Compose Transaction Settings', () => {
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
-      'Set the clawback address to the sender address by default'
+      'Use sender address as the clawback address by default'
     );
     await useSenderSetting.click(); // Switch to "off"
 
@@ -198,7 +198,7 @@ test.describe('Compose Transaction Settings', () => {
     await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
 
     // Check if the field on the "Compose Transaction" page has the correct default value
-    const useSenderField = page.getByLabel('Set the clawback address to the sender address');
+    const useSenderField = page.getByLabel('Use sender address as the clawback address');
     await expect(useSenderField).not.toBeChecked();
     await settingsBtn.click(); // Open settings dialog
     await expect(useSenderSetting).not.toBeChecked();
@@ -232,7 +232,7 @@ test.describe('Compose Transaction Settings', () => {
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
     await settingsBtn.click(); // Open settings dialog
     const useSenderSetting = page.getByLabel(
-      'Set the reserve address to the sender address by default'
+      'Use sender address as the reserve address by default'
     );
     await useSenderSetting.click(); // Switch to "off"
 
@@ -240,7 +240,7 @@ test.describe('Compose Transaction Settings', () => {
     await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
 
     // Check if the field on the "Compose Transaction" page has the correct default value
-    const useSenderField = page.getByLabel('Set the reserve address to the sender address');
+    const useSenderField = page.getByLabel('Use sender address as the reserve address');
     await expect(useSenderField).not.toBeChecked();
     await settingsBtn.click(); // Open settings dialog
     await expect(useSenderSetting).not.toBeChecked();

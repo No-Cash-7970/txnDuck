@@ -41,10 +41,10 @@ settings:
   default_use_sug_fee: Set fee automatically by default
   default_use_sug_rounds: Set valid rounds automatically by default
   get_asset_info: Retrieve asset information when asset ID is entered
-  default_apar_m_use_snd: Set the manager address to the sender address by default
-  default_apar_f_use_snd: Set the freeze address to the sender address by default
-  default_apar_c_use_snd: Set the clawback address to the sender address by default
-  default_apar_r_use_snd: Set the reserve address to the sender address by default
+  default_apar_m_use_snd: Use sender address as the manager address by default
+  default_apar_f_use_snd: Use sender address as the freeze address by default
+  default_apar_c_use_snd: Use sender address as the clawback address by default
+  default_apar_r_use_snd: Use sender address as the reserve address by default
   default_auto_send: Automatically send transaction after signing by default
   always_clear_after_send: Always clear saved transaction data after sending
   default_hide_send_info: Hide details within the “More Information” section by default
