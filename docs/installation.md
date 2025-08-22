@@ -64,11 +64,11 @@ of txnDuck to be quick and easy to run.
 2. Unzip the downloaded file. There should now be a new folder that contains a
    bunch of files and folders, such as `public` and `server.js`.
 3. Open the CLI and go to the folder created in Step #2 by running the following
-   in the CLI. Of course, replace `PATH/TO/SOURCE_CODE/FOLDER` with the actual
+   in the CLI. Of course, replace `PATH/TO/TXNDUCK/FOLDER` with the actual
    path to the folder.
 
     ```bash
-    cd PATH/TO/SOURCE_CODE/FOLDER
+    cd PATH/TO/TXNDUCK/FOLDER
     ```
 
 4. Run the web server.
