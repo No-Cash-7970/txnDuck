@@ -484,7 +484,7 @@ describe('Transaction Data Table Component', () => {
           type: 'keyreg',
           votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
           selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
           votefst: 6000000,
           votelst: 6100000,

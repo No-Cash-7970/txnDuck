@@ -1,6 +1,3 @@
-/* eslint-disable testing-library/no-container */
-/* eslint-disable testing-library/no-node-access */
-
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 

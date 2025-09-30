@@ -123,7 +123,7 @@ export default function NodeSelector({ lng }: Props) {
                     </Dialog.Title>
                     <ViewConfigDialogContent lng={lng} />
                     <Dialog.Close asChild>
-                      {/* eslint-disable-next-line max-len */}
+                      {/* eslint-disable-next-line @stylistic/max-len */}
                       <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
                         title={t('close')}
                       >
@@ -166,7 +166,7 @@ export default function NodeSelector({ lng }: Props) {
                     </Dialog.Title>
                     <CustomNodeDialogContent lng={lng} setopen={setCustomConfigOpen} />
                     <Dialog.Close asChild>
-                      {/* eslint-disable-next-line max-len */}
+                      {/* eslint-disable-next-line @stylistic/max-len */}
                       <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
                         title={t('close')}
                       >

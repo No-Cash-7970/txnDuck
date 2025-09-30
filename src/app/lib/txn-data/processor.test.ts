@@ -44,7 +44,7 @@ describe('Transaction Data Processor', () => {
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a payment transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -128,7 +128,7 @@ describe('Transaction Data Processor', () => {
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset transfer transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -173,7 +173,7 @@ describe('Transaction Data Processor', () => {
         .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (creation) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -232,7 +232,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.assetConfig?.assetMetadataHash).toHaveLength(32);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (creation) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -291,7 +291,7 @@ describe('Transaction Data Processor', () => {
         .toBe('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (destroy) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -327,7 +327,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (destroy) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -362,7 +362,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.assetConfig?.assetIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (reconfiguration) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -409,7 +409,7 @@ describe('Transaction Data Processor', () => {
         .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset configuration (reconfiguration) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -491,7 +491,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.assetFreeze?.frozen).toBe(true);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a asset freeze transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -541,7 +541,7 @@ describe('Transaction Data Processor', () => {
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
           votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
           selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
           votefst: 6000000,
           votelst: 6100000,
@@ -574,7 +574,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a key registration (online) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -590,7 +590,7 @@ describe('Transaction Data Processor', () => {
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
           votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
           selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
           votefst: 6000000,
           votelst: 6100000,
@@ -633,7 +633,6 @@ describe('Transaction Data Processor', () => {
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
           votekey: '',
           selkey: '',
-          // eslint-disable-next-line max-len
           sprfkey: '',
           nonpart: false,
         },
@@ -659,7 +658,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a key registration (offline) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -675,7 +674,6 @@ describe('Transaction Data Processor', () => {
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
           votekey: '',
           selkey: '',
-          // eslint-disable-next-line max-len
           sprfkey: '',
           nonpart: false,
         },
@@ -698,7 +696,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.keyreg?.nonParticipation).toBe(false);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a key registration (nonparticipating) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -712,7 +710,6 @@ describe('Transaction Data Processor', () => {
           lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
           votekey: '',
           selkey: '',
-          // eslint-disable-next-line max-len
           sprfkey: '',
           nonpart: true,
         },
@@ -738,7 +735,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.keyreg?.nonParticipation).toBe(true);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a key registration (nonparticipating) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -754,7 +751,6 @@ describe('Transaction Data Processor', () => {
           lx: textEncoder.encode('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'), // byte array
           votekey: '',
           selkey: '',
-          // eslint-disable-next-line max-len
           sprfkey: '',
           nonpart: true,
         },
@@ -829,7 +825,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (create) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -927,7 +923,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (update) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1010,7 +1006,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (delete) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1083,7 +1079,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (opt-in) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1119,7 +1115,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (close out) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -1156,7 +1152,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (close out) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1192,7 +1188,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (clear state) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -1234,7 +1230,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (clear state) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1275,7 +1271,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.boxes).toHaveLength(2);
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (no-op call) transaction',
     () => {
       const txn = processor.createTxnFromData(
@@ -1312,7 +1308,7 @@ describe('Transaction Data Processor', () => {
       expect(txn.applicationCall?.appIndex.toString()).toBe('88888888');
     });
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('returns `Transaction` object with given data for a application call (no-op call) transaction with byte array properties',
     () => {
       const textEncoder = new TextEncoder;
@@ -1495,7 +1491,7 @@ describe('Transaction Data Processor', () => {
         sender: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         voteKey: algosdk.base64ToBytes('G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo='),
         selectionKey:  algosdk.base64ToBytes('LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk='),
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         stateProofKey:  algosdk.base64ToBytes('RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA=='),
         voteFirst: 6000000,
         voteLast: 6100000,
@@ -1518,7 +1514,7 @@ describe('Transaction Data Processor', () => {
         lv: 6001000,
         votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
         selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
         votefst: 6000000,
         votelst: 6100000,

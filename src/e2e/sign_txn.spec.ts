@@ -18,7 +18,7 @@ const test = base.extend<{ signTxnPage: SignTxnPage }>({
 // the exact response of a request for transaction parameters in August 2024. Using the exact data
 // of a real request makes the mock as close to what would happen in production as much as possible.
 const txnParamsData = {
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "consensus-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
   "fee": 0,
   "genesis-hash": "wGHE2Pwdvd7S12BL5FaOP20EGYesN73ktiC1qzkkit8=",
@@ -68,7 +68,7 @@ test.describe('Sign Transaction Page', () => {
 
     test.describe('With URL Parameters', () => {
       const presetURLParam = '?preset=reg_offline';
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const urlParams = `${presetURLParam}&snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4`;
 
       test.beforeEach(async ({ page }) => {

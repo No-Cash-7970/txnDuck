@@ -158,6 +158,7 @@ export interface CheckboxFieldProps extends InputProps, FieldProps {
 }
 
 /** Properties for the ToggleField component */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface ToggleFieldProps extends CheckboxFieldProps {}
 
 /** Properties for the FileField component */

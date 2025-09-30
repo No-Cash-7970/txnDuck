@@ -118,7 +118,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.close.label')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has fields for asset transfer transaction type if "Asset Transfer" transaction type is selected',
   async () => {
     render(<ComposeForm />);
@@ -138,7 +138,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.aclose.label')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('retrieves asset information when "asset ID" is entered in an "Asset Transfer" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
@@ -154,7 +154,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('FOO')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('does not retrieve asset information when "asset ID" is entered in an "Asset Transfer" transaction when disabled in the settings)',
   async () => {
     localStorage.setItem('getAssetInfo', 'false');
@@ -171,7 +171,7 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('FOO')).not.toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has fields (with asset addresses set to sender) for asset configuration transaction type if "Asset Configuration" type is selected',
   async () => {
     render(<ComposeForm />);
@@ -215,7 +215,7 @@ describe('Compose Form Component', () => {
     expect(screen.getAllByText('fields.base64.label')).toHaveLength(3);
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has fields (without asset addresses set to sender) for asset configuration transaction type if "Asset Configuration" type is selected',
   async () => {
     render(<ComposeForm />);
@@ -276,7 +276,7 @@ describe('Compose Form Component', () => {
 
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('retrieves asset information when "asset ID" is entered in an "Asset Configuration" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
@@ -299,7 +299,7 @@ describe('Compose Form Component', () => {
       .toHaveValue('DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD');
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('does not retrieve asset information when "asset ID" is entered in an "Asset Configuration" transaction when disabled in the settings',
   async () => {
     localStorage.setItem('getAssetInfo', 'false');
@@ -338,7 +338,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.afrz.label')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('retrieves asset information when "asset ID" is entered in an "Asset Freeze" transaction when enabled in the settings (default)',
   async () => {
     render(<ComposeForm />);
@@ -352,7 +352,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('Foo Token')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('does not retrieve asset information when "asset ID" is entered in an "Asset Freeze" transaction when disabled in the settings',
   async () => {
     localStorage.setItem('getAssetInfo', 'false');
@@ -367,7 +367,7 @@ describe('Compose Form Component', () => {
     expect(screen.queryByText('Foo Token')).not.toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has fields for key registration transaction type if "Key Registration" transaction type is selected',
   async () => {
     render(<ComposeForm />);
@@ -391,7 +391,7 @@ describe('Compose Form Component', () => {
     expect(screen.getByText('fields.nonpart.label')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has fields for application call transaction type if "Application Call" transaction type is selected',
   async () => {
     render(<ComposeForm />);
@@ -923,7 +923,7 @@ describe('Compose Form Component', () => {
     await userEvent.upload(await screen.findByLabelText(/fields.apap.import_field_label/), file);
     try {
       await waitForElementToBeRemoved(screen.queryByRole('dialog'));
-    } catch (e) { // The element is already removed
+    } catch { // The element is already removed
       // No need to do anything here
     }
 
@@ -940,7 +940,7 @@ describe('Compose Form Component', () => {
     await userEvent.upload(await screen.findByLabelText(/fields.apsu.import_field_label/), file);
     try {
       await waitForElementToBeRemoved(screen.queryByRole('dialog'));
-    } catch (e) { // The element is already removed
+    } catch { // The element is already removed
       // No need to do anything here
     }
 

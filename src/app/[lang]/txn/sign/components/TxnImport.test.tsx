@@ -146,7 +146,7 @@ describe('Transaction Import Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('does not process an unsigned transaction file for a different network if not allowed (the default)',
   async () => {
     const data = fs.readFileSync('src/app/lib/testing/test_unsigned.txn.msgpack');
@@ -269,7 +269,7 @@ describe('Transaction Import Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('does not process a signed transaction file for a different network if not allowed (the default)',
   async () => {
     const data = fs.readFileSync('src/app/lib/testing/test_signed.txn.msgpack');
@@ -321,7 +321,7 @@ describe('Transaction Import Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('replaces the valid rounds with the suggested fee if "use suggested valid rounds" option is checked',
   async () => {
     const data = fs.readFileSync('src/app/lib/testing/test_unsigned.txn.msgpack');
@@ -357,7 +357,7 @@ describe('Transaction Import Component', () => {
     expect(routerPushMock).toHaveBeenCalled();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('shows warning if there is saved transaction data that will be overwritten if transaction is imported',
   async () => {
     sessionStorage.setItem('txnData',

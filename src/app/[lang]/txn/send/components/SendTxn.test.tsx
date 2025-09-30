@@ -16,6 +16,7 @@ jest.mock('use-debounce', () => ({ useDebouncedCallback: (fn: any) => fn }));
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
   ...jest.requireActual('../../../../lib/utils.ts'),
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 // Mock algosdk
@@ -55,7 +56,7 @@ describe('Send Transaction Component', () => {
     paramsMock.toString.mockClear();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('shows warning message about imported transaction overwriting saved transaction when there is a saved transaction',
   async () => {
     paramsMock.get.mockReturnValue(''); // Mock "import" URL parameter
@@ -65,7 +66,6 @@ describe('Send Transaction Component', () => {
     expect(screen.getByText('import_txn.overwrite_warning')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
   it('does not show any warning message when there is no saved transaction data while importing',
   async () => {
     paramsMock.get.mockReturnValue(null); // Mock "import" URL parameter not being present

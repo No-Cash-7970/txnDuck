@@ -2,7 +2,7 @@ import {
   Noto_Sans,
   Noto_Sans_Display,
   Noto_Sans_Mono,
-  Noto_Color_Emoji,
+  // Noto_Color_Emoji,
 } from 'next/font/google';
 
 export const notoSans = Noto_Sans({

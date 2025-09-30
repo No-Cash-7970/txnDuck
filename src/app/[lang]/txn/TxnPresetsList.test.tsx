@@ -135,7 +135,7 @@ describe('Transaction Presets List', () => {
       .toHaveLength(2);
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('removes preset from "favorites" category when "remove favorite" button of the copy in the "favorites" category is clicked',
   async () => {
     localStorage.setItem('txnPresetFavs', '["transfer"]');
@@ -150,7 +150,7 @@ describe('Transaction Presets List', () => {
     expect(screen.getByText('favorites.none')).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('removes preset from "favorites" category when "remove favorite" button of the copy NOT in the "favorites" category is clicked',
   async () => {
     localStorage.setItem('txnPresetFavs', '["transfer"]');

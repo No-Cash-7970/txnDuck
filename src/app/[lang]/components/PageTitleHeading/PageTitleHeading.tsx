@@ -7,7 +7,7 @@ type Props = {
   lng?: string,
   /**  If a badge for the transaction preset should be shown. Only used by a few pages. */
   showTxnPreset?: boolean
-}
+};
 
 /** Top heading for the title of a page */
 export default function PageTitleHeading({ children, lng = '', showTxnPreset = false }: Props) {

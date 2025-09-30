@@ -29,7 +29,7 @@ export const MIN_TX_FEE = 1000;
  */
 export const MAX_VALID_ROUNDS_PERIOD = 1000;
 
-// eslint-disable-next-line max-len
+// eslint-disable-next-line @stylistic/max-len
 // From https://developer.algorand.org/docs/get-details/transactions/transactions/#asset-configuration-transaction
 /** Maximum length of an asset's unit name in bytes
  * (or characters if only using ASCII characters)

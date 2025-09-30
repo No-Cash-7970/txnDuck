@@ -1,4 +1,5 @@
 import type { NextConfig } from 'next';
+import withPWAInit from "@ducanh2912/next-pwa";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
@@ -58,7 +59,7 @@ if (process.env.STANDALONE_BUILD?.toLowerCase() === 'true') {
 }
 
 // Create configuration for next-pwa plugin
-const withPWA = require('next-pwa')({
+const withPWA = withPWAInit({
   dest: 'public',
   disable: process.env.DISABLE_PWA === 'true',
   // register: true,

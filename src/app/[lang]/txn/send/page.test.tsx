@@ -21,6 +21,7 @@ jest.mock('react', () => ({
 // Mock the utils library because of the use of `fetch()`. This needs to be mocked because it is a
 // dependency of a child client component.
 jest.mock('../../../lib/utils.ts', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array()
 }));
 
@@ -50,7 +51,7 @@ describe('Send Transaction Page', () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('immediately attempts to send stored signed transaction if there is a stored signed transaction',
   async () => {
     paramsMock.get.mockReturnValue(null);
@@ -69,7 +70,7 @@ describe('Send Transaction Page', () => {
     expect(await screen.findByText(/import_txn.label/)).toBeInTheDocument();
   });
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('has file field for importing transaction if "import" parameter is present in the URL and there is a stored signed transaction',
   async () => {
     paramsMock.get.mockReturnValue('');

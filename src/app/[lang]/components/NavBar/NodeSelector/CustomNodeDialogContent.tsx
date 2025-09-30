@@ -51,7 +51,7 @@ export default function CustomNodeDialogContent({ lng, setopen }: Props) {
 
     let errorInHeaders = false;
     // Check if fields for headers are valid
-    jotaiStore.get(NodeConfigLib.headersListAtom).every((headerAtom, i) => {
+    jotaiStore.get(NodeConfigLib.headersListAtom).every(headerAtom => {
       const headerName = jotaiStore.get(headerAtom.name);
       const headerValue = jotaiStore.get(headerAtom.value);
       // If this "header name" field is invalid

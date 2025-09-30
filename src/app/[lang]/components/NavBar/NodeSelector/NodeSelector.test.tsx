@@ -166,7 +166,7 @@ describe('Node Selector', () => {
 
   describe('View Node Configuration Dialog', () => {
 
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     it('shows current node configuration when "View current configuration" button is clicked in node selector menu',
     async () => {
       localStorage.setItem('nodeConfig', JSON.stringify({

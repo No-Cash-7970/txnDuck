@@ -69,7 +69,7 @@ export default function TxnPresetsList({ lng }: Props) {
                   ? t(`${Preset.Transfer}.action`, {coinName: nodeConfig.coinName})
                   : t(`${Preset.TransferAlgos}.action`)
                 }
-                // eslint-disable-next-line max-len
+                // eslint-disable-next-line @stylistic/max-len
                 actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${fav}`}
                 color='accent'
                 presetName={fav}
@@ -86,7 +86,7 @@ export default function TxnPresetsList({ lng }: Props) {
           return (
             <TxnPreset key={fav} heading={t(`${fav}.heading`)}
               actionText={t(`${fav}.action`)}
-              // eslint-disable-next-line max-len
+              // eslint-disable-next-line @stylistic/max-len
               actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${fav}`}
               color='accent'
               presetName={fav}
@@ -110,7 +110,7 @@ export default function TxnPresetsList({ lng }: Props) {
             ? t(`${Preset.Transfer}.action`, {coinName: nodeConfig.coinName})
             : t(`${Preset.TransferAlgos}.action`)
           }
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.Transfer}`}
           color='primary'
           presetName={Preset.Transfer}
@@ -123,7 +123,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.RekeyAccount}.heading`)}
           actionText={t(`${Preset.RekeyAccount}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RekeyAccount}`}
           color='primary'
           presetName={Preset.RekeyAccount}
@@ -133,7 +133,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.CloseAccount}.heading`)}
           actionText={t(`${Preset.CloseAccount}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.CloseAccount}`}
           color='primary'
           presetName={Preset.CloseAccount}
@@ -148,7 +148,7 @@ export default function TxnPresetsList({ lng }: Props) {
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.AssetTransfer}.heading`)}
           actionText={t(`${Preset.AssetTransfer}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetTransfer}`}
           color='secondary'
           presetName={Preset.AssetTransfer}
@@ -158,7 +158,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetOptIn}.heading`)}
           actionText={t(`${Preset.AssetOptIn}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetOptIn}`}
           color='secondary'
           presetName={Preset.AssetOptIn}
@@ -168,7 +168,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetOptOut}.heading`)}
           actionText={t(`${Preset.AssetOptOut}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetOptOut}`}
           color='secondary'
           presetName={Preset.AssetOptOut}
@@ -178,7 +178,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetCreate}.heading`)}
           actionText={t(`${Preset.AssetCreate}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetCreate}`}
           color='secondary'
           presetName={Preset.AssetCreate}
@@ -188,7 +188,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetReconfig}.heading`)}
           actionText={t(`${Preset.AssetReconfig}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetReconfig}`}
           color='secondary'
           presetName={Preset.AssetReconfig}
@@ -198,7 +198,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetClawback}.heading`)}
           actionText={t(`${Preset.AssetClawback}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetClawback}`}
           color='secondary'
           presetName={Preset.AssetClawback}
@@ -208,7 +208,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetFreeze}.heading`)}
           actionText={t(`${Preset.AssetFreeze}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetFreeze}`}
           color='secondary'
           presetName={Preset.AssetFreeze}
@@ -218,7 +218,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetUnfreeze}.heading`)}
           actionText={t(`${Preset.AssetUnfreeze}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetUnfreeze}`}
           color='secondary'
           presetName={Preset.AssetUnfreeze}
@@ -228,7 +228,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AssetDestroy}.heading`)}
           actionText={t(`${Preset.AssetDestroy}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AssetDestroy}`}
           color='secondary'
           presetName={Preset.AssetDestroy}
@@ -243,7 +243,7 @@ export default function TxnPresetsList({ lng }: Props) {
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.AppRun}.heading`)}
           actionText={t(`${Preset.AppRun}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppRun}`}
           color='primary'
           presetName={Preset.AppRun}
@@ -255,7 +255,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppOptIn}.heading`)}
           actionText={t(`${Preset.AppOptIn}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppOptIn}`}
           color='primary'
           presetName={Preset.AppOptIn}
@@ -265,7 +265,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppDeploy}.heading`)}
           actionText={t(`${Preset.AppDeploy}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppDeploy}`}
           color='primary'
           presetName={Preset.AppDeploy}
@@ -275,7 +275,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppUpdate}.heading`)}
           actionText={t(`${Preset.AppUpdate}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppUpdate}`}
           color='primary'
           presetName={Preset.AppUpdate}
@@ -287,7 +287,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppClose}.heading`)}
           actionText={t(`${Preset.AppClose}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppClose}`}
           color='primary'
           presetName={Preset.AppClose}
@@ -297,7 +297,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppClear}.heading`)}
           actionText={t(`${Preset.AppClear}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppClear}`}
           color='primary'
           presetName={Preset.AppClear}
@@ -307,7 +307,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.AppDelete}.heading`)}
           actionText={t(`${Preset.AppDelete}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.AppDelete}`}
           color='primary'
           presetName={Preset.AppDelete}
@@ -324,7 +324,7 @@ export default function TxnPresetsList({ lng }: Props) {
       <section className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6'>
         <TxnPreset heading={t(`${Preset.RegOnline}.heading`)}
           actionText={t(`${Preset.RegOnline}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegOnline}`}
           color='secondary'
           presetName={Preset.RegOnline}
@@ -334,7 +334,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.RegOffline}.heading`)}
           actionText={t(`${Preset.RegOffline}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegOffline}`}
           color='secondary'
           presetName={Preset.RegOffline}
@@ -344,7 +344,7 @@ export default function TxnPresetsList({ lng }: Props) {
         </TxnPreset>
         <TxnPreset heading={t(`${Preset.RegNonpart}.heading`)}
           actionText={t(`${Preset.RegNonpart}.action`)}
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           actionURL={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${Preset.ParamName}=${Preset.RegNonpart}`}
           color='secondary'
           presetName={Preset.RegNonpart}

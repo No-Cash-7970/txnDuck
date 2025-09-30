@@ -1,4 +1,4 @@
-import { Suspense, use } from 'react';
+import { use } from 'react';
 import { type Metadata } from 'next';
 import Link from 'next/link';
 import {
@@ -6,7 +6,7 @@ import {
   IconArrowBigLeftLinesFilled,
   IconTrafficCone
 } from '@tabler/icons-react';
-import { PageLoadingPlaceholder, PageTitleHeading } from '@/app/[lang]/components';
+import { PageTitleHeading } from '@/app/[lang]/components';
 import { generateLangAltsMetadata, useTranslation } from '@/app/i18n';
 
 export async function generateMetadata(

@@ -2,7 +2,7 @@ name: Release - Standalone
 on:
   release:
     types: [released]
-  workflow_dispatch:
+  workflow_dispatch: null
 permissions:
   contents: write
 jobs:
@@ -10,30 +10,30 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code from "stable" branch
-      uses: actions/checkout@v4
-      with:
-        ref: stable
-    - name: Install Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-    - name: Enable Corepack for Yarn
-      run: corepack enable
-    - name: Set up Node cache # Set up Node cache by installing again
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: yarn
-    - name: Install dependencies
-      run: yarn
-    - name: Build standalone zip file
-      run: yarn build:standalone:zip
-      env:
-        NEXT_PUBLIC_WC_PROJECT_ID: ${{vars.NEXT_PUBLIC_WC_PROJECT_ID}}
-        NEXT_PUBLIC_MAGIC_API_KEY: ${{vars.NEXT_PUBLIC_MAGIC_API_KEY}}
-    - name: Upload standalone to latest release
-      uses: softprops/action-gh-release@v2
-      with:
-        fail_on_unmatched_files: true
-        files: build/*.zip
+      - name: Checkout code from "stable" branch
+        uses: actions/checkout@v4
+        with:
+          ref: stable
+      - name: Install Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Enable Corepack for Yarn
+        run: corepack enable
+      - name: Set up Node cache # Set up Node cache by installing again
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: yarn
+      - name: Install dependencies
+        run: yarn
+      - name: Build standalone zip file
+        run: yarn build:standalone:zip
+        env:
+          NEXT_PUBLIC_WC_PROJECT_ID: ${{vars.NEXT_PUBLIC_WC_PROJECT_ID}}
+          NEXT_PUBLIC_MAGIC_API_KEY: ${{vars.NEXT_PUBLIC_MAGIC_API_KEY}}
+      - name: Upload standalone to latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          fail_on_unmatched_files: true
+          files: build/*.zip

@@ -22,7 +22,7 @@ export type Props = {
   content?: any,
   /** Classes to add to the tooltip */
   contentClass?: string,
-}
+};
 
 /** Small button within a form field that show a tooltip when clicked */
 export default function FieldTip({tipProps}: {tipProps: Props}) {

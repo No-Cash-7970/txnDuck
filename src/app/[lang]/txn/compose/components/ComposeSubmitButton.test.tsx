@@ -180,7 +180,7 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
@@ -247,7 +247,7 @@ describe('Compose Form Component - Submit Button', () => {
     });
   }, 10000);
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('can store submitted *asset configuration* transaction data (with asset addresses set to sender)',
   async () => {
     render(
@@ -306,7 +306,7 @@ describe('Compose Form Component - Submit Button', () => {
     });
   }, 10000);
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   it('can store submitted *asset configuration* transaction data (without asset addresses set to sender)',
   async () => {
     render(
@@ -421,7 +421,7 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   }, 10000);
@@ -458,7 +458,7 @@ describe('Compose Form Component - Submit Button', () => {
       useSugRounds: true,
       b64Note: false,
       b64Lx: false,
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       retrievedAssetInfo: { id: '123456789', name: 'Foo Token', unitName: 'FOO', total: '1000', decimals: 2 },
     });
   });
@@ -498,7 +498,7 @@ describe('Compose Form Component - Submit Button', () => {
         snd: 'MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4',
         votekey: 'G/lqTV6MKspW6J8wH2d8ZliZ5XZVZsruqSBJMwLwlmo=',
         selkey: 'LrpLhvzr+QpN/bivh6IPpOaKGbGzTTB5lJtVfixmmgk=',
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         sprfkey: 'RpUpNWfZMjZ1zOOjv3MF2tjO714jsBt0GKnNsw0ihJ4HSZwci+d9zvUi3i67LwFUJgjQ5Dz4zZgHgGduElnmSA==',
         votefst: 6000000,
         votelst: 6100000,

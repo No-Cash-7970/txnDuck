@@ -30,7 +30,7 @@ export const usdcAsset = stringifyJSON({
 
 // GET /v2/transactions/params on testnet
 export const suggParams = JSON.stringify({
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "consensus-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
   "fee": 0,
   "genesis-hash": "SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=",
@@ -58,9 +58,9 @@ export const nodeStatus = JSON.stringify({
   "catchup-time": 0,
   "last-catchpoint": "",
   "last-round": 44440860,
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "last-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "next-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
   "next-version-round": 44440861,
   "next-version-supported": true,
@@ -72,7 +72,7 @@ export const nodeStatus = JSON.stringify({
 // content-type: application/msgpack
 // on testnet
 export const pendingTxn1 = Buffer.from(
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   'gqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5',
   'base64'
 );
@@ -81,7 +81,7 @@ export const pendingTxn1 = Buffer.from(
 // content-type: application/msgpack
 // on testnet
 export const pendingTxn2 = Buffer.from(
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   'g69jb25maXJtZWQtcm91bmTOAqYdHqpwb29sLWVycm9yoKN0eG6Co3NpZ8RAiG8Nhiruhncf2es5ozYnVfiFY4EAvLiGODPZf2n0eI4X1VtBZScF+3WQwn2RsIkdMyHbG0FNb5sQ93R03WTgAqN0eG6Io2ZlZc0D6KJmds4Cph0Zo2dlbqx0ZXN0bmV0LXYxLjCiZ2jEIEhjtRiks8hOyBDyLU8QgcsPcfBZp6wg3sYvf3DlCToiomx2zgKmIQGjcmN2xCDZdlfb2YQwPyRi+VSoHaataICjLqI7Z8kkOGIA5HFvlqNzbmTEINl2V9vZhDA/JGL5VKgdpq1ogKMuojtnySQ4YgDkcW+WpHR5cGWjcGF5',
   'base64'
 );
@@ -100,9 +100,9 @@ export const waitForBlock = JSON.stringify({
   "catchup-time": 0,
   "last-catchpoint": "",
   "last-round": 44440862,
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "last-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   "next-version": "https://github.com/algorandfoundation/specs/tree/925a46433742afb0b51bb939354bd907fa88bf95",
   "next-version-round": 44440863,
   "next-version-supported": true,

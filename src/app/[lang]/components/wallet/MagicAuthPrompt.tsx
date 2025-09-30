@@ -87,7 +87,7 @@ export default function MagicAuthPrompt({ t }: { t: TFunction }) {
             await magicProvider?.connect({email: magicEmail.value});
             setMagicProvider(undefined);
             setMagicEmail('');
-          } catch (error) {
+          } catch {
             setMagicAuthFailed(true);
           } finally {
             setDoingMagicAuth(false);

@@ -20,7 +20,7 @@ export const config = {
      * - sw.js (service worker script)
      * - etc.
      */
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     '/((?!api|_next/static|_next/image|favicon.ico|robots.txt|icon.svg|opengraph-image.png|apple-icon.png|sw.js|workbox-|worker-|assets|browserconfig.xml).*)'
   ]
 };

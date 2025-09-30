@@ -533,7 +533,7 @@ export function extractTxnDataFromAtoms(
   const txnType = generalForm.values.txnType;
 
   // Gather base transaction data
-  let baseTxnData: any = {
+  const baseTxnData: any = {
     type: txnType,
     snd: generalForm.values.snd,
     note: generalForm.values.note,

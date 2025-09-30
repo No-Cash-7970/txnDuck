@@ -30,7 +30,6 @@ export default function ConnectWallet({ t, setvalfn }:{
     // Focus on "connect wallet" button only when the prompt for entering the email address to get a
     // "magic link" was canceled
     if (!magicProvider && magicEmailCanceled) connectWalletBtnRef.current?.focus();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [magicProvider, magicEmailCanceled]);
 
   useEffect(() => {

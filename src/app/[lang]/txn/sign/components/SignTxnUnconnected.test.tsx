@@ -27,6 +27,7 @@ jest.mock('next/navigation', () => ({
 
 // Mock the utils library because of the use of `fetch()`
 jest.mock('../../../../lib/utils.ts', () => ({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   dataUrlToBytes: async (dataUrl: string) => new Uint8Array([
     // Genesis ID: testnet-v1.0, Genesis hash: SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=
     // {"type":"pay","snd":"7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M",

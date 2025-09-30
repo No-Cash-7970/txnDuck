@@ -57,7 +57,7 @@ export default function TxnImport({ lng }: Props) {
     // Try decoding file into a `Transaction` object
     try {
       txn = algosdk.decodeUnsignedTransaction(txnByteData);
-    } catch (error) {
+    } catch {
       // Decoding the transaction as an unsigned transaction did not work, so try to decode
       // it as a signed transaction because it may be a signed transaction
       txn = algosdk.decodeSignedTransaction(txnByteData).txn;

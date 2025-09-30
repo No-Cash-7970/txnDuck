@@ -178,7 +178,7 @@ export const isAlgodOK = async (
   try {
     const algod = new Algodv2(token, url, port, headers);
     await algod.ready().do();
-  } catch (e) {
+  } catch {
     return false;
   }
   return true;
@@ -226,7 +226,7 @@ export type ValidationMessage = {
   key: string,
   /** Dictionary containing values the validation message needs */
   dict?: {[k: string]: any}
-}
+};
 
 /** Type for validation atom */
-export type validationAtom<T> = WritableAtom<any, [SetStateAction<T>], void>
+export type validationAtom<T> = WritableAtom<any, [SetStateAction<T>], void>;

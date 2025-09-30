@@ -28,7 +28,7 @@ export default function ForeignAssets({ t }: { t: TFunction }) {
           type: 'insert',
           value: atomWithValidate(null, apasValidateOptions)
         })}
-        disabled={ // eslint-disable-next-line max-len
+        disabled={ // eslint-disable-next-line @stylistic/max-len
           (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length) >= MAX_APP_TOTAL_DEPS
         }
       >

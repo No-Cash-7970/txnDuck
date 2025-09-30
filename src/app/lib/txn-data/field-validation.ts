@@ -574,7 +574,7 @@ function createMaxBytesTest(maxBytes: number): TestConfig {
     test: (value: unknown) => {
       try {
         return base64ToBytes((value as string)?? '').byteLength <= maxBytes;
-      } catch (error) {
+      } catch {
         // The test failed because given Base64 value is invalid. Ignore the error because there
         // is already a validation check for valid Base64.
         return true;
@@ -593,7 +593,7 @@ function createBytesLengthTest(bytesLength: number): TestConfig {
     test: (value: unknown) => {
       try {
         return base64ToBytes((value as string)?? '').byteLength === bytesLength;
-      } catch (error) {
+      } catch {
         // The test failed because given Base64 value is invalid. Ignore the error because there
         // is already a validation check for valid Base64.
         return true;

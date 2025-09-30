@@ -57,7 +57,7 @@ test('Flow — Single transaction', async ({ homePage, page }) => {
 
   // Choose mnemonic wallet and enter the mnemonic when the prompt appears
   page.on('dialog', dialog => dialog.accept(
-    // eslint-disable-next-line max-len
+    // eslint-disable-next-line @stylistic/max-len
     'sugar bronze century excuse animal jacket what rail biology symbol want craft annual soul increase question army win execute slim girl chief exhaust abstract wink'
   ));
   await page.getByRole('button', { name: 'Use mnemonic' }).click();

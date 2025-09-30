@@ -39,7 +39,7 @@ export default function AppAccts({ t }: { t: TFunction }) {
           value: atomWithValidate('', apatValidateOptions)
         })}
         disabled={
-          // eslint-disable-next-line max-len
+          // eslint-disable-next-line @stylistic/max-len
           (appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length) >= MAX_APP_TOTAL_DEPS
           || appAccts.length >= MAX_APP_ACCTS
         }

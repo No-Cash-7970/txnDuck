@@ -35,7 +35,7 @@ export interface NodeConfig {
   /** The URL of for the Algod node server */
   nodeServer: string;
   /** Authentication token for using the Algod node server */
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line @stylistic/max-len
   nodeToken?: string | algosdk.AlgodTokenHeader | algosdk.CustomTokenHeader | algosdk.BaseHTTPClient;
   /** Port for the Algod node server */
   nodePort?: string | number;

@@ -41,7 +41,7 @@ test.describe('Compose Transaction Page', () => {
 
     test('fills in appropriate fields for setting up an Algo payment in a donation-like style',
     async ({ page }) => {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const formUrlParams = 'rcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY&amt=1&note=A+small+tip+for+No-Cash-7970+%3A%29';
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=transfer&${formUrlParams}`);
@@ -64,7 +64,7 @@ test.describe('Compose Transaction Page', () => {
 
     test('fills in appropriate fields for setting up an asset payment in a donation-like style',
     async ({ page }) => {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const formUrlParams = 'xaid=31566704&aamt=1&arcv=OMFLGYWNFKRIZ6Y6STE5SW3WJJQHLIG6GY4DD3FJHQRAK6MY5YMVJ6FWTY';
 
       // Mock the Algorand node call for asset data before navigating
@@ -93,7 +93,6 @@ test.describe('Compose Transaction Page', () => {
     });
 
     test('fills in appropriate fields for asset payment with specified fee', async ({ page }) => {
-      // eslint-disable-next-line max-len
       const formUrlParams = 'xaid=31566704&aamt=6.2831&fee=.001';
 
       // Mock the Algorand node call for asset data before navigating
@@ -122,7 +121,7 @@ test.describe('Compose Transaction Page', () => {
     });
 
     test('fills in appropriate fields for opting into an asset', async ({ page }) => {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const formUrlParams = 'xaid=31566704&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
 
       // Mock the Algorand node call for asset data before navigating
@@ -149,7 +148,6 @@ test.describe('Compose Transaction Page', () => {
     });
 
     test('fills in appropriate fields for closing an account', async ({ page }) => {
-      // eslint-disable-next-line max-len
       const formUrlParams = 'snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=close_account&${formUrlParams}`);
@@ -170,7 +168,7 @@ test.describe('Compose Transaction Page', () => {
     });
 
     test('fills in appropriate fields for registering an account online', async ({ page }) => {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const formUrlParams = 'snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4&votekey=87iBW46PP4BpTDz6%2BIEGvxY6JqEaOtV0g%2BVWcJqoqtc%3D&selkey=1V2BE2lbFvS937H7pJebN0zxkqe1Nrv%2BaVHDTPbYRlw%3D&sprfkey=f0CYOA4yXovNBFMFX%2B1I%2FtYVBaAl7VN6e0Ki5yZA3H6jGqsU%2FLYHNaBkMQ%2FrN4M4F3UmNcpaTmbVbq%2BGgDsrhQ%3D%3D&votefst=16532750&votelst=19532750&votekd=1732';
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=reg_online&${formUrlParams}`);
@@ -184,7 +182,7 @@ test.describe('Compose Transaction Page', () => {
       await expect(page.getByLabel(/Selection key/))
         .toHaveValue('1V2BE2lbFvS937H7pJebN0zxkqe1Nrv+aVHDTPbYRlw=');
       await expect(page.getByLabel(/State proof key/))
-        // eslint-disable-next-line max-len
+        // eslint-disable-next-line @stylistic/max-len
         .toHaveValue('f0CYOA4yXovNBFMFX+1I/tYVBaAl7VN6e0Ki5yZA3H6jGqsU/LYHNaBkMQ/rN4M4F3UmNcpaTmbVbq+GgDsrhQ==');
       await expect(page.getByLabel(/First voting round/)).toHaveValue('16532750');
       await expect(page.getByLabel(/Last voting round/)).toHaveValue('19532750');
@@ -200,7 +198,6 @@ test.describe('Compose Transaction Page', () => {
     });
 
     test('fills in appropriate fields for registering an account offline', async ({ page }) => {
-      // eslint-disable-next-line max-len
       const formUrlParams = 'snd=MWAPNXBDFFD2V5KWXAHWKBO7FO4JN36VR4CIBDKDDE7WAUAGZIXM3QPJW4';
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=reg_offline&${formUrlParams}`);
@@ -267,7 +264,7 @@ test.describe('Compose Transaction Page', () => {
 
     test('fills in appropriate fields for gracefully opting out of an application',
     async ({ page }) => {
-      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @stylistic/max-len
       const formUrlParams = 'apid=1284326447&snd=7JDB2I2R4ZXN4BAGZMRKYPZGKOTABRAG4KN2R7TWOAGMBCLUZXIMVLMA2M';
 
       await (new ComposeTxnPage(page)).goto('en', `?preset=app_close&${formUrlParams}`);

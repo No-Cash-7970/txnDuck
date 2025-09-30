@@ -35,7 +35,7 @@ type FailMessage = {
   i18nValues?: {[name: string]: any},
   /** The detailed error message response from the node */
   details: string
-}
+};
 
 /** Message data for a successful confirmed transaction */
 type SuccessMessage = {
@@ -43,7 +43,7 @@ type SuccessMessage = {
   txId: string,
   /** The response data from the node */
   response: algosdk.modelsv2.PendingTransactionResponse
-}
+};
 
 /** Section for sending a transaction and showing status of the transaction */
 export default function SendTxn({ lng }: Props) {

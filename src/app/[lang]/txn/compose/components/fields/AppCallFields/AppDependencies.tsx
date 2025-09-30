@@ -17,7 +17,7 @@ export default function AppDependencies({ t }: { t: TFunction }) {
   const boxes = useAtomValue(txnDataAtoms.apbx);
   return (
     <FieldGroup headingLevel={2} heading={t('fields.app_deps.heading')} headingClass='mb-0'>
-      { // eslint-disable-next-line max-len
+      { // eslint-disable-next-line @stylistic/max-len
         ((appAccts.length + appForeignApps.length + appForeignAssets.length + boxes.length) > MAX_APP_TOTAL_DEPS)
         &&
         <div className='alert alert-error text-start' id='apdeps-field'>
