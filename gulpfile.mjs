@@ -53,7 +53,7 @@ const yamlToJsonConverter = new Transform({
  * @returns {ExecaChildProcess|Promise}
  */
 const precommitLint = () => {
-  return exec('yarn next lint')
+  return exec('yarn lint')
     .catch(() => stashPopFail('Lint failed')); // Clean up if fail
 };
 
