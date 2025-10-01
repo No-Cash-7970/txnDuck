@@ -64,6 +64,14 @@ General notes:
     `0.002` instead.
 - Numbers must not contain commas
 
+### Transaction group
+
+These URL query parameters only apply when composing a transaction for a
+transaction group.
+
+- Group index (`grp_idx`) - If present, the transaction is part of a group.
+- Group preset (`grp_preset`)
+
 ### All presets
 
 - Sender address (`snd`)
