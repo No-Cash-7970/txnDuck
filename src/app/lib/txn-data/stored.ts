@@ -55,6 +55,11 @@ export const storedTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
 export const storedSignedTxnAtom =
   atomWithStorage<string|undefined>('signedTxn', undefined, storage);
 
+/** Transaction from data for all transactions in a transaction group that is temporarily stored
+ *  locally
+ */
+export const storedTxnGrpDataAtom = atomWithStorage<StoredTxnData[]>('txnGrpData', [], storage);
+
 /** Load stored transaction data into Jotai atoms
  * @param submittingForm A flag for indicating that the form is being submitted
  * @param preset The current preset being used

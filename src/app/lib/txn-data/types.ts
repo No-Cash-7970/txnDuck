@@ -51,6 +51,8 @@ export interface BaseTxnData {
   rekey?: string;
   /** Lease */
   lx?: string | Uint8Array;
+  /** Group ID */
+  grpId?: string;
 }
 /** Data for a payment transaction */
 export interface PaymentTxnData extends BaseTxnData {
