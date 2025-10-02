@@ -1578,4 +1578,98 @@ describe('Transaction Data Processor', () => {
     });
 
   });
+
+  describe('createDataFromTxnGrp()', () => {
+    it('returns an array of transaction data when given an array of transactions', () => {
+      const txn1 = algosdk.makePaymentTxnWithSuggestedParamsFromObject({
+        sender: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        receiver: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amount: 5_000_000, // 5 Algos
+        note: (new TextEncoder).encode('Hello world'),
+        closeRemainderTo: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
+          genesisID: 'testnet-v1.0',
+          minFee: 1000,
+        }
+      });
+      const txn2 = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
+        sender: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        receiver: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        assetIndex: 88888888,
+        amount: 500,
+        closeRemainderTo: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        rekeyTo: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        note: (new TextEncoder).encode('Hello world'),
+        suggestedParams: {
+          fee: 1000, // 0.001 Algos
+          flatFee: true,
+          firstValid: 6000000,
+          lastValid: 6001000,
+          genesisHash: algosdk.base64ToBytes('SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI='),
+          genesisID: 'testnet-v1.0',
+          minFee: 1000,
+        }
+      });
+
+      const txnDatas = processor.createDataFromTxnGrp([txn1, txn2]);
+
+      expect(txnDatas).toHaveLength(2);
+      expect(txnDatas[0].type).toBe(algosdk.TransactionType.pay);
+      expect(txnDatas[0].snd).toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+      expect(txnDatas[1].type).toBe(algosdk.TransactionType.axfer);
+      expect(txnDatas[1].snd).toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    });
+  });
+
+  describe('createTxnGrpFromData()', () => {
+    it('returns an array of `Transaction` objects with the given array of transaction data', () => {
+      const txnData1 = {
+        type: algosdk.TransactionType.pay,
+        snd: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        note: 'Hello world',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        rcv: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        amt: 5,
+        lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        rekey: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        close: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+      };
+      const txnData2 = {
+        type: algosdk.TransactionType.axfer,
+        snd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        note: 'Hello world',
+        fee: 0.001,
+        fv: 6000000,
+        lv: 6001000,
+        lx: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        rekey: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        asnd: 'GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A',
+        arcv: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+        xaid: 88888888,
+        aamt: 500,
+        aclose: 'EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4',
+      };
+
+      const txns = processor.createTxnGrpFromData(
+        [txnData1, txnData2],
+        'testnet-v1.0',
+        'SGO1GKSzyE7IEPItTxCByw9x8FmnrCDexi9/cOUJOiI=',
+      );
+
+      expect(txns).toHaveLength(2);
+      expect(txns[0].type).toBe(algosdk.TransactionType.pay);
+      expect(txns[0].sender.toString())
+        .toBe('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+      expect(txns[1].type).toBe(algosdk.TransactionType.axfer);
+      expect(txns[1].sender.toString())
+        .toBe('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    });
+  });
 });

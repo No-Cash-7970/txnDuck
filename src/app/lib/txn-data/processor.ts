@@ -4,7 +4,7 @@ import algosdk from 'algosdk';
 import * as TxnData from '@/app/lib/txn-data';
 
 /** Creates a "transaction data" object from a `Transaction` object
- * @param txn Transaction object from which to create the transaction data
+ * @param txn `Transaction` object from which to create the transaction data
  * @param options Options in how to parse and encode the `Transaction` object
  * @returns "Transaction data" object that contains the information in the `Transaction` object
  */
@@ -529,4 +529,44 @@ function createApplTxn(
   });
 
   return txn;
+}
+
+/** Creates a "transaction data" object from a `Transaction` object
+ * @param txns An array of `Transaction` objects from which to create the array of transaction data
+ * @param options Options in how to parse & encode every `Transaction` object in the returned array
+ * @returns An array of "transaction data" objects
+ */
+export function createDataFromTxnGrp(txns: algosdk.Transaction[], options: {
+  /** Parse the note as byte data to be encoded into Base64? */
+  b64Note?: boolean,
+  /** Parse the lease as byte data to be encoded into Base64? */
+  b64Lx?: boolean,
+  /** Parse the metadata hash as byte data to be encoded into Base64? */
+  b64Apar_am?: boolean,
+  /** Parse all arguments as byte data to be encoded into Base64? */
+  b64Apaa?: boolean,
+  /** The network's minimum transaction fee */
+  minFee?: number,
+} = {}) {
+  return txns.map(txn => createDataFromTxn(txn, options));
+}
+
+/** Creates an array of `Transacation` objects from the given array of transaction data
+ * @param txnDatas An array of transaction data
+ * @param genesisID Genesis ID of the network all transactions will be sent
+ * @param genesisHash Genesis hash of the network all transactions will be sent
+ * @param flatFee If the specified fee is to be the fee for each transaction and not the fee per
+ *                byte
+ * @return An array of `Transaction` objects that represents the given array of transaction data
+ */
+export function createTxnGrpFromData(
+  txnDatas: TxnData.TxnData[],
+  genesisID: string,
+  genesisHash: string,
+  flatFee = true,
+  minFee = TxnData.MIN_TX_FEE,
+) {
+  return txnDatas.map(
+    txnData => createTxnFromData(txnData, genesisID, genesisHash, flatFee, minFee)
+  );
 }
