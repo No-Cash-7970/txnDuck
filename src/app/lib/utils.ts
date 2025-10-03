@@ -31,7 +31,7 @@ export const bytesToDataUrl = async (
       onload: () => resolve(reader.result as string),
       onerror: () => reject(reader.error),
     });
-    reader.readAsDataURL(new File([bytes], '', { type }));
+    reader.readAsDataURL(new File([bytes as BlobPart], '', { type }));
   });
 };
 
@@ -211,10 +211,17 @@ export function applyTheme(
   // Update theme value
   setThemeFn(themeName);
 
-  // Apply the theme
-  // NOTE: If there are significant changes to the following line, update the script in the
-  //`<head>` if necessary */
-  (document.querySelector('html') as HTMLHtmlElement).dataset.theme = themeName;
+  const htmlElem = document.querySelector('html');
+
+  if (themeName) {
+    // Apply the theme
+    // NOTE: If there are significant changes to the following line, update the script in the
+    //`<head>` if necessary */
+    htmlElem!.dataset.theme = themeName;
+  } else {
+    // Unset the `data-theme` attribute if the theme is to be automatic
+    delete htmlElem!.dataset.theme;
+  }
 
   // Notify user (if the user should be notified)
   if (notifyFn) notifyFn();

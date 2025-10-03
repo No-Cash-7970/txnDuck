@@ -114,8 +114,12 @@ export default function HomeLayout(
            * NOTE: If you change something here, also update the theme-switcher and the not-found
            * page if necessary.
            */
-          // eslint-disable-next-line @stylistic/max-len
-          __html: `document.querySelector('html').dataset.theme = JSON.parse(localStorage.getItem('theme')) || ''`,
+          __html: `
+          const theme = JSON.parse(localStorage.getItem('theme'));
+          const htmlElem = document.querySelector('html');
+          if (theme) { htmlElem.dataset.theme = theme; }
+          else { delete htmlElem.dataset.theme; }
+          `
         }} />
 
         {/*  Set app name & icon, they appear when connecting a wallet to this app */}
