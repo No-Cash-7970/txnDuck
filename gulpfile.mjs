@@ -5,6 +5,19 @@ import fs from 'node:fs';
 import { Transform } from 'node:stream';
 import yaml from 'js-yaml';
 import archiver from 'archiver';
+import nextEnv from '@next/env';
+import yargs from 'yargs';
+import { hideBin } from 'yargs/helpers';
+
+// Load command line arguments
+const argv = yargs(hideBin(process.argv)).parse();
+
+// Load environment variables. Only consider the `--production` argument when NODE_ENV is not set.
+if (!process.env.NODE_ENV) {
+  nextEnv.loadEnvConfig(process.cwd(), !argv.production);
+} else {
+  nextEnv.loadEnvConfig(process.cwd());
+}
 
 /** The directory where compiled locales will go */
 const COMPILED_DEST = `src/app/i18n/locales/.dist`;
@@ -116,6 +129,15 @@ const zipStandalone = async () => {
   return await archive.finalize();
 };
 
+/** Meant to be run before building project. The lint is always run, but errors are ignored if
+ * specified to do so in the environment variables.
+ */
+const prebuildLint = () => {
+  return exec('yarn lint', {
+    reject: process.env.IGNORE_ESLINT_BUILD_ERRORS?.toLowerCase() !== 'true'
+  });
+};
+
 /*
  *******************************************************************************
  * Tasks                                                                       *
@@ -138,6 +160,7 @@ export const installDev = gulp.parallel(
  * compiling files that will be used in the building process.
  */
 export const prebuild = gulp.parallel(
+  prebuildLint,
   compileLocales,
 );
 

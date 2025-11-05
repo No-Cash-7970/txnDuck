@@ -3,6 +3,7 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  turbopack: {},
   webpack: (config, { isServer }) => {
     // Add use-wallet dependency modules that cause "not found" errors. Also see
     // https://github.com/WalletConnect/walletconnect-monorepo/issues/1908#issuecomment-1487801131
@@ -33,13 +34,6 @@ const nextConfig: NextConfig = {
     }
 
     return config;
-  },
-  eslint: {
-    // !! WARN !!
-    // This allows production builds to successfully complete even if your project has ESLint
-    // errors.
-    // !! WARN !!
-    ignoreDuringBuilds: process.env.IGNORE_ESLINT_BUILD_ERRORS?.toLowerCase() === 'true',
   },
   typescript: {
     // !! WARN !!

@@ -30,6 +30,6 @@ export class PrivacyPolicyPage {
    *              (e.g. "?a=1&b=2")
    */
   async goto(lang = 'en', query = '') {
-    await this.page.goto(PrivacyPolicyPage.getFullUrl(lang) + query);
+    return await this.page.goto(PrivacyPolicyPage.getFullUrl(lang) + query);
   }
 }

@@ -30,6 +30,6 @@ export class ComposeTxnPage {
    *              (e.g. "?a=1&b=2")
    */
   async goto(lang = 'en', query = '') {
-    await this.page.goto(ComposeTxnPage.getFullUrl(lang) + query);
+    return await this.page.goto(ComposeTxnPage.getFullUrl(lang) + query);
   }
 }

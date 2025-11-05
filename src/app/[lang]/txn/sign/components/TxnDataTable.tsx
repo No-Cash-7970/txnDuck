@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { TransactionType } from 'algosdk';
@@ -41,7 +41,6 @@ export default function TxnDataTable({ lng }: Props) {
   const minFee = useAtomValue(minFeeAtom);
   const fv = useAtomValue(fvAtom);
   const lv = useAtomValue(lvAtom);
-  const [isLoading, setIsLoading] = useState(true);
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
 
@@ -90,10 +89,7 @@ export default function TxnDataTable({ lng }: Props) {
     return `${type}`;
   }, [storedTxnData]);
 
-  // Wrap local storage atom in state variable to avoid hydration error
-  useEffect(() => setIsLoading(!storedTxnData), [storedTxnData]);
-
-  return (<>{!isImporting && !isLoading &&
+  return (<>{!isImporting && storedTxnData &&
     <table className='table mb-4'>
       <tbody>
         {/* Node network */}
@@ -738,7 +734,7 @@ export default function TxnDataTable({ lng }: Props) {
       </tbody>
     </table>
     }
-    {!isImporting && isLoading && <div className='text-center'>
+    {!isImporting && !storedTxnData && <div className='text-center'>
       <PageLoadingPlaceholder />
       <p className='my-0'>{t('sign_txn:loading.wait_msg')}</p>
       <Link className="link text-accent"

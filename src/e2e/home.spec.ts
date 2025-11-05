@@ -75,6 +75,11 @@ test.describe('Home Page', () => {
         await page.getByRole('button', { name: 'TestNet' }).click();
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
 
+        // A workaround for NS_BINDING_ABORT errors in Firefox caused by prefetching
+        if (test.info().project.name === 'firefox') {
+          await page.waitForLoadState('networkidle');
+        }
+
         // Select non-default network using URL parameter
         await (new HomePage(page)).goto('en', '?network=betanet');
         await expect(page.getByRole('button', { name: 'BetaNet' })).toBeVisible();
@@ -88,6 +93,12 @@ test.describe('Home Page', () => {
         const testnetButton = page.getByRole('button', { name: 'TestNet' });
         await testnetButton.click();
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
+
+        // A workaround for NS_BINDING_ABORT errors in Firefox caused by prefetching request being
+        // cut off too soon by navigating to another page
+        if (test.info().project.name === 'firefox') {
+          await page.waitForTimeout(100);
+        }
 
         // Select non-default network using URL parameter
         await (new HomePage(page)).goto('en', '?network=betanet');

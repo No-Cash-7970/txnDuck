@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { RESET } from "jotai/utils";
 import { useTranslation } from "@/app/i18n/client";
@@ -91,6 +91,9 @@ export default function SettingsForm(props: Props) {
     setConfirmWaitRounds(RESET);
     // XXX: Add more settings here
 
+    // Reset temporary setting values too
+    setTempConfirmWaitRounds('');
+
     // Notify user of reset
     setToastMsg(t('settings.reset_message'));
     setToastOpen(true);
@@ -106,11 +109,7 @@ export default function SettingsForm(props: Props) {
 
   // Temporary state variable so the changes to the input value are not debounced
   const [tempConfirmWaitRounds, setTempConfirmWaitRounds] =
-    useState<number|string>(Settings.defaults.confirmWaitRounds);
-
-  // Set the temporary state variable for "transaction confirm wait" input value to the value in
-  // storage (or default if nothing in storage)
-  useEffect(() => setTempConfirmWaitRounds(confirmWaitRounds), [confirmWaitRounds]);
+    useState<number|string>('');
 
   return (<>
     <form noValidate={true} aria-label={t('settings.heading')} onSubmit={(e) => e.preventDefault()}>
@@ -264,7 +263,7 @@ export default function SettingsForm(props: Props) {
         containerClass='mt-3'
         inputClass='w-24'
         min={1}
-        value={tempConfirmWaitRounds}
+        value={tempConfirmWaitRounds || confirmWaitRounds || Settings.defaults.confirmWaitRounds}
         onChange={(e) => {
           setTempConfirmWaitRounds(e.target.value);
           onChangeConfirmWait(e.target.value === '' ? RESET : parseInt(e.target.value));
@@ -276,7 +275,7 @@ export default function SettingsForm(props: Props) {
       {/* Clear data buttons */}
       <div className='mt-4 grid grid-cols-1 sm:grid-cols-2 gap-2'>
         <button type='button'
-          className='btn btn-sm btn-neutral h-auto min-h-[2rem] pt-1 pb-1'
+          className='btn btn-sm btn-neutral h-auto min-h-8 pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             setStoredTxnData(RESET);
@@ -287,7 +286,7 @@ export default function SettingsForm(props: Props) {
           {t('settings.clear_txn_data_btn')}
         </button>
         <button type='button'
-          className='btn btn-sm btn-outline h-auto min-h-[2rem] pt-1 pb-1'
+          className='btn btn-sm btn-outline h-auto min-h-8 pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
             resetSettings();
@@ -299,7 +298,7 @@ export default function SettingsForm(props: Props) {
       {/* Reset button */}
       <div className='mt-9'>
         <button type='button'
-          className='btn btn-sm btn-block btn-error h-auto min-h-[2rem] mx-auto'
+          className='btn btn-sm btn-block btn-error h-auto min-h-8 mx-auto'
           onClick={(e) => {
             e.preventDefault();
             localStorage.clear();

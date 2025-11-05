@@ -4,6 +4,8 @@ import { FlatCompat } from "@eslint/eslintrc";
 import testingLibrary from "eslint-plugin-testing-library";
 import stylistic from "@stylistic/eslint-plugin";
 import { defineConfig, globalIgnores } from "eslint/config";
+import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
+import nextTypescript from "eslint-config-next/typescript";
 import { includeIgnoreFile } from "@eslint/compat";
 import yamlparser from "yaml-eslint-parser";
 
@@ -18,7 +20,8 @@ const gitignorePath = fileURLToPath(new URL(".gitignore", import.meta.url));
 const eslintConfig = defineConfig([
   includeIgnoreFile(gitignorePath, "Imported .gitignore patterns"),
   globalIgnores(["public/**/*"], "Ignore public directory"),
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  ...nextCoreWebVitals,
+  ...nextTypescript,
   {
     plugins: { '@stylistic': stylistic },
     rules: {
@@ -27,16 +30,16 @@ const eslintConfig = defineConfig([
       '@typescript-eslint/no-explicit-any': 'off'
     },
   }, {
-		files: [
-			"**/__tests__/**/*.[jt]s?(x)",
+    files: [
+      "**/__tests__/**/*.[jt]s?(x)",
       "**/?(*.)+(test).[jt]s?(x)",
-		],
-		...testingLibrary.configs['flat/react'],
+    ],
+    ...testingLibrary.configs['flat/react'],
     rules: {
       "testing-library/no-await-sync-events": ["error", { eventModules: ["fire-event"] }],
       "testing-library/await-async-events": ["error", { eventModule: "userEvent" }],
     }
-	}, {
+  }, {
     files: ["**/?(*.)+(spec).[jt]s"],
     rules: {
       "@typescript-eslint/no-unused-vars": ["off", {
@@ -46,13 +49,15 @@ const eslintConfig = defineConfig([
     }
   }, {
     files: ["**/*.yaml", "**/*.yml"],
-    extends: compat.extends("plugin:yml/standard"),
+    extends: [...compat.extends("plugin:yml/standard")],
     languageOptions: {
       parser: yamlparser,
     },
     rules: {
       '@stylistic/max-len': 'off'
     },
+  }, {
+    ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
   }
 ]);
 

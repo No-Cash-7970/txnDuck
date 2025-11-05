@@ -27,7 +27,7 @@ export const config = {
 
 const cookieName = 'i18next';
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   let lng: string | null = '';
 
   // Check stored cookie for saved language

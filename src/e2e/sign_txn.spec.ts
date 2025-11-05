@@ -105,6 +105,12 @@ test.describe('Sign Transaction Page', () => {
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
         // Make sure switching networks works
         await expect(page.getByText('MainNet')).toHaveCount(2);
+
+        // A workaround for NS_BINDING_ABORT errors in Firefox caused by prefetching
+        if (test.info().project.name === 'firefox') {
+          await page.waitForLoadState('networkidle');
+        }
+
         // Select non-default network using URL parameter
         await (new SignTxnPage(page)).goto('en',`${presetURLParam}&network=betanet`);
         await expect(page.getByText('BetaNet')).toHaveCount(2);
@@ -117,6 +123,11 @@ test.describe('Sign Transaction Page', () => {
         const testnetButton = page.getByRole('button', { name: 'TestNet' });
         await testnetButton.click();
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
+
+        // A workaround for NS_BINDING_ABORT errors in Firefox caused by prefetching
+        if (test.info().project.name === 'firefox') {
+          await page.waitForLoadState('networkidle');
+        }
 
         // Select non-default network using URL parameter
         await (new SignTxnPage(page)).goto('en', '?network=betanet');

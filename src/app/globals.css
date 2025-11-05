@@ -1,6 +1,13 @@
 @import 'tailwindcss';
 @plugin "@tailwindcss/typography";
-@plugin "daisyui";
+/* A workaround for fixing "Unknown at rule: @property" error
+ * Solution from: https://github.com/saadeghi/daisyui/issues/3882#issuecomment-3382480890
+ * This may be removed and replaced if the issue is resolved in the future.
+ */
+@plugin "daisyui" {
+  exclude: properties;
+}
+/* @plugin "daisyui"; */
 
 @plugin "daisyui/theme" {
   name: "duck_dark";
