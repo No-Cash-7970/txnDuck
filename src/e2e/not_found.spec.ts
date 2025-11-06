@@ -16,8 +16,8 @@ const test = base.extend<{ notFoundPage: NotFoundPage }>({
 
 test.describe('Not Found Page', () => {
 
-  test('has footer', async ({ notFoundPage /* Adding this loads the page */, page }) => {
-    await expect(page.getByRole('contentinfo')).toBeVisible();
+  test('has footer', async ({ notFoundPage }) => {
+    await expect(notFoundPage.page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {

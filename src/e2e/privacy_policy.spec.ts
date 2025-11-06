@@ -16,8 +16,8 @@ const test = base.extend<{ privacyPolicyPage: PrivacyPolicyPage }>({
 
 test.describe('Privacy Policy Page', () => {
 
-  test('has footer', async ({ privacyPolicyPage /* Adding this loads the page */, page }) => {
-    await expect(page.getByRole('contentinfo')).toBeVisible();
+  test('has footer', async ({ privacyPolicyPage }) => {
+    await expect(privacyPolicyPage.page.getByRole('contentinfo')).toBeVisible();
   });
 
   test.describe('Language Support', () => {

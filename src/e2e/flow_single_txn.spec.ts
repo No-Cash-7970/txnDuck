@@ -17,7 +17,9 @@ const test = base.extend<{ homePage: HomePage }>({
 test.slow();
 
 // Run through the entire normal flow of creating and sending a single transaction.
-test('Flow — Single transaction', async ({ homePage, page }) => {
+test('Flow — Single transaction', async ({ homePage }) => {
+  const page = homePage.page;
+
   await mockTxnAlgodResponses(page);
 
   /*===== Home page =====*/

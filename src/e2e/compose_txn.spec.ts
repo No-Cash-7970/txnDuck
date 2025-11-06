@@ -17,13 +17,13 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
 
 test.describe('Compose Transaction Page', () => {
 
-  test('has footer', async ({ composeTxnPage /* Adding this loads the page */, page }) => {
-    await expect(page.getByRole('contentinfo')).toBeVisible();
+  test('has footer', async ({ composeTxnPage }) => {
+    await expect(composeTxnPage.page.getByRole('contentinfo')).toBeVisible();
   });
 
-  test('has link to presets page', async ({ composeTxnPage, page }) => {
-    await page.getByText(/Choose preset/).click();
-    await expect(page).toHaveURL(TxnPresetsPage.getFullUrl());
+  test('has link to presets page', async ({ composeTxnPage }) => {
+    await composeTxnPage.page.getByText(/Choose preset/).click();
+    await expect(composeTxnPage.page).toHaveURL(TxnPresetsPage.getFullUrl());
   });
 
   test.describe('Language Support', () => {

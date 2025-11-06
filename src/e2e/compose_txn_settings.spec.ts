@@ -1,16 +1,9 @@
 import { test as base, expect } from '@playwright/test';
 import { ComposeTxnPage, HomePage } from './pageModels';
 
-// Extend basic test by providing a "composeTxnPage" fixture and a "homePage" fixture.
+// Extend basic test by providing a "homePage" fixture.
 // Code adapted from https://playwright.dev/docs/pom
-const test = base.extend<{ composeTxnPage: ComposeTxnPage, homePage: HomePage }>({
-  composeTxnPage: async ({ page }, use) => {
-    // Set up the fixture.
-    const composeTxnPage = new ComposeTxnPage(page);
-    await composeTxnPage.goto();
-    // Use the fixture value in the test.
-    await use(composeTxnPage);
-  },
+const test = base.extend<{ homePage: HomePage }>({
   homePage: async ({ page }, use) => {
     // Set up the fixture.
     const homePage = new HomePage(page);
@@ -25,10 +18,16 @@ test.slow();
 test.describe('Compose Transaction Settings', () => {
 
   test('uses the default "Automatically set fee" value set in the settings',
-  async ({ homePage /* Adding this loads the home page */,  page }) => {
+  async ({ homePage }) => {
+    const page = homePage.page;
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
     // Change setting when on the home page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSugSetting = page.getByLabel('Set fee automatically by default');
     await useSugSetting.click(); // Switch to "off"
 
@@ -64,10 +63,16 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the default "Automatically set valid rounds" value set in the settings',
-  async ({ homePage, page }) => {
+  async ({ homePage }) => {
+    const page = homePage.page;
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
     // Change setting when on the home page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSugSetting = page.getByLabel('Set valid rounds automatically by default');
     await useSugSetting.click(); // Switch to "off"
 
@@ -103,10 +108,16 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "manager address to the sender address by default" value set in the settings',
-  async ({ homePage, page }) => {
+  async ({ homePage }) => {
+    const page = homePage.page;
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
     // Change setting when on the home page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSenderSetting = page.getByLabel(
       'Use sender address as the manager address by default'
     );
@@ -144,10 +155,16 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "freeze address to the sender address by default" value set in the settings',
-  async ({ homePage, page }) => {
+  async ({ homePage }) => {
+    const page = homePage.page;
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
     // Change setting when on the home page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSenderSetting = page.getByLabel(
       'Use sender address as the freeze address by default'
     );
@@ -185,10 +202,16 @@ test.describe('Compose Transaction Settings', () => {
   });
 
   test('uses the "clawback address to the sender address by default" value set in the settings',
-  async ({ homePage, page }) => {
+  async ({ homePage }) => {
+    const page = homePage.page;
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
     // Change setting when on the home page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSenderSetting = page.getByLabel(
       'Use sender address as the clawback address by default'
     );
@@ -227,17 +250,23 @@ test.describe('Compose Transaction Settings', () => {
 
   test('uses the "reserve address to the sender address by default" value set in the settings',
   async ({ page }) => {
-    // Change setting when on the home page
-    await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
+    const composeTxnPage = new ComposeTxnPage(page);
+    await composeTxnPage.goto('en', '?preset=asset_create');
+    // Wait until page is more fully loaded by using the node selector button as an indication of
+    // that. The settings button does not work when the page is not as fully loaded.
+    await page.getByRole('button', { name: 'TestNet' }).waitFor({ state: 'visible' });
+
+    // Change setting when on the compose page
     const settingsBtn = page.getByRole('button', { name: 'Settings' });
-    await settingsBtn.click(); // Open settings dialog
+    await page.getByRole('button', { name: 'Settings' }).click(); // Open settings dialog
+    await page.getByRole('dialog').waitFor({ state: 'visible' }); // Wait for settings dialog
     const useSenderSetting = page.getByLabel(
       'Use sender address as the reserve address by default'
     );
     await useSenderSetting.click(); // Switch to "off"
 
     // Go to "Compose Transaction" page
-    await (new ComposeTxnPage(page)).goto('en', '?preset=asset_create');
+    await composeTxnPage.goto('en', '?preset=asset_create');
 
     // Check if the field on the "Compose Transaction" page has the correct default value
     const useSenderField = page.getByLabel('Use sender address as the reserve address');

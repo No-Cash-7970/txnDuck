@@ -24,11 +24,15 @@ export default function NodeMenuItem({ config, children }: Props) {
    */
   const updateNodeConfig = (newConfig: NodeConfigLib.NodeConfig) => {
     setNodeConfig(newConfig);
+
     // The new node configuration isn't used unless the wallet provider is reloaded, which happens
     // when the page is refreshed. Also, remove the network specified in the URL, if present.
     const newURLParams = new URLSearchParams(currentURLParams.toString());
-    newURLParams.delete(NodeConfigLib.networkURLParamName);
-    router.push(pathName + (newURLParams.size ? `?${newURLParams}` : ''));
+
+    if (newURLParams.size) { // The current URL has query parameters
+      newURLParams.delete(NodeConfigLib.networkURLParamName);
+      router.push(`${pathName}?${newURLParams}`);
+    }
   };
 
   return (
