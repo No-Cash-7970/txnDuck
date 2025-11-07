@@ -205,6 +205,8 @@ export interface StoredTxnData {
   retrievedAssetInfo?: RetrievedAssetInfo;
 }
 
+// TODO: Create `StoredTxnDataWithPreset` interface so preset can be displayed for each transaction in a transaction group
+
 /** Type for a group of atoms that represent a box reference */
 export type BoxRefAtomGroup = {
   /** ID of the application that contains the box */

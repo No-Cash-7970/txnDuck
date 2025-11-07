@@ -55,10 +55,12 @@ export const storedTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
 export const storedSignedTxnAtom =
   atomWithStorage<string|undefined>('signedTxn', undefined, storage);
 
-/** Transaction from data for all transactions in a transaction group that is temporarily stored
- *  locally
+/** Array of the keys of all stored transactions in the transaction group. Each transaction in a
+ * transaction group is stored with its own unique storage key. For example, two transaction within
+ * a group may be stored under the keys `txn_a14f` and `txn_0d84`. This transaction group keys array
+ * would have a value like `["txn_a14f","txn_0d84"]` or  `["txn_a14f","txn_0d84",""]`.
  */
-export const storedTxnGrpDataAtom = atomWithStorage<StoredTxnData[]>('txnGrpData', [], storage);
+export const storedTxnGrpKeysAtom = atomWithStorage<string[]>('txnGrpKeys', [], storage);
 
 /** Load stored transaction data into Jotai atoms
  * @param submittingForm A flag for indicating that the form is being submitted
