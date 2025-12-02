@@ -3,6 +3,7 @@ import withPWAInit from "@ducanh2912/next-pwa";
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  serverExternalPackages: ['thread-stream'],
   turbopack: {},
   webpack: (config, { isServer }) => {
     // Add use-wallet dependency modules that cause "not found" errors. Also see
