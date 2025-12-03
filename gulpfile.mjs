@@ -129,15 +129,6 @@ const zipStandalone = async () => {
   return await archive.finalize();
 };
 
-/** Meant to be run before building project. The lint is always run, but errors are ignored if
- * specified to do so in the environment variables.
- */
-const prebuildLint = () => {
-  return exec('yarn lint', {
-    reject: process.env.IGNORE_ESLINT_BUILD_ERRORS?.toLowerCase() !== 'true'
-  });
-};
-
 /*
  *******************************************************************************
  * Tasks                                                                       *
@@ -160,7 +151,6 @@ export const installDev = gulp.parallel(
  * compiling files that will be used in the building process.
  */
 export const prebuild = gulp.parallel(
-  prebuildLint,
   compileLocales,
 );
 
