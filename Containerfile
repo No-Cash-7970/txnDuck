@@ -41,12 +41,9 @@ RUN corepack enable && yarn set version stable
 # Create directory for app and switch to it
 WORKDIR $PROD_APP_DIR
 # Copying these files before running `yarn install` allows us to take advantage
-# of Docker’s caching mechanism.
+# of the caching mechanism
 COPY package.json yarn.lock .yarnrc.yml ./
-# Install production dependencies while using BuildKit the create cache.
-# BuildKit is included in Docker 23.0+
-# See https://stackoverflow.com/a/66165135
-# See https://docs.docker.com/build/buildkit
+# Install production dependencies while using cache
 RUN --mount=type=cache,target=$PROD_NODE_DIR/.yarn YARN_CACHE_FOLDER=$PROD_NODE_DIR/.yarn yarn workspaces focus --all --production
 
 # Build the standalone

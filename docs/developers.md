@@ -62,8 +62,8 @@ development environment are in the [Installation Guide](installation.md#installi
 - `.erclintrc.json`: ESLint configuration
 - `.gitattributes`, `.gitignore`: Git configurations files
 - `.swcrc`: SWC (Speedy Web Compiler) [configuration file](https://swc.rs/docs/configuration/swcrc)
-- `docker-compose.yml`: Defines the [Docker](https://www.docker.com/) container(s) for this app
-- `Dockerfile`: Instructions for how to build a [Docker](https://www.docker.com/) container for this app
+- `compose.yml`: Defines the container(s) for this app that is run by a container engine like [Docker](https://www.docker.com/)
+- `Containerfile`: Instructions for how to build a container for this app
 - `gulpfile.mjs`: Contains the scripts for to be used with [Gulp task runner](https://gulpjs.com/)
 - `jest.config.mjs`: Configuration for [Jest](https://jestjs.io/) unit testing
    framework

@@ -1,5 +1,5 @@
 # See https://docs.github.com/en/actions/use-cases-and-examples/publishing-packages/publishing-docker-images#publishing-images-to-github-packages
-name: Release - Docker image
+name: Release - Container image
 on:
   release:
     types: [released]
@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 jobs:
   push_to_registries:
-    name: Push Docker image to multiple registries
+    name: Push container image to multiple registries
     runs-on: ubuntu-latest
     permissions:
       packages: write
@@ -19,7 +19,7 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
-      - name: Log in to the Container registry
+      - name: Log in to the container registry
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -30,7 +30,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      - name: Build and push Docker image
+      - name: Build and push container image
         id: push
         uses: docker/build-push-action@v5
         with:
