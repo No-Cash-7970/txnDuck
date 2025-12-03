@@ -5,6 +5,7 @@ services:
     build:
       context: .
       target: dev-setup
+      dockerfile: ./Containerfile
     volumes:
       - .:/app
     ports:
