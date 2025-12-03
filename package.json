@@ -9,7 +9,7 @@
     "build:standalone": "gulp buildStandalone",
     "build:standalone:zip": "gulp buildZipStandalone",
     "start": "next start",
-    "lint": "eslint .",
+    "lint": "yarn eslint .",
     "prod": "yarn build && next start",
     "release": "release-it --ci",
     "test": "jest",
