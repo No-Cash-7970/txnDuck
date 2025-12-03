@@ -394,7 +394,7 @@ fields:
       de la aplicación y el programa clear-state.
     placeholder: "Valor de argumento nº {{index}}"
     heading: Argumento de aplicación
-    none: No argumento de aplicación
+    none: Hay no argumento de aplicación
     empty: Argumento vacío
     add_btn: Añadir un argumento
     remove_btn: Eliminar un argumento
@@ -407,7 +407,7 @@ fields:
       aprobación de la aplicación y el programa de estado claro.
     placeholder: "Dirección de cuenta nº {{index}}"
     heading: Referencias de cuentas
-    none: No referencias de cuentas
+    none: Hay no referencias de cuentas
     add_btn: Añadir una cuenta
     max_error: Debe haber como máximo {{count, number}} referencias de cuentas.
     remove_btn: Eliminar una cuenta
@@ -419,7 +419,7 @@ fields:
       aplicación. El acceso es de sólo lectura.
     placeholder: "ID de aplicación nº {{index}}"
     heading: Referencias de aplicación
-    none: No referencias de aplicación
+    none: Hay no referencias de aplicación
     add_btn: Añadir una aplicación
     remove_btn: Eliminar una aplicación
   apas: # Asset references
@@ -429,14 +429,14 @@ fields:
       de borrado de esta aplicación. El acceso es de sólo lectura.
     placeholder: "ID de activo nº {{index}}"
     heading: Referencias de activo
-    none: No referencias de activo
+    none: Hay no referencias de activo
     add_btn: Añadir un activo
     remove_btn: Eliminar un activo
   apbx: # Box references
     heading: Referencias de caja
     tip: Las cajas que deben estar disponibles para el tiempo de ejecución del programa.
     box_heading: "Caja nº {{index}}"
-    none: No referencias de caja
+    none: Hay no referencias de caja
     add_btn: Añadir una caja
     remove_btn: Eliminar una caja
   apbx_i: # Box application index

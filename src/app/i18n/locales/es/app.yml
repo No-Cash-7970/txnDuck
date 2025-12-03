@@ -133,7 +133,7 @@ node_selector:
     heading: Configuración personalizada del nodo
     instructions: Los campos marcados con un asterisco (<marker>*</marker>) son obligatorios.
     network_placeholder: Elegir la red
-    no_headers: No cabeceras
+    no_headers: Hay no cabeceras
     add_header_btn: Añadir una cabecera
     remove_header_btn: Eliminar una cabecera
     header_heading: "Cabecera nº {{index}}"
