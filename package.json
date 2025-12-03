@@ -87,7 +87,7 @@
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "jest-wip-reporter": "^2.1.0",
-    "lefthook": "^2.0.4",
+    "lefthook": "^2.0.5",
     "release-it": "^19.0.6",
     "ts-jest": "^29.4.6",
     "yaml-eslint-parser": "^1.3.1"
