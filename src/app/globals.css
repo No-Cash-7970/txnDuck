@@ -217,6 +217,7 @@
 }
 
 .btn {
+  text-decoration: none;
   height: auto;
   line-height: var(--leading-snug);
   min-height: var(--size);
