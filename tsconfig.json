@@ -29,5 +29,14 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "build"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "src/e2e",
+    "src/app/lib/testing",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    "**/*.test.tsx",
+    "**/*.spec.tsx"
+  ]
 }
