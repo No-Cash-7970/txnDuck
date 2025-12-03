@@ -10,10 +10,8 @@ jobs:
     timeout-minutes: 30
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code from "stable" branch
+      - name: Checkout code
         uses: actions/checkout@v4
-        with:
-          ref: stable
       - name: Install Node
         uses: actions/setup-node@v4
         with:
