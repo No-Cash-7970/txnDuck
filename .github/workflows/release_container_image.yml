@@ -3,7 +3,6 @@ name: Release - Container image
 on:
   release:
     types: [released]
-  workflow_dispatch: null
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
