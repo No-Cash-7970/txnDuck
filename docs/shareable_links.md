@@ -52,8 +52,8 @@ The `network` URL query parameter can be set to one of the following networks:
 ## Compose Transaction page links
 
 URL query parameters can be used to create a link to the "Compose Transaction"
-page with some of the transaction fields already filled in. These URL query
-parameters only work when using a preset.
+page with some of the transaction fields already filled in. Most of these URL
+query parameters only work when using a particular preset.
 
 General notes:
 
@@ -64,15 +64,9 @@ General notes:
     `0.002` instead.
 - Numbers must not contain commas
 
-### Transaction group
-
-These URL query parameters only apply when composing a transaction for a
-transaction group.
-
-- Group index (`grp_idx`) - If present, the transaction is part of a group.
-- Group preset (`grp_preset`)
-
 ### All presets
+
+These URL query parameters work with any preset, or without a preset.
 
 - Sender address (`snd`)
 - Fee (in Algos) (`fee`)
@@ -90,28 +84,36 @@ Notes:
   round (`fv`) is not set, the first valid round will automatically be set to
   1,000 rounds *before* the last valid round.
 
+#### Transaction group
+
+These URL query parameters only apply when composing a transaction for a
+transaction group.
+
+- Group index (`grp_idx`) - If present, the transaction is part of a group.
+- Group preset (`grp_preset`)
+
 ### "Transfer Algos" preset
 
-`preset=transfer` or `preset=transfer_algos`
+The following URL query parameters can be used when `preset=transfer` or `preset=transfer_algos`.
 
 - Receiver address (`rcv`)
 - Amount (in Algos) (`amt`)
 
 ### "Rekey account" preset
 
-`preset=rekey_account`
+The following URL query parameters can be used when `preset=rekey_account`.
 
 - *No extra URL query parameters*
 
 ### "Close account" preset
 
-`preset=close_account`
+The following URL query parameters can be used when `preset=close_account`.
 
 - *No extra URL query parameters*
 
 ### "Transfer asset" preset
 
-`preset=asset_transfer`
+The following URL query parameters can be used when `preset=asset_transfer`.
 
 - Asset ID (`xaid`)
 - Receiver address (`arcv`)
@@ -124,99 +126,99 @@ Notes:
 
 ### "Opt into asset" preset
 
-`preset=asset_opt_in`
+The following URL query parameters can be used when `preset=asset_opt_in`.
 
 - Asset ID (`xaid`)
 
 ### "Opt out of asset" preset
 
-`preset=asset_opt_out`
+The following URL query parameters can be used when `preset=asset_opt_out`.
 
 - Asset ID (`xaid`)
 
 ### "Revoke (Claw back) asset" preset
 
-`preset=asset_clawback`
+The following URL query parameters can be used when `preset=asset_clawback`.
 
 - Asset ID (`xaid`)
 
 ### "Create asset" preset
 
-`preset=asset_create`
+The following URL query parameters can be used when `preset=asset_create`.
 
 - *No extra URL query parameters*
 
 ### "Reconfigure asset" preset
 
-`preset=asset_reconfig`
+The following URL query parameters can be used when `preset=asset_reconfig`.
 
 - Asset ID (`caid`)
 
 ### "Destroy asset" preset
 
-`preset=asset_destroy`
+The following URL query parameters can be used when `preset=asset_destroy`.
 
 - Asset ID (`caid`)
 
 ### "Freeze asset" preset
 
-`preset=asset_freeze`
+The following URL query parameters can be used when `preset=asset_freeze`.
 
 - Asset ID (`faid`)
 - Freeze target (`fadd`)
 
 ### "Unfreeze asset" preset
 
-`preset=asset_unfreeze`
+The following URL query parameters can be used when `preset=asset_unfreeze`.
 
 - Asset ID (`faid`)
 - Freeze (unfreeze) target (`fadd`)
 
 ### "Run application" preset
 
-`preset=app_run`
+The following URL query parameters can be used when `preset=app_run`.
 
 - Application ID (`apid`)
 
 ### "Opt into application" preset
 
-`preset=app_opt_in`
+The following URL query parameters can be used when `preset=app_opt_in`.
 
 - Application ID (`apid`)
 
 ### "Deploy application" preset
 
-`preset=app_deploy`
+The following URL query parameters can be used when `preset=app_deploy`.
 
 - *No extra URL query parameters*
 
 ### "Update application" preset
 
-`preset=app_update`
+The following URL query parameters can be used when `preset=app_update`.
 
 - Application ID (`apid`)
 
 ### "Close out application" preset
 
-`preset=app_close`
+The following URL query parameters can be used when `preset=app_close`.
 
 - Application ID (`apid`)
 
 ### "Clear application" preset
 
-`preset=app_clear`
+The following URL query parameters can be used when `preset=app_clear`.
 
 - Application ID (`apid`)
 
 ### "Delete application" preset
 
-`preset=app_delete`
+The following URL query parameters can be used when `preset=app_delete`.
 
 - Application ID (`apid`)
 
 ### "Register account online" preset
 
-`preset=reg_online`
+The following URL query parameters can be used when `preset=reg_online`.
 
 - Voting key (`votekey`)
 - Selection key (`selkey`)
@@ -227,13 +229,13 @@ Notes:
 
 ### "Register account offline" preset
 
-`preset=reg_offline`
+The following URL query parameters can be used when `preset=reg_offline`.
 
 - *No extra URL query parameters*
 
 ### "Register account nonparticipating" preset
 
-`preset=reg_nonpart`
+The following URL query parameters can be used when `preset=reg_nonpart`.
 
 - *No extra URL query parameters*
 
