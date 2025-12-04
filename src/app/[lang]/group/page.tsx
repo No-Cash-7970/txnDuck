@@ -42,7 +42,7 @@ export default function GroupPresetsPage(props: { params: Promise<{ lang: string
       <p className='text-center text-lg mb-3'>{t('instruction')}</p>
       <div className='flex justify-center'>
         <Link
-          href={`/${lang}/txn/compose`}
+          href={`/${lang}/group/compose`}
           className={'btn btn-block btn-accent font-normal'
             + ' text-lg py-1 max-w-3xl flex-wrap'
           }

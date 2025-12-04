@@ -1,5 +1,7 @@
 /** @file Constants used with transaction data */
 
+/** Maximum number of transactions allowed in an atomic transaction group */
+export const MAX_GRP_TXNS = 16;
 /** Number of characters in a valid account address */
 export const ADDRESS_LENGTH = 58;
 /** Length of a lease in bytes (or characters if only using ASCII characters) */
@@ -156,3 +158,5 @@ export enum Preset {
   /** Register nonparticipation */
   RegNonpart = 'reg_nonpart'
 }
+
+export const txnGrpIdxParamName = 'grp_idx';

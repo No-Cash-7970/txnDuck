@@ -1,0 +1,11 @@
+title: Componer el grupo
+grp_list_no_txn: No hay transacciones
+add_slot_btn: Añadir un espacio para la transacción
+review_sign_btn: Revisar y firmar el grupo
+edit_txn_btn: Editar
+edit_txn_btn_title: "Editar la transacción nº {{index}}"
+remove_slot_btn: Eliminar
+remove_slot_btn_title: "Eliminar la transacción nº {{index}}"
+no_txn_in_slot: "No hay transacción para el espacio nº {{index}}"
+move_slot_up_btn: "Mover el espacio nº {{index}} un espacio hasta arriba"
+move_slot_down_btn: "Mover el espacio nº {{index}} un espacio hasta abajo"
