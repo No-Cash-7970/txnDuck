@@ -5,10 +5,10 @@ import { useAtomValue, useStore } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
 import * as AppSettings from '@/app/lib/app-settings';
 import {
-  Preset,
   extractTxnDataFromAtoms,
   isFormValid,
   loadStoredTxnData,
+  Preset,
   showFormErrorsAtom,
   storedTxnDataAtom,
 } from '@/app/lib/txn-data';
@@ -54,7 +54,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
     // Going to "submit" the form data
     setSubmittingForm(true);
     // "Submit" transaction data by storing it into local/session storage
-    jotaiStore.set(storedTxnDataAtom, extractTxnDataFromAtoms(preset, jotaiStore));
+    jotaiStore.set(storedTxnDataAtom, extractTxnDataFromAtoms(preset as Preset, jotaiStore));
     // Go to sign-transaction page (only preserve preset URL parameter)
     router.push(`/${lng}/txn/sign` + (preset ? `?${Preset.ParamName}=${preset}` : ''));
   };

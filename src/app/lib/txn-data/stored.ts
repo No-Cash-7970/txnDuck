@@ -533,7 +533,7 @@ export function loadStoredTxnData(
  * @return Object containing the transaction data
  */
 export function extractTxnDataFromAtoms(
-  preset: string|null,
+  preset: Preset|null,
   jotaiStore: ReturnType<typeof useStore>
 ): StoredTxnData {
   const generalForm = jotaiStore.get(generalFormControlAtom);
@@ -812,6 +812,7 @@ export function extractTxnDataFromAtoms(
 
   return {
     txn: {...baseTxnData, ...specificTxnData},
+    preset: preset ?? undefined,
     useSugFee: jotaiStore.get(txnDataAtoms.useSugFee).value,
     useSugRounds: jotaiStore.get(txnDataAtoms.useSugRounds).value,
     b64Note: jotaiStore.get(txnDataAtoms.b64Note).value,

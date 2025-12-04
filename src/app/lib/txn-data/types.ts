@@ -2,6 +2,7 @@
 
 import { OnApplicationComplete, TransactionType } from "algosdk";
 import { validationAtom } from "@/app/lib/utils";
+import { Preset } from "./constants";
 
 /** Box reference */
 export type BoxRef = {
@@ -181,6 +182,10 @@ export type TxnData = BaseTxnData
 export interface StoredTxnData {
   /** Transaction data */
   txn: TxnData;
+  /** Preset that was used when creating the transaction. Usually only used for a transaction in a
+   * group
+   */
+  preset?: Preset;
   /** Use suggested fee? */
   useSugFee: boolean;
   /** Use suggested first & last valid rounds? */
