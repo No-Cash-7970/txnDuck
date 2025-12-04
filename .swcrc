@@ -1,4 +1,9 @@
 {
+  "exclude": [
+    ".*\\.test\\.(ts|js|tsx|jsx)$",
+    ".*testing\\/.*",
+    ".*__test__\\/.*"
+  ],
   "jsc": {
     "experimental": {
       "plugins": [["@swc-jotai/react-refresh", {}]]
