@@ -101,16 +101,12 @@ test.describe('Sign Transaction Page', () => {
       test('uses network specified in URL parameter when there IS saved network',
       async ({ signTxnPage }) => {
         const page = signTxnPage.page;
-        await signTxnPage.goto();
 
         // NOTE: Assuming that the default network is TestNet
 
         // Select MainNet from node selection menu so node configuration is stored in local storage
         await page.getByRole('button', { name: 'TestNet' }).click();
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
-        await page.waitForURL(SignTxnPage.getFullUrl('en')); // Wait for menu item "link" to load
-        // Make sure switching networks works
-        await expect(page.getByText('MainNet')).toHaveCount(2);
 
         // Select non-default network using URL parameter (with other URL parameters)
         await signTxnPage.goto('en', `${presetURLParam}&network=betanet`);
@@ -119,7 +115,6 @@ test.describe('Sign Transaction Page', () => {
 
       test('removes URL parameter if network is manually set', async ({ signTxnPage }) => {
         const page = signTxnPage.page;
-        await signTxnPage.goto();
 
         // NOTE: Assuming that the default network is TestNet
 

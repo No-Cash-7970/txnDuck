@@ -59,30 +59,27 @@ test.describe('Home Page', () => {
 
       test('uses default network if the network IS NOT specified in a URL parameter',
       async ({ homePage }) => {
-        await homePage.goto();
         // NOTE: Assuming that the default network is TestNet
         await expect(homePage.page.getByRole('button', { name: 'TestNet' })).toBeVisible();
       });
 
       test('uses network specified in URL parameter when there is NO saved network',
-      async ({ homePage }) => {
+      async ({ page }) => {
         // NOTE: Assuming that the default network is TestNet
         // Select non-default network using URL parameters
-        await homePage.goto('en', '?network=betanet');
-        await expect(homePage.page.getByRole('button', { name: 'BetaNet' })).toBeVisible();
+        await (new HomePage(page)).goto('en', '?network=betanet');
+        await expect(page.getByRole('button', { name: 'BetaNet' })).toBeVisible();
       });
 
       test('uses network specified in URL parameter when there IS saved network',
       async ({ homePage }) => {
         const page = homePage.page;
-        await homePage.goto();
 
         // NOTE: Assuming that the default network is TestNet
 
         // Select MainNet from node selection menu so node configuration is stored in local storage
         await page.getByRole('button', { name: 'TestNet' }).click();
         await page.getByText('MainNet', { exact: true }).click(); // Menu item
-        await page.waitForURL(HomePage.getFullUrl('en')); // Wait for menu item "link" to load
 
         // Select non-default network using URL parameter
         await homePage.goto('en', '?network=betanet');
@@ -91,7 +88,6 @@ test.describe('Home Page', () => {
 
       test('removes URL parameter if network is manually set',  async ({ homePage }) => {
         const page = homePage.page;
-        await homePage.goto();
 
         // NOTE: Assuming that the default network is TestNet
 
