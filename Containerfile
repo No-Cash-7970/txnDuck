@@ -54,8 +54,15 @@ RUN corepack enable && yarn set version stable
 WORKDIR $PROD_APP_DIR
 # Copy installed dependencies from "deps-prod" stage
 COPY --from=deps-prod $PROD_APP_DIR/node_modules ./node_modules
-# Copy source files
-COPY . .
+### Copy files in a way to take advantage of caching
+# Copy static assets
+COPY public/ public/
+# Copy configuration files
+COPY .env .env.production* .swcrc gulpfile.* LICENSE.* next.config.* postcss.config.* tsconfig.json .
+# Copy source files without the tests
+COPY --exclude=**/*.test.* --exclude=**/testing/* --exclude=**/e2e/ src/ src/
+# Copy package files
+COPY package.json yarn.lock .yarnrc.yml ./
 # Build
 RUN yarn build:standalone
 
