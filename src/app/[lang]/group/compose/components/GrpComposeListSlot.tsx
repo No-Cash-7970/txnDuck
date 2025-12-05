@@ -84,7 +84,7 @@ export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
             <div className='card-actions justify-between'>
               <Link title={`Compose transaction #${txnIdx+1}`}
                 // eslint-disable-next-line @stylistic/max-len
-                href={`/${lng}/txn/compose?${urlParams ? urlParams+'&' : ''}${txnGrpIdxParamName}=${txnIdx}`}
+                href={`/${lng}/txn?${urlParams ? urlParams+'&' : ''}${txnGrpIdxParamName}=${txnIdx}`}
                 className='btn btn-accent btn-xs sm:btn-sm'
               >
                 <IconEdit size={20} stroke={1.75} />
