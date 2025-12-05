@@ -18,9 +18,10 @@ window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 // Mock navigation hooks
 const routerPushMock = jest.fn();
+const searchParamsGetMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: routerPushMock }),
-  useSearchParams: () => ({ get: () => null }),
+  useSearchParams: () => ({ get: searchParamsGetMock }),
 }));
 
 // Mock algosdk
@@ -41,17 +42,21 @@ jest.mock('algosdk', () => ({
 }));
 
 import ComposeForm from './ComposeForm';
+import { txnGrpIdxParamName } from '@/app/lib/txn-data';
 
 describe('Compose Form Component - Submit Button', () => {
-  afterEach(() => {
+  beforeEach(() => {
     sessionStorage.clear();
     routerPushMock.mockClear();
+    searchParamsGetMock.mockClear();
+    searchParamsGetMock.mockReturnValue(null);
   });
 
-  it('goes to sign-transaction page if valid transaction data is submitted', async () => {
+  it('goes to sign-transaction page if valid transaction data is submitted (single transaction)',
+  async () => {
     render(
       // Wrap component in new Jotai provider to reset data stored in Jotai atoms
-      <JotaiProvider><ComposeForm /></JotaiProvider>
+      <JotaiProvider><ComposeForm lng='en'/></JotaiProvider>
     );
 
     // Enter data
@@ -64,9 +69,32 @@ describe('Compose Form Component - Submit Button', () => {
     await userEvent.paste('5');
 
     // Submit data
-    await userEvent.click(screen.getByText('sign_txn_btn'));
+    await userEvent.click(await screen.findByText('sign_txn_btn'));
 
-    expect(routerPushMock).toHaveBeenCalled();
+    expect(routerPushMock).toHaveBeenCalledWith('/en/txn/sign');
+  });
+
+  it('goes back to group-compose page if valid transaction data is submitted (group transaction)',
+  async () => {
+    searchParamsGetMock.mockImplementation((p: string) => p === txnGrpIdxParamName ? 0 : null);
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm lng='en'/></JotaiProvider>
+    );
+
+    // Enter data
+    await userEvent.selectOptions(screen.getByLabelText(/fields.type.label/), 'pay');
+    await userEvent.click(screen.getByLabelText(/fields.snd.label/));
+    await userEvent.paste('EW64GC6F24M7NDSC5R3ES4YUVE3ZXXNMARJHDCCCLIHZU6TBEOC7XRSBG4');
+    await userEvent.click(screen.getByLabelText(/fields.rcv.label/));
+    await userEvent.paste('GD64YIY3TWGDMCNPP553DZPPR6LDUSFQOIJVFDPPXWEG3FVOJCCDBBHU5A');
+    await userEvent.click(screen.getByLabelText(/fields.amt.label/));
+    await userEvent.paste('5');
+
+    // Submit data
+    await userEvent.click(screen.getByText('grp_compose_btn'));
+
+    expect(routerPushMock).toHaveBeenCalledWith('/en/group/compose');
   });
 
   it('can store submitted transaction data with Base64 note and lease', async () => {
@@ -716,6 +744,41 @@ describe('Compose Form Component - Submit Button', () => {
       amt: 42,
       lx: 'VGhpcyBpcyBhIGxlYXNl',
       b64_lx: true
+    });
+  });
+
+  it('can retrieve data of a group transaction from session storage',
+  async () => {
+    searchParamsGetMock.mockImplementation((p: string) => p === txnGrpIdxParamName ? 0 : null);
+    sessionStorage.setItem('txn_a14f', JSON.stringify({
+      txn: {
+        type: 'pay',
+        snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        fee: 0.001, // This should be ignored
+        fv: 5, // This should be ignored
+        lv: 1005, // This should be ignored
+        rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+        rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+        amt: 42,
+      },
+      useSugFee: true,
+      useSugRounds: true,
+    }));
+    sessionStorage.setItem('txnGrpKeys', JSON.stringify(['txn_a14f','txn_0d84','']));
+    render(
+      // Wrap component in new Jotai provider to reset data stored in Jotai atoms
+      <JotaiProvider><ComposeForm /></JotaiProvider>
+    );
+    expect(await screen.findByRole('form')).toHaveFormValues({
+      type: 'pay',
+      snd: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      use_sug_fee: true,
+      use_sug_rounds: true,
+      rekey: 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB',
+      rcv: 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA',
+      amt: 42,
+      b64_note: false,
+      b64_lx: false
     });
   });
 

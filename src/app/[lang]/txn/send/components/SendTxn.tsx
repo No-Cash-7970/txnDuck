@@ -17,7 +17,7 @@ import {
   defaultHideSendInfo as defaultHideSendInfoAtom
 } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
-import { storedSignedTxnAtom, storedTxnDataAtom } from '@/app/lib/txn-data';
+import { getStoredTxnDataAtom, storedSignedTxnAtom } from '@/app/lib/txn-data';
 import { bytesToDataUrl, dataUrlToBytes, importParamName } from '@/app/lib/utils';
 
 type Props = {
@@ -60,6 +60,7 @@ export default function SendTxn({ lng }: Props) {
   const [failMsg, setFailMsg] = useState<FailMessage>();
   const [successMsg, setSuccessMsg] = useState<SuccessMessage>();
 
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const [storedTxnData, setStoredTxnData] = useAtom(storedTxnDataAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
 

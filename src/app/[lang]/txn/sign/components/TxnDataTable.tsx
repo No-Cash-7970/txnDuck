@@ -36,13 +36,14 @@ const appTypes = [
 export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'sign_txn', 'common', 'app']);
   const nodeConfig = useAtomValue(nodeConfigAtom);
-  const storedTxnData = useAtomValue(TxnData.storedTxnDataAtom);
   const fee = useAtomValue(feeAtom);
   const minFee = useAtomValue(minFeeAtom);
   const fv = useAtomValue(fvAtom);
   const lv = useAtomValue(lvAtom);
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
+
+  const storedTxnData = useAtomValue(TxnData.getStoredTxnDataAtom(currentURLParams));
 
   /** Get the part of the i18n translation key for the given transaction type
    * @returns Part of the i18n translation key for the transaction type

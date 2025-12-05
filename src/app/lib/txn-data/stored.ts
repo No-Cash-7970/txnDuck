@@ -11,11 +11,12 @@ import { atomWithValidate } from 'jotai-form';
 import {
   baseUnitsToDecimal,
   decimalToBaseUnits,
+  randHexString,
   removeNonNumericalChars,
   removeNonNumericalDecimalChars
 } from '@/app/lib/utils';
 import * as txnDataAtoms from './atoms';
-import { MAX_VALID_ROUNDS_PERIOD, MIN_TX_FEE, Preset } from './constants';
+import { MAX_VALID_ROUNDS_PERIOD, MIN_TX_FEE, Preset, txnGrpIdxParamName } from './constants';
 import {
   StoredTxnData,
   type AppCallTxnData,
@@ -46,14 +47,10 @@ import {
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
 const storage = createJSONStorage<any>(() => sessionStorage); // Set the type of storage
 
-/** Transaction form data that is temporarily stored locally */
-export const storedTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
+/** Form data for a single (non-group) transaction that is temporarily stored locally */
+export const storedSingleTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
   'txnData', undefined, storage
 );
-
-/** Signed transaction, as a Data URI string, that is stored locally */
-export const storedSignedTxnAtom =
-  atomWithStorage<string|undefined>('signedTxn', undefined, storage);
 
 /** Array of the keys of all stored transactions in the transaction group. Each transaction in a
  * transaction group is stored with its own unique storage key. For example, two transaction within
@@ -61,6 +58,67 @@ export const storedSignedTxnAtom =
  * would have a value like `["txn_a14f","txn_0d84"]` or  `["txn_a14f","txn_0d84",""]`.
  */
 export const storedTxnGrpKeysAtom = atomWithStorage<string[]>('txnGrpKeys', [], storage);
+
+/** Collection of atoms for group transaction data. A group transaction is only placed in here if it
+ * has been retrieved before, so this collection may not contain all group transaction data that is
+ * stored.
+ */
+const grpTxnDatas: {[key:string]: typeof storedSingleTxnDataAtom} = {};
+
+/** Get the atom for the stored transaction data.
+ *
+ * If the transaction group index is given as a URL parameter, the transaction data for the
+ * transaction at the index in the group is given.
+ *
+ * @param Collection of URL parameters. Usually whatever is returned by Next.js `useSearchParams()`.
+ * @param jotaiStore  The Jotai Store for the atoms that will contain the transaction data
+ * @return An atom for the stored transaction data
+ */
+export function getStoredTxnDataAtom(
+  urlParams: ReadonlyURLSearchParams
+): typeof storedSingleTxnDataAtom {
+  const grpIdx = parseInt(urlParams.get(txnGrpIdxParamName) ?? '');
+
+  if (isNaN(grpIdx)) { // A normal transaction
+    return storedSingleTxnDataAtom;
+  } else { // A transaction that is part of a group
+    // Get storage key based on group index from storage
+    const grpKeys = storage.getItem('txnGrpKeys', []);
+    let grpTxnKey = grpKeys[grpIdx];
+
+    // Generate and store new key if on does not exist
+    if (!grpTxnKey) {
+      grpTxnKey = 'txn_' + randHexString(4);
+      grpKeys[grpIdx] = grpTxnKey;
+      storage.setItem('txnGrpKeys', grpKeys);
+    }
+
+    // Add group transaction atom to collection of group transaction atom if it is not already there
+    if (!grpTxnDatas[grpTxnKey]) {
+      grpTxnDatas[grpTxnKey] = atomWithStorage<StoredTxnData|undefined>(
+        grpTxnKey, undefined, storage
+      );
+    }
+
+    return grpTxnDatas[grpTxnKey];
+  }
+}
+
+/** Removes all data for the group transactions, including the list of storage keys for the
+ * transaction group
+ * @param jotaiStore  The Jotai Store for the atoms that will contain the data
+ */
+export function clearAllGrpTxns() {
+    const grpKeys = storage.getItem('txnGrpKeys', []);
+  // Delete each group transaction
+  grpKeys.forEach((key:string) => storage.removeItem(key));
+  // Delete list of group transaction keys
+  storage.removeItem('txnGrpKeys');
+}
+
+/** Signed transaction, as a Data URI string, that is stored locally */
+export const storedSignedTxnAtom =
+  atomWithStorage<string|undefined>('signedTxn', undefined, storage);
 
 /** Load stored transaction data into Jotai atoms
  * @param submittingForm A flag for indicating that the form is being submitted

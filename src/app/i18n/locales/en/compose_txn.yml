@@ -4,6 +4,7 @@ more_fields: More fields
 txn_presets_btn: Choose preset
 txn_presets_btn_warning: You may lose your progress if you choose a different preset.
 sign_txn_btn: Review & sign
+grp_compose_btn: Continue composing group
 fields:
   type: # Transaction type
     label: Transaction type

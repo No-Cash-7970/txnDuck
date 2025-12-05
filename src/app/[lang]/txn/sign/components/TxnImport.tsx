@@ -11,8 +11,8 @@ import { CheckboxField, FieldGroup, FileField } from "@/app/[lang]/components/fo
 import { useTranslation } from "@/app/i18n/client";
 import {
   createDataFromTxn,
+  getStoredTxnDataAtom,
   storedSignedTxnAtom,
-  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass
 } from "@/app/lib/txn-data";
@@ -30,7 +30,6 @@ type Props = {
 export default function TxnImport({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['sign_txn']);
   const router = useRouter();
-  const [storedTxnData, setStoredTxnData] = useAtom(storedTxnDataAtom);
   const setStoredSignedTxn = useSetAtom(storedSignedTxnAtom);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const [diffNetwork, setDiffNetwork] = useState(false);
@@ -44,6 +43,9 @@ export default function TxnImport({ lng }: Props) {
 
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
+
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
+  const [storedTxnData, setStoredTxnData] = useAtom(storedTxnDataAtom);
 
   /** Processes the given file as a signed or unsigned transaction file
    * @param file File to process

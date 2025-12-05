@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import {
@@ -13,8 +14,8 @@ import {
   tipContentClass,
   tipBtnClass,
   feeConditionalRequireAtom,
-  storedTxnDataAtom,
   txnDataAtoms,
+  getStoredTxnDataAtom,
 } from '@/app/lib/txn-data';
 import { defaultUseSugFee as defaultUseSugFeeAtom } from '@/app/lib/app-settings';
 import { nodeConfigAtom } from '@/app/lib/node-config';
@@ -82,7 +83,11 @@ export function FeeInput({ t }: { t: TFunction }) {
 
 export function UseSugFeeInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+
+  const currentURLParams = useSearchParams();
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+
   const defaultUseSugFee = useAtomValue(defaultUseSugFeeAtom);
   const setUseSugFee = useSetAtom(txnDataAtoms.useSugFee);
   const setFee = useSetAtom(txnDataAtoms.fee);

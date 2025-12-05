@@ -13,8 +13,8 @@ import {
   ADDRESS_LENGTH,
   Preset,
   assetConfigFormControlAtom,
+  getStoredTxnDataAtom,
   showFormErrorsAtom,
-  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass,
   txnDataAtoms,
@@ -40,7 +40,11 @@ export default function FreezeAddr({ t }: { t: TFunction }) {
 
 function UseSenderAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
+
+  const currentURLParams = useSearchParams();
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+
   const defaultApar_fUseSnd = useAtomValue(defaultApar_fUseSndAtom);
   const setApar_fUseSnd = useSetAtom(txnDataAtoms.apar_fUseSnd);
 

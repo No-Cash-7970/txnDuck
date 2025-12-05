@@ -20,8 +20,8 @@ import {
   AssetConfigTxnData,
   StoredTxnData,
   createTxnFromData,
+  getStoredTxnDataAtom,
   storedSignedTxnAtom,
-  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass,
   txnDataAtoms,
@@ -46,7 +46,6 @@ export default function SignTxn({ lng }: Props) {
   // A `null` value indicates that the default value should be used because the user has not changed
   // the value
   const [autoSend, setAutoSend] = useState<boolean|null>(null);
-  const storedTxnData = useAtomValue(storedTxnDataAtom);
   const defaultAutoSend = useAtomValue(defaultAutoSendAtom);
   const [storedSignedTxn, setStoredSignedTxn] = useAtom(storedSignedTxnAtom);
   const [hasSignTxnError, setHasSignTxnError] = useState(false);
@@ -55,6 +54,9 @@ export default function SignTxn({ lng }: Props) {
   const [isLoading, setIsLoading] = useState(true);
   const currentURLParams = useSearchParams();
   const isImporting = currentURLParams.get(importParamName) !== null;
+
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
 
   /** Get the suggested parameters for the network. Includes genesis ID, genesis hash, minimum fee,
    * first valid round, and last valid round.

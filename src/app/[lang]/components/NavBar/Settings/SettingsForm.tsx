@@ -9,7 +9,11 @@ import { ToastNotification, WalletProvider, ThemeChanger } from "@/app/[lang]/co
 import { NumberField, ToggleField } from "@/app/[lang]/components/form";
 import { useDebouncedCallback } from "use-debounce";
 import * as Settings from "@/app/lib/app-settings";
-import { storedSignedTxnAtom, storedTxnDataAtom } from "@/app/lib/txn-data";
+import {
+  clearAllGrpTxns,
+  storedSignedTxnAtom,
+  storedSingleTxnDataAtom,
+} from "@/app/lib/txn-data";
 import ConnectWallet from "./ConnectWallet";
 import { IconExclamationCircle } from "@tabler/icons-react";
 import { applyTheme } from "@/app/lib/utils";
@@ -51,7 +55,7 @@ export default function SettingsForm(props: Props) {
   const [alwaysClearAfterSend, setAlwaysClearAfterSend] = useAtom(Settings.alwaysClearAfterSend);
   const [defaultHideSendInfo, setDefaultHideSendInfo] = useAtom(Settings.defaultHideSendInfo);
   const [confirmWaitRounds, setConfirmWaitRounds] = useAtom(Settings.confirmWaitRounds);
-  const setStoredTxnData = useSetAtom(storedTxnDataAtom);
+  const setStoredSingleTxnData = useSetAtom(storedSingleTxnDataAtom);
   const setSignedTxn = useSetAtom(storedSignedTxnAtom);
   // XXX: Add more settings here
 
@@ -278,8 +282,9 @@ export default function SettingsForm(props: Props) {
           className='btn btn-sm btn-neutral h-auto min-h-8 pt-1 pb-1'
           onClick={(e) => {
             e.preventDefault();
-            setStoredTxnData(RESET);
+            setStoredSingleTxnData(RESET);
             setSignedTxn(RESET);
+            clearAllGrpTxns();
             notifyTxnDataCleared();
           }}
         >

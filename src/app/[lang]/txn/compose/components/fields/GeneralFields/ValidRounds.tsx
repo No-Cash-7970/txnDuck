@@ -1,9 +1,10 @@
 import { useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { type TFunction } from 'i18next';
 import { useAtomValue, useSetAtom } from 'jotai';
 import { FieldGroup, ToggleField } from '@/app/[lang]/components/form';
 import {
-  generalFormControlAtom, storedTxnDataAtom, tipBtnClass, tipContentClass, txnDataAtoms,
+  generalFormControlAtom, getStoredTxnDataAtom, tipBtnClass, tipContentClass, txnDataAtoms,
 } from '@/app/lib/txn-data';
 import { defaultUseSugRounds as defaultUseSugRoundsAtom } from '@/app/lib/app-settings';
 import FirstValid from './FirstValid';
@@ -24,7 +25,11 @@ export default function ValidRounds({ t }: { t: TFunction }) {
 
 export function UseSugRoundsInput({ t }: { t: TFunction }) {
   const form = useAtomValue(generalFormControlAtom);
+
+  const currentURLParams = useSearchParams();
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+
   const defaultUseSugRounds = useAtomValue(defaultUseSugRoundsAtom);
   const setUseSugRounds = useSetAtom(txnDataAtoms.useSugRounds);
 

@@ -13,8 +13,8 @@ import {
   ADDRESS_LENGTH,
   Preset,
   assetConfigFormControlAtom,
+  getStoredTxnDataAtom,
   showFormErrorsAtom,
-  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass,
   txnDataAtoms,
@@ -40,7 +40,11 @@ export default function ManagerAddr({ t }: { t: TFunction }) {
 
 function UseSenderAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
+
+  const currentURLParams = useSearchParams();
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+
   const defaultApar_mUseSnd = useAtomValue(defaultApar_mUseSndAtom);
   const setApar_mUseSnd = useSetAtom(txnDataAtoms.apar_mUseSnd);
 

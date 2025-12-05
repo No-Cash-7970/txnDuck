@@ -10,7 +10,8 @@ import {
   loadStoredTxnData,
   Preset,
   showFormErrorsAtom,
-  storedTxnDataAtom,
+  getStoredTxnDataAtom,
+  txnGrpIdxParamName,
 } from '@/app/lib/txn-data';
 
 type Props = {
@@ -24,15 +25,20 @@ type Props = {
  */
 export default function ComposeSubmitButton({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'common']);
+  const jotaiStore = useStore();
   /** A flag for indicating that the form is being submitted */
   const [submittingForm, setSubmittingForm] = useState(false);
-  const jotaiStore = useStore();
-  const storedTxnData = useAtomValue(storedTxnDataAtom);
   const disallowFormErrors = useAtomValue(AppSettings.disallowFormErrorsAtom);
+
   const router = useRouter();
   const currentURLParams = useSearchParams();
   const preset = currentURLParams.get(Preset.ParamName);
+  const grpIdx = parseInt(currentURLParams.get(txnGrpIdxParamName) ?? '');
 
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
+  const storedTxnData = useAtomValue(storedTxnDataAtom);
+
+  // Load transaction data
   useEffect(
     () => loadStoredTxnData(submittingForm, jotaiStore, currentURLParams, storedTxnData),
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -55,8 +61,13 @@ export default function ComposeSubmitButton({ lng }: Props) {
     setSubmittingForm(true);
     // "Submit" transaction data by storing it into local/session storage
     jotaiStore.set(storedTxnDataAtom, extractTxnDataFromAtoms(preset as Preset, jotaiStore));
-    // Go to sign-transaction page (only preserve preset URL parameter)
-    router.push(`/${lng}/txn/sign` + (preset ? `?${Preset.ParamName}=${preset}` : ''));
+
+    router.push(isNaN(grpIdx) // Is transaction a normal transaction (not part of a group)?
+      // Yes, go to sign-transaction page (only preserve preset URL parameter)
+      ? `/${lng}/txn/sign` + (preset ? `?${Preset.ParamName}=${preset}` : '')
+      // No, transaction is part of a group, so go back to compose group page
+      : `/${lng}/group/compose`
+    );
   };
 
   return (<>
@@ -67,7 +78,7 @@ export default function ComposeSubmitButton({ lng }: Props) {
       {submittingForm
         ? <span className='loading loading-spinner' />
         : <>
-          {t('sign_txn_btn')}
+          {isNaN(grpIdx) ? t('sign_txn_btn') : t('grp_compose_btn')}
           <IconArrowRight aria-hidden className='rtl:hidden' />
           <IconArrowLeft aria-hidden className='hidden rtl:inline' />
         </>

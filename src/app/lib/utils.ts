@@ -227,6 +227,24 @@ export function applyTheme(
   if (notifyFn) notifyFn();
 };
 
+/** Generates a random hexadecimal string of the given length.
+ *
+ * **WARNING**: This is not cryptographically safe. Do not use for cryptographic functions.
+ *
+ * @param len Length of the hexadecimal string
+ * @return Hexadecimal string
+ */
+export function randHexString(len: number): string {
+  const chars = '0123456789abcdef';
+  let result = '';
+
+  for (let i = 0; i < len; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+
+  return result;
+}
+
 /** Validation error message */
 export type ValidationMessage = {
   /** Translation key for the validation message */

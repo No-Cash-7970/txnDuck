@@ -25,6 +25,12 @@ jest.mock('../../components/wallet/WalletProvider.tsx', () => 'div');
 
 import GroupComposePage from './page';
 
+// Mock navigation hooks because they are used by a child components
+const paramsMock = {get: jest.fn()};
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => paramsMock,
+}));
+
 describe('Group Transactions Compose Page', () => {
 
   it('has builder steps', async () => {

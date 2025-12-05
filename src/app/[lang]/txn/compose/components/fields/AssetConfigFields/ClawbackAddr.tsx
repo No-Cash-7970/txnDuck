@@ -13,8 +13,8 @@ import {
   ADDRESS_LENGTH,
   Preset,
   assetConfigFormControlAtom,
+  getStoredTxnDataAtom,
   showFormErrorsAtom,
-  storedTxnDataAtom,
   tipBtnClass,
   tipContentClass,
   txnDataAtoms,
@@ -40,7 +40,11 @@ export default function ClawbackAddr({ t }: { t: TFunction }) {
 
 function UseSenderAddr({ t }: { t: TFunction }) {
   const form = useAtomValue(assetConfigFormControlAtom);
+
+  const currentURLParams = useSearchParams();
+  const storedTxnDataAtom = getStoredTxnDataAtom(currentURLParams);
   const storedTxnData = useAtomValue(storedTxnDataAtom);
+
   const defaultApar_cUseSnd = useAtomValue(defaultApar_cUseSndAtom);
   const setApar_cUseSnd = useSetAtom(txnDataAtoms.apar_cUseSnd);
 
