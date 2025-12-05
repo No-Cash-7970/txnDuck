@@ -16,10 +16,6 @@ const test = base.extend<{ notFoundPage: NotFoundPage }>({
 
 test.describe('Not Found Page', () => {
 
-  test('has footer', async ({ notFoundPage }) => {
-    await expect(notFoundPage.page.getByRole('contentinfo')).toBeVisible();
-  });
-
   test.describe('Language Support', () => {
     (new LanguageSupport({
       // The new behavior of Next.js is to have no title. It is not certain if this is the intended

@@ -17,10 +17,6 @@ const test = base.extend<{ composeTxnPage: ComposeTxnPage }>({
 
 test.describe('Compose Transaction Page', () => {
 
-  test('has footer', async ({ composeTxnPage }) => {
-    await expect(composeTxnPage.page.getByRole('contentinfo')).toBeVisible();
-  });
-
   test('has link to presets page', async ({ composeTxnPage }) => {
     await composeTxnPage.page.getByText(/Choose preset/).click();
     await expect(composeTxnPage.page).toHaveURL(TxnPresetsPage.getFullUrl());

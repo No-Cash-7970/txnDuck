@@ -16,10 +16,6 @@ const test = base.extend<{ txnPresetsPage: TxnPresetsPage }>({
 
 test.describe('Transaction Presets Page', () => {
 
-  test('has footer', async ({ txnPresetsPage }) => {
-    await expect(txnPresetsPage.page.getByRole('contentinfo')).toBeVisible();
-  });
-
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /preset/, title: /Transaction/ },

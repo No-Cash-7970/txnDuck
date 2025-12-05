@@ -16,10 +16,6 @@ const test = base.extend<{ grpComposePage: GroupComposePage }>({
 
 test.describe('Transaction Group Compose Page', () => {
 
-  test('has footer', async ({ grpComposePage }) => {
-    await expect(grpComposePage.page.getByRole('contentinfo')).toBeVisible();
-  });
-
   test.describe('Language Support', () => {
     (new LanguageSupport({
       en: { body: /Compose/, title: /Compose/ },

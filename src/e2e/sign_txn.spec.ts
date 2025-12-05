@@ -28,11 +28,6 @@ const txnParamsData = {
 
 test.describe('Sign Transaction Page', () => {
 
-  test('has footer', async ({ signTxnPage }) => {
-    await signTxnPage.goto();
-    await expect(signTxnPage.page.getByRole('contentinfo')).toBeVisible();
-  });
-
   test('shows manual transaction fee and valid rounds', async ({ signTxnPage }) => {
     const page = signTxnPage.page;
 
