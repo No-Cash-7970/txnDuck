@@ -1,20 +1,12 @@
-import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
 import testingLibrary from "eslint-plugin-testing-library";
 import stylistic from "@stylistic/eslint-plugin";
 import { defineConfig, globalIgnores } from "eslint/config";
 import nextCoreWebVitals from "eslint-config-next/core-web-vitals";
 import nextTypescript from "eslint-config-next/typescript";
 import { includeIgnoreFile } from "@eslint/compat";
-import yamlparser from "yaml-eslint-parser";
+import * as yamlParser from "yaml-eslint-parser";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
 const gitignorePath = fileURLToPath(new URL(".gitignore", import.meta.url));
 
 const eslintConfig = defineConfig([
@@ -48,13 +40,9 @@ const eslintConfig = defineConfig([
       "react-hooks/rules-of-hooks": "off",
     }
   }, {
-    files: ["**/*.yaml", "**/*.yml"],
-    extends: [...compat.extends("plugin:yml/standard")],
+    files: ["*.yaml", "*.yml"],
     languageOptions: {
-      parser: yamlparser,
-    },
-    rules: {
-      '@stylistic/max-len': 'off'
+      parser: yamlParser,
     },
   }, {
     ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts"]
