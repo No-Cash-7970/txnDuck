@@ -191,7 +191,7 @@ export function createDataFromTxn(txn: algosdk.Transaction, options: {
  * @param genesisID Genesis ID of the network the transaction will be sent
  * @param genesisHash Genesis hash of the network the transaction will be sent
  * @param flatFee If the specified fee is to be the fee for the transaction and not the fee per byte
- * @return `Transaction` object that represents the given transaction data
+ * @returns `Transaction` object that represents the given transaction data
  */
 export function createTxnFromData(
   txnData: TxnData.TxnData,
@@ -557,7 +557,7 @@ export function createDataFromTxnGrp(txns: algosdk.Transaction[], options: {
  * @param genesisHash Genesis hash of the network all transactions will be sent
  * @param flatFee If the specified fee is to be the fee for each transaction and not the fee per
  *                byte
- * @return An array of `Transaction` objects that represents the given array of transaction data
+ * @returns An array of `Transaction` objects that represents the given array of transaction data
  */
 export function createTxnGrpFromData(
   txnDatas: TxnData.TxnData[],

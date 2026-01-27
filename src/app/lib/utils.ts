@@ -232,7 +232,7 @@ export function applyTheme(
  * **WARNING**: This is not cryptographically safe. Do not use for cryptographic functions.
  *
  * @param len Length of the hexadecimal string
- * @return Hexadecimal string
+ * @returns Hexadecimal string
  */
 export function randHexString(len: number): string {
   const chars = '0123456789abcdef';

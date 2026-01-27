@@ -72,7 +72,7 @@ const grpTxnDatas: {[key:string]: typeof storedSingleTxnDataAtom} = {};
  *
  * @param Collection of URL parameters. Usually whatever is returned by Next.js `useSearchParams()`.
  * @param jotaiStore  The Jotai Store for the atoms that will contain the transaction data
- * @return An atom for the stored transaction data
+ * @returns An atom for the stored transaction data
  */
 export function getStoredTxnDataAtom(
   urlParams: ReadonlyURLSearchParams
@@ -588,7 +588,7 @@ export function loadStoredTxnData(
 /** Extract the transaction data from Jotai atoms and compile the data into a single object
  * @param preset The current preset being used
  * @param jotaiStore The Jotai Store for the atoms that contains the transaction data
- * @return Object containing the transaction data
+ * @returns Object containing the transaction data
  */
 export function extractTxnDataFromAtoms(
   preset: Preset|null,
