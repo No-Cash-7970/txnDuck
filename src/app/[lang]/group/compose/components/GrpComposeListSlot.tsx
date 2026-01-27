@@ -21,7 +21,6 @@ type Props = {
 export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
   const { t } = useTranslation(lng || '', ['grp_compose', 'common']);
   const [grpList, setGrpList] = useAtom(storedTxnGrpKeysAtom);
-  // const [storedTxnData, setStoredTxnData] = useState<StoredTxnData|null>(null);
   const currentURLParams = useSearchParams();
   const urlParams = currentURLParams.toString();
 
