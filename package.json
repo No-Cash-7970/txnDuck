@@ -92,6 +92,9 @@
     "ts-jest": "^29.4.6",
     "yaml-eslint-parser": "^2.0.0"
   },
+  "resolutions": {
+    "conventional-changelog-conventionalcommits": "^9.0.0"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
