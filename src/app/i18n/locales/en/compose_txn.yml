@@ -146,7 +146,7 @@ fields:
       asset receiver.
     placeholder: Target address
   aclose: # Close remainder of asset to
-    label: Close remainder to of asset to
+    label: Close remainder of asset to
     tip: >-
       Specify this field to remove the asset holding from the sender account and reduce the
       account’s minimum balance (i.e. opt-out of the asset).
