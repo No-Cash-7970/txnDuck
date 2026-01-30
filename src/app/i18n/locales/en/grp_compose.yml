@@ -9,3 +9,4 @@ remove_slot_btn_title: "Remove transaction #{{index}}"
 no_txn_in_slot: "No transaction for slot #{{index}}"
 move_slot_up_btn: "Move slot #{{index}} up one slot"
 move_slot_down_btn: "Move slot #{{index}} down one slot"
+no_preset: Manual

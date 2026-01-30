@@ -9,3 +9,4 @@ remove_slot_btn_title: "Eliminar la transacción nº {{index}}"
 no_txn_in_slot: "No hay transacción para el espacio nº {{index}}"
 move_slot_up_btn: "Mover el espacio nº {{index}} un espacio hasta arriba"
 move_slot_down_btn: "Mover el espacio nº {{index}} un espacio hasta abajo"
+no_preset: Manual

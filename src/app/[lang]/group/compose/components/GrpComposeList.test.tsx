@@ -46,7 +46,7 @@ describe('Group Compose List Component', () => {
     sessionStorage.setItem('txn_a14f', '{"txn":{"type":"pay","snd":"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB","rcv":"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB","amt":0},"useSugFee":true,"useSugRounds":true,"b64Note":false,"b64Lx":false}');
     sessionStorage.setItem('txnGrpKeys', '["txn_0d84","","txn_a14f"]');
     render(<GrpComposeList />);
-    expect(screen.getAllByText(/Type\: pay/)).toHaveLength(2);
+    expect(screen.getAllByText('txn_presets:no_preset')).toHaveLength(2);
     expect(screen.getByText(/no_txn_in_slot/)).toBeInTheDocument();
     expect(screen.getByText(/review_sign_btn/)).toHaveClass('btn-disabled');
   });
@@ -83,7 +83,7 @@ describe('Group Compose List Component', () => {
     // Click the first "Remove" button (for an empty slot)
     await userEvent.click(screen.getAllByText(/remove_slot_btn/)[0]);
     expect(await screen.findAllByText(/no_txn_in_slot/)).toHaveLength(14);
-    expect(await screen.findByText(/Type\: pay/)).toBeInTheDocument();
+    expect(await screen.findByText('txn_presets:no_preset')).toBeInTheDocument();
     expect(await screen.findByText(/add_slot_btn/)).not.toBeDisabled();
     expect(sessionStorage.getItem('txnGrpKeys'))
       .toBe('["txn_0d84","","","","","","","","","","","","","",""]');
@@ -91,7 +91,7 @@ describe('Group Compose List Component', () => {
     // Click the first "Remove" button again (This time for a slot with a transaction)
     await userEvent.click(screen.getAllByText(/remove_slot_btn/)[0]);
     expect(await screen.findAllByText(/no_txn_in_slot/)).toHaveLength(14);
-    expect(screen.queryByText(/Type\: pay/)).not.toBeInTheDocument();
+    expect(screen.queryByText('txn_presets:no_preset')).not.toBeInTheDocument();
     expect(await screen.findByText(/add_slot_btn/)).not.toBeDisabled();
     expect(sessionStorage.getItem('txnGrpKeys'))
       .toBe('["","","","","","","","","","","","","",""]');

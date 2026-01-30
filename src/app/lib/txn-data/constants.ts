@@ -160,3 +160,12 @@ export enum Preset {
 }
 
 export const txnGrpIdxParamName = 'grp_idx';
+
+export const appTypes = [
+  'no_op',
+  'opt_in',
+  'close_out',
+  'clear',
+  'update',
+  'delete'
+];

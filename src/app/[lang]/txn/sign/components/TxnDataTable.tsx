@@ -23,15 +23,6 @@ type Props = {
   lng?: string
 };
 
-const appTypes = [
-  'no_op',
-  'opt_in',
-  'close_out',
-  'clear',
-  'update',
-  'delete'
-];
-
 /** Table that displays the stored transaction data */
 export default function TxnDataTable({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['compose_txn', 'sign_txn', 'common', 'app']);
@@ -84,7 +75,7 @@ export default function TxnDataTable({ lng }: Props) {
     if (type === TransactionType.appl) {
       if (!((storedTxnData?.txn as TxnData.AppCallTxnData)?.apid)) return 'appl_create';
 
-      return 'appl_' + appTypes[(storedTxnData?.txn as TxnData.AppCallTxnData)?.apan];
+      return 'appl_' + TxnData.appTypes[(storedTxnData?.txn as TxnData.AppCallTxnData)?.apan];
     }
 
     return `${type}`;
@@ -473,7 +464,7 @@ export default function TxnDataTable({ lng }: Props) {
             <th role='rowheader' className='align-top'>{t('fields.apan.label')}</th>
             <td>
               {t('fields.apan.options.'
-                + appTypes[(storedTxnData?.txn as TxnData.AppCallTxnData).apan]
+                + TxnData.appTypes[(storedTxnData?.txn as TxnData.AppCallTxnData).apan]
               )}
             </td>
           </tr>
@@ -649,7 +640,7 @@ export default function TxnDataTable({ lng }: Props) {
             }</span>
           </th>
           <td>
-            {// Show fee when the store transaction data is loaded and the suggested fee is loaded
+            {// Show fee when the stored transaction data is loaded and the suggested fee is loaded
              // (if it is to be used)
             (storedTxnData && (!storedTxnData?.useSugFee || !!fee.value))
               ? t('fields.fee.in_coin', {
