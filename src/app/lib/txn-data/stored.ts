@@ -45,7 +45,7 @@ import {
 } from './field-validation';
 
 /* Code adapted from https://github.com/pmndrs/jotai/discussions/1220#discussioncomment-2918007 */
-const storage = createJSONStorage<any>(() => sessionStorage); // Set the type of storage
+const storage = createJSONStorage<any>(() => global.sessionStorage); // Set the type of storage
 
 /** Form data for a single (non-group) transaction that is temporarily stored locally */
 export const storedSingleTxnDataAtom = atomWithStorage<StoredTxnData|undefined>(
