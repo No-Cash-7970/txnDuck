@@ -690,7 +690,7 @@ export function extractTxnDataFromAtoms(
     }
 
     if (preset && preset !== Preset.AssetOptOut) {
-      specificTxnData.aclose = false;
+      specificTxnData.aclose = undefined;
     }
 
     if (preset && preset !== Preset.AssetClawback) {
