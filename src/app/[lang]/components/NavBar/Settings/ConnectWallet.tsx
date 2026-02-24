@@ -70,8 +70,8 @@ export default function ConnectWallet({ t }: { t: TFunction }) {
                 'z-1000 card menu shadow-md border border-base-300 bg-base-200 overflow-auto'
                 + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
                 + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
-                + ' max-w-[var(--radix-dropdown-menu-trigger-width)]'
-                + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
+                + ' max-w-(--radix-dropdown-menu-trigger-width)'
+                + ' max-h-(--radix-dropdown-menu-content-available-height)'
                 + ' prose-li:max-w-full'
               }>
                 <li className='menu-title'>{t('wallet.providers_list_title')}</li>

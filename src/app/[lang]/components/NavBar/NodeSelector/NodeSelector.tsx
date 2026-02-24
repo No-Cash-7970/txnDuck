@@ -52,7 +52,7 @@ export default function NodeSelector({ lng }: Props) {
       <DropdownMenu.Trigger asChild>
         <button title={t('node_selector.choose_node')}
           className={ 'btn btn-accent'
-            + ' w-auto max-w-[4rem] mx-2 px-2 text-xs gap-1 flex-wrap'
+            + ' w-auto max-w-16 mx-2 px-2 text-xs gap-1 flex-wrap'
             + ' sm:max-w-sm sm:px-4 sm:text-sm sm:gap-2' }
         >
           <NodeSelectorButtonText t={t} />
@@ -64,7 +64,7 @@ export default function NodeSelector({ lng }: Props) {
             'z-1000 card menu shadow-md border border-base-300 bg-base-200 max-w-72 overflow-auto'
             + ' data-[side=bottom]:mt-1 data-[side=top]:mb-1'
             + ' data-[side=left]:mr-1 data-[side=right]:ml-1'
-            + ' max-h-[var(--radix-dropdown-menu-content-available-height)]'
+            + ' max-h-(--radix-dropdown-menu-content-available-height)'
             + ' prose-li:max-w-full'
           }>
             <li className='menu-title'>{t('node_selector.choose_node')}</li>
@@ -124,7 +124,7 @@ export default function NodeSelector({ lng }: Props) {
                     <ViewConfigDialogContent lng={lng} />
                     <Dialog.Close asChild>
                       {/* eslint-disable-next-line @stylistic/max-len */}
-                      <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
+                      <button className='btn-ghost btn btn-sm btn-square text-base-content fixed inset-e-3 top-3'
                         title={t('close')}
                       >
                         <IconX aria-hidden />
@@ -167,7 +167,7 @@ export default function NodeSelector({ lng }: Props) {
                     <CustomNodeDialogContent lng={lng} setopen={setCustomConfigOpen} />
                     <Dialog.Close asChild>
                       {/* eslint-disable-next-line @stylistic/max-len */}
-                      <button className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
+                      <button className='btn-ghost btn btn-sm btn-square text-base-content fixed inset-e-3 top-3'
                         title={t('close')}
                       >
                         <IconX aria-hidden />

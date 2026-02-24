@@ -363,7 +363,7 @@ export default function SignTxn({ lng }: Props) {
             onChange={(e) => setAutoSend(e.target.checked)}
           />
           <button
-            className='btn btn-lg btn-primary btn-block min-h-[4rem] h-auto'
+            className='btn btn-lg btn-primary btn-block min-h-16 h-auto'
             onClick={() => signTransaction()}
           >
             <Icons.IconBallpenFilled aria-hidden />

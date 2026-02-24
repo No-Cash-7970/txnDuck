@@ -101,7 +101,7 @@ export default function WalletDialogContent({ t }: { t: TFunction }) {
       {/* Upper corner close button */}
       <Dialog.Close asChild>
         <button type="button" title={t('close')} className={
-          'btn-ghost btn btn-sm btn-square text-base-content absolute end-3 top-3'
+          'btn-ghost btn btn-sm btn-square text-base-content absolute inset-e-3 top-3'
         }>
           <IconX aria-hidden />
         </button>

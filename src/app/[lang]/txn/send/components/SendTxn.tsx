@@ -347,7 +347,7 @@ export default function SendTxn({ lng }: Props) {
         </div>
         <div className='grid gap-4 md:gap-4 grid-cols-1 md:grid-cols-4 grid-rows-1 mt-8'>
           <button
-            className='btn btn-primary leading-tight min-h-[2rem] h-auto col-span-2'
+            className='btn btn-primary leading-tight min-h-8 h-auto col-span-2'
             onClick={() => {
               setFailMsg(undefined);
               waitForConfirmation(pendingTxId);
@@ -357,13 +357,13 @@ export default function SendTxn({ lng }: Props) {
             {t('wait_longer_btn')}
           </button>
           <button
-            className='btn leading-tight min-h-[2rem] h-auto col-span-1'
+            className='btn leading-tight min-h-8 h-auto col-span-1'
             onClick={attemptSendTxn}
           >
             <Icons.IconRotate aria-hidden />
             {t('retry_btn')}
           </button>
-          <a className='btn btn-outline font-semibold leading-tight min-h-[2rem] h-auto col-span-1'
+          <a className='btn btn-outline font-semibold leading-tight min-h-8 h-auto col-span-1'
             href={`/${lng}`}
           >
             <Icons.IconBan aria-hidden />

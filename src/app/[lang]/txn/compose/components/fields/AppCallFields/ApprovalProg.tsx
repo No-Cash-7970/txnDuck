@@ -85,7 +85,7 @@ export default function ApprovalProg({ t }: { t: TFunction }) {
             />
             <Dialog.Close asChild>
               <button
-                className='btn-ghost btn btn-sm btn-square text-base-content fixed end-3 top-3'
+                className='btn-ghost btn btn-sm btn-square text-base-content fixed inset-e-3 top-3'
                 title={t('close')}
               >
                 <IconX aria-hidden />

@@ -71,7 +71,7 @@ export default function TxnPreset({
       </div>
       {txnPresetFavs.indexOf(presetName) === -1 // If preset is not in favorites
         ? (
-          <button type="button" className="btn btn-sm btn-ghost absolute top-1 end-1 px-1"
+          <button type="button" className="btn btn-sm btn-ghost absolute top-1 inset-e-1 px-1"
             title={t('favorites.add', {presetName: heading})}
             onClick={() => setTxnPresetFavs([...txnPresetFavs, presetName])}
           >
@@ -79,7 +79,7 @@ export default function TxnPreset({
           </button>
         )
         : (
-          <button type="button" className="btn btn-sm btn-ghost absolute top-1 end-1 px-1"
+          <button type="button" className="btn btn-sm btn-ghost absolute top-1 inset-e-1 px-1"
             title={t('favorites.remove', {presetName: heading})}
             onClick={() => {
               const newFavs = [...txnPresetFavs];
