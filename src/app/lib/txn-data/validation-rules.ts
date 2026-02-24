@@ -10,7 +10,7 @@ import '@/app/lib/validation-set-locale'; // Run setup for the locales for Yup (
 
 /** Validation schema for wallet address */
 export const addressSchema = YupString().trim().length(ADDRESS_LENGTH);
-/** Validation schemea for asset/application IDs */
+/** Validation schema for asset/application IDs */
 export const idSchema = YupNumber().min(1);
 
 export {YupMixed, YupNumber, YupString};
