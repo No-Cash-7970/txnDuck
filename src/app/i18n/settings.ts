@@ -32,6 +32,7 @@ export const defaultNS: string = 'common';
 export type i18nOptions = {
   debug?: boolean,
   supportedLngs: string[],
+  showSupportNotice: boolean,
   fallbackLng: string,
   lng: string,
   fallbackNS: string,
@@ -43,6 +44,7 @@ export function getOptions (lng = fallbackLng, ns: string | string[] = defaultNS
   return {
     debug: process.env.I18NEXT_DEBUG?.toLowerCase() === 'true',
     supportedLngs: Object.keys(supportedLangs),
+    showSupportNotice: false,
     // preload: languages,
     fallbackLng,
     lng,

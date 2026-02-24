@@ -33,7 +33,8 @@ i18next
     detection: {
       order: ['path', 'htmlTag', 'cookie', 'navigator'],
     },
-    preload: runsOnServerSide ? Object.keys(supportedLangs) : []
+    preload: runsOnServerSide ? Object.keys(supportedLangs) : [],
+    showSupportNotice: false,
   });
 
 export default i18next;
