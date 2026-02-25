@@ -5,6 +5,7 @@ txn_presets_btn: Eligir una preselección
 txn_presets_btn_warning: Puede perder su progreso si elige una preselección diferente.
 sign_txn_btn: Revisar y firmar
 grp_compose_btn: Continuar componer el grupo
+grp_compose_cancel_btn: Cancelar editar
 fields:
   type: # Transaction type
     label: Tipo de transacción

@@ -1,5 +1,4 @@
 import { useTranslation } from '@/app/i18n/client';
-import { storedTxnGrpKeysAtom, txnGrpIdxParamName, type StoredTxnData } from '@/app/lib/txn-data';
 import {
   IconChevronDown,
   IconChevronUp,
@@ -26,7 +25,7 @@ export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
   const { t } = useTranslation(lng || '', ['grp_compose', 'compose_txn', 'txn_presets', 'common']);
   const nodeConfig = useAtomValue(nodeConfigAtom);
   const minFee = useAtomValue(minFeeAtom);
-  const [grpList, setGrpList] = useAtom(storedTxnGrpKeysAtom);
+  const [grpList, setGrpList] = useAtom(TxnData.storedTxnGrpKeysAtom);
   const currentURLParams = useSearchParams();
   const urlParams = currentURLParams.toString();
 
@@ -35,7 +34,7 @@ export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
   // is a solution to avoiding using `useEffect` borrowed from
   // <https://react.dev/learn/you-might-not-need-an-effect#caching-expensive-calculations>.
   const storedTxnData  = ((txnList: string[], idx: number) => {
-    return JSON.parse(sessionStorage.getItem(txnList[idx]) ?? 'null') as StoredTxnData;
+    return JSON.parse(sessionStorage.getItem(txnList[idx]) ?? 'null') as TxnData.StoredTxnData;
   })(grpList, txnIdx);
 
   /** Remove transaction slot from the transaction group list
@@ -534,7 +533,7 @@ export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
                     : ''
                   }`
                   + `${urlParams ? urlParams + '&' : ''}`
-                  + `${txnGrpIdxParamName}=${txnIdx}`
+                  + `${TxnData.txnGrpIdxParamName}=${txnIdx}&${TxnData.txnGrpEditParamName}`
                 }
                 className='btn btn-outline btn-accent btn-xs sm:btn-sm'
               >
@@ -563,7 +562,7 @@ export default function GrpComposeListSlot({ lng, txnIdx }: Props) {
             <div className='card-actions justify-between'>
               <a title={`Compose transaction #${txnIdx+1}`}
                 // eslint-disable-next-line @stylistic/max-len
-                href={`/${lng}/txn?${urlParams ? urlParams+'&' : ''}${txnGrpIdxParamName}=${txnIdx}`}
+                href={`/${lng}/txn?${urlParams ? urlParams+'&' : ''}${TxnData.txnGrpIdxParamName}=${txnIdx}`}
                 className='btn btn-accent btn-xs sm:btn-sm'
               >
                 <IconEdit size={20} stroke={1.75} />
@@ -591,7 +590,7 @@ function GrpTxnButtons({ t, txnIdx }: {
   /** Transaction index */
   txnIdx: number,
 }) {
-  const [grpList, setGrpList] = useAtom(storedTxnGrpKeysAtom);
+  const [grpList, setGrpList] = useAtom(TxnData.storedTxnGrpKeysAtom);
 
   /** Move transaction slot one slot up in the transaction group list. For example, if the slot
    * number is 2, slot #3 will be moved up to become slot #2.

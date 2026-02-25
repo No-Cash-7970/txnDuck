@@ -8,7 +8,7 @@ import * as Icons from '@tabler/icons-react';
 import { TransactionType } from 'algosdk';
 import { useAtomValue } from 'jotai';
 import { useTranslation } from '@/app/i18n/client';
-import { Preset } from '@/app/lib/txn-data';
+import { Preset, txnGrpEditParamName, txnGrpIdxParamName } from '@/app/lib/txn-data';
 import * as txnDataAtoms from '@/app/lib/txn-data/atoms';
 import ComposeSubmitButton from './ComposeSubmitButton';
 import { Fee, Note, Sender, TxnType, ValidRounds } from './fields/GeneralFields';
@@ -295,26 +295,36 @@ export default function ComposeForm({ lng }: Props) {
           <ComposeSubmitButton lng={lng} />
         </div>
         <div className='sm:order-first'>
-          <Link type='button' className='btn w-full' href={{
-            pathname: `/${lng}/txn`,
-            query: (() => {
-              // Remove URL parameter for preset if it is specified.
-              // This is for the link (back button) to the Presets page
-              const newURLParams = new URLSearchParams(currentURLParams.toString());
-              newURLParams.delete(Preset.ParamName);
-              return newURLParams.toString();
-            })()
-          }}>
-            <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
-            <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
-            {t('txn_presets_btn')}
-          </Link>
-          <div className={
-            'alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-snug text-base-content/70'
-          }>
-            <Icons.IconAlertTriangleFilled aria-hidden className='align-middle my-auto me-2' />
-            <span>{t('txn_presets_btn_warning')}</span>
-          </div>
+          {currentURLParams.get(txnGrpIdxParamName) !== null
+            && currentURLParams.get(txnGrpEditParamName) !== null
+            ? <Link type='button' className='btn w-full' href={`/${lng}/group/compose`}>
+              <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
+              <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
+              {t('grp_compose_cancel_btn')}
+            </Link>
+            : <>
+              <Link type='button' className='btn w-full' href={{
+                pathname: `/${lng}/txn`,
+                query: (() => {
+                  // Remove URL parameter for preset if it is specified.
+                  // This is for the link (back button) to the Presets page
+                  const newURLParams = new URLSearchParams(currentURLParams.toString());
+                  newURLParams.delete(Preset.ParamName);
+                  return newURLParams.toString();
+                })()
+              }}>
+                <Icons.IconArrowLeft aria-hidden className='rtl:hidden' />
+                <Icons.IconArrowRight aria-hidden className='hidden rtl:inline' />
+                {t('txn_presets_btn')}
+              </Link>
+              <div className={
+                'alert bg-base-100 gap-1 border-0 py-0 mt-2 leading-snug text-base-content/70'
+              }>
+                <Icons.IconAlertTriangleFilled aria-hidden className='align-middle my-auto me-2' />
+                <span>{t('txn_presets_btn_warning')}</span>
+              </div>
+            </>
+          }
         </div>
       </div>
 
