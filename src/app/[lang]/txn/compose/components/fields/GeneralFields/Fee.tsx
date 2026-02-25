@@ -57,6 +57,7 @@ export function FeeInput({ t }: { t: TFunction }) {
       afterSideLabel={
         nodeConfig.coinName || t('algo', {count: form.values.fee as number ?? 0})
       }
+      min={0}
       step={0.000001}
       value={form.values.fee as number ?? ''}
       onChange={(e) =>
