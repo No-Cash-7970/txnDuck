@@ -14,7 +14,9 @@ jest.mock('react-i18next', () => i18nextClientMock);
 // Mock navigation hooks
 jest.mock('next/navigation', () => ({
   useSearchParams: () => ({
-    get: () => null
+    get: () => null,
+    size: 1,
+    toString: () => 'param=test',
   }),
 }));
 
@@ -31,4 +33,9 @@ describe('Transaction Presets Page', () => {
     expect(screen.getByRole('heading', { level: 1 })).not.toBeEmptyDOMElement();
   });
 
+  it('has a "skip preset" link that has the pages URL search parameters', () => {
+    const pageParam = new Promise<any>(resolve => { resolve({lang: ''}); });
+    render(<TxnPresetsPage params={pageParam} />);
+    expect(screen.getByText('skip_btn')).toHaveAttribute('href', '/txn/compose?param=test');
+  });
 });
