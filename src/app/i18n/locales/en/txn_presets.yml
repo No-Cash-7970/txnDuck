@@ -4,6 +4,7 @@ skip_btn: Or skip this and compose a transaction without using a preset
 category_label: Category
 all_heading: All
 invalid_preset: Invalid preset
+back_btn: Back
 # Favorites
 favorites:
   heading: Favorites

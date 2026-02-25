@@ -5,6 +5,7 @@ skip_btn: O sáltese esto y componga una transacción sin utilizar una preselecc
 category_label: Categorías
 all_heading: Todas
 invalid_preset: Preselección inválido
+back_btn: Volver
 # Favorites
 favorites:
   heading: Favoritos
