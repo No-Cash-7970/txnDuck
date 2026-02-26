@@ -12,6 +12,7 @@ import {
   showFormErrorsAtom,
   getStoredTxnDataAtom,
   txnGrpIdxParamName,
+  txnGrpEditParamName,
 } from '@/app/lib/txn-data';
 
 type Props = {
@@ -78,7 +79,11 @@ export default function ComposeSubmitButton({ lng }: Props) {
       {submittingForm
         ? <span className='loading loading-spinner' />
         : <>
-          {isNaN(grpIdx) ? t('sign_txn_btn') : t('grp_compose_btn')}
+          {isNaN(grpIdx) && t('sign_txn_btn')}
+          {!isNaN(grpIdx) && <>
+            {currentURLParams.get(txnGrpEditParamName) === null
+              ? t('grp_compose_btn') : t('grp_compose_save_btn')}
+          </>}
           <IconArrowRight aria-hidden className='rtl:hidden' />
           <IconArrowLeft aria-hidden className='hidden rtl:inline' />
         </>
