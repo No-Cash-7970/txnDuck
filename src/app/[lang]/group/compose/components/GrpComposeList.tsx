@@ -28,7 +28,7 @@ export default function GrpComposeList({ lng }: Props) {
     <ol className='not-prose'>
       {grpList.length
         ? grpList.map((storageKey, i) => <GrpComposeListSlot key={i} lng={lng} txnIdx={i} />)
-        : <li className='text-lg text-center italic mb-6'>{t('grp_list_no_txn')}</li>
+        : <li className='text-lg text-center italic mt-10 mb-8'>{t('grp_list_no_txn')}</li>
       }
     </ol>
     <button className='btn btn-block btn-secondary btn-sm'
