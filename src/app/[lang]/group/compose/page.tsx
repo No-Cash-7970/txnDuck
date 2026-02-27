@@ -26,7 +26,7 @@ export async function generateMetadata(
 /** Make Next JS generate at static version of this page */
 export function generateStaticParams() { return ['group_compose']; }
 
-/** Choose Transaction Group Presets page */
+/** Compose Transaction Group page */
 export default function GroupComposePage(props: { params: Promise<{ lang: string }> }) {
   const { lang } = use(props.params);
   const { t } = use(useTranslation(lang, ['grp_compose', 'app']));
