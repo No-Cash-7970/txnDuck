@@ -48,7 +48,7 @@ export default function GrpComposeList({ lng }: Props) {
       {/* </p> */}
     {/* </div> */}
     <Link href={'#'} className={
-      `btn btn-block btn-primary font-bold mt-8`
+      `btn btn-lg btn-block btn-primary font-bold mt-10`
       + ((grpList.length && grpList.indexOf('') === -1) ? '' : ' btn-disabled')
     }>
       {t('review_sign_btn')}
