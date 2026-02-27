@@ -6,7 +6,6 @@ import { useAtom } from "jotai";
 import GrpComposeListSlot from "./GrpComposeListSlot";
 import { IconPlus } from "@tabler/icons-react";
 import Link from "next/link";
-import { useState } from "react";
 
 type Props = {
   /** Language */
@@ -17,7 +16,6 @@ type Props = {
 export default function GrpComposeList({ lng }: Props) {
   const { t } = useTranslation(lng || '', ['grp_compose']);
   const [grpList, setGrpList] = useAtom(storedTxnGrpKeysAtom);
-  const [emptySlotExists, setEmptySlotExists] = useState<boolean>(false);
 
   /** Adds slot to the transaction group list */
   function addTxnSlot() {
@@ -29,10 +27,7 @@ export default function GrpComposeList({ lng }: Props) {
   return <>
     <ol className='not-prose'>
       {grpList.length
-        ? grpList.map((storageKey, i) => {
-          if (!emptySlotExists && grpList[i] === '') setEmptySlotExists(true);
-          return <GrpComposeListSlot key={i} lng={lng} txnIdx={i} />;
-        })
+        ? grpList.map((storageKey, i) => <GrpComposeListSlot key={i} lng={lng} txnIdx={i} />)
         : <li className='text-lg text-center italic mb-6'>{t('grp_list_no_txn')}</li>
       }
     </ol>
@@ -54,7 +49,7 @@ export default function GrpComposeList({ lng }: Props) {
     {/* </div> */}
     <Link href={'#'} className={
       `btn btn-block btn-primary font-bold mt-8`
-      + ((grpList.length && !emptySlotExists) ? '' : ' btn-disabled')
+      + ((grpList.length && grpList.indexOf('') === -1) ? '' : ' btn-disabled')
     }>
       {t('review_sign_btn')}
     </Link>
