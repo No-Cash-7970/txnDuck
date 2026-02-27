@@ -47,7 +47,7 @@ export default function GrpComposeList({ lng }: Props) {
         {/* Minimum total fee: {(grpList.length * MIN_TX_FEE) / 1_000_000} Algos */}
       {/* </p> */}
     {/* </div> */}
-    <Link href={'#'} className={
+    <Link href={`/${lng}/group/sign`} className={
       `btn btn-lg btn-block btn-primary font-bold mt-10`
       + ((grpList.length && grpList.indexOf('') === -1) ? '' : ' btn-disabled')
     }>
