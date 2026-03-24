@@ -36,7 +36,7 @@ export default function GroupComposePage(props: { params: Promise<{ lang: string
         <IconTrafficCone stroke={2} size={32} />
         <p>{t('page_under_construction')}</p>
       </div>
-      <BuilderSteps lng={lang} color='secondary' current='compose' />
+      <BuilderSteps lng={lang} group={true} color='secondary' current='compose' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
       <GrpComposeList lng={lang} />
     </main>

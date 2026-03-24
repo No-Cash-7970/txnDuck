@@ -33,7 +33,7 @@ export default function GroupSignPage(props: { params: Promise<{ lang: string }>
         <IconTrafficCone stroke={2} size={32} />
         <p>{t('page_under_construction')}</p>
       </div>
-      <BuilderSteps lng={lang} color='secondary' current='sign' />
+      <BuilderSteps lng={lang} group={true} color='secondary' current='sign' />
       <PageTitleHeading lng={lang} showTxnPreset={true}>{t('title')}</PageTitleHeading>
     </main>
   );
